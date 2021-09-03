@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.4.8">
-    <title>Remedy.Struct.Event.MessageDeleteBulk — Remedy v0.4.8</title>
+    <title>Remedy.Voice.Event — Remedy v0.4.8</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
     <script src="dist/sidebar_items-5cb63b30a2.js"></script>
       <script src="docs_config.js"></script>
@@ -69,8 +69,8 @@ Remedy      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Remedy.Struct.Event.MessageDeleteBulk <small class="app-vsn">(Remedy v0.4.8)</small>
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/event/message_delete_bulk.ex#L1" title="View Source" class="view-source" rel="help">
+        Remedy.Voice.Event <small class="app-vsn">(Remedy v0.4.8)</small>
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/voice/event.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -78,7 +78,7 @@ Remedy      </a>
 
 
         <section id="moduledoc">
-<p>Struct representing a Message Delete Bulk event</p>        </section>
+<p>Voice Event</p>        </section>
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -88,129 +88,40 @@ Remedy      </a>
             </a>
             Summary
           </h1>
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:channel_id/0">channel_id()</a>
-  </div>
-    <div class="summary-synopsis"><p>Channel id of the deleted message</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:guild_id/0">guild_id()</a>
-  </div>
-    <div class="summary-synopsis"><p>Guild id of the deleted message</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:ids/0">ids()</a>
-  </div>
-    <div class="summary-synopsis"><p>Ids of the deleted messages</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#handle/3">handle(event, payload, state)</a>
   </div>
 </div>
   </div>
         </section>
 
-        <section id="types" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#types">
+            <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types          </h1>
-          <div class="types-list">
-<section class="detail" id="t:channel_id/0">
+Functions          </h1>
+          <div class="functions-list">
+<section class="detail" id="handle/3">
   <div class="detail-header">
-    <a href="#t:channel_id/0" class="detail-link" title="Link to this type">
+    <a href="#handle/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">channel_id()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/event/message_delete_bulk.ex#L15" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">handle(event, payload, state)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/voice/event.ex#L12" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
   </div>
 
   <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>channel_id() :: <a href="Remedy.Struct.Channel.html#t:id/0">Remedy.Struct.Channel.id</a>()</pre>
-      </div>
-
-<p>Channel id of the deleted message</p>  </section>
-</section>
-<section class="detail" id="t:guild_id/0">
-  <div class="detail-header">
-    <a href="#t:guild_id/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">guild_id()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/event/message_delete_bulk.ex#L22" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>guild_id() :: <a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>() | nil</pre>
-      </div>
-
-<p>Guild id of the deleted message</p><p><code class="inline">nil</code> if a non-guild message was deleted.</p>  </section>
-</section>
-<section class="detail" id="t:ids/0">
-  <div class="detail-header">
-    <a href="#t:ids/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">ids()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/event/message_delete_bulk.ex#L25" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>ids() :: [<a href="Remedy.Struct.Message.html#t:id/0">Remedy.Struct.Message.id</a>(), ...]</pre>
-      </div>
-
-<p>Ids of the deleted messages</p>  </section>
-</section>
-<section class="detail" id="t:t/0">
-  <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">t()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/event/message_delete_bulk.ex#L27" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>t() :: %Remedy.Struct.Event.MessageDeleteBulk{
-  channel_id: <a href="#t:channel_id/0">channel_id</a>(),
-  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
-  ids: <a href="#t:ids/0">ids</a>()
-}</pre>
-      </div>
 
   </section>
 </section>

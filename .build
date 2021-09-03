@@ -73,6 +73,7 @@ Remedy.Struct.VoiceWSState.html
 Remedy.Struct.WSState.html
 Remedy.Struct.Webhook.html
 Remedy.Util.html
+Remedy.Voice.Event.html
 Remedy.Voice.html
 api-reference.html
 api.html
@@ -82,7 +83,7 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-cb13bd0f50.js
-dist/sidebar_items-224b1f6bdf.js
+dist/search_items-85656703bb.js
+dist/sidebar_items-5cb63b30a2.js
 index.html
 search.html

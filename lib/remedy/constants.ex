@@ -1,13 +1,23 @@
 defmodule Remedy.Constants do
   @moduledoc false
 
-  def base_url, do: "https://discord.com/api/v9"
-  def cdn_url, do: "https://cdn.discordapp.com"
-  def gateway, do: "/gateway"
-  def gateway_bot, do: "/gateway/bot"
+  def base_url,
+    do: "https://discord.com/api/v9"
 
-  def channel(channel_id), do: "/channels/#{channel_id}"
-  def channel_messages(channel_id), do: "/channels/#{channel_id}/messages"
+  def cdn_url,
+    do: "https://cdn.discordapp.com"
+
+  def gateway,
+    do: "/gateway"
+
+  def gateway_bot,
+    do: "/gateway/bot"
+
+  def channel(channel_id),
+    do: "/channels/#{channel_id}"
+
+  def channel_messages(channel_id),
+    do: "/channels/#{channel_id}/messages"
 
   def channel_message(channel_id, message_id),
     do: "/channels/#{channel_id}/messages/#{message_id}"

@@ -23,7 +23,6 @@ defmodule Remedy.Mixfile do
 
   def docs do
     [
-      main: "docs/static/API.md",
       extras: extras(),
       groups_for_modules: groups_for_modules()
     ]

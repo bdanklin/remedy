@@ -8,8 +8,8 @@ defmodule Remedy.MixProject do
   def project do
     [
       app: :remedy,
-      version: @version,
-      elixir: "~> 1.11",
+      version: "0.5.0",
+      elixir: "~> 1.9",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       package: package(),

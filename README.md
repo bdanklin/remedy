@@ -1,3 +1,9 @@
+<img align="left" width="60" height="60" src="/remedy.png"> 
+
+# Remedy
+
+Playground fork of Nostrum.
+
 ## Notes
 
 - [ ] Separate applicable components into their own package.

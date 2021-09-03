@@ -15,7 +15,7 @@ defmodule Remedy.Consumer do
 
   ## Example
   An example consumer can be found
-  [here](https://github.com/Kraigie/remedy/blob/master/examples/event_consumer.ex).
+  [here](https://github.com/bdanklin/remedy/blob/master/examples/event_consumer.ex).
   """
 
   use ConsumerSupervisor

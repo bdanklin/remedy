@@ -27,3 +27,6 @@ doc
 # Ignore VSCode artifacts
 .elixir_ls/
 .mix_tasks
+
+# ignore environment variables
+.env

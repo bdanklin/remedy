@@ -17,7 +17,7 @@ defmodule Remedy.Api.Base do
 
   def process_request_headers(headers) do
     user_agent = [
-      {"User-Agent", "DiscordBot (https://github.com/kraigie/remedy, #{@version})"} | headers
+      {"User-Agent", "DiscordBot (https://github.com/bdanklin/remedy, #{@version})"} | headers
     ]
 
     token = "Bot " <> Application.get_env(:remedy, :token)

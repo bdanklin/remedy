@@ -284,7 +284,7 @@ defmodule Remedy.Cache.GuildCache do
   def member_update(guild_id, member) do
     # We may retrieve a GUILD_MEMBER_UPDATE event for our own user even if we
     # have the required intents to retrieve it for other members disabled, as
-    # outlined in issue https://github.com/Kraigie/remedy/issues/293. In
+    # outlined in issue https://github.com/bdanklin/remedy/issues/293. In
     # that case, we will not have the guild cached.
     case :ets.lookup(@table_name, guild_id) do
       [{_id, guild}] ->

@@ -247,8 +247,8 @@ defmodule Remedy.Struct.Embed do
 
   ```Elixir
   iex> embed = %Remedy.Struct.Embed{}
-  ...> Remedy.Struct.Embed.put_url(embed, "https://github.com/Kraigie/remedy")
-  %Remedy.Struct.Embed{url: "https://github.com/Kraigie/remedy"}
+  ...> Remedy.Struct.Embed.put_url(embed, "https://github.com/bdanklin/remedy")
+  %Remedy.Struct.Embed{url: "https://github.com/bdanklin/remedy"}
   ```
   """
   @spec put_url(t, url) :: t

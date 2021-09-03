@@ -8,13 +8,14 @@ defmodule Remedy.Mixfile do
       version: "0.4.7",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
+      elixirc_options: [debug_info: Mix.env() == :dev],
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       description: "An elixir Discord library",
       package: package(),
       name: "Remedy",
-      source_url: "https://github.com/kraigie/remedy",
-      homepage_url: "https://github.com/kraigie/remedy",
+      source_url: "https://github.com/bdanklin/remedy",
+      homepage_url: "https://github.com/bdanklin/remedy",
       deps: deps(),
       docs: docs(),
       dialyzer: dialyzer(),
@@ -32,8 +33,6 @@ defmodule Remedy.Mixfile do
     ]
   end
 
-  # "How to" shamelessly copied from the nerves project.
-  # https://github.com/nerves-project/nerves/tree/master/docs
   def docs do
     [
       main: "intro",
@@ -44,14 +43,7 @@ defmodule Remedy.Mixfile do
 
   def extras do
     [
-      "docs/static/Intro.md",
-      "docs/static/API.md",
-      "docs/static/State.md",
-      "docs/static/Events.md",
-      "docs/static/Consumers.md",
-      "docs/static/Voice.md",
-      "docs/static/Gateway Intents.md",
-      "docs/static/Slash commands.md"
+      "docs/static/API.md"
     ]
   end
 
@@ -79,10 +71,10 @@ defmodule Remedy.Mixfile do
     [
       name: :remedy,
       licenses: ["MIT"],
-      maintainers: ["Craig Dazey", "Johannes Christ", "Joe Banks"],
+      maintainers: ["Benjamin Danklin"],
       links: %{
-        "GitHub" => "https://github.com/Kraigie/remedy/",
-        "Docs" => "https://kraigie.github.io/remedy/"
+        "GitHub" => "https://github.com/bdanklin/remedy/",
+        "Docs" => "https://bdanklin.github.io/remedy/"
       }
     ]
   end
@@ -104,7 +96,7 @@ defmodule Remedy.Mixfile do
 
   def dialyzer do
     [
-      plt_add_deps: :transitive,
+      plt_add_deps: :app_tree,
       plt_add_apps: [:mix]
     ]
   end

@@ -5,8 +5,8 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.4.8">
-    <title>Remedy.Cache.ChannelCache — Remedy v0.4.8</title>
+    <meta name="project" content="Remedy v0.5.0">
+    <title>Remedy.Cache.ChannelCache — Remedy v0.5.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
     <script src="dist/sidebar_items-5cb63b30a2.js"></script>
       <script src="docs_config.js"></script>
@@ -46,12 +46,15 @@
 
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
-      <a href="https://github.com/bdanklin/remedy" class="sidebar-projectName">
+      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName">
 Remedy      </a>
       <strong class="sidebar-projectVersion">
-        v0.4.8
+        v0.5.0
       </strong>
     </div>
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
   </div>
 
   <ul class="sidebar-listNav">
@@ -69,8 +72,8 @@ Remedy      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Remedy.Cache.ChannelCache <small class="app-vsn">(Remedy v0.4.8)</small>
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache/channel_cache.ex#L1" title="View Source" class="view-source" rel="help">
+        Remedy.Cache.ChannelCache <small class="app-vsn">(Remedy v0.5.0)</small>
+          <a href="https://github.com/bdanklin/remedy/blob/v0.5.0/lib/remedy/cache/channel_cache.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -83,9 +86,9 @@ methods provided below you can call any other ETS methods on the table.</p><h2 i
   <a href="#module-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ets</span><span class="o">.</span><span class="n">info</span><span class="p" data-group-id="3584099334-1">(</span><span class="ss">:channels</span><span class="p" data-group-id="3584099334-1">)</span><span class="w">
-</span><span class="p" data-group-id="3584099334-2">[</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="ss">heir</span><span class="p">:</span><span class="w"> </span><span class="ss">:none</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="ss">:channels</span><span class="p">,</span><span class="w"> </span><span class="ss">size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="3584099334-2">]</span><span class="w">
-</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">info</span><span class="p" data-group-id="3584099334-3">[</span><span class="ss">:size</span><span class="p" data-group-id="3584099334-3">]</span><span class="w">
+<pre><code class="makeup elixir"><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ets</span><span class="o">.</span><span class="n">info</span><span class="p" data-group-id="5890887709-1">(</span><span class="ss">:channels</span><span class="p" data-group-id="5890887709-1">)</span><span class="w">
+</span><span class="p" data-group-id="5890887709-2">[</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="ss">heir</span><span class="p">:</span><span class="w"> </span><span class="ss">:none</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="ss">:channels</span><span class="p">,</span><span class="w"> </span><span class="ss">size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="5890887709-2">]</span><span class="w">
+</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">info</span><span class="p" data-group-id="5890887709-3">[</span><span class="ss">:size</span><span class="p" data-group-id="5890887709-3">]</span><span class="w">
 </span><span class="mi">1</span></code></pre>        </section>
 
         <section id="summary" class="details-list">
@@ -130,7 +133,7 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">get(id)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache/channel_cache.ex#L43" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.0/lib/remedy/cache/channel_cache.ex#L43" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -149,12 +152,12 @@ information, a call is made to a <a href="Remedy.Cache.GuildCache.html"><code cl
   <a href="#get/1-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="k">case</span><span class="w"> </span><span class="nc">Remedy.Cache.ChannelCache</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="4288866268-1">(</span><span class="mi">133333333337</span><span class="p" data-group-id="4288866268-1">)</span><span class="w"> </span><span class="k" data-group-id="4288866268-2">do</span><span class="w">
-  </span><span class="p" data-group-id="4288866268-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">channel</span><span class="p" data-group-id="4288866268-3">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+<pre><code class="makeup elixir"><span class="k">case</span><span class="w"> </span><span class="nc">Remedy.Cache.ChannelCache</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="8132394232-1">(</span><span class="mi">133333333337</span><span class="p" data-group-id="8132394232-1">)</span><span class="w"> </span><span class="k" data-group-id="8132394232-2">do</span><span class="w">
+  </span><span class="p" data-group-id="8132394232-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">channel</span><span class="p" data-group-id="8132394232-3">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
     </span><span class="s">&quot;We found &quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">channel</span><span class="o">.</span><span class="n">name</span><span class="w">
-  </span><span class="p" data-group-id="4288866268-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="c">_reason</span><span class="p" data-group-id="4288866268-4">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+  </span><span class="p" data-group-id="8132394232-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="c">_reason</span><span class="p" data-group-id="8132394232-4">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
     </span><span class="s">&quot;Donde esta&quot;</span><span class="w">
-</span><span class="k" data-group-id="4288866268-2">end</span></code></pre>  </section>
+</span><span class="k" data-group-id="8132394232-2">end</span></code></pre>  </section>
 </section>
 <section class="detail" id="get!/1">
   <div class="detail-header">
@@ -163,7 +166,7 @@ information, a call is made to a <a href="Remedy.Cache.GuildCache.html"><code cl
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">get!(id)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache/channel_cache.ex#L56" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.0/lib/remedy/cache/channel_cache.ex#L56" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

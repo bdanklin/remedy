@@ -1,7 +1,7 @@
 defmodule Remedy.Application do
   @moduledoc false
 
-  alias Remedy.Cache.GuildCache
+
   use Application
 
   require Logger
@@ -17,7 +17,8 @@ defmodule Remedy.Application do
       Remedy.Shard.Connector,
       Remedy.Cache.CacheSupervisor,
       Remedy.Shard.Supervisor,
-      Remedy.Voice.Supervisor
+      Remedy.Voice.Supervisor,
+      Remedy.Bot
     ]
 
     if Application.get_env(:remedy, :dev),
@@ -26,7 +27,7 @@ defmodule Remedy.Application do
   end
 
   @doc false
-  def setup_ets_tables do
+   def setup_ets_tables do
     :ets.new(:gateway_url, [:set, :public, :named_table])
     :ets.new(:unavailable_guilds, [:set, :public, :named_table])
     :ets.new(:users, [:set, :public, :named_table])
@@ -34,7 +35,6 @@ defmodule Remedy.Application do
     :ets.new(:presences, [:set, :public, :named_table])
     :ets.new(:guild_shard_map, [:set, :public, :named_table])
     :ets.new(:channel_guild_map, [:set, :public, :named_table])
-    :ets.new(GuildCache.tabname(), [:set, :public, :named_table])
   end
 
   defp check_token, do: check_token(Application.get_env(:remedy, :token))

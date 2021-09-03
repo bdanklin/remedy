@@ -9,7 +9,7 @@
 
 ## Installation
 
-I do not recommend anybody install this, instead you should probably use [Remedy](https://github.com/Kraigie/remedy)
+I do not recommend anybody install this, instead you should probably use [Remedy](https://github.com/bdanklin/remedy)
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)

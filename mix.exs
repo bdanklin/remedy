@@ -96,7 +96,11 @@ defmodule Remedy.MixProject do
       {:credo, "~> 1.4"},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:gen_stage, "~> 1.0"},
-      {:recon, "~> 2.3", only: :dev, optional: true}
+      {:recon, "~> 2.3", only: :dev, optional: true},
+      {:unsafe, "~> 1.0"},
+      {:ecto, "~> 3.7"},
+      {:etso, "~> 0.1.6"},
+      {:sunbake, git: "https://github.com/bdanklin/sunbake"}
     ]
   end
 

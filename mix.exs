@@ -7,7 +7,6 @@ defmodule Remedy.Mixfile do
       app: :remedy,
       version: "0.4.8",
       elixir: "~> 1.9",
-      elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       description: "An elixir Discord library",
@@ -17,15 +16,12 @@ defmodule Remedy.Mixfile do
       homepage_url: "https://github.com/bdanklin/remedy",
       deps: deps(),
       dialyzer: dialyzer(),
-      aliases: aliases(),
-      lockfile: Path.expand("mix.lock", __DIR__),
-      deps_path: Path.expand("deps", __DIR__),
-      build_path: Path.expand("_build", __DIR__)
+      aliases: aliases()
     ]
   end
 
-  defp elixirc_paths(:test), do: ["lib", "test"]
-  defp elixirc_paths(_), do: ["lib"]
+  # defp elixirc_paths(:test), do: ["lib", "test"]
+  # defp elixirc_paths(_), do: ["lib"]
 
   def application do
     [
@@ -60,8 +56,8 @@ defmodule Remedy.Mixfile do
       {:kcl, "~> 1.4"},
       {:porcelain, "~> 2.0"},
       {:ex_doc, "~> 0.15", only: :dev},
-      {:credo, "~> 1.4", only: [:dev, :test]},
-      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:credo, "~> 1.4"},
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:gen_stage, "~> 1.0"},
       {:recon, "~> 2.3", only: :dev, optional: true}
     ]

@@ -42,3 +42,4 @@ jobs:
         name: Run Tests
 env:
   MIX_ENV: ${{ secrets.ENV_TEST }}
+  ENV_TEST: ${{ secrets.ENV_TEST }}

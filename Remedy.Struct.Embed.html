@@ -127,20 +127,19 @@ or standard <a href="https://hexdocs.pm/elixir/Map.html"><code class="inline">Ma
       ]
     end
   end
-
-iex&gt; Remedy.Struct.Embed.from(%MyApp.MyStruct{})
+</code></pre><p>Remedy.Struct.Embed.from(%MyApp.MyStruct{})
 %Remedy.Struct.Embed{
   title: &quot;craig&quot;,
   description: &quot;remedy&quot;,
-  url: &quot;https://google.com/&quot;,
+  url: &quot;<a href="https://google.com/%22,">https://google.com/&quot;,</a>
   timestamp: &quot;2016-05-05T21:04:13.203Z&quot;,
   color: 431_948,
-  fields: [
-    %Remedy.Struct.Embed.Field{name: &quot;Field 1&quot;, value: &quot;Test&quot;},
-    %Remedy.Struct.Embed.Field{name: &quot;Field 2&quot;, value: &quot;More test&quot;, inline: true}
-  ]
-}</code></pre><p>See this modules callbacks for a list of all the functions that can be implemented.</p><p>The implementation of these callbacks is optional. Not implemented functions will simply
-be ignored.</p>        </section>
+  fields: [</p><pre><code class="makeup elixir"><span class="p" data-group-id="5212572166-1">%</span><span class="nc" data-group-id="5212572166-1">Remedy.Struct.Embed.Field</span><span class="p" data-group-id="5212572166-1">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Field 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="p" data-group-id="5212572166-1">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="5212572166-2">%</span><span class="nc" data-group-id="5212572166-2">Remedy.Struct.Embed.Field</span><span class="p" data-group-id="5212572166-2">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Field 2&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;More test&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">inline</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="5212572166-2">}</span></code></pre><p>  ]
+}</p><pre><code class="makeup elixir"><span class="nc">See</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">modules</span><span class="w"> </span><span class="n">callbacks</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">functions</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">implemented</span><span class="o">.</span><span class="w">
+
+</span><span class="nc">The</span><span class="w"> </span><span class="n">implementation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">callbacks</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">optional</span><span class="o">.</span><span class="w"> </span><span class="nc">Not</span><span class="w"> </span><span class="n">implemented</span><span class="w"> </span><span class="n">functions</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">simply</span><span class="w">
+</span><span class="n">be</span><span class="w"> </span><span class="n">ignored</span><span class="o">.</span></code></pre>        </section>
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -381,7 +380,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">author()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L143" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L144" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -402,7 +401,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">color()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L125" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L126" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -423,7 +422,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">description()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L116" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L117" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -444,7 +443,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">fields()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L146" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L147" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -465,7 +464,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">footer()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L128" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L129" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -486,7 +485,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">image()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L131" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L132" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -507,7 +506,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">provider()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L140" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L141" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -528,7 +527,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">t()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L148" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L149" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -563,7 +562,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">thumbnail()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L134" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L135" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -584,7 +583,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">timestamp()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L122" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L123" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -605,7 +604,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">title()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L110" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L111" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -626,7 +625,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">type()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L113" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L114" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -647,7 +646,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">url()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L119" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L120" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -668,7 +667,7 @@ Types          </h1>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">video()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L137" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L138" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -699,7 +698,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">author(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L164" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L165" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -720,7 +719,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">color(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L165" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L166" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -741,7 +740,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">description(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L167" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L168" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -762,7 +761,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">fields(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L166" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L167" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -783,7 +782,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">footer(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L168" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L169" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -804,7 +803,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">image(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L169" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L170" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -825,7 +824,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">thumbnail(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L170" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L171" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -846,7 +845,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">timestamp(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L171" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L172" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -867,7 +866,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">title(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L172" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L173" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -888,7 +887,7 @@ Callbacks          </h1>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">url(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L173" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L174" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -919,7 +918,7 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">from(struct)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L479" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L480" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -936,7 +935,7 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_author(embed, name, url, icon_url)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L421" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L422" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -974,7 +973,7 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_color(embed, value)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L287" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L288" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1001,7 +1000,7 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_description(embed, value)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L239" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L240" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1029,7 +1028,7 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_field(embed, name, value, inline \\ nil)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L460" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L461" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1079,7 +1078,7 @@ iex&gt; embed = %Remedy.Struct.Embed{
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_footer(embed, text, icon_url \\ nil)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L317" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L318" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1124,7 +1123,7 @@ iex&gt; embed = %Remedy.Struct.Embed{}
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_image(embed, url)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L342" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L343" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1155,7 +1154,7 @@ iex&gt; embed = %Remedy.Struct.Embed{}
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_thumbnail(embed, url)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L370" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L371" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1186,7 +1185,7 @@ iex&gt; embed = %Remedy.Struct.Embed{}
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_timestamp(embed, value)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L271" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L272" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1202,9 +1201,9 @@ iex&gt; embed = %Remedy.Struct.Embed{}
   <a href="#put_timestamp/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">embed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3578567489-1">%</span><span class="nc" data-group-id="3578567489-1">Remedy.Struct.Embed</span><span class="p" data-group-id="3578567489-1">{</span><span class="p" data-group-id="3578567489-1">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Embed</span><span class="o">.</span><span class="n">put_timestamp</span><span class="p" data-group-id="3578567489-2">(</span><span class="n">embed</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2018-04-21T17:33:51.893000Z&quot;</span><span class="p" data-group-id="3578567489-2">)</span><span class="w">
-</span><span class="p" data-group-id="3578567489-3">%</span><span class="nc" data-group-id="3578567489-3">Remedy.Struct.Embed</span><span class="p" data-group-id="3578567489-3">{</span><span class="ss">timestamp</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2018-04-21T17:33:51.893000Z&quot;</span><span class="p" data-group-id="3578567489-3">}</span></code></pre>  </section>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">embed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4910150850-1">%</span><span class="nc" data-group-id="4910150850-1">Remedy.Struct.Embed</span><span class="p" data-group-id="4910150850-1">{</span><span class="p" data-group-id="4910150850-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Embed</span><span class="o">.</span><span class="n">put_timestamp</span><span class="p" data-group-id="4910150850-2">(</span><span class="n">embed</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2018-04-21T17:33:51.893000Z&quot;</span><span class="p" data-group-id="4910150850-2">)</span><span class="w">
+</span><span class="p" data-group-id="4910150850-3">%</span><span class="nc" data-group-id="4910150850-3">Remedy.Struct.Embed</span><span class="p" data-group-id="4910150850-3">{</span><span class="ss">timestamp</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2018-04-21T17:33:51.893000Z&quot;</span><span class="p" data-group-id="4910150850-3">}</span></code></pre>  </section>
 </section>
 <section class="detail" id="put_title/2">
   <div class="detail-header">
@@ -1213,7 +1212,7 @@ iex&gt; embed = %Remedy.Struct.Embed{}
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_title(embed, value)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L217" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L218" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1240,7 +1239,7 @@ iex&gt; embed = %Remedy.Struct.Embed{}
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">put_url(embed, value)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L255" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/embed.ex#L256" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

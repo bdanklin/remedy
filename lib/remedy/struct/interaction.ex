@@ -2,7 +2,7 @@ defmodule Remedy.Struct.Interaction do
   @moduledoc "Slash command invocation struct."
   # https://discord.com/developers/docs/interactions/slash-commands#interaction
 
-  alias Remedy.Snowflake
+  alias Sunbake.Snowflake
   alias Remedy.Struct.ApplicationCommandInteractionData
   alias Remedy.Struct.Guild.Member
   alias Remedy.Struct.User

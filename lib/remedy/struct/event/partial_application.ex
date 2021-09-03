@@ -2,7 +2,7 @@ defmodule Remedy.Struct.Event.PartialApplication do
   @moduledoc "Sent on `READY`"
   @moduledoc since: "0.5.0"
 
-  alias Remedy.Snowflake
+  alias Sunbake.Snowflake
 
   defstruct [:id, :flags]
 

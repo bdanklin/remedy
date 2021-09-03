@@ -1,7 +1,7 @@
 defmodule Remedy.Struct.ApplicationCommandInteractionData do
   @moduledoc "Struct for interaction data."
 
-  alias Remedy.Snowflake
+  alias Sunbake.Snowflake
 
   alias Remedy.Struct.{
     ApplicationCommandInteractionDataOption,

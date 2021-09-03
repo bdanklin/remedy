@@ -3,7 +3,7 @@ defmodule Remedy.Struct.Guild.AuditLogEntry do
   Represents a single entry in the guild's audit log.
   """
 
-  alias Remedy.Snowflake
+  alias Sunbake.Snowflake
   alias Remedy.Struct.User
   alias Remedy.Util
 

@@ -12,7 +12,7 @@ defmodule Remedy.Struct.Guild.Integration do
   """
   @moduledoc since: "0.5.0"
 
-  alias Remedy.Snowflake
+  alias Sunbake.Snowflake
 
   defstruct [:id, :name, :type, :enabled]
 

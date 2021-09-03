@@ -76,13 +76,14 @@ Remedy.Struct.Webhook.html
 Remedy.Util.html
 Remedy.Voice.html
 api-reference.html
+api.html
 dist/app-f27ff079945e43879c46.js
 dist/elixir-a172fe91e725dcb259e2.css
 dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-fe07bcafc0.js
-dist/sidebar_items-49d40cc5d3.js
+dist/search_items-5c7a3e3eed.js
+dist/sidebar_items-1d2a8203ae.js
 index.html
 search.html

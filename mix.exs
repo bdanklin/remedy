@@ -16,9 +16,11 @@ defmodule Remedy.Mixfile do
       source_url: "https://github.com/bdanklin/remedy",
       homepage_url: "https://github.com/bdanklin/remedy",
       deps: deps(),
-      docs: docs(),
       dialyzer: dialyzer(),
-      aliases: aliases()
+      aliases: aliases(),
+      lockfile: Path.expand("mix.lock", __DIR__),
+      deps_path: Path.expand("deps", __DIR__),
+      build_path: Path.expand("_build", __DIR__)
     ]
   end
 
@@ -29,34 +31,6 @@ defmodule Remedy.Mixfile do
     [
       extra_applications: [:logger, :inets],
       mod: {Remedy.Application, []}
-    ]
-  end
-
-  def docs do
-    [
-      main: "intro",
-      extras: extras(),
-      groups_for_modules: groups_for_modules()
-    ]
-  end
-
-  def extras do
-    [
-      "docs/static/API.md"
-    ]
-  end
-
-  def groups_for_modules do
-    [
-      Api: [
-        ~r/Remedy.Api/
-      ],
-      Cache: [
-        ~r/Remedy.Cache/
-      ],
-      Structs: [
-        ~r/Remedy.Struct/
-      ]
     ]
   end
 

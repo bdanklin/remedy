@@ -2,9 +2,7 @@
 
 # Remedy
 
-[![Publish Docs](https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg?branch=master)](https://github.com/bdanklin/remedy/actions/workflows/docs.yml)
-
-[![Test & Lint](https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml/badge.svg?branch=master)](https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml)
+[![Publish Docs](https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg?branch=master)](https://github.com/bdanklin/remedy/actions/workflows/docs.yml)[![Test & Lint](https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml/badge.svg?branch=master)](https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml)
 
 Playground fork of Nostrum.
 

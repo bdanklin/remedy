@@ -41,4 +41,4 @@ jobs:
       - run: mix test --no-start
         name: Run Tests
 env:
-  MIX_ENV: test
+  MIX_ENV: ${{ secrets.ENV_TEST }}

@@ -1,49 +1,7 @@
 defmodule Remedy.Api do
-  @moduledoc ~S"""
-  Interface for Discord's rest API.
-
-  By default all methods in this module are ran synchronously. If you wish to
-  have async rest operations I recommend you execute these functions inside of a
-  task.
-
-  **Examples**
-  ```Elixir
-  # Async Task
-  t = Task.async fn ->
-    Remedy.Api.get_channel_messages(12345678912345, :infinity, {})
-  end
-  messages = Task.await t
-
-  # A lot of times we don't care about the return value of the function
-  Task.start fn ->
-    messages = ["in", "the", "end", "it", "doesn't", "even", "matter"]
-    Enum.each messages, &Remedy.Api.create_message!(12345678912345, &1)
-  end
-  ```
-
-  #### A note about Strings and Ints
-  Currently, responses from the REST api will have `id` fields as `string`.
-  Everything received from the WS connection will have `id` fields as `int`.
-
-  If you're processing a response from the API and trying to access something in the cache
-  based off of an `id` in the response, you will need to conver it to an `int` using
-  `String.to_integer/1`. I'm open to suggestions for how this should be handled going forward.
-
-  **Example**
-  ```Elixir
-  messages = Remedy.Api.get_pinned_messages!(12345678912345)
-
-  authors =
-    Enum.map messages, fn msg ->
-      author_id = String.to_integer(msg.author.id)
-      Remedy.Cache.User.get!(id: author_id)
-    end
-  ```
-  """
-
   use Bitwise
 
-  import Remedy.Snowflake, only: [is_snowflake: 1]
+  import Sunbake.Snowflake, only: [is_snowflake: 1]
 
   alias Remedy.Cache.Me
   alias Remedy.{Constants, Snowflake, Util}
@@ -51,77 +9,28 @@ defmodule Remedy.Api do
   alias Remedy.Struct.Guild.{AuditLog, AuditLogEntry, Member, Role}
   alias Remedy.Shard.{Session, Supervisor}
 
-  @typedoc """
-  Represents a failed response from the API.
-
-  This occurs when hackney or HTTPoison fail, or when the API doesn't respond with `200` or `204`.
-  """
   @type error :: {:error, Remedy.Error.ApiError.t() | HTTPoison.Error.t()}
 
-  @typedoc """
-  Represents a limit used to retrieve messages.
-
-  Integer number of messages, or :infinity to retrieve all messages.
-  """
   @type limit :: integer | :infinity
 
-  @typedoc """
-  Represents a tuple used to locate messages.
-
-  The first element of the tuple is an atom.
-  The second element will be a message_id as an integer.
-  The tuple can also be empty to search from the most recent message in the channel
-  """
   @type locator ::
           {:before, integer}
           | {:after, integer}
           | {:around, integer}
           | {}
 
-  @typedoc """
-  Represents different statuses the bot can have.
-
-    - `:dnd` - Red circle.
-    - `:idle` - Yellow circle.
-    - `:online` - Green circle.
-    - `:invisible` - The bot will appear offline.
-  """
   @type status :: :dnd | :idle | :online | :invisible
 
-  @typedoc """
-  Represents an emoji for interacting with reaction endpoints.
-  """
   @type emoji :: Emoji.t() | Emoji.api_name()
 
-  @typedoc """
-  Represents optional parameters for Api functions.
-
-  Each function has documentation regarding what parameters it
-  supports or needs.
-  """
   @type options :: keyword | map
 
-  @doc """
-  Updates the status of the bot for a certain shard.
-
-  ## Parameters
-    - `pid` - Pid of the shard.
-    - `status` - Status of the bot.
-    - `game` - The 'playing' text of the bot. Empty will clear.
-    - `type` - The type of status to show. 0 (Playing) | 1 (Streaming) | 2 (Listening) | 3 (Watching)
-    - `stream` - URL of twitch.tv stream
-  """
   @spec update_shard_status(pid, status, String.t(), integer, String.t() | nil) :: :ok
   def update_shard_status(pid, status, game, type \\ 0, stream \\ nil) do
     Session.update_status(pid, to_string(status), game, stream, type)
     :ok
   end
 
-  @doc """
-  Updates the status of the bot for all shards.
-
-  See `update_shard_status/5` for usage.
-  """
   @spec update_status(status, String.t(), integer, String.t() | nil) :: :ok
   def update_status(status, game, type \\ 0, stream \\ nil) do
     Supervisor.update_status(to_string(status), game, stream, type)
@@ -156,7 +65,7 @@ defmodule Remedy.Api do
   ## Options
 
     * `:content` (string) - the message contents (up to 2000 characters)
-    * `:nonce` (`t:Remedy.Snowflake.t/0`) - a nonce that can be used for
+    * `:nonce` (`t:Sunbake.Snowflake.t/0`) - a nonce that can be used for
     optimistic message sending
     * `:tts` (boolean) - true if this is a TTS message
     * `:file` (`t:Path.t/0` | map) - the path of the file being sent, or a map with the following keys
@@ -227,6 +136,7 @@ defmodule Remedy.Api do
   Remedy.Api.create_message(43189401384091, content: "Hello @everyone", allowed_mentions: :none)
   ```
   """
+
   @spec create_message(Channel.id() | Message.t(), options | String.t()) ::
           error | {:ok, Message.t()}
   def create_message(channel_id, options)
@@ -858,7 +768,7 @@ defmodule Remedy.Api do
     do: send_chunked_delete(messages, channel_id)
 
   def bulk_delete_messages(channel_id, messages, true) do
-    alias Remedy.Snowflake
+    alias Sunbake.Snowflake
 
     snowflake_two_weeks_ago =
       DateTime.utc_now()
@@ -875,7 +785,7 @@ defmodule Remedy.Api do
 
   @spec send_chunked_delete(
           [Remedy.Struct.Message.id()] | %Stream{},
-          Remedy.Snowflake.t()
+          Sunbake.Snowflake.t()
         ) :: error | {:ok}
   defp send_chunked_delete(messages, channel_id) do
     messages
@@ -1226,7 +1136,7 @@ defmodule Remedy.Api do
 
     * `:name` (string) - name of the emoji
     * `:image` (base64 data URI) - the 128x128 emoji image. Maximum size of 256kb
-    * `:roles` (list of `t:Remedy.Snowflake.t/0`) - roles for which this emoji will be whitelisted
+    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles for which this emoji will be whitelisted
     (default: [])
 
   `:name` and `:image` are always required.
@@ -1280,7 +1190,7 @@ defmodule Remedy.Api do
   ## Options
 
     * `:name` (string) - name of the emoji
-    * `:roles` (list of `t:Remedy.Snowflake.t/0`) - roles to which this emoji will be whitelisted
+    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles to which this emoji will be whitelisted
 
   ## Examples
 
@@ -1408,18 +1318,18 @@ defmodule Remedy.Api do
     * `:default_message_notifications` (integer) - default message
     notification level
     * `:explicit_content_filter` (integer) - explicit content filter level
-    * `:afk_channel_id` (`t:Remedy.Snowflake.t/0`) - id for afk channel
+    * `:afk_channel_id` (`t:Sunbake.Snowflake.t/0`) - id for afk channel
     * `:afk_timeout` (integer) - afk timeout in seconds
     * `:icon` (base64 data URI) - 128x128 jpeg image for the guild icon
-    * `:owner_id` (`t:Remedy.Snowflake.t/0`) - user id to transfer
+    * `:owner_id` (`t:Sunbake.Snowflake.t/0`) - user id to transfer
     guild ownership to (must be owner)
     * `:splash` (base64 data URI) - 128x128 jpeg image for the guild splash
     (VIP only)
-    * `:system_channel_id` (`t:Remedy.Snowflake.t/0`) - the id of the
+    * `:system_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the
     channel to which system messages are sent
-    * `:rules_channel_id` (`t:Remedy.Snowflake.t/0`) - the id of the channel that
+    * `:rules_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel that
     is used for rules in public guilds
-    * `:public_updates_channel_id` (`t:Remedy.Snowflake.t/0`) - the id of the channel
+    * `:public_updates_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel
     where admins and moderators receive notices from Discord in public guilds
 
   ## Examples
@@ -1726,10 +1636,10 @@ defmodule Remedy.Api do
   ## Options
 
     * `:nick` (string) - value to set users nickname to
-    * `:roles` (list of `t:Remedy.Snowflake.t/0`) - array of role ids the member is assigned
+    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - array of role ids the member is assigned
     * `:mute` (boolean) - if the user is muted
     * `:deaf` (boolean) - if the user is deafened
-    * `:channel_id` (`t:Remedy.Snowflake.t/0`) - id of channel to move user to (if they are connected to voice)
+    * `:channel_id` (`t:Sunbake.Snowflake.t/0`) - id of channel to move user to (if they are connected to voice)
 
   ## Examples
 
@@ -2481,9 +2391,9 @@ defmodule Remedy.Api do
 
   ## Options
 
-    * `:before` (`t:Remedy.Snowflake.t/0`) - get guilds before this
+    * `:before` (`t:Sunbake.Snowflake.t/0`) - get guilds before this
     guild ID
-    * `:after` (`t:Remedy.Snowflake.t/0`) - get guilds after this guild
+    * `:after` (`t:Sunbake.Snowflake.t/0`) - get guilds after this guild
     ID
     * `:limit` (integer) - max number of guilds to return (1-100)
 

@@ -9,12 +9,12 @@ defmodule Remedy.Shard.Stage.Cache do
 
   require Logger
 
-  def start_link(opts) do
-    GenStage.start_link(__MODULE__, opts, name: __MODULE__, spawn_opt: [Util.fullsweep_after()])
+  def start_link(_opts) do
+    GenStage.start_link(__MODULE__, [], name: __MODULE__, spawn_opt: [Util.fullsweep_after()])
   end
 
-  def init(_opts) do
-    {:producer_consumer, [], subscribe_to: [Producer]}
+  def init(opts) do
+    {:producer_consumer, opts, subscribe_to: [Producer]}
   end
 
   def handle_events(events, _from, state) do

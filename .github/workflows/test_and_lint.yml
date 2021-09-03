@@ -6,10 +6,6 @@ on:
       - master
   pull_request:
 
-env:
-  MIX_ENV: ${{ secrets.ENV_TEST }}
-  ENV_TEST: ${{ secrets.ENV_TEST }}
-
 jobs:
   test_and_lint:
     runs-on: ubuntu-latest

@@ -2,7 +2,6 @@
 
 - [ ] Separate applicable components into their own package.  
   - [ ] Types - Timestamp / Snowflake
-  - [ ] 
 - [ ] Convert structs to Ecto Schema.
 - [ ] Cache
   - [ ] Generalize. choose what to cache based on your resources.

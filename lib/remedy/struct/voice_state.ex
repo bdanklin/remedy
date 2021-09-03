@@ -1,8 +1,8 @@
 defmodule Remedy.Struct.VoiceState do
   @moduledoc false
 
-  alias Remedy.Voice.Session
   alias Porcelain.Process, as: Proc
+  alias Remedy.Voice.Session
 
   defstruct [
     :guild_id,

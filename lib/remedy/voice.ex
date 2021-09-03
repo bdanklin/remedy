@@ -29,12 +29,12 @@ defmodule Remedy.Voice do
       - Send packets on your own time using `Remedy.Voice.send_frames/2`
   """
 
+  alias Porcelain.Process, as: Proc
   alias Remedy.Api
   alias Remedy.Struct.{Channel, Guild, VoiceState}
   alias Remedy.Voice.Audio
   alias Remedy.Voice.Session
   alias Remedy.Voice.Supervisor, as: VoiceSupervisor
-  alias Porcelain.Process, as: Proc
 
   require Logger
 

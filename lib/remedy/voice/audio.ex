@@ -8,12 +8,12 @@ defmodule Remedy.Voice.Audio do
 
   require Logger
 
+  alias Porcelain.Process, as: Proc
+  alias Porcelain.Result, as: Res
   alias Remedy.Error.VoiceError
   alias Remedy.Struct.VoiceState
   alias Remedy.Util
   alias Remedy.Voice
-  alias Porcelain.Process, as: Proc
-  alias Porcelain.Result, as: Res
 
   @encryption_mode "xsalsa20_poly1305"
   @samples_per_frame 960
@@ -21,6 +21,7 @@ defmodule Remedy.Voice.Audio do
   # How many consecutive packets to send before resting
   @frames_per_burst 10
 
+  @spec encryption_mode :: <<_::136>>
   def encryption_mode, do: @encryption_mode
 
   def rtp_header(%VoiceState{} = voice) do

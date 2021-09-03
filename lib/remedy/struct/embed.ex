@@ -57,7 +57,8 @@ defmodule Remedy.Struct.Embed do
       end
     end
 
-  iex> Remedy.Struct.Embed.from(%MyApp.MyStruct{})
+  ```elixir
+  Remedy.Struct.Embed.from(%MyApp.MyStruct{})
   %Remedy.Struct.Embed{
     title: "craig",
     description: "remedy",

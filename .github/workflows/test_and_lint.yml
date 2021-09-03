@@ -34,7 +34,7 @@ jobs:
       - run: mix credo --strict
         name: Lint
 
-      - run: mix format--check-formatted
+      - run: mix format --check-formatted
         name: Check Formatting
         if: ${{ matrix.elixir-version == '1.11' && matrix.otp-version == '23' }}
 

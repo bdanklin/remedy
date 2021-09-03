@@ -8,7 +8,6 @@ defmodule Remedy.Mixfile do
       version: "0.4.7",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
-      elixirc_options: [debug_info: Mix.env() == :dev],
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       description: "An elixir Discord library",

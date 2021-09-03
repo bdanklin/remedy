@@ -5,8 +5,8 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.4.7">
-    <title>Remedy.Cache.ChannelCache — Remedy v0.4.7</title>
+    <meta name="project" content="Remedy v0.4.8">
+    <title>Remedy.Cache.ChannelCache — Remedy v0.4.8</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
     <script src="dist/sidebar_items-49d40cc5d3.js"></script>
       <script src="docs_config.js"></script>
@@ -49,7 +49,7 @@
       <a href="https://github.com/bdanklin/remedy" class="sidebar-projectName">
 Remedy      </a>
       <strong class="sidebar-projectVersion">
-        v0.4.7
+        v0.4.8
       </strong>
     </div>
   </div>
@@ -70,7 +70,7 @@ Remedy      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Remedy.Cache.ChannelCache <small class="app-vsn">(Remedy v0.4.7)</small>
+        Remedy.Cache.ChannelCache <small class="app-vsn">(Remedy v0.4.8)</small>
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache/channel_cache.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
@@ -84,9 +84,9 @@ methods provided below you can call any other ETS methods on the table.</p><h2 i
   <a href="#module-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ets</span><span class="o">.</span><span class="n">info</span><span class="p" data-group-id="2771880398-1">(</span><span class="ss">:channels</span><span class="p" data-group-id="2771880398-1">)</span><span class="w">
-</span><span class="p" data-group-id="2771880398-2">[</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="ss">heir</span><span class="p">:</span><span class="w"> </span><span class="ss">:none</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="ss">:channels</span><span class="p">,</span><span class="w"> </span><span class="ss">size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="2771880398-2">]</span><span class="w">
-</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">info</span><span class="p" data-group-id="2771880398-3">[</span><span class="ss">:size</span><span class="p" data-group-id="2771880398-3">]</span><span class="w">
+<pre><code class="makeup elixir"><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ets</span><span class="o">.</span><span class="n">info</span><span class="p" data-group-id="7765967670-1">(</span><span class="ss">:channels</span><span class="p" data-group-id="7765967670-1">)</span><span class="w">
+</span><span class="p" data-group-id="7765967670-2">[</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="ss">heir</span><span class="p">:</span><span class="w"> </span><span class="ss">:none</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="ss">:channels</span><span class="p">,</span><span class="w"> </span><span class="ss">size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="7765967670-2">]</span><span class="w">
+</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">info</span><span class="p" data-group-id="7765967670-3">[</span><span class="ss">:size</span><span class="p" data-group-id="7765967670-3">]</span><span class="w">
 </span><span class="mi">1</span></code></pre>        </section>
 
         <section id="summary" class="details-list">
@@ -150,12 +150,12 @@ information, a call is made to a <a href="Remedy.Cache.GuildCache.html"><code cl
   <a href="#get/1-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="k">case</span><span class="w"> </span><span class="nc">Remedy.Cache.ChannelCache</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="4963839567-1">(</span><span class="mi">133333333337</span><span class="p" data-group-id="4963839567-1">)</span><span class="w"> </span><span class="k" data-group-id="4963839567-2">do</span><span class="w">
-  </span><span class="p" data-group-id="4963839567-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">channel</span><span class="p" data-group-id="4963839567-3">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+<pre><code class="makeup elixir"><span class="k">case</span><span class="w"> </span><span class="nc">Remedy.Cache.ChannelCache</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="2172457310-1">(</span><span class="mi">133333333337</span><span class="p" data-group-id="2172457310-1">)</span><span class="w"> </span><span class="k" data-group-id="2172457310-2">do</span><span class="w">
+  </span><span class="p" data-group-id="2172457310-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">channel</span><span class="p" data-group-id="2172457310-3">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
     </span><span class="s">&quot;We found &quot;</span><span class="w"> </span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">channel</span><span class="o">.</span><span class="n">name</span><span class="w">
-  </span><span class="p" data-group-id="4963839567-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="c">_reason</span><span class="p" data-group-id="4963839567-4">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+  </span><span class="p" data-group-id="2172457310-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="c">_reason</span><span class="p" data-group-id="2172457310-4">}</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
     </span><span class="s">&quot;Donde esta&quot;</span><span class="w">
-</span><span class="k" data-group-id="4963839567-2">end</span></code></pre>  </section>
+</span><span class="k" data-group-id="2172457310-2">end</span></code></pre>  </section>
 </section>
 <section class="detail" id="get!/1">
   <div class="detail-header">

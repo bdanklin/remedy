@@ -5,8 +5,8 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.4.7">
-    <title>Remedy.Api — Remedy v0.4.7</title>
+    <meta name="project" content="Remedy v0.4.8">
+    <title>Remedy.Api — Remedy v0.4.8</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
     <script src="dist/sidebar_items-49d40cc5d3.js"></script>
       <script src="docs_config.js"></script>
@@ -49,7 +49,7 @@
       <a href="https://github.com/bdanklin/remedy" class="sidebar-projectName">
 Remedy      </a>
       <strong class="sidebar-projectVersion">
-        v0.4.7
+        v0.4.8
       </strong>
     </div>
   </div>
@@ -70,7 +70,7 @@ Remedy      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Remedy.Api <small class="app-vsn">(Remedy v0.4.7)</small>
+        Remedy.Api <small class="app-vsn">(Remedy v0.4.8)</small>
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
@@ -1851,9 +1851,9 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#create_global_application_command/2-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="6231812079-1">(</span><span class="w">
-  </span><span class="p" data-group-id="6231812079-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6231812079-3">[</span><span class="p" data-group-id="6231812079-3">]</span><span class="p" data-group-id="6231812079-2">}</span><span class="w">
-</span><span class="p" data-group-id="6231812079-1">)</span></code></pre>  </section>
+<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="8148456992-1">(</span><span class="w">
+  </span><span class="p" data-group-id="8148456992-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8148456992-3">[</span><span class="p" data-group-id="8148456992-3">]</span><span class="p" data-group-id="8148456992-2">}</span><span class="w">
+</span><span class="p" data-group-id="8148456992-1">)</span></code></pre>  </section>
 </section>
 <section class="detail" id="create_group_dm/2">
   <div class="detail-header">
@@ -2227,13 +2227,13 @@ object. See the linked documentation.</li></ul><h2 id="create_interaction_respon
   <a href="#create_interaction_response/3-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0098993479-1">%{</span><span class="w">
+<pre><code class="makeup elixir"><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6055428960-1">%{</span><span class="w">
   </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-  </span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0098993479-2">%{</span><span class="w">
+  </span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6055428960-2">%{</span><span class="w">
     </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;I copy and pasted this code.&quot;</span><span class="w">
-  </span><span class="p" data-group-id="0098993479-2">}</span><span class="w">
-</span><span class="p" data-group-id="0098993479-1">}</span><span class="w">
-</span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_interaction_response</span><span class="p" data-group-id="0098993479-3">(</span><span class="n">interaction</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p" data-group-id="0098993479-3">)</span></code></pre><p>As an alternative to passing the interaction ID and token, the
+  </span><span class="p" data-group-id="6055428960-2">}</span><span class="w">
+</span><span class="p" data-group-id="6055428960-1">}</span><span class="w">
+</span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_interaction_response</span><span class="p" data-group-id="6055428960-3">(</span><span class="n">interaction</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p" data-group-id="6055428960-3">)</span></code></pre><p>As an alternative to passing the interaction ID and token, the
 original <a href="Remedy.Struct.Interaction.html#t:t/0"><code class="inline">Remedy.Struct.Interaction.t/0</code></a> can also be passed
 directly. See <code class="inline">create_interaction_response/1</code>.</p>  </section>
 </section>
@@ -2285,14 +2285,14 @@ that you have the <code class="inline">VIEW_MESSAGE_HISTORY</code> permission. T
 <code class="inline">message_reference</code> field in your call. The complete structure
 documentation can be found <a href="https://discord.com/developers/docs/resources/channel#message-object-message-reference-structure">on the Discord Developer
 Portal</a>,
-but simply passing <code class="inline">message_id</code> will suffice:</p><pre><code class="makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">my_command</span><span class="p" data-group-id="8116562608-1">(</span><span class="n">msg</span><span class="p" data-group-id="8116562608-1">)</span><span class="w"> </span><span class="k" data-group-id="8116562608-2">do</span><span class="w">
+but simply passing <code class="inline">message_id</code> will suffice:</p><pre><code class="makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">my_command</span><span class="p" data-group-id="5857362517-1">(</span><span class="n">msg</span><span class="p" data-group-id="5857362517-1">)</span><span class="w"> </span><span class="k" data-group-id="5857362517-2">do</span><span class="w">
   </span><span class="c1"># Reply to the author - ``msg`` is a ``Remedy.Struct.Message``</span><span class="w">
-  </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="8116562608-3">(</span><span class="w">
+  </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="5857362517-3">(</span><span class="w">
     </span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w">
     </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="ss">message_reference</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8116562608-4">%{</span><span class="ss">message_id</span><span class="p">:</span><span class="w"> </span><span class="n">msg</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="8116562608-4">}</span><span class="w">
-  </span><span class="p" data-group-id="8116562608-3">)</span><span class="w">
-</span><span class="k" data-group-id="8116562608-2">end</span></code></pre><p>Passing a list will merge the settings provided</p><h2 id="create_message/2-examples" class="section-heading">
+    </span><span class="ss">message_reference</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5857362517-4">%{</span><span class="ss">message_id</span><span class="p">:</span><span class="w"> </span><span class="n">msg</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="5857362517-4">}</span><span class="w">
+  </span><span class="p" data-group-id="5857362517-3">)</span><span class="w">
+</span><span class="k" data-group-id="5857362517-2">end</span></code></pre><p>Passing a list will merge the settings provided</p><h2 id="create_message/2-examples" class="section-heading">
   <a href="#create_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -3559,21 +3559,21 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
   Example
 </h2>
 <pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_application_information</span><span class="w">
-</span><span class="p" data-group-id="8100204453-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="8100204453-2">%{</span><span class="w">
+</span><span class="p" data-group-id="2443103786-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="2443103786-2">%{</span><span class="w">
   </span><span class="ss">bot_public</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
   </span><span class="ss">bot_require_code_grant</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
   </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
   </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Baba O-Riley&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">owner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8100204453-3">%{</span><span class="w">
+  </span><span class="ss">owner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2443103786-3">%{</span><span class="w">
     </span><span class="ss">avatar</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
     </span><span class="ss">discriminator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0042&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;i own a bot&quot;</span><span class="w">
-  </span><span class="p" data-group-id="8100204453-3">}</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="8100204453-2">}</span><span class="p" data-group-id="8100204453-1">}</span></code></pre>  </section>
+  </span><span class="p" data-group-id="2443103786-3">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="2443103786-2">}</span><span class="p" data-group-id="2443103786-1">}</span></code></pre>  </section>
 </section>
 <section class="detail" id="get_channel/1">
   <div class="detail-header">
@@ -3938,15 +3938,15 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   Example
 </h2>
 <pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_global_application_commands</span><span class="w">
-</span><span class="p" data-group-id="5969712007-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
- </span><span class="p" data-group-id="5969712007-2">[</span><span class="w">
-   </span><span class="p" data-group-id="5969712007-3">%{</span><span class="w">
+</span><span class="p" data-group-id="3228872270-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="3228872270-2">[</span><span class="w">
+   </span><span class="p" data-group-id="3228872270-3">%{</span><span class="w">
      </span><span class="ss">application_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;455589479713865749&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;789841753196331029&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="w">
-   </span><span class="p" data-group-id="5969712007-3">}</span><span class="w">
- </span><span class="p" data-group-id="5969712007-2">]</span><span class="p" data-group-id="5969712007-1">}</span></code></pre>  </section>
+   </span><span class="p" data-group-id="3228872270-3">}</span><span class="w">
+ </span><span class="p" data-group-id="3228872270-2">]</span><span class="p" data-group-id="3228872270-1">}</span></code></pre>  </section>
 </section>
 <section class="detail" id="get_guild/1">
   <div class="detail-header">
@@ -5176,8 +5176,8 @@ where admins and moderators receive notices from Discord in public guilds</li></
   <a href="#modify_guild/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="6734281728-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="6734281728-1">)</span><span class="w">
-</span><span class="p" data-group-id="6734281728-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6734281728-3">%</span><span class="nc" data-group-id="6734281728-3">Remedy.Struct.Guild</span><span class="p" data-group-id="6734281728-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="6734281728-3">}</span><span class="p" data-group-id="6734281728-2">}</span></code></pre>  </section>
+<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="4189767505-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="4189767505-1">)</span><span class="w">
+</span><span class="p" data-group-id="4189767505-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4189767505-3">%</span><span class="nc" data-group-id="4189767505-3">Remedy.Struct.Guild</span><span class="p" data-group-id="4189767505-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="4189767505-3">}</span><span class="p" data-group-id="4189767505-2">}</span></code></pre>  </section>
 </section>
 <section class="detail" id="modify_guild!/2">
     <span id="modify_guild!/1"></span>

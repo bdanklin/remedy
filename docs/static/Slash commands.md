@@ -3,7 +3,7 @@
 Discord allows you to create commands for your bot that work within the slash
 command menu.
 
-Using nostrum, you can create, receive, and respond to slash commands invoked
+Using remedy, you can create, receive, and respond to slash commands invoked
 by Discord users.
 
 ## Permisisons required
@@ -62,10 +62,10 @@ command = %{
 ```
 
 To register this command on the guild, we simply pass it to
-`Nostrum.Api.create_guild_application_command/2`:
+`Remedy.Api.create_guild_application_command/2`:
 
 ```elixir
-Nostrum.Api.create_guild_application_command(guild_id, command)
+Remedy.Api.create_guild_application_command(guild_id, command)
 ```
 
 You can register the command in the ``:READY`` gateway event handler.
@@ -76,7 +76,7 @@ Set up a gateway event handler for ``:INTERACTION_CREATE``. On command
 invocation the interaction payload will look something like the following:
 
 ```elixir
-%Nostrum.Struct.Interaction{
+%Remedy.Struct.Interaction{
   channel_id: 474025345243414539,
   data: %{
     id: 793152718839087135,
@@ -96,8 +96,8 @@ Let's match on the retrieved event and create two function heads for the
 separate operation modes:
 
 ```elixir
-alias Nostrum.Api
-alias Nostrum.Struct.Interaction
+alias Remedy.Api
+alias Remedy.Struct.Interaction
 
 defp manage_role(%Interaction{data: %{options: [%{value: role_id}, %{value: "assign"}]}} = interaction) do
   Api.add_guild_member_role(interaction.guild_id, interaction.member.user.id, role_id)
@@ -118,7 +118,7 @@ that you would use for regular commands.
 
 ## Responding to interactions
 
-To respond to interactions, use ``Nostrum.Api.create_interaction_response/2``:
+To respond to interactions, use ``Remedy.Api.create_interaction_response/2``:
 
 ```elixir
 defp manage_role(%Interaction{data: %{options: [%{value: role_id}, %{value: "assign"}]}} = interaction) do

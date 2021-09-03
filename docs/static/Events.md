@@ -4,12 +4,12 @@ sent from Discord over a websocket connection. By defining an event handler for
 an event, when something like a message is created or a channel is deleted, your
 application can perform an action as a result of that event.
 
-Nostrum currently uses a [GenStage](https://github.com/elixir-lang/gen_stage)
+Remedy currently uses a [GenStage](https://github.com/elixir-lang/gen_stage)
 implementation to handle dispatching events from the WS connection. To handle
 events it is up to you to define the `consumer` of the GenStage life cycle.
 
 To see the documentation on using one of provided consumers, please see
-`Nostrum.Consumer`.
+`Remedy.Consumer`.
 
 ## Why GenStage?
 From the GenStage docs:
@@ -34,7 +34,7 @@ If you disagree with anything listed below or would like to offer a suggestion o
 how it can be improved, please feel free to voice your opinion.
 
 ### Shard
-Every shard in the Nostrum application is ran as its own process. These shards
+Every shard in the Remedy application is ran as its own process. These shards
 are all run under the same supervisor. As part of the setup for each shard, it
 creates its own producer under a supervisor.
 
@@ -43,7 +43,7 @@ As events are sent to the shard, the following happens:
  the producer.
 
  2. If the event is a `Dispatch`, the payload is converted to an atom-keyed map.
- This is done because over ETF (which Nostrum uses), map keys are sometimes
+ This is done because over ETF (which Remedy uses), map keys are sometimes
  binaries and sometimes strings, making it a real headache. Additionally, with
  atom keys, we can use the `Map.key` notation. This is normally considered unsafe
  but a debug messages will be emitted if a key is unsafely converted to an atom.
@@ -68,7 +68,7 @@ dispatching these events.
 The consumer is implemented by the user. They can spawn any number of consumers
 which will in turn request events from the producers created by each shard.
 
-Nostrum wraps the GenStage module to provide a simpler interface for event handling.
+Remedy wraps the GenStage module to provide a simpler interface for event handling.
 One of the benefits to this approach is that we can abstract away the manual linking
 of producer to consumer.
 

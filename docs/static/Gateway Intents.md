@@ -4,11 +4,11 @@ The Discord API allows you to fine tune the payloads that are received by your b
 
 When connecting to Discord you can instruct Discord on which events you want to receive (i.e. messages, user presences, etc.).
 
-Nostrum allows you to set these intents within your configuration, **by default all non-privileged intents are enabled**.
+Remedy allows you to set these intents within your configuration, **by default all non-privileged intents are enabled**.
 
 To pass intents you should use the following configuration:
 ```elixir
-config :nostrum,
+config :remedy,
   token: "bot_token",
   gateway_intents: [
       :guilds,
@@ -96,7 +96,7 @@ Note that intents marked with `*` are **privileged** intents. You must enable th
 
 Once your bot passes 100 servers Discord will force you to **verify your bot**. If you require privileged intents you may need to write additional information on your usage of them.
 
-Nostrum's default value for `gateway_intents` is `:nonprivileged`, which enables all non-privileged intents.
+Remedy's default value for `gateway_intents` is `:nonprivileged`, which enables all non-privileged intents.
 This is equivalent to setting `gateway_intents` to the above list without the **privileged** intents.
 If you require all intents, including privileged ones, set `gateway_intents` to `:all`.
 

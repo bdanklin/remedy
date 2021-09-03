@@ -1,6 +1,6 @@
 ## Consumers
-Nostrum uses GenStage for event dispatching. A consumer is provided by the
-library in the form of `Nostrum.Consumer`. This provided process abstracts most
+Remedy uses GenStage for event dispatching. A consumer is provided by the
+library in the form of `Remedy.Consumer`. This provided process abstracts most
 of the "work" of defining consumers away from the user. With this consumer
 everything is handled including maintaining all of the internal caches.
 

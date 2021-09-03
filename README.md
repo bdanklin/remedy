@@ -1,6 +1,6 @@
 ## Notes
 
-- [ ] Separate applicable components into their own package.  
+- [ ] Separate applicable components into their own package.
   - [ ] Types - Timestamp / Snowflake
 - [ ] Convert structs to Ecto Schema.
 - [ ] Cache
@@ -9,7 +9,7 @@
 
 ## Installation
 
-I do not recommend anybody install this, instead you should probably use [Nostrum](https://github.com/Kraigie/nostrum)
+I do not recommend anybody install this, instead you should probably use [Remedy](https://github.com/Kraigie/remedy)
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)

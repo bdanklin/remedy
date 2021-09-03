@@ -1,5 +1,7 @@
 defmodule Remedy.Voice.Event do
-  @moduledoc false
+  @moduledoc """
+  Voice Event
+  """
 
   alias Remedy.Cache.UserCache
   alias Remedy.Voice

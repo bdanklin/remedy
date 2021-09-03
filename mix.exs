@@ -1,28 +1,36 @@
-defmodule Remedy.Mixfile do
-  @moduledoc false
+defmodule Remedy.MixProject do
   use Mix.Project
+
+  @version "0.5.0"
+  @scm_url "https://github.com/bdanklin/remedy"
+  @doc_url "https://bdanklin.github.io/remedy/"
 
   def project do
     [
       app: :remedy,
-      version: "0.4.8",
-      elixir: "~> 1.9",
+      version: @version,
+      elixir: "~> 1.11",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      description: "An elixir Discord library",
       package: package(),
       name: "Remedy",
-      source_url: "https://github.com/bdanklin/remedy",
-      homepage_url: "https://github.com/bdanklin/remedy",
+      source_url: @scm_url,
+      homepage_url: @doc_url,
       deps: deps(),
       docs: docs(),
       dialyzer: dialyzer(),
-      aliases: aliases()
+      aliases: aliases(),
+      description: """
+      Discord Library in Elixir.
+      """
     ]
   end
 
   def docs do
     [
+      source_ref: "v#{@version}",
+      logo: "remedy.png",
+      assets: "guides/assets",
       extras: extras(),
       groups_for_modules: groups_for_modules()
     ]
@@ -70,9 +78,10 @@ defmodule Remedy.Mixfile do
       licenses: ["MIT"],
       maintainers: ["Benjamin Danklin"],
       links: %{
-        "GitHub" => "https://github.com/bdanklin/remedy/",
-        "Docs" => "https://bdanklin.github.io/remedy/"
-      }
+        "GitHub" => @scm_url,
+        "Docs" => @doc_url
+      },
+      files: ~w(lib mix.exs README.md .formatter.exs)
     ]
   end
 

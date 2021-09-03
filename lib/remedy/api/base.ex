@@ -1,7 +1,7 @@
 defmodule Remedy.Api.Base do
   @moduledoc false
 
-  @version Remedy.Mixfile.project()[:version]
+  @version Remedy.MixProject.project()[:version]
 
   use HTTPoison.Base
 

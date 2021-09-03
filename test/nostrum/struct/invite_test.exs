@@ -1,11 +1,11 @@
-defmodule Nostrum.Struct.InviteTest do
+defmodule Remedy.Struct.InviteTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Struct.Channel
-  alias Nostrum.Struct.Guild
-  alias Nostrum.Struct.Invite
-  alias Nostrum.Struct.User
-  alias Nostrum.Util
+  alias Remedy.Struct.Channel
+  alias Remedy.Struct.Guild
+  alias Remedy.Struct.Invite
+  alias Remedy.Struct.User
+  alias Remedy.Util
 
   doctest Invite
 

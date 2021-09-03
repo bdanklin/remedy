@@ -1,3 +1,3 @@
-defmodule NostrumTest do
+defmodule RemedyTest do
   use ExUnit.Case
 end

@@ -1,4 +1,4 @@
-defmodule Nostrum.Api do
+defmodule Remedy.Api do
   @moduledoc ~S"""
   Interface for Discord's rest API.
 
@@ -10,14 +10,14 @@ defmodule Nostrum.Api do
   ```Elixir
   # Async Task
   t = Task.async fn ->
-    Nostrum.Api.get_channel_messages(12345678912345, :infinity, {})
+    Remedy.Api.get_channel_messages(12345678912345, :infinity, {})
   end
   messages = Task.await t
 
   # A lot of times we don't care about the return value of the function
   Task.start fn ->
     messages = ["in", "the", "end", "it", "doesn't", "even", "matter"]
-    Enum.each messages, &Nostrum.Api.create_message!(12345678912345, &1)
+    Enum.each messages, &Remedy.Api.create_message!(12345678912345, &1)
   end
   ```
 
@@ -31,32 +31,32 @@ defmodule Nostrum.Api do
 
   **Example**
   ```Elixir
-  messages = Nostrum.Api.get_pinned_messages!(12345678912345)
+  messages = Remedy.Api.get_pinned_messages!(12345678912345)
 
   authors =
     Enum.map messages, fn msg ->
       author_id = String.to_integer(msg.author.id)
-      Nostrum.Cache.User.get!(id: author_id)
+      Remedy.Cache.User.get!(id: author_id)
     end
   ```
   """
 
   use Bitwise
 
-  import Nostrum.Snowflake, only: [is_snowflake: 1]
+  import Remedy.Snowflake, only: [is_snowflake: 1]
 
-  alias Nostrum.Cache.Me
-  alias Nostrum.{Constants, Snowflake, Util}
-  alias Nostrum.Struct.{Channel, Embed, Emoji, Guild, Interaction, Invite, Message, User, Webhook}
-  alias Nostrum.Struct.Guild.{AuditLog, AuditLogEntry, Member, Role}
-  alias Nostrum.Shard.{Session, Supervisor}
+  alias Remedy.Cache.Me
+  alias Remedy.{Constants, Snowflake, Util}
+  alias Remedy.Struct.{Channel, Embed, Emoji, Guild, Interaction, Invite, Message, User, Webhook}
+  alias Remedy.Struct.Guild.{AuditLog, AuditLogEntry, Member, Role}
+  alias Remedy.Shard.{Session, Supervisor}
 
   @typedoc """
   Represents a failed response from the API.
 
   This occurs when hackney or HTTPoison fail, or when the API doesn't respond with `200` or `204`.
   """
-  @type error :: {:error, Nostrum.Error.ApiError.t() | HTTPoison.Error.t()}
+  @type error :: {:error, Remedy.Error.ApiError.t() | HTTPoison.Error.t()}
 
   @typedoc """
   Represents a limit used to retrieve messages.
@@ -147,23 +147,23 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `VIEW_CHANNEL` and `SEND_MESSAGES` permissions. It
   may situationally need the `SEND_MESSAGES_TTS` permission. It fires the
-  `t:Nostrum.Consumer.message_create/0` event.
+  `t:Remedy.Consumer.message_create/0` event.
 
   If `options` is a string, `options` will be used as the message's content.
 
-  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:content` (string) - the message contents (up to 2000 characters)
-    * `:nonce` (`t:Nostrum.Snowflake.t/0`) - a nonce that can be used for
+    * `:nonce` (`t:Remedy.Snowflake.t/0`) - a nonce that can be used for
     optimistic message sending
     * `:tts` (boolean) - true if this is a TTS message
     * `:file` (`t:Path.t/0` | map) - the path of the file being sent, or a map with the following keys
     if sending a binary from memory
       * `:name` (string) - the name of the file
       * `:body` (string) - binary you wish to send
-    * `:embed` (`t:Nostrum.Struct.Embed.t/0`) - embedded rich content
+    * `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
     * `:allowed_mentions` - See "Allowed mentions" below
     * `:message_reference` (`map`) - See "Message references" below
 
@@ -195,8 +195,8 @@ defmodule Nostrum.Api do
 
   ```elixir
   def my_command(msg) do
-    # Reply to the author - ``msg`` is a ``Nostrum.Struct.Message``
-    Nostrum.Api.create_message(
+    # Reply to the author - ``msg`` is a ``Remedy.Struct.Message``
+    Remedy.Api.create_message(
       msg.channel_id,
       content: "Hello",
       message_reference: %{message_id: msg.id}
@@ -209,22 +209,22 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.create_message(43189401384091, content: "hello world!")
+  Remedy.Api.create_message(43189401384091, content: "hello world!")
 
-  Nostrum.Api.create_message(43189401384091, "hello world!")
+  Remedy.Api.create_message(43189401384091, "hello world!")
 
-  import Nostrum.Struct.Embed
+  import Remedy.Struct.Embed
   embed =
-    %Nostrum.Struct.Embed{}
+    %Remedy.Struct.Embed{}
     |> put_title("embed")
     |> put_description("new desc")
-  Nostrum.Api.create_message(43189401384091, embed: embed)
+  Remedy.Api.create_message(43189401384091, embed: embed)
 
-  Nostrum.Api.create_message(43189401384091, file: "/path/to/file.txt")
+  Remedy.Api.create_message(43189401384091, file: "/path/to/file.txt")
 
-  Nostrum.Api.create_message(43189401384091, content: "hello world!", embed: embed, file: "/path/to/file.txt")
+  Remedy.Api.create_message(43189401384091, content: "hello world!", embed: embed, file: "/path/to/file.txt")
 
-  Nostrum.Api.create_message(43189401384091, content: "Hello @everyone", allowed_mentions: :none)
+  Remedy.Api.create_message(43189401384091, content: "Hello @everyone", allowed_mentions: :none)
   ```
   """
   @spec create_message(Channel.id() | Message.t(), options | String.t()) ::
@@ -284,7 +284,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_message/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_message!(Channel.id() | Message.t(), options | String.t()) ::
           no_return | Message.t()
@@ -297,32 +297,32 @@ defmodule Nostrum.Api do
   Edits a previously sent message in a channel.
 
   This endpoint requires the `VIEW_CHANNEL` permission. It fires the
-  `t:Nostrum.Consumer.message_update/0` event.
+  `t:Remedy.Consumer.message_update/0` event.
 
   If `options` is a string, `options` will be used as the message's content.
 
-  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:content` (string) - the message contents (up to 2000 characters)
-    * `:embed` (`t:Nostrum.Struct.Embed.t/0`) - embedded rich content
+    * `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.edit_message(43189401384091, 1894013840914098, content: "hello world!")
+  Remedy.Api.edit_message(43189401384091, 1894013840914098, content: "hello world!")
 
-  Nostrum.Api.edit_message(43189401384091, 1894013840914098, "hello world!")
+  Remedy.Api.edit_message(43189401384091, 1894013840914098, "hello world!")
 
-  import Nostrum.Struct.Embed
+  import Remedy.Struct.Embed
   embed =
-    %Nostrum.Struct.Embed{}
+    %Remedy.Struct.Embed{}
     |> put_title("embed")
     |> put_description("new desc")
-  Nostrum.Api.edit_message(43189401384091, 1894013840914098, embed: embed)
+  Remedy.Api.edit_message(43189401384091, 1894013840914098, embed: embed)
 
-  Nostrum.Api.edit_message(43189401384091, 1894013840914098, content: "hello world!", embed: embed)
+  Remedy.Api.edit_message(43189401384091, 1894013840914098, content: "hello world!", embed: embed)
   ```
   """
   @spec edit_message(Channel.id(), Message.id(), options | String.t()) ::
@@ -345,7 +345,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `edit_message/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `edit_message/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec edit_message!(Channel.id(), Message.id(), options) :: no_return | Message.t()
   def edit_message!(channel_id, message_id, options) do
@@ -354,7 +354,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `edit_message/3`, but takes a `Nostrum.Struct.Message` instead of a
+  Same as `edit_message/3`, but takes a `Remedy.Struct.Message` instead of a
   `channel_id` and `message_id`.
   """
   @spec edit_message(Message.t(), options) :: error | {:ok, Message.t()}
@@ -363,7 +363,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `edit_message/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `edit_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec edit_message!(Message.t(), options) :: no_return | Message.t()
   def edit_message!(message, options) do
@@ -372,7 +372,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_message/2`, but takes a `Nostrum.Struct.Message` instead of a
+  Same as `delete_message/2`, but takes a `Remedy.Struct.Message` instead of a
   `channel_id` and `message_id`.
   """
   @spec delete_message(Message.t()) :: error | {:ok}
@@ -386,12 +386,12 @@ defmodule Nostrum.Api do
   This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_MESSAGES' permission. It
   fires the `MESSAGE_DELETE` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.delete_message(43189401384091, 43189401384091)
+  Remedy.Api.delete_message(43189401384091, 43189401384091)
   ```
   """
   @spec delete_message(Channel.id(), Message.id()) :: error | {:ok}
@@ -401,7 +401,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_message/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_message/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_message!(Message.t()) :: error | {:ok}
   def delete_message!(%Message{id: id, channel_id: c_id}) do
@@ -410,7 +410,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_message/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_message!(Channel.id(), Message.id()) :: no_return | {:ok}
   def delete_message!(channel_id, message_id) do
@@ -424,23 +424,23 @@ defmodule Nostrum.Api do
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
   permissions. Additionally, if nobody else has reacted to the message with
   the `emoji`, this endpoint requires the `ADD_REACTIONS` permission. It
-  fires a `t:Nostrum.Consumer.message_reaction_add/0` event.
+  fires a `t:Remedy.Consumer.message_reaction_add/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  # Using a Nostrum.Struct.Emoji.
-  emoji = %Nostrum.Struct.Emoji{id: 43819043108, name: "foxbot"}
-  Nostrum.Api.create_reaction(123123123123, 321321321321, emoji)
+  # Using a Remedy.Struct.Emoji.
+  emoji = %Remedy.Struct.Emoji{id: 43819043108, name: "foxbot"}
+  Remedy.Api.create_reaction(123123123123, 321321321321, emoji)
 
   # Using a base 16 emoji string.
-  Nostrum.Api.create_reaction(123123123123, 321321321321, "\xF0\x9F\x98\x81")
+  Remedy.Api.create_reaction(123123123123, 321321321321, "\xF0\x9F\x98\x81")
 
   ```
 
-  For other emoji string examples, see `t:Nostrum.Struct.Emoji.api_name/0`.
+  For other emoji string examples, see `t:Remedy.Struct.Emoji.api_name/0`.
   """
   @spec create_reaction(Channel.id(), Message.id(), emoji) :: error | {:ok}
   def create_reaction(channel_id, message_id, emoji)
@@ -453,7 +453,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_reaction/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_reaction/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
   def create_reaction!(channel_id, message_id, emoji) do
@@ -465,9 +465,9 @@ defmodule Nostrum.Api do
   Deletes a reaction the current user has made for the message.
 
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
-  permissions. It fires a `t:Nostrum.Consumer.message_reaction_remove/0` event.
+  permissions. It fires a `t:Remedy.Consumer.message_reaction_remove/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.Api.error/0`.
 
   See `create_reaction/3` for similar examples.
   """
@@ -482,7 +482,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_own_reaction/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_own_reaction/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_own_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
   def delete_own_reaction!(channel_id, message_id, emoji) do
@@ -494,9 +494,9 @@ defmodule Nostrum.Api do
   Deletes another user's reaction from a message.
 
   This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
-  `MANAGE_MESSAGES` permissions. It fires a `t:Nostrum.Consumer.message_reaction_remove/0` event.
+  `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.Api.error/0`.
 
   See `create_reaction/3` for similar examples.
   """
@@ -511,7 +511,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_user_reaction/4`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_user_reaction/4`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_user_reaction!(Channel.id(), Message.id(), emoji, User.id()) :: no_return | {:ok}
   def delete_user_reaction!(channel_id, message_id, emoji, user_id) do
@@ -522,9 +522,9 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Deletes all reactions of a given emoji from a message.
 
-  This endpoint requires the `MANAGE_MESSAGES` permissions. It fires a `t:Nostrum.Consumer.message_reaction_remove_emoji/0` event.
+  This endpoint requires the `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove_emoji/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.Api.error/0`.
 
   See `create_reaction/3` for similar examples.
   """
@@ -542,7 +542,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_reaction/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_reaction/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
   def delete_reaction!(channel_id, message_id, emoji) do
@@ -555,7 +555,7 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY` permissions.
 
-  If successful, returns `{:ok, users}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, users}`. Otherwise, returns `t:Remedy.Api.error/0`.
 
   See `create_reaction/3` for similar examples.
   """
@@ -571,7 +571,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_reactions/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_reactions/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_reactions!(Channel.id(), Message.id(), emoji) :: no_return | [User.t()]
   def get_reactions!(channel_id, message_id, emoji) do
@@ -583,9 +583,9 @@ defmodule Nostrum.Api do
   Deletes all reactions from a message.
 
   This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
-  `MANAGE_MESSAGES` permissions. It fires a `t:Nostrum.Consumer.message_reaction_remove_all/0` event.
+  `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove_all/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, return `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, return `t:Remedy.Api.error/0`.
   """
   @spec delete_all_reactions(Channel.id(), Message.id()) :: error | {:ok}
   def delete_all_reactions(channel_id, message_id) do
@@ -593,7 +593,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_all_reactions/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_all_reactions/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_all_reactions!(Channel.id(), Message.id()) :: no_return | {:ok}
   def delete_all_reactions!(channel_id, message_id) do
@@ -604,13 +604,13 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Gets a channel.
 
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_channel(381889573426429952)
-  {:ok, %Nostrum.Struct.Channel{id: 381889573426429952}}
+  Remedy.Api.get_channel(381889573426429952)
+  {:ok, %Remedy.Struct.Channel{id: 381889573426429952}}
   ```
   """
   @spec get_channel(Channel.id()) :: error | {:ok, Channel.t()}
@@ -620,7 +620,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_channel/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_channel!(Channel.id()) :: no_return | Channel.t()
   def get_channel!(channel_id) do
@@ -633,39 +633,39 @@ defmodule Nostrum.Api do
 
   An optional `reason` can be given for the guild audit log.
 
-  If a `t:Nostrum.Struct.Channel.guild_channel/0` is being modified, this
+  If a `t:Remedy.Struct.Channel.guild_channel/0` is being modified, this
   endpoint requires the `MANAGE_CHANNEL` permission. It fires a
-  `t:Nostrum.Consumer.channel_update/0` event. If a
-  `t:Nostrum.Struct.Channel.channel_category/0` is being modified, then this
-  endpoint fires multiple `t:Nostrum.Consumer.channel_update/0` events.
+  `t:Remedy.Consumer.channel_update/0` event. If a
+  `t:Remedy.Struct.Channel.channel_category/0` is being modified, then this
+  endpoint fires multiple `t:Remedy.Consumer.channel_update/0` events.
 
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:name` (string) - 2-100 character channel name
     * `:position` (integer) - the position of the channel in the left-hand listing
-    * `:topic` (string) (`t:Nostrum.Struct.Channel.text_channel/0` only) -
+    * `:topic` (string) (`t:Remedy.Struct.Channel.text_channel/0` only) -
     0-1024 character channel topic
-    * `:nsfw` (boolean) (`t:Nostrum.Struct.Channel.text_channel/0` only) -
+    * `:nsfw` (boolean) (`t:Remedy.Struct.Channel.text_channel/0` only) -
     if the channel is nsfw
-    * `:bitrate` (integer) (`t:Nostrum.Struct.Channel.voice_channel/0` only) -
+    * `:bitrate` (integer) (`t:Remedy.Struct.Channel.voice_channel/0` only) -
     the bitrate (in bits) of the voice channel; 8000 to 96000 (128000 for VIP servers)
-    * `:user_limit` (integer) (`t:Nostrum.Struct.Channel.voice_channel/0` only) -
+    * `:user_limit` (integer) (`t:Remedy.Struct.Channel.voice_channel/0` only) -
     the user limit of the voice channel; 0 refers to no limit, 1 to 99 refers to a user limit
-    * `:permission_overwrites` (list of `t:Nostrum.Struct.Overwrite.t/0` or equivalent map) -
+    * `:permission_overwrites` (list of `t:Remedy.Struct.Overwrite.t/0` or equivalent map) -
     channel or category-specific permissions
-    * `:parent_id` (`t:Nostrum.Struct.Channel.id/0`) (`t:Nostrum.Struct.Channel.guild_channel/0` only) -
+    * `:parent_id` (`t:Remedy.Struct.Channel.id/0`) (`t:Remedy.Struct.Channel.guild_channel/0` only) -
     id of the new parent category for a channel
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_channel(41771983423143933, name: "elixir-nostrum", topic: "nostrum discussion")
-  {:ok, %Nostrum.Struct.Channel{id: 41771983423143933, name: "elixir-nostrum", topic: "nostrum discussion"}}
+  Remedy.Api.modify_channel(41771983423143933, name: "elixir-remedy", topic: "remedy discussion")
+  {:ok, %Remedy.Struct.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
 
-  Nostrum.Api.modify_channel(41771983423143933)
-  {:ok, %Nostrum.Struct.Channel{id: 41771983423143933}}
+  Remedy.Api.modify_channel(41771983423143933)
+  {:ok, %Remedy.Struct.Channel{id: 41771983423143933}}
   ```
   """
   @spec modify_channel(Channel.id(), options, AuditLogEntry.reason()) ::
@@ -688,7 +688,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `modify_channel/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_channel/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_channel!(Channel.id(), options, AuditLogEntry.reason()) :: no_return | Channel.t()
   def modify_channel!(channel_id, options, reason \\ nil) do
@@ -701,19 +701,19 @@ defmodule Nostrum.Api do
 
   An optional `reason` can be provided for the guild audit log.
 
-  If deleting a `t:Nostrum.Struct.Channel.guild_channel/0`, this endpoint requires
+  If deleting a `t:Remedy.Struct.Channel.guild_channel/0`, this endpoint requires
   the `MANAGE_CHANNELS` permission. It fires a
-  `t:Nostrum.Consumer.channel_delete/0`. If a `t:Nostrum.Struct.Channel.channel_category/0`
-  is deleted, then a `t:Nostrum.Consumer.channel_update/0` event will fire
+  `t:Remedy.Consumer.channel_delete/0`. If a `t:Remedy.Struct.Channel.channel_category/0`
+  is deleted, then a `t:Remedy.Consumer.channel_update/0` event will fire
   for each channel under the category.
 
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.delete_channel(421533712753360896)
-  {:ok, %Nostrum.Struct.Channel{id: 421533712753360896}}
+  Remedy.Api.delete_channel(421533712753360896)
+  {:ok, %Remedy.Struct.Channel{id: 421533712753360896}}
   ```
   """
   @spec delete_channel(Channel.id(), AuditLogEntry.reason()) :: error | {:ok, Channel.t()}
@@ -730,7 +730,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_channel/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_channel/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_channel!(Channel.id(), AuditLogEntry.reason()) :: no_return | Channel.t()
   def delete_channel!(channel_id, reason \\ nil) do
@@ -745,12 +745,12 @@ defmodule Nostrum.Api do
   is missing the 'READ_MESSAGE_HISTORY' permission, then this function will
   return no messages.
 
-  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_channel_messages(43189401384091, 5, {:before, 130230401384})
+  Remedy.Api.get_channel_messages(43189401384091, 5, {:before, 130230401384})
   ```
   """
   @spec get_channel_messages(Channel.id(), limit, locator) :: error | {:ok, [Message.t()]}
@@ -800,7 +800,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel_messages/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_channel_messages/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_channel_messages!(Channel.id(), limit, locator) :: no_return | [Message.t()]
   def get_channel_messages!(channel_id, limit, locator \\ {}) do
@@ -813,12 +813,12 @@ defmodule Nostrum.Api do
 
   This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
 
-  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_channel_message(43189401384091, 198238475613443)
+  Remedy.Api.get_channel_message(43189401384091, 198238475613443)
   ```
   """
   @spec get_channel_message(Channel.id(), Message.id()) :: error | {:ok, Message.t()}
@@ -829,7 +829,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel_message/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_channel_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_channel_message!(Channel.id(), Message.id()) :: no_return | Message.t()
   def get_channel_message!(channel_id, message_id) do
@@ -840,7 +840,7 @@ defmodule Nostrum.Api do
   @doc """
   Deletes multiple messages from a channel.
 
-  `messages` is a list of `Nostrum.Struct.Message.id` that you wish to delete.
+  `messages` is a list of `Remedy.Struct.Message.id` that you wish to delete.
   When given more than 100 messages, this function will chunk the given message
   list into blocks of 100 and send them off to the API. It will stop deleting
   on the first error that occurs. Keep in mind that deleting thousands of
@@ -851,14 +851,14 @@ defmodule Nostrum.Api do
   `Filter` is an optional parameter that specifies whether messages sent over
   two weeks ago should be filtered out; defaults to `true`.
   """
-  @spec bulk_delete_messages(integer, [Nostrum.Struct.Message.id()], boolean) :: error | {:ok}
+  @spec bulk_delete_messages(integer, [Remedy.Struct.Message.id()], boolean) :: error | {:ok}
   def bulk_delete_messages(channel_id, messages, filter \\ true)
 
   def bulk_delete_messages(channel_id, messages, false),
     do: send_chunked_delete(messages, channel_id)
 
   def bulk_delete_messages(channel_id, messages, true) do
-    alias Nostrum.Snowflake
+    alias Remedy.Snowflake
 
     snowflake_two_weeks_ago =
       DateTime.utc_now()
@@ -874,8 +874,8 @@ defmodule Nostrum.Api do
   end
 
   @spec send_chunked_delete(
-          [Nostrum.Struct.Message.id()] | %Stream{},
-          Nostrum.Snowflake.t()
+          [Remedy.Struct.Message.id()] | %Stream{},
+          Remedy.Snowflake.t()
         ) :: error | {:ok}
   defp send_chunked_delete(messages, channel_id) do
     messages
@@ -891,9 +891,9 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `bulk_delete_messages/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `bulk_delete_messages/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
-  @spec bulk_delete_messages!(integer, [Nostrum.Struct.Message.id()], boolean) ::
+  @spec bulk_delete_messages!(integer, [Remedy.Struct.Message.id()], boolean) ::
           no_return | {:ok}
   def bulk_delete_messages!(channel_id, messages, filter \\ true) do
     bulk_delete_messages(channel_id, messages, filter)
@@ -938,7 +938,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `edit_channel_permissions/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `edit_channel_permissions/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec edit_channel_permissions!(
           integer,
@@ -978,13 +978,13 @@ defmodule Nostrum.Api do
   This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_CHANNELS' permissions.
 
   If successful, returns `{:ok, invite}`. Otherwise, returns a
-  `t:Nostrum.Api.error/0`.
+  `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_channel_invites(43189401384091)
-  {:ok, [%Nostrum.Struct.Invite{} | _]}
+  Remedy.Api.get_channel_invites(43189401384091)
+  {:ok, [%Remedy.Struct.Invite{} | _]}
   ```
   """
   @spec get_channel_invites(Channel.id()) :: error | {:ok, [Invite.detailed_invite()]}
@@ -994,7 +994,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel_invites/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_channel_invites/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_channel_invites!(Channel.id()) :: no_return | [Invite.detailed_invite()]
   def get_channel_invites!(channel_id) do
@@ -1009,7 +1009,7 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `CREATE_INSTANT_INVITE` permission.
 
-  If successful, returns `{:ok, invite}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, invite}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
@@ -1025,11 +1025,11 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.create_channel_invite(41771983423143933)
-  {:ok, Nostrum.Struct.Invite{}}
+  Remedy.Api.create_channel_invite(41771983423143933)
+  {:ok, Remedy.Struct.Invite{}}
 
-  Nostrum.Api.create_channel_invite(41771983423143933, max_uses: 20)
-  {:ok, %Nostrum.Struct.Invite{}}
+  Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
+  {:ok, %Remedy.Struct.Invite{}}
   ```
   """
   @spec create_channel_invite(Channel.id(), options, AuditLogEntry.reason()) ::
@@ -1053,7 +1053,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_channel_invite/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_channel_invite/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_channel_invite!(Channel.id(), options, AuditLogEntry.reason()) ::
           no_return | Invite.detailed_invite()
@@ -1076,7 +1076,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `start_typing/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `start_typing/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec start_typing!(integer) :: no_return | {:ok}
   def start_typing!(channel_id) do
@@ -1089,12 +1089,12 @@ defmodule Nostrum.Api do
 
   This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
 
-  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_pinned_messages(43189401384091)
+  Remedy.Api.get_pinned_messages(43189401384091)
   ```
   """
   @spec get_pinned_messages(Channel.id()) :: error | {:ok, [Message.t()]}
@@ -1104,7 +1104,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_pinned_messages/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_pinned_messages/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_pinned_messages!(Channel.id()) :: no_return | [Message.t()]
   def get_pinned_messages!(channel_id) do
@@ -1117,15 +1117,15 @@ defmodule Nostrum.Api do
 
   This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
   'MANAGE_MESSAGES' permissions. It fires the
-  `t:Nostrum.Consumer.message_update/0` and
-  `t:Nostrum.Consumer.channel_pins_update/0` events.
+  `t:Remedy.Consumer.message_update/0` and
+  `t:Remedy.Consumer.channel_pins_update/0` events.
 
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.add_pinned_channel_message(43189401384091, 18743893102394)
+  Remedy.Api.add_pinned_channel_message(43189401384091, 18743893102394)
   ```
   """
   @spec add_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
@@ -1135,7 +1135,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `add_pinned_channel_message/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `add_pinned_channel_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec add_pinned_channel_message!(Channel.id(), Message.id()) :: no_return | {:ok}
   def add_pinned_channel_message!(channel_id, message_id) do
@@ -1148,8 +1148,8 @@ defmodule Nostrum.Api do
 
   This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
   'MANAGE_MESSAGES' permissions. It fires the
-  `t:Nostrum.Consumer.message_update/0` and
-  `t:Nostrum.Consumer.channel_pins_update/0` events.
+  `t:Remedy.Consumer.message_update/0` and
+  `t:Remedy.Consumer.channel_pins_update/0` events.
 
   Returns `{:ok}` if successful. `error` otherwise.
   """
@@ -1160,7 +1160,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_pinned_channel_message/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_pinned_channel_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_pinned_channel_message!(Channel.id(), Message.id()) :: no_return | {:ok}
   def delete_pinned_channel_message!(channel_id, message_id) do
@@ -1173,7 +1173,7 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `MANAGE_EMOJIS` permission.
 
-  If successful, returns `{:ok, emojis}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, emojis}`. Otherwise, returns `t:Remedy.Api.error/0`.
   """
   @spec list_guild_emojis(Guild.id()) :: error | {:ok, [Emoji.t()]}
   def list_guild_emojis(guild_id) do
@@ -1182,7 +1182,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `list_guild_emojis/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `list_guild_emojis/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec list_guild_emojis!(Guild.id()) :: no_return | [Emoji.t()]
   def list_guild_emojis!(guild_id) do
@@ -1195,7 +1195,7 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `MANAGE_EMOJIS` permission.
 
-  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.Api.error/0`.
   """
   @spec get_guild_emoji(Guild.id(), Emoji.id()) :: error | {:ok, Emoji.t()}
   def get_guild_emoji(guild_id, emoji_id) do
@@ -1204,7 +1204,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_emoji/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_guild_emoji/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_guild_emoji!(Guild.id(), Emoji.id()) :: no_return | Emoji.t()
   def get_guild_emoji!(guild_id, emoji_id) do
@@ -1216,17 +1216,17 @@ defmodule Nostrum.Api do
   Creates a new emoji for the given guild.
 
   This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
-  `t:Nostrum.Consumer.guild_emojis_update/0` event.
+  `t:Remedy.Consumer.guild_emojis_update/0` event.
 
   An optional `reason` can be provided for the audit log.
 
-  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:name` (string) - name of the emoji
     * `:image` (base64 data URI) - the 128x128 emoji image. Maximum size of 256kb
-    * `:roles` (list of `t:Nostrum.Snowflake.t/0`) - roles for which this emoji will be whitelisted
+    * `:roles` (list of `t:Remedy.Snowflake.t/0`) - roles for which this emoji will be whitelisted
     (default: [])
 
   `:name` and `:image` are always required.
@@ -1236,7 +1236,7 @@ defmodule Nostrum.Api do
   ```Elixir
   image = "data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8="
 
-  Nostrum.Api.create_guild_emoji(43189401384091, name: "nostrum", image: image, roles: [])
+  Remedy.Api.create_guild_emoji(43189401384091, name: "remedy", image: image, roles: [])
   ```
   """
   @spec create_guild_emoji(Guild.id(), options, AuditLogEntry.reason()) ::
@@ -1259,7 +1259,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_emoji/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_guild_emoji/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_guild_emoji!(Guild.id(), options, AuditLogEntry.reason()) :: no_return | Emoji.t()
   def create_guild_emoji!(guild_id, params, reason \\ nil) do
@@ -1271,21 +1271,21 @@ defmodule Nostrum.Api do
   Modify the given emoji.
 
   This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
-  `t:Nostrum.Consumer.guild_emojis_update/0` event.
+  `t:Remedy.Consumer.guild_emojis_update/0` event.
 
   An optional `reason` can be provided for the audit log.
 
-  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:name` (string) - name of the emoji
-    * `:roles` (list of `t:Nostrum.Snowflake.t/0`) - roles to which this emoji will be whitelisted
+    * `:roles` (list of `t:Remedy.Snowflake.t/0`) - roles to which this emoji will be whitelisted
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
+  Remedy.Api.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
   ```
   """
   @spec modify_guild_emoji(Guild.id(), Emoji.id(), options, AuditLogEntry.reason()) ::
@@ -1308,7 +1308,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_emoji/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_guild_emoji/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_guild_emoji!(Guild.id(), Emoji.id(), options, AuditLogEntry.reason()) ::
           no_return | Emoji.t()
@@ -1323,9 +1323,9 @@ defmodule Nostrum.Api do
   An optional `reason` can be provided for the audit log.
 
   This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
-  `t:Nostrum.Consumer.guild_emojis_update/0` event.
+  `t:Remedy.Consumer.guild_emojis_update/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.Api.error/0`.
   """
   @spec delete_guild_emoji(Guild.id(), Emoji.id(), AuditLogEntry.reason()) :: error | {:ok}
   def delete_guild_emoji(guild_id, emoji_id, reason \\ nil),
@@ -1339,7 +1339,7 @@ defmodule Nostrum.Api do
       })
 
   @doc ~S"""
-  Same as `delete_guild_emoji/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_guild_emoji/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_guild_emoji!(Guild.id(), Emoji.id(), AuditLogEntry.reason()) :: no_return | {:ok}
   def delete_guild_emoji!(guild_id, emoji_id, reason \\ nil) do
@@ -1348,13 +1348,13 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Get the `t:Nostrum.Struct.Guild.AuditLog.t/0` for the given `guild_id`.
+  Get the `t:Remedy.Struct.Guild.AuditLog.t/0` for the given `guild_id`.
 
   ## Options
 
-    * `:user_id` (`t:Nostrum.Struct.User.id/0`) - filter the log for a user ID
+    * `:user_id` (`t:Remedy.Struct.User.id/0`) - filter the log for a user ID
     * `:action_type` (`t:integer/0`) - filter the log by audit log type, see [Audit Log Events](https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events)
-    * `:before` (`t:Nostrum.Struct.Snowflake.t/0`) - filter the log before a certain entry ID
+    * `:before` (`t:Remedy.Struct.Snowflake.t/0`) - filter the log before a certain entry ID
     * `:limit` (`t:pos_integer/0`) - how many entries are returned (default 50, minimum 1, maximum 100)
   """
   @spec get_guild_audit_log(Guild.id(), options) :: {:ok, AuditLog.t()} | error
@@ -1366,13 +1366,13 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Gets a guild.
 
-  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_guild(81384788765712384)
-  {:ok, %Nostrum.Struct.Guild{id: 81384788765712384}}
+  Remedy.Api.get_guild(81384788765712384)
+  {:ok, %Remedy.Struct.Guild{id: 81384788765712384}}
   ```
   """
   @spec get_guild(Guild.id()) :: error | {:ok, Guild.rest_guild()}
@@ -1382,7 +1382,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `get_guild/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_guild/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_guild!(Guild.id()) :: no_return | Guild.rest_guild()
   def get_guild!(guild_id) do
@@ -1394,11 +1394,11 @@ defmodule Nostrum.Api do
   Modifies a guild's settings.
 
   This endpoint requires the `MANAGE_GUILD` permission. It fires the
-  `t:Nostrum.Consumer.guild_update/0` event.
+  `t:Remedy.Consumer.guild_update/0` event.
 
   An optional `reason` can be provided for the audit log.
 
-  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
@@ -1408,25 +1408,25 @@ defmodule Nostrum.Api do
     * `:default_message_notifications` (integer) - default message
     notification level
     * `:explicit_content_filter` (integer) - explicit content filter level
-    * `:afk_channel_id` (`t:Nostrum.Snowflake.t/0`) - id for afk channel
+    * `:afk_channel_id` (`t:Remedy.Snowflake.t/0`) - id for afk channel
     * `:afk_timeout` (integer) - afk timeout in seconds
     * `:icon` (base64 data URI) - 128x128 jpeg image for the guild icon
-    * `:owner_id` (`t:Nostrum.Snowflake.t/0`) - user id to transfer
+    * `:owner_id` (`t:Remedy.Snowflake.t/0`) - user id to transfer
     guild ownership to (must be owner)
     * `:splash` (base64 data URI) - 128x128 jpeg image for the guild splash
     (VIP only)
-    * `:system_channel_id` (`t:Nostrum.Snowflake.t/0`) - the id of the
+    * `:system_channel_id` (`t:Remedy.Snowflake.t/0`) - the id of the
     channel to which system messages are sent
-    * `:rules_channel_id` (`t:Nostrum.Snowflake.t/0`) - the id of the channel that
+    * `:rules_channel_id` (`t:Remedy.Snowflake.t/0`) - the id of the channel that
     is used for rules in public guilds
-    * `:public_updates_channel_id` (`t:Nostrum.Snowflake.t/0`) - the id of the channel
+    * `:public_updates_channel_id` (`t:Remedy.Snowflake.t/0`) - the id of the channel
     where admins and moderators receive notices from Discord in public guilds
 
   ## Examples
 
   ```elixir
-  Nostrum.Api.modify_guild(451824027976073216, name: "Nose Drum")
-  {:ok, %Nostrum.Struct.Guild{id: 451824027976073216, name: "Nose Drum", ...}}
+  Remedy.Api.modify_guild(451824027976073216, name: "Nose Drum")
+  {:ok, %Remedy.Struct.Guild{id: 451824027976073216, name: "Nose Drum", ...}}
   ```
   """
   @spec modify_guild(Guild.id(), options, AuditLogEntry.reason()) ::
@@ -1451,7 +1451,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `modify_guild/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_guild/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_guild!(Guild.id(), options) :: no_return | Guild.rest_guild()
   def modify_guild!(guild_id, options \\ []) do
@@ -1463,14 +1463,14 @@ defmodule Nostrum.Api do
   Deletes a guild.
 
   This endpoint requires that the current user is the owner of the guild.
-  It fires the `t:Nostrum.Consumer.guild_delete/0` event.
+  It fires the `t:Remedy.Consumer.guild_delete/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.delete_guild(81384788765712384)
+  Remedy.Api.delete_guild(81384788765712384)
   {:ok}
   ```
   """
@@ -1480,7 +1480,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_guild/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_guild/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_guild!(Guild.id()) :: no_return | {:ok}
   def delete_guild!(guild_id) do
@@ -1491,13 +1491,13 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Gets a list of guild channels.
 
-  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_guild_channels(81384788765712384)
-  {:ok, [%Nostrum.Struct.Channel{guild_id: 81384788765712384} | _]}
+  Remedy.Api.get_guild_channels(81384788765712384)
+  {:ok, [%Remedy.Struct.Channel{guild_id: 81384788765712384} | _]}
   ```
   """
   @spec get_guild_channels(Guild.id()) :: error | {:ok, [Channel.guild_channel()]}
@@ -1507,7 +1507,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_channels/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_guild_channels/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_guild_channels!(Guild.id()) :: no_return | [Channel.guild_channel()]
   def get_guild_channels!(guild_id) do
@@ -1519,20 +1519,20 @@ defmodule Nostrum.Api do
   Creates a channel for a guild.
 
   This endpoint requires the `MANAGE_CHANNELS` permission. It fires a
-  `t:Nostrum.Consumer.channel_create/0` event.
+  `t:Remedy.Consumer.channel_create/0` event.
 
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:name` (string) - channel name (2-100 characters)
-    * `:type` (integer) - the type of channel (See `Nostrum.Struct.Channel`)
+    * `:type` (integer) - the type of channel (See `Remedy.Struct.Channel`)
     * `:topic` (string) - channel topic (0-1024 characters)
     * `:bitrate` (integer) - the bitrate (in bits) of the voice channel (voice only)
     * `:user_limit` (integer) - the user limit of the voice channel (voice only)
-    * `:permission_overwrites` (list of `t:Nostrum.Struct.Overwrite.t/0` or equivalent map) -
+    * `:permission_overwrites` (list of `t:Remedy.Struct.Overwrite.t/0` or equivalent map) -
     the channel's permission overwrites
-    * `:parent_id` (`t:Nostrum.Struct.Channel.id/0`) - id of the parent category for a channel
+    * `:parent_id` (`t:Remedy.Struct.Channel.id/0`) - id of the parent category for a channel
     * `:nsfw` (boolean) - if the channel is nsfw
 
   `:name` is always required.
@@ -1540,8 +1540,8 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.create_guild_channel(81384788765712384, name: "elixir-nostrum", topic: "craig's domain")
-  {:ok, %Nostrum.Struct.Channel{guild_id: 81384788765712384}}
+  Remedy.Api.create_guild_channel(81384788765712384, name: "elixir-remedy", topic: "craig's domain")
+  {:ok, %Remedy.Struct.Channel{guild_id: 81384788765712384}}
   ```
   """
   @spec create_guild_channel(Guild.id(), options) :: error | {:ok, Channel.guild_channel()}
@@ -1556,7 +1556,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_channel/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_guild_channel/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_guild_channel!(Guild.id(), options) :: no_return | Channel.guild_channel()
   def create_guild_channel!(guild_id, options) do
@@ -1568,16 +1568,16 @@ defmodule Nostrum.Api do
   Reorders a guild's channels.
 
   This endpoint requires the `MANAGE_CHANNELS` permission. It fires multiple
-  `t:Nostrum.Consumer.channel_update/0` events.
+  `t:Remedy.Consumer.channel_update/0` events.
 
-  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   `positions` is a list of maps that each map a channel id with a position.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_guild_channel_positions(279093381723062272, [%{id: 351500354581692420, position: 2}])
+  Remedy.Api.modify_guild_channel_positions(279093381723062272, [%{id: 351500354581692420, position: 2}])
   {:ok}
   ```
   """
@@ -1589,7 +1589,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_channel_positions/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_guild_channel_positions/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_guild_channel_positions!(Guild.id(), [%{id: integer, position: integer}]) ::
           no_return | {:ok}
@@ -1601,12 +1601,12 @@ defmodule Nostrum.Api do
   @doc """
   Gets a guild member.
 
-  If successful, returns `{:ok, member}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, member}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_guild_member(4019283754613, 184937267485)
+  Remedy.Api.get_guild_member(4019283754613, 184937267485)
   ```
   """
   @spec get_guild_member(Guild.id(), User.id()) :: error | {:ok, Member.t()}
@@ -1616,7 +1616,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `get_guild_member/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_guild_member/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_guild_member!(Guild.id(), User.id()) :: no_return | Member.t()
   def get_guild_member!(guild_id, user_id) do
@@ -1627,17 +1627,17 @@ defmodule Nostrum.Api do
   @doc """
   Gets a list of a guild's members.
 
-  If successful, returns `{:ok, members}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, members}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:limit` (integer) - max number of members to return (1-1000) (default: 1)
-    * `:after` (`t:Nostrum.Struct.User.id/0`) - the highest user id in the previous page (default: 0)
+    * `:after` (`t:Remedy.Struct.User.id/0`) - the highest user id in the previous page (default: 0)
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.list_guild_members(41771983423143937, limit: 1)
+  Remedy.Api.list_guild_members(41771983423143937, limit: 1)
   ```
   """
   @spec list_guild_members(Guild.id(), options) :: error | {:ok, [Member.t()]}
@@ -1652,7 +1652,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `list_guild_members/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `list_guild_members/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec list_guild_members!(Guild.id(), options) :: no_return | [Member.t()]
   def list_guild_members!(guild_id, options \\ %{}) do
@@ -1663,19 +1663,19 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Puts a user in a guild.
 
-  This endpoint fires the `t:Nostrum.Consumer.guild_member_add/0` event.
+  This endpoint fires the `t:Remedy.Consumer.guild_member_add/0` event.
   It requires the `CREATE_INSTANT_INVITE` permission. Additionally, it
   situationally requires the `MANAGE_NICKNAMES`, `MANAGE_ROLES`,
   `MUTE_MEMBERS`, and `DEAFEN_MEMBERS` permissions.
 
   If successful, returns `{:ok, member}` or `{:ok}` if the user was already a member of the
-  guild. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  guild. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:access_token` (string) - the user's oauth2 access token
     * `:nick` (string) - value to set users nickname to
-    * `:roles` (list of `t:Nostrum.Struct.Guild.Role.id/0`) - array of role ids the member is assigned
+    * `:roles` (list of `t:Remedy.Struct.Guild.Role.id/0`) - array of role ids the member is assigned
     * `:mute` (boolean) - if the user is muted
     * `:deaf` (boolean) - if the user is deafened
 
@@ -1684,11 +1684,11 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.add_guild_member(
+  Remedy.Api.add_guild_member(
     41771983423143937,
     18374719829378473,
     access_token: "6qrZcUqja7812RVdnEKjpzOL4CvHBFG",
-    nick: "nostrum",
+    nick: "remedy",
     roles: [431849301, 913809431]
   )
   ```
@@ -1706,7 +1706,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `add_guild_member/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `add_guild_member/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec add_guild_member!(Guild.id(), User.id(), options) :: no_return | Member.t() | {:ok}
   def add_guild_member!(guild_id, user_id, options) do
@@ -1717,24 +1717,24 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Modifies a guild member's attributes.
 
-  This endpoint fires the `t:Nostrum.Consumer.guild_member_update/0` event.
+  This endpoint fires the `t:Remedy.Consumer.guild_member_update/0` event.
   It situationally requires the `MANAGE_NICKNAMES`, `MANAGE_ROLES`,
   `MUTE_MEMBERS`, `DEAFEN_MEMBERS`, and `MOVE_MEMBERS` permissions.
 
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
     * `:nick` (string) - value to set users nickname to
-    * `:roles` (list of `t:Nostrum.Snowflake.t/0`) - array of role ids the member is assigned
+    * `:roles` (list of `t:Remedy.Snowflake.t/0`) - array of role ids the member is assigned
     * `:mute` (boolean) - if the user is muted
     * `:deaf` (boolean) - if the user is deafened
-    * `:channel_id` (`t:Nostrum.Snowflake.t/0`) - id of channel to move user to (if they are connected to voice)
+    * `:channel_id` (`t:Remedy.Snowflake.t/0`) - id of channel to move user to (if they are connected to voice)
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_guild_member(41771983423143937, 637162356451, nick: "Nostrum")
+  Remedy.Api.modify_guild_member(41771983423143937, 637162356451, nick: "Remedy")
   {:ok}
   ```
   """
@@ -1750,7 +1750,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `modify_guild_member/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_guild_member/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_guild_member!(Guild.id(), User.id(), options) :: error | {:ok}
   def modify_guild_member!(guild_id, user_id, options \\ %{}) do
@@ -1761,7 +1761,7 @@ defmodule Nostrum.Api do
   @doc """
   Modifies the nickname of the current user in a guild.
 
-  If successful, returns `{:ok, %{nick: nick}}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, %{nick: nick}}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
@@ -1770,8 +1770,8 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_current_user_nick(41771983423143937, nick: "Nostrum")
-  {:ok, %{nick: "Nostrum"}}
+  Remedy.Api.modify_current_user_nick(41771983423143937, nick: "Remedy")
+  {:ok, %{nick: "Remedy"}}
   ```
   """
   @spec modify_current_user_nick(Guild.id(), options) :: error | {:ok, %{nick: String.t()}}
@@ -1781,7 +1781,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `modify_current_user_nick/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_current_user_nick/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_current_user_nick!(Guild.id(), options) :: no_return | %{nick: String.t()}
   def modify_current_user_nick!(guild_id, options \\ %{}) do
@@ -1830,16 +1830,16 @@ defmodule Nostrum.Api do
   Removes a member from a guild.
 
   This event requires the `KICK_MEMBERS` permission. It fires a
-  `t:Nostrum.Consumer.guild_member_remove/0` event.
+  `t:Remedy.Consumer.guild_member_remove/0` event.
 
   An optional reason can be provided for the audit log with `reason`.
 
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.remove_guild_member(1453827904102291, 18739485766253)
+  Remedy.Api.remove_guild_member(1453827904102291, 18739485766253)
   {:ok}
   ```
   """
@@ -1856,7 +1856,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `remove_guild_member/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `remove_guild_member/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec remove_guild_member!(Guild.id(), User.id(), AuditLogEntry.reason()) :: no_return | {:ok}
   def remove_guild_member!(guild_id, user_id, reason \\ nil) do
@@ -1879,7 +1879,7 @@ defmodule Nostrum.Api do
 
   Guild to get bans for is specified by `guild_id`.
   """
-  @spec get_guild_bans(integer) :: error | {:ok, [Nostrum.Struct.User.t()]}
+  @spec get_guild_bans(integer) :: error | {:ok, [Remedy.Struct.User.t()]}
   def get_guild_bans(guild_id) do
     request(:get, Constants.guild_bans(guild_id))
     |> handle_request_with_decode
@@ -1922,12 +1922,12 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Gets a guild's roles.
 
-  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_guild_roles(147362948571673)
+  Remedy.Api.get_guild_roles(147362948571673)
   ```
   """
   @spec get_guild_roles(Guild.id()) :: error | {:ok, [Role.t()]}
@@ -1937,7 +1937,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_roles/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_guild_roles/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_guild_roles!(Guild.id()) :: no_return | [Role.t()]
   def get_guild_roles!(guild_id) do
@@ -1951,9 +1951,9 @@ defmodule Nostrum.Api do
   An optional reason for the audit log can be provided via `reason`.
 
   This endpoint requires the `MANAGE_ROLES` permission. It fires a
-  `t:Nostrum.Consumer.guild_role_create/0` event.
+  `t:Remedy.Consumer.guild_role_create/0` event.
 
-  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
@@ -1966,7 +1966,7 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.create_guild_role(41771983423143937, name: "nostrum-club", hoist: true)
+  Remedy.Api.create_guild_role(41771983423143937, name: "remedy-club", hoist: true)
   ```
   """
   @spec create_guild_role(Guild.id(), options, AuditLogEntry.reason()) :: error | {:ok, Role.t()}
@@ -1988,7 +1988,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_role/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_guild_role/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_guild_role!(Guild.id(), options, AuditLogEntry.reason()) :: no_return | Role.t()
   def create_guild_role!(guild_id, options, reason \\ nil) do
@@ -2000,16 +2000,16 @@ defmodule Nostrum.Api do
   Reorders a guild's roles.
 
   This endpoint requires the `MANAGE_ROLES` permission. It fires multiple
-  `t:Nostrum.Consumer.guild_role_update/0` events.
+  `t:Remedy.Consumer.guild_role_update/0` events.
 
-  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   `positions` is a list of maps that each map a role id with a position.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
+  Remedy.Api.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
   ```
   """
   @spec modify_guild_role_positions(
@@ -2031,7 +2031,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_role_positions/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_guild_role_positions/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_guild_role_positions!(
           Guild.id(),
@@ -2047,11 +2047,11 @@ defmodule Nostrum.Api do
   Modifies a guild role.
 
   This endpoint requires the `MANAGE_ROLES` permission. It fires a
-  `t:Nostrum.Consumer.guild_role_update/0` event.
+  `t:Remedy.Consumer.guild_role_update/0` event.
 
   An optional `reason` can be specified for the audit log.
 
-  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
@@ -2064,7 +2064,7 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
+  Remedy.Api.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
   ```
   """
   @spec modify_guild_role(Guild.id(), Role.id(), options, AuditLogEntry.reason()) ::
@@ -2088,7 +2088,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_role/3`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_guild_role/3`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_guild_role!(Guild.id(), Role.id(), options, AuditLogEntry.reason()) ::
           no_return | Role.t()
@@ -2103,14 +2103,14 @@ defmodule Nostrum.Api do
   An optional `reason` can be specified for the audit log.
 
   This endpoint requires the `MANAGE_ROLES` permission. It fires a
-  `t:Nostrum.Consumer.guild_role_delete/0` event.
+  `t:Remedy.Consumer.guild_role_delete/0` event.
 
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.delete_guild_role(41771983423143937, 392817238471936)
+  Remedy.Api.delete_guild_role(41771983423143937, 392817238471936)
   ```
   """
   @spec delete_guild_role(Guild.id(), Role.id(), AuditLogEntry.reason()) :: error | {:ok}
@@ -2126,7 +2126,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_guild_role/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_guild_role/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_guild_role!(Guild.id(), Role.id(), AuditLogEntry.reason()) :: no_return | {:ok}
   def delete_guild_role!(guild_id, role_id, reason \\ nil) do
@@ -2139,12 +2139,12 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `KICK_MEMBERS` permission.
 
-  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_guild_prune_count(81384788765712384, 1)
+  Remedy.Api.get_guild_prune_count(81384788765712384, 1)
   {:ok, %{pruned: 0}}
   ```
   """
@@ -2155,7 +2155,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_prune_count/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_guild_prune_count/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_guild_prune_count!(Guild.id(), 1..30) :: no_return | %{pruned: integer}
   def get_guild_prune_count!(guild_id, days) do
@@ -2169,14 +2169,14 @@ defmodule Nostrum.Api do
   An optional `reason` can be provided for the guild audit log.
 
   This endpoint requires the `KICK_MEMBERS` permission. It fires multiple
-  `t:Nostrum.Consumer.guild_member_remove/0` events.
+  `t:Remedy.Consumer.guild_member_remove/0` events.
 
-  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.begin_guild_prune(81384788765712384, 1)
+  Remedy.Api.begin_guild_prune(81384788765712384, 1)
   {:ok, %{pruned: 0}}
   ```
   """
@@ -2196,7 +2196,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `begin_guild_prune/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `begin_guild_prune/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec begin_guild_prune!(Guild.id(), 1..30, AuditLogEntry.reason()) ::
           no_return | %{pruned: integer}
@@ -2210,7 +2210,7 @@ defmodule Nostrum.Api do
 
   Guild to get voice regions for is specified by `guild_id`.
   """
-  @spec get_voice_region(integer) :: error | {:ok, [Nostrum.Struct.VoiceRegion.t()]}
+  @spec get_voice_region(integer) :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
   def get_voice_region(guild_id) do
     request(:get, Constants.guild_voice_regions(guild_id))
     |> handle_request_with_decode
@@ -2221,13 +2221,13 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `MANAGE_GUILD` permission.
 
-  If successful, returns `{:ok, invites}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, invites}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_guild_invites(81384788765712384)
-  {:ok, [%Nostrum.Struct.Invite{} | _]}
+  Remedy.Api.get_guild_invites(81384788765712384)
+  {:ok, [%Remedy.Struct.Invite{} | _]}
   ```
   """
   @spec get_guild_invites(Guild.id()) :: error | {:ok, [Invite.detailed_invite()]}
@@ -2237,7 +2237,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_invites/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_guild_invites/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_guild_invites!(Guild.id()) :: no_return | [Invite.detailed_invite()]
   def get_guild_invites!(guild_id) do
@@ -2251,7 +2251,7 @@ defmodule Nostrum.Api do
   Guild to get integrations for is specified by `guild_id`.
   """
   @spec get_guild_integrations(Guild.id()) ::
-          error | {:ok, [Nostrum.Struct.Guild.Integration.t()]}
+          error | {:ok, [Remedy.Struct.Guild.Integration.t()]}
   def get_guild_integrations(guild_id) do
     request(:get, Constants.guild_integrations(guild_id))
     |> handle_request_with_decode
@@ -2334,7 +2334,7 @@ defmodule Nostrum.Api do
   Gets an invite by its `invite_code`.
 
   If successful, returns `{:ok, invite}`. Otherwise, returns a
-  `t:Nostrum.Api.error/0`.
+  `t:Remedy.Api.error/0`.
 
   ## Options
 
@@ -2343,9 +2343,9 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_invite("zsjUsC")
+  Remedy.Api.get_invite("zsjUsC")
 
-  Nostrum.Api.get_invite("zsjUsC", with_counts: true)
+  Remedy.Api.get_invite("zsjUsC", with_counts: true)
   ```
   """
   @spec get_invite(Invite.code(), options) :: error | {:ok, Invite.simple_invite()}
@@ -2355,7 +2355,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_invite/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_invite/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_invite!(Invite.code(), options) :: no_return | Invite.simple_invite()
   def get_invite!(invite_code, options \\ []) do
@@ -2369,12 +2369,12 @@ defmodule Nostrum.Api do
   This endpoint requires the `MANAGE_CHANNELS` permission.
 
   If successful, returns `{:ok, invite}`. Otherwise, returns a
-  `t:Nostrum.Api.error/0`.
+  `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.delete_invite("zsjUsC")
+  Remedy.Api.delete_invite("zsjUsC")
   ```
   """
   @spec delete_invite(Invite.code()) :: error | {:ok, Invite.simple_invite()}
@@ -2384,7 +2384,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `delete_invite/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `delete_invite/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec delete_invite!(Invite.code()) :: no_return | Invite.simple_invite()
   def delete_invite!(invite_code) do
@@ -2393,10 +2393,10 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Gets a user by its `t:Nostrum.Struct.User.id/0`.
+  Gets a user by its `t:Remedy.Struct.User.id/0`.
 
   If the request is successful, this function returns `{:ok, user}`, where
-  `user` is a `Nostrum.Struct.User`. Otherwise, returns `{:error, reason}`.
+  `user` is a `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
   """
   @spec get_user(User.id()) :: error | {:ok, User.t()}
   def get_user(user_id) do
@@ -2405,7 +2405,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `get_user/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_user/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_user!(User.id()) :: no_return | User.t()
   def get_user!(user_id) do
@@ -2416,12 +2416,12 @@ defmodule Nostrum.Api do
   @doc """
   Gets info on the current user.
 
-  If nostrum's caching is enabled, it is recommended to use `Me.get/0`
+  If remedy's caching is enabled, it is recommended to use `Me.get/0`
   instead of this function. This is because sending out an API request is much slower
   than pulling from our cache.
 
   If the request is successful, this function returns `{:ok, user}`, where
-  `user` is nostrum's `Nostrum.Struct.User`. Otherwise, returns `{:error, reason}`.
+  `user` is remedy's `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
   """
   @spec get_current_user() :: error | {:ok, User.t()}
   def get_current_user do
@@ -2430,7 +2430,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `get_current_user/0`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_current_user/0`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_current_user!() :: no_return | User.t()
   def get_current_user! do
@@ -2449,7 +2449,7 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
+  Remedy.Api.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
   ```
   """
   @spec modify_current_user(options) :: error | {:ok, User.t()}
@@ -2464,7 +2464,7 @@ defmodule Nostrum.Api do
   end
 
   @doc """
-  Same as `modify_current_user/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `modify_current_user/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec modify_current_user!(options) :: no_return | User.t()
   def modify_current_user!(options) do
@@ -2477,21 +2477,21 @@ defmodule Nostrum.Api do
 
   This endpoint requires the `guilds` OAuth2 scope.
 
-  If successful, returns `{:ok, guilds}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, guilds}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Options
 
-    * `:before` (`t:Nostrum.Snowflake.t/0`) - get guilds before this
+    * `:before` (`t:Remedy.Snowflake.t/0`) - get guilds before this
     guild ID
-    * `:after` (`t:Nostrum.Snowflake.t/0`) - get guilds after this guild
+    * `:after` (`t:Remedy.Snowflake.t/0`) - get guilds after this guild
     ID
     * `:limit` (integer) - max number of guilds to return (1-100)
 
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Api.get_current_user_guilds(limit: 1)
-  {:ok, [%Nostrum.Struct.Guild{}]}
+  iex> Remedy.Api.get_current_user_guilds(limit: 1)
+  {:ok, [%Remedy.Struct.Guild{}]}
   ```
   """
   @spec get_current_user_guilds(options) :: error | {:ok, [Guild.user_guild()]}
@@ -2506,7 +2506,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_current_user_guilds/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_current_user_guilds/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_current_user_guilds!(options) :: no_return | [Guild.user_guild()]
   def get_current_user_guilds!(options \\ []) do
@@ -2533,13 +2533,13 @@ defmodule Nostrum.Api do
   @doc """
   Gets a list of our user's DM channels.
 
-  If successful, returns `{:ok, dm_channels}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, dm_channels}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.get_user_dms()
-  {:ok, [%Nostrum.Struct.Channel{type: 1} | _]}
+  Remedy.Api.get_user_dms()
+  {:ok, [%Remedy.Struct.Channel{type: 1} | _]}
   ```
   """
   @spec get_user_dms() :: error | {:ok, [Channel.dm_channel()]}
@@ -2549,7 +2549,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `get_user_dms/0`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `get_user_dms/0`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec get_user_dms!() :: no_return | [Channel.dm_channel()]
   def get_user_dms! do
@@ -2560,13 +2560,13 @@ defmodule Nostrum.Api do
   @doc ~S"""
   Create a new DM channel with a user.
 
-  If successful, returns `{:ok, dm_channel}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, dm_channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   ## Examples
 
   ```Elixir
-  Nostrum.Api.create_dm(150061853001777154)
-  {:ok, %Nostrum.Struct.Channel{type: 1}}
+  Remedy.Api.create_dm(150061853001777154)
+  {:ok, %Remedy.Struct.Channel{type: 1}}
   ```
   """
   @spec create_dm(User.id()) :: error | {:ok, Channel.dm_channel()}
@@ -2576,7 +2576,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_dm/1`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_dm/1`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_dm!(User.id()) :: no_return | Channel.dm_channel()
   def create_dm!(user_id) do
@@ -2587,7 +2587,7 @@ defmodule Nostrum.Api do
   @doc """
   Creates a new group DM channel.
 
-  If successful, returns `{:ok, group_dm_channel}`. Otherwise, returns a `t:Nostrum.Api.error/0`.
+  If successful, returns `{:ok, group_dm_channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
 
   `access_tokens` are user oauth2 tokens. `nicks` is a map that maps a user id
   to a nickname.
@@ -2595,8 +2595,8 @@ defmodule Nostrum.Api do
   ## Examples
 
   ```Elixir
-  Nostrum.Api.create_group_dm(["6qrZcUqja7812RVdnEKjpzOL4CvHBFG"], %{41771983423143937 => "My Nickname"})
-  {:ok, %Nostrum.Struct.Channel{type: 3}}
+  Remedy.Api.create_group_dm(["6qrZcUqja7812RVdnEKjpzOL4CvHBFG"], %{41771983423143937 => "My Nickname"})
+  {:ok, %Remedy.Struct.Channel{type: 3}}
   ```
   """
   @spec create_group_dm([String.t()], %{optional(User.id()) => String.t()}) ::
@@ -2607,7 +2607,7 @@ defmodule Nostrum.Api do
   end
 
   @doc ~S"""
-  Same as `create_group_dm/2`, but raises `Nostrum.Error.ApiError` in case of failure.
+  Same as `create_group_dm/2`, but raises `Remedy.Error.ApiError` in case of failure.
   """
   @spec create_group_dm!([String.t()], %{optional(User.id()) => String.t()}) ::
           no_return | Channel.group_dm_channel()
@@ -2628,7 +2628,7 @@ defmodule Nostrum.Api do
   @doc """
   Gets a list of voice regions.
   """
-  @spec list_voice_regions() :: error | {:ok, [Nostrum.Struct.VoiceRegion.t()]}
+  @spec list_voice_regions() :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
   def list_voice_regions do
     request(:get, Constants.regions())
     |> handle_request_with_decode
@@ -2651,7 +2651,7 @@ defmodule Nostrum.Api do
             avatar: String.t()
           },
           AuditLogEntry.reason()
-        ) :: error | {:ok, Nostrum.Struct.Webhook.t()}
+        ) :: error | {:ok, Remedy.Struct.Webhook.t()}
   def create_webhook(channel_id, args, reason \\ nil) do
     %{
       method: :post,
@@ -2670,7 +2670,7 @@ defmodule Nostrum.Api do
   ## Parameters
     - `channel_id` - Channel to get webhooks for.
   """
-  @spec get_channel_webhooks(Channel.id()) :: error | {:ok, [Nostrum.Struct.Webhook.t()]}
+  @spec get_channel_webhooks(Channel.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
   def get_channel_webhooks(channel_id) do
     request(:get, Constants.webhooks_channel(channel_id))
     |> handle_request_with_decode
@@ -2682,7 +2682,7 @@ defmodule Nostrum.Api do
   ## Parameters
     - `guild_id` - Guild to get webhooks for.
   """
-  @spec get_guild_webhooks(Guild.id()) :: error | {:ok, [Nostrum.Struct.Webhook.t()]}
+  @spec get_guild_webhooks(Guild.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
   def get_guild_webhooks(guild_id) do
     request(:get, Constants.webhooks_guild(guild_id))
     |> handle_request_with_decode
@@ -2694,7 +2694,7 @@ defmodule Nostrum.Api do
   ## Parameters
     - `webhook_id` - Id of the webhook to get.
   """
-  @spec get_webhook(Webhook.id()) :: error | {:ok, Nostrum.Struct.Webhook.t()}
+  @spec get_webhook(Webhook.id()) :: error | {:ok, Remedy.Struct.Webhook.t()}
   def get_webhook(webhook_id) do
     request(:get, Constants.webhook(webhook_id))
     |> handle_request_with_decode
@@ -2711,7 +2711,7 @@ defmodule Nostrum.Api do
     - `webhook_token` - Token of the webhook to get.
   """
   @spec get_webhook_with_token(Webhook.id(), Webhook.token()) ::
-          error | {:ok, Nostrum.Struct.Webhook.t()}
+          error | {:ok, Remedy.Struct.Webhook.t()}
   def get_webhook_with_token(webhook_id, webhook_token) do
     request(:get, Constants.webhook_token(webhook_id, webhook_token))
     |> handle_request_with_decode
@@ -2734,7 +2734,7 @@ defmodule Nostrum.Api do
             avatar: String.t()
           },
           AuditLogEntry.reason()
-        ) :: error | {:ok, Nostrum.Struct.Webhook.t()}
+        ) :: error | {:ok, Remedy.Struct.Webhook.t()}
   def modify_webhook(webhook_id, args, reason \\ nil) do
     %{
       method: :patch,
@@ -2769,7 +2769,7 @@ defmodule Nostrum.Api do
             avatar: String.t()
           },
           AuditLogEntry.reason()
-        ) :: error | {:ok, Nostrum.Struct.Webhook.t()}
+        ) :: error | {:ok, Remedy.Struct.Webhook.t()}
   def modify_webhook_with_token(webhook_id, webhook_token, args, reason \\ nil) do
     %{
       method: :patch,
@@ -2906,7 +2906,7 @@ defmodule Nostrum.Api do
 
   ## Example
   ```elixir
-  Nostrum.Api.get_application_information
+  Remedy.Api.get_application_information
   {:ok,
   %{
     bot_public: false,
@@ -2944,7 +2944,7 @@ defmodule Nostrum.Api do
   ## Example
 
   ```elixir
-  iex> Nostrum.Api.get_global_application_commands
+  iex> Remedy.Api.get_global_application_commands
   {:ok,
    [
      %{
@@ -2983,7 +2983,7 @@ defmodule Nostrum.Api do
   ## Example
 
   ```elixir
-  Nostrum.Api.create_application_command(
+  Remedy.Api.create_application_command(
     %{name: "edit", description: "ed, man! man, ed", options: []}
   )
   ```
@@ -3195,12 +3195,12 @@ defmodule Nostrum.Api do
   # Why the two separate functions here?
   # For the standard use case of "responding to an interaction retrieved
   # from the gateway", `create_interaction_response/2` is perfectly
-  # sufficient. However, when one, for instance, uses Nostrum in a web
+  # sufficient. However, when one, for instance, uses Remedy in a web
   # service, or wants to respond to interactions at a later point in time,
   # we do not want the user to manually have to reconstruct interactions.
   @doc """
   Same as `create_interaction_response/3`, but directly takes the
-  `t:Nostrum.Struct.Interaction.t/0` received from the gateway.
+  `t:Remedy.Struct.Interaction.t/0` received from the gateway.
   """
   @spec create_interaction_response(Interaction.t(), map()) :: {:ok} | error
   def create_interaction_response(interaction, response) do
@@ -3225,11 +3225,11 @@ defmodule Nostrum.Api do
       content: "I copy and pasted this code."
     }
   }
-  Nostrum.Api.create_interaction_response(interaction, response)
+  Remedy.Api.create_interaction_response(interaction, response)
   ```
 
   As an alternative to passing the interaction ID and token, the
-  original `t:Nostrum.Struct.Interaction.t/0` can also be passed
+  original `t:Remedy.Struct.Interaction.t/0` can also be passed
   directly. See `create_interaction_response/1`.
   """
   @spec create_interaction_response(Interaction.id(), Interaction.token(), map()) :: {:ok} | error
@@ -3343,7 +3343,7 @@ defmodule Nostrum.Api do
   """
   @spec get_token() :: String.t()
   def get_token do
-    Application.get_env(:nostrum, :token)
+    Application.get_env(:remedy, :token)
   end
 
   defp handle_request_with_decode(response)

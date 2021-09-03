@@ -1,14 +1,14 @@
-defmodule Nostrum.Struct.MemberTest do
+defmodule Remedy.Struct.MemberTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Permission
-  alias Nostrum.Struct.{Channel, Guild, User, Overwrite}
-  alias Nostrum.Struct.Guild.{Member, Role}
+  alias Remedy.Permission
+  alias Remedy.Struct.{Channel, Guild, User, Overwrite}
+  alias Remedy.Struct.Guild.{Member, Role}
 
   doctest Member
 
   describe "mention/1" do
-    test "matches `Nostrum.Struct.User.mention/1`" do
+    test "matches `Remedy.Struct.User.mention/1`" do
       member = %Member{user: %User{id: 150_061_853_001_777_154}}
 
       assert(Member.mention(member) === User.mention(member.user))

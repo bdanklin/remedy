@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Embed.Video do
+defmodule Remedy.Struct.Embed.Video do
   @moduledoc """
   Struct representing a Discord embed video.
   """
 
-  alias Nostrum.Util
+  alias Remedy.Util
   alias Poison.Encoder
 
   defstruct [

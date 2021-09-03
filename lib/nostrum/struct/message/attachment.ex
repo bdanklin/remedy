@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Message.Attachment do
+defmodule Remedy.Struct.Message.Attachment do
   @moduledoc """
   Struct representing a Discord message attachment.
   """
 
-  alias Nostrum.{Snowflake, Util}
+  alias Remedy.{Snowflake, Util}
 
   defstruct [
     :id,

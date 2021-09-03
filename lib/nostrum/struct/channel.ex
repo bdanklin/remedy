@@ -1,8 +1,8 @@
-defmodule Nostrum.Struct.Channel do
+defmodule Remedy.Struct.Channel do
   @moduledoc ~S"""
   Struct representing a Discord guild channel.
 
-  A `Nostrum.Struct.Channel` represents all 5 types of channels. Each
+  A `Remedy.Struct.Channel` represents all 5 types of channels. Each
   channel has a field `:type` with any of the following values:
 
     * `0` - GUILD_TEXT
@@ -16,22 +16,22 @@ defmodule Nostrum.Struct.Channel do
 
   ## Mentioning Channels in Messages
 
-  A `Nostrum.Struct.Channel` can be mentioned in message content using the `String.Chars`
+  A `Remedy.Struct.Channel` can be mentioned in message content using the `String.Chars`
   protocol or `mention/1`.
 
   ```Elixir
-  channel = %Nostrum.Struct.Channel{id: 381889573426429952}
-  Nostrum.Api.create_message!(184046599834435585, "#{channel}")
-  %Nostrum.Struct.Message{content: "<#381889573426429952>"}
+  channel = %Remedy.Struct.Channel{id: 381889573426429952}
+  Remedy.Api.create_message!(184046599834435585, "#{channel}")
+  %Remedy.Struct.Message{content: "<#381889573426429952>"}
 
-  channel = %Nostrum.Struct.Channel{id: 280085880452939778}
-  Nostrum.Api.create_message!(280085880452939778, "#{Nostrum.Struct.Channel.mention(channel)}")
-  %Nostrum.Struct.Message{content: "<#280085880452939778>"}
+  channel = %Remedy.Struct.Channel{id: 280085880452939778}
+  Remedy.Api.create_message!(280085880452939778, "#{Remedy.Struct.Channel.mention(channel)}")
+  %Remedy.Struct.Message{content: "<#280085880452939778>"}
   ```
   """
 
-  alias Nostrum.Struct.{Channel, Guild, Message, Overwrite, User}
-  alias Nostrum.{Snowflake, Util}
+  alias Remedy.Struct.{Channel, Guild, Message, Overwrite, User}
+  alias Remedy.{Snowflake, Util}
 
   defstruct [
     :id,
@@ -106,7 +106,7 @@ defmodule Nostrum.Struct.Channel do
   @type last_pin_timestamp :: String.t() | nil
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a text channel in a guild.
+  A `Remedy.Struct.Channel` that represents a text channel in a guild.
   """
   @type guild_text_channel :: %__MODULE__{
           id: id,
@@ -129,7 +129,7 @@ defmodule Nostrum.Struct.Channel do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a DM channel.
+  A `Remedy.Struct.Channel` that represents a DM channel.
   """
   @type dm_channel :: %__MODULE__{
           id: id,
@@ -152,7 +152,7 @@ defmodule Nostrum.Struct.Channel do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a voice channel in a guild.
+  A `Remedy.Struct.Channel` that represents a voice channel in a guild.
   """
   @type guild_voice_channel :: %__MODULE__{
           id: id,
@@ -175,7 +175,7 @@ defmodule Nostrum.Struct.Channel do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a group DM channel.
+  A `Remedy.Struct.Channel` that represents a group DM channel.
   """
   @type group_dm_channel :: %__MODULE__{
           id: id,
@@ -198,7 +198,7 @@ defmodule Nostrum.Struct.Channel do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a channel category in a guild.
+  A `Remedy.Struct.Channel` that represents a channel category in a guild.
   """
   @type channel_category :: %__MODULE__{
           id: id,
@@ -221,7 +221,7 @@ defmodule Nostrum.Struct.Channel do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a channel in a guild.
+  A `Remedy.Struct.Channel` that represents a channel in a guild.
   """
   @type guild_channel ::
           guild_text_channel
@@ -229,7 +229,7 @@ defmodule Nostrum.Struct.Channel do
           | channel_category
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a text channel.
+  A `Remedy.Struct.Channel` that represents a text channel.
   """
   @type text_channel ::
           guild_text_channel
@@ -237,7 +237,7 @@ defmodule Nostrum.Struct.Channel do
           | group_dm_channel
 
   @typedoc """
-  A `Nostrum.Struct.Channel` that represents a voice channel.
+  A `Remedy.Struct.Channel` that represents a voice channel.
   """
   @type voice_channel :: guild_voice_channel
 
@@ -249,13 +249,13 @@ defmodule Nostrum.Struct.Channel do
           | channel_category
 
   @doc ~S"""
-  Formats a `Nostrum.Struct.Channel` into a mention.
+  Formats a `Remedy.Struct.Channel` into a mention.
 
   ## Examples
 
   ```Elixir
-  iex> channel = %Nostrum.Struct.Channel{id: 381889573426429952}
-  ...> Nostrum.Struct.Channel.mention(channel)
+  iex> channel = %Remedy.Struct.Channel{id: 381889573426429952}
+  ...> Remedy.Struct.Channel.mention(channel)
   "<#381889573426429952>"
   ```
   """

@@ -1,7 +1,7 @@
-defmodule Nostrum.Struct.GuildTest do
+defmodule Remedy.Struct.GuildTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Struct.Guild
+  alias Remedy.Struct.Guild
 
   doctest Guild
 end

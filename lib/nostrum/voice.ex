@@ -1,11 +1,11 @@
-defmodule Nostrum.Voice do
+defmodule Remedy.Voice do
   @moduledoc """
   Interface for playing audio through Discord's voice channels.
 
   # Using Discord Voice Channels
-  To play sound in Discord with Nostrum, you'll need `ffmpeg` to be installed.
+  To play sound in Discord with Remedy, you'll need `ffmpeg` to be installed.
   If you don't have the executable `ffmpeg` in the path, the absolute path may
-  be configured through config keys `:nostrum, :ffmpeg`. If you don't want to use
+  be configured through config keys `:remedy, :ffmpeg`. If you don't want to use
   ffmpeg, read on to the next section.
 
   A bot may be connected to at most one voice channel per guild. For this reason,
@@ -21,19 +21,19 @@ defmodule Nostrum.Voice do
 
   ## Voice Without FFmpeg
   If you wish to BYOE (Bring Your Own Encoder), there are a few options.
-    - Use `:raw` as `type` for `Nostrum.Voice.play/4`
+    - Use `:raw` as `type` for `Remedy.Voice.play/4`
       - Provide the complete list of opus frames as the input
-    - Use `:raw_s` as `type` for `Nostrum.Voice.play/4`
+    - Use `:raw_s` as `type` for `Remedy.Voice.play/4`
       - Provide a stateful enumerable of opus frames as input (think GenServer wrapped in `Stream.unfold/2`)
     - Use lower level functions to send opus frames at your leisure
-      - Send packets on your own time using `Nostrum.Voice.send_frames/2`
+      - Send packets on your own time using `Remedy.Voice.send_frames/2`
   """
 
-  alias Nostrum.Api
-  alias Nostrum.Struct.{Channel, Guild, VoiceState}
-  alias Nostrum.Voice.Audio
-  alias Nostrum.Voice.Session
-  alias Nostrum.Voice.Supervisor, as: VoiceSupervisor
+  alias Remedy.Api
+  alias Remedy.Struct.{Channel, Guild, VoiceState}
+  alias Remedy.Voice.Audio
+  alias Remedy.Voice.Session
+  alias Remedy.Voice.Supervisor, as: VoiceSupervisor
   alias Porcelain.Process, as: Proc
 
   require Logger
@@ -68,7 +68,7 @@ defmodule Nostrum.Voice do
   @doc """
   Joins or moves the bot to a voice channel.
 
-  This function is equivalent to `Nostrum.Api.update_voice_state/4`.
+  This function is equivalent to `Remedy.Api.update_voice_state/4`.
   """
   @spec join_channel(Guild.id(), Channel.id(), boolean, boolean) :: no_return | :ok
   def join_channel(guild_id, channel_id, self_mute \\ false, self_deaf \\ false) do
@@ -78,7 +78,7 @@ defmodule Nostrum.Voice do
   @doc """
   Leaves the voice channel of the given guild id.
 
-  This function is equivalent to calling `Nostrum.Api.update_voice_state(guild_id, nil)`.
+  This function is equivalent to calling `Remedy.Api.update_voice_state(guild_id, nil)`.
   """
   @spec leave_channel(Guild.id()) :: no_return | :ok
   def leave_channel(guild_id) do
@@ -129,36 +129,36 @@ defmodule Nostrum.Voice do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.play(123456789, "~/music/FavoriteSong.mp3", :url)
+  iex> Remedy.Voice.play(123456789, "~/music/FavoriteSong.mp3", :url)
 
-  iex> Nostrum.Voice.play(123456789, "~/music/NotFavoriteButStillGoodSong.mp3", :url, volume: 0.5)
+  iex> Remedy.Voice.play(123456789, "~/music/NotFavoriteButStillGoodSong.mp3", :url, volume: 0.5)
 
-  iex> Nostrum.Voice.play(123456789, "~/music/ThisWillBeHeavilyDistorted.mp3", :url, volume: 1000)
+  iex> Remedy.Voice.play(123456789, "~/music/ThisWillBeHeavilyDistorted.mp3", :url, volume: 1000)
   ```
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
   iex> raw_data = File.read!("~/music/sound_effect.wav")
 
-  iex> Nostrum.Voice.play(123456789, raw_data, :pipe)
+  iex> Remedy.Voice.play(123456789, raw_data, :pipe)
   ```
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.play(123456789, "https://www.youtube.com/watch?v=b4RJ-QGOtw4", :ytdl,
+  iex> Remedy.Voice.play(123456789, "https://www.youtube.com/watch?v=b4RJ-QGOtw4", :ytdl,
   ...>   realtime: true, start_pos: "0:17", duration: "30")
 
-  iex> Nostrum.Voice.play(123456789, "https://www.youtube.com/watch?v=0ngcL_5ekXo", :ytdl,
+  iex> Remedy.Voice.play(123456789, "https://www.youtube.com/watch?v=0ngcL_5ekXo", :ytdl,
   ...>   filter: "lowpass=f=1200", filter: "highpass=f=300", filter: "asetrate=44100*0.5")
   ```
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.play(123456789, "https://www.twitch.tv/pestily", :stream)
+  iex> Remedy.Voice.play(123456789, "https://www.twitch.tv/pestily", :stream)
 
-  iex> Nostrum.Voice.play(123456789, "https://youtu.be/LN4r-K8ZP5Q", :stream)
+  iex> Remedy.Voice.play(123456789, "https://youtu.be/LN4r-K8ZP5Q", :stream)
   ```
   """
   @spec play(
@@ -218,11 +218,11 @@ defmodule Nostrum.Voice do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.play(123456789, "http://brandthill.com/files/weird_dubstep_noises.mp3")
+  iex> Remedy.Voice.play(123456789, "http://brandthill.com/files/weird_dubstep_noises.mp3")
 
-  iex> Nostrum.Voice.stop(123456789)
+  iex> Remedy.Voice.stop(123456789)
   ```
   """
   @spec stop(Guild.id()) :: :ok | {:error, String.t()}
@@ -260,11 +260,11 @@ defmodule Nostrum.Voice do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.play(123456789, "~/files/twelve_hour_loop_of_waterfall_sounds.mp3")
+  iex> Remedy.Voice.play(123456789, "~/files/twelve_hour_loop_of_waterfall_sounds.mp3")
 
-  iex> Nostrum.Voice.pause(123456789)
+  iex> Remedy.Voice.pause(123456789)
   ```
   """
   @spec pause(Guild.id()) :: :ok | {:error, String.t()}
@@ -300,13 +300,13 @@ defmodule Nostrum.Voice do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.play(123456789, "~/stuff/Toto - Africa (Bass Boosted)")
+  iex> Remedy.Voice.play(123456789, "~/stuff/Toto - Africa (Bass Boosted)")
 
-  iex> Nostrum.Voice.pause(123456789)
+  iex> Remedy.Voice.pause(123456789)
 
-  iex> Nostrum.Voice.resume(123456789)
+  iex> Remedy.Voice.resume(123456789)
   ```
   """
   @spec resume(Guild.id()) :: :ok | {:error, String.t()}
@@ -342,16 +342,16 @@ defmodule Nostrum.Voice do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.play(123456789, "https://a-real-site.biz/RickRoll.m4a")
+  iex> Remedy.Voice.play(123456789, "https://a-real-site.biz/RickRoll.m4a")
 
-  iex> Nostrum.Voice.playing?(123456789)
+  iex> Remedy.Voice.playing?(123456789)
   true
 
-  iex> Nostrum.Voice.pause(123456789)
+  iex> Remedy.Voice.pause(123456789)
 
-  iex> Nostrum.Voice.playing?(123456789)
+  iex> Remedy.Voice.playing?(123456789)
   false
   ```
   """
@@ -373,14 +373,14 @@ defmodule Nostrum.Voice do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.ready?(123456789)
+  iex> Remedy.Voice.ready?(123456789)
   true
 
-  iex> Nostrum.Voice.leave_channel(123456789)
+  iex> Remedy.Voice.leave_channel(123456789)
 
-  iex> Nostrum.Voice.ready?(123456789)
+  iex> Remedy.Voice.ready?(123456789)
   false
   ```
   """
@@ -400,14 +400,14 @@ defmodule Nostrum.Voice do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Voice.join_channel(123456789, 420691337)
+  iex> Remedy.Voice.join_channel(123456789, 420691337)
 
-  iex> Nostrum.Voice.get_channel(123456789)
+  iex> Remedy.Voice.get_channel(123456789)
   420691337
 
-  iex> Nostrum.Voice.leave_channel(123456789)
+  iex> Remedy.Voice.leave_channel(123456789)
 
-  iex> Nostrum.Voice.get_channel(123456789)
+  iex> Remedy.Voice.get_channel(123456789)
   nil
   ```
   """
@@ -426,7 +426,7 @@ defmodule Nostrum.Voice do
   Low-level. Set speaking flag in voice channel.
 
   This function does not need to be called unless you are sending audio frames
-  directly using `Nostrum.Voice.send_frames/2`.
+  directly using `Remedy.Voice.send_frames/2`.
   """
   @doc since: "0.5.0"
   @spec set_is_speaking(Guild.id(), boolean) :: :ok
@@ -435,15 +435,15 @@ defmodule Nostrum.Voice do
   @doc """
   Low-level. Send pre-encoded audio packets directly.
 
-  Speaking should be set to true via `Nostrum.Voice.set_is_speaking/2` before sending frames.
+  Speaking should be set to true via `Remedy.Voice.set_is_speaking/2` before sending frames.
 
   Opus frames will be encrypted and prefixed with the appropriate RTP header and sent immediately.
   The length of `frames` depends on how often you wish to send a sequence of frames.
   A single frame contains 20ms of audio. Sending more than 50 frames (1 second of audio)
   in a single function call may result in inconsistent playback rates.
 
-  `Nostrum.Voice.playing?/1` will not return accurate values when using `send_frames/2`
-  instead of `Nostrum.Voice.play/4`
+  `Remedy.Voice.playing?/1` will not return accurate values when using `send_frames/2`
+  instead of `Remedy.Voice.play/4`
   """
   @doc since: "0.5.0"
   @spec send_frames(Guild.id(), [binary]) :: :ok | {:error, String.t()}
@@ -462,7 +462,7 @@ defmodule Nostrum.Voice do
   Low-level. Manually connect to voice websockets gateway.
 
   This function should only be called if config option `:voice_auto_connect` is set to `false`.
-  By default Nostrum will automatically create a voice gateway when joining a channel.
+  By default Remedy will automatically create a voice gateway when joining a channel.
   """
   @doc since: "0.5.0"
   @spec connect_to_gateway(Guild.id()) :: :ok | {:error, String.t()}
@@ -514,7 +514,7 @@ defmodule Nostrum.Voice do
 
     state = Map.put(state, guild_id, voice)
 
-    if Application.get_env(:nostrum, :voice_auto_connect, true),
+    if Application.get_env(:remedy, :voice_auto_connect, true),
       do: start_if_ready(voice)
 
     {:reply, voice, state}

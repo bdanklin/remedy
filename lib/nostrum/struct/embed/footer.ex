@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Embed.Footer do
+defmodule Remedy.Struct.Embed.Footer do
   @moduledoc """
   Struct representing a Discord embed footer.
   """
 
-  alias Nostrum.Util
+  alias Remedy.Util
   alias Poison.Encoder
 
   defstruct [

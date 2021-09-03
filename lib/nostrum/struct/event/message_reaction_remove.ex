@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Event.MessageReactionRemove do
+defmodule Remedy.Struct.Event.MessageReactionRemove do
   @moduledoc "Sent when a user removes a reaction from a message"
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Struct.{Channel, Emoji, Guild, Message, User}
-  alias Nostrum.Util
+  alias Remedy.Struct.{Channel, Emoji, Guild, Message, User}
+  alias Remedy.Util
 
   defstruct [:user_id, :channel_id, :message_id, :guild_id, :emoji]
 

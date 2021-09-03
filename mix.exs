@@ -1,10 +1,10 @@
-defmodule Nostrum.Mixfile do
+defmodule Remedy.Mixfile do
   @moduledoc false
   use Mix.Project
 
   def project do
     [
-      app: :nostrum,
+      app: :remedy,
       version: "0.4.7",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -12,9 +12,9 @@ defmodule Nostrum.Mixfile do
       start_permanent: Mix.env() == :prod,
       description: "An elixir Discord library",
       package: package(),
-      name: "Nostrum",
-      source_url: "https://github.com/kraigie/nostrum",
-      homepage_url: "https://github.com/kraigie/nostrum",
+      name: "Remedy",
+      source_url: "https://github.com/kraigie/remedy",
+      homepage_url: "https://github.com/kraigie/remedy",
       deps: deps(),
       docs: docs(),
       dialyzer: dialyzer(),
@@ -28,7 +28,7 @@ defmodule Nostrum.Mixfile do
   def application do
     [
       extra_applications: [:logger, :inets],
-      mod: {Nostrum.Application, []}
+      mod: {Remedy.Application, []}
     ]
   end
 
@@ -58,13 +58,13 @@ defmodule Nostrum.Mixfile do
   def groups_for_modules do
     [
       Api: [
-        ~r/Nostrum.Api/
+        ~r/Remedy.Api/
       ],
       Cache: [
-        ~r/Nostrum.Cache/
+        ~r/Remedy.Cache/
       ],
       Structs: [
-        ~r/Nostrum.Struct/
+        ~r/Remedy.Struct/
       ]
     ]
   end
@@ -77,12 +77,12 @@ defmodule Nostrum.Mixfile do
 
   def package do
     [
-      name: :nostrum,
+      name: :remedy,
       licenses: ["MIT"],
       maintainers: ["Craig Dazey", "Johannes Christ", "Joe Banks"],
       links: %{
-        "GitHub" => "https://github.com/Kraigie/nostrum/",
-        "Docs" => "https://kraigie.github.io/nostrum/"
+        "GitHub" => "https://github.com/Kraigie/remedy/",
+        "Docs" => "https://kraigie.github.io/remedy/"
       }
     ]
   end

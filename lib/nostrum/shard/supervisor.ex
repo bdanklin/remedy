@@ -1,14 +1,14 @@
-defmodule Nostrum.Shard.Supervisor do
+defmodule Remedy.Shard.Supervisor do
   @moduledoc false
 
   use Supervisor
 
-  alias Nostrum.Cache.Mapping.GuildShard
-  alias Nostrum.Error.CacheError
-  alias Nostrum.Shard
-  alias Nostrum.Shard.Session
-  alias Nostrum.Shard.Stage.{Cache, Producer}
-  alias Nostrum.Util
+  alias Remedy.Cache.Mapping.GuildShard
+  alias Remedy.Error.CacheError
+  alias Remedy.Shard
+  alias Remedy.Shard.Session
+  alias Remedy.Shard.Stage.{Cache, Producer}
+  alias Remedy.Util
 
   require Logger
 
@@ -16,7 +16,7 @@ defmodule Nostrum.Shard.Supervisor do
     {url, gateway_shard_count} = Util.gateway()
 
     num_shards =
-      case Application.get_env(:nostrum, :num_shards, :auto) do
+      case Application.get_env(:remedy, :num_shards, :auto) do
         :auto ->
           gateway_shard_count
 
@@ -27,7 +27,7 @@ defmodule Nostrum.Shard.Supervisor do
           Logger.warn(
             "Configured shard count (#{shard_count}) " <>
               "differs from Discord Gateway's recommended shard count (#{gateway_shard_count}). " <>
-              "Consider using `num_shards: :auto` option in your Nostrum config."
+              "Consider using `num_shards: :auto` option in your Remedy config."
           )
 
           shard_count
@@ -46,7 +46,7 @@ defmodule Nostrum.Shard.Supervisor do
   def update_status(status, game, stream, type) do
     ShardSupervisor
     |> Supervisor.which_children()
-    |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Nostrum.Shard end)
+    |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard end)
     |> Enum.map(fn {_id, pid, _type, _modules} -> Supervisor.which_children(pid) end)
     |> List.flatten()
     |> Enum.map(fn {_id, pid, _type, _modules} ->
@@ -59,11 +59,11 @@ defmodule Nostrum.Shard.Supervisor do
       {:ok, shard_id} ->
         ShardSupervisor
         |> Supervisor.which_children()
-        |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Nostrum.Shard end)
+        |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard end)
         |> Enum.filter(fn {id, _pid, _type, _modules} -> id == shard_id end)
         |> Enum.map(fn {_id, pid, _type, _modules} -> Supervisor.which_children(pid) end)
         |> List.flatten()
-        |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Nostrum.Shard.Session end)
+        |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard.Session end)
         |> List.first()
         |> elem(1)
         |> Session.update_voice_state(guild_id, channel_id, self_mute, self_deaf)

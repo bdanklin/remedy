@@ -1,13 +1,13 @@
-defmodule Nostrum.Struct.Interaction do
+defmodule Remedy.Struct.Interaction do
   @moduledoc "Slash command invocation struct."
   # https://discord.com/developers/docs/interactions/slash-commands#interaction
 
-  alias Nostrum.Snowflake
-  alias Nostrum.Struct.ApplicationCommandInteractionData
-  alias Nostrum.Struct.Guild.Member
-  alias Nostrum.Struct.User
-  alias Nostrum.Struct.{Channel, Guild, Message}
-  alias Nostrum.Util
+  alias Remedy.Snowflake
+  alias Remedy.Struct.ApplicationCommandInteractionData
+  alias Remedy.Struct.Guild.Member
+  alias Remedy.Struct.User
+  alias Remedy.Struct.{Channel, Guild, Message}
+  alias Remedy.Util
 
   defstruct [
     :id,

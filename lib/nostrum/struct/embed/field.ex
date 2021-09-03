@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Embed.Field do
+defmodule Remedy.Struct.Embed.Field do
   @moduledoc """
   Struct representing a Discord embed field.
   """
 
-  alias Nostrum.Util
+  alias Remedy.Util
   alias Poison.Encoder
 
   defstruct [

@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Event.MessageDelete do
+defmodule Remedy.Struct.Event.MessageDelete do
   @moduledoc """
   Struct representing a Message Delete event
   """
 
-  alias Nostrum.Struct.{Channel, Guild, Message}
+  alias Remedy.Struct.{Channel, Guild, Message}
 
   defstruct [
     :id,

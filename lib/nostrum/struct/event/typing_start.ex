@@ -1,12 +1,12 @@
-defmodule Nostrum.Struct.Event.TypingStart do
+defmodule Remedy.Struct.Event.TypingStart do
   @moduledoc "Sent when a user starts typing in a channel"
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Struct.Channel
-  alias Nostrum.Struct.Guild
-  alias Nostrum.Struct.Guild.Member
-  alias Nostrum.Struct.User
-  alias Nostrum.Util
+  alias Remedy.Struct.Channel
+  alias Remedy.Struct.Guild
+  alias Remedy.Struct.Guild.Member
+  alias Remedy.Struct.User
+  alias Remedy.Util
 
   defstruct [:channel_id, :guild_id, :user_id, :timestamp, :member]
 

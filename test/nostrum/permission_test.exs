@@ -1,7 +1,7 @@
-defmodule Nostrum.PermissionTest do
+defmodule Remedy.PermissionTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Permission
+  alias Remedy.Permission
 
   require Permission
 

@@ -1,9 +1,9 @@
-defmodule Nostrum.Voice.Event do
+defmodule Remedy.Voice.Event do
   @moduledoc false
 
-  alias Nostrum.Cache.UserCache
-  alias Nostrum.Voice
-  alias Nostrum.Voice.{Audio, Payload, Session}
+  alias Remedy.Cache.UserCache
+  alias Remedy.Voice
+  alias Remedy.Voice.{Audio, Payload, Session}
 
   require Logger
 
@@ -65,10 +65,12 @@ defmodule Nostrum.Voice.Event do
     Logger.debug(fn ->
       user_id = payload["d"]["user_id"] |> String.to_integer()
 
-      "Voice client connected: #{case UserCache.get(user_id) do
-        {:ok, %{username: username}} -> username
-        _ -> user_id
-      end}"
+      "Voice client connected: #{
+        case UserCache.get(user_id) do
+          {:ok, %{username: username}} -> username
+          _ -> user_id
+        end
+      }"
     end)
 
     state
@@ -78,10 +80,12 @@ defmodule Nostrum.Voice.Event do
     Logger.debug(fn ->
       user_id = payload["d"]["user_id"] |> String.to_integer()
 
-      "Voice client disconnected: #{case UserCache.get(user_id) do
-        {:ok, %{username: username}} -> username
-        _ -> user_id
-      end}"
+      "Voice client disconnected: #{
+        case UserCache.get(user_id) do
+          {:ok, %{username: username}} -> username
+          _ -> user_id
+        end
+      }"
     end)
 
     state

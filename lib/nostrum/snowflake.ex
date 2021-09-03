@@ -1,9 +1,9 @@
-defmodule Nostrum.Snowflake do
+defmodule Remedy.Snowflake do
   @moduledoc """
   Functions that work on Snowflakes.
   """
 
-  alias Nostrum.Constants
+  alias Remedy.Constants
 
   @typedoc """
   The type that represents snowflakes in JSON.
@@ -27,16 +27,16 @@ defmodule Nostrum.Snowflake do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Snowflake.is_snowflake(89918932789497856)
+  iex> Remedy.Snowflake.is_snowflake(89918932789497856)
   true
 
-  iex> Nostrum.Snowflake.is_snowflake(-1)
+  iex> Remedy.Snowflake.is_snowflake(-1)
   false
 
-  iex> Nostrum.Snowflake.is_snowflake(0xFFFFFFFFFFFFFFFF + 1)
+  iex> Remedy.Snowflake.is_snowflake(0xFFFFFFFFFFFFFFFF + 1)
   false
 
-  iex> Nostrum.Snowflake.is_snowflake("117789813427535878")
+  iex> Remedy.Snowflake.is_snowflake("117789813427535878")
   false
   ```
   """
@@ -49,19 +49,19 @@ defmodule Nostrum.Snowflake do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Snowflake.cast(200317799350927360)
+  iex> Remedy.Snowflake.cast(200317799350927360)
   {:ok, 200317799350927360}
 
-  iex> Nostrum.Snowflake.cast("200317799350927360")
+  iex> Remedy.Snowflake.cast("200317799350927360")
   {:ok, 200317799350927360}
 
-  iex> Nostrum.Snowflake.cast(nil)
+  iex> Remedy.Snowflake.cast(nil)
   {:ok, nil}
 
-  iex> Nostrum.Snowflake.cast(true)
+  iex> Remedy.Snowflake.cast(true)
   :error
 
-  iex> Nostrum.Snowflake.cast(-1)
+  iex> Remedy.Snowflake.cast(-1)
   :error
   ```
   """
@@ -96,7 +96,7 @@ defmodule Nostrum.Snowflake do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Snowflake.dump(109112383011581952)
+  iex> Remedy.Snowflake.dump(109112383011581952)
   "109112383011581952"
   ```
   """
@@ -115,11 +115,11 @@ defmodule Nostrum.Snowflake do
 
   ```Elixir
   iex> {:ok, dt, _} = DateTime.from_iso8601("2016-05-05T21:04:13.203Z")
-  iex> Nostrum.Snowflake.from_datetime(dt)
+  iex> Remedy.Snowflake.from_datetime(dt)
   {:ok, 177888205536755712}
 
   iex> {:ok, dt, _} = DateTime.from_iso8601("1998-12-25T00:00:00.000Z")
-  iex> Nostrum.Snowflake.from_datetime(dt)
+  iex> Remedy.Snowflake.from_datetime(dt)
   :error
   ```
   """
@@ -154,7 +154,7 @@ defmodule Nostrum.Snowflake do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Snowflake.creation_time(177888205536886784)
+  iex> Remedy.Snowflake.creation_time(177888205536886784)
   ~U[2016-05-05 21:04:13.203Z]
   ```
   """

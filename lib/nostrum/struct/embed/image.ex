@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Embed.Image do
+defmodule Remedy.Struct.Embed.Image do
   @moduledoc """
   Struct representing a Discord embed image.
   """
 
-  alias Nostrum.Util
+  alias Remedy.Util
   alias Poison.Encoder
 
   defstruct [

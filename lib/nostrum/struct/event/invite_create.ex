@@ -1,10 +1,10 @@
-defmodule Nostrum.Struct.Event.InviteCreate do
+defmodule Remedy.Struct.Event.InviteCreate do
   @moduledoc """
   Struct representing an Invite Create event
   """
 
-  alias Nostrum.Struct.{Channel, Guild, User}
-  alias Nostrum.Util
+  alias Remedy.Struct.{Channel, Guild, User}
+  alias Remedy.Util
 
   defstruct [
     :channel_id,

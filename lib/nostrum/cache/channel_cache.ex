@@ -1,4 +1,4 @@
-defmodule Nostrum.Cache.ChannelCache do
+defmodule Remedy.Cache.ChannelCache do
   @moduledoc """
   Cache for channels.
 
@@ -14,24 +14,24 @@ defmodule Nostrum.Cache.ChannelCache do
   ```
   """
 
-  alias Nostrum.Cache.GuildCache
-  alias Nostrum.Struct.Channel
-  alias Nostrum.Util
+  alias Remedy.Cache.GuildCache
+  alias Remedy.Struct.Channel
+  alias Remedy.Util
 
-  import Nostrum.Snowflake, only: [is_snowflake: 1]
+  import Remedy.Snowflake, only: [is_snowflake: 1]
 
   @doc ~S"""
   Retrieves a channel from the cache.
 
   Internally, the ChannelCache process only stores
-  `t:Nostrum.Struct.Channel.dm_channel/0` references. To get channel
-  information, a call is made to a `Nostrum.Cache.GuildCache`.
+  `t:Remedy.Struct.Channel.dm_channel/0` references. To get channel
+  information, a call is made to a `Remedy.Cache.GuildCache`.
 
   If successful, returns `{:ok, channel}`. Otherwise, returns `{:error, reason}`
 
   ## Example
   ```elixir
-  case Nostrum.Cache.ChannelCache.get(133333333337) do
+  case Remedy.Cache.ChannelCache.get(133333333337) do
     {:ok, channel} ->
       "We found " <> channel.name
     {:error, _reason} ->
@@ -39,8 +39,8 @@ defmodule Nostrum.Cache.ChannelCache do
   end
   ```
   """
-  @spec get(Channel.id() | Nostrum.Struct.Message.t()) :: {:error, atom} | {:ok, Channel.t()}
-  def get(%Nostrum.Struct.Message{channel_id: channel_id}), do: get(channel_id)
+  @spec get(Channel.id() | Remedy.Struct.Message.t()) :: {:error, atom} | {:ok, Channel.t()}
+  def get(%Remedy.Struct.Message{channel_id: channel_id}), do: get(channel_id)
 
   def get(id) when is_snowflake(id) do
     case lookup(id) do
@@ -50,10 +50,10 @@ defmodule Nostrum.Cache.ChannelCache do
   end
 
   @doc ~S"""
-  Same as `get/1`, but raises `Nostrum.Error.CacheError` in case of a failure.
+  Same as `get/1`, but raises `Remedy.Error.CacheError` in case of a failure.
   """
-  @spec get!(Channel.id() | Nostrum.Struct.Message.t()) :: no_return | Channel.t()
-  def get!(%Nostrum.Struct.Message{channel_id: channel_id}), do: get!(channel_id)
+  @spec get!(Channel.id() | Remedy.Struct.Message.t()) :: no_return | Channel.t()
+  def get!(%Remedy.Struct.Message{channel_id: channel_id}), do: get!(channel_id)
   def get!(id) when is_snowflake(id), do: id |> get |> Util.bangify_find(id, __MODULE__)
 
   @doc false

@@ -1,4 +1,4 @@
-defmodule Nostrum.Cache.Mapping.ShardPidNum do
+defmodule Remedy.Cache.Mapping.ShardPidNum do
   @moduledoc """
   Simple mapping of shard pid to num
   """

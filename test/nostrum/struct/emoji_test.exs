@@ -1,7 +1,7 @@
-defmodule Nostrum.Struct.EmojiTest do
+defmodule Remedy.Struct.EmojiTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Struct.Emoji
+  alias Remedy.Struct.Emoji
 
   doctest Emoji
 

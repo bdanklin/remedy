@@ -1,30 +1,30 @@
-defmodule Nostrum.Struct.Guild.Member do
+defmodule Remedy.Struct.Guild.Member do
   @moduledoc ~S"""
   Struct representing a Discord guild member.
 
-  A `Nostrum.Struct.Guild.Member` stores a `Nostrum.Struct.User`'s properties
-  pertaining to a specific `Nostrum.Struct.Guild`.
+  A `Remedy.Struct.Guild.Member` stores a `Remedy.Struct.User`'s properties
+  pertaining to a specific `Remedy.Struct.Guild`.
 
   ## Mentioning Members in Messages
 
-  A `Nostrum.Struct.Guild.Member` can be mentioned in message content using the `String.Chars`
+  A `Remedy.Struct.Guild.Member` can be mentioned in message content using the `String.Chars`
   protocol or `mention/1`.
 
   ```Elixir
-  member = %Nostrum.Struct.Guild.Member{user: Nostrum.Struct.User{id: 120571255635181568}}
-  Nostrum.Api.create_message!(184046599834435585, "#{member}")
-  %Nostrum.Struct.Message{content: "<@120571255635181568>"}
+  member = %Remedy.Struct.Guild.Member{user: Remedy.Struct.User{id: 120571255635181568}}
+  Remedy.Api.create_message!(184046599834435585, "#{member}")
+  %Remedy.Struct.Message{content: "<@120571255635181568>"}
 
-  member = %Nostrum.Struct.Guild.Member{user: Nostrum.Struct.User{id: 89918932789497856}}
-  Nostrum.Api.create_message!(280085880452939778, "#{Nostrum.Struct.Guild.Member.mention(member)}")
-  %Nostrum.Struct.Message{content: "<@89918932789497856>"}
+  member = %Remedy.Struct.Guild.Member{user: Remedy.Struct.User{id: 89918932789497856}}
+  Remedy.Api.create_message!(280085880452939778, "#{Remedy.Struct.Guild.Member.mention(member)}")
+  %Remedy.Struct.Message{content: "<@89918932789497856>"}
   ```
   """
 
-  alias Nostrum.Permission
-  alias Nostrum.Struct.{Channel, Guild, User}
-  alias Nostrum.Struct.Guild.Role
-  alias Nostrum.{Snowflake, Util}
+  alias Remedy.Permission
+  alias Remedy.Struct.{Channel, Guild, User}
+  alias Remedy.Struct.Guild.Role
+  alias Remedy.{Snowflake, Util}
 
   defstruct [
     :user,
@@ -79,13 +79,13 @@ defmodule Nostrum.Struct.Guild.Member do
         }
 
   @doc ~S"""
-  Formats a `Nostrum.Struct.Guild.Member` into a mention.
+  Formats a `Remedy.Struct.Guild.Member` into a mention.
 
   ## Examples
 
   ```Elixir
-  iex> member = %Nostrum.Struct.Guild.Member{user: %Nostrum.Struct.User{id: 177888205536886784}}
-  ...> Nostrum.Struct.Guild.Member.mention(member)
+  iex> member = %Remedy.Struct.Guild.Member{user: %Remedy.Struct.User{id: 177888205536886784}}
+  ...> Remedy.Struct.Guild.Member.mention(member)
   "<@177888205536886784>"
   ```
   """
@@ -98,9 +98,9 @@ defmodule Nostrum.Struct.Guild.Member do
   ## Examples
 
   ```Elixir
-  guild = Nostrum.Cache.GuildCache.get!(279093381723062272)
+  guild = Remedy.Cache.GuildCache.get!(279093381723062272)
   member = Map.get(guild.members, 177888205536886784)
-  Nostrum.Struct.Guild.Member.guild_permissions(member, guild)
+  Remedy.Struct.Guild.Member.guild_permissions(member, guild)
   #=> [:administrator]
   ```
   """
@@ -134,15 +134,15 @@ defmodule Nostrum.Struct.Guild.Member do
   end
 
   @doc """
-  Returns a member's permissions in a guild channel, based on its `Nostrum.Struct.Overwrite`s.
+  Returns a member's permissions in a guild channel, based on its `Remedy.Struct.Overwrite`s.
 
   ## Examples
 
   ```Elixir
-  guild = Nostrum.Cache.GuildCache.get!(279093381723062272)
+  guild = Remedy.Cache.GuildCache.get!(279093381723062272)
   member = Map.get(guild.members, 177888205536886784)
   channel_id = 381889573426429952
-  Nostrum.Struct.Guild.Member.guild_channel_permissions(member, guild, channel_id)
+  Remedy.Struct.Guild.Member.guild_channel_permissions(member, guild, channel_id)
   #=> [:manage_messages]
   ```
   """
@@ -182,7 +182,7 @@ defmodule Nostrum.Struct.Guild.Member do
   @doc """
   Return the topmost role of the given member on the given guild.
 
-  The topmost role is determined via `t:Nostrum.Struct.Guild.Role.position`.
+  The topmost role is determined via `t:Remedy.Struct.Guild.Role.position`.
 
   ## Parameters
 

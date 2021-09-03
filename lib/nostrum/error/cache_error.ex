@@ -1,4 +1,4 @@
-defmodule Nostrum.Error.CacheError do
+defmodule Remedy.Error.CacheError do
   @moduledoc """
   Represents an error when interacting with the cache.
 

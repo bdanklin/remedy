@@ -1,4 +1,4 @@
-defmodule Nostrum.Error.VoiceError do
+defmodule Remedy.Error.VoiceError do
   @moduledoc """
   Represents an error when playing sound through voice channels.
 

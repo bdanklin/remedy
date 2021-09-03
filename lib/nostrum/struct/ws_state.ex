@@ -1,4 +1,4 @@
-defmodule Nostrum.Struct.WSState do
+defmodule Remedy.Struct.WSState do
   @moduledoc """
   Struct representing the current WS state.
   """

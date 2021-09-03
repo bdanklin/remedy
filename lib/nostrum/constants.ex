@@ -1,4 +1,4 @@
-defmodule Nostrum.Constants do
+defmodule Remedy.Constants do
   @moduledoc false
 
   def base_url, do: "https://discord.com/api/v7"

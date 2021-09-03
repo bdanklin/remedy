@@ -19,7 +19,7 @@ end
 
 defmodule DummyConsumer do
   @moduledoc false
-  use Nostrum.Consumer
+  use Remedy.Consumer
 
   require Logger
 

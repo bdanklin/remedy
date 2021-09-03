@@ -1,4 +1,4 @@
-defmodule Nostrum.Cache.PresenceCache do
+defmodule Remedy.Cache.PresenceCache do
   @moduledoc """
   Cache for presences.
 
@@ -14,10 +14,10 @@ defmodule Nostrum.Cache.PresenceCache do
   ```
   """
 
-  alias Nostrum.Struct.{Guild, User}
-  alias Nostrum.Util
+  alias Remedy.Struct.{Guild, User}
+  alias Remedy.Util
 
-  import Nostrum.Snowflake, only: [is_snowflake: 1]
+  import Remedy.Snowflake, only: [is_snowflake: 1]
 
   @doc ~S"""
   Retreives a presence for a user from the cache by guild and id.
@@ -26,7 +26,7 @@ defmodule Nostrum.Cache.PresenceCache do
 
   ## Example
   ```elixir
-  case Nostrum.Cache.PresenceCache.get(111133335555, 222244446666) do
+  case Remedy.Cache.PresenceCache.get(111133335555, 222244446666) do
     {:ok, presence} ->
       "They're #{presence.status}"
     {:error, _reason} ->
@@ -43,7 +43,7 @@ defmodule Nostrum.Cache.PresenceCache do
   end
 
   @doc """
-  Same as `get/1`, but raises `Nostrum.Error.CacheError` in case of a failure.
+  Same as `get/1`, but raises `Remedy.Error.CacheError` in case of a failure.
   """
   @spec get!(User.id(), Guild.id()) :: no_return | map
   def get!(user_id, guild_id) when is_snowflake(user_id) and is_snowflake(guild_id) do

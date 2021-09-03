@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Message.Activity do
+defmodule Remedy.Struct.Message.Activity do
   @moduledoc """
   Struct representing a Discord message activity.
   """
 
-  alias Nostrum.Util
+  alias Remedy.Util
 
   defstruct [
     :type,

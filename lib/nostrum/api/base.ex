@@ -1,11 +1,11 @@
-defmodule Nostrum.Api.Base do
+defmodule Remedy.Api.Base do
   @moduledoc false
 
-  @version Nostrum.Mixfile.project()[:version]
+  @version Remedy.Mixfile.project()[:version]
 
   use HTTPoison.Base
 
-  alias Nostrum.Constants
+  alias Remedy.Constants
 
   def process_url(url) do
     URI.encode(Constants.base_url() <> url)
@@ -17,10 +17,10 @@ defmodule Nostrum.Api.Base do
 
   def process_request_headers(headers) do
     user_agent = [
-      {"User-Agent", "DiscordBot (https://github.com/kraigie/nostrum, #{@version})"} | headers
+      {"User-Agent", "DiscordBot (https://github.com/kraigie/remedy, #{@version})"} | headers
     ]
 
-    token = "Bot " <> Application.get_env(:nostrum, :token)
+    token = "Bot " <> Application.get_env(:remedy, :token)
 
     [{"Authorization", token} | user_agent]
   end

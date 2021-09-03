@@ -1,7 +1,7 @@
-defmodule Nostrum.Application do
+defmodule Remedy.Application do
   @moduledoc false
 
-  alias Nostrum.Cache.GuildCache
+  alias Remedy.Cache.GuildCache
   use Application
 
   require Logger
@@ -13,14 +13,14 @@ defmodule Nostrum.Application do
     setup_ets_tables()
 
     children = [
-      Nostrum.Api.Ratelimiter,
-      Nostrum.Shard.Connector,
-      Nostrum.Cache.CacheSupervisor,
-      Nostrum.Shard.Supervisor,
-      Nostrum.Voice.Supervisor
+      Remedy.Api.Ratelimiter,
+      Remedy.Shard.Connector,
+      Remedy.Cache.CacheSupervisor,
+      Remedy.Shard.Supervisor,
+      Remedy.Voice.Supervisor
     ]
 
-    if Application.get_env(:nostrum, :dev),
+    if Application.get_env(:remedy, :dev),
       do: Supervisor.start_link(children ++ [DummySupervisor], strategy: :one_for_one),
       else: Supervisor.start_link(children, strategy: :one_for_one)
   end
@@ -37,7 +37,7 @@ defmodule Nostrum.Application do
     :ets.new(GuildCache.tabname(), [:set, :public, :named_table])
   end
 
-  defp check_token, do: check_token(Application.get_env(:nostrum, :token))
+  defp check_token, do: check_token(Application.get_env(:remedy, :token))
   defp check_token(nil), do: raise("Please supply a token")
   defp check_token(<<_::192, 46, _::48, 46, _::216>>), do: :ok
 
@@ -45,27 +45,27 @@ defmodule Nostrum.Application do
     do: raise("Invalid token format, copy it again from the `Bot` tab of your Application")
 
   defp check_executables do
-    ff = Application.get_env(:nostrum, :ffmpeg)
-    yt = Application.get_env(:nostrum, :youtubedl)
-    sl = Application.get_env(:nostrum, :streamlink)
+    ff = Application.get_env(:remedy, :ffmpeg)
+    yt = Application.get_env(:remedy, :youtubedl)
+    sl = Application.get_env(:remedy, :streamlink)
 
     cond do
       is_binary(ff) and is_nil(System.find_executable(ff)) ->
         Logger.warn("""
-        #{ff} was not found in your path. By default, Nostrum requires ffmpeg to use voice.
-        If you don't intend to use voice with ffmpeg, configure :nostrum, :ffmpeg to nil to suppress.
+        #{ff} was not found in your path. By default, Remedy requires ffmpeg to use voice.
+        If you don't intend to use voice with ffmpeg, configure :remedy, :ffmpeg to nil to suppress.
         """)
 
       is_binary(yt) and is_nil(System.find_executable(yt)) ->
         Logger.warn("""
-        #{yt} was not found in your path. Nostrum supports youtube-dl for voice.
-        If you don't require youtube-dl support, configure :nostrum, :youtubedl to nil to suppress.
+        #{yt} was not found in your path. Remedy supports youtube-dl for voice.
+        If you don't require youtube-dl support, configure :remedy, :youtubedl to nil to suppress.
         """)
 
       is_binary(sl) and is_nil(System.find_executable(sl)) ->
         Logger.warn("""
-        #{sl} was not found in your path. Nostrum supports streamlink for voice.
-        If you don't require streamlink support, configure :nostrum, :streamlink to nil to suppress.
+        #{sl} was not found in your path. Remedy supports streamlink for voice.
+        If you don't require streamlink support, configure :remedy, :streamlink to nil to suppress.
         """)
 
       true ->

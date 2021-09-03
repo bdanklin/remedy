@@ -1,4 +1,4 @@
-defmodule Nostrum.Api.RatelimitTest do
+defmodule Remedy.Api.RatelimitTest do
   use ExUnit.Case, async: true
 
   @test_channel 179_679_229_036_724_225
@@ -15,7 +15,7 @@ defmodule Nostrum.Api.RatelimitTest do
     expected = "/channels/#{@test_channel}/messages/_id"
 
     result =
-      Nostrum.Api.Ratelimiter.get_endpoint(
+      Remedy.Api.Ratelimiter.get_endpoint(
         "/channels/#{@test_channel}/messages/#{@test_message}",
         :get
       )
@@ -27,7 +27,7 @@ defmodule Nostrum.Api.RatelimitTest do
     expected = "delete:/channels/#{@test_channel}/messages/_id"
 
     result =
-      Nostrum.Api.Ratelimiter.get_endpoint(
+      Remedy.Api.Ratelimiter.get_endpoint(
         "/channels/#{@test_channel}/messages/#{@test_message}",
         :delete
       )
@@ -38,7 +38,7 @@ defmodule Nostrum.Api.RatelimitTest do
   test "endpoint with no major parameter" do
     expected = "/users/_id"
 
-    result = Nostrum.Api.Ratelimiter.get_endpoint("/users/#{@test_user}", :get)
+    result = Remedy.Api.Ratelimiter.get_endpoint("/users/#{@test_user}", :get)
 
     assert result == expected
   end
@@ -51,8 +51,8 @@ defmodule Nostrum.Api.RatelimitTest do
       1..2
       |> Task.async_stream(
         fn _ ->
-          with {:ok, _} <- Nostrum.Api.get_user(first),
-               {:ok, _} <- Nostrum.Api.get_user(second) do
+          with {:ok, _} <- Remedy.Api.get_user(first),
+               {:ok, _} <- Remedy.Api.get_user(second) do
             :ok
           else
             o ->
@@ -69,7 +69,7 @@ defmodule Nostrum.Api.RatelimitTest do
 
   @tag disabled: true
   test "one route sync no 429" do
-    result = Enum.map(1..10, fn x -> Nostrum.Api.create_message(@test_channel, "#{x}") end)
+    result = Enum.map(1..10, fn x -> Remedy.Api.create_message(@test_channel, "#{x}") end)
     assert Enum.all?(result, fn x -> elem(x, 0) == :ok end) == true
   end
 
@@ -77,7 +77,7 @@ defmodule Nostrum.Api.RatelimitTest do
   test "one route async no 429" do
     responses =
       1..11
-      |> Task.async_stream(&Nostrum.Api.create_message(@test_channel, "#{&1}"), timeout: 50000)
+      |> Task.async_stream(&Remedy.Api.create_message(@test_channel, "#{&1}"), timeout: 50000)
       |> Enum.to_list()
 
     assert Enum.all?(responses, fn {_, {k, _}} -> k == :ok end) == true
@@ -88,7 +88,7 @@ defmodule Nostrum.Api.RatelimitTest do
     responses =
       1..5
       |> Task.async_stream(
-        fn _ -> Nostrum.Api.get_pinned_messages(@test_channel) end,
+        fn _ -> Remedy.Api.get_pinned_messages(@test_channel) end,
         timeout: 50000
       )
       |> Enum.to_list()
@@ -112,10 +112,10 @@ defmodule Nostrum.Api.RatelimitTest do
       1..10
       |> Task.async_stream(
         fn x ->
-          with {:ok, _} <- Nostrum.Api.get_guild(@test_guild),
-               {:ok, _} <- Nostrum.Api.create_message(@test_channel, "#{x}"),
-               {:ok, _} <- Nostrum.Api.get_channel_message(@test_channel, @test_message),
-               {:ok} <- Nostrum.Api.start_typing(@test_channel) do
+          with {:ok, _} <- Remedy.Api.get_guild(@test_guild),
+               {:ok, _} <- Remedy.Api.create_message(@test_channel, "#{x}"),
+               {:ok, _} <- Remedy.Api.get_channel_message(@test_channel, @test_message),
+               {:ok} <- Remedy.Api.start_typing(@test_channel) do
             :ok
           else
             _ ->

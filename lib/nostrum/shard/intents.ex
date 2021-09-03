@@ -1,4 +1,4 @@
-defmodule Nostrum.Shard.Intents do
+defmodule Remedy.Shard.Intents do
   @moduledoc false
 
   import Bitwise
@@ -32,7 +32,7 @@ defmodule Nostrum.Shard.Intents do
   @spec get_enabled_intents :: integer()
   def get_enabled_intents do
     # If no intents are passed in config, default to non-privileged being enabled.
-    enabled_intents = Application.get_env(:nostrum, :gateway_intents, :nonprivileged)
+    enabled_intents = Application.get_env(:remedy, :gateway_intents, :nonprivileged)
 
     case enabled_intents do
       :all ->

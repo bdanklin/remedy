@@ -1,10 +1,10 @@
-defmodule Nostrum.Struct.Event.MessageReactionAdd do
+defmodule Remedy.Struct.Event.MessageReactionAdd do
   @moduledoc "Sent when a user adds a reaction to a message"
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Struct.Guild.Member
-  alias Nostrum.Struct.{Channel, Emoji, Guild, Message, User}
-  alias Nostrum.Util
+  alias Remedy.Struct.Guild.Member
+  alias Remedy.Struct.{Channel, Emoji, Guild, Message, User}
+  alias Remedy.Util
 
   defstruct [:user_id, :channel_id, :message_id, :guild_id, :member, :emoji]
 

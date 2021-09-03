@@ -1,4 +1,4 @@
-defmodule Nostrum.Api.Ratelimiter do
+defmodule Remedy.Api.Ratelimiter do
   @moduledoc """
   Ratelimit implimentation specific to Discord's API.
   Only to be used when starting in a rest-only manner.
@@ -6,9 +6,9 @@ defmodule Nostrum.Api.Ratelimiter do
 
   use GenServer
 
-  alias Nostrum.Api.{Base, Bucket}
-  alias Nostrum.Error.ApiError
-  alias Nostrum.Util
+  alias Remedy.Api.{Base, Bucket}
+  alias Remedy.Error.ApiError
+  alias Remedy.Util
 
   require Logger
 

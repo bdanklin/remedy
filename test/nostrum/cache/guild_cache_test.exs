@@ -1,8 +1,8 @@
-defmodule Nostrum.Cache.GuildCacheTest do
+defmodule Remedy.Cache.GuildCacheTest do
   use ExUnit.Case
 
-  alias Nostrum.Cache.GuildCache
-  alias Nostrum.Struct.Guild
+  alias Remedy.Cache.GuildCache
+  alias Remedy.Struct.Guild
 
   setup_all do
     :ets.new(GuildCache.tabname(), [:set, :public, :named_table])

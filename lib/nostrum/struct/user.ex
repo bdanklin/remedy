@@ -1,20 +1,20 @@
-defmodule Nostrum.Struct.User do
+defmodule Remedy.Struct.User do
   @moduledoc ~S"""
   Struct representing a Discord user.
 
   ## Mentioning Users in Messages
 
-  A `Nostrum.Struct.User` can be mentioned in message content using the `String.Chars`
+  A `Remedy.Struct.User` can be mentioned in message content using the `String.Chars`
   protocol or `mention/1`.
 
   ```Elixir
-  user = %Nostrum.Struct.User{id: 120571255635181568}
-  Nostrum.Api.create_message!(184046599834435585, "#{user}")
-  %Nostrum.Struct.Message{content: "<@120571255635181568>"}
+  user = %Remedy.Struct.User{id: 120571255635181568}
+  Remedy.Api.create_message!(184046599834435585, "#{user}")
+  %Remedy.Struct.Message{content: "<@120571255635181568>"}
 
-  user = %Nostrum.Struct.User{id: 89918932789497856}
-  Nostrum.Api.create_message!(280085880452939778, "#{Nostrum.Struct.User.mention(user)}")
-  %Nostrum.Struct.Message{content: "<@89918932789497856>"}
+  user = %Remedy.Struct.User{id: 89918932789497856}
+  Remedy.Api.create_message!(280085880452939778, "#{Remedy.Struct.User.mention(user)}")
+  %Remedy.Struct.Message{content: "<@89918932789497856>"}
   ```
 
   ## User vs. Member
@@ -22,7 +22,7 @@ defmodule Nostrum.Struct.User do
   A `member` has everything that a `user` has, but also additional information on a per guild basis. This includes things like a `nickname` and a list of `roles`.
   """
 
-  alias Nostrum.{Constants, Snowflake, Struct.User.Flags, Util}
+  alias Remedy.{Constants, Snowflake, Struct.User.Flags, Util}
 
   defstruct [
     :id,
@@ -80,13 +80,13 @@ defmodule Nostrum.Struct.User do
         }
 
   @doc ~S"""
-  Formats an `Nostrum.Struct.User` into a mention.
+  Formats an `Remedy.Struct.User` into a mention.
 
   ## Examples
 
   ```Elixir
-  iex> user = %Nostrum.Struct.User{id: 177888205536886784}
-  ...> Nostrum.Struct.User.mention(user)
+  iex> user = %Remedy.Struct.User{id: 177888205536886784}
+  ...> Remedy.Struct.User.mention(user)
   "<@177888205536886784>"
   ```
   """
@@ -103,16 +103,16 @@ defmodule Nostrum.Struct.User do
   ## Examples
 
   ```Elixir
-  iex> user = %Nostrum.Struct.User{avatar: "8342729096ea3675442027381ff50dfe",
+  iex> user = %Remedy.Struct.User{avatar: "8342729096ea3675442027381ff50dfe",
   ...>                             id: 80351110224678912}
-  iex> Nostrum.Struct.User.avatar_url(user)
+  iex> Remedy.Struct.User.avatar_url(user)
   "https://cdn.discordapp.com/avatars/80351110224678912/8342729096ea3675442027381ff50dfe.webp"
-  iex> Nostrum.Struct.User.avatar_url(user, "png")
+  iex> Remedy.Struct.User.avatar_url(user, "png")
   "https://cdn.discordapp.com/avatars/80351110224678912/8342729096ea3675442027381ff50dfe.png"
 
-  iex> user = %Nostrum.Struct.User{avatar: nil,
+  iex> user = %Remedy.Struct.User{avatar: nil,
   ...>                             discriminator: "1337"}
-  iex> Nostrum.Struct.User.avatar_url(user)
+  iex> Remedy.Struct.User.avatar_url(user)
   "https://cdn.discordapp.com/embed/avatars/2.png"
   ```
   """
@@ -137,9 +137,9 @@ defmodule Nostrum.Struct.User do
   ## Examples
 
   ```Elixir
-  iex> user = %Nostrum.Struct.User{username: "b1nzy",
+  iex> user = %Remedy.Struct.User{username: "b1nzy",
   ...>                             discriminator: "0852"}
-  iex> Nostrum.Struct.User.full_name(user)
+  iex> Remedy.Struct.User.full_name(user)
   "b1nzy#0852"
   ```
   """

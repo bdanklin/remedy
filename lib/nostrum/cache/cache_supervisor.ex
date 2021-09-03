@@ -1,4 +1,4 @@
-defmodule Nostrum.Cache.CacheSupervisor do
+defmodule Remedy.Cache.CacheSupervisor do
   @moduledoc false
 
   use Supervisor
@@ -9,7 +9,7 @@ defmodule Nostrum.Cache.CacheSupervisor do
 
   def init([]) do
     children = [
-      Nostrum.Cache.Me
+      Remedy.Cache.Me
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

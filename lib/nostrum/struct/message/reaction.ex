@@ -1,10 +1,10 @@
-defmodule Nostrum.Struct.Message.Reaction do
+defmodule Remedy.Struct.Message.Reaction do
   @moduledoc """
   Struct representing a Discord message reaction.
   """
 
-  alias Nostrum.Struct.Emoji
-  alias Nostrum.Util
+  alias Remedy.Struct.Emoji
+  alias Remedy.Util
 
   defstruct [
     :count,

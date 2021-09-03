@@ -1,4 +1,4 @@
-defmodule Nostrum.Cache.Mapping.ChannelGuild do
+defmodule Remedy.Cache.Mapping.ChannelGuild do
   @moduledoc """
   Mapping of channel -> guild relationships.
 
@@ -6,8 +6,8 @@ defmodule Nostrum.Cache.Mapping.ChannelGuild do
   belongs to. This mapping is an ETS table that stores this information.
   """
 
-  alias Nostrum.Struct.Channel
-  alias Nostrum.Struct.Guild
+  alias Remedy.Struct.Channel
+  alias Remedy.Struct.Guild
 
   @doc """
   Gets a `guild_id` from a `channel_id`.

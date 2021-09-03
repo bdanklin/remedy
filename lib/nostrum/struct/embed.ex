@@ -1,72 +1,72 @@
-defmodule Nostrum.Struct.Embed do
+defmodule Remedy.Struct.Embed do
   @moduledoc ~S"""
   Functions that work on Discord embeds.
 
   ## Building Embeds
 
-  `Nostrum.Struct.Embed`s can be built using this module's builder functions
+  `Remedy.Struct.Embed`s can be built using this module's builder functions
   or standard `Map` syntax:
 
   ```Elixir
-  iex> import Nostrum.Struct.Embed
+  iex> import Remedy.Struct.Embed
   ...> embed =
-  ...>   %Nostrum.Struct.Embed{}
+  ...>   %Remedy.Struct.Embed{}
   ...>   |> put_title("craig")
-  ...>   |> put_description("nostrum")
+  ...>   |> put_description("remedy")
   ...>   |> put_url("https://google.com/")
   ...>   |> put_timestamp("2016-05-05T21:04:13.203Z")
   ...>   |> put_color(431_948)
   ...>   |> put_field("Field 1", "Test")
   ...>   |> put_field("Field 2", "More test", true)
   ...> embed
-  %Nostrum.Struct.Embed{
+  %Remedy.Struct.Embed{
     title: "craig",
-    description: "nostrum",
+    description: "remedy",
     url: "https://google.com/",
     timestamp: "2016-05-05T21:04:13.203Z",
     color: 431_948,
     fields: [
-      %Nostrum.Struct.Embed.Field{name: "Field 1", value: "Test"},
-      %Nostrum.Struct.Embed.Field{name: "Field 2", value: "More test", inline: true}
+      %Remedy.Struct.Embed.Field{name: "Field 1", value: "Test"},
+      %Remedy.Struct.Embed.Field{name: "Field 2", value: "More test", inline: true}
     ]
   }
   ```
 
   ## Using structs
 
-  You can also create `Nostrum.Struct.Embed`s from structs, by using the
-  `Nostrum.Struct.Embed` module. Here's how the example above could be build using structs
+  You can also create `Remedy.Struct.Embed`s from structs, by using the
+  `Remedy.Struct.Embed` module. Here's how the example above could be build using structs
 
   ```Elixir
     defmodule MyApp.MyStruct do
-      use Nostrum.Struct.Embed
+      use Remedy.Struct.Embed
 
       defstruct []
 
       def title(_), do: "craig"
-      def description(_), do: "nostrum"
+      def description(_), do: "remedy"
       def url(_), do: "https://google.com/"
       def timestamp(_), do: "2016-05-05T21:04:13.203Z"
       def color(_), do: 431_948
 
       def fields(_) do
         [
-          %Nostrum.Struct.Embed.Field{name: "Field 1", value: "Test"},
-          %Nostrum.Struct.Embed.Field{name: "Field 2", value: "More test", inline: true}
+          %Remedy.Struct.Embed.Field{name: "Field 1", value: "Test"},
+          %Remedy.Struct.Embed.Field{name: "Field 2", value: "More test", inline: true}
         ]
       end
     end
 
-  iex> Nostrum.Struct.Embed.from(%MyApp.MyStruct{})
-  %Nostrum.Struct.Embed{
+  iex> Remedy.Struct.Embed.from(%MyApp.MyStruct{})
+  %Remedy.Struct.Embed{
     title: "craig",
-    description: "nostrum",
+    description: "remedy",
     url: "https://google.com/",
     timestamp: "2016-05-05T21:04:13.203Z",
     color: 431_948,
     fields: [
-      %Nostrum.Struct.Embed.Field{name: "Field 1", value: "Test"},
-      %Nostrum.Struct.Embed.Field{name: "Field 2", value: "More test", inline: true}
+      %Remedy.Struct.Embed.Field{name: "Field 1", value: "Test"},
+      %Remedy.Struct.Embed.Field{name: "Field 2", value: "More test", inline: true}
     ]
   }
   ```
@@ -76,8 +76,8 @@ defmodule Nostrum.Struct.Embed do
   be ignored.
   """
 
-  alias Nostrum.Struct.Embed.{Author, Field, Footer, Image, Provider, Thumbnail, Video}
-  alias Nostrum.Util
+  alias Remedy.Struct.Embed.{Author, Field, Footer, Image, Provider, Thumbnail, Video}
+  alias Remedy.Util
   alias Poison.Encoder
 
   defstruct [
@@ -174,7 +174,7 @@ defmodule Nostrum.Struct.Embed do
 
   defmacro __using__(_) do
     quote do
-      @behaviour Nostrum.Struct.Embed
+      @behaviour Remedy.Struct.Embed
 
       def author(_), do: nil
       def color(_), do: nil
@@ -208,9 +208,9 @@ defmodule Nostrum.Struct.Embed do
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_title(embed, "nostrum")
-  %Nostrum.Struct.Embed{title: "nostrum"}
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_title(embed, "remedy")
+  %Remedy.Struct.Embed{title: "remedy"}
   ```
   """
   @spec put_title(t, title) :: t
@@ -230,9 +230,9 @@ defmodule Nostrum.Struct.Embed do
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_description(embed, "An elixir library for the discord API.")
-  %Nostrum.Struct.Embed{description: "An elixir library for the discord API."}
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_description(embed, "An elixir library for the discord API.")
+  %Remedy.Struct.Embed{description: "An elixir library for the discord API."}
   ```
   """
   @spec put_description(t, description) :: t
@@ -246,9 +246,9 @@ defmodule Nostrum.Struct.Embed do
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_url(embed, "https://github.com/Kraigie/nostrum")
-  %Nostrum.Struct.Embed{url: "https://github.com/Kraigie/nostrum"}
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_url(embed, "https://github.com/Kraigie/remedy")
+  %Remedy.Struct.Embed{url: "https://github.com/Kraigie/remedy"}
   ```
   """
   @spec put_url(t, url) :: t
@@ -262,9 +262,9 @@ defmodule Nostrum.Struct.Embed do
   ## Examples
 
   ```elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_timestamp(embed, "2018-04-21T17:33:51.893000Z")
-  %Nostrum.Struct.Embed{timestamp: "2018-04-21T17:33:51.893000Z"}
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_timestamp(embed, "2018-04-21T17:33:51.893000Z")
+  %Remedy.Struct.Embed{timestamp: "2018-04-21T17:33:51.893000Z"}
   ```
   """
   @spec put_timestamp(t, timestamp) :: t
@@ -278,9 +278,9 @@ defmodule Nostrum.Struct.Embed do
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_color(embed, 431948)
-  %Nostrum.Struct.Embed{color: 431948}
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_color(embed, 431948)
+  %Remedy.Struct.Embed{color: 431948}
   ```
   """
   @spec put_color(t, color) :: t
@@ -289,25 +289,25 @@ defmodule Nostrum.Struct.Embed do
   end
 
   @doc ~S"""
-  Puts a `Nostrum.Struct.Embed.Footer` under `:footer` in `embed`.
+  Puts a `Remedy.Struct.Embed.Footer` under `:footer` in `embed`.
 
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_footer(embed, "Discord API", nil)
-  %Nostrum.Struct.Embed{
-    footer: %Nostrum.Struct.Embed.Footer{
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_footer(embed, "Discord API", nil)
+  %Remedy.Struct.Embed{
+    footer: %Remedy.Struct.Embed.Footer{
       text: "Discord API",
       icon_url: nil
     }
   }
 
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_footer(embed, "nostrum footer", "https://discord.com/assets/53ef346458017da2062aca5c7955946b.svg")
-  %Nostrum.Struct.Embed{
-    footer: %Nostrum.Struct.Embed.Footer{
-      text: "nostrum footer",
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_footer(embed, "remedy footer", "https://discord.com/assets/53ef346458017da2062aca5c7955946b.svg")
+  %Remedy.Struct.Embed{
+    footer: %Remedy.Struct.Embed.Footer{
+      text: "remedy footer",
       icon_url: "https://discord.com/assets/53ef346458017da2062aca5c7955946b.svg"
     }
   }
@@ -324,15 +324,15 @@ defmodule Nostrum.Struct.Embed do
   end
 
   @doc ~S"""
-  Puts a `Nostrum.Struct.Embed.Image` under `:image` in `embed`.
+  Puts a `Remedy.Struct.Embed.Image` under `:image` in `embed`.
 
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_image(embed, "https://discord.com/assets/af92e60c16b7019f34a467383b31490a.svg")
-  %Nostrum.Struct.Embed{
-    image: %Nostrum.Struct.Embed.Image{
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_image(embed, "https://discord.com/assets/af92e60c16b7019f34a467383b31490a.svg")
+  %Remedy.Struct.Embed{
+    image: %Remedy.Struct.Embed.Image{
       url: "https://discord.com/assets/af92e60c16b7019f34a467383b31490a.svg"
     }
   }
@@ -352,15 +352,15 @@ defmodule Nostrum.Struct.Embed do
   end
 
   @doc ~S"""
-  Puts a `Nostrum.Struct.Embed.Thumbnail` under `:thumbnail` in `embed`.
+  Puts a `Remedy.Struct.Embed.Thumbnail` under `:thumbnail` in `embed`.
 
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_thumbnail(embed, "https://discord.com/assets/af92e60c16b7019f34a467383b31490a.svg")
-  %Nostrum.Struct.Embed{
-    thumbnail: %Nostrum.Struct.Embed.Thumbnail{
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_thumbnail(embed, "https://discord.com/assets/af92e60c16b7019f34a467383b31490a.svg")
+  %Remedy.Struct.Embed{
+    thumbnail: %Remedy.Struct.Embed.Thumbnail{
       url: "https://discord.com/assets/af92e60c16b7019f34a467383b31490a.svg"
     }
   }
@@ -401,15 +401,15 @@ defmodule Nostrum.Struct.Embed do
   end
 
   @doc ~S"""
-  Puts a `Nostrum.Struct.Embed.Author` under `:author` in `embed`.
+  Puts a `Remedy.Struct.Embed.Author` under `:author` in `embed`.
 
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_author(embed, "skippi", "https://github.com/skippi", nil)
-  %Nostrum.Struct.Embed{
-    author: %Nostrum.Struct.Embed.Author{
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_author(embed, "skippi", "https://github.com/skippi", nil)
+  %Remedy.Struct.Embed{
+    author: %Remedy.Struct.Embed.Author{
       name: "skippi",
       url: "https://github.com/skippi",
       icon_url: nil
@@ -429,29 +429,29 @@ defmodule Nostrum.Struct.Embed do
   end
 
   @doc ~S"""
-  Adds a `Nostrum.Struct.Embed.Field` under `:fields` in `embed`.
+  Adds a `Remedy.Struct.Embed.Field` under `:fields` in `embed`.
 
   ## Examples
 
   ```Elixir
-  iex> embed = %Nostrum.Struct.Embed{}
-  ...> Nostrum.Struct.Embed.put_field(embed, "First User", "b1nzy")
-  %Nostrum.Struct.Embed{
+  iex> embed = %Remedy.Struct.Embed{}
+  ...> Remedy.Struct.Embed.put_field(embed, "First User", "b1nzy")
+  %Remedy.Struct.Embed{
     fields: [
-      %Nostrum.Struct.Embed.Field{name: "First User", value: "b1nzy"}
+      %Remedy.Struct.Embed.Field{name: "First User", value: "b1nzy"}
     ]
   }
 
-  iex> embed = %Nostrum.Struct.Embed{
+  iex> embed = %Remedy.Struct.Embed{
   ...>   fields: [
-  ...>     %Nostrum.Struct.Embed.Field{name: "First User", value: "b1nzy"}
+  ...>     %Remedy.Struct.Embed.Field{name: "First User", value: "b1nzy"}
   ...>   ]
   ...> }
-  ...> Nostrum.Struct.Embed.put_field(embed, "Second User", "Danny")
-  %Nostrum.Struct.Embed{
+  ...> Remedy.Struct.Embed.put_field(embed, "Second User", "Danny")
+  %Remedy.Struct.Embed{
     fields: [
-      %Nostrum.Struct.Embed.Field{name: "First User", value: "b1nzy"},
-      %Nostrum.Struct.Embed.Field{name: "Second User", value: "Danny"}
+      %Remedy.Struct.Embed.Field{name: "First User", value: "b1nzy"},
+      %Remedy.Struct.Embed.Field{name: "Second User", value: "Danny"}
     ]
   }
   ```
@@ -474,7 +474,7 @@ defmodule Nostrum.Struct.Embed do
   end
 
   @doc """
-  Create an embed from a struct that implements the `Nostrum.Struct.Embed` behaviour
+  Create an embed from a struct that implements the `Remedy.Struct.Embed` behaviour
   """
   def from(%module{} = struct) do
     # checks if the struct implements the behaviour

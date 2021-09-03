@@ -1,9 +1,9 @@
-defmodule Nostrum.Shard.Session do
+defmodule Remedy.Shard.Session do
   @moduledoc false
 
-  alias Nostrum.{Constants, Util}
-  alias Nostrum.Shard.{Connector, Event, Payload}
-  alias Nostrum.Struct.WSState
+  alias Remedy.{Constants, Util}
+  alias Remedy.Shard.{Connector, Event, Payload}
+  alias Remedy.Struct.WSState
 
   require Logger
 

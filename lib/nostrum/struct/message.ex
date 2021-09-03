@@ -1,12 +1,12 @@
-defmodule Nostrum.Struct.Message do
+defmodule Remedy.Struct.Message do
   @moduledoc """
   Struct representing a Discord message.
   """
 
-  alias Nostrum.Struct.{Channel, Embed, Guild, User}
-  alias Nostrum.Struct.Guild.{Member, Role}
-  alias Nostrum.Struct.Message.{Activity, Application, Attachment, Reaction, Reference}
-  alias Nostrum.{Snowflake, Util}
+  alias Remedy.Struct.{Channel, Embed, Guild, User}
+  alias Remedy.Struct.Guild.{Member, Role}
+  alias Remedy.Struct.Message.{Activity, Application, Attachment, Reaction, Reference}
+  alias Remedy.{Snowflake, Util}
 
   defstruct [
     :activity,

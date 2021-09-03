@@ -1,14 +1,14 @@
-defmodule Nostrum.Struct.ApplicationCommandInteractionData do
+defmodule Remedy.Struct.ApplicationCommandInteractionData do
   @moduledoc "Struct for interaction data."
 
-  alias Nostrum.Snowflake
+  alias Remedy.Snowflake
 
-  alias Nostrum.Struct.{
+  alias Remedy.Struct.{
     ApplicationCommandInteractionDataOption,
     ApplicationCommandInteractionDataResolved
   }
 
-  alias Nostrum.Util
+  alias Remedy.Util
 
   defstruct [:id, :name, :resolved, :options, :custom_id, :component_type]
 
@@ -36,7 +36,7 @@ defmodule Nostrum.Struct.ApplicationCommandInteractionData do
   @typedoc """
   Command interaction data for slash commands.
 
-  Used as part of `t:Nostrum.Struct.Interaction.t/0`.
+  Used as part of `t:Remedy.Struct.Interaction.t/0`.
 
   Official reference:
   https://discord.com/developers/docs/interactions/slash-commands#interaction-applicationcommandinteractiondata

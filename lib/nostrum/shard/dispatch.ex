@@ -1,11 +1,11 @@
-defmodule Nostrum.Shard.Dispatch do
+defmodule Remedy.Shard.Dispatch do
   @moduledoc false
 
-  alias Nostrum.Cache.{ChannelCache, GuildCache, PresenceCache, UserCache}
-  alias Nostrum.Cache.Me
-  alias Nostrum.Shard.{Intents, Session}
+  alias Remedy.Cache.{ChannelCache, GuildCache, PresenceCache, UserCache}
+  alias Remedy.Cache.Me
+  alias Remedy.Shard.{Intents, Session}
 
-  alias Nostrum.Struct.Event.{
+  alias Remedy.Struct.Event.{
     ChannelPinsUpdate,
     GuildBanAdd,
     GuildBanRemove,
@@ -25,18 +25,18 @@ defmodule Nostrum.Shard.Dispatch do
     VoiceState
   }
 
-  alias Nostrum.Struct.{Guild, Interaction, Message, User}
-  alias Nostrum.Struct.Guild.UnavailableGuild
-  alias Nostrum.Util
-  alias Nostrum.Voice
-  alias Nostrum.Voice.Session, as: VoiceSession
+  alias Remedy.Struct.{Guild, Interaction, Message, User}
+  alias Remedy.Struct.Guild.UnavailableGuild
+  alias Remedy.Util
+  alias Remedy.Voice
+  alias Remedy.Voice.Session, as: VoiceSession
 
   require Logger
 
   @large_threshold 250
 
   def handle({payload, state}) do
-    if Application.get_env(:nostrum, :log_full_events),
+    if Application.get_env(:remedy, :log_full_events),
       do: Logger.debug(inspect(payload.d, pretty: true))
 
     payload.t
@@ -136,7 +136,7 @@ defmodule Nostrum.Shard.Dispatch do
 
     should_request? = large_server? or intents_should_request?
 
-    if should_request? and Application.get_env(:nostrum, :request_guild_members, false) do
+    if should_request? and Application.get_env(:remedy, :request_guild_members, false) do
       Session.request_guild_members(state.conn_pid, guild.id)
     end
 

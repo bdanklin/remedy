@@ -1,4 +1,4 @@
-defmodule Nostrum.Struct.VoiceWSState do
+defmodule Remedy.Struct.VoiceWSState do
   @moduledoc """
   Struct representing the current Voice WS state.
   """
@@ -20,7 +20,7 @@ defmodule Nostrum.Struct.VoiceWSState do
   ]
 
   @typedoc "The guild id that this voice websocket state applies to"
-  @type guild_id :: Nostrum.Struct.Guild.id()
+  @type guild_id :: Remedy.Struct.Guild.id()
 
   @typedoc "The session id"
   @type session :: String.t()

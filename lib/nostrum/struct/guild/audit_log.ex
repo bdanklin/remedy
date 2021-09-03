@@ -1,11 +1,11 @@
-defmodule Nostrum.Struct.Guild.AuditLog do
+defmodule Remedy.Struct.Guild.AuditLog do
   @moduledoc """
   Represents a guild's audit log.
   """
 
-  alias Nostrum.Struct.Guild.AuditLogEntry
-  alias Nostrum.Struct.{User, Webhook}
-  alias Nostrum.Util
+  alias Remedy.Struct.Guild.AuditLogEntry
+  alias Remedy.Struct.{User, Webhook}
+  alias Remedy.Util
 
   defstruct [:entries, :users, :webhooks]
 

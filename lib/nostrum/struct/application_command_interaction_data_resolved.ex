@@ -1,13 +1,13 @@
-defmodule Nostrum.Struct.ApplicationCommandInteractionDataResolved do
+defmodule Remedy.Struct.ApplicationCommandInteractionDataResolved do
   @moduledoc "Converted interaction payload."
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Struct.Channel
-  alias Nostrum.Struct.Guild.Member
-  alias Nostrum.Struct.Guild.Role
-  alias Nostrum.Struct.Message
-  alias Nostrum.Struct.User
-  alias Nostrum.Util
+  alias Remedy.Struct.Channel
+  alias Remedy.Struct.Guild.Member
+  alias Remedy.Struct.Guild.Role
+  alias Remedy.Struct.Message
+  alias Remedy.Struct.User
+  alias Remedy.Util
 
   defstruct [:users, :members, :roles, :channels, :messages]
 

@@ -1,4 +1,4 @@
-defmodule Nostrum.Cache.Mapping.GuildShard do
+defmodule Remedy.Cache.Mapping.GuildShard do
   @moduledoc """
   Mapping of guild -> shard relationships.
 
@@ -6,7 +6,7 @@ defmodule Nostrum.Cache.Mapping.GuildShard do
   is an ETS table that stores this information.
   """
 
-  alias Nostrum.Struct.Guild
+  alias Remedy.Struct.Guild
 
   @doc """
   Gets the a shard num from a `guild_id`.

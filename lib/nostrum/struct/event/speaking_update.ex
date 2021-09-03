@@ -1,8 +1,8 @@
-defmodule Nostrum.Struct.Event.SpeakingUpdate do
+defmodule Remedy.Struct.Event.SpeakingUpdate do
   @moduledoc """
-  Struct representing a Nostrum-generated Speaking Update event
+  Struct representing a Remedy-generated Speaking Update event
 
-  Nostrum will generate this event when the bot starts or stops playing audio.
+  Remedy will generate this event when the bot starts or stops playing audio.
   """
 
   defstruct [
@@ -12,7 +12,7 @@ defmodule Nostrum.Struct.Event.SpeakingUpdate do
     :timed_out
   ]
 
-  alias Nostrum.Struct.{Channel, Guild}
+  alias Remedy.Struct.{Channel, Guild}
 
   @typedoc """
   Id of the channel this speaking update is occurring in.

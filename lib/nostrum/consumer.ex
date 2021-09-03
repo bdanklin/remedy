@@ -1,29 +1,29 @@
-defmodule Nostrum.Consumer do
+defmodule Remedy.Consumer do
   @moduledoc """
   Consumer process for gateway event handling.
 
   # Consuming Gateway Events
-  To handle events, Nostrum uses a GenStage implementation.
+  To handle events, Remedy uses a GenStage implementation.
 
-  Nostrum defines the `producer` and `producer_consumer` in the GenStage design.
+  Remedy defines the `producer` and `producer_consumer` in the GenStage design.
   To consume the events you must create at least one `consumer` process. It is
   generally recommended that you spawn a consumer per core. To find this number
   you can use `System.schedulers_online/0`.
 
-  Nostrum uses a ConsumerSupervisor to dispatch events, meaning your handlers
+  Remedy uses a ConsumerSupervisor to dispatch events, meaning your handlers
   will each be ran in their own seperate task.
 
   ## Example
   An example consumer can be found
-  [here](https://github.com/Kraigie/nostrum/blob/master/examples/event_consumer.ex).
+  [here](https://github.com/Kraigie/remedy/blob/master/examples/event_consumer.ex).
   """
 
   use ConsumerSupervisor
 
-  alias Nostrum.Shard.Stage.Cache
-  alias Nostrum.Struct.{Channel, VoiceWSState, WSState}
+  alias Remedy.Shard.Stage.Cache
+  alias Remedy.Struct.{Channel, VoiceWSState, WSState}
 
-  alias Nostrum.Struct.Event.{
+  alias Remedy.Struct.Event.{
     ChannelPinsUpdate,
     GuildBanAdd,
     GuildBanRemove,
@@ -54,17 +54,17 @@ defmodule Nostrum.Consumer do
 
   For example, a message create will look like this
   ```Elixir
-  {:MESSAGE_CREATE, {Nostrum.Struct.Message.t}, WSState.t}
+  {:MESSAGE_CREATE, {Remedy.Struct.Message.t}, WSState.t}
   ```
 
   In some cases there will be multiple payloads when something is updated, so as
   to include the new and the old versions. In the event of there being two payloads,
   the old payload will always be first, followed by the new payload.
   ```Elixir
-  {:USER_UPDATE, {old_user :: Nostrum.Struct.User.t, new_user :: Nostrum.Struct.User.t}, WSState.t()}
+  {:USER_UPDATE, {old_user :: Remedy.Struct.User.t, new_user :: Remedy.Struct.User.t}, WSState.t()}
   ```
 
-  For a full listing of events, please see `t:Nostrum.Consumer.event/0`.
+  For a full listing of events, please see `t:Remedy.Consumer.event/0`.
   """
   @callback handle_event(event) :: any
 
@@ -98,31 +98,31 @@ defmodule Nostrum.Consumer do
           {:GUILD_BAN_ADD, GuildBanAdd.t(), WSState.t()}
   @type guild_ban_remove ::
           {:GUILD_BAN_REMOVE, GuildBanRemove.t(), WSState.t()}
-  @type guild_create :: {:GUILD_CREATE, new_guild :: Nostrum.Struct.Guild.t(), WSState.t()}
-  @type guild_available :: {:GUILD_AVAILABLE, new_guild :: Nostrum.Struct.Guild.t(), WSState.t()}
+  @type guild_create :: {:GUILD_CREATE, new_guild :: Remedy.Struct.Guild.t(), WSState.t()}
+  @type guild_available :: {:GUILD_AVAILABLE, new_guild :: Remedy.Struct.Guild.t(), WSState.t()}
   @type guild_unavailable ::
-          {:GUILD_UNAVAILABLE, unavailable_guild :: Nostrum.Struct.Guild.UnavailableGuild.t(),
+          {:GUILD_UNAVAILABLE, unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(),
            WSState.t()}
   @type guild_update ::
           {:GUILD_UPDATE,
-           {old_guild :: Nostrum.Struct.Guild.t(), new_guild :: Nostrum.Struct.Guild.t()},
+           {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()},
            WSState.t()}
   @type guild_delete ::
-          {:GUILD_DELETE, {old_guild :: Nostrum.Struct.Guild.t(), unavailable :: boolean},
+          {:GUILD_DELETE, {old_guild :: Remedy.Struct.Guild.t(), unavailable :: boolean},
            WSState.t()}
   @type guild_emojis_update ::
           {:GUILD_EMOJIS_UPDATE,
-           {guild_id :: integer, old_emojis :: [Nostrum.Struct.Emoji.t()],
-            new_emojis :: [Nostrum.Struct.Emoji.t()]}, WSState.t()}
+           {guild_id :: integer, old_emojis :: [Remedy.Struct.Emoji.t()],
+            new_emojis :: [Remedy.Struct.Emoji.t()]}, WSState.t()}
   @type guild_integrations_update ::
           {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), WSState.t()}
   @type guild_member_add ::
-          {:GUILD_MEMBER_ADD,
-           {guild_id :: integer, new_member :: Nostrum.Struct.Guild.Member.t()}, WSState.t()}
+          {:GUILD_MEMBER_ADD, {guild_id :: integer, new_member :: Remedy.Struct.Guild.Member.t()},
+           WSState.t()}
   @type guild_members_chunk :: {:GUILD_MEMBERS_CHUNK, map, WSState.t()}
   @type guild_member_remove ::
           {:GUILD_MEMBER_REMOVE,
-           {guild_id :: integer, old_member :: Nostrum.Struct.Guild.Member.t()}, WSState.t()}
+           {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
   @typedoc """
   Dispatched when a guild member is updated.
 
@@ -130,13 +130,13 @@ defmodule Nostrum.Consumer do
   """
   @type guild_member_update ::
           {:GUILD_MEMBER_UPDATE,
-           {guild_id :: integer, old_member :: Nostrum.Struct.Guild.Member.t() | nil,
-            new_member :: Nostrum.Struct.Guild.Member.t()}, WSState.t()}
+           {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t() | nil,
+            new_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
   @type guild_role_create ::
-          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Nostrum.Struct.Guild.Role.t()},
+          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Remedy.Struct.Guild.Role.t()},
            WSState.t()}
   @type guild_role_delete ::
-          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Nostrum.Struct.Guild.Role.t()},
+          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t()},
            WSState.t()}
   @typedoc """
   Dispatched when a role on a guild is updated.
@@ -145,13 +145,13 @@ defmodule Nostrum.Consumer do
   """
   @type guild_role_update ::
           {:GUILD_ROLE_UPDATE,
-           {guild_id :: integer, old_role :: Nostrum.Struct.Guild.Role.t() | nil,
-            new_role :: Nostrum.Struct.Guild.Role.t()}, WSState.t()}
-  @type message_create :: {:MESSAGE_CREATE, message :: Nostrum.Struct.Message.t(), WSState.t()}
+           {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t() | nil,
+            new_role :: Remedy.Struct.Guild.Role.t()}, WSState.t()}
+  @type message_create :: {:MESSAGE_CREATE, message :: Remedy.Struct.Message.t(), WSState.t()}
   @type message_delete :: {:MESSAGE_DELETE, MessageDelete.t(), WSState.t()}
   @type message_delete_bulk :: {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), WSState.t()}
   @type message_update ::
-          {:MESSAGE_UPDATE, updated_message :: Nostrum.Struct.Message.t(), WSState.t()}
+          {:MESSAGE_UPDATE, updated_message :: Remedy.Struct.Message.t(), WSState.t()}
   @type message_reaction_add :: {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), WSState.t()}
   @type message_reaction_remove ::
           {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), WSState.t()}
@@ -179,7 +179,7 @@ defmodule Nostrum.Consumer do
   """
   @type user_update ::
           {:USER_UPDATE,
-           {old_user :: Nostrum.Struct.User.t() | nil, new_user :: Nostrum.Struct.User.t()},
+           {old_user :: Remedy.Struct.User.t() | nil, new_user :: Remedy.Struct.User.t()},
            WSState.t()}
   @typedoc """
   Dispatched when the bot is ready to begin sending audio after joining a voice channel.
@@ -241,9 +241,9 @@ defmodule Nostrum.Consumer do
 
   defmacro __using__(opts) do
     quote location: :keep do
-      @behaviour Nostrum.Consumer
+      @behaviour Remedy.Consumer
 
-      alias Nostrum.Consumer
+      alias Remedy.Consumer
 
       def start_link(event) do
         Task.start_link(fn ->
@@ -274,7 +274,7 @@ defmodule Nostrum.Consumer do
   `mod` is the name of the module where you define your event callbacks, which should probably be
   the current module which you can get with `__MODULE__`.
 
-  `opts` is a list of general process options. See `t:Nostrum.Consumer.options/0` for more info.
+  `opts` is a list of general process options. See `t:Remedy.Consumer.options/0` for more info.
   """
   @spec start_link(module, options) :: Supervisor.on_start()
   def start_link(mod, opts \\ []) do

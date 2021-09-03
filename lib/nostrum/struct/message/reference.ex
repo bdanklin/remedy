@@ -1,10 +1,10 @@
-defmodule Nostrum.Struct.Message.Reference do
+defmodule Remedy.Struct.Message.Reference do
   @moduledoc """
   Struct representing a discord message reference.
   """
 
-  alias Nostrum.{Snowflake, Util}
-  alias Nostrum.Struct.{Channel, Guild, Message}
+  alias Remedy.{Snowflake, Util}
+  alias Remedy.Struct.{Channel, Guild, Message}
 
   defstruct [
     :message_id,

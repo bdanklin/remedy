@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Embed.Provider do
+defmodule Remedy.Struct.Embed.Provider do
   @moduledoc """
   Struct representing a Discord embed provider.
   """
 
-  alias Nostrum.Util
+  alias Remedy.Util
   alias Poison.Encoder
 
   defstruct [

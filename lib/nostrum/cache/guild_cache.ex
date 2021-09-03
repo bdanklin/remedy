@@ -1,5 +1,5 @@
-defmodule Nostrum.Cache.GuildCache do
-  @table_name :nostrum_guilds
+defmodule Remedy.Cache.GuildCache do
+  @table_name :remedy_guilds
   @moduledoc """
   Functions for retrieving guild states.
 
@@ -8,17 +8,17 @@ defmodule Nostrum.Cache.GuildCache do
   on the table.
   """
 
-  alias Nostrum.Cache.Mapping.ChannelGuild
-  alias Nostrum.Snowflake
-  alias Nostrum.Struct.Channel
-  alias Nostrum.Struct.Emoji
-  alias Nostrum.Struct.Guild
-  alias Nostrum.Struct.Guild.Member
-  alias Nostrum.Struct.Guild.Role
-  alias Nostrum.Struct.Message
-  alias Nostrum.Util
+  alias Remedy.Cache.Mapping.ChannelGuild
+  alias Remedy.Snowflake
+  alias Remedy.Struct.Channel
+  alias Remedy.Struct.Emoji
+  alias Remedy.Struct.Guild
+  alias Remedy.Struct.Guild.Member
+  alias Remedy.Struct.Guild.Role
+  alias Remedy.Struct.Message
+  alias Remedy.Util
 
-  import Nostrum.Snowflake, only: [is_snowflake: 1]
+  import Remedy.Snowflake, only: [is_snowflake: 1]
 
   @type clause ::
           {:id, Guild.id()}
@@ -40,7 +40,7 @@ defmodule Nostrum.Cache.GuildCache do
   def tabname, do: @table_name
 
   @doc """
-  Retrieves all `Nostrum.Struct.Guild` from the cache as a list.
+  Retrieves all `Remedy.Struct.Guild` from the cache as a list.
   """
   @spec all() :: Enum.t()
   def all do
@@ -50,7 +50,7 @@ defmodule Nostrum.Cache.GuildCache do
   end
 
   @doc """
-  Selects values using a `selector` from all `Nostrum.Struct.Guild` in the cache.
+  Selects values using a `selector` from all `Remedy.Struct.Guild` in the cache.
   """
   @spec select_all(selector) :: Enum.t()
   def select_all(selector)
@@ -60,17 +60,17 @@ defmodule Nostrum.Cache.GuildCache do
   end
 
   @doc """
-  Retrives a single `Nostrum.Struct.Guild` from the cache via its `id`.
+  Retrives a single `Remedy.Struct.Guild` from the cache via its `id`.
 
   Returns `{:error, reason}` if no result was found.
 
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Cache.GuildCache.get(0)
-  {:ok, %Nostrum.Struct.Guild{id: 0}}
+  iex> Remedy.Cache.GuildCache.get(0)
+  {:ok, %Remedy.Struct.Guild{id: 0}}
 
-  iex> Nostrum.Cache.GuildCache.get(10)
+  iex> Remedy.Cache.GuildCache.get(10)
   {:error, :id_not_found_on_guild_lookup}
   ```
   """
@@ -80,24 +80,24 @@ defmodule Nostrum.Cache.GuildCache do
   end
 
   @doc ~S"""
-  Same as `get/1`, but raises `Nostrum.Error.CacheError` in case of failure.
+  Same as `get/1`, but raises `Remedy.Error.CacheError` in case of failure.
   """
   @spec get!(Guild.id()) :: Guild.t() | no_return
   def get!(id), do: get(id) |> Util.bangify_find(id, __MODULE__)
 
   @doc """
-  Retrives a single `Nostrum.Struct.Guild` where it matches the `clauses`.
+  Retrives a single `Remedy.Struct.Guild` where it matches the `clauses`.
 
   Returns `{:error, reason}` if no result was found.
 
   ```Elixir
-  iex> Nostrum.Cache.GuildCache.get_by(id: 0)
-  {:ok, %Nostrum.Struct.Guild{id: 0}}
+  iex> Remedy.Cache.GuildCache.get_by(id: 0)
+  {:ok, %Remedy.Struct.Guild{id: 0}}
 
-  iex> Nostrum.Cache.GuildCache.get_by(%{id: 0})
-  {:ok, %Nostrum.Struct.Guild{id: 0}}
+  iex> Remedy.Cache.GuildCache.get_by(%{id: 0})
+  {:ok, %Remedy.Struct.Guild{id: 0}}
 
-  iex> Nostrum.Cache.GuildCache.get_by(id: 10)
+  iex> Remedy.Cache.GuildCache.get_by(id: 10)
   {:error, :id_not_found_on_guild_lookup}
   ```
   """
@@ -107,23 +107,23 @@ defmodule Nostrum.Cache.GuildCache do
   end
 
   @doc ~S"""
-  Same as `get_by/1`, but raises `Nostrum.Error.CacheError` in case of failure.
+  Same as `get_by/1`, but raises `Remedy.Error.CacheError` in case of failure.
   """
   @spec get_by!(clauses) :: Guild.t() | no_return
   def get_by!(clauses), do: get_by(clauses) |> Util.bangify_find(clauses, __MODULE__)
 
   @doc """
-  Selects values using a `selector` from a `Nostrum.Struct.Guild`.
+  Selects values using a `selector` from a `Remedy.Struct.Guild`.
 
   Returns `{:error, reason}` if no result was found.
 
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Cache.GuildCache.select(0, fn guild -> guild.id end)
+  iex> Remedy.Cache.GuildCache.select(0, fn guild -> guild.id end)
   {:ok, 0}
 
-  iex> Nostrum.Cache.GuildCache.select(10, fn guild -> guild.id end)
+  iex> Remedy.Cache.GuildCache.select(10, fn guild -> guild.id end)
   {:error, :id_not_found_on_guild_lookup}
   ```
   """
@@ -133,25 +133,25 @@ defmodule Nostrum.Cache.GuildCache do
   end
 
   @doc ~S"""
-  Same as `select/2`, but raises `Nostrum.Error.CacheError` in case of failure.
+  Same as `select/2`, but raises `Remedy.Error.CacheError` in case of failure.
   """
   @spec select!(Guild.id(), selector) :: any | no_return
   def select!(id, selector), do: select(id, selector) |> Util.bangify_find(id, __MODULE__)
 
   @doc """
-  Selects values using a `selector` from a `Nostrum.Struct.Guild` that matches
+  Selects values using a `selector` from a `Remedy.Struct.Guild` that matches
   the `clauses`.
 
   Returns `{:error, reason}` if no result was found.
 
   ```Elixir
-  iex> Nostrum.Cache.GuildCache.select_by([id: 0], fn guild -> guild.id end)
+  iex> Remedy.Cache.GuildCache.select_by([id: 0], fn guild -> guild.id end)
   {:ok, 0}
 
-  iex> Nostrum.Cache.GuildCache.select_by(%{id: 0}, fn guild -> guild.id end)
+  iex> Remedy.Cache.GuildCache.select_by(%{id: 0}, fn guild -> guild.id end)
   {:ok, 0}
 
-  iex> Nostrum.Cache.GuildCache.select_by([id: 10], fn guild -> guild.id end)
+  iex> Remedy.Cache.GuildCache.select_by([id: 10], fn guild -> guild.id end)
   {:error, :id_not_found_on_guild_lookup}
   ```
   """
@@ -185,7 +185,7 @@ defmodule Nostrum.Cache.GuildCache do
   end
 
   @doc ~S"""
-  Same as `select_by/2`, but raises `Nostrum.Error.CacheError` in case of failure.
+  Same as `select_by/2`, but raises `Remedy.Error.CacheError` in case of failure.
   """
   @spec select_by!(clauses, selector) :: any | no_return
   def select_by!(clauses, selector),
@@ -284,7 +284,7 @@ defmodule Nostrum.Cache.GuildCache do
   def member_update(guild_id, member) do
     # We may retrieve a GUILD_MEMBER_UPDATE event for our own user even if we
     # have the required intents to retrieve it for other members disabled, as
-    # outlined in issue https://github.com/Kraigie/nostrum/issues/293. In
+    # outlined in issue https://github.com/Kraigie/remedy/issues/293. In
     # that case, we will not have the guild cached.
     case :ets.lookup(@table_name, guild_id) do
       [{_id, guild}] ->

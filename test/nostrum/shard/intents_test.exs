@@ -1,11 +1,11 @@
-defmodule Nostrum.Shard.IntentsTest do
+defmodule Remedy.Shard.IntentsTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Shard.Intents
+  alias Remedy.Shard.Intents
 
   describe "get_enabled_intents/0" do
     test "returns all intents enabled when all intents are set" do
-      Application.put_env(:nostrum, :gateway_intents, :all)
+      Application.put_env(:remedy, :gateway_intents, :all)
 
       result = Intents.get_enabled_intents()
 
@@ -16,7 +16,7 @@ defmodule Nostrum.Shard.IntentsTest do
     end
 
     test "returns all non-privileged intents enabled when intents set to :nonprivileged (default)" do
-      Application.put_env(:nostrum, :gateway_intents, :nonprivileged)
+      Application.put_env(:remedy, :gateway_intents, :nonprivileged)
 
       result = Intents.get_enabled_intents()
 
@@ -27,7 +27,7 @@ defmodule Nostrum.Shard.IntentsTest do
     end
 
     test "returns 0 when no intents are enabled" do
-      Application.put_env(:nostrum, :gateway_intents, [])
+      Application.put_env(:remedy, :gateway_intents, [])
 
       result = Intents.get_enabled_intents()
 
@@ -37,7 +37,7 @@ defmodule Nostrum.Shard.IntentsTest do
     end
 
     test "returns 1 when guild intent is enabled" do
-      Application.put_env(:nostrum, :gateway_intents, [:guilds])
+      Application.put_env(:remedy, :gateway_intents, [:guilds])
 
       result = Intents.get_enabled_intents()
 

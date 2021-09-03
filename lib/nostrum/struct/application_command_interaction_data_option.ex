@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.ApplicationCommandInteractionDataOption do
+defmodule Remedy.Struct.ApplicationCommandInteractionDataOption do
   @moduledoc "Struct for command invocation arguments."
 
   # seasons greetings from `AbstractBeanModelParserFactory.java`.
 
-  alias Nostrum.Util
+  alias Remedy.Util
 
   defstruct [:name, :type, :value, :options]
 

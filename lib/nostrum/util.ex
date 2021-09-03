@@ -1,11 +1,11 @@
-defmodule Nostrum.Util do
+defmodule Remedy.Util do
   @moduledoc """
   Utility functions
   """
 
-  alias Nostrum.{Api, Constants, Snowflake}
-  alias Nostrum.Shard.Session
-  alias Nostrum.Struct.WSState
+  alias Remedy.{Api, Constants, Snowflake}
+  alias Remedy.Shard.Session
+  alias Remedy.Struct.WSState
 
   require Logger
 
@@ -14,7 +14,7 @@ defmodule Nostrum.Util do
 
   ## Example
   ``` Elixir
-  Nostrum.Util.nostrum_struct(%{
+  Remedy.Util.remedy_struct(%{
     author: User,
     mentions: [User],
     mention_roles: [User],
@@ -22,7 +22,7 @@ defmodule Nostrum.Util do
   })
   ```
   """
-  defmacro nostrum_struct(body) do
+  defmacro remedy_struct(body) do
     quote do
       @derive [Poison.Encoder]
       defstruct Map.keys(unquote(body))
@@ -40,7 +40,7 @@ defmodule Nostrum.Util do
       end
 
       def to_struct(map) do
-        alias Nostrum.Util
+        alias Remedy.Util
 
         new_map =
           for {k, v} <- unquote(body), into: %{} do
@@ -106,7 +106,7 @@ defmodule Nostrum.Util do
   @spec num_shards() :: integer
   def num_shards do
     num =
-      with :auto <- Application.get_env(:nostrum, :num_shards, :auto),
+      with :auto <- Application.get_env(:remedy, :num_shards, :auto),
            {_url, shards} <- gateway(),
            do: shards
 
@@ -120,10 +120,10 @@ defmodule Nostrum.Util do
         res
 
       {:error} ->
-        raise(Nostrum.Error.CacheError, finding: find, cache_name: cache_name)
+        raise(Remedy.Error.CacheError, finding: find, cache_name: cache_name)
 
       {:error, _other} ->
-        raise(Nostrum.Error.CacheError, finding: find, cache_name: cache_name)
+        raise(Remedy.Error.CacheError, finding: find, cache_name: cache_name)
     end
   end
 
@@ -147,7 +147,7 @@ defmodule Nostrum.Util do
         raise("Authentication rejected, invalid token")
 
       {:error, %{status_code: code, message: message}} ->
-        raise(Nostrum.Error.ApiError, status_code: code, message: message)
+        raise(Remedy.Error.ApiError, status_code: code, message: message)
 
       {:ok, body} ->
         body = Poison.decode!(body)
@@ -251,14 +251,14 @@ defmodule Nostrum.Util do
   def fullsweep_after do
     {:fullsweep_after,
      Application.get_env(
-       :nostrum,
+       :remedy,
        :fullsweep_after_default,
        :erlang.system_info(:fullsweep_after) |> elem(1)
      )}
   end
 
   @doc """
-  Gets the latency of the shard connection from a `Nostrum.Struct.WSState.t()` struct.
+  Gets the latency of the shard connection from a `Remedy.Struct.WSState.t()` struct.
 
   Returns the latency in milliseconds as an integer, returning nil if unknown.
   """
@@ -282,7 +282,7 @@ defmodule Nostrum.Util do
   def get_all_shard_latencies do
     ShardSupervisor
     |> Supervisor.which_children()
-    |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Nostrum.Shard end)
+    |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard end)
     |> Enum.map(fn {_id, pid, _type, _modules} -> Supervisor.which_children(pid) end)
     |> List.flatten()
     |> Enum.map(fn {_id, pid, _type, _modules} -> Session.get_ws_state(pid) end)
@@ -293,7 +293,7 @@ defmodule Nostrum.Util do
   Since we're being sacrilegious and converting strings to atoms from the WS, there will be some
   atoms that we see that aren't defined in any Discord structs. This method mainly serves as a
   means to define those atoms once so the user isn't warned about them in the
-  `Nostrum.Util.maybe_to_atom/1` function when they are in fact harmless.
+  `Remedy.Util.maybe_to_atom/1` function when they are in fact harmless.
   """
   def unused_atoms do
     [

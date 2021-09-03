@@ -1,7 +1,7 @@
-defmodule Nostrum.SnowflakeTest do
+defmodule Remedy.SnowflakeTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Snowflake
+  alias Remedy.Snowflake
 
   require Snowflake
 

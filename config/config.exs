@@ -1,6 +1,6 @@
 import Config
 
-config :nostrum,
+config :remedy,
   token: "",
   ffmpeg: "ffmpeg",
   youtubedl: "youtube-dl"

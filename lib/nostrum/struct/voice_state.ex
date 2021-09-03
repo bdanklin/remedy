@@ -1,7 +1,7 @@
-defmodule Nostrum.Struct.VoiceState do
+defmodule Remedy.Struct.VoiceState do
   @moduledoc false
 
-  alias Nostrum.Voice.Session
+  alias Remedy.Voice.Session
   alias Porcelain.Process, as: Proc
 
   defstruct [

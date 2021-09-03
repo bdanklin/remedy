@@ -1,4 +1,4 @@
-defmodule Nostrum.Voice.Audio do
+defmodule Remedy.Voice.Audio do
   @moduledoc false
 
   @dialyzer {:nowarn_function, get_stream_url: 1}
@@ -8,10 +8,10 @@ defmodule Nostrum.Voice.Audio do
 
   require Logger
 
-  alias Nostrum.Error.VoiceError
-  alias Nostrum.Struct.VoiceState
-  alias Nostrum.Util
-  alias Nostrum.Voice
+  alias Remedy.Error.VoiceError
+  alias Remedy.Struct.VoiceState
+  alias Remedy.Util
+  alias Remedy.Voice
   alias Porcelain.Process, as: Proc
   alias Porcelain.Result, as: Res
 
@@ -92,7 +92,7 @@ defmodule Nostrum.Voice.Audio do
   def get_source(%VoiceState{ffmpeg_proc: ffmpeg_proc}), do: ffmpeg_proc.out
 
   def try_send_data(%VoiceState{} = voice, init?) do
-    wait = if(init?, do: Application.get_env(:nostrum, :audio_timeout, 20_000), else: 500)
+    wait = if(init?, do: Application.get_env(:remedy, :audio_timeout, 20_000), else: 500)
     {:ok, watchdog} = :timer.apply_after(wait, __MODULE__, :on_stall, [voice])
 
     {voice, done} =
@@ -141,7 +141,7 @@ defmodule Nostrum.Voice.Audio do
   def get_stream_url(url) do
     res =
       Porcelain.exec(
-        Application.get_env(:nostrum, :youtubedl, "youtube-dl"),
+        Application.get_env(:remedy, :youtubedl, "youtube-dl"),
         [
           ["-f", "best"],
           ["-g"],
@@ -167,7 +167,7 @@ defmodule Nostrum.Voice.Audio do
   def spawn_youtubedl(url) do
     res =
       Porcelain.spawn(
-        Application.get_env(:nostrum, :youtubedl, "youtube-dl"),
+        Application.get_env(:remedy, :youtubedl, "youtube-dl"),
         [
           ["-f", "bestaudio"],
           ["-o", "-"],
@@ -190,7 +190,7 @@ defmodule Nostrum.Voice.Audio do
   def spawn_streamlink(url) do
     res =
       Porcelain.spawn(
-        Application.get_env(:nostrum, :streamlink, "streamlink"),
+        Application.get_env(:remedy, :streamlink, "streamlink"),
         [
           ["--stdout"],
           ["--quiet"],
@@ -232,7 +232,7 @@ defmodule Nostrum.Voice.Audio do
 
     res =
       Porcelain.spawn(
-        Application.get_env(:nostrum, :ffmpeg, "ffmpeg"),
+        Application.get_env(:remedy, :ffmpeg, "ffmpeg"),
         [
           ffmpeg_options(options, input_url),
           ["-ac", "2"],

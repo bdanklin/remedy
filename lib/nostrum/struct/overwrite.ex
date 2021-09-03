@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Overwrite do
+defmodule Remedy.Struct.Overwrite do
   @moduledoc """
   Struct representing a Discord overwrite.
   """
 
-  alias Nostrum.{Snowflake, Util}
+  alias Remedy.{Snowflake, Util}
 
   defstruct [
     :id,

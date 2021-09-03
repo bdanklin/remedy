@@ -1,16 +1,16 @@
-defmodule Nostrum.Shard.Event do
+defmodule Remedy.Shard.Event do
   @moduledoc false
 
-  alias Nostrum.Shard.Payload
-  alias Nostrum.Shard.Stage.Producer
-  alias Nostrum.Util
+  alias Remedy.Shard.Payload
+  alias Remedy.Shard.Stage.Producer
+  alias Remedy.Util
 
   require Logger
 
   def handle(:dispatch, payload, state) do
     payload = Util.safe_atom_map(payload)
 
-    if Application.get_env(:nostrum, :log_dispatch_events),
+    if Application.get_env(:remedy, :log_dispatch_events),
       do: payload.t |> inspect() |> Logger.debug()
 
     Producer.notify(Producer, payload, state)

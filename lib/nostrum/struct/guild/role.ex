@@ -1,24 +1,24 @@
-defmodule Nostrum.Struct.Guild.Role do
+defmodule Remedy.Struct.Guild.Role do
   @moduledoc ~S"""
   Struct representing a Discord role.
 
   ## Mentioning Roles in Messages
 
-  A `Nostrum.Struct.Guild.Role` can be mentioned in message content using the `String.Chars`
+  A `Remedy.Struct.Guild.Role` can be mentioned in message content using the `String.Chars`
   protocol or `mention/1`.
 
   ```Elixir
-  role = %Nostrum.Struct.Guild.Role{id: 431886897539973131}
-  Nostrum.Api.create_message!(184046599834435585, "#{role}")
-  %Nostrum.Struct.Message{}
+  role = %Remedy.Struct.Guild.Role{id: 431886897539973131}
+  Remedy.Api.create_message!(184046599834435585, "#{role}")
+  %Remedy.Struct.Message{}
 
-  role = %Nostrum.Struct.Guild.Role{id: 431884023535632398}
-  Nostrum.Api.create_message!(280085880452939778, "#{Nostrum.Struct.Guild.Role.mention(role)}")
-  %Nostrum.Struct.Message{}
+  role = %Remedy.Struct.Guild.Role{id: 431884023535632398}
+  Remedy.Api.create_message!(280085880452939778, "#{Remedy.Struct.Guild.Role.mention(role)}")
+  %Remedy.Struct.Message{}
   ```
   """
 
-  alias Nostrum.{Snowflake, Util}
+  alias Remedy.{Snowflake, Util}
 
   defstruct [
     :id,
@@ -71,13 +71,13 @@ defmodule Nostrum.Struct.Guild.Role do
         }
 
   @doc ~S"""
-  Formats an `Nostrum.Struct.Role` into a mention.
+  Formats an `Remedy.Struct.Role` into a mention.
 
   ## Examples
 
   ```Elixir
-  iex> role = %Nostrum.Struct.Guild.Role{id: 431886639627763722}
-  ...> Nostrum.Struct.Guild.Role.mention(role)
+  iex> role = %Remedy.Struct.Guild.Role{id: 431886639627763722}
+  ...> Remedy.Struct.Guild.Role.mention(role)
   "<@&431886639627763722>"
   ```
   """

@@ -1,5 +1,5 @@
-defmodule Nostrum.Struct.InteractionTest do
-  alias Nostrum.Struct.{
+defmodule Remedy.Struct.InteractionTest do
+  alias Remedy.Struct.{
     ApplicationCommandInteractionData,
     ApplicationCommandInteractionDataOption,
     ApplicationCommandInteractionDataResolved,
@@ -7,8 +7,8 @@ defmodule Nostrum.Struct.InteractionTest do
     User
   }
 
-  alias Nostrum.Struct.Guild.{Role, Member}
-  alias Nostrum.Util
+  alias Remedy.Struct.Guild.{Role, Member}
+  alias Remedy.Util
 
   use ExUnit.Case, async: true
 

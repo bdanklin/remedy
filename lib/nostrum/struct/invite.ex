@@ -1,10 +1,10 @@
-defmodule Nostrum.Struct.Invite do
+defmodule Remedy.Struct.Invite do
   @moduledoc """
   Struct representing a Discord invite.
   """
 
-  alias Nostrum.Struct.{Channel, Guild, User}
-  alias Nostrum.Util
+  alias Remedy.Struct.{Channel, Guild, User}
+  alias Remedy.Util
 
   defstruct [
     :code,

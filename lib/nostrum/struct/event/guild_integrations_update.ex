@@ -1,8 +1,8 @@
-defmodule Nostrum.Struct.Event.GuildIntegrationsUpdate do
+defmodule Remedy.Struct.Event.GuildIntegrationsUpdate do
   @moduledoc "Sent when a guild integration is updated"
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Struct.Guild
+  alias Remedy.Struct.Guild
 
   defstruct [:guild_id]
 

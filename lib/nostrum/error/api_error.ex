@@ -1,4 +1,4 @@
-defmodule Nostrum.Error.ApiError do
+defmodule Remedy.Error.ApiError do
   @moduledoc """
   Represents a failed response from the API.
 
@@ -32,7 +32,9 @@ defmodule Nostrum.Error.ApiError do
         response: %{code: error_code, message: message, errors: errors},
         status_code: code
       }) do
-    "(HTTP #{code}) received Discord status code #{error_code} (#{message}) with errors: #{inspect(errors)}"
+    "(HTTP #{code}) received Discord status code #{error_code} (#{message}) with errors: #{
+      inspect(errors)
+    }"
   end
 
   @impl true

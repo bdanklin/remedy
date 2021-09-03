@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Event.ChannelPinsUpdate do
+defmodule Remedy.Struct.Event.ChannelPinsUpdate do
   @moduledoc "Represents an update to channel pins."
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Struct.Channel
-  alias Nostrum.Struct.Guild
+  alias Remedy.Struct.Channel
+  alias Remedy.Struct.Guild
 
   defstruct [:guild_id, :channel_id, :last_pin_timestamp]
 

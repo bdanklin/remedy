@@ -1,11 +1,11 @@
-defmodule Nostrum.Shard.Stage.Cache do
+defmodule Remedy.Shard.Stage.Cache do
   @moduledoc false
 
   use GenStage
 
-  alias Nostrum.Shard.Dispatch
-  alias Nostrum.Shard.Stage.Producer
-  alias Nostrum.Util
+  alias Remedy.Shard.Dispatch
+  alias Remedy.Shard.Stage.Producer
+  alias Remedy.Util
 
   require Logger
 

@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Event.InviteDelete do
+defmodule Remedy.Struct.Event.InviteDelete do
   @moduledoc """
   Struct representing an Invite Delete event
   """
 
-  alias Nostrum.Struct.{Channel, Guild}
+  alias Remedy.Struct.{Channel, Guild}
 
   defstruct [
     :channel_id,

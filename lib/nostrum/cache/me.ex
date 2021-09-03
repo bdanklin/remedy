@@ -1,11 +1,11 @@
-defmodule Nostrum.Cache.Me do
+defmodule Remedy.Cache.Me do
   @moduledoc """
   Simple cache that stores information for the current user.
   """
 
   use Agent
 
-  alias Nostrum.Struct.User
+  alias Remedy.Struct.User
 
   def start_link([]) do
     Agent.start_link(fn -> nil end, name: __MODULE__)

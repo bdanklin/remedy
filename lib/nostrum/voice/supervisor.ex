@@ -1,10 +1,10 @@
-defmodule Nostrum.Voice.Supervisor do
+defmodule Remedy.Voice.Supervisor do
   @moduledoc false
 
   use Supervisor
 
-  alias Nostrum.Struct.VoiceState
-  alias Nostrum.Voice.Session
+  alias Remedy.Struct.VoiceState
+  alias Remedy.Voice.Session
 
   require Logger
 
@@ -14,7 +14,7 @@ defmodule Nostrum.Voice.Supervisor do
 
   def init(_opts) do
     children = [
-      Nostrum.Voice
+      Remedy.Voice
     ]
 
     options = [

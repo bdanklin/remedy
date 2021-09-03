@@ -1,43 +1,43 @@
-defmodule Nostrum.Struct.Emoji do
+defmodule Remedy.Struct.Emoji do
   @moduledoc ~S"""
   Struct representing a Discord emoji.
 
   ## Mentioning Emojis in Messages
 
-  A `Nostrum.Struct.Emoji` can be mentioned in message content using the `String.Chars`
+  A `Remedy.Struct.Emoji` can be mentioned in message content using the `String.Chars`
   protocol or `mention/1`.
 
   ```Elixir
-  emoji = %Nostrum.Struct.Emoji{id: 437093487582642177, name: "foxbot"}
-  Nostrum.Api.create_message!(184046599834435585, "#{emoji}")
-  %Nostrum.Struct.Message{content: "<:foxbot:437093487582642177>"}
+  emoji = %Remedy.Struct.Emoji{id: 437093487582642177, name: "foxbot"}
+  Remedy.Api.create_message!(184046599834435585, "#{emoji}")
+  %Remedy.Struct.Message{content: "<:foxbot:437093487582642177>"}
 
-  emoji = %Nostrum.Struct.Emoji{id: 436885297037312001, name: "tealixir"}
-  Nostrum.Api.create_message!(280085880452939778, "#{Nostrum.Struct.Emoji.mention(emoji)}")
-  %Nostrum.Struct.Message{content: "<:tealixir:436885297037312001>"}
+  emoji = %Remedy.Struct.Emoji{id: 436885297037312001, name: "tealixir"}
+  Remedy.Api.create_message!(280085880452939778, "#{Remedy.Struct.Emoji.mention(emoji)}")
+  %Remedy.Struct.Message{content: "<:tealixir:436885297037312001>"}
   ```
 
   ## Using Emojis in the Api
 
-  A `Nostrum.Struct.Emoji` can be used in `Nostrum.Api` by using its api name
+  A `Remedy.Struct.Emoji` can be used in `Remedy.Api` by using its api name
   or the struct itself.
 
   ```Elixir
-  emoji = %Nostrum.Struct.Emoji{id: 436885297037312001, name: "tealixir"}
-  Nostrum.Api.create_reaction(381889573426429952, 436247584349356032, Nostrum.Struct.Emoji.api_name(emoji))
+  emoji = %Remedy.Struct.Emoji{id: 436885297037312001, name: "tealixir"}
+  Remedy.Api.create_reaction(381889573426429952, 436247584349356032, Remedy.Struct.Emoji.api_name(emoji))
   {:ok}
 
-  emoji = %Nostrum.Struct.Emoji{id: 436189601820966923, name: "elixir"}
-  Nostrum.Api.create_reaction(381889573426429952, 436247584349356032, emoji)
+  emoji = %Remedy.Struct.Emoji{id: 436189601820966923, name: "elixir"}
+  Remedy.Api.create_reaction(381889573426429952, 436247584349356032, emoji)
   {:ok}
   ```
 
-  See `t:Nostrum.Struct.Emoji.api_name/0` for more information.
+  See `t:Remedy.Struct.Emoji.api_name/0` for more information.
   """
 
-  alias Nostrum.{Constants, Snowflake, Util}
-  alias Nostrum.Struct.Guild.Role
-  alias Nostrum.Struct.User
+  alias Remedy.{Constants, Snowflake, Util}
+  alias Remedy.Struct.Guild.Role
+  alias Remedy.Struct.User
 
   defstruct [
     :id,
@@ -63,14 +63,14 @@ defmodule Nostrum.Struct.Emoji do
     * `"name"`
     * A base 16 unicode emoji string.
 
-  `api_name/1` is a convenience function that returns a `Nostrum.Struct.Emoji`'s
+  `api_name/1` is a convenience function that returns a `Remedy.Struct.Emoji`'s
   api name.
 
   ## Examples
 
   ```Elixir
   # Custom Emojis
-  "nostrum:431890438091489"
+  "remedy:431890438091489"
 
   # Unicode Emojis
   "≡ƒæì"
@@ -112,21 +112,21 @@ defmodule Nostrum.Struct.Emoji do
         }
 
   @doc ~S"""
-  Formats an `Nostrum.Struct.Emoji` into a mention.
+  Formats an `Remedy.Struct.Emoji` into a mention.
 
   ## Examples
 
   ```Elixir
-  iex> emoji = %Nostrum.Struct.Emoji{name: "≡ƒæì"}
-  ...> Nostrum.Struct.Emoji.mention(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{name: "≡ƒæì"}
+  ...> Remedy.Struct.Emoji.mention(emoji)
   "≡ƒæì"
 
-  iex> emoji = %Nostrum.Struct.Emoji{id: 436885297037312001, name: "tealixir"}
-  ...> Nostrum.Struct.Emoji.mention(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{id: 436885297037312001, name: "tealixir"}
+  ...> Remedy.Struct.Emoji.mention(emoji)
   "<:tealixir:436885297037312001>"
 
-  iex> emoji = %Nostrum.Struct.Emoji{id: 437016804309860372, name: "blobseizure", animated: true}
-  ...> Nostrum.Struct.Emoji.mention(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{id: 437016804309860372, name: "blobseizure", animated: true}
+  ...> Remedy.Struct.Emoji.mention(emoji)
   "<a:blobseizure:437016804309860372>"
   ```
   """
@@ -137,17 +137,17 @@ defmodule Nostrum.Struct.Emoji do
   def mention(%__MODULE__{id: id, name: name}), do: "<:#{name}:#{id}>"
 
   @doc ~S"""
-  Formats an emoji struct into its `t:Nostrum.Struct.Emoji.api_name/0`.
+  Formats an emoji struct into its `t:Remedy.Struct.Emoji.api_name/0`.
 
   ## Examples
 
   ```Elixir
-  iex> emoji = %Nostrum.Struct.Emoji{name: "Γ¡É"}
-  ...> Nostrum.Struct.Emoji.api_name(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{name: "Γ¡É"}
+  ...> Remedy.Struct.Emoji.api_name(emoji)
   "Γ¡É"
 
-  iex> emoji = %Nostrum.Struct.Emoji{id: 437093487582642177, name: "foxbot"}
-  ...> Nostrum.Struct.Emoji.api_name(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{id: 437093487582642177, name: "foxbot"}
+  ...> Remedy.Struct.Emoji.api_name(emoji)
   "foxbot:437093487582642177"
   ```
   """
@@ -163,16 +163,16 @@ defmodule Nostrum.Struct.Emoji do
   ## Examples
 
   ```Elixir
-  iex> emoji = %Nostrum.Struct.Emoji{id: 450225070569291776}
-  iex> Nostrum.Struct.Emoji.image_url(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{id: 450225070569291776}
+  iex> Remedy.Struct.Emoji.image_url(emoji)
   "https://cdn.discordapp.com/emojis/450225070569291776.png"
 
-  iex> emoji = %Nostrum.Struct.Emoji{id: 406140226998894614, animated: true}
-  iex> Nostrum.Struct.Emoji.image_url(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{id: 406140226998894614, animated: true}
+  iex> Remedy.Struct.Emoji.image_url(emoji)
   "https://cdn.discordapp.com/emojis/406140226998894614.gif"
 
-  iex> emoji = %Nostrum.Struct.Emoji{id: nil, name: "Γ¡É"}
-  iex> Nostrum.Struct.Emoji.image_url(emoji)
+  iex> emoji = %Remedy.Struct.Emoji{id: nil, name: "Γ¡É"}
+  iex> Remedy.Struct.Emoji.image_url(emoji)
   nil
   ```
   """

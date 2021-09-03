@@ -1,14 +1,14 @@
-defmodule Nostrum.Struct.Event.VoiceReady do
+defmodule Remedy.Struct.Event.VoiceReady do
   @moduledoc since: "0.5.0"
   @moduledoc """
-  Struct representing a Nostrum-generated Voice Ready event
+  Struct representing a Remedy-generated Voice Ready event
 
-  Nostrum will generate this event when the bot joins a voice channel
+  Remedy will generate this event when the bot joins a voice channel
   and is ready to play audio.
 
   Listening to this event may be used for bots that begin playing audio
   directly after joining a voice channel as an alternative to waiting
-  until `Nostrum.Voice.ready?/1` returns `true`.
+  until `Remedy.Voice.ready?/1` returns `true`.
   """
 
   defstruct [
@@ -16,7 +16,7 @@ defmodule Nostrum.Struct.Event.VoiceReady do
     :guild_id
   ]
 
-  alias Nostrum.Struct.{Channel, Guild}
+  alias Remedy.Struct.{Channel, Guild}
 
   @typedoc """
   Id of the channel that voice is ready in.

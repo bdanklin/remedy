@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Embed.Author do
+defmodule Remedy.Struct.Embed.Author do
   @moduledoc """
   Struct representing a Discord embed author.
   """
 
-  alias Nostrum.Util
+  alias Remedy.Util
   alias Poison.Encoder
 
   defstruct [

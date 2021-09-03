@@ -1,4 +1,4 @@
-defmodule Nostrum.Cache.UserCache do
+defmodule Remedy.Cache.UserCache do
   @moduledoc """
   Cache for users.
 
@@ -14,10 +14,10 @@ defmodule Nostrum.Cache.UserCache do
   ```
   """
 
-  alias Nostrum.Struct.User
-  alias Nostrum.Util
+  alias Remedy.Struct.User
+  alias Remedy.Util
 
-  import Nostrum.Snowflake, only: [is_snowflake: 1]
+  import Remedy.Snowflake, only: [is_snowflake: 1]
 
   @doc ~s"""
   Retrieves a user from the cache by id.
@@ -26,7 +26,7 @@ defmodule Nostrum.Cache.UserCache do
 
   ## Example
   ```elixir
-  case Nostrum.Cache.UserCache.get(1111222233334444) do
+  case Remedy.Cache.UserCache.get(1111222233334444) do
     {:ok, user} ->
       "We found " <> user.username
     {:error, _reason} ->
@@ -43,7 +43,7 @@ defmodule Nostrum.Cache.UserCache do
   end
 
   @doc """
-  Same as `get/1`, but raises `Nostrum.Error.CacheError` in case of a failure.
+  Same as `get/1`, but raises `Remedy.Error.CacheError` in case of a failure.
   """
   @spec get!(User.id()) :: no_return | User.t()
   def get!(id) when is_snowflake(id), do: id |> get |> Util.bangify_find(id, __MODULE__)

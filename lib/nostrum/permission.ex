@@ -1,4 +1,4 @@
-defmodule Nostrum.Permission do
+defmodule Remedy.Permission do
   @moduledoc """
   Functions that work on permissions.
 
@@ -6,8 +6,8 @@ defmodule Nostrum.Permission do
   to work with permissions:
 
   ```Elixir
-  alias Nostrum.Cache.GuildCache
-  alias Nostrum.Struct.Guild.Member
+  alias Remedy.Cache.GuildCache
+  alias Remedy.Struct.Guild.Member
 
   guild = GuildCache.get!(279093381723062272)
   member = Map.get(guild.members, 177888205536886784)
@@ -112,10 +112,10 @@ defmodule Nostrum.Permission do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Permission.is_permission(:administrator)
+  iex> Remedy.Permission.is_permission(:administrator)
   true
 
-  iex> Nostrum.Permission.is_permission(:not_a_permission)
+  iex> Remedy.Permission.is_permission(:not_a_permission)
   false
   ```
   """
@@ -135,10 +135,10 @@ defmodule Nostrum.Permission do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Permission.from_bit(0x04000000)
+  iex> Remedy.Permission.from_bit(0x04000000)
   {:ok, :change_nickname}
 
-  iex> Nostrum.Permission.from_bit(0)
+  iex> Remedy.Permission.from_bit(0)
   :error
   ```
   """
@@ -153,10 +153,10 @@ defmodule Nostrum.Permission do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Permission.from_bit!(0x04000000)
+  iex> Remedy.Permission.from_bit!(0x04000000)
   :change_nickname
 
-  iex> Nostrum.Permission.from_bit!(0)
+  iex> Remedy.Permission.from_bit!(0)
   ** (ArgumentError) expected a valid bit, got: `0`
   ```
   """
@@ -176,10 +176,10 @@ defmodule Nostrum.Permission do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Permission.from_bitset(0x08000002)
+  iex> Remedy.Permission.from_bitset(0x08000002)
   [:manage_nicknames, :kick_members]
 
-  iex> Nostrum.Permission.from_bitset(0x4000000000000)
+  iex> Remedy.Permission.from_bitset(0x4000000000000)
   []
   ```
   """
@@ -202,7 +202,7 @@ defmodule Nostrum.Permission do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Permission.to_bit(:administrator)
+  iex> Remedy.Permission.to_bit(:administrator)
   8
   ```
   """
@@ -215,7 +215,7 @@ defmodule Nostrum.Permission do
   ## Examples
 
   ```Elixir
-  iex> Nostrum.Permission.to_bitset([:administrator, :create_instant_invite])
+  iex> Remedy.Permission.to_bitset([:administrator, :create_instant_invite])
   9
   ```
   """

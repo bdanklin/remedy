@@ -1,9 +1,9 @@
-defmodule Nostrum.Shard.Connector do
+defmodule Remedy.Shard.Connector do
   @moduledoc false
 
   use GenServer
 
-  alias Nostrum.Util
+  alias Remedy.Util
 
   require Logger
 

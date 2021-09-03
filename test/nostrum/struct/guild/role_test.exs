@@ -1,7 +1,7 @@
-defmodule Nostrum.Struct.Guild.RoleTest do
+defmodule Remedy.Struct.Guild.RoleTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Struct.Guild.Role
+  alias Remedy.Struct.Guild.Role
 
   doctest Role
 

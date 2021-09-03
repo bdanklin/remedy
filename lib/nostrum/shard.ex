@@ -1,9 +1,9 @@
-defmodule Nostrum.Shard do
+defmodule Remedy.Shard do
   @moduledoc false
 
   use Supervisor
 
-  alias Nostrum.Shard.Session
+  alias Remedy.Shard.Session
 
   def start_link([_, shard_num] = opts) do
     Supervisor.start_link(__MODULE__, opts, name: :"Shard-#{shard_num}")

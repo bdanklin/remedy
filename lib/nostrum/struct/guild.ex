@@ -1,11 +1,11 @@
-defmodule Nostrum.Struct.Guild do
+defmodule Remedy.Struct.Guild do
   @moduledoc """
   Struct representing a Discord guild.
   """
 
-  alias Nostrum.Struct.{Channel, Emoji, User}
-  alias Nostrum.Struct.Guild.{Member, Role}
-  alias Nostrum.{Constants, Snowflake, Util}
+  alias Remedy.Struct.{Channel, Emoji, User}
+  alias Remedy.Struct.Guild.{Member, Role}
+  alias Remedy.{Constants, Snowflake, Util}
 
   defstruct [
     :id,
@@ -149,7 +149,7 @@ defmodule Nostrum.Struct.Guild do
   @type channels :: %{required(Channel.id()) => Channel.t()} | nil
 
   @typedoc """
-  A `Nostrum.Struct.Guild` that is sent on user-specific rest endpoints.
+  A `Remedy.Struct.Guild` that is sent on user-specific rest endpoints.
   """
   @type user_guild :: %__MODULE__{
           id: id,
@@ -185,7 +185,7 @@ defmodule Nostrum.Struct.Guild do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Guild` that is sent on guild-specific rest endpoints.
+  A `Remedy.Struct.Guild` that is sent on guild-specific rest endpoints.
   """
   @type rest_guild :: %__MODULE__{
           id: id,
@@ -221,7 +221,7 @@ defmodule Nostrum.Struct.Guild do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Guild` that is unavailable.
+  A `Remedy.Struct.Guild` that is unavailable.
   """
   @type unavailable_guild :: %__MODULE__{
           id: id,
@@ -257,7 +257,7 @@ defmodule Nostrum.Struct.Guild do
         }
 
   @typedoc """
-  A `Nostrum.Struct.Guild` that is fully available.
+  A `Remedy.Struct.Guild` that is fully available.
   """
   @type available_guild :: %__MODULE__{
           id: id,
@@ -306,15 +306,15 @@ defmodule Nostrum.Struct.Guild do
   ## Examples
 
   ```Elixir
-  iex> guild = %Nostrum.Struct.Guild{icon: "86e39f7ae3307e811784e2ffd11a7310",
+  iex> guild = %Remedy.Struct.Guild{icon: "86e39f7ae3307e811784e2ffd11a7310",
   ...>                               id: 41771983423143937}
-  iex> Nostrum.Struct.Guild.icon_url(guild)
+  iex> Remedy.Struct.Guild.icon_url(guild)
   "https://cdn.discordapp.com/icons/41771983423143937/86e39f7ae3307e811784e2ffd11a7310.webp"
-  iex> Nostrum.Struct.Guild.icon_url(guild, "png")
+  iex> Remedy.Struct.Guild.icon_url(guild, "png")
   "https://cdn.discordapp.com/icons/41771983423143937/86e39f7ae3307e811784e2ffd11a7310.png"
 
-  iex> guild = %Nostrum.Struct.Guild{icon: nil}
-  iex> Nostrum.Struct.Guild.icon_url(guild)
+  iex> guild = %Remedy.Struct.Guild{icon: nil}
+  iex> Remedy.Struct.Guild.icon_url(guild)
   nil
   ```
   """
@@ -333,15 +333,15 @@ defmodule Nostrum.Struct.Guild do
   ## Examples
 
   ```Elixir
-  iex> guild = %Nostrum.Struct.Guild{splash: "86e39f7ae3307e811784e2ffd11a7310",
+  iex> guild = %Remedy.Struct.Guild{splash: "86e39f7ae3307e811784e2ffd11a7310",
   ...>                               id: 41771983423143937}
-  iex> Nostrum.Struct.Guild.splash_url(guild)
+  iex> Remedy.Struct.Guild.splash_url(guild)
   "https://cdn.discordapp.com/splashes/41771983423143937/86e39f7ae3307e811784e2ffd11a7310.webp"
-  iex> Nostrum.Struct.Guild.splash_url(guild, "png")
+  iex> Remedy.Struct.Guild.splash_url(guild, "png")
   "https://cdn.discordapp.com/splashes/41771983423143937/86e39f7ae3307e811784e2ffd11a7310.png"
 
-  iex> guild = %Nostrum.Struct.Guild{splash: nil}
-  iex> Nostrum.Struct.Guild.splash_url(guild)
+  iex> guild = %Remedy.Struct.Guild{splash: nil}
+  iex> Remedy.Struct.Guild.splash_url(guild)
   nil
   ```
   """

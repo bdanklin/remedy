@@ -1,4 +1,4 @@
-defmodule Nostrum.Struct.VoiceRegion do
+defmodule Remedy.Struct.VoiceRegion do
   @moduledoc """
   Struct representing a Discord voice region.
   """

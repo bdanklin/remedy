@@ -1,10 +1,10 @@
-defmodule Nostrum.Voice.Payload do
+defmodule Remedy.Voice.Payload do
   @moduledoc false
 
-  alias Nostrum.Cache.Me
-  alias Nostrum.Constants
-  alias Nostrum.Voice.Audio
-  alias Nostrum.Struct.{VoiceState, VoiceWSState}
+  alias Remedy.Cache.Me
+  alias Remedy.Constants
+  alias Remedy.Voice.Audio
+  alias Remedy.Struct.{VoiceState, VoiceWSState}
 
   require Logger
 

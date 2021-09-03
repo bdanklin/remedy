@@ -1,11 +1,11 @@
-defmodule Nostrum.Struct.Event.Ready do
+defmodule Remedy.Struct.Event.Ready do
   @moduledoc "Sent after initial handshake with the gateway"
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Struct.Event.PartialApplication
-  alias Nostrum.Struct.Guild.UnavailableGuild
-  alias Nostrum.Struct.User
-  alias Nostrum.Util
+  alias Remedy.Struct.Event.PartialApplication
+  alias Remedy.Struct.Guild.UnavailableGuild
+  alias Remedy.Struct.User
+  alias Remedy.Util
 
   defstruct [:v, :user, :guilds, :session_id, :shard, :application]
 
@@ -25,7 +25,7 @@ defmodule Nostrum.Struct.Event.Ready do
   Used for resuming connections.
 
   If you are wondering whether you need to use this, you probably don't.
-  Nostrum handles reconnections for you.
+  Remedy handles reconnections for you.
   """
   @type session_id :: String.t()
 

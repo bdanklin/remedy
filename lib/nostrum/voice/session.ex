@@ -1,12 +1,12 @@
-defmodule Nostrum.Voice.Session do
+defmodule Remedy.Voice.Session do
   @moduledoc false
 
-  alias Nostrum.Cache.{ChannelCache, GuildCache}
-  alias Nostrum.Constants
-  alias Nostrum.Shard.Stage.Producer
-  alias Nostrum.Struct.{VoiceState, VoiceWSState}
-  alias Nostrum.Voice
-  alias Nostrum.Voice.{Event, Payload}
+  alias Remedy.Cache.{ChannelCache, GuildCache}
+  alias Remedy.Constants
+  alias Remedy.Shard.Stage.Producer
+  alias Remedy.Struct.{VoiceState, VoiceWSState}
+  alias Remedy.Voice
+  alias Remedy.Voice.{Event, Payload}
 
   require Logger
 

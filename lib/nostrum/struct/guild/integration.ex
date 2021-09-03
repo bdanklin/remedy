@@ -1,9 +1,9 @@
-defmodule Nostrum.Struct.Guild.Integration do
+defmodule Remedy.Struct.Guild.Integration do
   @moduledoc """
   Struct representing a Discord guild integration.
 
   The struct defined here only has the fields provided for Discord Bot
-  integrations available. If you use Nostrum in a non-bot application, feel
+  integrations available. If you use Remedy in a non-bot application, feel
   free to open an issue to add it.
 
   ## References
@@ -12,7 +12,7 @@ defmodule Nostrum.Struct.Guild.Integration do
   """
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Snowflake
+  alias Remedy.Snowflake
 
   defstruct [:id, :name, :type, :enabled]
 

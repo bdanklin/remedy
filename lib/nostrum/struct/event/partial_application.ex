@@ -1,8 +1,8 @@
-defmodule Nostrum.Struct.Event.PartialApplication do
+defmodule Remedy.Struct.Event.PartialApplication do
   @moduledoc "Sent on `READY`"
   @moduledoc since: "0.5.0"
 
-  alias Nostrum.Snowflake
+  alias Remedy.Snowflake
 
   defstruct [:id, :flags]
 

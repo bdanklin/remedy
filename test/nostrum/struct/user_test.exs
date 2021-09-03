@@ -1,7 +1,7 @@
-defmodule Nostrum.Struct.UserTest do
+defmodule Remedy.Struct.UserTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Struct.User
+  alias Remedy.Struct.User
 
   doctest User
 

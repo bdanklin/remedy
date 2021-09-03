@@ -1,8 +1,8 @@
-defmodule Nostrum.Shard.DispatchTest do
+defmodule Remedy.Shard.DispatchTest do
   use ExUnit.Case, async: true
 
-  alias Nostrum.Shard.Dispatch
-  alias Nostrum.Struct.Event.{MessageDelete, MessageDeleteBulk}
+  alias Remedy.Shard.Dispatch
+  alias Remedy.Struct.Event.{MessageDelete, MessageDeleteBulk}
 
   describe "handle_event/1" do
     test "returns `MessageDelete.t()` given Message Delete event" do

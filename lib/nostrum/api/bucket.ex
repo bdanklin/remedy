@@ -1,7 +1,7 @@
-defmodule Nostrum.Api.Bucket do
+defmodule Remedy.Api.Bucket do
   @moduledoc false
 
-  alias Nostrum.Util
+  alias Remedy.Util
 
   def update_bucket(route, remaining, reset_time, latency) do
     :ets.insert(:ratelimit_buckets, {route, remaining, reset_time, latency})

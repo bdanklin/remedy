@@ -1,11 +1,11 @@
-defmodule Nostrum.Struct.Guild.AuditLogEntry do
+defmodule Remedy.Struct.Guild.AuditLogEntry do
   @moduledoc """
   Represents a single entry in the guild's audit log.
   """
 
-  alias Nostrum.Snowflake
-  alias Nostrum.Struct.User
-  alias Nostrum.Util
+  alias Remedy.Snowflake
+  alias Remedy.Struct.User
+  alias Remedy.Util
 
   defstruct [
     :action_type,

@@ -1,7 +1,7 @@
-defmodule Nostrum.Shard.Payload do
+defmodule Remedy.Shard.Payload do
   @moduledoc false
 
-  alias Nostrum.{Constants, Shard.Intents, Util}
+  alias Remedy.{Constants, Shard.Intents, Util}
 
   @large_threshold 250
 
@@ -16,11 +16,11 @@ defmodule Nostrum.Shard.Payload do
     {os, name} = :os.type()
 
     %{
-      "token" => Application.get_env(:nostrum, :token),
+      "token" => Application.get_env(:remedy, :token),
       "properties" => %{
         "$os" => Atom.to_string(os) <> " " <> Atom.to_string(name),
-        "$browser" => "Nostrum",
-        "$device" => "Nostrum",
+        "$browser" => "Remedy",
+        "$device" => "Remedy",
         "$referrer" => "",
         "$referring_domain" => ""
       },
@@ -35,7 +35,7 @@ defmodule Nostrum.Shard.Payload do
   @doc false
   def resume_payload(state) do
     %{
-      "token" => Application.get_env(:nostrum, :token),
+      "token" => Application.get_env(:remedy, :token),
       "session_id" => state.session,
       "seq" => state.seq
     }

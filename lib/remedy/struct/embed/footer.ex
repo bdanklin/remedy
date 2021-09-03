@@ -3,8 +3,8 @@ defmodule Remedy.Struct.Embed.Footer do
   Struct representing a Discord embed footer.
   """
 
-  alias Remedy.Util
   alias Poison.Encoder
+  alias Remedy.Util
 
   defstruct [
     :text,

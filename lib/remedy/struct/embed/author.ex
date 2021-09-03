@@ -3,8 +3,8 @@ defmodule Remedy.Struct.Embed.Author do
   Struct representing a Discord embed author.
   """
 
-  alias Remedy.Util
   alias Poison.Encoder
+  alias Remedy.Util
 
   defstruct [
     :name,

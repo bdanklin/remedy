@@ -76,9 +76,9 @@ defmodule Remedy.Struct.Embed do
   be ignored.
   """
 
+  alias Poison.Encoder
   alias Remedy.Struct.Embed.{Author, Field, Footer, Image, Provider, Thumbnail, Video}
   alias Remedy.Util
-  alias Poison.Encoder
 
   defstruct [
     :title,

@@ -3,8 +3,8 @@ defmodule Remedy.Struct.Embed.Thumbnail do
   Struct representing a Discord embed thumbnail.
   """
 
-  alias Remedy.Util
   alias Poison.Encoder
+  alias Remedy.Util
 
   defstruct [
     :url,

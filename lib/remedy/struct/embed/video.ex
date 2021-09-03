@@ -3,8 +3,8 @@ defmodule Remedy.Struct.Embed.Video do
   Struct representing a Discord embed video.
   """
 
-  alias Remedy.Util
   alias Poison.Encoder
+  alias Remedy.Util
 
   defstruct [
     :url,

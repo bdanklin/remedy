@@ -129,7 +129,9 @@ defmodule Remedy.Api.Ratelimiter do
     (:calendar.datetime_to_gregorian_seconds(datetime) - @gregorian_epoch) * 1000
   end
 
-  defp to_integer(v) when is_binary(v), do: String.to_integer(v)
+  defp to_integer(v) when is_binary(v),
+    do: v |> Integer.parse() |> Tuple.to_list() |> List.first()
+
   defp to_integer(_v), do: nil
 
   @doc """

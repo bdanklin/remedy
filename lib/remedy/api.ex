@@ -273,15 +273,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `edit_message/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec edit_message!(Message.t(), options) :: no_return | Message.t()
-  def edit_message!(message, options) do
-    edit_message(message, options)
-    |> bangify
-  end
-
-  @doc ~S"""
   Same as `delete_message/2`, but takes a `Remedy.Struct.Message` instead of a
   `channel_id` and `message_id`.
   """
@@ -308,24 +299,6 @@ defmodule Remedy.Api do
   def delete_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
     request(:delete, Constants.channel_message(channel_id, message_id))
-  end
-
-  @doc ~S"""
-  Same as `delete_message/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_message!(Message.t()) :: error | {:ok}
-  def delete_message!(%Message{id: id, channel_id: c_id}) do
-    delete_message(c_id, id)
-    |> bangify
-  end
-
-  @doc ~S"""
-  Same as `delete_message/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_message!(Channel.id(), Message.id()) :: no_return | {:ok}
-  def delete_message!(channel_id, message_id) do
-    delete_message(channel_id, message_id)
-    |> bangify
   end
 
   @doc ~S"""
@@ -363,15 +336,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_reaction/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec create_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
-  def create_reaction!(channel_id, message_id, emoji) do
-    create_reaction(channel_id, message_id, emoji)
-    |> bangify
-  end
-
-  @doc ~S"""
   Deletes a reaction the current user has made for the message.
 
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
@@ -392,15 +356,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_own_reaction/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_own_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
-  def delete_own_reaction!(channel_id, message_id, emoji) do
-    delete_own_reaction(channel_id, message_id, emoji)
-    |> bangify
-  end
-
-  @doc ~S"""
   Deletes another user's reaction from a message.
 
   This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
@@ -418,15 +373,6 @@ defmodule Remedy.Api do
 
   def delete_user_reaction(channel_id, message_id, emoji_api_name, user_id) do
     request(:delete, Constants.channel_reaction(channel_id, message_id, emoji_api_name, user_id))
-  end
-
-  @doc ~S"""
-  Same as `delete_user_reaction/4`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_user_reaction!(Channel.id(), Message.id(), emoji, User.id()) :: no_return | {:ok}
-  def delete_user_reaction!(channel_id, message_id, emoji, user_id) do
-    delete_user_reaction(channel_id, message_id, emoji, user_id)
-    |> bangify
   end
 
   @doc ~S"""
@@ -452,15 +398,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_reaction/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
-  def delete_reaction!(channel_id, message_id, emoji) do
-    delete_reaction(channel_id, message_id, emoji)
-    |> bangify
-  end
-
-  @doc ~S"""
   Gets all users who reacted with an emoji.
 
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY` permissions.
@@ -481,15 +418,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_reactions/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_reactions!(Channel.id(), Message.id(), emoji) :: no_return | [User.t()]
-  def get_reactions!(channel_id, message_id, emoji) do
-    get_reactions(channel_id, message_id, emoji)
-    |> bangify
-  end
-
-  @doc ~S"""
   Deletes all reactions from a message.
 
   This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
@@ -500,15 +428,6 @@ defmodule Remedy.Api do
   @spec delete_all_reactions(Channel.id(), Message.id()) :: error | {:ok}
   def delete_all_reactions(channel_id, message_id) do
     request(:delete, Constants.channel_reactions_delete(channel_id, message_id))
-  end
-
-  @doc ~S"""
-  Same as `delete_all_reactions/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_all_reactions!(Channel.id(), Message.id()) :: no_return | {:ok}
-  def delete_all_reactions!(channel_id, message_id) do
-    delete_all_reactions(channel_id, message_id)
-    |> bangify
   end
 
   @doc ~S"""
@@ -527,15 +446,6 @@ defmodule Remedy.Api do
   def get_channel(channel_id) when is_snowflake(channel_id) do
     request(:get, Constants.channel(channel_id))
     |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc ~S"""
-  Same as `get_channel/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_channel!(Channel.id()) :: no_return | Channel.t()
-  def get_channel!(channel_id) do
-    get_channel(channel_id)
-    |> bangify
   end
 
   @doc ~S"""
@@ -598,15 +508,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_channel/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_channel!(Channel.id(), options, AuditLogEntry.reason()) :: no_return | Channel.t()
-  def modify_channel!(channel_id, options, reason \\ nil) do
-    modify_channel(channel_id, options, reason)
-    |> bangify
-  end
-
-  @doc ~S"""
   Deletes a channel.
 
   An optional `reason` can be provided for the guild audit log.
@@ -637,15 +538,6 @@ defmodule Remedy.Api do
     }
     |> request()
     |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc ~S"""
-  Same as `delete_channel/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_channel!(Channel.id(), AuditLogEntry.reason()) :: no_return | Channel.t()
-  def delete_channel!(channel_id, reason \\ nil) do
-    delete_channel(channel_id, reason)
-    |> bangify
   end
 
   @doc ~S"""
@@ -710,15 +602,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel_messages/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_channel_messages!(Channel.id(), limit, locator) :: no_return | [Message.t()]
-  def get_channel_messages!(channel_id, limit, locator \\ {}) do
-    get_channel_messages(channel_id, limit, locator)
-    |> bangify
-  end
-
-  @doc ~S"""
   Retrieves a message from a channel.
 
   This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
@@ -736,15 +619,6 @@ defmodule Remedy.Api do
       when is_snowflake(channel_id) and is_snowflake(message_id) do
     request(:get, Constants.channel_message(channel_id, message_id))
     |> handle_request_with_decode({:struct, Message})
-  end
-
-  @doc ~S"""
-  Same as `get_channel_message/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_channel_message!(Channel.id(), Message.id()) :: no_return | Message.t()
-  def get_channel_message!(channel_id, message_id) do
-    get_channel_message(channel_id, message_id)
-    |> bangify
   end
 
   @doc """
@@ -801,16 +675,6 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `bulk_delete_messages/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec bulk_delete_messages!(integer, [Remedy.Struct.Message.id()], boolean) ::
-          no_return | {:ok}
-  def bulk_delete_messages!(channel_id, messages, filter \\ true) do
-    bulk_delete_messages(channel_id, messages, filter)
-    |> bangify
-  end
-
-  @doc """
   Edit the permission overwrites for a user or role.
 
   Role or user to overwrite is specified by `overwrite_id`.
@@ -845,24 +709,6 @@ defmodule Remedy.Api do
       options: [],
       headers: maybe_add_reason(reason)
     })
-  end
-
-  @doc """
-  Same as `edit_channel_permissions/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec edit_channel_permissions!(
-          integer,
-          integer,
-          %{
-            required(:type) => String.t(),
-            optional(:allow) => integer,
-            optional(:deny) => integer
-          },
-          AuditLogEntry.reason()
-        ) :: no_return | {:ok}
-  def edit_channel_permissions!(channel_id, overwrite_id, permission_info, reason \\ nil) do
-    edit_channel_permissions(channel_id, overwrite_id, permission_info, reason)
-    |> bangify
   end
 
   @doc """
@@ -901,15 +747,6 @@ defmodule Remedy.Api do
   def get_channel_invites(channel_id) when is_snowflake(channel_id) do
     request(:get, Constants.channel_invites(channel_id))
     |> handle_request_with_decode({:list, {:struct, Invite}})
-  end
-
-  @doc ~S"""
-  Same as `get_channel_invites/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_channel_invites!(Channel.id()) :: no_return | [Invite.detailed_invite()]
-  def get_channel_invites!(channel_id) do
-    get_channel_invites(channel_id)
-    |> bangify
   end
 
   @doc ~S"""
@@ -985,15 +822,6 @@ defmodule Remedy.Api do
     request(:post, Constants.channel_typing(channel_id))
   end
 
-  @doc """
-  Same as `start_typing/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec start_typing!(integer) :: no_return | {:ok}
-  def start_typing!(channel_id) do
-    start_typing(channel_id)
-    |> bangify
-  end
-
   @doc ~S"""
   Retrieves all pinned messages from a channel.
 
@@ -1011,15 +839,6 @@ defmodule Remedy.Api do
   def get_pinned_messages(channel_id) when is_snowflake(channel_id) do
     request(:get, Constants.channel_pins(channel_id))
     |> handle_request_with_decode({:list, {:struct, Message}})
-  end
-
-  @doc ~S"""
-  Same as `get_pinned_messages/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_pinned_messages!(Channel.id()) :: no_return | [Message.t()]
-  def get_pinned_messages!(channel_id) do
-    get_pinned_messages(channel_id)
-    |> bangify
   end
 
   @doc ~S"""
@@ -1044,15 +863,6 @@ defmodule Remedy.Api do
     request(:put, Constants.channel_pin(channel_id, message_id))
   end
 
-  @doc ~S"""
-  Same as `add_pinned_channel_message/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec add_pinned_channel_message!(Channel.id(), Message.id()) :: no_return | {:ok}
-  def add_pinned_channel_message!(channel_id, message_id) do
-    add_pinned_channel_message(channel_id, message_id)
-    |> bangify
-  end
-
   @doc """
   Unpins a message in a channel.
 
@@ -1070,15 +880,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_pinned_channel_message/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_pinned_channel_message!(Channel.id(), Message.id()) :: no_return | {:ok}
-  def delete_pinned_channel_message!(channel_id, message_id) do
-    delete_pinned_channel_message(channel_id, message_id)
-    |> bangify
-  end
-
-  @doc ~S"""
   Gets a list of emojis for a given guild.
 
   This endpoint requires the `MANAGE_EMOJIS` permission.
@@ -1092,15 +893,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `list_guild_emojis/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec list_guild_emojis!(Guild.id()) :: no_return | [Emoji.t()]
-  def list_guild_emojis!(guild_id) do
-    list_guild_emojis(guild_id)
-    |> bangify
-  end
-
-  @doc ~S"""
   Gets an emoji for the given guild and emoji ids.
 
   This endpoint requires the `MANAGE_EMOJIS` permission.
@@ -1111,15 +903,6 @@ defmodule Remedy.Api do
   def get_guild_emoji(guild_id, emoji_id) do
     request(:get, Constants.guild_emoji(guild_id, emoji_id))
     |> handle_request_with_decode({:struct, Emoji})
-  end
-
-  @doc ~S"""
-  Same as `get_guild_emoji/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_guild_emoji!(Guild.id(), Emoji.id()) :: no_return | Emoji.t()
-  def get_guild_emoji!(guild_id, emoji_id) do
-    get_guild_emoji(guild_id, emoji_id)
-    |> bangify
   end
 
   @doc ~S"""
@@ -1169,15 +952,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_emoji/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec create_guild_emoji!(Guild.id(), options, AuditLogEntry.reason()) :: no_return | Emoji.t()
-  def create_guild_emoji!(guild_id, params, reason \\ nil) do
-    create_guild_emoji(guild_id, params, reason)
-    |> bangify
-  end
-
-  @doc ~S"""
   Modify the given emoji.
 
   This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
@@ -1218,16 +992,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_emoji/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_guild_emoji!(Guild.id(), Emoji.id(), options, AuditLogEntry.reason()) ::
-          no_return | Emoji.t()
-  def modify_guild_emoji!(guild_id, emoji_id, options, reason \\ nil) do
-    modify_guild_emoji(guild_id, emoji_id, options, reason)
-    |> bangify
-  end
-
-  @doc ~S"""
   Deletes the given emoji.
 
   An optional `reason` can be provided for the audit log.
@@ -1247,15 +1011,6 @@ defmodule Remedy.Api do
         options: [],
         headers: maybe_add_reason(reason)
       })
-
-  @doc ~S"""
-  Same as `delete_guild_emoji/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_guild_emoji!(Guild.id(), Emoji.id(), AuditLogEntry.reason()) :: no_return | {:ok}
-  def delete_guild_emoji!(guild_id, emoji_id, reason \\ nil) do
-    delete_guild_emoji(guild_id, emoji_id, reason)
-    |> bangify
-  end
 
   @doc ~S"""
   Get the `t:Remedy.Struct.Guild.AuditLog.t/0` for the given `guild_id`.
@@ -1289,15 +1044,6 @@ defmodule Remedy.Api do
   def get_guild(guild_id) when is_snowflake(guild_id) do
     request(:get, Constants.guild(guild_id))
     |> handle_request_with_decode({:struct, Guild})
-  end
-
-  @doc """
-  Same as `get_guild/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_guild!(Guild.id()) :: no_return | Guild.rest_guild()
-  def get_guild!(guild_id) do
-    get_guild(guild_id)
-    |> bangify
   end
 
   @doc """
@@ -1360,15 +1106,6 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Guild})
   end
 
-  @doc """
-  Same as `modify_guild/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_guild!(Guild.id(), options) :: no_return | Guild.rest_guild()
-  def modify_guild!(guild_id, options \\ []) do
-    modify_guild(guild_id, options)
-    |> bangify
-  end
-
   @doc ~S"""
   Deletes a guild.
 
@@ -1390,15 +1127,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_guild/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_guild!(Guild.id()) :: no_return | {:ok}
-  def delete_guild!(guild_id) do
-    delete_guild(guild_id)
-    |> bangify
-  end
-
-  @doc ~S"""
   Gets a list of guild channels.
 
   If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -1414,15 +1142,6 @@ defmodule Remedy.Api do
   def get_guild_channels(guild_id) when is_snowflake(guild_id) do
     request(:get, Constants.guild_channels(guild_id))
     |> handle_request_with_decode({:list, {:struct, Channel}})
-  end
-
-  @doc ~S"""
-  Same as `get_guild_channels/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_guild_channels!(Guild.id()) :: no_return | [Channel.guild_channel()]
-  def get_guild_channels!(guild_id) do
-    get_guild_channels(guild_id)
-    |> bangify
   end
 
   @doc """
@@ -1465,15 +1184,6 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Channel})
   end
 
-  @doc ~S"""
-  Same as `create_guild_channel/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec create_guild_channel!(Guild.id(), options) :: no_return | Channel.guild_channel()
-  def create_guild_channel!(guild_id, options) do
-    create_guild_channel(guild_id, options)
-    |> bangify
-  end
-
   @doc """
   Reorders a guild's channels.
 
@@ -1498,16 +1208,6 @@ defmodule Remedy.Api do
     request(:patch, Constants.guild_channels(guild_id), positions)
   end
 
-  @doc ~S"""
-  Same as `modify_guild_channel_positions/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_guild_channel_positions!(Guild.id(), [%{id: integer, position: integer}]) ::
-          no_return | {:ok}
-  def modify_guild_channel_positions!(guild_id, positions) do
-    modify_guild_channel_positions(guild_id, positions)
-    |> bangify
-  end
-
   @doc """
   Gets a guild member.
 
@@ -1523,15 +1223,6 @@ defmodule Remedy.Api do
   def get_guild_member(guild_id, user_id) when is_snowflake(guild_id) and is_snowflake(user_id) do
     request(:get, Constants.guild_member(guild_id, user_id))
     |> handle_request_with_decode({:struct, Member})
-  end
-
-  @doc """
-  Same as `get_guild_member/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_guild_member!(Guild.id(), User.id()) :: no_return | Member.t()
-  def get_guild_member!(guild_id, user_id) do
-    get_guild_member(guild_id, user_id)
-    |> bangify
   end
 
   @doc """
@@ -1559,15 +1250,6 @@ defmodule Remedy.Api do
   def list_guild_members(guild_id, %{} = options) when is_snowflake(guild_id) do
     request(:get, Constants.guild_members(guild_id), "", params: options)
     |> handle_request_with_decode({:list, {:struct, Member}})
-  end
-
-  @doc """
-  Same as `list_guild_members/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec list_guild_members!(Guild.id(), options) :: no_return | [Member.t()]
-  def list_guild_members!(guild_id, options \\ %{}) do
-    list_guild_members(guild_id, options)
-    |> bangify
   end
 
   @doc ~S"""
@@ -1615,15 +1297,6 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Member})
   end
 
-  @doc """
-  Same as `add_guild_member/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec add_guild_member!(Guild.id(), User.id(), options) :: no_return | Member.t() | {:ok}
-  def add_guild_member!(guild_id, user_id, options) do
-    add_guild_member(guild_id, user_id, options)
-    |> bangify
-  end
-
   @doc ~S"""
   Modifies a guild member's attributes.
 
@@ -1660,15 +1333,6 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `modify_guild_member/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_guild_member!(Guild.id(), User.id(), options) :: error | {:ok}
-  def modify_guild_member!(guild_id, user_id, options \\ %{}) do
-    modify_guild_member(guild_id, user_id, options)
-    |> bangify
-  end
-
-  @doc """
   Modifies the nickname of the current user in a guild.
 
   If successful, returns `{:ok, %{nick: nick}}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -1688,15 +1352,6 @@ defmodule Remedy.Api do
   def modify_current_user_nick(guild_id, options \\ %{}) do
     request(:patch, Constants.guild_me_nick(guild_id), options)
     |> handle_request_with_decode()
-  end
-
-  @doc """
-  Same as `modify_current_user_nick/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_current_user_nick!(Guild.id(), options) :: no_return | %{nick: String.t()}
-  def modify_current_user_nick!(guild_id, options \\ %{}) do
-    modify_current_user_nick(guild_id, options)
-    |> bangify()
   end
 
   @doc """
@@ -1763,15 +1418,6 @@ defmodule Remedy.Api do
       options: [],
       headers: maybe_add_reason(reason)
     })
-  end
-
-  @doc """
-  Same as `remove_guild_member/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec remove_guild_member!(Guild.id(), User.id(), AuditLogEntry.reason()) :: no_return | {:ok}
-  def remove_guild_member!(guild_id, user_id, reason \\ nil) do
-    remove_guild_member(guild_id, user_id, reason)
-    |> bangify
   end
 
   @doc """
@@ -1847,15 +1493,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_roles/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_guild_roles!(Guild.id()) :: no_return | [Role.t()]
-  def get_guild_roles!(guild_id) do
-    get_guild_roles(guild_id)
-    |> bangify
-  end
-
-  @doc ~S"""
   Creates a guild role.
 
   An optional reason for the audit log can be provided via `reason`.
@@ -1898,15 +1535,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_role/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec create_guild_role!(Guild.id(), options, AuditLogEntry.reason()) :: no_return | Role.t()
-  def create_guild_role!(guild_id, options, reason \\ nil) do
-    create_guild_role(guild_id, options, reason)
-    |> bangify
-  end
-
-  @doc ~S"""
   Reorders a guild's roles.
 
   This endpoint requires the `MANAGE_ROLES` permission. It fires multiple
@@ -1938,19 +1566,6 @@ defmodule Remedy.Api do
     }
     |> request()
     |> handle_request_with_decode({:list, {:struct, Role}})
-  end
-
-  @doc ~S"""
-  Same as `modify_guild_role_positions/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_guild_role_positions!(
-          Guild.id(),
-          [%{id: Role.id(), position: integer}],
-          AuditLogEntry.reason()
-        ) :: no_return | [Role.t()]
-  def modify_guild_role_positions!(guild_id, positions, reason \\ nil) do
-    modify_guild_role_positions(guild_id, positions, reason)
-    |> bangify
   end
 
   @doc ~S"""
@@ -1998,16 +1613,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_role/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_guild_role!(Guild.id(), Role.id(), options, AuditLogEntry.reason()) ::
-          no_return | Role.t()
-  def modify_guild_role!(guild_id, role_id, options, reason \\ nil) do
-    modify_guild_role(guild_id, role_id, options, reason)
-    |> bangify
-  end
-
-  @doc ~S"""
   Deletes a role from a guild.
 
   An optional `reason` can be specified for the audit log.
@@ -2035,15 +1640,6 @@ defmodule Remedy.Api do
     })
   end
 
-  @doc ~S"""
-  Same as `delete_guild_role/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_guild_role!(Guild.id(), Role.id(), AuditLogEntry.reason()) :: no_return | {:ok}
-  def delete_guild_role!(guild_id, role_id, reason \\ nil) do
-    delete_guild_role(guild_id, role_id, reason)
-    |> bangify
-  end
-
   @doc """
   Gets the number of members that would be removed in a prune given `days`.
 
@@ -2062,15 +1658,6 @@ defmodule Remedy.Api do
   def get_guild_prune_count(guild_id, days) when is_snowflake(guild_id) and days in 1..30 do
     request(:get, Constants.guild_prune(guild_id), "", params: [days: days])
     |> handle_request_with_decode
-  end
-
-  @doc ~S"""
-  Same as `get_guild_prune_count/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_guild_prune_count!(Guild.id(), 1..30) :: no_return | %{pruned: integer}
-  def get_guild_prune_count!(guild_id, days) do
-    get_guild_prune_count(guild_id, days)
-    |> bangify
   end
 
   @doc """
@@ -2105,16 +1692,6 @@ defmodule Remedy.Api do
     |> handle_request_with_decode
   end
 
-  @doc ~S"""
-  Same as `begin_guild_prune/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec begin_guild_prune!(Guild.id(), 1..30, AuditLogEntry.reason()) ::
-          no_return | %{pruned: integer}
-  def begin_guild_prune!(guild_id, days, reason) do
-    begin_guild_prune(guild_id, days, reason)
-    |> bangify
-  end
-
   @doc """
   Gets a list of voice regions for the guild.
 
@@ -2144,15 +1721,6 @@ defmodule Remedy.Api do
   def get_guild_invites(guild_id) when is_snowflake(guild_id) do
     request(:get, Constants.guild_invites(guild_id))
     |> handle_request_with_decode({:list, {:struct, Invite}})
-  end
-
-  @doc ~S"""
-  Same as `get_guild_invites/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_guild_invites!(Guild.id()) :: no_return | [Invite.detailed_invite()]
-  def get_guild_invites!(guild_id) do
-    get_guild_invites(guild_id)
-    |> bangify
   end
 
   @doc """
@@ -2265,15 +1833,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_invite/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_invite!(Invite.code(), options) :: no_return | Invite.simple_invite()
-  def get_invite!(invite_code, options \\ []) do
-    get_invite(invite_code, options)
-    |> bangify
-  end
-
-  @doc ~S"""
   Deletes an invite by its `invite_code`.
 
   This endpoint requires the `MANAGE_CHANNELS` permission.
@@ -2293,15 +1852,6 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Invite})
   end
 
-  @doc ~S"""
-  Same as `delete_invite/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec delete_invite!(Invite.code()) :: no_return | Invite.simple_invite()
-  def delete_invite!(invite_code) do
-    delete_invite(invite_code)
-    |> bangify
-  end
-
   @doc """
   Gets a user by its `t:Remedy.Struct.User.id/0`.
 
@@ -2312,15 +1862,6 @@ defmodule Remedy.Api do
   def get_user(user_id) do
     request(:get, Constants.user(user_id))
     |> handle_request_with_decode({:struct, User})
-  end
-
-  @doc """
-  Same as `get_user/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_user!(User.id()) :: no_return | User.t()
-  def get_user!(user_id) do
-    get_user(user_id)
-    |> bangify
   end
 
   @doc """
@@ -2337,15 +1878,6 @@ defmodule Remedy.Api do
   def get_current_user do
     request(:get, Constants.me())
     |> handle_request_with_decode({:struct, User})
-  end
-
-  @doc """
-  Same as `get_current_user/0`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_current_user!() :: no_return | User.t()
-  def get_current_user! do
-    get_current_user()
-    |> bangify
   end
 
   @doc ~S"""
@@ -2371,15 +1903,6 @@ defmodule Remedy.Api do
   def modify_current_user(%{} = options) do
     request(:patch, Constants.me(), options)
     |> handle_request_with_decode({:struct, User})
-  end
-
-  @doc """
-  Same as `modify_current_user/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec modify_current_user!(options) :: no_return | User.t()
-  def modify_current_user!(options) do
-    modify_current_user(options)
-    |> bangify
   end
 
   @doc """
@@ -2413,15 +1936,6 @@ defmodule Remedy.Api do
   def get_current_user_guilds(options) when is_map(options) do
     request(:get, Constants.me_guilds(), "", params: options)
     |> handle_request_with_decode({:list, {:struct, Guild}})
-  end
-
-  @doc ~S"""
-  Same as `get_current_user_guilds/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_current_user_guilds!(options) :: no_return | [Guild.user_guild()]
-  def get_current_user_guilds!(options \\ []) do
-    get_current_user_guilds(options)
-    |> bangify
   end
 
   @doc """
@@ -2459,15 +1973,6 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_user_dms/0`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec get_user_dms!() :: no_return | [Channel.dm_channel()]
-  def get_user_dms! do
-    get_user_dms()
-    |> bangify
-  end
-
-  @doc ~S"""
   Create a new DM channel with a user.
 
   If successful, returns `{:ok, dm_channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -2483,15 +1988,6 @@ defmodule Remedy.Api do
   def create_dm(user_id) when is_snowflake(user_id) do
     request(:post, Constants.me_channels(), %{recipient_id: user_id})
     |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc ~S"""
-  Same as `create_dm/1`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec create_dm!(User.id()) :: no_return | Channel.dm_channel()
-  def create_dm!(user_id) do
-    create_dm(user_id)
-    |> bangify
   end
 
   @doc """
@@ -2514,16 +2010,6 @@ defmodule Remedy.Api do
   def create_group_dm(access_tokens, nicks) when is_list(access_tokens) and is_map(nicks) do
     request(:post, Constants.me_channels(), %{access_tokens: access_tokens, nicks: nicks})
     |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc ~S"""
-  Same as `create_group_dm/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-  @spec create_group_dm!([String.t()], %{optional(User.id()) => String.t()}) ::
-          no_return | Channel.group_dm_channel()
-  def create_group_dm!(access_tokens, nicks) do
-    create_group_dm(access_tokens, nicks)
-    |> bangify
   end
 
   @doc """
@@ -3117,6 +2603,7 @@ defmodule Remedy.Api do
   - `token`: Interaction token.
   - `message_id`: Followup message ID.
   """
+
   @spec delete_interaction_followup_message(Interaction.token(), Message.id()) :: {:ok} | error
   @spec delete_interaction_followup_message(User.id(), Interaction.token(), Message.id()) ::
           {:ok} | error
@@ -3163,7 +2650,6 @@ defmodule Remedy.Api do
     request = %{
       method: method,
       route: route,
-      # Hello hackney documentation :^)
       body:
         {:multipart,
          [
@@ -3208,7 +2694,6 @@ defmodule Remedy.Api do
   defp handle_request_with_decode({:error, _} = error), do: error
 
   defp handle_request_with_decode(response, type)
-  # add_guild_member/3 can return both a 201 and a 204
   defp handle_request_with_decode({:ok}, _type), do: {:ok}
   defp handle_request_with_decode({:error, _} = error, _type), do: error
 

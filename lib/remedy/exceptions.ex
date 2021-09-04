@@ -1,4 +1,4 @@
-defmodule Remedy.Error.VoiceError do
+defmodule Remedy.VoiceError do
   @moduledoc """
   Represents an error when playing sound through voice channels.
 
@@ -14,7 +14,7 @@ defmodule Remedy.Error.VoiceError do
   end
 end
 
-defmodule Remedy.Error.CacheError do
+defmodule Remedy.CacheError do
   @moduledoc """
   Represents an error when interacting with the cache.
 
@@ -40,7 +40,7 @@ defmodule Remedy.Error.CacheError do
   end
 end
 
-defmodule Remedy.Error.ApiError do
+defmodule Remedy.ApiError do
   @moduledoc """
   Represents a failed response from the API.
 

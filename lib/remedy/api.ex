@@ -9,7 +9,7 @@ defmodule Remedy.Api do
   alias Remedy.Struct.Guild.{AuditLog, AuditLogEntry, Member, Role}
   alias Remedy.Shard.{Session, Supervisor}
 
-  @type error :: {:error, Remedy.Error.ApiError.t() | HTTPoison.Error.t()}
+  @type error :: {:error, Remedy.ApiError.t() | HTTPoison.Error.t()}
 
   @type limit :: integer | :infinity
 
@@ -194,7 +194,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_message!(Channel.id() | Message.t(), options | String.t()) ::
           no_return | Message.t()
@@ -255,7 +255,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `edit_message/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `edit_message/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec edit_message!(Channel.id(), Message.id(), options) :: no_return | Message.t()
   def edit_message!(channel_id, message_id, options) do
@@ -273,7 +273,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `edit_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `edit_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec edit_message!(Message.t(), options) :: no_return | Message.t()
   def edit_message!(message, options) do
@@ -311,7 +311,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_message/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_message/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_message!(Message.t()) :: error | {:ok}
   def delete_message!(%Message{id: id, channel_id: c_id}) do
@@ -320,7 +320,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_message!(Channel.id(), Message.id()) :: no_return | {:ok}
   def delete_message!(channel_id, message_id) do
@@ -363,7 +363,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_reaction/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_reaction/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
   def create_reaction!(channel_id, message_id, emoji) do
@@ -392,7 +392,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_own_reaction/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_own_reaction/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_own_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
   def delete_own_reaction!(channel_id, message_id, emoji) do
@@ -421,7 +421,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_user_reaction/4`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_user_reaction/4`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_user_reaction!(Channel.id(), Message.id(), emoji, User.id()) :: no_return | {:ok}
   def delete_user_reaction!(channel_id, message_id, emoji, user_id) do
@@ -452,7 +452,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_reaction/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_reaction/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_reaction!(Channel.id(), Message.id(), emoji) :: no_return | {:ok}
   def delete_reaction!(channel_id, message_id, emoji) do
@@ -481,7 +481,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_reactions/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_reactions/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_reactions!(Channel.id(), Message.id(), emoji) :: no_return | [User.t()]
   def get_reactions!(channel_id, message_id, emoji) do
@@ -503,7 +503,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_all_reactions/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_all_reactions/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_all_reactions!(Channel.id(), Message.id()) :: no_return | {:ok}
   def delete_all_reactions!(channel_id, message_id) do
@@ -530,7 +530,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_channel/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_channel!(Channel.id()) :: no_return | Channel.t()
   def get_channel!(channel_id) do
@@ -598,7 +598,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_channel/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_channel/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_channel!(Channel.id(), options, AuditLogEntry.reason()) :: no_return | Channel.t()
   def modify_channel!(channel_id, options, reason \\ nil) do
@@ -640,7 +640,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_channel/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_channel/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_channel!(Channel.id(), AuditLogEntry.reason()) :: no_return | Channel.t()
   def delete_channel!(channel_id, reason \\ nil) do
@@ -710,7 +710,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel_messages/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_channel_messages/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_channel_messages!(Channel.id(), limit, locator) :: no_return | [Message.t()]
   def get_channel_messages!(channel_id, limit, locator \\ {}) do
@@ -739,7 +739,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_channel_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_channel_message!(Channel.id(), Message.id()) :: no_return | Message.t()
   def get_channel_message!(channel_id, message_id) do
@@ -801,7 +801,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `bulk_delete_messages/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `bulk_delete_messages/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec bulk_delete_messages!(integer, [Remedy.Struct.Message.id()], boolean) ::
           no_return | {:ok}
@@ -848,7 +848,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `edit_channel_permissions/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `edit_channel_permissions/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec edit_channel_permissions!(
           integer,
@@ -904,7 +904,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_channel_invites/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_channel_invites/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_channel_invites!(Channel.id()) :: no_return | [Invite.detailed_invite()]
   def get_channel_invites!(channel_id) do
@@ -963,7 +963,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_channel_invite/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_channel_invite/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_channel_invite!(Channel.id(), options, AuditLogEntry.reason()) ::
           no_return | Invite.detailed_invite()
@@ -986,7 +986,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `start_typing/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `start_typing/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec start_typing!(integer) :: no_return | {:ok}
   def start_typing!(channel_id) do
@@ -1014,7 +1014,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_pinned_messages/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_pinned_messages/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_pinned_messages!(Channel.id()) :: no_return | [Message.t()]
   def get_pinned_messages!(channel_id) do
@@ -1045,7 +1045,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `add_pinned_channel_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `add_pinned_channel_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec add_pinned_channel_message!(Channel.id(), Message.id()) :: no_return | {:ok}
   def add_pinned_channel_message!(channel_id, message_id) do
@@ -1070,7 +1070,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_pinned_channel_message/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_pinned_channel_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_pinned_channel_message!(Channel.id(), Message.id()) :: no_return | {:ok}
   def delete_pinned_channel_message!(channel_id, message_id) do
@@ -1092,7 +1092,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `list_guild_emojis/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `list_guild_emojis/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec list_guild_emojis!(Guild.id()) :: no_return | [Emoji.t()]
   def list_guild_emojis!(guild_id) do
@@ -1114,7 +1114,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_emoji/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_guild_emoji/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_guild_emoji!(Guild.id(), Emoji.id()) :: no_return | Emoji.t()
   def get_guild_emoji!(guild_id, emoji_id) do
@@ -1169,7 +1169,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_emoji/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_guild_emoji/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_guild_emoji!(Guild.id(), options, AuditLogEntry.reason()) :: no_return | Emoji.t()
   def create_guild_emoji!(guild_id, params, reason \\ nil) do
@@ -1218,7 +1218,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_emoji/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_guild_emoji/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_guild_emoji!(Guild.id(), Emoji.id(), options, AuditLogEntry.reason()) ::
           no_return | Emoji.t()
@@ -1249,7 +1249,7 @@ defmodule Remedy.Api do
       })
 
   @doc ~S"""
-  Same as `delete_guild_emoji/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_guild_emoji/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_guild_emoji!(Guild.id(), Emoji.id(), AuditLogEntry.reason()) :: no_return | {:ok}
   def delete_guild_emoji!(guild_id, emoji_id, reason \\ nil) do
@@ -1292,7 +1292,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `get_guild/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_guild/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_guild!(Guild.id()) :: no_return | Guild.rest_guild()
   def get_guild!(guild_id) do
@@ -1361,7 +1361,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `modify_guild/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_guild/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_guild!(Guild.id(), options) :: no_return | Guild.rest_guild()
   def modify_guild!(guild_id, options \\ []) do
@@ -1390,7 +1390,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_guild/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_guild/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_guild!(Guild.id()) :: no_return | {:ok}
   def delete_guild!(guild_id) do
@@ -1417,7 +1417,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_channels/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_guild_channels/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_guild_channels!(Guild.id()) :: no_return | [Channel.guild_channel()]
   def get_guild_channels!(guild_id) do
@@ -1466,7 +1466,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_channel/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_guild_channel/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_guild_channel!(Guild.id(), options) :: no_return | Channel.guild_channel()
   def create_guild_channel!(guild_id, options) do
@@ -1499,7 +1499,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_channel_positions/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_guild_channel_positions/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_guild_channel_positions!(Guild.id(), [%{id: integer, position: integer}]) ::
           no_return | {:ok}
@@ -1526,7 +1526,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `get_guild_member/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_guild_member/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_guild_member!(Guild.id(), User.id()) :: no_return | Member.t()
   def get_guild_member!(guild_id, user_id) do
@@ -1562,7 +1562,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `list_guild_members/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `list_guild_members/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec list_guild_members!(Guild.id(), options) :: no_return | [Member.t()]
   def list_guild_members!(guild_id, options \\ %{}) do
@@ -1616,7 +1616,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `add_guild_member/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `add_guild_member/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec add_guild_member!(Guild.id(), User.id(), options) :: no_return | Member.t() | {:ok}
   def add_guild_member!(guild_id, user_id, options) do
@@ -1660,7 +1660,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `modify_guild_member/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_guild_member/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_guild_member!(Guild.id(), User.id(), options) :: error | {:ok}
   def modify_guild_member!(guild_id, user_id, options \\ %{}) do
@@ -1691,7 +1691,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `modify_current_user_nick/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_current_user_nick/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_current_user_nick!(Guild.id(), options) :: no_return | %{nick: String.t()}
   def modify_current_user_nick!(guild_id, options \\ %{}) do
@@ -1766,7 +1766,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `remove_guild_member/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `remove_guild_member/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec remove_guild_member!(Guild.id(), User.id(), AuditLogEntry.reason()) :: no_return | {:ok}
   def remove_guild_member!(guild_id, user_id, reason \\ nil) do
@@ -1847,7 +1847,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_roles/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_guild_roles/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_guild_roles!(Guild.id()) :: no_return | [Role.t()]
   def get_guild_roles!(guild_id) do
@@ -1898,7 +1898,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_guild_role/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_guild_role/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_guild_role!(Guild.id(), options, AuditLogEntry.reason()) :: no_return | Role.t()
   def create_guild_role!(guild_id, options, reason \\ nil) do
@@ -1941,7 +1941,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_role_positions/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_guild_role_positions/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_guild_role_positions!(
           Guild.id(),
@@ -1998,7 +1998,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `modify_guild_role/3`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_guild_role/3`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_guild_role!(Guild.id(), Role.id(), options, AuditLogEntry.reason()) ::
           no_return | Role.t()
@@ -2036,7 +2036,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_guild_role/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_guild_role/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_guild_role!(Guild.id(), Role.id(), AuditLogEntry.reason()) :: no_return | {:ok}
   def delete_guild_role!(guild_id, role_id, reason \\ nil) do
@@ -2065,7 +2065,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_prune_count/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_guild_prune_count/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_guild_prune_count!(Guild.id(), 1..30) :: no_return | %{pruned: integer}
   def get_guild_prune_count!(guild_id, days) do
@@ -2106,7 +2106,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `begin_guild_prune/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `begin_guild_prune/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec begin_guild_prune!(Guild.id(), 1..30, AuditLogEntry.reason()) ::
           no_return | %{pruned: integer}
@@ -2147,7 +2147,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_guild_invites/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_guild_invites/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_guild_invites!(Guild.id()) :: no_return | [Invite.detailed_invite()]
   def get_guild_invites!(guild_id) do
@@ -2265,7 +2265,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_invite/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_invite/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_invite!(Invite.code(), options) :: no_return | Invite.simple_invite()
   def get_invite!(invite_code, options \\ []) do
@@ -2294,7 +2294,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `delete_invite/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `delete_invite/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec delete_invite!(Invite.code()) :: no_return | Invite.simple_invite()
   def delete_invite!(invite_code) do
@@ -2315,7 +2315,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `get_user/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_user/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_user!(User.id()) :: no_return | User.t()
   def get_user!(user_id) do
@@ -2340,7 +2340,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `get_current_user/0`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_current_user/0`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_current_user!() :: no_return | User.t()
   def get_current_user! do
@@ -2374,7 +2374,7 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `modify_current_user/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `modify_current_user/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec modify_current_user!(options) :: no_return | User.t()
   def modify_current_user!(options) do
@@ -2416,7 +2416,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_current_user_guilds/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_current_user_guilds/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_current_user_guilds!(options) :: no_return | [Guild.user_guild()]
   def get_current_user_guilds!(options \\ []) do
@@ -2459,7 +2459,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `get_user_dms/0`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `get_user_dms/0`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec get_user_dms!() :: no_return | [Channel.dm_channel()]
   def get_user_dms! do
@@ -2486,7 +2486,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_dm/1`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_dm/1`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_dm!(User.id()) :: no_return | Channel.dm_channel()
   def create_dm!(user_id) do
@@ -2517,7 +2517,7 @@ defmodule Remedy.Api do
   end
 
   @doc ~S"""
-  Same as `create_group_dm/2`, but raises `Remedy.Error.ApiError` in case of failure.
+  Same as `create_group_dm/2`, but raises `Remedy.ApiError` in case of failure.
   """
   @spec create_group_dm!([String.t()], %{optional(User.id()) => String.t()}) ::
           no_return | Channel.group_dm_channel()

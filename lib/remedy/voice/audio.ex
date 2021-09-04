@@ -10,7 +10,7 @@ defmodule Remedy.Voice.Audio do
 
   alias Porcelain.Process, as: Proc
   alias Porcelain.Result, as: Res
-  alias Remedy.Error.VoiceError
+  alias Remedy.VoiceError
   alias Remedy.Struct.VoiceState
   alias Remedy.Util
   alias Remedy.Voice

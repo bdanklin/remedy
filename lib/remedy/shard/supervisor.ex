@@ -4,7 +4,7 @@ defmodule Remedy.Shard.Supervisor do
   use Supervisor
 
   alias Remedy.Cache.Mapping.GuildShard
-  alias Remedy.Error.CacheError
+  alias Remedy.CacheError
   alias Remedy.Shard
   alias Remedy.Shard.Session
   alias Remedy.Shard.Stage.{Cache, Producer}

@@ -7,7 +7,7 @@ defmodule Remedy.Api.Ratelimiter do
   use GenServer
 
   alias Remedy.Api.{Base, Bucket}
-  alias Remedy.Error.ApiError
+  alias Remedy.ApiError
   alias Remedy.Util
 
   require Logger

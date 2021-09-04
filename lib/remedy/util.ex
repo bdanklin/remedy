@@ -120,10 +120,10 @@ defmodule Remedy.Util do
         res
 
       {:error} ->
-        raise(Remedy.Error.CacheError, finding: find, cache_name: cache_name)
+        raise(Remedy.CacheError, finding: find, cache_name: cache_name)
 
       {:error, _other} ->
-        raise(Remedy.Error.CacheError, finding: find, cache_name: cache_name)
+        raise(Remedy.CacheError, finding: find, cache_name: cache_name)
     end
   end
 
@@ -147,7 +147,7 @@ defmodule Remedy.Util do
         raise("Authentication rejected, invalid token")
 
       {:error, %{status_code: code, message: message}} ->
-        raise(Remedy.Error.ApiError, status_code: code, message: message)
+        raise(Remedy.ApiError, status_code: code, message: message)
 
       {:ok, body} ->
         body = Poison.decode!(body)

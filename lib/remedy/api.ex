@@ -3,7 +3,7 @@ defmodule Remedy.Api do
 
   import Sunbake.Snowflake, only: [is_snowflake: 1]
 
-  alias Remedy.Cache.Me
+  alias Remedy.Bot
   alias Remedy.{Constants, Snowflake, Util}
   alias Remedy.Struct.{Channel, Embed, Emoji, Guild, Interaction, Invite, Message, User, Webhook}
   alias Remedy.Struct.Guild.{AuditLog, AuditLogEntry, Member, Role}
@@ -2326,7 +2326,7 @@ defmodule Remedy.Api do
   @doc """
   Gets info on the current user.
 
-  If remedy's caching is enabled, it is recommended to use `Me.get/0`
+  If remedy's caching is enabled, it is recommended to use `Bot.get/0`
   instead of this function. This is because sending out an API request is much slower
   than pulling from our cache.
 
@@ -2868,7 +2868,7 @@ defmodule Remedy.Api do
   """
   @spec get_global_application_commands() :: {:ok, [map()]} | error
   @spec get_global_application_commands(User.id()) :: {:ok, [map()]} | error
-  def get_global_application_commands(application_id \\ Me.get().id) do
+  def get_global_application_commands(application_id \\ Bot.get().id) do
     request(:get, Constants.global_application_commands(application_id))
     |> handle_request_with_decode
   end
@@ -2900,7 +2900,7 @@ defmodule Remedy.Api do
   """
   @spec create_global_application_command(map()) :: {:ok, map()} | error
   @spec create_global_application_command(User.id(), map()) :: {:ok, map()} | error
-  def create_global_application_command(application_id \\ Me.get().id, command) do
+  def create_global_application_command(application_id \\ Bot.get().id, command) do
     request(:post, Constants.global_application_commands(application_id), command)
     |> handle_request_with_decode
   end
@@ -2923,7 +2923,7 @@ defmodule Remedy.Api do
   @spec edit_global_application_command(Snowflake.t(), map()) :: {:ok, map()} | error
   @spec edit_global_application_command(User.id(), Snowflake.t(), map()) :: {:ok, map()} | error
   def edit_global_application_command(
-        application_id \\ Me.get().id,
+        application_id \\ Bot.get().id,
         command_id,
         command
       ) do
@@ -2941,7 +2941,7 @@ defmodule Remedy.Api do
   """
   @spec delete_global_application_command(Snowflake.t()) :: {:ok} | error
   @spec delete_global_application_command(User.id(), Snowflake.t()) :: {:ok} | error
-  def delete_global_application_command(application_id \\ Me.get().id, command_id) do
+  def delete_global_application_command(application_id \\ Bot.get().id, command_id) do
     request(:delete, Constants.global_application_command(application_id, command_id))
   end
 
@@ -2965,53 +2965,26 @@ defmodule Remedy.Api do
   Updated list of global application commands. See the official reference:
   https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-global-application-commands
   """
+
   @doc since: "0.5.0"
   @spec bulk_overwrite_global_application_commands([map()]) :: {:ok, [map()]} | error
   @spec bulk_overwrite_global_application_commands(User.id(), [map()]) :: {:ok, [map()]} | error
-  def bulk_overwrite_global_application_commands(application_id \\ Me.get().id, commands) do
+  def bulk_overwrite_global_application_commands(application_id \\ Bot.get().id, commands) do
     request(:put, Constants.global_application_commands(application_id), commands)
     |> handle_request_with_decode
   end
 
-  @doc """
-  Fetch all guild application commands for the given guild.
-
-  ## Parameters
-  - `application_id`: Application ID for which to fetch commands.
-    If not given, this will be fetched from `Me`.
-  - `guild_id`: The guild ID for which guild application commands
-    should be requested.
-
-  ## Return value
-  A list of ``ApplicationCommand``s on success. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#applicationcommand
-  """
   @spec get_guild_application_commands(Guild.id()) :: {:ok, [map()]} | error
   @spec get_guild_application_commands(User.id(), Guild.id()) :: {:ok, [map()]} | error
-  def get_guild_application_commands(application_id \\ Me.get().id, guild_id) do
+  def get_guild_application_commands(application_id \\ Bot.get().id, guild_id) do
     request(:get, Constants.guild_application_commands(application_id, guild_id))
     |> handle_request_with_decode
   end
 
-  @doc """
-  Create a guild application command on the specified guild.
-
-  The new command will be available immediately.
-
-  ## Parameters
-  - `application_id`: Application ID for which to create the command.
-    If not given, this will be fetched from `Me`.
-  - `guild_id`: Guild on which to create the command.
-  - `command`: Command configuration, see the linked API documentation for reference.
-
-  ## Return value
-  The created command. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#create-guild-application-command
-  """
   @spec create_guild_application_command(Guild.id(), map()) :: {:ok, map()} | error
   @spec create_guild_application_command(User.id(), Guild.id(), map()) :: {:ok, map()} | error
   def create_guild_application_command(
-        application_id \\ Me.get().id,
+        application_id \\ Bot.get().id,
         guild_id,
         command
       ) do
@@ -3019,27 +2992,11 @@ defmodule Remedy.Api do
     |> handle_request_with_decode
   end
 
-  @doc """
-  Update an existing guild application command.
-
-  The updated command will be available immediately.
-
-  ## Parameters
-  - `application_id`: Application ID for which to edit the command.
-    If not given, this will be fetched from `Me`.
-  - `guild_id`: Guild for which to update the command.
-  - `command_id`: The current snowflake of the command.
-  - `command`: Command configuration, see the linked API documentation for reference.
-
-  ## Return value
-  The updated command. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#edit-guild-application-command
-  """
   @spec edit_guild_application_command(Guild.id(), Snowflake.t(), map()) :: {:ok, map()} | error
   @spec edit_guild_application_command(User.id(), Guild.id(), Snowflake.t(), map()) ::
           {:ok, map()} | error
   def edit_guild_application_command(
-        application_id \\ Me.get().id,
+        application_id \\ Bot.get().id,
         guild_id,
         command_id,
         command
@@ -3052,19 +3009,9 @@ defmodule Remedy.Api do
     |> handle_request_with_decode
   end
 
-  @doc """
-  Delete an existing guild application command.
-
-  ## Parameters
-  - `application_id`: Application ID for which to create the command.
-    If not given, this will be fetched from `Me`.
-  - `guild_id`: The guild on which the command exists.
-  - `command_id`: The current snowflake of the command.
-  """
-  @spec delete_guild_application_command(Guild.id(), Snowflake.t()) :: {:ok} | error
   @spec delete_guild_application_command(User.id(), Guild.id(), Snowflake.t()) :: {:ok} | error
   def delete_guild_application_command(
-        application_id \\ Me.get().id,
+        application_id \\ Bot.get().id,
         guild_id,
         command_id
       ) do
@@ -3094,7 +3041,7 @@ defmodule Remedy.Api do
   @spec bulk_overwrite_guild_application_commands(User.id(), Guild.id(), [map()]) ::
           {:ok, [map()]} | error
   def bulk_overwrite_guild_application_commands(
-        application_id \\ Me.get().id,
+        application_id \\ Bot.get().id,
         guild_id,
         commands
       ) do
@@ -3157,7 +3104,7 @@ defmodule Remedy.Api do
   """
   @spec create_followup_message(Interaction.token(), map()) :: {:ok} | error
   @spec create_followup_message(User.id(), Interaction.token(), map()) :: {:ok} | error
-  def create_followup_message(application_id \\ Me.get().id, token, webhook_payload) do
+  def create_followup_message(application_id \\ Bot.get().id, token, webhook_payload) do
     execute_webhook(application_id, token, webhook_payload)
   end
 
@@ -3174,7 +3121,7 @@ defmodule Remedy.Api do
   @spec delete_interaction_followup_message(User.id(), Interaction.token(), Message.id()) ::
           {:ok} | error
   def delete_interaction_followup_message(
-        application_id \\ Me.get().id,
+        application_id \\ Bot.get().id,
         token,
         message_id
       ) do

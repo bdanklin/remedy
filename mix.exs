@@ -1,14 +1,14 @@
 defmodule Remedy.MixProject do
   use Mix.Project
 
-  @version "0.5.0"
+  @version "0.5.1"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
 
   def project do
     [
       app: :remedy,
-      version: "0.5.0",
+      version: "0.5.1",
       elixir: "~> 1.9",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -32,27 +32,14 @@ defmodule Remedy.MixProject do
       logo: "remedy.png",
       assets: "guides/assets",
       extras: extras(),
-      groups_for_modules: groups_for_modules()
+      main: "introduction",
+      extra_section: "HELLO"
     ]
   end
 
   def extras do
     [
-      "docs/static/API.md"
-    ]
-  end
-
-  def groups_for_modules do
-    [
-      Api: [
-        ~r/Remedy.Api/
-      ],
-      Cache: [
-        ~r/Remedy.Cache/
-      ],
-      Structs: [
-        ~r/Remedy.Struct/
-      ]
+      "hello/introduction.md"
     ]
   end
 
@@ -78,10 +65,9 @@ defmodule Remedy.MixProject do
       licenses: ["MIT"],
       maintainers: ["Benjamin Danklin"],
       links: %{
-        "GitHub" => @scm_url,
-        "Docs" => @doc_url
+        "GitHub" => @scm_url
       },
-      files: ~w(lib mix.exs README.md .formatter.exs)
+      files: ~w(lib mix.exs README.md .formatter.exs remedy.png)
     ]
   end
 
@@ -100,7 +86,8 @@ defmodule Remedy.MixProject do
       {:unsafe, "~> 1.0"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
-      {:sunbake, git: "https://github.com/bdanklin/sunbake"}
+      {:sunbake, git: "https://github.com/bdanklin/sunbake"},
+      {:battle_standard, "~> 0.1.0"}
     ]
   end
 

@@ -1,8 +1,7 @@
 defmodule Remedy.Shard.Dispatch do
   @moduledoc false
 
-  alias Remedy.Cache.{ChannelCache, GuildCache, PresenceCache, UserCache}
-  alias Remedy.Cache.Me
+  alias Remedy.Bot
   alias Remedy.Shard.{Intents, Session}
 
   alias Remedy.Struct.Event.{
@@ -60,16 +59,10 @@ defmodule Remedy.Shard.Dispatch do
     end
   end
 
-  def handle_event(:CHANNEL_CREATE = event, %{type: 1} = p, state) do
+  def handle_event(:CHANNEL_CREATE = event, p, state) do
     {event, ChannelCache.create(p), state}
   end
 
-  def handle_event(:CHANNEL_CREATE = event, %{type: t} = p, state) when t in [0, 2] do
-    :ets.insert(:channel_guild_map, {p.id, p.guild_id})
-    {event, GuildCache.channel_create(p.guild_id, p), state}
-  end
-
-  # Ignore group channels
   def handle_event(:CHANNEL_CREATE, _p, _state) do
     :noop
   end
@@ -79,7 +72,6 @@ defmodule Remedy.Shard.Dispatch do
   end
 
   def handle_event(:CHANNEL_DELETE = event, %{type: t} = p, state) when t in [0, 2] do
-    :ets.delete(:channel_guild_map, p.id)
     {event, GuildCache.channel_delete(p.guild_id, p.id), state}
   end
 
@@ -88,7 +80,6 @@ defmodule Remedy.Shard.Dispatch do
   end
 
   def handle_event(:CHANNEL_DELETE, _p, _state) do
-    # Ignore group channels
     :noop
   end
 
@@ -149,7 +140,8 @@ defmodule Remedy.Shard.Dispatch do
     {check_new_or_unavailable(guild.id), guild, state}
   end
 
-  def handle_event(:GUILD_UPDATE = event, p, state), do: {event, GuildCache.update(p), state}
+  def handle_event(:GUILD_UPDATE = event, p, state),
+    do: {event, GuildCache.update(p), state}
 
   def handle_event(:GUILD_DELETE = event, p, state) do
     :ets.delete(:guild_shard_map, p.id)
@@ -242,7 +234,7 @@ defmodule Remedy.Shard.Dispatch do
       |> Enum.map(fn guild -> handle_event(:GUILD_CREATE, guild, state) end)
 
     current_user = Util.cast(p.user, {:struct, User})
-    Me.put(current_user)
+    Bot.put(current_user)
 
     [{event, p, state}] ++ ready_guilds
   end
@@ -256,8 +248,8 @@ defmodule Remedy.Shard.Dispatch do
   def handle_event(:USER_SETTINGS_UPDATE = event, p, state), do: {event, p, state}
 
   def handle_event(:USER_UPDATE = event, p, state) do
-    if Me.get().id === p.id do
-      Me.update(p)
+    if Bot.get().id === p.id do
+      Bot.update(p)
     end
 
     {event, UserCache.update(p), state}
@@ -270,7 +262,7 @@ defmodule Remedy.Shard.Dispatch do
     do: {event, SpeakingUpdate.to_struct(p), state}
 
   def handle_event(:VOICE_STATE_UPDATE = event, p, state) do
-    if Me.get().id === p.user_id do
+    if Bot.get().id === p.user_id do
       if p.channel_id do
         # Joining Channel
         voice = Voice.get_voice(p.guild_id)

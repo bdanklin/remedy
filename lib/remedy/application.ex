@@ -1,7 +1,6 @@
 defmodule Remedy.Application do
   @moduledoc false
 
-
   use Application
 
   require Logger
@@ -15,7 +14,6 @@ defmodule Remedy.Application do
     children = [
       Remedy.Api.Ratelimiter,
       Remedy.Shard.Connector,
-      Remedy.Cache.CacheSupervisor,
       Remedy.Shard.Supervisor,
       Remedy.Voice.Supervisor,
       Remedy.Bot
@@ -27,7 +25,7 @@ defmodule Remedy.Application do
   end
 
   @doc false
-   def setup_ets_tables do
+  def setup_ets_tables do
     :ets.new(:gateway_url, [:set, :public, :named_table])
     :ets.new(:unavailable_guilds, [:set, :public, :named_table])
     :ets.new(:users, [:set, :public, :named_table])

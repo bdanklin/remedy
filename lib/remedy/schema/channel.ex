@@ -1,4 +1,5 @@
 defmodule Remedy.Schema.Channel do
+  @moduledoc false
   use Remedy.Schema, :model
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -34,5 +35,7 @@ defmodule Remedy.Schema.Channel do
     embeds_many :permission_overwrites, PermissionOverwrite
     embeds_one :member, ThreadMember
     embeds_one :thread_metadata, ThreadMetadata
+
+    has_many :messages, Message
   end
 end

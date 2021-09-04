@@ -23,7 +23,7 @@ defmodule Remedy.Voice.Payload do
   def identify_payload(%VoiceWSState{} = state) do
     %{
       server_id: state.guild_id,
-      user_id: Me.get().id,
+      user_id: Bot.get().id,
       token: state.token,
       session_id: state.session
     }

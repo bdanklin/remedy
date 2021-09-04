@@ -1,4 +1,5 @@
 defmodule Remedy.Schema do
+  @moduledoc false
   defmacro __using__(:model) do
     quote do
       use Ecto.Schema
@@ -66,6 +67,7 @@ defmodule Remedy.Schema do
       alias Remedy.Schema.{
         App,
         Channel,
+        Embed,
         Emoji,
         Guild,
         Message,

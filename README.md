@@ -1,4 +1,4 @@
-<img align="left" width="60" height="60" src="/remedy.png"> 
+<img align="left" width="60" height="60" src="https://raw.githubusercontent.com/bdanklin/remedy/master/remedy.png">
 
 # Remedy
 
@@ -23,4 +23,3 @@ I do not recommend anybody install this, instead you should probably use [Nostru
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)
-

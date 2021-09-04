@@ -144,12 +144,7 @@ defmodule Remedy.Struct.User.Flags do
   """
   @spec from_integer(integer()) :: t
   def from_integer(flag_value) do
-    boolean_list =
-      Enum.map(@flag_values, fn {flag, value} ->
-        {flag, (flag_value &&& value) == value}
-      end)
-
-    struct(__MODULE__, boolean_list)
+    for {flag, value} <- @flag_values, into: %{}, do: {flag, (flag_value &&& value) == value}
   end
 
   @doc """

@@ -9,6 +9,7 @@ I am still using [Nostrum](https://github.com/Kraigie/nostrum) for my bots and I
 
 ## Goals
 
+- Gun 2.0
 - Separate applicable components into their own packages.
 - Organise types - Timestamp / Snowflake
 - Convert structs to schema to...

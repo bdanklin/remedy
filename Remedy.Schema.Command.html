@@ -5,10 +5,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.0">
-    <title>Remedy.Cache.Me — Remedy v0.5.0</title>
+    <meta name="project" content="Remedy v0.5.1">
+    <title>Remedy.Schema.Command — Remedy v0.5.1</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
-    <script src="dist/sidebar_items-5cb63b30a2.js"></script>
+    <script src="dist/sidebar_items-7b4f1bd6b6.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-f27ff079945e43879c46.js"></script>
   </head>
@@ -49,7 +49,7 @@
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName">
 Remedy      </a>
       <strong class="sidebar-projectVersion">
-        v0.5.0
+        v0.5.1
       </strong>
     </div>
       <a href="https://bdanklin.github.io/remedy/">
@@ -58,7 +58,7 @@ Remedy      </a>
   </div>
 
   <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
       <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
@@ -72,16 +72,14 @@ Remedy      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Remedy.Cache.Me <small class="app-vsn">(Remedy v0.5.0)</small>
-          <a href="https://github.com/bdanklin/remedy/blob/v0.5.0/lib/remedy/cache/me.ex#L1" title="View Source" class="view-source" rel="help">
+        Remedy.Schema.Command <small class="app-vsn">(Remedy v0.5.1)</small>
+          <a href="https://github.com/bdanklin/remedy/blob/v0.5.1/lib/remedy/schema/command.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
       </h1>
 
 
-        <section id="moduledoc">
-<p>Simple cache that stores information for the current user.</p>        </section>
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -97,19 +95,7 @@ Remedy      </a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#child_spec/1">child_spec(arg)</a>
-  </div>
-    <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get/0">get()</a>
-  </div>
-    <div class="summary-synopsis"><p>Returns the current user's state.</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#start_link/1">start_link(list)</a>
+    <a href="#validate/1">validate(model)</a>
   </div>
 </div>
   </div>
@@ -123,52 +109,14 @@ Remedy      </a>
             </a>
 Functions          </h1>
           <div class="functions-list">
-<section class="detail" id="child_spec/1">
+<section class="detail" id="validate/1">
   <div class="detail-header">
-    <a href="#child_spec/1" class="detail-link" title="Link to this function">
+    <a href="#validate/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">child_spec(arg)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/v0.5.0/lib/remedy/cache/me.ex#L6" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-
-<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>  </section>
-</section>
-<section class="detail" id="get/0">
-  <div class="detail-header">
-    <a href="#get/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">get()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/v0.5.0/lib/remedy/cache/me.ex#L18" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>get() :: <a href="Remedy.Struct.User.html#t:t/0">Remedy.Struct.User.t</a>() | nil</pre>
-      </div>
-
-<p>Returns the current user's state.</p>  </section>
-</section>
-<section class="detail" id="start_link/1">
-  <div class="detail-header">
-    <a href="#start_link/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">start_link(list)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/v0.5.0/lib/remedy/cache/me.ex#L10" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">validate(model)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.1/lib/remedy/schema/command.ex#L17" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

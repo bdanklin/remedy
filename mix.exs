@@ -1,14 +1,14 @@
 defmodule Remedy.MixProject do
   use Mix.Project
 
-  @version "0.5.1"
+  @version "0.5.2"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
 
   def project do
     [
       app: :remedy,
-      version: "0.5.1",
+      version: "0.5.2",
       elixir: "~> 1.9",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -86,7 +86,7 @@ defmodule Remedy.MixProject do
       {:unsafe, "~> 1.0"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
-      {:sunbake, git: "https://github.com/bdanklin/sunbake"},
+      {:sunbake, "~> 0.2.0"},
       {:battle_standard, "~> 0.1.0"}
     ]
   end

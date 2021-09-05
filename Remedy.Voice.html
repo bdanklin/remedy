@@ -8,7 +8,7 @@
     <meta name="project" content="Remedy v0.5.2">
     <title>Remedy.Voice — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
-    <script src="dist/sidebar_items-7b4f1bd6b6.js"></script>
+    <script src="dist/sidebar_items-8d6c11b81a.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-f27ff079945e43879c46.js"></script>
   </head>
@@ -238,7 +238,7 @@ Functions          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>connect_to_gateway(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+          <pre>connect_to_gateway(Remedy.Struct.Guild.id()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
       </div>
 
 <p>Low-level. Manually connect to voice websockets gateway.</p><p>This function should only be called if config option <code class="inline">:voice_auto_connect</code> is set to <code class="inline">false</code>.
@@ -260,7 +260,7 @@ By default Remedy will automatically create a voice gateway when joining a chann
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_channel_id(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: <a href="Remedy.Struct.Channel.html#t:id/0">Remedy.Struct.Channel.id</a>()</pre>
+          <pre>get_channel_id(Remedy.Struct.Guild.id()) :: Remedy.Struct.Channel.id()</pre>
       </div>
 
 <p>Gets the id of the voice channel that the bot is connected to.</p><h2 id="get_channel_id/1-parameters" class="section-heading">
@@ -300,14 +300,14 @@ nil</code></pre>  </section>
       <h2>Specs</h2>
       <div class="specs">
           <pre>join_channel(
-  <a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>(),
-  <a href="Remedy.Struct.Channel.html#t:id/0">Remedy.Struct.Channel.id</a>(),
+  Remedy.Struct.Guild.id(),
+  Remedy.Struct.Channel.id(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
 ) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | :ok</pre>
       </div>
 
-<p>Joins or moves the bot to a voice channel.</p><p>This function is equivalent to <a href="Remedy.Api.html#update_voice_state/4"><code class="inline">Remedy.Api.update_voice_state/4</code></a>.</p>  </section>
+<p>Joins or moves the bot to a voice channel.</p><p>This function is equivalent to <code class="inline">Remedy.Api.update_voice_state/4</code>.</p>  </section>
 </section>
 <section class="detail" id="leave_channel/1">
   <div class="detail-header">
@@ -325,7 +325,7 @@ nil</code></pre>  </section>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>leave_channel(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | :ok</pre>
+          <pre>leave_channel(Remedy.Struct.Guild.id()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | :ok</pre>
       </div>
 
 <p>Leaves the voice channel of the given guild id.</p><p>This function is equivalent to calling <code class="inline">Remedy.Api.update_voice_state(guild_id, nil)</code>.</p>  </section>
@@ -347,7 +347,7 @@ nil</code></pre>  </section>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>listen(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()) ::
+          <pre>listen(Remedy.Struct.Guild.id(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()) ::
   [{<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()}] | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
       </div>
 
@@ -373,7 +373,7 @@ nil</code></pre>  </section>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>pause(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+          <pre>pause(Remedy.Struct.Guild.id()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
       </div>
 
 <p>Pauses the current sound being played in a voice channel.</p><p>The bot must be connected to a voice channel in the guild specified.</p><h2 id="pause/1-parameters" class="section-heading">
@@ -410,7 +410,7 @@ iex&gt; Remedy.Voice.pause(123456789)</code></pre>  </section>
       <h2>Specs</h2>
       <div class="specs">
           <pre>play(
-  <a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>(),
+  Remedy.Struct.Guild.id(),
   <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>() | <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>(),
   :url | :pipe | :ytdl | :stream | :raw | :raw_s,
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
@@ -475,7 +475,7 @@ iex&gt; Remedy.Voice.play(123456789, &quot;https://youtu.be/LN4r-K8ZP5Q&quot;, :
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>playing?(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+          <pre>playing?(Remedy.Struct.Guild.id()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
       </div>
 
 <p>Checks if the bot is playing sound in a voice channel.</p><h2 id="playing?/1-parameters" class="section-heading">
@@ -514,7 +514,7 @@ false</code></pre>  </section>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>ready?(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+          <pre>ready?(Remedy.Struct.Guild.id()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
       </div>
 
 <p>Checks if the connection is up and ready to play audio.</p><h2 id="ready?/1-parameters" class="section-heading">
@@ -551,7 +551,7 @@ false</code></pre>  </section>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>resume(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+          <pre>resume(Remedy.Struct.Guild.id()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
       </div>
 
 <p>Resumes playing the current paused sound in a voice channel.</p><p>The bot must be connected to a voice channel in the guild specified.</p><h2 id="resume/1-parameters" class="section-heading">
@@ -587,7 +587,7 @@ iex&gt; Remedy.Voice.resume(123456789)</code></pre>  </section>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>send_frames(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()]) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+          <pre>send_frames(Remedy.Struct.Guild.id(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()]) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
       </div>
 
 <p>Low-level. Send pre-encoded audio packets directly.</p><p>Speaking should be set to true via <a href="#set_is_speaking/2"><code class="inline">Remedy.Voice.set_is_speaking/2</code></a> before sending frames.</p><p>Opus frames will be encrypted and prefixed with the appropriate RTP header and sent immediately.
@@ -613,7 +613,7 @@ instead of <a href="#play/4"><code class="inline">Remedy.Voice.play/4</code></a>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>set_is_speaking(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()) :: :ok</pre>
+          <pre>set_is_speaking(Remedy.Struct.Guild.id(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()) :: :ok</pre>
       </div>
 
 <p>Low-level. Set speaking flag in voice channel.</p><p>This function does not need to be called unless you are sending audio frames
@@ -635,7 +635,7 @@ directly using <a href="#send_frames/2"><code class="inline">Remedy.Voice.send_f
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>stop(<a href="Remedy.Struct.Guild.html#t:id/0">Remedy.Struct.Guild.id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
+          <pre>stop(Remedy.Struct.Guild.id()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
       </div>
 
 <p>Stops the current sound being played in a voice channel.</p><p>The bot must be connected to a voice channel in the guild specified.</p><h2 id="stop/1-parameters" class="section-heading">

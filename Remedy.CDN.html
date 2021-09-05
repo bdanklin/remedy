@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.2">
-    <title>Remedy.Struct.Embed.Footer — Remedy v0.5.2</title>
+    <title>Remedy.CDN — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
-    <script src="dist/sidebar_items-7b4f1bd6b6.js"></script>
+    <script src="dist/sidebar_items-8d6c11b81a.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-f27ff079945e43879c46.js"></script>
   </head>
@@ -72,8 +72,8 @@ Remedy      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Remedy.Struct.Embed.Footer <small class="app-vsn">(Remedy v0.5.2)</small>
-          <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/struct/embed/footer.ex#L1" title="View Source" class="view-source" rel="help">
+        Remedy.CDN <small class="app-vsn">(Remedy v0.5.2)</small>
+          <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -81,7 +81,7 @@ Remedy      </a>
 
 
         <section id="moduledoc">
-<p>Struct representing a Discord embed footer.</p>        </section>
+<p>Discord CDN functions.</p>        </section>
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -91,131 +91,174 @@ Remedy      </a>
             </a>
             Summary
           </h1>
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:icon_url/0">icon_url()</a>
-  </div>
-    <div class="summary-synopsis"><p>URL of footer icon</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:proxy_icon_url/0">proxy_icon_url()</a>
-  </div>
-    <div class="summary-synopsis"><p>Proxied URL of footer icon</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#animated_avatar/2">animated_avatar(id, avatar)</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:text/0">text()</a>
+    <a href="#animated_emoji/1">animated_emoji(id)</a>
   </div>
-    <div class="summary-synopsis"><p>Footer text</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#avatar/2">avatar(id, avatar)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#embed_avatar/1">embed_avatar(image_name)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#emoji/1">emoji(id)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#icon/2">icon(id, icon)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#splash/2">splash(id, splash)</a>
+  </div>
 </div>
   </div>
         </section>
 
-        <section id="types" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#types">
+            <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types          </h1>
-          <div class="types-list">
-<section class="detail" id="t:icon_url/0">
+Functions          </h1>
+          <div class="functions-list">
+<section class="detail" id="animated_avatar/2">
   <div class="detail-header">
-    <a href="#t:icon_url/0" class="detail-link" title="Link to this type">
+    <a href="#animated_avatar/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">icon_url()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/struct/embed/footer.ex#L29" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">animated_avatar(id, avatar)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L15" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
   </div>
 
   <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>icon_url() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
-      </div>
-
-<p>URL of footer icon</p>  </section>
-</section>
-<section class="detail" id="t:proxy_icon_url/0">
-  <div class="detail-header">
-    <a href="#t:proxy_icon_url/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">proxy_icon_url()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/struct/embed/footer.ex#L32" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>proxy_icon_url() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
-      </div>
-
-<p>Proxied URL of footer icon</p>  </section>
-</section>
-<section class="detail" id="t:t/0">
-  <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">t()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/struct/embed/footer.ex#L34" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>t() :: %Remedy.Struct.Embed.Footer{
-  icon_url: <a href="#t:icon_url/0">icon_url</a>(),
-  proxy_icon_url: <a href="#t:proxy_icon_url/0">proxy_icon_url</a>(),
-  text: <a href="#t:text/0">text</a>()
-}</pre>
-      </div>
 
   </section>
 </section>
-<section class="detail" id="t:text/0">
+<section class="detail" id="animated_emoji/1">
   <div class="detail-header">
-    <a href="#t:text/0" class="detail-link" title="Link to this type">
+    <a href="#animated_emoji/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">text()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/struct/embed/footer.ex#L26" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">animated_emoji(id)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L30" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
   </div>
 
   <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>text() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-      </div>
 
-<p>Footer text</p>  </section>
+  </section>
+</section>
+<section class="detail" id="avatar/2">
+  <div class="detail-header">
+    <a href="#avatar/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">avatar(id, avatar)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L8" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="embed_avatar/1">
+  <div class="detail-header">
+    <a href="#embed_avatar/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">embed_avatar(image_name)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L20" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="emoji/1">
+  <div class="detail-header">
+    <a href="#emoji/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">emoji(id)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L25" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="icon/2">
+  <div class="detail-header">
+    <a href="#icon/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">icon(id, icon)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L35" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="splash/2">
+  <div class="detail-header">
+    <a href="#splash/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">splash(id, splash)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/v0.5.2/lib/remedy/cdn.ex#L40" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+  </div>
+
+  <section class="docstring">
+
+  </section>
 </section>
           </div>
         </section>

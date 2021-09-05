@@ -58,7 +58,8 @@ defmodule Remedy.Schema.Guild do
     has_one :widget_channel, Channel
 
     ## Inferred Through Fkey
-    has_many :banned_users, User, through: Ban
+    has_many :bans, Ban
+    has_many :banned_users, through: [:bans, :users]
   end
 
   def splash(guild)

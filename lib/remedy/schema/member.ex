@@ -11,15 +11,15 @@ defmodule Remedy.Schema.Member do
     field :mute, :boolean
     field :pending, :boolean, default: false
     field :permissions, :string
-
+    field :roles, {:array, Snowflake}, virtual: true
+    embeds_many :member_roles, Role
     belongs_to :user, User
-
     belongs_to :guild, Guild
   end
 
   def mention(%__MODULE__{user: user}), do: User.mention(user)
 
-  @spec guild_channel_permissions(t, Guild.t(), Channel.id()) :: [Permission.t()]
+  # @spec guild_channel_permissions(t, Guild.t(), Channel.id()) :: [Permission.t()]
   def guild_channel_permissions(%__MODULE__{} = member, guild, channel_id) do
     use Bitwise
 
@@ -64,7 +64,8 @@ defmodule Remedy.Schema.Member do
   #=> [:administrator]
   ```
   """
-  @spec guild_permissions(t, Guild.t()) :: [Permission.t()]
+
+  # @spec guild_permissions(t, Guild.t()) :: [Permission.t()]
   def guild_permissions(member, guild)
 
   def guild_permissions(%__MODULE__{user: %{id: user_id}}, %Guild{owner_id: owner_id})
@@ -109,7 +110,7 @@ defmodule Remedy.Schema.Member do
   assigned. Otherwise, `nil` is returned.
   """
   @doc since: "0.5.0"
-  @spec top_role(__MODULE__.t(), Guild.t()) :: Role.t() | nil
+  # @spec top_role(__MODULE__.t(), Guild.t()) :: Role.t() | nil
   def top_role(%__MODULE__{roles: member_roles}, %Guild{roles: guild_roles}) do
     guild_roles
     |> Stream.filter(fn {id, _role} -> id in member_roles end)

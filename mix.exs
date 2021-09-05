@@ -39,7 +39,7 @@ defmodule Remedy.MixProject do
 
   def docs do
     [
-      source_ref: "v#{@version}",
+      source_ref: "master",
       logo: "remedy.png",
       assets: "guides/assets",
       extras: [

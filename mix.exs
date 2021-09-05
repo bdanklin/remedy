@@ -1,28 +1,39 @@
 defmodule Remedy.MixProject do
   use Mix.Project
 
+  @app :remedy
+  @name "Remedy"
   @version "0.5.2"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
+  @description "Discord Library in Elixir."
+  @license ["MIT"]
+  @maintainers ["Benjamin Danklin"]
 
   def project do
     [
-      app: :remedy,
-      version: "0.5.2",
+      app: @app,
+      version: @version,
       elixir: "~> 1.9",
+      name: @name,
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      package: package(),
-      name: "Remedy",
       source_url: @scm_url,
       homepage_url: @doc_url,
-      deps: deps(),
-      docs: docs(),
-      dialyzer: dialyzer(),
+      description: @description,
       aliases: aliases(),
-      description: """
-      Discord Library in Elixir.
-      """
+      deps: deps(),
+      dialyzer: dialyzer(),
+      docs: docs(),
+      package: package()
+      #    compilers: [:boundary, :phoenix, :gettext] ++ Mix.compilers(),
+    ]
+  end
+
+  def application do
+    [
+      extra_applications: [:logger, :inets],
+      mod: {Remedy.Application, []}
     ]
   end
 
@@ -31,25 +42,11 @@ defmodule Remedy.MixProject do
       source_ref: "v#{@version}",
       logo: "remedy.png",
       assets: "guides/assets",
-      extras: extras(),
+      extras: [
+        "hello/introduction.md"
+      ],
       main: "introduction",
       extra_section: "HELLO"
-    ]
-  end
-
-  def extras do
-    [
-      "hello/introduction.md"
-    ]
-  end
-
-  # defp elixirc_paths(:test), do: ["lib", "test"]
-  # defp elixirc_paths(_), do: ["lib"]
-
-  def application do
-    [
-      extra_applications: [:logger, :inets],
-      mod: {Remedy.Application, []}
     ]
   end
 
@@ -61,9 +58,9 @@ defmodule Remedy.MixProject do
 
   def package do
     [
-      name: :remedy,
-      licenses: ["MIT"],
-      maintainers: ["Benjamin Danklin"],
+      name: @app,
+      licenses: @license,
+      maintainers: @maintainers,
       links: %{
         "GitHub" => @scm_url
       },
@@ -73,16 +70,17 @@ defmodule Remedy.MixProject do
 
   defp deps do
     [
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.15", only: [:dev]},
+      {:recon, "~> 2.3", only: [:dev]},
+      # {:boundary, "~> 0.8.0", only: [:dev], runtime: false},
       {:httpoison, "~> 1.7"},
       {:poison, "~> 3.0"},
       {:gun, "~> 2.0", hex: :remedy_gun},
       {:kcl, "~> 1.4"},
       {:porcelain, "~> 2.0"},
-      {:ex_doc, "~> 0.15", only: :dev},
       {:credo, "~> 1.4"},
-      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:gen_stage, "~> 1.0"},
-      {:recon, "~> 2.3", only: :dev, optional: true},
       {:unsafe, "~> 1.0"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},

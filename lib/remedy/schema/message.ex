@@ -33,6 +33,10 @@ defmodule Remedy.Schema.Message do
     has_many :reactions, Reaction
     has_one :activity, Activity
   end
+
+  def link(%__MODULE__{guild_id: guild_id, channel_id: channel_id, id: id}) do
+    "https://discord.com/channels/#{guild_id}/#{channel_id}/#{id}"
+  end
 end
 
 defmodule Remedy.Schema.MessageFlags do

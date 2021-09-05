@@ -2,24 +2,7 @@ defmodule Remedy.Gateway.Intents do
   @moduledoc false
   use Remedy.Schema, :model
   use BattleStandard
-
-  @type t :: %__MODULE__{
-          GUILDS: boolean(),
-          GUILD_MEMBERS: boolean(),
-          GUILD_BANS: boolean(),
-          GUILD_EMOJIS: boolean(),
-          GUILD_INTEGRATIONS: boolean(),
-          GUILD_WEBHOOKS: boolean(),
-          GUILD_INVITES: boolean(),
-          GUILD_VOICE_STATES: boolean(),
-          GUILD_PRESENCES: boolean(),
-          GUILD_MESSAGES: boolean(),
-          GUILD_MESSAGE_REACTIONS: boolean(),
-          GUILD_MESSAGE_TYPING: boolean(),
-          DIRECT_MESSAGES: boolean(),
-          DIRECT_MESSAGE_REACTIONS: boolean(),
-          DIRECT_MESSAGE_TYPING: boolean()
-        }
+  @primary_key false
 
   embedded_schema do
     field :GUILDS, :boolean, default: true
@@ -38,6 +21,24 @@ defmodule Remedy.Gateway.Intents do
     field :DIRECT_MESSAGE_REACTIONS, :boolean, default: true
     field :DIRECT_MESSAGE_TYPING, :boolean, default: true
   end
+
+  @type t :: %__MODULE__{
+          GUILDS: boolean(),
+          GUILD_MEMBERS: boolean(),
+          GUILD_BANS: boolean(),
+          GUILD_EMOJIS: boolean(),
+          GUILD_INTEGRATIONS: boolean(),
+          GUILD_WEBHOOKS: boolean(),
+          GUILD_INVITES: boolean(),
+          GUILD_VOICE_STATES: boolean(),
+          GUILD_PRESENCES: boolean(),
+          GUILD_MESSAGES: boolean(),
+          GUILD_MESSAGE_REACTIONS: boolean(),
+          GUILD_MESSAGE_TYPING: boolean(),
+          DIRECT_MESSAGES: boolean(),
+          DIRECT_MESSAGE_REACTIONS: boolean(),
+          DIRECT_MESSAGE_TYPING: boolean()
+        }
 
   @flag_bits [
     GUILDS: 1 <<< 0,
@@ -58,6 +59,22 @@ defmodule Remedy.Gateway.Intents do
   ]
 
   def get do
-    :noop
+    Application.get_env(:remedy, :gateway_intents)
+    |> resolve()
+    |> to_integer()
+  end
+
+  defp resolve(intents) when is_list(intents) do
+  end
+
+  defp resolve(:all) do
+    %__MODULE__{
+      GUILD_MEMBERS: true,
+      GUILD_PRESENCES: true
+    }
+  end
+
+  defp resolve(nil) do
+    %__MODULE__{}
   end
 end

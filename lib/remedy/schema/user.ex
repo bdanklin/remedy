@@ -1,6 +1,24 @@
 defmodule Remedy.Schema.User do
+  @moduledoc false
   use Remedy.Schema, :model
   @primary_key {:id, Snowflake, autogenerate: false}
+
+  @type t :: %__MODULE__{
+          username: String.t(),
+          discriminator: integer(),
+          avatar: String.t(),
+          bot: boolean(),
+          system: boolean(),
+          mfa_enabled: boolean(),
+          banner: String.t(),
+          accent_color: integer(),
+          locale: String.t(),
+          verified: boolean(),
+          email: String.t(),
+          flags: UserFlags,
+          premium_type: integer(),
+          public_flags: integer()
+        }
 
   schema "users" do
     field :username, :string
@@ -17,219 +35,91 @@ defmodule Remedy.Schema.User do
     field :flags, :integer
     field :premium_type, :integer
     field :public_flags, :integer
-    has_many :messages, Message
-    has_many :channels, Channel
-    has_many :guilds, Guild
+    has_many :messages, Message, foreign_key: :author_id
+    #   has_many :channels, Channel
+    has_many :guilds, Guild, foreign_key: :owner_id
+  end
+
+  @doc """
+  Converts a User to its _mention_ format.
+  """
+  @spec mention(Remedy.Schema.User.t()) :: String.t()
+  def mention(user)
+  def mention(%__MODULE__{id: id}), do: "<@#{to_string(id)}>"
+
+  def avatar(user)
+
+  def avatar(%__MODULE__{avatar: nil, discriminator: disc}) do
+    Integer.parse(disc) |> Tuple.to_list() |> List.first() |> rem(5) |> default_avatar()
+  end
+
+  def avatar(%__MODULE__{id: id, avatar: avatar}) do
+    Constants.cdn_avatar(id, avatar, "png") |> uri_encode()
+  end
+
+  defp default_avatar(image_name) do
+    Constants.cdn_embed_avatar(image_name) |> uri_encode()
+  end
+
+  defp uri_encode(term) do
+    URI.encode(Constants.cdn_url() <> term)
   end
 end
 
-# defmodule Remedy.Schema.MessageFlags do
-#   @moduledoc """
-#   Struct representing the flags a user account can have
-#   """
+defmodule Remedy.Schema.UserFlags do
+  @moduledoc false
+  use Remedy.Schema, :model
 
-#   import Bitwise
+  @type t :: %__MODULE__{
+          DISCORD_EMPLOYEE: boolean(),
+          PARTNERED_SERVER_OWNER: boolean(),
+          HYPESQUAD_EVENTS: boolean(),
+          BUG_HUNTER_LEVEL_1: boolean(),
+          HYPESQUAD_BRAVERY: boolean(),
+          HYPESQUAD_BRILLIANCE: boolean(),
+          HYPESQUAD_BALANCE: boolean(),
+          EARLY_SUPPORTER: boolean(),
+          TEAM_USER: boolean(),
+          SYSTEM: boolean(),
+          BUG_HUNTER_LEVEL_2: boolean(),
+          VERIFIED_BOT: boolean(),
+          VERIFIED_DEVELOPER: boolean(),
+          DISCORD_CERTIFIED_MODERATOR: boolean()
+        }
 
-#   embedded_schema do
-# field :staff, :boolean, default: false,
-# field :partner, :boolean, default: false,
-# field :hypesquad_events, :boolean, default: false,
-# field :bug_hunter_level_1, :boolean, default: false,
-# field :hypesquad_bravery, :boolean, default: false,
-# field :hypesquad_brilliance, :boolean, default: false,
-# field :hypesquad_balance, :boolean, default: false,
-# field :early_supporter, :boolean, default: false,
-# field :team_user, :boolean, default: false,
-# field :system, :boolean, default: false,
-# field :bug_hunter_level_2, :boolean, default: false,
-# field :verified_bot, :boolean, default: false,
-# field :verified_developer, :boolean, default: false
-#   end
+  embedded_schema do
+    field :DISCORD_EMPLOYEE, :boolean, default: false
+    field :PARTNERED_SERVER_OWNER, :boolean, default: false
+    field :HYPESQUAD_EVENTS, :boolean, default: false
+    field :BUG_HUNTER_LEVEL_1, :boolean, default: false
+    field :HYPESQUAD_BRAVERY, :boolean, default: false
+    field :HYPESQUAD_BRILLIANCE, :boolean, default: false
+    field :HYPESQUAD_BALANCE, :boolean, default: false
+    field :EARLY_SUPPORTER, :boolean, default: false
+    field :TEAM_USER, :boolean, default: false
+    field :SYSTEM, :boolean, default: false
+    field :BUG_HUNTER_LEVEL_2, :boolean, default: false
+    field :VERIFIED_BOT, :boolean, default: false
+    field :VERIFIED_DEVELOPER, :boolean, default: false
+    field :DISCORD_CERTIFIED_MODERATOR, :boolean, default: false
+  end
 
-#   defstruct
+  use BattleStandard
 
-
-
-
-
-
-
-
-
-
-
-
-
-#   @typedoc """
-#   Discord Employee
-#   """
-#   @type staff :: boolean
-
-#   @typedoc """
-#   Discord Partner
-#   """
-#   @type partner :: boolean
-
-#   @typedoc """
-#   HypeSquad Events
-#   """
-#   @type hypesquad_events :: boolean
-
-#   @typedoc """
-#   Bug Hunter (Level 1)
-#   """
-#   @type bug_hunter_level_1 :: boolean
-
-#   @typedoc """
-#   HypeSquad Bravery
-#   """
-#   @type hypesquad_bravery :: boolean
-
-#   @typedoc """
-#   HypeSquad Brilliance
-#   """
-#   @type hypesquad_brilliance :: boolean
-
-#   @typedoc """
-#   HypeSquad Balance
-#   """
-#   @type hypesquad_balance :: boolean
-
-#   @typedoc """
-#   Early Supporter
-#   """
-#   @type early_supporter :: boolean
-
-#   @typedoc """
-#   Team User
-#   """
-#   @type team_user :: boolean
-
-#   @typedoc """
-#   System user
-#   """
-#   @type system :: boolean
-
-#   @typedoc """
-#   Bug Hunter (Level 2)
-#   """
-#   @type bug_hunter_level_2 :: boolean
-
-#   @typedoc """
-#   Verified bot
-#   """
-#   @type verified_bot :: boolean
-
-#   @typedoc """
-#   Verified developer
-#   """
-#   @type verified_developer :: boolean
-
-#   @type flags :: %__MODULE__{
-#           staff: staff,
-#           partner: partner,
-#           hypesquad_events: hypesquad_events,
-#           bug_hunter_level_1: bug_hunter_level_1,
-#           hypesquad_bravery: hypesquad_bravery,
-#           hypesquad_brilliance: hypesquad_brilliance,
-#           hypesquad_balance: hypesquad_balance,
-#           early_supporter: early_supporter,
-#           team_user: team_user,
-#           system: system,
-#           bug_hunter_level_2: bug_hunter_level_2,
-#           verified_bot: verified_bot,
-#           verified_developer: verified_developer
-#         }
-
-#   @type t :: flags
-
-#   @flag_values [
-#     staff: 1 <<< 0,
-#     partner: 1 <<< 1,
-#     hypesquad_events: 1 <<< 2,
-#     bug_hunter_level_1: 1 <<< 3,
-#     hypesquad_bravery: 1 <<< 6,
-#     hypesquad_brilliance: 1 <<< 7,
-#     hypesquad_balance: 1 <<< 8,
-#     early_supporter: 1 <<< 9,
-#     team_user: 1 <<< 10,
-#     system: 1 <<< 12,
-#     bug_hunter_level_2: 1 <<< 14,
-#     verified_bot: 1 <<< 16,
-#     verified_developer: 1 <<< 17
-#   ]
-
-#   @doc """
-#   Constructs a flag struct based on an integer from the Discord API (either public_flags or flags).
-
-#   ## Examples
-
-#   ```elixir
-#   iex> Remedy.Struct.User.Flags.from_integer(131842)
-#   %Remedy.Struct.User.Flags{
-#     bug_hunter_level_1: false,
-#     bug_hunter_level_2: false,
-#     early_supporter: true,
-#     hypesquad_balance: true,
-#     hypesquad_bravery: false,
-#     hypesquad_brilliance: false,
-#     hypesquad_events: false,
-#     partner: true,
-#     staff: false,
-#     system: false,
-#     team_user: false,
-#     verified_bot: false,
-#     verified_developer: true
-#   }
-#   ```
-#   """
-#   @spec from_integer(integer()) :: t
-#   def from_integer(flag_value) do
-#     boolean_list =
-#       Enum.map(@flag_values, fn {flag, value} ->
-#         {flag, (flag_value &&& value) == value}
-#       end)
-
-#     struct(__MODULE__, boolean_list)
-#   end
-
-#   @doc """
-#   Convert a flag struct to an integer value.
-
-#   ## Examples
-
-#   ```elixir
-#   iex> my_flags = %Remedy.Struct.User.Flags{
-#   ...>  bug_hunter_level_1: false,
-#   ...>  bug_hunter_level_2: false,
-#   ...>  early_supporter: true,
-#   ...>  hypesquad_balance: true,
-#   ...>  hypesquad_bravery: false,
-#   ...>  hypesquad_brilliance: false,
-#   ...>  hypesquad_events: false,
-#   ...>  partner: true,
-#   ...>  staff: false,
-#   ...>  system: false,
-#   ...>  team_user: false,
-#   ...>  verified_bot: false,
-#   ...>  verified_developer: true
-#   ...> }
-#   iex> Remedy.Struct.User.Flags.to_integer(my_flags)
-#   131842
-#   ```
-#   """
-#   @spec to_integer(t) :: integer()
-#   def to_integer(flag_struct) do
-#     booleans =
-#       flag_struct
-#       |> Map.from_struct()
-#       |> Map.to_list()
-
-#     Enum.reduce(booleans, 0, fn {flag, enabled}, flag_value ->
-#       case enabled do
-#         true -> flag_value ||| @flag_values[flag]
-#         false -> flag_value
-#       end
-#     end)
-#   end
-# end
+  @flag_bits [
+    {:DISCORD_EMPLOYEE, 1 <<< 0},
+    {:PARTNERED_SERVER_OWNER, 1 <<< 1},
+    {:HYPESQUAD_EVENTS, 1 <<< 2},
+    {:BUG_HUNTER_LEVEL_1, 1 <<< 3},
+    {:HYPESQUAD_BRAVERY, 1 <<< 6},
+    {:HYPESQUAD_BRILLIANCE, 1 <<< 7},
+    {:HYPESQUAD_BALANCE, 1 <<< 8},
+    {:EARLY_SUPPORTER, 1 <<< 9},
+    {:TEAM_USER, 1 <<< 10},
+    {:SYSTEM, 1 <<< 12},
+    {:BUG_HUNTER_LEVEL_2, 1 <<< 14},
+    {:VERIFIED_BOT, 1 <<< 16},
+    {:VERIFIED_DEVELOPER, 1 <<< 17},
+    {:DISCORD_CERTIFIED_MODERATOR, 1 <<< 18}
+  ]
+end

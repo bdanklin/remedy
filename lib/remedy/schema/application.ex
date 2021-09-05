@@ -24,3 +24,28 @@ defmodule Remedy.Schema.App do
     field :slug, :string
   end
 end
+
+defmodule Remedy.Schema.Team do
+  use Remedy.Schema, :model
+  alias Remedy.Schema.TeamMember
+
+  @primary_key {:id, :id, autogenerate: false}
+  schema "teams" do
+    field :icon, :string
+    field :name, :string
+    field :owner_user_id, Snowflake
+    has_many :members, TeamMember
+  end
+end
+
+defmodule Remedy.Schema.TeamMember do
+  use Remedy.Schema, :model
+
+  @primary_key false
+  schema "team_members" do
+    field :membership_state, :integer
+    field :permissions, {:array, :string}
+    belongs_to :team, Team
+    belongs_to :user, User
+  end
+end

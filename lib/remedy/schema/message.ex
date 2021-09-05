@@ -6,8 +6,8 @@ defmodule Remedy.Schema.Message do
   schema "messages" do
     #   belongs_to :message_reference,
     #   belongs_to :referenced_message,
-    belongs_to :application, Application
-    belongs_to :author, User
+    belongs_to :application, App
+    belongs_to :author, User, foreign_key: :author_id
     belongs_to :channel, Channel
     belongs_to :guild, Guild
     belongs_to :member, Member
@@ -50,6 +50,17 @@ defmodule Remedy.Schema.MessageFlags do
     {:EPHEMERAL, 1 <<< 6},
     {:LOADING, 1 <<< 7}
   ]
+
+  @type t :: %__MODULE__{
+          CROSSPOSTED: boolean(),
+          IS_CROSSPOST: boolean(),
+          SUPPRESS_EMBEDS: boolean(),
+          SOURCE_MESSAGE_DELETED: boolean(),
+          URGENT: boolean(),
+          HAS_THREAD: boolean(),
+          EPHEMERAL: boolean(),
+          LOADING: boolean()
+        }
 
   embedded_schema do
     field :CROSSPOSTED, :boolean, default: false

@@ -23,8 +23,9 @@ defmodule Remedy.Schema do
 
       def changeset(nil, params), do: changeset(%__MODULE__{id: params.id}, params)
 
-      def changeset(model, params) when is_atom(model) do
-        model
+      # seems very out of scope?
+      def changeset(__MODULE__, params) do
+        __MODULE__
         |> Cache.get(params.id)
         |> changeset(params)
       end
@@ -46,7 +47,7 @@ defmodule Remedy.Schema do
         __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
       end
 
-      #   defoverridable(changeset: 1, changeset: 2, validations: 1)
+      defoverridable(changeset: 1, changeset: 2, validations: 1)
     end
   end
 
@@ -66,15 +67,25 @@ defmodule Remedy.Schema do
 
       alias Remedy.Schema.{
         App,
+        AuditLog,
         Channel,
+        Command,
+        Component,
         Embed,
         Emoji,
         Guild,
+        Interaction,
+        InteractionData,
+        InteractionDataOption,
+        InteractionDataResolved,
+        Member,
         Message,
-        Sticker,
+        Role,
+        StageInstance,
         StickerPack,
-        Team,
+        Sticker,
         TeamMember,
+        Team,
         User,
         Voice,
         Webhook

@@ -4,7 +4,7 @@ defmodule Remedy.Api do
   import Sunbake.Snowflake, only: [is_snowflake: 1]
 
   alias Remedy.Bot
-  alias Remedy.{Constants, Snowflake, Util}
+  alias Remedy.{Constants, Util}
   alias Remedy.Struct.{Channel, Embed, Emoji, Guild, Interaction, Invite, Message, User, Webhook}
   alias Remedy.Struct.Guild.{AuditLog, AuditLogEntry, Member, Role}
   alias Remedy.Shard.{Session, Supervisor}

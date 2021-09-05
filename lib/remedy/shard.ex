@@ -12,8 +12,6 @@ defmodule Remedy.Shard do
   def init(opts) do
     children = [
       {Session, opts}
-      # TODO: Add per shard ratelimiter
-      # TODO: Add per shard cache
     ]
 
     Supervisor.init(children, strategy: :one_for_all, max_restarts: 3, max_seconds: 60)

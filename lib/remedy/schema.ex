@@ -62,12 +62,16 @@ defmodule Remedy.Schema do
 
     quote do
       alias unquote(parent)
-      alias Sunbake.{Snowflake, ISO8601}
       import Sunbake.Snowflake, only: [is_snowflake: 1]
+      alias Sunbake.{ISO8601, Snowflake}
 
       alias Remedy.Schema.{
         App,
         AuditLog,
+        AuditLogChange,
+        AuditLogEntry,
+        AuditLogOption,
+        Ban,
         Channel,
         Command,
         Component,
@@ -80,12 +84,13 @@ defmodule Remedy.Schema do
         InteractionDataResolved,
         Member,
         Message,
+        Overwrite,
         Role,
         StageInstance,
-        StickerPack,
         Sticker,
-        TeamMember,
+        StickerPack,
         Team,
+        TeamMember,
         User,
         Voice,
         Webhook

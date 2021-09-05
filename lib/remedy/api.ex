@@ -1,12 +1,12 @@
 defmodule Remedy.Api do
+  @moduledoc false
   use Bitwise
+  use Remedy.Schema
 
   import Sunbake.Snowflake, only: [is_snowflake: 1]
 
   alias Remedy.Bot
   alias Remedy.{Constants, Util}
-  alias Remedy.Struct.{Channel, Embed, Emoji, Guild, Interaction, Invite, Message, User, Webhook}
-  alias Remedy.Struct.Guild.{AuditLog, AuditLogEntry, Member, Role}
   alias Remedy.Shard.{Session, Supervisor}
 
   @type error :: {:error, Remedy.ApiError.t() | HTTPoison.Error.t()}

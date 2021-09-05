@@ -1,6 +1,7 @@
 defmodule Remedy.Schema.Guild do
   @moduledoc false
   use Remedy.Schema, :model
+  alias Remedy.CDN
   @primary_key {:id, Snowflake, autogenerate: false}
 
   schema "guilds" do
@@ -31,13 +32,11 @@ defmodule Remedy.Schema.Guild do
     field :region, :string
     field :splash, :string
     field :system_channel_flags, :integer
-
     field :vanity_url_code, :string
     field :verification_level, :integer
     field :widget_enabled, :boolean
 
     belongs_to :application, App
-
     belongs_to :owner, User
 
     embeds_one :welcome_screen, WelcomeScreen
@@ -57,15 +56,16 @@ defmodule Remedy.Schema.Guild do
     has_one :rules_channel, Channel
     has_one :system_channel, Channel
     has_one :widget_channel, Channel
-  end
-end
 
-defmodule Remedy.Schema.UnavailableGuild do
-  @moduledoc false
-  use Remedy.Schema, :model
-  @primary_key {:id, Snowflake, autogenerate: false}
-
-  schema "guilds" do
-    field :unavailable, :boolean
+    ## Inferred Through Fkey
+    has_many :banned_users, User, through: Ban
   end
+
+  def splash(guild)
+  def splash(%__MODULE__{splash: nil}), do: nil
+  def splash(%__MODULE__{id: id, splash: splash}), do: CDN.splash(id, splash)
+
+  def icon(guild)
+  def icon(%__MODULE__{icon: nil}), do: nil
+  def icon(%__MODULE__{id: id, icon: icon}), do: CDN.icon(id, icon)
 end

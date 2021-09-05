@@ -1,41 +1,59 @@
-# defmodule Remedy.Schema.AuditLog do
-# use Remedy.Schema, :model
+defmodule Remedy.Schema.AuditLog do
+  @moduledoc false
+  use Remedy.Schema, :model
+  @primary_key false
 
-# schema "audit_logs" do
-# belongs_to :guild, Guild
-# has_many :webhooks, Webhook
-# has_many :users, User
-# has_many :audit_log_entries, Entry
-# has_many :integrations, Integration
-# has_many :threads, Channel
-# end
-# end
+  embedded_schema do
+    belongs_to :guild, Guild
+    embeds_many :webhooks, Webhook
+    embeds_many :users, User
+    embeds_many :audit_log_entries, AuditLogEntry
+    embeds_many :integrations, Integration
+    embeds_many :threads, Channel
+  end
+end
 
-# defmodule Remedy.Schema.AuditLog.Entry do
-# use Remedy.Schema, :model
-# alias Remedy.Schema.AuditLog.Change
+defmodule Remedy.Schema.AuditLogEntry do
+  @moduledoc false
+  use Remedy.Schema, :model
 
-# @primary_key {:id, :id, autogenerate: false}
-# schema "audit_logs" do
-# field :target_id, :string
-# embeds_many :changes, Change
-# belongs_to :user, User
-# field :action_type, :integer
-# field :options, AuditLog.Option
-# field :reason, :string
-# end
-# end
+  @primary_key {:id, Snowflake, autogenerate: false}
+  embedded_schema do
+    field :target_id, :string
+    field :action_type, :integer
+    field :reason, :string
+    belongs_to :user, User
+    embeds_many :options, AuditLogOption
+    embeds_many :changes, Change
+  end
+end
 
-# defmodule Remedy.Schema.AuditLog.Change do
-# use Remedy.Schema, :model
+defmodule Remedy.Schema.AuditLogOption do
+  @moduledoc false
+  use Remedy.Schema, :model
 
-# @primary_key {:id, :id, autogenerate: false}
-# schema "audit_logs" do
-# field :target_id, :string
-# embeds_many :changes, Change
-# belongs_to :user, User
-# field :action_type, :integer
-# field :options, Option
-# field :reason, :string
-# end
-# end
+  @primary_key false
+  embedded_schema do
+    field :delete_member_days, :string
+    field :members_removed, :string
+    belongs_to :channel, Channel
+    field :message_id, Snowflake
+    field :count, :string
+    field :id, Snowflake
+    embeds_one :overwrite, PermissionOverwrite
+    field :type, :string
+    field :role_name, :string
+  end
+end
+
+defmodule Remedy.Schema.AuditLogChange do
+  @moduledoc false
+  use Remedy.Schema, :model
+
+  @primary_key false
+  embedded_schema do
+    field :new_value, :any, virtual: true
+    field :old_value, :any, virtual: true
+    field :key, :any, virtual: true
+  end
+end

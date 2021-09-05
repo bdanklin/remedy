@@ -1,5 +1,6 @@
 %{
   "battle_standard": {:hex, :battle_standard, "0.1.0", "54df398e3fb8cd0c839fb5c50a23ecd162f74700315c04aac37d7c97ae62dfcf", [:mix], [], "hexpm", "b0ff675c2a12705ae96f14c97e7025e2eb66c854749a767d5afef58a6c9ff899"},
+  "boundary": {:hex, :boundary, "0.8.0", "74fa1cc077e92e2e62c7ceb0116dcd6872cf0e6ab5094325a6460f60b3da2e6a", [:mix], [], "hexpm", "cafbd95ad4b4acdf9e5f42d9590cf49993062cfb5dd4bce4a28791974f362d16"},
   "bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [:mix], [], "hexpm", "7af5c7e09fe1d40f76c8e4f9dd2be7cebd83909f31fee7cd0e9eadc567da8353"},
   "certifi": {:hex, :certifi, "2.6.1", "dbab8e5e155a0763eea978c913ca280a6b544bfa115633fa20249c3d396d9493", [:rebar3], [], "hexpm", "524c97b4991b3849dd5c17a631223896272c6b0af446778ba4675a1dff53bb7e"},
   "chacha20": {:hex, :chacha20, "1.0.3", "26372176993172260968b36b4e7bc2e007e6b2b397ae08083e4836df67cdf03c", [:mix], [], "hexpm", "27f23b680e63f04b5bced77a9d8867033b381c091f92d544de0ad93accfb7cec"},

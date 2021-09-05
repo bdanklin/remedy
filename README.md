@@ -9,13 +9,17 @@ Playground fork of Nostrum.
 ## Working on
 
 - [ ] Separate applicable components into their own package.
-- [ ] Types - Timestamp / Snowflake
+  - [x] Bit Flag handler - https://hex.pm/packages/battle_standard 
+  - [x] Timestamp & Snowflake Ecto Types - https://hex.pm/packages/sunbake
 - [ ] Convert structs Schema.
 - [ ] Convert cache to Etso.
 - [ ] Generalize cache.
-- [ ] Make it an actual cache, aka invisible and if the resource is not in cache, we should fetch it and return it as required.
+  - [ ] Giving a library user the choice of what to cache is actually a huge pain it turns out.
+  - [ ] Make it an actual cache, aka invisible and if the resource is not in cache, we should fetch it and return it as required.
 - [ ] Testing
-- [ ] Supply a bot secret thru workflow to enable actual testing on a real server. without exposing secrets (prob too hard)
+  - [ ] Doc Tests to run on Github Actions
+  - [ ] Doc Tests to even run manually for a start would be 🔥
+  - [ ] Supply a bot secret thru workflow to enable actual testing on a real server. without exposing secrets (prob too hard)
 
 ## Installation
 

@@ -1,9 +1,11 @@
 defmodule Remedy.Schema.User do
   @moduledoc false
   use Remedy.Schema, :model
+  alias Remedy.CDN
   @primary_key {:id, Snowflake, autogenerate: false}
 
   @type t :: %__MODULE__{
+          id: Snowflake.t(),
           username: String.t(),
           discriminator: integer(),
           avatar: String.t(),
@@ -49,20 +51,17 @@ defmodule Remedy.Schema.User do
 
   def avatar(user)
 
-  def avatar(%__MODULE__{avatar: nil, discriminator: disc}) do
-    Integer.parse(disc) |> Tuple.to_list() |> List.first() |> rem(5) |> default_avatar()
+  def avatar(%__MODULE__{avatar: nil, discriminator: discriminator}) do
+    discriminator
+    |> Integer.parse()
+    |> Tuple.to_list()
+    |> List.first()
+    |> rem(5)
+    |> CDN.embed_avatar()
   end
 
   def avatar(%__MODULE__{id: id, avatar: avatar}) do
-    Constants.cdn_avatar(id, avatar, "png") |> uri_encode()
-  end
-
-  defp default_avatar(image_name) do
-    Constants.cdn_embed_avatar(image_name) |> uri_encode()
-  end
-
-  defp uri_encode(term) do
-    URI.encode(Constants.cdn_url() <> term)
+    CDN.avatar(id, avatar)
   end
 end
 

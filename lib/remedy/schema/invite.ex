@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Invite do
   use Remedy.Schema, :model
   @primary_key {:code, :string, autogenerate: false}
 
-  schema "voice_regions" do
+  schema "invites" do
     field :target_type, :integer
     field :approximate_presence_count, :integer
     field :approximate_member_count, :integer

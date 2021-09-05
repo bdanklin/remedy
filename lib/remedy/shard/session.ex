@@ -46,11 +46,11 @@ defmodule Remedy.Shard.Session do
     GenServer.call(pid, :get_ws_state)
   end
 
-  def start_link([gateway, shard_num]) do
-    GenServer.start_link(__MODULE__, [gateway, shard_num], spawn_opt: [Util.fullsweep_after()])
+  def start_link([gateway, shard_num] = opts) do
+    GenServer.start_link(__MODULE__, opts, spawn_opt: [Util.fullsweep_after()])
   end
 
-  def init([_gateway, _shard_num] = args) do
+  def init(args) do
     {:ok, nil, {:continue, args}}
   end
 

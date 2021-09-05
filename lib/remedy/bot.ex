@@ -4,8 +4,7 @@ defmodule Remedy.Bot do
   """
 
   use Agent
-
-  alias Remedy.Struct.User
+  use Remedy.Schema
 
   def start_link([]) do
     Agent.start_link(fn -> nil end, name: __MODULE__)

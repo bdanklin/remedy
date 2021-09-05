@@ -26,6 +26,7 @@ defmodule Remedy.Schema.App do
 end
 
 defmodule Remedy.Schema.Team do
+  @moduledoc false
   use Remedy.Schema, :model
   alias Remedy.Schema.TeamMember
 
@@ -34,11 +35,13 @@ defmodule Remedy.Schema.Team do
     field :icon, :string
     field :name, :string
     field :owner_user_id, Snowflake
+    has_one :application, App
     has_many :members, TeamMember
   end
 end
 
 defmodule Remedy.Schema.TeamMember do
+  @moduledoc false
   use Remedy.Schema, :model
 
   @primary_key false

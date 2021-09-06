@@ -1,4 +1,5 @@
 defmodule Remedy.Schema.WSState do
+  @moduledoc false
   use Remedy.Schema, :model
 
   @primary_key false

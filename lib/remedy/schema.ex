@@ -45,7 +45,7 @@ defmodule Remedy.Schema do
     quote do
       use Ecto.Schema
       import Ecto.Changeset
-      unquote schema_helpers()
+      unquote(schema_helpers())
       @before_compile Remedy.Schema.Model
     end
   end
@@ -54,14 +54,14 @@ defmodule Remedy.Schema do
     quote do
       use Ecto.Schema
       import Ecto.Changeset
-      unquote schema_helpers()
+      unquote(schema_helpers())
       @before_compile Remedy.Schema.Payload
     end
   end
 
   defmacro __using__(_) do
     quote do
-      unquote schema_helpers()
+      unquote(schema_helpers())
     end
   end
 end
@@ -86,6 +86,8 @@ defmodule Remedy.Schema.Model do
         model
         |> cast(params, castable())
         |> cast_embeds()
+        |> apply_changes()
+        |> Morphix.atomorphiform!()
       end
 
       defp cast_embeds(cast_model) do
@@ -105,27 +107,18 @@ defmodule Remedy.Schema.Payload do
     quote do
       alias __MODULE__
 
-      def new(params) do
-        params
-        |> changeset()
-        |> apply_changes()
-      end
+      def new(params \\ %{}), do: changeset(params)
 
       def changeset(params), do: changeset(%__MODULE__{}, params)
-
       def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-      # seems very out of scope?
-      def changeset(__MODULE__, params) do
-        __MODULE__
-        |> Cache.get(params.id)
-        |> changeset(params)
-      end
 
       def changeset(%__MODULE__{} = model, params) do
         model
         |> cast(params, castable())
         |> cast_embeds()
+        |> apply_changes()
+        |> Map.from_struct()
+        |> Morphix.stringmorphiform!()
       end
 
       defp cast_embeds(cast_model) do

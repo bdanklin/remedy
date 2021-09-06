@@ -63,10 +63,6 @@ defmodule Remedy.Shard.Dispatch do
     {event, ChannelCache.create(p), state}
   end
 
-  def handle_event(:CHANNEL_CREATE, _p, _state) do
-    :noop
-  end
-
   def handle_event(:CHANNEL_DELETE = event, %{type: 1} = p, state) do
     {event, ChannelCache.delete(p.id), state}
   end

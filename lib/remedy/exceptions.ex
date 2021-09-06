@@ -14,6 +14,19 @@ defmodule Remedy.VoiceError do
   end
 end
 
+defmodule Remedy.EnvironmentVariableError do
+  @moduledoc """
+  Raised when an environment variable cannot be found
+  """
+  defexception [:message]
+
+  @impl true
+  def exception(var) do
+    msg = "Environment variable #{var} is required."
+    %__MODULE__{message: msg}
+  end
+end
+
 defmodule Remedy.CacheError do
   @moduledoc """
   Represents an error when interacting with the cache.

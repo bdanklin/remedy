@@ -4,8 +4,8 @@ defmodule Remedy.Util do
   """
 
   alias Remedy.{Api, Constants, Snowflake}
-  alias Remedy.Shard.Session
   alias Remedy.Schema.WSState
+  alias Remedy.Shard.Session
 
   require Logger
 

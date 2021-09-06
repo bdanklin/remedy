@@ -58,14 +58,15 @@ defmodule Remedy.Gateway.Intents do
     DIRECT_MESSAGE_TYPING: 1 <<< 14
   ]
 
+  @gateway_intent Application.compile_env(:remedy, :gateway_intents)
   def get do
-    Application.get_env(:remedy, :gateway_intents)
+    @gateway_intent
     |> resolve()
     |> to_integer()
   end
 
-  defp resolve(intents) when is_list(intents) do
-  end
+  # defp resolve(intents) when is_list(intents) do
+  # end
 
   defp resolve(:all) do
     %__MODULE__{

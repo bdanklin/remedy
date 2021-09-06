@@ -10,10 +10,10 @@ defmodule Remedy.Voice.Audio do
 
   alias Porcelain.Process, as: Proc
   alias Porcelain.Result, as: Res
-  alias Remedy.VoiceError
   alias Remedy.Struct.VoiceState
   alias Remedy.Util
   alias Remedy.Voice
+  alias Remedy.VoiceError
 
   @encryption_mode "xsalsa20_poly1305"
   @samples_per_frame 960

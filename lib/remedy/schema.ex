@@ -44,9 +44,18 @@ defmodule Remedy.Schema do
 
   defp payload_helpers do
     quote do
-      alias Remedy.Schema.WSState
+      alias Remedy.Gateway.Commands.{
+        Heartbeat,
+        Hello,
+        Identify,
+        RequestGuildMembers,
+        Resume,
+        UpdatePresence,
+        UpdateVoiceState
+      }
+
       alias Remedy.Gateway.Payload
-      alias Remedy.Gateway.Commands.{Heartbeat, Identify, Hello}
+      alias Remedy.Schema.WSState
     end
   end
 

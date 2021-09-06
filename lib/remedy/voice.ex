@@ -32,8 +32,7 @@ defmodule Remedy.Voice do
   alias Porcelain.Process, as: Proc
   alias Remedy.Api
   alias Remedy.Struct.{Channel, Guild, VoiceState}
-  alias Remedy.Voice.Audio
-  alias Remedy.Voice.Session
+  alias Remedy.Voice.{Audio, Session}
   alias Remedy.Voice.Supervisor, as: VoiceSupervisor
 
   require Logger

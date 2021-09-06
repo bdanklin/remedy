@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Identify do
   use Remedy.Schema
 
   @defaults %{
-    "token" => Application.get_env(:remedy, :token),
+    "token" => System.get_env(:remedy, :token),
     "properties" => %{
       "$os" => to_string(elem(:os.type(), 0)),
       "$device" => "Remedy",

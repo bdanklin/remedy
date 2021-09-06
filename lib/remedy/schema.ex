@@ -64,7 +64,7 @@ defmodule Remedy.Schema do
       use Ecto.Schema
       import Ecto.Changeset
       unquote(schema_helpers())
-      @before_compile Remedy.Schema.Model
+      @before_compile Schema.Model
 
       def validate(changeset), do: changeset
       defoverridable validate: 1
@@ -77,7 +77,7 @@ defmodule Remedy.Schema do
       import Ecto.Changeset
       unquote(schema_helpers())
       unquote(payload_helpers())
-      @before_compile Remedy.Schema.Payload
+      @before_compile Schema.Payload
 
       def validate(changeset), do: changeset
       defoverridable validate: 1

@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Component do
   use Remedy.Schema, :model
 
   @primary_key false
-embedded_schema do
+  embedded_schema do
     field :title, :string
     field :type, :string
     field :description, :string

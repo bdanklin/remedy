@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Command do
   use Remedy.Schema, :model
 
   @primary_key {:id, Snowflake, autogenerate: false}
-embedded_schema do
+  embedded_schema do
     field :type, :integer, default: 1
     field :name, :string
     field :description, :string

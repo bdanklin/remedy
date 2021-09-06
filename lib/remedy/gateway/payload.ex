@@ -1,13 +1,13 @@
 defmodule Remedy.Gateway.Payload do
   @moduledoc false
-  use Remedy.Schema
+  use Remedy.Schema, :payload
 
-  @payload %{
-    "op" => "",
-    "d" => %{},
-    "s" => "",
-    "t" => ""
-  }
+  embedded_schema do
+    field :op, :string
+    field :d, :map
+    field :s, :string
+    field :t, :string
+  end
 
   @op %{
     "DISPATCH" => 0,
@@ -25,23 +25,6 @@ defmodule Remedy.Gateway.Payload do
     "SYNC_GUILD" => 12,
     "SYNC_CALL" => 13
   }
-
-  def identify do
-    %{
-      "token" => Application.get_env(:remedy, :token),
-      "properties" => %{
-        "$os" => "",
-        "$browser" => "Remedy",
-        "$device" => "Remedy",
-        "$referrer" => "",
-        "$referring_domain" => ""
-      },
-      "compress" => false,
-      "large_threshold" => "@large_threshold",
-      "shard" => "[state.shard_num, Util.num_shards()]",
-      "intents" => "Intents.get_enabled_intents()"
-    }
-  end
 
   def resume do
     %{

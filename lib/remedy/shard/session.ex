@@ -84,22 +84,22 @@ defmodule Remedy.Shard.Session do
 
   defp await_ws_upgrade(worker, stream) do
     # TODO: Once gun 2.0 is released, the block below can be simplified to:
-    # {:upgrade, [<<"websocket">>], _headers} = :gun.await(worker, stream, @timeout_ws_upgrade)
+    {:upgrade, [<<"websocket">>], _headers} = :gun.await(worker, stream, @timeout_ws_upgrade)
 
-    receive do
-      {:gun_upgrade, ^worker, ^stream, [<<"websocket">>], _headers} ->
-        :ok
-
-      {:gun_error, ^worker, ^stream, reason} ->
-        exit({:ws_upgrade_failed, reason})
-    after
-      @timeout_ws_upgrade ->
-        Logger.error(fn ->
-          "Cannot upgrade connection to Websocket after #{@timeout_ws_upgrade / 1000} seconds"
-        end)
-
-        exit(:timeout)
-    end
+    #  receive do
+    #    {:gun_upgrade, ^worker, ^stream, [<<"websocket">>], _headers} ->
+    #      :ok
+    #
+    #    {:gun_error, ^worker, ^stream, reason} ->
+    #      exit({:ws_upgrade_failed, reason})
+    #  after
+    #    @timeout_ws_upgrade ->
+    #      Logger.error(fn ->
+    #        "Cannot upgrade connection to Websocket after #{@timeout_ws_upgrade / 1000} seconds"
+    #      end)
+    #
+    #      exit(:timeout)
+    #  end
   end
 
   def handle_info({:gun_ws, _worker, stream, {:binary, frame}}, state) do

@@ -235,6 +235,7 @@ defmodule Remedy.Api do
   Remedy.Api.edit_message(43189401384091, 1894013840914098, content: "hello world!", embed: embed)
   ```
   """
+
   @spec edit_message(Channel.id(), Message.id(), options | String.t()) ::
           error | {:ok, Message.t()}
   def edit_message(channel_id, message_id, options)
@@ -276,6 +277,7 @@ defmodule Remedy.Api do
   Same as `delete_message/2`, but takes a `Remedy.Struct.Message` instead of a
   `channel_id` and `message_id`.
   """
+
   @spec delete_message(Message.t()) :: error | {:ok}
   def delete_message(%Message{id: id, channel_id: c_id}) do
     delete_message(c_id, id)
@@ -295,6 +297,7 @@ defmodule Remedy.Api do
   Remedy.Api.delete_message(43189401384091, 43189401384091)
   ```
   """
+
   @spec delete_message(Channel.id(), Message.id()) :: error | {:ok}
   def delete_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
@@ -325,6 +328,7 @@ defmodule Remedy.Api do
 
   For other emoji string examples, see `t:Remedy.Struct.Emoji.api_name/0`.
   """
+
   @spec create_reaction(Channel.id(), Message.id(), emoji) :: error | {:ok}
   def create_reaction(channel_id, message_id, emoji)
 
@@ -365,6 +369,7 @@ defmodule Remedy.Api do
 
   See `create_reaction/3` for similar examples.
   """
+
   @spec delete_user_reaction(Channel.id(), Message.id(), emoji, User.id()) :: error | {:ok}
   def delete_user_reaction(channel_id, message_id, emoji, user_id)
 
@@ -384,6 +389,7 @@ defmodule Remedy.Api do
 
   See `create_reaction/3` for similar examples.
   """
+
   @spec delete_reaction(Channel.id(), Message.id(), emoji) :: error | {:ok}
   def delete_reaction(channel_id, message_id, emoji)
 
@@ -406,6 +412,7 @@ defmodule Remedy.Api do
 
   See `create_reaction/3` for similar examples.
   """
+
   @spec get_reactions(Channel.id(), Message.id(), emoji) :: error | {:ok, [User.t()]}
   def get_reactions(channel_id, message_id, emoji)
 
@@ -425,6 +432,7 @@ defmodule Remedy.Api do
 
   If successful, returns `{:ok}`. Otherwise, return `t:Remedy.Api.error/0`.
   """
+
   @spec delete_all_reactions(Channel.id(), Message.id()) :: error | {:ok}
   def delete_all_reactions(channel_id, message_id) do
     request(:delete, Constants.channel_reactions_delete(channel_id, message_id))

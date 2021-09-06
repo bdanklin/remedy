@@ -1,7 +1,7 @@
 defmodule Remedy.Shard.Payload do
   @moduledoc false
-  alias Gateway.Intents
-  alias Remedy.{Constants, Shard.Intents, Util}
+  alias Remedy.Gateway.Intents
+  alias Remedy.{Constants, Util}
 
   @large_threshold 250
 

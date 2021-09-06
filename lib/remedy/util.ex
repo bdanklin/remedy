@@ -5,7 +5,7 @@ defmodule Remedy.Util do
 
   alias Remedy.{Api, Constants, Snowflake}
   alias Remedy.Shard.Session
-  alias Remedy.Struct.WSState
+  alias Remedy.Schema.WSState
 
   require Logger
 
@@ -246,32 +246,6 @@ defmodule Remedy.Util do
     end
   end
 
-  @doc false
-  @spec fullsweep_after() :: {:fullsweep_after, non_neg_integer}
-  def fullsweep_after do
-    {:fullsweep_after,
-     Application.get_env(
-       :remedy,
-       :fullsweep_after_default,
-       :erlang.system_info(:fullsweep_after) |> elem(1)
-     )}
-  end
-
-  @doc """
-  Gets the latency of the shard connection from a `Remedy.Struct.WSState.t()` struct.
-
-  Returns the latency in milliseconds as an integer, returning nil if unknown.
-  """
-  @spec get_shard_latency(WSState.t()) :: non_neg_integer | nil
-  def get_shard_latency(%WSState{last_heartbeat_ack: nil}), do: nil
-
-  def get_shard_latency(%WSState{last_heartbeat_send: nil}), do: nil
-
-  def get_shard_latency(%WSState{} = state) do
-    latency = DateTime.diff(state.last_heartbeat_ack, state.last_heartbeat_send, :millisecond)
-    max(0, latency + if(latency < 0, do: state.heartbeat_interval, else: 0))
-  end
-
   @doc """
   Gets the latencies of all shard connections.
 
@@ -286,7 +260,7 @@ defmodule Remedy.Util do
     |> Enum.map(fn {_id, pid, _type, _modules} -> Supervisor.which_children(pid) end)
     |> List.flatten()
     |> Enum.map(fn {_id, pid, _type, _modules} -> Session.get_ws_state(pid) end)
-    |> Enum.reduce(%{}, fn s, m -> Map.put(m, s.shard_num, get_shard_latency(s)) end)
+    |> Enum.reduce(%{}, fn s, m -> Map.put(m, s.shard_num, WSState.get_shard_latency(s)) end)
   end
 
   @doc """

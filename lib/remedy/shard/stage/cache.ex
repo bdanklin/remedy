@@ -10,7 +10,7 @@ defmodule Remedy.Shard.Stage.Cache do
   require Logger
 
   def start_link(_opts) do
-    GenStage.start_link(__MODULE__, [], name: __MODULE__, spawn_opt: [Util.fullsweep_after()])
+    GenStage.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def init(opts) do

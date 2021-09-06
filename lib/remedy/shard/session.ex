@@ -3,7 +3,7 @@ defmodule Remedy.Shard.Session do
 
   alias Remedy.{Constants, Util}
   alias Remedy.Shard.{Connector, Event, Payload}
-  alias Remedy.Struct.WSState
+  alias Remedy.Schema.WSState
 
   require Logger
 
@@ -47,7 +47,7 @@ defmodule Remedy.Shard.Session do
   end
 
   def start_link(opts) do
-    GenServer.start_link(__MODULE__, opts, spawn_opt: [Util.fullsweep_after()])
+    GenServer.start_link(__MODULE__, opts)
   end
 
   def init(args) do

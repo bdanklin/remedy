@@ -12,7 +12,7 @@ defmodule Remedy.Schema.Sticker do
     field :format_type, :integer
     field :available, :boolean
     field :sort_value, :integer
-    belongs_to :pack, StickerPack
+    belongs_to :sticker_pack, StickerPack
     belongs_to :guild, Guild
     belongs_to :user, User
   end

@@ -3,7 +3,7 @@ defmodule Remedy.Schema.VoiceState do
   use Remedy.Schema, :model
   @primary_key {:id, Snowflake, autogenerate: false}
 
-  schema "voice_states" do
+  embedded_schema do
     field :username, :string
     field :discriminator, :string
     field :avatar, :string

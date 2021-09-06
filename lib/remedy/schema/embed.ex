@@ -4,7 +4,7 @@ defmodule Remedy.Schema.Embed do
   alias Embed.{Field, Author, Footer, Provider, Thumbnail, Video}
 
   @primary_key {:id, Snowflake, autogenerate: false}
-  schema "embeds" do
+embedded_schema do
     field :title, :string
     field :type, :string
     field :description, :string

@@ -85,7 +85,8 @@ defmodule Remedy.MixProject do
       {:etso, "~> 0.1.6"},
       {:sunbake, "~> 0.2.0"},
       {:battle_standard, "~> 0.1.0"},
-      {:morphix, "~> 0.8.1"}
+      {:morphix, "~> 0.8.1"},
+      {:recase, "~> 0.7.0"}
     ]
   end
 

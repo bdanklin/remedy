@@ -36,8 +36,17 @@ defmodule Remedy.Schema do
         TeamMember,
         User,
         Voice,
+        VoiceState,
         Webhook
       }
+    end
+  end
+
+  defp payload_helpers do
+    quote do
+      alias Remedy.Schema.WSState
+      alias Remedy.Gateway.Payload
+      alias Remedy.Gateway.Commands.{Heartbeat, Identify, Hello}
     end
   end
 
@@ -47,6 +56,9 @@ defmodule Remedy.Schema do
       import Ecto.Changeset
       unquote(schema_helpers())
       @before_compile Remedy.Schema.Model
+
+      def validate(changeset), do: changeset
+      defoverridable validate: 1
     end
   end
 
@@ -55,7 +67,11 @@ defmodule Remedy.Schema do
       use Ecto.Schema
       import Ecto.Changeset
       unquote(schema_helpers())
+      unquote(payload_helpers())
       @before_compile Remedy.Schema.Payload
+
+      def validate(changeset), do: changeset
+      defoverridable validate: 1
     end
   end
 
@@ -107,7 +123,7 @@ defmodule Remedy.Schema.Payload do
     quote do
       alias __MODULE__
 
-      def new(params \\ %{}), do: changeset(params)
+      defp new(params \\ %{}), do: changeset(params)
 
       def changeset(params), do: changeset(%__MODULE__{}, params)
       def changeset(nil, params), do: changeset(%__MODULE__{}, params)
@@ -115,10 +131,23 @@ defmodule Remedy.Schema.Payload do
       def changeset(%__MODULE__{} = model, params) do
         model
         |> cast(params, castable())
+        |> validate()
         |> cast_embeds()
         |> apply_changes()
         |> Map.from_struct()
         |> Morphix.stringmorphiform!()
+      end
+
+      def build_payload(data),
+        do: data |> new() |> Remedy.Gateway.Payload.build(command())
+
+      def command do
+        __MODULE__
+        |> to_string()
+        |> String.split(".")
+        |> List.last()
+        |> Recase.to_snake()
+        |> String.upcase()
       end
 
       defp cast_embeds(cast_model) do

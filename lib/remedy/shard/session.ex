@@ -2,7 +2,7 @@ defmodule Remedy.Shard.Session do
   @moduledoc false
 
   alias Remedy.{Constants, Util}
-  alias Remedy.Schema.WSState
+  alias Remedy.Gateway.WSState
   alias Remedy.Shard.{Connector, Event, Payload}
 
   require Logger

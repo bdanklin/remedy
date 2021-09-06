@@ -8,8 +8,9 @@ Playground fork of Nostrum.
 
 ## Working on
 
+- [ ] Remove the shard ETS table. use Registry instead.
 - [ ] Separate applicable components into their own package.
-  - [x] Bit Flag handler - https://hex.pm/packages/battle_standard 
+  - [x] Bit Flag handler - https://hex.pm/packages/battle_standard
   - [x] Timestamp & Snowflake Ecto Types - https://hex.pm/packages/sunbake
 - [ ] Convert structs Schema.
 - [ ] Convert cache to Etso.
@@ -20,6 +21,9 @@ Playground fork of Nostrum.
   - [ ] Doc Tests to run on Github Actions
   - [ ] Doc Tests to even run manually for a start would be 🔥
   - [ ] Supply a bot secret thru workflow to enable actual testing on a real server. without exposing secrets (prob too hard)
+  - [ ] Display while running
+    - [ ] https://hexdocs.pm/table_rex/TableRex.Table.html
+    - [ ] https://github.com/henrik/progress_bar
 
 ## Installation
 

@@ -20,7 +20,7 @@ defmodule Remedy.Schema.WSState do
     field :zlib_ctx, :any, virtual: true
   end
 
-    @doc """
+  @doc """
   Gets the latency of the shard connection from a `Remedy.Struct.WSState.t()` struct.
 
   Returns the latency in milliseconds as an integer, returning nil if unknown.
@@ -29,9 +29,12 @@ defmodule Remedy.Schema.WSState do
 
   def get_shard_latency(%__MODULE__{last_heartbeat_send: nil}), do: nil
 
-  def get_shard_latency(%__MODULE__{
-    last_heartbeat_ack: last_heartbeat_ack,
-    last_heartbeat_send: last_heartbeat_send} = state) do
+  def get_shard_latency(
+        %__MODULE__{
+          last_heartbeat_ack: last_heartbeat_ack,
+          last_heartbeat_send: last_heartbeat_send
+        } = state
+      ) do
     latency = DateTime.diff(last_heartbeat_ack, last_heartbeat_send, :millisecond)
 
     max(0, latency + if(latency < 0, do: state.heartbeat_interval, else: 0))

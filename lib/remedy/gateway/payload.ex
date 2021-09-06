@@ -4,7 +4,7 @@ defmodule Remedy.Gateway.Payload do
 
   @primary_key false
   embedded_schema do
-    field :op, :string
+    field :op, :integer
     field :d, :map
     field :s, :string
     field :t, :string
@@ -27,12 +27,16 @@ defmodule Remedy.Gateway.Payload do
     "SYNC_CALL" => 13
   }
 
-  def resume do
+  defp op(event), do: @op |> Map.get(event)
+
+  def build(data, event, s \\ nil) do
     %{
-      "token" => Application.get_env(:remedy, :token),
-      "session_id" => "state.session",
-      "seq" => "state.seq"
+      d: data,
+      t: event,
+      s: s,
+      op: op(event)
     }
+    |> new()
   end
 
   def update_presence do

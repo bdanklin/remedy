@@ -26,9 +26,6 @@ defmodule Remedy.Gateway.Commands.Identify do
     large_threshold: Application.get_env(:remedy, :large_threshold) || @default_large_threshold
   }
 
-  @doc """
-  Identify Schema
-  """
   @primary_key false
   embedded_schema do
     field :token, :string
@@ -39,7 +36,9 @@ defmodule Remedy.Gateway.Commands.Identify do
     field :intents, :integer
   end
 
-  def payload(shard_num, opts \\ []) do
+  def payload(state, opts \\ [])
+
+  def payload(%WSState{shard_num: shard_num}, opts) do
     [
       {:compress, opts[:compress]},
       {:large_threshold, opts[:large_threshold]},
@@ -47,6 +46,9 @@ defmodule Remedy.Gateway.Commands.Identify do
     ]
     |> Enum.into(@defaults)
     |> Map.merge(@env)
-    |> new()
+    |> build_payload()
   end
+
+  def payload(term, _opts),
+    do: raise("Expected a Websocket State, got: #{term}, Seppuku 切腹 ( ͡ಠ ʖ̯ ͡ಠ)")
 end

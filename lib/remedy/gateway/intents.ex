@@ -65,17 +65,10 @@ defmodule Remedy.Gateway.Intents do
     |> to_integer()
   end
 
-  # defp resolve(intents) when is_list(intents) do
-  # end
-
   defp resolve(:all) do
     %__MODULE__{
       GUILD_MEMBERS: true,
       GUILD_PRESENCES: true
     }
-  end
-
-  defp resolve(nil) do
-    %__MODULE__{}
   end
 end

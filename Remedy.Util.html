@@ -8,7 +8,7 @@
     <meta name="project" content="Remedy v0.5.2">
     <title>Remedy.Util — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
-    <script src="dist/sidebar_items-e58a5d5851.js"></script>
+    <script src="dist/sidebar_items-34a0a52f89.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-f27ff079945e43879c46.js"></script>
   </head>
@@ -111,12 +111,6 @@ Remedy      </a>
     <a href="#get_all_shard_latencies/0">get_all_shard_latencies()</a>
   </div>
     <div class="summary-synopsis"><p>Gets the latencies of all shard connections.</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get_shard_latency/1">get_shard_latency(state)</a>
-  </div>
-    <div class="summary-synopsis"><p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.WSState.t()</code> struct.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -226,7 +220,7 @@ for future use.</p>  </section>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">get_all_shard_latencies()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L282" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L256" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -236,33 +230,12 @@ for future use.</p>  </section>
       <h2>Specs</h2>
       <div class="specs">
           <pre>get_all_shard_latencies() :: %{
-  required(<a href="Remedy.Struct.WSState.html#t:shard_num/0">Remedy.Struct.WSState.shard_num</a>()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil
+  required(Remedy.Schema.WSState.shard_num()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil
 }</pre>
       </div>
 
-<p>Gets the latencies of all shard connections.</p><p>Calls <a href="#get_shard_latency/1"><code class="inline">get_shard_latency/1</code></a> on all shards and returns a map whose keys are
+<p>Gets the latencies of all shard connections.</p><p>Calls <code class="inline">get_shard_latency/1</code> on all shards and returns a map whose keys are
 shard nums and whose values are latencies in milliseconds.</p>  </section>
-</section>
-<section class="detail" id="get_shard_latency/1">
-  <div class="detail-header">
-    <a href="#get_shard_latency/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">get_shard_latency(state)</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L266" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-  </div>
-
-  <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>get_shard_latency(<a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil</pre>
-      </div>
-
-<p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.WSState.t()</code> struct.</p><p>Returns the latency in milliseconds as an integer, returning nil if unknown.</p>  </section>
 </section>
 <section class="detail" id="maybe_to_atom/1">
   <div class="detail-header">
@@ -410,7 +383,7 @@ types of objects returned by Discord, the amount of new atoms created <em>SHOULD
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">unused_atoms()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L298" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L272" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

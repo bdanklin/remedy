@@ -8,7 +8,7 @@
     <meta name="project" content="Remedy v0.5.2">
     <title>Remedy.Consumer — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
-    <script src="dist/sidebar_items-e58a5d5851.js"></script>
+    <script src="dist/sidebar_items-34a0a52f89.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-f27ff079945e43879c46.js"></script>
   </head>
@@ -382,7 +382,7 @@ Types          </h1>
       <h2>Specs</h2>
       <div class="specs">
           <pre>channel_create() ::
-  {:CHANNEL_CREATE, Remedy.Struct.Channel.t(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+  {:CHANNEL_CREATE, Remedy.Struct.Channel.t(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -404,7 +404,7 @@ Types          </h1>
       <h2>Specs</h2>
       <div class="specs">
           <pre>channel_delete() ::
-  {:CHANNEL_DELETE, Remedy.Struct.Channel.t(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+  {:CHANNEL_DELETE, Remedy.Struct.Channel.t(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -425,7 +425,7 @@ Types          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>channel_pins_ack() :: {:CHANNEL_PINS_ACK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+          <pre>channel_pins_ack() :: {:CHANNEL_PINS_ACK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -448,7 +448,7 @@ Types          </h1>
       <div class="specs">
           <pre>channel_pins_update() ::
   {:CHANNEL_PINS_UPDATE, <a href="Remedy.Struct.Event.ChannelPinsUpdate.html#t:t/0">Remedy.Struct.Event.ChannelPinsUpdate.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -472,7 +472,7 @@ Types          </h1>
           <pre>channel_update() ::
   {:CHANNEL_UPDATE,
    {old_channel :: Remedy.Struct.Channel.t() | nil,
-    new_channel :: Remedy.Struct.Channel.t()}, <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+    new_channel :: Remedy.Struct.Channel.t()}, Remedy.Struct.WSState.t()}</pre>
       </div>
 
 <p>Dispatched when a channel is updated.</p><p><code class="inline">old_channel</code> will be <code class="inline">nil</code> when the pre-update channel could not be fetched from the cache.</p>  </section>
@@ -556,7 +556,7 @@ Types          </h1>
       <div class="specs">
           <pre>guild_available() ::
   {:GUILD_AVAILABLE, new_guild :: Remedy.Struct.Guild.t(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -579,7 +579,7 @@ Types          </h1>
       <div class="specs">
           <pre>guild_ban_add() ::
   {:GUILD_BAN_ADD, <a href="Remedy.Struct.Event.GuildBanAdd.html#t:t/0">Remedy.Struct.Event.GuildBanAdd.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -602,7 +602,7 @@ Types          </h1>
       <div class="specs">
           <pre>guild_ban_remove() ::
   {:GUILD_BAN_REMOVE, <a href="Remedy.Struct.Event.GuildBanRemove.html#t:t/0">Remedy.Struct.Event.GuildBanRemove.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -625,7 +625,7 @@ Types          </h1>
       <div class="specs">
           <pre>guild_create() ::
   {:GUILD_CREATE, new_guild :: Remedy.Struct.Guild.t(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -649,7 +649,7 @@ Types          </h1>
           <pre>guild_delete() ::
   {:GUILD_DELETE,
    {old_guild :: Remedy.Struct.Guild.t(), unavailable :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()},
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -673,7 +673,7 @@ Types          </h1>
           <pre>guild_emojis_update() ::
   {:GUILD_EMOJIS_UPDATE,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), old_emojis :: [Remedy.Struct.Emoji.t()],
-    new_emojis :: [Remedy.Struct.Emoji.t()]}, <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+    new_emojis :: [Remedy.Struct.Emoji.t()]}, Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -696,7 +696,7 @@ Types          </h1>
       <div class="specs">
           <pre>guild_integrations_update() ::
   {:GUILD_INTEGRATIONS_UPDATE, <a href="Remedy.Struct.Event.GuildIntegrationsUpdate.html#t:t/0">Remedy.Struct.Event.GuildIntegrationsUpdate.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -720,7 +720,7 @@ Types          </h1>
           <pre>guild_member_add() ::
   {:GUILD_MEMBER_ADD,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), new_member :: Remedy.Struct.Guild.Member.t()},
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -744,7 +744,7 @@ Types          </h1>
           <pre>guild_member_remove() ::
   {:GUILD_MEMBER_REMOVE,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), old_member :: Remedy.Struct.Guild.Member.t()},
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -768,7 +768,7 @@ Types          </h1>
           <pre>guild_member_update() ::
   {:GUILD_MEMBER_UPDATE,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), old_member :: Remedy.Struct.Guild.Member.t() | nil,
-    new_member :: Remedy.Struct.Guild.Member.t()}, <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+    new_member :: Remedy.Struct.Guild.Member.t()}, Remedy.Struct.WSState.t()}</pre>
       </div>
 
 <p>Dispatched when a guild member is updated.</p><p><code class="inline">old_member</code> will be <code class="inline">nil</code> when the pre-update member could not be fetched from the cache.</p>  </section>
@@ -790,7 +790,7 @@ Types          </h1>
       <h2>Specs</h2>
       <div class="specs">
           <pre>guild_members_chunk() ::
-  {:GUILD_MEMBERS_CHUNK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+  {:GUILD_MEMBERS_CHUNK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -814,7 +814,7 @@ Types          </h1>
           <pre>guild_role_create() ::
   {:GUILD_ROLE_CREATE,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), new_role :: Remedy.Struct.Guild.Role.t()},
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -838,7 +838,7 @@ Types          </h1>
           <pre>guild_role_delete() ::
   {:GUILD_ROLE_DELETE,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), old_role :: Remedy.Struct.Guild.Role.t()},
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -862,7 +862,7 @@ Types          </h1>
           <pre>guild_role_update() ::
   {:GUILD_ROLE_UPDATE,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), old_role :: Remedy.Struct.Guild.Role.t() | nil,
-    new_role :: Remedy.Struct.Guild.Role.t()}, <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+    new_role :: Remedy.Struct.Guild.Role.t()}, Remedy.Struct.WSState.t()}</pre>
       </div>
 
 <p>Dispatched when a role on a guild is updated.</p><p><code class="inline">old_role</code> will be <code class="inline">nil</code> when the pre-update role could not be fetched from the cache.</p>  </section>
@@ -886,7 +886,7 @@ Types          </h1>
           <pre>guild_unavailable() ::
   {:GUILD_UNAVAILABLE,
    unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -910,7 +910,7 @@ Types          </h1>
           <pre>guild_update() ::
   {:GUILD_UPDATE,
    {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()},
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -931,7 +931,7 @@ Types          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>message_ack() :: {:MESSAGE_ACK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+          <pre>message_ack() :: {:MESSAGE_ACK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -954,7 +954,7 @@ Types          </h1>
       <div class="specs">
           <pre>message_create() ::
   {:MESSAGE_CREATE, message :: Remedy.Struct.Message.t(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -977,7 +977,7 @@ Types          </h1>
       <div class="specs">
           <pre>message_delete() ::
   {:MESSAGE_DELETE, <a href="Remedy.Struct.Event.MessageDelete.html#t:t/0">Remedy.Struct.Event.MessageDelete.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1000,7 +1000,7 @@ Types          </h1>
       <div class="specs">
           <pre>message_delete_bulk() ::
   {:MESSAGE_DELETE_BULK, <a href="Remedy.Struct.Event.MessageDeleteBulk.html#t:t/0">Remedy.Struct.Event.MessageDeleteBulk.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1023,7 +1023,7 @@ Types          </h1>
       <div class="specs">
           <pre>message_reaction_add() ::
   {:MESSAGE_REACTION_ADD, <a href="Remedy.Struct.Event.MessageReactionAdd.html#t:t/0">Remedy.Struct.Event.MessageReactionAdd.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1046,7 +1046,7 @@ Types          </h1>
       <div class="specs">
           <pre>message_reaction_remove() ::
   {:MESSAGE_REACTION_REMOVE, <a href="Remedy.Struct.Event.MessageReactionRemove.html#t:t/0">Remedy.Struct.Event.MessageReactionRemove.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1069,7 +1069,7 @@ Types          </h1>
       <div class="specs">
           <pre>message_reaction_remove_all() ::
   {:MESSAGE_REACTION_REMOVE_ALL,
-   <a href="Remedy.Struct.Event.MessageReactionRemoveAll.html#t:t/0">Remedy.Struct.Event.MessageReactionRemoveAll.t</a>(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   <a href="Remedy.Struct.Event.MessageReactionRemoveAll.html#t:t/0">Remedy.Struct.Event.MessageReactionRemoveAll.t</a>(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1093,7 +1093,7 @@ Types          </h1>
           <pre>message_reaction_remove_emoji() ::
   {:MESSAGE_REACTION_REMOVE_EMOJI,
    <a href="Remedy.Struct.Event.MessageReactionRemoveEmoji.html#t:t/0">Remedy.Struct.Event.MessageReactionRemoveEmoji.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1116,7 +1116,7 @@ Types          </h1>
       <div class="specs">
           <pre>message_update() ::
   {:MESSAGE_UPDATE, updated_message :: Remedy.Struct.Message.t(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1187,7 +1187,7 @@ Types          </h1>
           <pre>presence_update() ::
   {:PRESENCE_UPDATE,
    {guild_id :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), old_presence :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil, new_presence :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()},
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
 <p>Dispatched when a user's presence is updated.</p><p><code class="inline">old_presence</code> will be <code class="inline">nil</code> when the pre-update presence could not be fetched from the cache.</p>  </section>
@@ -1208,7 +1208,7 @@ Types          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>ready() :: {:READY, <a href="Remedy.Struct.Event.Ready.html#t:t/0">Remedy.Struct.Event.Ready.t</a>(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+          <pre>ready() :: {:READY, <a href="Remedy.Struct.Event.Ready.html#t:t/0">Remedy.Struct.Event.Ready.t</a>(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1229,7 +1229,7 @@ Types          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>resumed() :: {:RESUMED, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+          <pre>resumed() :: {:RESUMED, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1252,7 +1252,7 @@ Types          </h1>
       <div class="specs">
           <pre>typing_start() ::
   {:TYPING_START, <a href="Remedy.Struct.Event.TypingStart.html#t:t/0">Remedy.Struct.Event.TypingStart.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1297,7 +1297,7 @@ Types          </h1>
           <pre>user_update() ::
   {:USER_UPDATE,
    {old_user :: Remedy.Struct.User.t() | nil,
-    new_user :: Remedy.Struct.User.t()}, <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+    new_user :: Remedy.Struct.User.t()}, Remedy.Struct.WSState.t()}</pre>
       </div>
 
 <p>Dispatched when a user is updated.</p><p><code class="inline">old_user</code> will be <code class="inline">nil</code> when the pre-update user could not be fetched from the cache.</p>  </section>
@@ -1343,7 +1343,7 @@ Types          </h1>
       <div class="specs">
           <pre>voice_server_update() ::
   {:VOICE_SERVER_UPDATE, <a href="Remedy.Struct.Event.VoiceServerUpdate.html#t:t/0">Remedy.Struct.Event.VoiceServerUpdate.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1389,7 +1389,7 @@ Types          </h1>
       <div class="specs">
           <pre>voice_state_update() ::
   {:VOICE_STATE_UPDATE, <a href="Remedy.Struct.Event.VoiceState.html#t:t/0">Remedy.Struct.Event.VoiceState.t</a>(),
-   <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+   Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>
@@ -1410,7 +1410,7 @@ Types          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>webhooks_update() :: {:WEBHOOKS_UPDATE, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Struct.WSState.html#t:t/0">Remedy.Struct.WSState.t</a>()}</pre>
+          <pre>webhooks_update() :: {:WEBHOOKS_UPDATE, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Remedy.Struct.WSState.t()}</pre>
       </div>
 
   </section>

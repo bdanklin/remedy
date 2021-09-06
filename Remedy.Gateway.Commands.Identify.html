@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.2">
-    <title>Remedy.Struct.Message.Reference — Remedy v0.5.2</title>
+    <title>Remedy.Gateway.Commands.Identify — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
-    <script src="dist/sidebar_items-e58a5d5851.js"></script>
+    <script src="dist/sidebar_items-34a0a52f89.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-f27ff079945e43879c46.js"></script>
   </head>
@@ -72,8 +72,8 @@ Remedy      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Remedy.Struct.Message.Reference <small class="app-vsn">(Remedy v0.5.2)</small>
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/message/reference.ex#L1" title="View Source" class="view-source" rel="help">
+        Remedy.Gateway.Commands.Identify <small class="app-vsn">(Remedy v0.5.2)</small>
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -81,7 +81,7 @@ Remedy      </a>
 
 
         <section id="moduledoc">
-<p>Struct representing a discord message reference.</p>        </section>
+<p>Identify</p>        </section>
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -91,129 +91,132 @@ Remedy      </a>
             </a>
             Summary
           </h1>
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:channel_id/0">channel_id()</a>
+    <a href="#__struct__/0">%Remedy.Gateway.Commands.Identify{}</a>
   </div>
-    <div class="summary-synopsis"><p>Id of the originating message's channel</p></div>
+    <div class="summary-synopsis"><p>Identify Schema</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:guild_id/0">guild_id()</a>
+    <a href="#changeset/1">changeset(params)</a>
   </div>
-    <div class="summary-synopsis"><p>Id of the originating message's guild</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:message_id/0">message_id()</a>
+    <a href="#changeset/2">changeset(model, params)</a>
   </div>
-    <div class="summary-synopsis"><p>Id of the originating message</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#new/1">new(params \\ %{})</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#payload/2">payload(shard_num, opts \\ [])</a>
   </div>
 </div>
   </div>
         </section>
 
-        <section id="types" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#types">
+            <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types          </h1>
-          <div class="types-list">
-<section class="detail" id="t:channel_id/0">
+Functions          </h1>
+          <div class="functions-list">
+<section class="detail" id="__struct__/0">
   <div class="detail-header">
-    <a href="#t:channel_id/0" class="detail-link" title="Link to this type">
+    <a href="#__struct__/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">channel_id()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/message/reference.ex#L19" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">%Remedy.Gateway.Commands.Identify{}</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L33" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
+      <span class="note">(struct)</span>
   </div>
 
   <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>channel_id() :: Remedy.Struct.Channel.id()</pre>
-      </div>
 
-<p>Id of the originating message's channel</p>  </section>
+<p>Identify Schema</p>  </section>
 </section>
-<section class="detail" id="t:guild_id/0">
+<section class="detail" id="changeset/1">
   <div class="detail-header">
-    <a href="#t:guild_id/0" class="detail-link" title="Link to this type">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">guild_id()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/message/reference.ex#L22" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">changeset(params)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
   </div>
 
   <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>guild_id() :: Remedy.Struct.Guild.id()</pre>
-      </div>
 
-<p>Id of the originating message's guild</p>  </section>
+  </section>
 </section>
-<section class="detail" id="t:message_id/0">
+<section class="detail" id="changeset/2">
   <div class="detail-header">
-    <a href="#t:message_id/0" class="detail-link" title="Link to this type">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">message_id()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/message/reference.ex#L16" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">changeset(model, params)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
   </div>
 
   <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>message_id() :: Remedy.Struct.Message.id()</pre>
-      </div>
 
-<p>Id of the originating message</p>  </section>
+  </section>
 </section>
-<section class="detail" id="t:t/0">
+<section class="detail" id="new/1">
+    <span id="new/0"></span>
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#new/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">t()</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/struct/message/reference.ex#L24" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">new(params \\ %{})</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
   </div>
 
   <section class="docstring">
-      <h2>Specs</h2>
-      <div class="specs">
-          <pre>t() :: %Remedy.Struct.Message.Reference{
-  channel_id: <a href="#t:channel_id/0">channel_id</a>(),
-  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
-  message_id: <a href="#t:message_id/0">message_id</a>()
-}</pre>
-      </div>
+
+  </section>
+</section>
+<section class="detail" id="payload/2">
+    <span id="payload/1"></span>
+  <div class="detail-header">
+    <a href="#payload/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">payload(shard_num, opts \\ [])</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L42" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+  </div>
+
+  <section class="docstring">
 
   </section>
 </section>

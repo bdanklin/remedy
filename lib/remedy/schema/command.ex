@@ -1,4 +1,5 @@
 defmodule Remedy.Schema.Command do
+  @moduledoc false
   use Remedy.Schema, :model
 
   @primary_key {:id, Snowflake, autogenerate: false}

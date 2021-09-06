@@ -1,6 +1,6 @@
 defmodule Remedy.Shard.Payload do
   @moduledoc false
-
+  alias Gateway.Intents
   alias Remedy.{Constants, Shard.Intents, Util}
 
   @large_threshold 250
@@ -27,7 +27,7 @@ defmodule Remedy.Shard.Payload do
       "compress" => false,
       "large_threshold" => @large_threshold,
       "shard" => [state.shard_num, Util.num_shards()],
-      "intents" => Intents.get_enabled_intents()
+      "intents" => Intents.get()
     }
     |> build_payload("IDENTIFY")
   end

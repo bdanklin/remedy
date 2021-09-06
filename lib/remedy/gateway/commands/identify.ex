@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Identify do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @defaults %{
     "token" => Application.get_env(:remedy, :token),

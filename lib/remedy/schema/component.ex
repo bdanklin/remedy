@@ -1,4 +1,5 @@
 defmodule Remedy.Schema.Component do
+  @moduledoc false
   use Remedy.Schema, :model
 
   @primary_key false

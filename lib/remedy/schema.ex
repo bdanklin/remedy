@@ -131,6 +131,7 @@ defmodule Remedy.Schema.Payload do
   defmacro __before_compile__(_env) do
     quote do
       alias __MODULE__
+      alias Remedy.Gateway.Payload
 
       defp new(params \\ %{}), do: changeset(params)
 
@@ -148,7 +149,7 @@ defmodule Remedy.Schema.Payload do
       end
 
       def build_payload(data),
-        do: data |> new() |> Remedy.Gateway.Payload.build(command())
+        do: data |> new() |> Payload.build(command())
 
       def command do
         __MODULE__

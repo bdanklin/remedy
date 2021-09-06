@@ -37,30 +37,6 @@ defmodule Remedy.Gateway.Payload do
       op: op(event)
     }
     |> new()
-  end
-
-  def update_presence do
-    %{
-      "since" => 91_879_201,
-      "status" => "online",
-      "afk" => false
-    }
-  end
-
-  def update_voice_state do
-    %{
-      "guild_id" => "guild_id",
-      "channel_id" => "channel_id",
-      "self_mute" => "self_mute",
-      "self_deaf" => "self_deaf"
-    }
-  end
-
-  def guild_request_members do
-    %{
-      "guild_id" => "",
-      "query" => "",
-      "limit" => 0
-    }
+    |> :erlang.term_to_binary()
   end
 end

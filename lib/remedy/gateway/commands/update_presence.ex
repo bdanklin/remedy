@@ -9,14 +9,17 @@ defmodule Remedy.Gateway.Commands.UpdatePresence do
     embeds_one :activity, Activity
   end
 
+  @defaults %{
+    since: 91_879_201,
+    status: "online",
+    afk: false
+  }
+
   def payload(state, opts \\ [])
 
   def payload(%WSState{}, opts) do
-    %{
-      since: opts[:since],
-      status: opts[:status],
-      afk: opts[:afk]
-    }
+    opts
+    |> Enum.into(@defaults)
     |> build_payload()
   end
 

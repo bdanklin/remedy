@@ -26,7 +26,7 @@ defmodule Remedy.MixProject do
       dialyzer: dialyzer(),
       docs: docs(),
       package: package()
-      #    compilers: [:boundary, :phoenix, :gettext] ++ Mix.compilers(),
+
     ]
   end
 
@@ -85,7 +85,8 @@ defmodule Remedy.MixProject do
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
       {:sunbake, "~> 0.2.0"},
-      {:battle_standard, "~> 0.1.0"}
+      {:battle_standard, "~> 0.1.0"},
+      {:morphix, "~> 0.8.1"}
     ]
   end
 

@@ -3,6 +3,7 @@ defmodule Remedy.Gateway.Commands.Identify do
   Identify
   """
   alias Remedy.Gateway.Intents
+  alias Remedy.Util
   use Remedy.Schema, :payload
 
   @default_compress false
@@ -43,7 +44,7 @@ defmodule Remedy.Gateway.Commands.Identify do
     [
       {:compress, opts[:compress]},
       {:large_threshold, opts[:large_threshold]},
-      {:shard, [shard_num, Remedy.Util.num_shards()]}
+      {:shard, [shard_num, Util.num_shards()]}
     ]
     |> Enum.into(@defaults)
     |> Map.merge(@env)

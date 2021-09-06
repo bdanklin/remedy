@@ -26,7 +26,6 @@ defmodule Remedy.MixProject do
       dialyzer: dialyzer(),
       docs: docs(),
       package: package()
-
     ]
   end
 

@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Ban do
   use Remedy.Schema, :model
   @primary_key false
 
-  schema "bans" do
+  embedded_schema do
     belongs_to :user, User
     belongs_to :guild, Guild
     field :reason, :string

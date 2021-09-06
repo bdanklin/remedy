@@ -12,8 +12,8 @@
     has_many: :*,
     many_to_many: :*,
     embeds_one: :*,
-    embeds_many: :*
-    quote: :*
+    embeds_many: :*,
+    quote: :*,
     unquote: :*
   ]
 ]

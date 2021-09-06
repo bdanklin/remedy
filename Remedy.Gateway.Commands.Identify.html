@@ -8,7 +8,7 @@
     <meta name="project" content="Remedy v0.5.2">
     <title>Remedy.Gateway.Commands.Identify — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
-    <script src="dist/sidebar_items-34a0a52f89.js"></script>
+    <script src="dist/sidebar_items-7d0d28292c.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-f27ff079945e43879c46.js"></script>
   </head>
@@ -97,9 +97,8 @@ Remedy      </a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__struct__/0">%Remedy.Gateway.Commands.Identify{}</a>
+    <a href="#build_payload/1">build_payload(data)</a>
   </div>
-    <div class="summary-synopsis"><p>Identify Schema</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -113,12 +112,17 @@ Remedy      </a>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#new/1">new(params \\ %{})</a>
+    <a href="#command/0">command()</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#payload/2">payload(shard_num, opts \\ [])</a>
+    <a href="#payload/2">payload(state, opts \\ [])</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#validate/1">validate(changeset)</a>
   </div>
 </div>
   </div>
@@ -132,23 +136,22 @@ Remedy      </a>
             </a>
 Functions          </h1>
           <div class="functions-list">
-<section class="detail" id="__struct__/0">
+<section class="detail" id="build_payload/1">
   <div class="detail-header">
-    <a href="#__struct__/0" class="detail-link" title="Link to this function">
+    <a href="#build_payload/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">%Remedy.Gateway.Commands.Identify{}</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L33" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">build_payload(data)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
-      <span class="note">(struct)</span>
   </div>
 
   <section class="docstring">
 
-<p>Identify Schema</p>  </section>
+  </section>
 </section>
 <section class="detail" id="changeset/1">
   <div class="detail-header">
@@ -184,14 +187,13 @@ Functions          </h1>
 
   </section>
 </section>
-<section class="detail" id="new/1">
-    <span id="new/0"></span>
+<section class="detail" id="command/0">
   <div class="detail-header">
-    <a href="#new/1" class="detail-link" title="Link to this function">
+    <a href="#command/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">new(params \\ %{})</h1>
+    <h1 class="signature">command()</h1>
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
@@ -209,8 +211,25 @@ Functions          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">payload(shard_num, opts \\ [])</h1>
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L42" class="view-source" rel="help" title="View Source">
+    <h1 class="signature">payload(state, opts \\ [])</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L39" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+  </div>
+
+  <section class="docstring">
+
+  </section>
+</section>
+<section class="detail" id="validate/1">
+  <div class="detail-header">
+    <a href="#validate/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">validate(changeset)</h1>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/commands/identify.ex#L6" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

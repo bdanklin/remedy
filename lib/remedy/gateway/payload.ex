@@ -1,8 +1,8 @@
 defmodule Remedy.Gateway.Payload do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
-  @defaults %{
+  @payload %{
     "op" => "",
     "d" => %{},
     "s" => "",
@@ -26,9 +26,9 @@ defmodule Remedy.Gateway.Payload do
     "SYNC_CALL" => 13
   }
 
-  def identify() do
+  def identify do
     %{
-      "token" => "Application.get_env(:remedy, :token)",
+      "token" => Application.get_env(:remedy, :token),
       "properties" => %{
         "$os" => "",
         "$browser" => "Remedy",
@@ -43,15 +43,15 @@ defmodule Remedy.Gateway.Payload do
     }
   end
 
-  def resume() do
+  def resume do
     %{
-      "token" => "Application.get_env(:remedy, :token)",
+      "token" => Application.get_env(:remedy, :token),
       "session_id" => "state.session",
       "seq" => "state.seq"
     }
   end
 
-  def update_presence() do
+  def update_presence do
     %{
       "since" => 91_879_201,
       "status" => "online",
@@ -59,7 +59,7 @@ defmodule Remedy.Gateway.Payload do
     }
   end
 
-  def update_voice_state() do
+  def update_voice_state do
     %{
       "guild_id" => "guild_id",
       "channel_id" => "channel_id",
@@ -68,9 +68,9 @@ defmodule Remedy.Gateway.Payload do
     }
   end
 
-  def guild_request_members() do
+  def guild_request_members do
     %{
-      "guild_id" => "41771983444115456",
+      "guild_id" => "",
       "query" => "",
       "limit" => 0
     }

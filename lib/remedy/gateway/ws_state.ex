@@ -1,4 +1,4 @@
-defmodule Remedy.Schema.WSState do
+defmodule Remedy.Gateway.WSState do
   @moduledoc false
   use Remedy.Schema, :model
 

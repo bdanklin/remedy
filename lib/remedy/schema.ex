@@ -112,7 +112,8 @@ defmodule Remedy.Schema.Model do
         |> cast(params, castable())
         |> cast_embeds()
         |> apply_changes()
-        |> Morphix.atomorphiform!()
+
+        #        |> Morphix.atomorphiform!()
       end
 
       defp cast_embeds(cast_model) do

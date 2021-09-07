@@ -4,7 +4,7 @@
 #   alias Remedy.Bot
 #   alias Remedy.Constants
 #   alias Remedy.Voice.Audio
-#   alias Remedy.Voice.WSState
+#   alias Remedy.Voice.Websocket
 # use Remedy.Schema
 
 #   require Logger
@@ -21,7 +21,7 @@
 #     |> build_payload("HEARTBEAT")
 #   end
 
-#   def identify_payload(%WSState{} = state) do
+#   def identify_payload(%Websocket{} = state) do
 #     %{
 #       server_id: state.guild_id,
 #       user_id: Bot.get().id,
@@ -31,7 +31,7 @@
 #     |> build_payload("IDENTIFY")
 #   end
 
-#   def resume_payload(%WSState{} = state) do
+#   def resume_payload(%Websocket{} = state) do
 #     %{
 #       server_id: state.guild_id,
 #       token: state.token,

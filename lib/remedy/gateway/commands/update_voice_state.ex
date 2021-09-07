@@ -18,7 +18,7 @@ defmodule Remedy.Gateway.Commands.UpdateVoiceState do
 
   def payload(state, opts \\ [])
 
-  def payload(%WSState{}, opts) do
+  def payload(%Websocket{}, opts) do
     opts
     |> Enum.into(@defaults)
     |> build_payload()

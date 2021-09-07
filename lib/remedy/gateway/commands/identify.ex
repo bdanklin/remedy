@@ -39,7 +39,7 @@ defmodule Remedy.Gateway.Commands.Identify do
 
   def payload(state, opts \\ [])
 
-  def payload(%WSState{shard_num: shard_num}, opts) do
+  def payload(%Websocket{shard_num: shard_num}, opts) do
     [
       {:compress, opts[:compress]},
       {:large_threshold, opts[:large_threshold]},

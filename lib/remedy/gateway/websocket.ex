@@ -1,4 +1,4 @@
-defmodule Remedy.Gateway.WSState do
+defmodule Remedy.Gateway.Websocket do
   @moduledoc false
   use Remedy.Schema, :model
 
@@ -21,7 +21,7 @@ defmodule Remedy.Gateway.WSState do
   end
 
   @doc """
-  Gets the latency of the shard connection from a `Remedy.Struct.WSState.t()` struct.
+  Gets the latency of the shard connection from a `Remedy.Struct.Websocket.t()` struct.
 
   Returns the latency in milliseconds as an integer, returning nil if unknown.
   """

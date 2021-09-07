@@ -4,7 +4,7 @@ defmodule Remedy.Voice.Supervisor do
   use Supervisor
 
   alias Remedy.Voice.Session
-  alias Remedy.Voice.WSState
+  alias Remedy.Voice.Websocket
   use Remedy.Schema
   require Logger
 

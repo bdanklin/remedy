@@ -21,7 +21,7 @@ defmodule Remedy.Consumer do
   use ConsumerSupervisor
 
   alias Remedy.Shard.Stage.EventBuffer
-  alias Remedy.Struct.{Channel, VoiceWSState, WSState}
+  alias Remedy.Struct.{Channel, VoiceWSState, Websocket}
 
   alias Remedy.Struct.Event.{
     ChannelPinsUpdate,
@@ -42,148 +42,100 @@ defmodule Remedy.Consumer do
     VoiceState
   }
 
-  @doc """
-  Callback used to handle events.
-
-  ## Event
-  `event` is a tuple describing the event. The tuple will include information in
-  the following format:
-  ```Elixir
-  {event_name, {event_payload(s)}, WSState.t}
-  ```
-
-  For example, a message create will look like this
-  ```Elixir
-  {:MESSAGE_CREATE, {Remedy.Struct.Message.t}, WSState.t}
-  ```
-
-  In some cases there will be multiple payloads when something is updated, so as
-  to include the new and the old versions. In the event of there being two payloads,
-  the old payload will always be first, followed by the new payload.
-  ```Elixir
-  {:USER_UPDATE, {old_user :: Remedy.Struct.User.t, new_user :: Remedy.Struct.User.t}, WSState.t()}
-  ```
-
-  For a full listing of events, please see `t:Remedy.Consumer.event/0`.
-  """
   @callback handle_event(event) :: any
 
-  @type options :: [option] | []
+  @type channel_create ::
+          {:CHANNEL_CREATE, Channel.t(), Websocket.t()}
+  @type channel_delete ::
+          {:CHANNEL_DELETE, Channel.t(), Websocket.t()}
 
-  @typedoc """
-  General process options.
-
-  The `subscribe_to` option should only be set if you want to use your own producer or producer consumer.
-  """
-  @type option ::
-          {:registry, atom()}
-          | {:name, Supervisor.name()}
-          | {:max_restarts, non_neg_integer()}
-          | {:max_seconds, non_neg_integer()}
-          | {:subscribe_to, [GenStage.stage() | {GenStage.stage(), keyword()}]}
-
-  @type channel_create :: {:CHANNEL_CREATE, Channel.t(), WSState.t()}
-  @type channel_delete :: {:CHANNEL_DELETE, Channel.t(), WSState.t()}
-  @typedoc """
-  Dispatched when a channel is updated.
-
-  `old_channel` will be `nil` when the pre-update channel could not be fetched from the cache.
-  """
   @type channel_update ::
-          {:CHANNEL_UPDATE, {old_channel :: Channel.t() | nil, new_channel :: Channel.t()}, WSState.t()}
-  @type channel_pins_ack :: {:CHANNEL_PINS_ACK, map, WSState.t()}
-  @type channel_pins_update :: {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), WSState.t()}
+          {:CHANNEL_UPDATE, {old_channel :: Channel.t() | nil, new_channel :: Channel.t()}, Websocket.t()}
+  @type channel_pins_ack ::
+          {:CHANNEL_PINS_ACK, map, Websocket.t()}
+  @type channel_pins_update ::
+          {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), Websocket.t()}
   @type guild_ban_add ::
-          {:GUILD_BAN_ADD, GuildBanAdd.t(), WSState.t()}
+          {:GUILD_BAN_ADD, GuildBanAdd.t(), Websocket.t()}
   @type guild_ban_remove ::
-          {:GUILD_BAN_REMOVE, GuildBanRemove.t(), WSState.t()}
-  @type guild_create :: {:GUILD_CREATE, new_guild :: Remedy.Struct.Guild.t(), WSState.t()}
-  @type guild_available :: {:GUILD_AVAILABLE, new_guild :: Remedy.Struct.Guild.t(), WSState.t()}
+          {:GUILD_BAN_REMOVE, GuildBanRemove.t(), Websocket.t()}
+  @type guild_create ::
+          {:GUILD_CREATE, new_guild :: Remedy.Struct.Guild.t(), Websocket.t()}
+  @type guild_available ::
+          {:GUILD_AVAILABLE, new_guild :: Remedy.Struct.Guild.t(), Websocket.t()}
   @type guild_unavailable ::
-          {:GUILD_UNAVAILABLE, unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(), WSState.t()}
+          {:GUILD_UNAVAILABLE, unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(), Websocket.t()}
   @type guild_update ::
-          {:GUILD_UPDATE, {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()}, WSState.t()}
+          {:GUILD_UPDATE, {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()}, Websocket.t()}
   @type guild_delete ::
-          {:GUILD_DELETE, {old_guild :: Remedy.Struct.Guild.t(), unavailable :: boolean}, WSState.t()}
+          {:GUILD_DELETE, {old_guild :: Remedy.Struct.Guild.t(), unavailable :: boolean}, Websocket.t()}
   @type guild_emojis_update ::
           {:GUILD_EMOJIS_UPDATE,
            {guild_id :: integer, old_emojis :: [Remedy.Struct.Emoji.t()], new_emojis :: [Remedy.Struct.Emoji.t()]},
-           WSState.t()}
+           Websocket.t()}
   @type guild_integrations_update ::
-          {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), WSState.t()}
+          {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), Websocket.t()}
   @type guild_member_add ::
-          {:GUILD_MEMBER_ADD, {guild_id :: integer, new_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
-  @type guild_members_chunk :: {:GUILD_MEMBERS_CHUNK, map, WSState.t()}
+          {:GUILD_MEMBER_ADD, {guild_id :: integer, new_member :: Remedy.Struct.Guild.Member.t()}, Websocket.t()}
+  @type guild_members_chunk ::
+          {:GUILD_MEMBERS_CHUNK, map, Websocket.t()}
   @type guild_member_remove ::
-          {:GUILD_MEMBER_REMOVE, {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
-  @typedoc """
-  Dispatched when a guild member is updated.
+          {:GUILD_MEMBER_REMOVE, {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t()}, Websocket.t()}
 
-  `old_member` will be `nil` when the pre-update member could not be fetched from the cache.
-  """
   @type guild_member_update ::
           {:GUILD_MEMBER_UPDATE,
            {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t() | nil,
-            new_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
+            new_member :: Remedy.Struct.Guild.Member.t()}, Websocket.t()}
   @type guild_role_create ::
-          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Remedy.Struct.Guild.Role.t()}, WSState.t()}
+          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Remedy.Struct.Guild.Role.t()}, Websocket.t()}
   @type guild_role_delete ::
-          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t()}, WSState.t()}
-  @typedoc """
-  Dispatched when a role on a guild is updated.
+          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t()}, Websocket.t()}
 
-  `old_role` will be `nil` when the pre-update role could not be fetched from the cache.
-  """
   @type guild_role_update ::
           {:GUILD_ROLE_UPDATE,
            {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t() | nil,
-            new_role :: Remedy.Struct.Guild.Role.t()}, WSState.t()}
-  @type message_create :: {:MESSAGE_CREATE, message :: Remedy.Struct.Message.t(), WSState.t()}
-  @type message_delete :: {:MESSAGE_DELETE, MessageDelete.t(), WSState.t()}
-  @type message_delete_bulk :: {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), WSState.t()}
+            new_role :: Remedy.Struct.Guild.Role.t()}, Websocket.t()}
+  @type message_create ::
+          {:MESSAGE_CREATE, message :: Remedy.Struct.Message.t(), Websocket.t()}
+  @type message_delete ::
+          {:MESSAGE_DELETE, MessageDelete.t(), Websocket.t()}
+  @type message_delete_bulk ::
+          {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), Websocket.t()}
   @type message_update ::
-          {:MESSAGE_UPDATE, updated_message :: Remedy.Struct.Message.t(), WSState.t()}
-  @type message_reaction_add :: {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), WSState.t()}
+          {:MESSAGE_UPDATE, updated_message :: Remedy.Struct.Message.t(), Websocket.t()}
+  @type message_reaction_add ::
+          {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), Websocket.t()}
   @type message_reaction_remove ::
-          {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), WSState.t()}
+          {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), Websocket.t()}
   @type message_reaction_remove_all ::
-          {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(), WSState.t()}
+          {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(), Websocket.t()}
   @type message_reaction_remove_emoji ::
-          {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(), WSState.t()}
-  @type message_ack :: {:MESSAGE_ACK, map, WSState.t()}
-  @typedoc """
-  Dispatched when a user's presence is updated.
+          {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(), Websocket.t()}
+  @type message_ack :: {:MESSAGE_ACK, map, Websocket.t()}
 
-  `old_presence` will be `nil` when the pre-update presence could not be fetched from the cache.
-  """
   @type presence_update ::
-          {:PRESENCE_UPDATE, {guild_id :: integer, old_presence :: map | nil, new_presence :: map}, WSState.t()}
-  @type ready :: {:READY, Ready.t(), WSState.t()}
-  @type resumed :: {:RESUMED, map, WSState.t()}
-  @type typing_start :: {:TYPING_START, TypingStart.t(), WSState.t()}
+          {:PRESENCE_UPDATE, {guild_id :: integer, old_presence :: map | nil, new_presence :: map}, Websocket.t()}
+  @type ready ::
+          {:READY, Ready.t(), Websocket.t()}
+  @type resumed ::
+          {:RESUMED, map, Websocket.t()}
+  @type typing_start ::
+          {:TYPING_START, TypingStart.t(), Websocket.t()}
   @type user_settings_update :: no_return
-  @typedoc """
-  Dispatched when a user is updated.
 
-  `old_user` will be `nil` when the pre-update user could not be fetched from the cache.
-  """
   @type user_update ::
-          {:USER_UPDATE, {old_user :: Remedy.Struct.User.t() | nil, new_user :: Remedy.Struct.User.t()}, WSState.t()}
-  @typedoc """
-  Dispatched when the bot is ready to begin sending audio after joining a voice channel.
+          {:USER_UPDATE, {old_user :: Remedy.Struct.User.t() | nil, new_user :: Remedy.Struct.User.t()}, Websocket.t()}
 
-  Note that the third tuple element is of type `VoiceWSState.t()` instead of `WSState.t().`
-  """
   @type voice_ready :: {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}
-  @typedoc """
-  Dispatched when the bot starts or stops speaking.
 
-  Note that the third tuple element is of type `VoiceWSState.t()` instead of `WSState.t().`
-  """
-  @type voice_speaking_update :: {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}
-  @type voice_state_update :: {:VOICE_STATE_UPDATE, VoiceState.t(), WSState.t()}
-  @type voice_server_update :: {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), WSState.t()}
-  @type webhooks_update :: {:WEBHOOKS_UPDATE, map, WSState.t()}
+  @type voice_speaking_update ::
+          {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}
+  @type voice_state_update ::
+          {:VOICE_STATE_UPDATE, VoiceState.t(), Websocket.t()}
+  @type voice_server_update ::
+          {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), Websocket.t()}
+  @type webhooks_update ::
+          {:WEBHOOKS_UPDATE, map, Websocket.t()}
 
   @type event ::
           channel_create
@@ -254,21 +206,20 @@ defmodule Remedy.Consumer do
 
   defmacro __before_compile__(_env) do
     quote do
+      def start_link do
+        Consumer.start_link(__MODULE__)
+      end
+
       def handle_event(_event) do
         :ok
+      end
+
+      def handle_event(_event) do
+        :noop
       end
     end
   end
 
-  @doc ~S"""
-  Starts a consumer process.
-
-  `mod` is the name of the module where you define your event callbacks, which should probably be
-  the current module which you can get with `__MODULE__`.
-
-  `opts` is a list of general process options. See `t:Remedy.Consumer.options/0` for more info.
-  """
-  @spec start_link(module, options) :: Supervisor.on_start()
   def start_link(mod, opts \\ []) do
     {mod_and_opts, cs_opts} =
       case Keyword.pop(opts, :name) do

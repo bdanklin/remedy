@@ -4,7 +4,7 @@
 #   alias Remedy.Cache.{ChannelCache, GuildCache}
 #   alias Remedy.Constants
 #   alias Remedy.Shard.Stage.Producer
-#   alias Remedy.Voice.WSState
+#   alias Remedy.Voice.Websocket
 #   alias Remedy.Voice
 #   alias Remedy.Voice.{Event, Payload}
 # use Remedy.Schema

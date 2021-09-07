@@ -8,7 +8,7 @@ defmodule Remedy.Gateway.Commands.Heartbeat do
 
   def payload(state, opts \\ [])
 
-  def payload(%WSState{heartbeat_interval: heartbeat_interval}, _opts) do
+  def payload(%Websocket{heartbeat_interval: heartbeat_interval}, _opts) do
     %{
       heartbeat_interval: heartbeat_interval
     }

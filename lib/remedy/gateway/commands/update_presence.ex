@@ -17,7 +17,7 @@ defmodule Remedy.Gateway.Commands.UpdatePresence do
 
   def payload(state, opts \\ [])
 
-  def payload(%WSState{}, opts) do
+  def payload(%Websocket{}, opts) do
     opts
     |> Enum.into(@defaults)
     |> build_payload()

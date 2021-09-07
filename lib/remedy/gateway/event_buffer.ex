@@ -12,8 +12,8 @@ defmodule Remedy.Gateway.EventBuffer do
     GenStage.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def init(opts) do
-    {:producer_consumer, opts, subscribe_to: [Producer]}
+  def init(_opts) do
+    {:producer_consumer, [], subscribe_to: [Producer]}
   end
 
   def handle_events(events, _from, state) do

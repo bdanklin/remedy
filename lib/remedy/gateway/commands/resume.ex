@@ -10,7 +10,7 @@ defmodule Remedy.Gateway.Commands.Resume do
 
   def payload(state, opts \\ [])
 
-  def payload(%WSState{session: session_id, seq: seq}, _opts) do
+  def payload(%Websocket{session: session_id, seq: seq}, _opts) do
     %{
       session_id: session_id,
       seq: seq,

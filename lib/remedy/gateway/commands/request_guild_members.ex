@@ -12,13 +12,13 @@ defmodule Remedy.Gateway.Commands.RequestGuildMembers do
 
   @defaults %{
     guild_id: 872_417_560_094_732_328,
-    limit: 1,
+    limit: 0,
     user_ids: 883_307_747_305_725_972
   }
 
   def payload(state, opts \\ [])
 
-  def payload(%WSState{}, opts) do
+  def payload(%Websocket{}, opts) do
     opts
     |> Enum.into(@defaults)
     |> build_payload()

@@ -55,7 +55,7 @@ defmodule Remedy.Schema do
       }
 
       alias Remedy.Gateway.Payload
-      alias Remedy.Gateway.WSState
+      alias Remedy.Gateway.Websocket
     end
   end
 

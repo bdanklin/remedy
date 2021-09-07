@@ -2,7 +2,7 @@ defmodule Remedy.Shard.Session do
   @moduledoc false
 
   alias Remedy.{Constants, Util}
-  alias Remedy.Gateway.WSState
+  alias Remedy.Gateway.Websocket
   alias Remedy.Shard.{Connector, Event, Payload}
 
   require Logger
@@ -31,10 +31,11 @@ defmodule Remedy.Shard.Session do
     stream = :gun.ws_upgrade(worker, @gateway_qs)
     await_ws_upgrade(worker, stream)
 
-    zlib_context = :zlib.open()
-    :zlib.inflateInit(zlib_context)
+    zlib_context =
+      :zlib.open()
+      |> :zlib.inflateInit()
 
-    state = %WSState{
+    state = %Websocket{
       conn_pid: self(),
       conn: worker,
       shard_num: shard_num,

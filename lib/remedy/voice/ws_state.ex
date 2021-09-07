@@ -1,4 +1,4 @@
-# defmodule Remedy.Voice.WSState do
+# defmodule Remedy.Voice.Websocket do
 #   @moduledoc """
 #   Struct representing the current Voice WS state.
 #   """

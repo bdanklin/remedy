@@ -4,20 +4,6 @@ defmodule Remedy.Schema.Message do
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "messages" do
-    #   belongs_to :message_reference,
-    #   belongs_to :referenced_message,
-    belongs_to :application, App
-    belongs_to :author, User, foreign_key: :author_id
-    belongs_to :channel, Channel
-    belongs_to :guild, Guild
-    belongs_to :member, Member
-    belongs_to :thread, Channel
-    belongs_to :webhook, Webhook
-    embeds_many :attachments, Attachments
-    embeds_many :embeds, Embed
-    embeds_many :mention_roles, Role
-    embeds_many :sticker_items, Sticker
-    embeds_one :interaction, Interaction
     field :content, :string
     field :edited_timestamp, ISO8601
     field :flags, :integer
@@ -27,11 +13,25 @@ defmodule Remedy.Schema.Message do
     field :timestamp, ISO8601
     field :tts, :boolean
     field :type, :integer
-    has_many :components, Component
-    has_many :mention_channels, Channel
-    has_many :mentions, User
-    has_many :reactions, Reaction
-    has_one :activity, Activity
+    belongs_to :application, App
+    belongs_to :author, User, foreign_key: :author_id
+    belongs_to :channel, Channel
+    belongs_to :guild, Guild
+    belongs_to :thread, Channel
+    belongs_to :webhook, Webhook
+    embeds_many :attachments, Attachments
+    embeds_many :components, Component
+    embeds_many :embeds, Embed
+    embeds_many :mention_channels, Channel
+    embeds_many :mention_roles, Role
+    embeds_many :mentions, User
+    embeds_many :reactions, Reaction
+    embeds_many :sticker_items, Sticker
+    embeds_one :message_reference, Reference
+    embeds_one :referenced_message, Message
+    embeds_one :activity, Activity
+    embeds_one :interaction, Interaction
+    embeds_one :member, Member
   end
 
   def link(%__MODULE__{guild_id: guild_id, channel_id: channel_id, id: id}) do

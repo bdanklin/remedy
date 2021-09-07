@@ -1,13 +1,20 @@
-defmodule Remedy.Struct.Event.Ready do
-  @moduledoc "Sent after initial handshake with the gateway"
-  @moduledoc since: "0.5.0"
+defmodule Remedy.Gateway.Events.Ready do
+  @moduledoc false
+  use Remedy.Schema, :model
+
+  embedded_schema do
+    field :v, :integer
+    field :session_id, :string
+    field :shard, {:array, :integer}
+    embeds_one :application, App
+    embeds_one :user, User
+    embeds_many :guilds, Guild
+  end
 
   alias Remedy.Struct.Event.PartialApplication
   alias Remedy.Struct.Guild.UnavailableGuild
   alias Remedy.Struct.User
   alias Remedy.Util
-
-  defstruct [:v, :user, :guilds, :session_id, :shard, :application]
 
   @typedoc """
   Gateway version.
@@ -51,13 +58,4 @@ defmodule Remedy.Struct.Event.Ready do
         }
 
   @doc false
-  def to_struct(map) do
-    %__MODULE__{
-      v: map.v,
-      user: Util.cast(map.user, {:struct, User}),
-      guilds: Util.cast(map.guilds, {:list, {:struct, UnavailableGuild}}),
-      shard: :erlang.list_to_tuple(map.shard),
-      application: Util.cast(map.application, {:struct, PartialApplication})
-    }
-  end
 end

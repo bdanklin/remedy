@@ -1,5 +1,7 @@
 defmodule Remedy.Shard.Dispatch do
-  @moduledoc false
+  @moduledoc """
+  Receives events from the pid workers
+  """
 
   alias Remedy.Bot
   alias Remedy.Shard.{Intents, Session}

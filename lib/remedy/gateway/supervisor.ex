@@ -11,6 +11,9 @@ defmodule Remedy.Shard.Supervisor do
 
   require Logger
 
+  @gateway "/gateway"
+  @gateway_bot "/gateway/bot"
+
   def start_link(_args) do
     {url, gateway_shard_count} = gateway()
 
@@ -106,7 +109,7 @@ defmodule Remedy.Shard.Supervisor do
   end
 
   defp get_new_gateway_url do
-    case Api.request(:get, Constants.gateway_bot(), "") do
+    case Remedy.Api.request(:get, @gateway_bot, "") do
       {:error, %{status_code: 401}} ->
         raise("Authentication rejected, invalid token")
 

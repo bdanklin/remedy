@@ -14,7 +14,6 @@ defmodule Remedy.Gateway.Events.Ready do
   alias Remedy.Struct.Event.PartialApplication
   alias Remedy.Struct.Guild.UnavailableGuild
   alias Remedy.Struct.User
-  alias Remedy.Util
 
   @typedoc """
   Gateway version.

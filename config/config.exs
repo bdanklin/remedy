@@ -4,7 +4,7 @@ config :porcelain,
   driver: Porcelain.Driver.Basic
 
 config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
+  format: "\n$time $metadata[$level] $message",
   metadata: [:request_id, :shard, :guild, :channel]
 
 config :remedy,

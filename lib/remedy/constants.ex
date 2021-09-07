@@ -7,12 +7,6 @@ defmodule Remedy.Constants do
   def cdn_url,
     do: "https://cdn.discordapp.com"
 
-  def gateway,
-    do: "/gateway"
-
-  def gateway_bot,
-    do: "/gateway/bot"
-
   def channel(channel_id),
     do: "/channels/#{channel_id}"
 

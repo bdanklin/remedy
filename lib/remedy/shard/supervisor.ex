@@ -13,7 +13,7 @@ defmodule Remedy.Shard.Supervisor do
   require Logger
 
   def start_link(_args) do
-    {url, gateway_shard_count} = Util.gateway()
+    {url, gateway_shard_count} = gateway()
 
     num_shards =
       case Application.get_env(:remedy, :num_shards, :auto) do
@@ -90,5 +90,38 @@ defmodule Remedy.Shard.Supervisor do
       {Shard, [gateway, shard_num]},
       id: shard_num
     )
+  end
+
+  @doc """
+  Returns the gateway url and shard count for current websocket connections.
+
+  If by chance no gateway connection has been made, will fetch the url to use and store it
+  for future use.
+  """
+  @spec gateway() :: {String.t(), integer}
+  defp gateway do
+    case :ets.lookup(:gateway_url, "url") do
+      [] -> get_new_gateway_url()
+      [{"url", url, shards}] -> {url, shards}
+    end
+  end
+
+  defp get_new_gateway_url do
+    case Api.request(:get, Constants.gateway_bot(), "") do
+      {:error, %{status_code: 401}} ->
+        raise("Authentication rejected, invalid token")
+
+      {:error, %{status_code: code, message: message}} ->
+        raise(Remedy.ApiError, status_code: code, message: message)
+
+      {:ok, body} ->
+        body = Poison.decode!(body)
+
+        "wss://" <> url = body["url"]
+        shards = if body["shards"], do: body["shards"], else: 1
+
+        :ets.insert(:gateway_url, {"url", url, shards})
+        {url, shards}
+    end
   end
 end

@@ -10,8 +10,6 @@ Remedy.EnvironmentVariableError.html
 Remedy.Gateway.Commands.Identify.html
 Remedy.Permission.html
 Remedy.Schema.InteractionData.html
-Remedy.Struct.Event.ChannelPinsUpdate.html
-Remedy.Struct.Event.GuildBanAdd.html
 Remedy.Struct.Event.GuildBanRemove.html
 Remedy.Struct.Event.GuildIntegrationsUpdate.html
 Remedy.Struct.Event.InviteCreate.html
@@ -29,10 +27,7 @@ Remedy.Struct.Event.TypingStart.html
 Remedy.Struct.Event.VoiceReady.html
 Remedy.Struct.Event.VoiceServerUpdate.html
 Remedy.Struct.Event.VoiceState.html
-Remedy.Struct.VoiceWSState.html
 Remedy.Util.html
-Remedy.Voice.Event.html
-Remedy.Voice.html
 Remedy.VoiceError.html
 Remedy.html
 api-reference.html
@@ -43,8 +38,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-f406301ac0.js
-dist/sidebar_items-7d0d28292c.js
+dist/search_items-d1e077f905.js
+dist/sidebar_items-f91282a1e8.js
 index.html
 introduction.html
 search.html

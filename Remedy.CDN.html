@@ -10,7 +10,7 @@
     <title>Remedy.CDN — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-7d0d28292c.js"></script>
+    <script src="dist/sidebar_items-f91282a1e8.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -95,7 +95,15 @@ Remedy.CDN <small class="app-vsn">(Remedy v0.5.2)</small>
 
 
         <section id="moduledoc">
-<p>Discord CDN functions.</p>
+<p>Discord CDN interface.</p><p>Storing images and other assets can be painful, use this module to retreive assets from the discord cdn rather than storing them.</p><p>Each function takes the required parameters to directly access a resource.</p><blockquote><p>Some functions may directly take a struct, for example <code class="inline">%User{} |&gt; CDN.user_avatar()</code>. But these are undocumented.</p></blockquote><h2 id="module-format" class="section-heading">
+  <a href="#module-format" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Format
+</h2>
+<p>All images are returned as either a <code class="inline">.png</code> or a <code class="inline">.gif</code> if the asset is animated. This is done automatically.</p><h2 id="module-size" class="section-heading">
+  <a href="#module-size" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Size
+</h2>
+
         </section>
 
 
@@ -114,49 +122,91 @@ Remedy.CDN <small class="app-vsn">(Remedy v0.5.2)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#animated_avatar/2">animated_avatar(id, avatar)</a>
+    <a href="#achievement_icon/4">achievement_icon(application_id, achievement_id, icon_hash, size \\ nil)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#animated_emoji/1">animated_emoji(id)</a>
+    <a href="#application_asset/3">application_asset(application_id, asset_id, size \\ nil)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#avatar/2">avatar(id, avatar)</a>
+    <a href="#application_icon/3">application_icon(application_id, icon, size \\ nil)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#embed_avatar/1">embed_avatar(image_name)</a>
+    <a href="#appplication_cover/3">appplication_cover(application_id, cover_image, size \\ nil)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#emoji/1">emoji(id)</a>
+    <a href="#custom_emoji/2">custom_emoji(id, size \\ nil)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#icon/2">icon(id, icon)</a>
+    <a href="#default_user_avatar/2">default_user_avatar(user_dicriminator, size \\ nil)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#splash/2">splash(id, splash)</a>
+    <a href="#guild_banner/3">guild_banner(guild_id, guild_banner, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_discovery_splash/3">guild_discovery_splash(guild_id, guild_discovery_splash, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_icon/3">guild_icon(id, guild_icon, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_splash/3">guild_splash(id, splash, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#sticker_pack_banner/2">sticker_pack_banner(sticker_pack_banner_asset_id, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#user_avatar/3">user_avatar(id, user_avatar, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#user_banner/3">user_banner(user_id, user_banner, size \\ nil)</a>
 
   </div>
 
@@ -176,16 +226,18 @@ Remedy.CDN <small class="app-vsn">(Remedy v0.5.2)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="animated_avatar/2">
+<section class="detail" id="achievement_icon/4">
+
+    <span id="achievement_icon/3"></span>
 
   <div class="detail-header">
-    <a href="#animated_avatar/2" class="detail-link" title="Link to this function">
+    <a href="#achievement_icon/4" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">animated_avatar(id, avatar)</h1>
+    <h1 class="signature">achievement_icon(application_id, achievement_id, icon_hash, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L15" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L74" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -198,16 +250,18 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="animated_emoji/1">
+<section class="detail" id="application_asset/3">
+
+    <span id="application_asset/2"></span>
 
   <div class="detail-header">
-    <a href="#animated_emoji/1" class="detail-link" title="Link to this function">
+    <a href="#application_asset/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">animated_emoji(id)</h1>
+    <h1 class="signature">application_asset(application_id, asset_id, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L30" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L69" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -220,16 +274,18 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="avatar/2">
+<section class="detail" id="application_icon/3">
+
+    <span id="application_icon/2"></span>
 
   <div class="detail-header">
-    <a href="#avatar/2" class="detail-link" title="Link to this function">
+    <a href="#application_icon/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">avatar(id, avatar)</h1>
+    <h1 class="signature">application_icon(application_id, icon, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L8" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L59" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -242,16 +298,18 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="embed_avatar/1">
+<section class="detail" id="appplication_cover/3">
+
+    <span id="appplication_cover/2"></span>
 
   <div class="detail-header">
-    <a href="#embed_avatar/1" class="detail-link" title="Link to this function">
+    <a href="#appplication_cover/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">embed_avatar(image_name)</h1>
+    <h1 class="signature">appplication_cover(application_id, cover_image, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L20" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L64" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -264,16 +322,18 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="emoji/1">
+<section class="detail" id="custom_emoji/2">
+
+    <span id="custom_emoji/1"></span>
 
   <div class="detail-header">
-    <a href="#emoji/1" class="detail-link" title="Link to this function">
+    <a href="#custom_emoji/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">emoji(id)</h1>
+    <h1 class="signature">custom_emoji(id, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L25" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L19" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -286,16 +346,18 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="icon/2">
+<section class="detail" id="default_user_avatar/2">
+
+    <span id="default_user_avatar/1"></span>
 
   <div class="detail-header">
-    <a href="#icon/2" class="detail-link" title="Link to this function">
+    <a href="#default_user_avatar/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">icon(id, icon)</h1>
+    <h1 class="signature">default_user_avatar(user_dicriminator, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L35" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L49" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -308,16 +370,162 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="splash/2">
+<section class="detail" id="guild_banner/3">
+
+    <span id="guild_banner/2"></span>
 
   <div class="detail-header">
-    <a href="#splash/2" class="detail-link" title="Link to this function">
+    <a href="#guild_banner/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">splash(id, splash)</h1>
+    <h1 class="signature">guild_banner(guild_id, guild_banner, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L40" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L39" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_discovery_splash/3">
+
+    <span id="guild_discovery_splash/2"></span>
+
+  <div class="detail-header">
+    <a href="#guild_discovery_splash/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_discovery_splash(guild_id, guild_discovery_splash, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L34" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_icon/3">
+
+    <span id="guild_icon/2"></span>
+
+  <div class="detail-header">
+    <a href="#guild_icon/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_icon(id, guild_icon, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L24" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_splash/3">
+
+    <span id="guild_splash/2"></span>
+
+  <div class="detail-header">
+    <a href="#guild_splash/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_splash(id, splash, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L29" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="sticker_pack_banner/2">
+
+    <span id="sticker_pack_banner/1"></span>
+
+  <div class="detail-header">
+    <a href="#sticker_pack_banner/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">sticker_pack_banner(sticker_pack_banner_asset_id, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L79" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="user_avatar/3">
+
+    <span id="user_avatar/2"></span>
+
+  <div class="detail-header">
+    <a href="#user_avatar/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">user_avatar(id, user_avatar, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L54" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="user_banner/3">
+
+    <span id="user_banner/2"></span>
+
+  <div class="detail-header">
+    <a href="#user_banner/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">user_banner(user_id, user_banner, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L44" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

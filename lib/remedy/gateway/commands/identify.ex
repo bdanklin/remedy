@@ -9,7 +9,7 @@ defmodule Remedy.Gateway.Commands.Identify do
   @default_compress false
   @default_large_threshold 50
   @default_properties %{
-    "$os" => to_string(elem(:os.type(), 0)),
+    "$os" => to_string(:erlang.system_info(:system_architecture)),
     "$device" => "Remedy",
     "$browser" => "Remedy"
   }

@@ -1,5 +1,4 @@
 defmodule Remedy.Schema.VoiceState do
-  alias Porcelain.Process, as: Proc
   @moduledoc false
   use Remedy.Schema, :model
   @primary_key {:id, Snowflake, autogenerate: false}

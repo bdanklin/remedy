@@ -14,34 +14,6 @@ defmodule Remedy.Shard.Session do
   @timeout_ws_upgrade 10_000
   @gun_opts %{protocols: [:http], retry: 1_000_000_000}
 
-  def update_status(pid, status, game, stream, type) do
-    {idle_since, afk} =
-      case status do
-        "idle" ->
-          {Util.now(), true}
-
-        _ ->
-          {0, false}
-      end
-
-    payload = Payload.status_update_payload(idle_since, game, stream, status, afk, type)
-    GenServer.cast(pid, {:status_update, payload})
-  end
-
-  def update_voice_state(pid, guild_id, channel_id, self_mute, self_deaf) do
-    payload = Payload.update_voice_state_payload(guild_id, channel_id, self_mute, self_deaf)
-    GenServer.cast(pid, {:update_voice_state, payload})
-  end
-
-  def request_guild_members(pid, guild_id, limit \\ 0) do
-    payload = Payload.request_members_payload(guild_id, limit)
-    GenServer.cast(pid, {:request_guild_members, payload})
-  end
-
-  def get_ws_state(pid) do
-    GenServer.call(pid, :get_ws_state)
-  end
-
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
   end
@@ -132,10 +104,7 @@ defmodule Remedy.Shard.Session do
     {:noreply, state}
   end
 
-  def handle_info(
-        {:gun_down, _conn, _proto, _reason, _killed_streams},
-        state
-      ) do
+  def handle_info({:gun_down, _conn, _proto, _reason, _killed_streams}, state) do
     # Try to cancel the internal timer, but
     # do not explode if it was already cancelled.
     :timer.cancel(state.heartbeat_ref)
@@ -186,5 +155,37 @@ defmodule Remedy.Shard.Session do
 
   def handle_call(:get_ws_state, _sender, state) do
     {:reply, state, state}
+  end
+
+  ###########
+  ### Remove
+  ###########
+
+  def update_status(pid, status, game, stream, type) do
+    {idle_since, afk} =
+      case status do
+        "idle" ->
+          {Util.now(), true}
+
+        _ ->
+          {0, false}
+      end
+
+    payload = Payload.status_update_payload(idle_since, game, stream, status, afk, type)
+    GenServer.cast(pid, {:status_update, payload})
+  end
+
+  def update_voice_state(pid, guild_id, channel_id, self_mute, self_deaf) do
+    payload = Payload.update_voice_state_payload(guild_id, channel_id, self_mute, self_deaf)
+    GenServer.cast(pid, {:update_voice_state, payload})
+  end
+
+  def request_guild_members(pid, guild_id, limit \\ 0) do
+    payload = Payload.request_members_payload(guild_id, limit)
+    GenServer.cast(pid, {:request_guild_members, payload})
+  end
+
+  def get_ws_state(pid) do
+    GenServer.call(pid, :get_ws_state)
   end
 end

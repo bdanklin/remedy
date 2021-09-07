@@ -5,7 +5,6 @@ defmodule Remedy.Shard.Stage.Cache do
 
   alias Remedy.Shard.Dispatch
   alias Remedy.Shard.Stage.Producer
-  alias Remedy.Util
 
   require Logger
 

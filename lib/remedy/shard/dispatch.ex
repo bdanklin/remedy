@@ -27,8 +27,6 @@ defmodule Remedy.Shard.Dispatch do
   alias Remedy.Struct.{Guild, Interaction, Message, User}
   alias Remedy.Struct.Guild.UnavailableGuild
   alias Remedy.Util
-  alias Remedy.Voice
-  alias Remedy.Voice.Session, as: VoiceSession
 
   require Logger
 

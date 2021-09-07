@@ -4,6 +4,7 @@ defmodule Remedy.Gateway.Event.GuildBanAdd do
   @primary_key false
 
   embedded_schema do
+    field :guild_id, Snowflake
     embeds_one :guild, Guild
     embeds_one :user, User
   end
@@ -14,7 +15,6 @@ defmodule Remedy.Gateway.Event.GuildBanAdd do
   @typedoc "Banned user"
   @type user :: User.t()
 
-  @typedoc "Event sent when a user is banned from a guild"
   @type t :: %__MODULE__{
           guild_id: guild_id,
           user: user

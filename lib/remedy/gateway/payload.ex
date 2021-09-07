@@ -1,7 +1,6 @@
 defmodule Remedy.Gateway.Payload do
   @moduledoc false
   use Remedy.Schema, :payload
-
   @primary_key false
   embedded_schema do
     field :op, :integer

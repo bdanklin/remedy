@@ -24,8 +24,7 @@ defmodule Remedy.Gateway.Commands.Identify do
   @env %{
     compress: Application.compile_env(:remedy, :compress) || @default_compress,
     token: Application.compile_env(:remedy, :token),
-    large_threshold:
-      Application.compile_env(:remedy, :large_threshold) || @default_large_threshold
+    large_threshold: Application.compile_env(:remedy, :large_threshold) || @default_large_threshold
   }
 
   @primary_key false

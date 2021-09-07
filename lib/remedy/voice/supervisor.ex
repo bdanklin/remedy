@@ -3,10 +3,9 @@ defmodule Remedy.Voice.Supervisor do
 
   use Supervisor
 
-
   alias Remedy.Voice.Session
   alias Remedy.Voice.WSState
-use Remedy.Schema
+  use Remedy.Schema
   require Logger
 
   def start_link(_opts) do

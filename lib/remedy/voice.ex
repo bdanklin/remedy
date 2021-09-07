@@ -101,7 +101,6 @@
 #       - `:raw_s` Same as `:raw` but input must be stateful, i.e. calling `Enum.take/2` on input is not idempotent.
 #     - `options` - See options section below.
 
-
 #   Returns `{:error, reason}` if unable to play or a sound is playing, else `:ok`.
 
 #   ## Options

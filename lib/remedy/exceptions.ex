@@ -89,9 +89,7 @@ defmodule Remedy.ApiError do
         response: %{code: error_code, message: message, errors: errors},
         status_code: code
       }) do
-    "(HTTP #{code}) received Discord status code #{error_code} (#{message}) with errors: #{
-      inspect(errors)
-    }"
+    "(HTTP #{code}) received Discord status code #{error_code} (#{message}) with errors: #{inspect(errors)}"
   end
 
   @impl true

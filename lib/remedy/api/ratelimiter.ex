@@ -110,9 +110,7 @@ defmodule Remedy.Api.Ratelimiter do
   end
 
   defp wait_for_timeout(request, timeout, from) do
-    Logger.info(
-      "RATELIMITER: Waiting #{timeout}ms to process request with route #{request.route}"
-    )
+    Logger.info("RATELIMITER: Waiting #{timeout}ms to process request with route #{request.route}")
 
     Process.sleep(timeout)
     GenServer.call(Ratelimiter, {:queue, request, from}, :infinity)

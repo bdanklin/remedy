@@ -26,9 +26,6 @@ defmodule Remedy.Schema.VoiceState do
     field :player_pid
   end
 
-  def new, do: %__MODULE__{}
-  def new(params), do: struct(__MODULE__, params)
-
   def ready_for_ws?(%__MODULE__{} = v) do
     not (is_pid(v.session_pid) or
            is_nil(v.session) or

@@ -90,8 +90,7 @@ defmodule Remedy.Consumer do
   `old_channel` will be `nil` when the pre-update channel could not be fetched from the cache.
   """
   @type channel_update ::
-          {:CHANNEL_UPDATE, {old_channel :: Channel.t() | nil, new_channel :: Channel.t()},
-           WSState.t()}
+          {:CHANNEL_UPDATE, {old_channel :: Channel.t() | nil, new_channel :: Channel.t()}, WSState.t()}
   @type channel_pins_ack :: {:CHANNEL_PINS_ACK, map, WSState.t()}
   @type channel_pins_update :: {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), WSState.t()}
   @type guild_ban_add ::
@@ -101,28 +100,22 @@ defmodule Remedy.Consumer do
   @type guild_create :: {:GUILD_CREATE, new_guild :: Remedy.Struct.Guild.t(), WSState.t()}
   @type guild_available :: {:GUILD_AVAILABLE, new_guild :: Remedy.Struct.Guild.t(), WSState.t()}
   @type guild_unavailable ::
-          {:GUILD_UNAVAILABLE, unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(),
-           WSState.t()}
+          {:GUILD_UNAVAILABLE, unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(), WSState.t()}
   @type guild_update ::
-          {:GUILD_UPDATE,
-           {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()},
-           WSState.t()}
+          {:GUILD_UPDATE, {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()}, WSState.t()}
   @type guild_delete ::
-          {:GUILD_DELETE, {old_guild :: Remedy.Struct.Guild.t(), unavailable :: boolean},
-           WSState.t()}
+          {:GUILD_DELETE, {old_guild :: Remedy.Struct.Guild.t(), unavailable :: boolean}, WSState.t()}
   @type guild_emojis_update ::
           {:GUILD_EMOJIS_UPDATE,
-           {guild_id :: integer, old_emojis :: [Remedy.Struct.Emoji.t()],
-            new_emojis :: [Remedy.Struct.Emoji.t()]}, WSState.t()}
+           {guild_id :: integer, old_emojis :: [Remedy.Struct.Emoji.t()], new_emojis :: [Remedy.Struct.Emoji.t()]},
+           WSState.t()}
   @type guild_integrations_update ::
           {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), WSState.t()}
   @type guild_member_add ::
-          {:GUILD_MEMBER_ADD, {guild_id :: integer, new_member :: Remedy.Struct.Guild.Member.t()},
-           WSState.t()}
+          {:GUILD_MEMBER_ADD, {guild_id :: integer, new_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
   @type guild_members_chunk :: {:GUILD_MEMBERS_CHUNK, map, WSState.t()}
   @type guild_member_remove ::
-          {:GUILD_MEMBER_REMOVE,
-           {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
+          {:GUILD_MEMBER_REMOVE, {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
   @typedoc """
   Dispatched when a guild member is updated.
 
@@ -133,11 +126,9 @@ defmodule Remedy.Consumer do
            {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t() | nil,
             new_member :: Remedy.Struct.Guild.Member.t()}, WSState.t()}
   @type guild_role_create ::
-          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Remedy.Struct.Guild.Role.t()},
-           WSState.t()}
+          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Remedy.Struct.Guild.Role.t()}, WSState.t()}
   @type guild_role_delete ::
-          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t()},
-           WSState.t()}
+          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t()}, WSState.t()}
   @typedoc """
   Dispatched when a role on a guild is updated.
 
@@ -166,8 +157,7 @@ defmodule Remedy.Consumer do
   `old_presence` will be `nil` when the pre-update presence could not be fetched from the cache.
   """
   @type presence_update ::
-          {:PRESENCE_UPDATE,
-           {guild_id :: integer, old_presence :: map | nil, new_presence :: map}, WSState.t()}
+          {:PRESENCE_UPDATE, {guild_id :: integer, old_presence :: map | nil, new_presence :: map}, WSState.t()}
   @type ready :: {:READY, Ready.t(), WSState.t()}
   @type resumed :: {:RESUMED, map, WSState.t()}
   @type typing_start :: {:TYPING_START, TypingStart.t(), WSState.t()}
@@ -178,9 +168,7 @@ defmodule Remedy.Consumer do
   `old_user` will be `nil` when the pre-update user could not be fetched from the cache.
   """
   @type user_update ::
-          {:USER_UPDATE,
-           {old_user :: Remedy.Struct.User.t() | nil, new_user :: Remedy.Struct.User.t()},
-           WSState.t()}
+          {:USER_UPDATE, {old_user :: Remedy.Struct.User.t() | nil, new_user :: Remedy.Struct.User.t()}, WSState.t()}
   @typedoc """
   Dispatched when the bot is ready to begin sending audio after joining a voice channel.
 

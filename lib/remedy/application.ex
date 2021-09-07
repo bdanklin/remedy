@@ -15,7 +15,7 @@ defmodule Remedy.Application do
       Remedy.Api.Ratelimiter,
       Remedy.Shard.Connector,
       Remedy.Shard.Supervisor,
-     # Remedy.Voice.Supervisor,
+      # Remedy.Voice.Supervisor,
       Remedy.Bot
     ]
 

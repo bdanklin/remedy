@@ -25,17 +25,18 @@ defmodule Remedy.Api do
 
   @type options :: keyword | map
 
-  @spec update_shard_status(pid, status, String.t(), integer, String.t() | nil) :: :ok
-  def update_shard_status(pid, status, game, type \\ 0, stream \\ nil) do
-    Session.update_status(pid, to_string(status), game, stream, type)
-    :ok
-  end
+  # TODO: Not Ideal level of abstraction for the user. needing the pid is pretty aids.
+  # @spec update_shard_status(pid, status, String.t(), integer, String.t() | nil) :: :ok
+  # def update_shard_status(pid, status, game, type \\ 0, stream \\ nil) do
+  #   Session.update_status(pid, to_string(status), game, stream, type)
+  #   :ok
+  # end
 
-  @spec update_status(status, String.t(), integer, String.t() | nil) :: :ok
-  def update_status(status, game, type \\ 0, stream \\ nil) do
-    Supervisor.update_status(to_string(status), game, stream, type)
-    :ok
-  end
+  # @spec update_status(status, String.t(), integer, String.t() | nil) :: :ok
+  # def update_status(status, game, type \\ 0, stream \\ nil) do
+  #   Supervisor.update_status(to_string(status), game, stream, type)
+  #   :ok
+  # end
 
   @doc """
   Joins, moves, or disconnects the bot from a voice channel.
@@ -137,15 +138,12 @@ defmodule Remedy.Api do
   ```
   """
 
-  @spec create_message(Channel.id() | Message.t(), options | String.t()) ::
-          error | {:ok, Message.t()}
+  @spec create_message(Channel.id() | Message.t(), options | String.t()) :: error | {:ok, Message.t()}
   def create_message(channel_id, options)
 
-  def create_message(%Message{} = message, options),
-    do: create_message(message.channel_id, options)
+  def create_message(%Message{} = message, options), do: create_message(message.channel_id, options)
 
-  def create_message(channel_id, options) when is_list(options),
-    do: create_message(channel_id, Map.new(options))
+  def create_message(channel_id, options) when is_list(options), do: create_message(channel_id, Map.new(options))
 
   def create_message(channel_id, %{} = options) when is_snowflake(channel_id) do
     options = prepare_allowed_mentions(options)
@@ -184,8 +182,7 @@ defmodule Remedy.Api do
   end
 
   defp create_multipart(%{name: name, body: body}) do
-    {"file", body, {"form-data", [{"name", "file"}, {"filename", name}]},
-     [{"Content-Type", "multipart/form-data"}]}
+    {"file", body, {"form-data", [{"name", "file"}, {"filename", name}]}, [{"Content-Type", "multipart/form-data"}]}
   end
 
   defp create_message_with_json(channel_id, options) do
@@ -655,7 +652,6 @@ defmodule Remedy.Api do
     snowflake_two_weeks_ago =
       DateTime.utc_now()
       |> DateTime.to_unix()
-      # 60 seconds * 60 * 24 * 14 = 14 days / 2 weeks
       |> Kernel.-(60 * 60 * 24 * 14)
       |> DateTime.from_unix!()
       |> Snowflake.from_datetime!()
@@ -699,6 +695,7 @@ defmodule Remedy.Api do
    specify them, they will override their respective former values in an
    existing overwrite.
   """
+
   @spec edit_channel_permissions(
           integer,
           integer,
@@ -725,6 +722,7 @@ defmodule Remedy.Api do
   Role or user overwrite to delete is specified by `channel_id` and `overwrite_id`.
   An optional `reason` can be given for the audit log.
   """
+
   @spec delete_channel_permissions(integer, integer, AuditLogEntry.reason()) :: error | {:ok}
   def delete_channel_permissions(channel_id, overwrite_id, reason \\ nil) do
     request(%{
@@ -751,6 +749,7 @@ defmodule Remedy.Api do
   {:ok, [%Remedy.Struct.Invite{} | _]}
   ```
   """
+
   @spec get_channel_invites(Channel.id()) :: error | {:ok, [Invite.detailed_invite()]}
   def get_channel_invites(channel_id) when is_snowflake(channel_id) do
     request(:get, Constants.channel_invites(channel_id))
@@ -787,6 +786,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Invite{}}
   ```
   """
+
   @spec create_channel_invite(Channel.id(), options, AuditLogEntry.reason()) ::
           error | {:ok, Invite.detailed_invite()}
   def create_channel_invite(channel_id, options \\ [], reason \\ nil)

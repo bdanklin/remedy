@@ -10,12 +10,8 @@ defmodule Remedy.Shard.Session do
   use GenServer
 
   @gateway_qs "/?compress=zlib-stream&encoding=etf&v=6"
-
-  # Maximum time the initial connection may take, in milliseconds.
   @timeout_connect 10_000
-  # Maximum time the websocket upgrade may take, in milliseconds.
   @timeout_ws_upgrade 10_000
-  # Options to pass to :gun.open/3
   @gun_opts %{protocols: [:http], retry: 1_000_000_000}
 
   def update_status(pid, status, game, stream, type) do
@@ -185,8 +181,7 @@ defmodule Remedy.Shard.Session do
 
     :ok = :gun.ws_send(state.conn, state.stream, {:binary, Payload.heartbeat_payload(state.seq)})
 
-    {:noreply,
-     %{state | heartbeat_ref: ref, heartbeat_ack: false, last_heartbeat_send: DateTime.utc_now()}}
+    {:noreply, %{state | heartbeat_ref: ref, heartbeat_ack: false, last_heartbeat_send: DateTime.utc_now()}}
   end
 
   def handle_call(:get_ws_state, _sender, state) do

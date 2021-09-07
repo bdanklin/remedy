@@ -10,7 +10,7 @@
     <title>Remedy.Util — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-f91282a1e8.js"></script>
+    <script src="dist/sidebar_items-f4a064a2d0.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -117,24 +117,6 @@ Remedy.Util <small class="app-vsn">(Remedy v0.5.2)</small>
     <a href="#enum_to_struct/2">enum_to_struct(enum, struct)</a>
 
   </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#gateway/0">gateway()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Returns the gateway url and shard count for current websocket connections.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get_all_shard_latencies/0">get_all_shard_latencies()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Gets the latencies of all shard connections.</p></div>
 
 </div>
 <div class="summary-row">
@@ -249,68 +231,6 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="gateway/0">
-
-  <div class="detail-header">
-    <a href="#gateway/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">gateway()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L137" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>gateway() :: {<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}</pre>
-
-      </div>
-
-<p>Returns the gateway url and shard count for current websocket connections.</p><p>If by chance no gateway connection has been made, will fetch the url to use and store it
-for future use.</p>
-  </section>
-</section>
-<section class="detail" id="get_all_shard_latencies/0">
-
-  <div class="detail-header">
-    <a href="#get_all_shard_latencies/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">get_all_shard_latencies()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L256" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>get_all_shard_latencies() :: %{
-  required(Remedy.Schema.WSState.shard_num()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil
-}</pre>
-
-      </div>
-
-<p>Gets the latencies of all shard connections.</p><p>Calls <code class="inline">get_shard_latency/1</code> on all shards and returns a map whose keys are
-shard nums and whose values are latencies in milliseconds.</p>
-  </section>
-</section>
 <section class="detail" id="maybe_to_atom/1">
 
   <div class="detail-header">
@@ -320,7 +240,7 @@ shard nums and whose values are latencies in milliseconds.</p>
     </a>
     <h1 class="signature">maybe_to_atom(token)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L198" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L165" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -471,7 +391,7 @@ in your config.</p>
     </a>
     <h1 class="signature">safe_atom_map(term)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L176" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L143" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -505,7 +425,7 @@ types of objects returned by Discord, the amount of new atoms created <em>SHOULD
     </a>
     <h1 class="signature">unused_atoms()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L272" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/util.ex#L222" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

@@ -53,15 +53,11 @@ defmodule Remedy.Schema.User do
 
   def avatar(%__MODULE__{avatar: nil, discriminator: discriminator}) do
     discriminator
-    |> Integer.parse()
-    |> Tuple.to_list()
-    |> List.first()
-    |> rem(5)
-    |> CDN.embed_avatar()
+    |> CDN.default_user_avatar()
   end
 
   def avatar(%__MODULE__{id: id, avatar: avatar}) do
-    CDN.avatar(id, avatar)
+    CDN.user_avatar(id, avatar)
   end
 end
 

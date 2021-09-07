@@ -247,23 +247,6 @@ defmodule Remedy.Util do
   end
 
   @doc """
-  Gets the latencies of all shard connections.
-
-  Calls `get_shard_latency/1` on all shards and returns a map whose keys are
-  shard nums and whose values are latencies in milliseconds.
-  """
-  @spec get_all_shard_latencies :: %{WSState.shard_num() => non_neg_integer | nil}
-  def get_all_shard_latencies do
-    ShardSupervisor
-    |> Supervisor.which_children()
-    |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard end)
-    |> Enum.map(fn {_id, pid, _type, _modules} -> Supervisor.which_children(pid) end)
-    |> List.flatten()
-    |> Enum.map(fn {_id, pid, _type, _modules} -> Session.get_ws_state(pid) end)
-    |> Enum.reduce(%{}, fn s, m -> Map.put(m, s.shard_num, WSState.get_shard_latency(s)) end)
-  end
-
-  @doc """
   Since we're being sacrilegious and converting strings to atoms from the WS, there will be some
   atoms that we see that aren't defined in any Discord structs. This method mainly serves as a
   means to define those atoms once so the user isn't warned about them in the

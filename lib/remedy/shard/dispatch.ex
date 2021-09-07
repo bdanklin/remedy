@@ -40,7 +40,7 @@ defmodule Remedy.Shard.Dispatch do
 
     payload.t
     |> handle_event(payload.d, state)
-    |> format_event
+    |> format_event()
   end
 
   defp format_event(events) when is_list(events),
@@ -93,10 +93,10 @@ defmodule Remedy.Shard.Dispatch do
     {event, GuildBanRemove.to_struct(p), state}
   end
 
-  def handle_event(:GUILD_CREATE, %{unavailable: true} = guild, state) do
-    :ets.insert(:unavailable_guilds, {guild.id, guild})
-    {:GUILD_UNAVAILABLE, UnavailableGuild.to_struct(guild), state}
-  end
+  # def handle_event(:GUILD_CREATE, %{unavailable: true} = guild, state) do
+  #   :ets.insert(:unavailable_guilds, {guild.id, guild})
+  #   {:GUILD_UNAVAILABLE, UnavailableGuild.to_struct(guild), state}
+  # end
 
   def handle_event(:GUILD_CREATE, p, state) do
     # Ensures every channel will have an associated guild_id

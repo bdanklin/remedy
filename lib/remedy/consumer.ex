@@ -20,7 +20,7 @@ defmodule Remedy.Consumer do
 
   use ConsumerSupervisor
 
-  alias Remedy.Shard.Stage.Cache
+  alias Remedy.Shard.Stage.EventBuffer
   alias Remedy.Struct.{Channel, VoiceWSState, WSState}
 
   alias Remedy.Struct.Event.{
@@ -281,7 +281,7 @@ defmodule Remedy.Consumer do
 
   @doc false
   def init([mod, opts]) do
-    default = [strategy: :one_for_one, subscribe_to: [Cache]]
+    default = [strategy: :one_for_one, subscribe_to: [EventBuffer]]
 
     ConsumerSupervisor.init(
       [

@@ -14,7 +14,7 @@ defmodule Remedy.Application do
     children = [
       Remedy.Api.Ratelimiter,
       Remedy.Shard.Connector,
-      Remedy.Shard.Supervisor,
+      Remedy.Gateway.Supervisor,
       # Remedy.Voice.Supervisor,
       Remedy.Bot
     ]

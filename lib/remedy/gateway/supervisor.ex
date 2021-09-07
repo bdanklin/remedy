@@ -1,13 +1,12 @@
-defmodule Remedy.Shard.Supervisor do
+defmodule Remedy.Gateway.Supervisor do
   @moduledoc false
 
   use Supervisor
 
-  alias Remedy.Cache.Mapping.GuildShard
-  alias Remedy.CacheError
   alias Remedy.Shard
   alias Remedy.Shard.Session
-  alias Remedy.Shard.Stage.{Cache, Producer}
+  alias Remedy.Shard.Stage.Producer
+  alias Remedy.Gateway.EventBuffer
 
   require Logger
 
@@ -80,7 +79,7 @@ defmodule Remedy.Shard.Supervisor do
     children =
       [
         Producer,
-        Cache
+        EventBuffer
       ] ++ for i <- 0..(num_shards - 1), do: create_worker(url, i)
 
     Supervisor.init(children, strategy: :one_for_one, max_restarts: 3, max_seconds: 60)

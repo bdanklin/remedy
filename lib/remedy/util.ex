@@ -107,7 +107,7 @@ defmodule Remedy.Util do
   def num_shards do
     num =
       with :auto <- Application.get_env(:remedy, :num_shards, :auto),
-           {_url, shards} <- Remedy.Shard.Supervisor.gateway(),
+           {_url, shards} <- Remedy.Gateway.Supervisor.gateway(),
            do: shards
 
     if num == nil, do: 1, else: num

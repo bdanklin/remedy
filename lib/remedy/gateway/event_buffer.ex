@@ -1,4 +1,4 @@
-defmodule Remedy.Shard.Stage.Cache do
+defmodule Remedy.Gateway.EventBuffer do
   @moduledoc false
 
   use GenStage
@@ -17,12 +17,15 @@ defmodule Remedy.Shard.Stage.Cache do
   end
 
   def handle_events(events, _from, state) do
-    flat_processed_events =
-      events
-      |> Enum.map(&Dispatch.handle/1)
-      |> List.flatten()
-      |> Enum.filter(fn event -> event != :noop end)
+    {:noreply,
+     events
+     |> dispatch(), state, :hibernate}
+  end
 
-    {:noreply, flat_processed_events, state, :hibernate}
+  defp dispatch(events) do
+    events
+    |> Enum.map(&Dispatch.handle/1)
+    |> List.flatten()
+    |> Enum.filter(fn event -> event != :noop end)
   end
 end

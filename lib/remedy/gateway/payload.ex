@@ -38,4 +38,9 @@ defmodule Remedy.Gateway.Payload do
     |> new()
     |> :erlang.term_to_binary()
   end
+
+  # breakdown
+  def raze() do
+    nil
+  end
 end

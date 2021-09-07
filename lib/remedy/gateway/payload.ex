@@ -40,7 +40,7 @@ defmodule Remedy.Gateway.Payload do
   end
 
   # breakdown
-  def raze() do
+  def raze do
     nil
   end
 end

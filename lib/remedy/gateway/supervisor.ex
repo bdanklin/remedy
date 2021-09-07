@@ -3,10 +3,10 @@ defmodule Remedy.Gateway.Supervisor do
 
   use Supervisor
 
+  alias Remedy.Gateway.EventBuffer
   alias Remedy.Shard
   alias Remedy.Shard.Session
   alias Remedy.Shard.Stage.Producer
-  alias Remedy.Gateway.EventBuffer
 
   require Logger
 

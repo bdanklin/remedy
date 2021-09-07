@@ -97,6 +97,5 @@ defmodule Remedy.Schema.Emoji do
   @spec image_url(t) :: String.t() | nil
   def image_url(emoji)
   def image_url(%__MODULE__{id: nil}), do: nil
-  def image_url(%__MODULE__{animated: true, id: id}), do: CDN.animated_emoji(id)
-  def image_url(%__MODULE__{id: id}), do: CDN.animated_emoji(id)
+  def image_url(%__MODULE__{id: id}), do: CDN.custom_emoji(id)
 end

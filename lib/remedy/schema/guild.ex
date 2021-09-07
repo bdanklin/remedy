@@ -64,9 +64,9 @@ defmodule Remedy.Schema.Guild do
 
   def splash(guild)
   def splash(%__MODULE__{splash: nil}), do: nil
-  def splash(%__MODULE__{id: id, splash: splash}), do: CDN.splash(id, splash)
+  def splash(%__MODULE__{id: id, splash: splash}), do: CDN.guild_splash(id, splash)
 
   def icon(guild)
   def icon(%__MODULE__{icon: nil}), do: nil
-  def icon(%__MODULE__{id: id, icon: icon}), do: CDN.icon(id, icon)
+  def icon(%__MODULE__{id: id, icon: icon}), do: CDN.guild_icon(id, icon)
 end

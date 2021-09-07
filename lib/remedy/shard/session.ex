@@ -31,9 +31,8 @@ defmodule Remedy.Shard.Session do
     stream = :gun.ws_upgrade(worker, @gateway_qs)
     await_ws_upgrade(worker, stream)
 
-    zlib_context =
-      :zlib.open()
-      |> :zlib.inflateInit()
+    zlib_context = :zlib.open()
+    :zlib.inflateInit(zlib_context)
 
     state = %Websocket{
       conn_pid: self(),

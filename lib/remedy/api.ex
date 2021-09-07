@@ -7,7 +7,6 @@ defmodule Remedy.Api do
 
   alias Remedy.Bot
   alias Remedy.{Constants, Util}
-  alias Remedy.Shard.Supervisor
 
   @type error :: {:error, Remedy.ApiError.t() | HTTPoison.Error.t()}
 

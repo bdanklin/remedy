@@ -10,23 +10,30 @@ defmodule Remedy.Gateway.Payload do
   end
 
   @op %{
-    "DISPATCH" => 0,
-    "HEARTBEAT" => 1,
-    "IDENTIFY" => 2,
-    "STATUS_UPDATE" => 3,
-    "VOICE_STATUS_UPDATE" => 4,
-    "VOICE_SERVER_PING" => 5,
-    "RESUME" => 6,
-    "RECONNECT" => 7,
-    "REQUEST_GUILD_MEMBERS" => 8,
-    "INVALID_SESSION" => 9,
-    "HELLO" => 10,
-    "HEARTBEAT_ACK" => 11,
-    "SYNC_GUILD" => 12,
-    "SYNC_CALL" => 13
+    0 => "DISPATCH",
+    1 => "HEARTBEAT",
+    2 => "IDENTIFY",
+    3 => "STATUS_UPDATE",
+    4 => "VOICE_STATUS_UPDATE",
+    5 => "VOICE_SERVER_PING",
+    6 => "RESUME",
+    7 => "RECONNECT",
+    8 => "REQUEST_GUILD_MEMBERS",
+    9 => "INVALID_SESSION",
+    10 => "HELLO",
+    11 => "HEARTBEAT_ACK",
+    12 => "SYNC_GUILD",
+    13 => "SYNC_CALL"
   }
 
-  defp op(event), do: @op |> Map.get(event)
+  def op(event) do
+    @op
+    |> Enum.filter(fn {_k, v} -> v == event end)
+    |> Enum.into([])
+    |> List.first()
+  end
+
+  def event(op), do: @op[op]
 
   def build(data, event, s \\ nil) do
     %{
@@ -40,7 +47,7 @@ defmodule Remedy.Gateway.Payload do
   end
 
   # breakdown
-  def raze do
-    nil
+  def raze(payload) do
+    payload |> new()
   end
 end

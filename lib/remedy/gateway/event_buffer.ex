@@ -4,7 +4,7 @@ defmodule Remedy.Gateway.EventBuffer do
   use GenStage
 
   alias Remedy.Shard.Dispatch
-  alias Remedy.Shard.Stage.Producer
+  alias Remedy.Gateway.EventAdmission
 
   require Logger
 
@@ -13,7 +13,7 @@ defmodule Remedy.Gateway.EventBuffer do
   end
 
   def init(_opts) do
-    {:producer_consumer, [], subscribe_to: [Producer]}
+    {:producer_consumer, [], subscribe_to: [EventAdmission]}
   end
 
   def handle_events(events, _from, state) do

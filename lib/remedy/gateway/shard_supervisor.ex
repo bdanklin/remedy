@@ -1,9 +1,9 @@
-defmodule Remedy.Shard do
+defmodule Remedy.Gateway.ShardSupervisor do
   @moduledoc false
 
   use Supervisor
 
-  alias Remedy.Shard.Session
+  alias Remedy.Gateway.ShardSession
 
   def start_link(%{shard: shard} = opts) do
     Supervisor.start_link(__MODULE__, opts, name: :"Shard-#{shard}")
@@ -11,7 +11,7 @@ defmodule Remedy.Shard do
 
   def init(opts) do
     children = [
-      {Session, opts}
+      {ShardSession, opts}
     ]
 
     Supervisor.init(children, strategy: :one_for_all, max_restarts: 3, max_seconds: 60)

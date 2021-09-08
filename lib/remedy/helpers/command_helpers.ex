@@ -1,4 +1,4 @@
-defmodule Remedy.Gateway.Command do
+defmodule Remedy.CommandHelpers do
   @moduledoc false
   alias Remedy.Gateway.Commands.{
     Heartbeat,

@@ -8,7 +8,7 @@ defmodule Remedy.Gateway.Websocket do
     field :seq, :integer
     field :session, :integer
     field :shard_pid, :any, virtual: true
-    field :conn, :any, virtual: true
+    field :worker, :any, virtual: true
     field :conn_pid, :any, virtual: true
     field :stream, :any, virtual: true
     field :gateway, :string
@@ -17,7 +17,8 @@ defmodule Remedy.Gateway.Websocket do
     field :heartbeat_ack, :boolean
     field :heartbeat_interval, :integer
     field :heartbeat_ref, :any, virtual: true
-    field :zlib_ctx, :any, virtual: true
+    field :zlib_context, :any, virtual: true
+    field :payload, :any, virtual: true
   end
 
   @doc """

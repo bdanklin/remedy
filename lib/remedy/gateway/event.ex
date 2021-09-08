@@ -1,25 +1,30 @@
 defmodule Remedy.Shard.Event do
-  @moduledoc false
+  @moduledoc """
+  Handles what to do with events as they arrive from the gateway.
+
+  Arrives as a %Websocket{}.
+
+  ## Return Format
+
+  - `{:reply, reply, socket}` - If an event requires an immediate response.
+  - `{:noreply, socket}` - If an event does not require a response.
+
+  No further processing should be done here as the socket needs to be responsive.
+
+  > Send the dispatch events to the producer but I kind of feel like they should be sent by the Shard Session to maintain some sense of context.
+
+  """
 
   alias Remedy.Shard.Payload
-  alias Remedy.Shard.Stage.Producer
   alias Remedy.Util
+  alias Remedy.Gateway.Websocket
+  import Remedy.CommandHelpers
 
   require Logger
 
-  def handle(:dispatch, payload, state) do
-    payload = Util.safe_atom_map(payload)
+  def handle(socket)
 
-    if Application.get_env(:remedy, :log_dispatch_events),
-      do: payload.t |> inspect() |> Logger.debug()
-
-    Producer.notify(Producer, payload, state)
-
-    if payload.t == :READY do
-      %{state | session: payload.d.session_id}
-    else
-      state
-    end
+  def handle(%Websocket{payload: %{op: op, d: d}} = state) do
   end
 
   def handle(:heartbeat, _payload, state) do
@@ -62,6 +67,21 @@ defmodule Remedy.Shard.Event do
   def handle(event, _payload, state) do
     Logger.warn("UNHANDLED GATEWAY EVENT #{event}")
     state
+  end
+
+  def handle(:dispatch, payload, state) do
+    payload = Util.safe_atom_map(payload)
+
+    if Application.get_env(:remedy, :log_dispatch_events),
+      do: payload.t |> inspect() |> Logger.debug()
+
+    Producer.notify(Producer, payload, state)
+
+    if payload.t == :READY do
+      %{state | session: payload.d.session_id}
+    else
+      state
+    end
   end
 
   def session_exists?(state) do

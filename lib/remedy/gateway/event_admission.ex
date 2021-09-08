@@ -1,4 +1,4 @@
-defmodule Remedy.Shard.Stage.Producer do
+defmodule Remedy.Gateway.EventAdmission do
   @moduledoc false
 
   use GenStage
@@ -26,9 +26,7 @@ defmodule Remedy.Shard.Stage.Producer do
   end
 
   def dispatch_events(queue, demand, events) do
-    with d
-         when d > 0 <- demand,
-         {{:value, payload}, queue} <- :queue.out(queue) do
+    with d when d > 0 <- demand, {{:value, payload}, queue} <- :queue.out(queue) do
       dispatch_events(queue, demand - 1, [payload | events])
     else
       _ -> {:noreply, Enum.reverse(events), {queue, demand}, :hibernate}

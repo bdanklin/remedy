@@ -12,9 +12,9 @@ defmodule Remedy.Application do
     setup_ets_tables()
 
     children = [
-      Remedy.Shard.AirTrafficControl,
       Remedy.Api.Ratelimiter,
-      Remedy.Gateway.Supervisor,
+      Remedy.GatewayATC,
+      Remedy.Gateway,
       # Remedy.Voice.Supervisor,
       Remedy.Bot
     ]

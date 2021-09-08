@@ -72,6 +72,7 @@ defmodule Remedy.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.15", only: [:dev]},
       {:recon, "~> 2.3", only: [:dev]},
+      {:progress_bar, "~> 2.0"},
       # {:boundary, "~> 0.8.0", only: [:dev], runtime: false},
       {:httpoison, "~> 1.7"},
       {:poison, "~> 3.0"},

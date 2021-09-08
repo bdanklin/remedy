@@ -3,7 +3,7 @@ defmodule Remedy.Shard.Session do
 
   alias Remedy.{Constants, Util}
   alias Remedy.Gateway.Websocket
-  alias Remedy.Shard.{Connector, Event, Payload}
+  alias Remedy.Shard.{AirTrafficControl, Event, Payload}
 
   require Logger
 
@@ -14,59 +14,44 @@ defmodule Remedy.Shard.Session do
   @timeout_ws_upgrade 10_000
   @gun_opts %{protocols: [:http], retry: 1_000_000_000}
 
-  def start_link(opts) do
-    GenServer.start_link(__MODULE__, opts)
+  def start_link(socket) do
+    GenServer.start_link(__MODULE__, socket)
   end
 
-  def init(args) do
-    {:ok, nil, {:continue, args}}
+  def init(socket) do
+    {:ok, socket, {:continue, :connect_session}}
   end
 
-  def handle_continue([gateway, shard_num], nil) do
-    Connector.block_until_connect()
-    Logger.metadata(shard: shard_num)
-
-    {:ok, worker} = :gun.open(:binary.bin_to_list(gateway), 443, @gun_opts)
-    {:ok, :http} = :gun.await_up(worker, @timeout_connect)
-    stream = :gun.ws_upgrade(worker, @gateway_qs)
-    await_ws_upgrade(worker, stream)
-
-    zlib_context = :zlib.open()
-    :zlib.inflateInit(zlib_context)
-
-    state = %Websocket{
-      conn_pid: self(),
-      conn: worker,
-      shard_num: shard_num,
-      stream: stream,
-      gateway: gateway <> @gateway_qs,
-      last_heartbeat_ack: DateTime.utc_now(),
-      heartbeat_ack: true,
-      zlib_ctx: zlib_context
-    }
-
-    Logger.debug(fn -> "Websocket connection up on worker #{inspect(worker)}" end)
-
-    {:noreply, state}
+  def handle_continue(:connect_session, socket) do
+    {:noreply,
+     socket
+     |> connect_session()}
   end
 
-  defp await_ws_upgrade(worker, stream) do
-    # TODO: Once gun 2.0 is released, the block below can be simplified to:
-    # {:upgrade, [<<"websocket">>], _headers} = :gun.await(worker, stream, @timeout_ws_upgrade)
+  defp connect_session(%{gateway: gateway, shard: shard}) do
+    Logger.metadata(shard: shard)
 
-    receive do
-      {:gun_upgrade, ^worker, ^stream, [<<"websocket">>], _headers} ->
-        :ok
+    with :ok <- AirTrafficControl.request_connect(),
+         {:ok, worker} <- :gun.open(:binary.bin_to_list(gateway), 443, @gun_opts),
+         {:ok, :http} = :gun.await_up(worker, @timeout_connect),
+         stream = :gun.ws_upgrade(worker, @gateway_qs),
+         :ok <- await_ws_upgrade(worker, stream),
+         zlib_context <- :zlib.open() do
+      :zlib.inflateInit(zlib_context)
 
-      {:gun_error, ^worker, ^stream, reason} ->
-        exit({:ws_upgrade_failed, reason})
-    after
-      @timeout_ws_upgrade ->
-        Logger.error(fn ->
-          "Cannot upgrade connection to Websocket after #{@timeout_ws_upgrade / 1000} seconds"
-        end)
+      Logger.debug("Websocket connection up on worker #{inspect(worker)}")
 
-        exit(:timeout)
+      {:noreply,
+       %Websocket{
+         conn_pid: self(),
+         conn: worker,
+         shard: shard,
+         stream: stream,
+         gateway: gateway <> @gateway_qs,
+         last_heartbeat_ack: DateTime.utc_now(),
+         heartbeat_ack: true,
+         zlib_ctx: zlib_context
+       }}
     end
   end
 
@@ -94,19 +79,20 @@ defmodule Remedy.Shard.Session do
     end
   end
 
+  # Gun Closed The Connection Without Reason
   def handle_info({:gun_ws, _conn, _stream, :close}, state) do
     Logger.info("Shard websocket closed (unknown reason)")
     {:noreply, state}
   end
 
+  # Gun Closed The Connection with an Error Code
   def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, state) do
-    Logger.info("Shard websocket closed (errno #{errno}, reason #{inspect(reason)})")
+    Logger.warn("Shard websocket closed. ##{errno}: #{inspect(reason)})")
     {:noreply, state}
   end
 
+  # Gun Is Down
   def handle_info({:gun_down, _conn, _proto, _reason, _killed_streams}, state) do
-    # Try to cancel the internal timer, but
-    # do not explode if it was already cancelled.
     :timer.cancel(state.heartbeat_ref)
     {:noreply, state}
   end
@@ -160,6 +146,26 @@ defmodule Remedy.Shard.Session do
   ###########
   ### Remove
   ###########
+
+  defp await_ws_upgrade(worker, stream) do
+    # TODO: Once gun 2.0 is released, the block below can be simplified to:
+    # {:upgrade, [<<"websocket">>], _headers} = :gun.await(worker, stream, @timeout_ws_upgrade)
+
+    receive do
+      {:gun_upgrade, ^worker, ^stream, [<<"websocket">>], _headers} ->
+        :ok
+
+      {:gun_error, ^worker, ^stream, reason} ->
+        exit({:ws_upgrade_failed, reason})
+    after
+      @timeout_ws_upgrade ->
+        Logger.error(fn ->
+          "Cannot upgrade connection to Websocket after #{@timeout_ws_upgrade / 1000} seconds"
+        end)
+
+        exit(:timeout)
+    end
+  end
 
   def update_status(pid, status, game, stream, type) do
     {idle_since, afk} =

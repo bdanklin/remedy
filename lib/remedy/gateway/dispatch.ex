@@ -109,7 +109,7 @@ defmodule Remedy.Shard.Dispatch do
     guild.members
     |> Enum.each(fn member -> UserCache.create(member.user) end)
 
-    :ets.insert(:guild_shard_map, {guild.id, state.shard_num})
+    :ets.insert(:guild_shard_map, {guild.id, state.shard})
 
     Enum.each(guild.channels, fn channel ->
       :ets.insert(:channel_guild_map, {channel.id, guild.id})

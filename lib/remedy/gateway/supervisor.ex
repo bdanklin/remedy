@@ -16,7 +16,7 @@ defmodule Remedy.Gateway.Supervisor do
   def start_link(_args) do
     {url, gateway_shard_count} = gateway()
 
-    num_shards =
+    shards =
       case Application.get_env(:remedy, :num_shards, :auto) do
         :auto ->
           gateway_shard_count
@@ -39,7 +39,7 @@ defmodule Remedy.Gateway.Supervisor do
 
     Supervisor.start_link(
       __MODULE__,
-      [url, num_shards],
+      %{url: url, shards: shards},
       name: ShardSupervisor
     )
   end
@@ -75,23 +75,18 @@ defmodule Remedy.Gateway.Supervisor do
   # end
 
   @doc false
-  def init([url, num_shards]) do
+  def init(%{url: url, shards: shards}) do
     children =
       [
         Producer,
         EventBuffer
-      ] ++ for i <- 0..(num_shards - 1), do: create_worker(url, i)
+      ] ++ shard_workers(url, shards)
 
     Supervisor.init(children, strategy: :one_for_one, max_restarts: 3, max_seconds: 60)
   end
 
-  @doc false
-  def create_worker(gateway, shard_num) do
-    Supervisor.child_spec(
-      {Shard, [gateway, shard_num]},
-      id: shard_num
-    )
-  end
+  defp shard_workers(gateway, shards), do: for(shard <- 0..(shards - 1), into: [], do: shard_worker(gateway, shard))
+  defp shard_worker(gateway, shard), do: Supervisor.child_spec({Shard, %{gateway: gateway, shard: shard}}, id: shard)
 
   @doc """
   Returns the gateway url and shard count for current websocket connections.

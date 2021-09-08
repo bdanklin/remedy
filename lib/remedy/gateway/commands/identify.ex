@@ -39,11 +39,11 @@ defmodule Remedy.Gateway.Commands.Identify do
 
   def payload(state, opts \\ [])
 
-  def payload(%Websocket{shard_num: shard_num}, opts) do
+  def payload(%Websocket{shard: shard}, opts) do
     [
       {:compress, opts[:compress]},
       {:large_threshold, opts[:large_threshold]},
-      {:shard, [shard_num, Util.num_shards()]}
+      {:shard, [shard, Util.num_shards()]}
     ]
     |> Enum.into(@defaults)
     |> Map.merge(@env)

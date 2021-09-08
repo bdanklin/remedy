@@ -5,8 +5,8 @@ defmodule Remedy.Shard do
 
   alias Remedy.Shard.Session
 
-  def start_link([_, shard_num] = opts) do
-    Supervisor.start_link(__MODULE__, opts, name: :"Shard-#{shard_num}")
+  def start_link(%{shard: shard} = opts) do
+    Supervisor.start_link(__MODULE__, opts, name: :"Shard-#{shard}")
   end
 
   def init(opts) do

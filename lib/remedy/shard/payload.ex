@@ -26,7 +26,7 @@ defmodule Remedy.Shard.Payload do
       },
       "compress" => false,
       "large_threshold" => @large_threshold,
-      "shard" => [state.shard_num, Util.num_shards()],
+      "shard" => [state.shard, Util.num_shards()],
       "intents" => Intents.get()
     }
     |> build_payload("IDENTIFY")

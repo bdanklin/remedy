@@ -4,7 +4,7 @@ defmodule Remedy.Gateway.Websocket do
 
   @primary_key false
   embedded_schema do
-    field :shard_num, :integer
+    field :shard, :integer
     field :seq, :integer
     field :session, :integer
     field :shard_pid, :any, virtual: true

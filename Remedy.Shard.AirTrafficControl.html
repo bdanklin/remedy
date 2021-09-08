@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.2">
 
-    <title>Remedy.Api.Ratelimiter — Remedy v0.5.2</title>
+    <title>Remedy.Shard.AirTrafficControl — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-29cff46e34.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Api.Ratelimiter <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Shard.AirTrafficControl <small class="app-vsn">(Remedy v0.5.2)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/air_traffic_control.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,8 +95,7 @@ Remedy.Api.Ratelimiter <small class="app-vsn">(Remedy v0.5.2)</small>
 
 
         <section id="moduledoc">
-<p>Ratelimit implimentation specific to Discord's API.
-Only to be used when starting in a rest-only manner.</p>
+<p>Controls the runway for shard connections.</p>
         </section>
 
 
@@ -108,22 +107,6 @@ Only to be used when starting in a rest-only manner.</p>
             </a>
             Summary
           </h1>
-
-  <div class="summary-types summary">
-    <h2>
-      <a href="#types">Types</a>
-    </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:on_start/0">on_start()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Return values of start functions.</p></div>
-
-</div>
-
-  </div>
 
   <div class="summary-functions summary">
     <h2>
@@ -140,25 +123,7 @@ Only to be used when starting in a rest-only manner.</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#empty_buckets/0">empty_buckets()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Empties all buckets, voiding any saved ratelimit values.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#get_endpoint/2">get_endpoint(route, method)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Retrieves a proper ratelimit endpoint from a given route and url.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#init/1">init(list)</a>
+    <a href="#init/1">init(state)</a>
 
   </div>
 
@@ -167,11 +132,16 @@ Only to be used when starting in a rest-only manner.</p>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#start_link/1">start_link(list)</a>
+    <a href="#request_connect/0">request_connect()</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Starts the ratelimiter.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/1">start_link(args)</a>
+
+  </div>
 
 </div>
 
@@ -179,49 +149,6 @@ Only to be used when starting in a rest-only manner.</p>
 
         </section>
 
-
-        <section id="types" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#types">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-Types
-          </h1>
-          <div class="types-list">
-<section class="detail" id="t:on_start/0">
-
-  <div class="detail-header">
-    <a href="#t:on_start/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">on_start()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L18" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>on_start() ::
-  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | :ignore | {:error, {:already_started, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
-
-      </div>
-
-<p>Return values of start functions.</p>
-  </section>
-</section>
-
-          </div>
-        </section>
 
         <section id="functions" class="details-list">
           <h1 class="section-heading">
@@ -241,7 +168,7 @@ Functions
     </a>
     <h1 class="signature">child_spec(init_arg)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/air_traffic_control.ex#L6" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -254,64 +181,6 @@ Functions
 <p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="empty_buckets/0">
-
-  <div class="detail-header">
-    <a href="#empty_buckets/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">empty_buckets()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L43" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>empty_buckets() :: true</pre>
-
-      </div>
-
-<p>Empties all buckets, voiding any saved ratelimit values.</p>
-  </section>
-</section>
-<section class="detail" id="get_endpoint/2">
-
-  <div class="detail-header">
-    <a href="#get_endpoint/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">get_endpoint(route, method)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L139" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>get_endpoint(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-<p>Retrieves a proper ratelimit endpoint from a given route and url.</p>
-  </section>
-</section>
 <section class="detail" id="init/1">
 
   <div class="detail-header">
@@ -319,9 +188,9 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">init(list)</h1>
+    <h1 class="signature">init(state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L34" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/air_traffic_control.ex#L47" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -334,16 +203,16 @@ Functions
 <p>Callback implementation for <a href="https://hexdocs.pm/elixir/GenServer.html#c:init/1"><code class="inline">GenServer.init/1</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="start_link/1">
+<section class="detail" id="request_connect/0">
 
   <div class="detail-header">
-    <a href="#start_link/1" class="detail-link" title="Link to this function">
+    <a href="#request_connect/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">start_link(list)</h1>
+    <h1 class="signature">request_connect()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L30" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/air_traffic_control.ex#L12" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -353,14 +222,29 @@ Functions
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>start_link([]) :: <a href="#t:on_start/0">on_start</a>()</pre>
+  </section>
+</section>
+<section class="detail" id="start_link/1">
 
-      </div>
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">start_link(args)</h1>
 
-<p>Starts the ratelimiter.</p>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/air_traffic_control.ex#L43" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
   </section>
 </section>
 

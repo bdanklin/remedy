@@ -8,8 +8,10 @@ Remedy.CacheError.html
 Remedy.Consumer.html
 Remedy.EnvironmentVariableError.html
 Remedy.Gateway.Commands.Identify.html
+Remedy.Gateway.html
 Remedy.Permission.html
 Remedy.Schema.InteractionData.html
+Remedy.Shard.AirTrafficControl.html
 Remedy.Shard.Dispatch.html
 Remedy.Struct.Event.GuildBanRemove.html
 Remedy.Struct.Event.GuildIntegrationsUpdate.html
@@ -27,6 +29,7 @@ Remedy.Struct.Event.TypingStart.html
 Remedy.Struct.Event.VoiceReady.html
 Remedy.Struct.Event.VoiceServerUpdate.html
 Remedy.Struct.Event.VoiceState.html
+Remedy.TimeHelpers.html
 Remedy.Util.html
 Remedy.VoiceError.html
 Remedy.html
@@ -38,8 +41,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-9b12af76c1.js
-dist/sidebar_items-6e3408a0b6.js
+dist/search_items-491d9aa9bb.js
+dist/sidebar_items-29cff46e34.js
 index.html
 introduction.html
 search.html

@@ -8,11 +8,13 @@ Remedy.CacheError.html
 Remedy.Consumer.html
 Remedy.EnvironmentVariableError.html
 Remedy.Gateway.Commands.Identify.html
-Remedy.Gateway.html
+Remedy.GatewayATC.html
+Remedy.GatewayStatus.html
+Remedy.GunLean.html
 Remedy.Permission.html
 Remedy.Schema.InteractionData.html
-Remedy.Shard.AirTrafficControl.html
 Remedy.Shard.Dispatch.html
+Remedy.Shard.Event.html
 Remedy.Struct.Event.GuildBanRemove.html
 Remedy.Struct.Event.GuildIntegrationsUpdate.html
 Remedy.Struct.Event.InviteCreate.html
@@ -41,8 +43,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-491d9aa9bb.js
-dist/sidebar_items-29cff46e34.js
+dist/search_items-f9f936c436.js
+dist/sidebar_items-dfb5c52c3e.js
 index.html
 introduction.html
 search.html

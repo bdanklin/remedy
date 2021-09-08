@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.2">
 
-    <title>Remedy.Struct.Event.VoiceServerUpdate — Remedy v0.5.2</title>
+    <title>Remedy.Shard.Event — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-dfb5c52c3e.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Shard.Event <small class="app-vsn">(Remedy v0.5.2)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,11 @@ Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</sm
 
 
         <section id="moduledoc">
-<p>Sent when a guild's voice server is updated</p>
+<p>Handles what to do with events as they arrive from the gateway.</p><p>Arrives as a %Websocket{}.</p><h2 id="module-return-format" class="section-heading">
+  <a href="#module-return-format" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Return Format
+</h2>
+<ul><li><code class="inline">{:reply, reply, socket}</code> - If an event requires an immediate response.</li><li><code class="inline">{:noreply, socket}</code> - If an event does not require a response.</li></ul><p>No further processing should be done here as the socket needs to be responsive.</p><blockquote><p>Send the dispatch events to the producer but I kind of feel like they should be sent by the Shard Session to maintain some sense of context.</p></blockquote>
         </section>
 
 
@@ -108,44 +112,29 @@ Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</sm
             Summary
           </h1>
 
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:endpoint/0">endpoint()</a>
+    <a href="#handle/1">handle(socket)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>The voice server host</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:guild_id/0">guild_id()</a>
+    <a href="#handle/3">handle(event, payload, state)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Guild this voice server update is for</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#session_exists?/1">session_exists?(state)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Event sent when a guild's voice server is updated</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:token/0">token()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Voice connection token</p></div>
 
 </div>
 
@@ -154,25 +143,25 @@ Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</sm
         </section>
 
 
-        <section id="types" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#types">
+            <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types
+Functions
           </h1>
-          <div class="types-list">
-<section class="detail" id="t:endpoint/0">
+          <div class="functions-list">
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#t:endpoint/0" class="detail-link" title="Link to this type">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">endpoint()</h1>
+    <h1 class="signature">handle(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L25" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -182,26 +171,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>endpoint() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
-
-      </div>
-
-<p>The voice server host</p>
   </section>
 </section>
-<section class="detail" id="t:guild_id/0">
+<section class="detail" id="handle/3">
 
   <div class="detail-header">
-    <a href="#t:guild_id/0" class="detail-link" title="Link to this type">
+    <a href="#handle/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">guild_id()</h1>
+    <h1 class="signature">handle(event, payload, state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L30" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -211,26 +193,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>guild_id() :: Remedy.Struct.Guild.id()</pre>
-
-      </div>
-
-<p>Guild this voice server update is for</p>
   </section>
 </section>
-<section class="detail" id="t:t/0">
+<section class="detail" id="session_exists?/1">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#session_exists?/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">t()</h1>
+    <h1 class="signature">session_exists?(state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L19" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L87" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -240,47 +215,7 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>t() :: %Remedy.Struct.Event.VoiceServerUpdate{
-  endpoint: <a href="#t:endpoint/0">endpoint</a>(),
-  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
-  token: <a href="#t:token/0">token</a>()
-}</pre>
-
-      </div>
-
-<p>Event sent when a guild's voice server is updated</p>
-  </section>
-</section>
-<section class="detail" id="t:token/0">
-
-  <div class="detail-header">
-    <a href="#t:token/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">token()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L10" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>token() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-<p>Voice connection token</p>
   </section>
 </section>
 

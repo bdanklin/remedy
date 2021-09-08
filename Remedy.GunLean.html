@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.2">
 
-    <title>Remedy.Struct.Event.VoiceServerUpdate — Remedy v0.5.2</title>
+    <title>Remedy.GunLean — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-dfb5c52c3e.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.GunLean <small class="app-vsn">(Remedy v0.5.2)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun_lean.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,7 @@ Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</sm
 
 
         <section id="moduledoc">
-<p>Sent when a guild's voice server is updated</p>
+<p>Helpers for Gun so that I can lose the erlang syntax.</p><p>Everything takes a <code class="inline">%Websocket{}</code> and returns a <code class="inline">%Websocket{}</code> or raises.</p>
         </section>
 
 
@@ -108,44 +108,42 @@ Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</sm
             Summary
           </h1>
 
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:endpoint/0">endpoint()</a>
+    <a href="#open_await/1">open_await(socket)</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>The voice server host</p></div>
+    <div class="summary-synopsis"><p>Combines <code class="inline">:gun.open</code> and <code class="inline">:gun.await_up</code>. Because we use them both together anytime we use them anyway.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:guild_id/0">guild_id()</a>
+    <a href="#send/2">send(socket, reply)</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Guild this voice server update is for</p></div>
+    <div class="summary-synopsis"><p>Send a bullet?</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#upgrade_ws_await/1">upgrade_ws_await(socket)</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Event sent when a guild's voice server is updated</p></div>
+    <div class="summary-synopsis"><p>Same as above. Upgrades the conn to websocket and holds the process until its good to go.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:token/0">token()</a>
+    <a href="#zlib_init/1">zlib_init(socket)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Voice connection token</p></div>
 
 </div>
 
@@ -154,25 +152,25 @@ Remedy.Struct.Event.VoiceServerUpdate <small class="app-vsn">(Remedy v0.5.2)</sm
         </section>
 
 
-        <section id="types" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#types">
+            <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types
+Functions
           </h1>
-          <div class="types-list">
-<section class="detail" id="t:endpoint/0">
+          <div class="functions-list">
+<section class="detail" id="open_await/1">
 
   <div class="detail-header">
-    <a href="#t:endpoint/0" class="detail-link" title="Link to this type">
+    <a href="#open_await/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">endpoint()</h1>
+    <h1 class="signature">open_await(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun_lean.ex#L16" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -182,26 +180,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>endpoint() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
-
-      </div>
-
-<p>The voice server host</p>
+<p>Combines <code class="inline">:gun.open</code> and <code class="inline">:gun.await_up</code>. Because we use them both together anytime we use them anyway.</p>
   </section>
 </section>
-<section class="detail" id="t:guild_id/0">
+<section class="detail" id="send/2">
 
   <div class="detail-header">
-    <a href="#t:guild_id/0" class="detail-link" title="Link to this type">
+    <a href="#send/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">guild_id()</h1>
+    <h1 class="signature">send(socket, reply)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun_lean.ex#L56" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -211,26 +202,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>guild_id() :: Remedy.Struct.Guild.id()</pre>
-
-      </div>
-
-<p>Guild this voice server update is for</p>
+<p>Send a bullet?</p>
   </section>
 </section>
-<section class="detail" id="t:t/0">
+<section class="detail" id="upgrade_ws_await/1">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#upgrade_ws_await/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">t()</h1>
+    <h1 class="signature">upgrade_ws_await(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L19" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun_lean.ex#L41" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -240,30 +224,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>t() :: %Remedy.Struct.Event.VoiceServerUpdate{
-  endpoint: <a href="#t:endpoint/0">endpoint</a>(),
-  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
-  token: <a href="#t:token/0">token</a>()
-}</pre>
-
-      </div>
-
-<p>Event sent when a guild's voice server is updated</p>
+<p>Same as above. Upgrades the conn to websocket and holds the process until its good to go.</p>
   </section>
 </section>
-<section class="detail" id="t:token/0">
+<section class="detail" id="zlib_init/1">
 
   <div class="detail-header">
-    <a href="#t:token/0" class="detail-link" title="Link to this type">
+    <a href="#zlib_init/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">token()</h1>
+    <h1 class="signature">zlib_init(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/voice_server_update.ex#L10" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun_lean.ex#L62" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -273,14 +246,7 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>token() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-<p>Voice connection token</p>
   </section>
 </section>
 

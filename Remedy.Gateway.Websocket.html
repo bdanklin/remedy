@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.2">
 
-    <title>Remedy.Shard.Dispatch — Remedy v0.5.2</title>
+    <title>Remedy.Gateway.Websocket — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-fd8d5d0ee7.js"></script>
@@ -84,15 +84,19 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Shard.Dispatch <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.2)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
 
       </h1>
 
+
+        <section id="moduledoc">
+<p>Contains all the information required to maintain the gateway websocket connection to Discord.</p>
+        </section>
 
 
         <section id="summary" class="details-list">
@@ -110,14 +114,37 @@ Remedy.Shard.Dispatch <small class="app-vsn">(Remedy v0.5.2)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle/1">handle(arg)</a>
+    <a href="#changeset/1">changeset(params)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle_event/3">handle_event(event, p, state)</a>
+    <a href="#changeset/2">changeset(model, params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_shard_latency/1">get_shard_latency(state)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.Websocket.t()</code> struct.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#new/1">new(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#validate/1">validate(changeset)</a>
 
   </div>
 
@@ -137,16 +164,16 @@ Remedy.Shard.Dispatch <small class="app-vsn">(Remedy v0.5.2)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="handle/1">
+<section class="detail" id="changeset/1">
 
   <div class="detail-header">
-    <a href="#handle/1" class="detail-link" title="Link to this function">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">handle(arg)</h1>
+    <h1 class="signature">changeset(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L33" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -159,16 +186,82 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="handle_event/3">
+<section class="detail" id="changeset/2">
 
   <div class="detail-header">
-    <a href="#handle_event/3" class="detail-link" title="Link to this function">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">handle_event(event, p, state)</h1>
+    <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L58" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="get_shard_latency/1">
+
+  <div class="detail-header">
+    <a href="#get_shard_latency/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_shard_latency(state)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L40" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.Websocket.t()</code> struct.</p><p>Returns the latency in milliseconds as an integer, returning nil if unknown.</p>
+  </section>
+</section>
+<section class="detail" id="new/1">
+
+  <div class="detail-header">
+    <a href="#new/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">new(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="validate/1">
+
+  <div class="detail-header">
+    <a href="#validate/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">validate(changeset)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L5" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

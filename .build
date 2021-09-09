@@ -8,9 +8,10 @@ Remedy.CacheError.html
 Remedy.Consumer.html
 Remedy.EnvironmentVariableError.html
 Remedy.Gateway.Commands.Identify.html
+Remedy.Gateway.Websocket.html
 Remedy.GatewayATC.html
 Remedy.GatewayStatus.html
-Remedy.GunLean.html
+Remedy.Gun.html
 Remedy.Permission.html
 Remedy.Schema.InteractionData.html
 Remedy.Shard.Dispatch.html
@@ -43,8 +44,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-f9f936c436.js
-dist/sidebar_items-dfb5c52c3e.js
+dist/search_items-70de22bc80.js
+dist/sidebar_items-fd8d5d0ee7.js
 index.html
 introduction.html
 search.html

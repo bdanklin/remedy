@@ -10,7 +10,7 @@
     <title>Remedy.Shard.Event — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-dfb5c52c3e.js"></script>
+    <script src="dist/sidebar_items-fd8d5d0ee7.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -95,11 +95,15 @@ Remedy.Shard.Event <small class="app-vsn">(Remedy v0.5.2)</small>
 
 
         <section id="moduledoc">
-<p>Handles what to do with events as they arrive from the gateway.</p><p>Arrives as a %Websocket{}.</p><h2 id="module-return-format" class="section-heading">
+<p>Handles what to do with events as they arrive from the gateway.</p><h2 id="module-intake-format" class="section-heading">
+  <a href="#module-intake-format" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Intake Format
+</h2>
+<p>Arrives as a %Websocket{}.</p><h2 id="module-return-format" class="section-heading">
   <a href="#module-return-format" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Return Format
 </h2>
-<ul><li><code class="inline">{:reply, reply, socket}</code> - If an event requires an immediate response.</li><li><code class="inline">{:noreply, socket}</code> - If an event does not require a response.</li></ul><p>No further processing should be done here as the socket needs to be responsive.</p><blockquote><p>Send the dispatch events to the producer but I kind of feel like they should be sent by the Shard Session to maintain some sense of context.</p></blockquote>
+<p>Returns a %Websocket{}</p><p>Handle the immediate returns and pass all further processing to Dispatch. No further processing should be done here as the socket needs to be responsive. ie wait until after dispatch to perform caching events</p><blockquote><p>Send the dispatch events to the producer but I kind of feel like they should be sent by the Shard Session to maintain some sense of context.</p></blockquote>
         </section>
 
 
@@ -161,7 +165,7 @@ Functions
     </a>
     <h1 class="signature">handle(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L25" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L26" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -183,7 +187,7 @@ Functions
     </a>
     <h1 class="signature">handle(event, payload, state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L30" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L31" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -205,7 +209,7 @@ Functions
     </a>
     <h1 class="signature">session_exists?(state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L87" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event.ex#L88" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

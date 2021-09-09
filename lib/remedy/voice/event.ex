@@ -30,7 +30,7 @@
 
 #     Voice.update_voice(state.guild_id,
 #       secret_key: payload["d"]["secret_key"] |> :erlang.list_to_binary(),
-#       rtp_sequence: 0,
+#       rtp_sequenceuence: 0,
 #       rtp_timestamp: 0
 #     )
 

@@ -18,7 +18,7 @@ defmodule Remedy.Schema.VoiceState do
     field :ip
     field :port
     field :udp_socket
-    field :rtp_sequence
+    field :rtp_sequenceuence
     field :rtp_timestamp
     field :ffmpeg_proc
     field :raw_audio

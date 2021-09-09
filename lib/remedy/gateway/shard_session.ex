@@ -4,14 +4,11 @@ defmodule Remedy.Gateway.ShardSession do
   alias Remedy.Util
   alias Remedy.Gateway.Websocket
   alias Remedy.Shard.{Event, Payload}
-  alias Remedy.{GunLean, GatewayATC}
+  alias Remedy.{Gun, GatewayATC}
   require Logger
 
   use GenServer
 
-  @timeout_connect 10_000
-  @timeout_ws_upgrade 10_000
-  @gun_opts %{protocols: [:http], retry: 1_000_000_000}
   @gateway_qs "/?compress=zlib-stream&encoding=etf&v=6"
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
@@ -21,50 +18,38 @@ defmodule Remedy.Gateway.ShardSession do
     {:ok, %Websocket{gateway: gateway, shard: shard}, {:continue, :establish_connection}}
   end
 
-  defp request_connect(state) do
-    case GatewayATC.request_connect() do
-      :ok -> state
-      _ -> raise "Connection Runway Error"
-    end
+  def handle_continue(:establish_connection, socket) do
+    {:noreply,
+     socket
+     |> GatewayATC.request_connect()
+     |> Gun.open_await()
+     |> Gun.upgrade_ws_await()
+     |> Gun.zlib_init()
+     |> put_gateway()
+     |> ack_heartbeats()
+     |> log_connection_up()}
   end
 
-  # =
-  def handle_continue(:establish_connection, %{shard: shard, gateway: gateway} = state) do
+  defp put_gateway(%Websocket{gateway: gateway} = socket) do
+    %{socket | gateway: gateway <> @gateway_qs}
+  end
+
+  defp ack_heartbeats(socket) do
+    %{socket | heartbeat_ack: true}
+  end
+
+  defp log_connection_up(%Websocket{shard: shard, worker: worker} = socket) do
     Logger.metadata(shard: shard)
-
-    state
-    |> request_connect()
-    |> GunLean.open_await()
-    |> GunLean.upgrade_ws_await()
-
-    zlib_context = :zlib.open()
-    :zlib.inflateInit(zlib_context)
-    state = %{state | zlib_context: zlib_context}
-
-    %{
-      state
-      | gateway: gateway <> @gateway_qs,
-        last_heartbeat_ack: DateTime.utc_now(),
-        heartbeat_ack: true
-    }
-
-    Logger.debug(fn -> "Websocket connection up on worker #{inspect(shard)}" end)
-
-    {:noreply, state}
+    Logger.info("Connection Established for shard: #{inspect(shard)}, on worker: #{inspect(worker)}", shard: shard)
+    socket
   end
 
   defp unpack_frame_to_payload(%{zlib_context: zlib_context} = state, frame) do
     %{state | payload: :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()}
   end
 
-  defp parse_payload(%{payload: %{op: op} = payload}) do
-  end
-
-  def wrap_things_up({:noreply, socket}), do: socket
-
-  def wrap_things_up({:reply, reply, socket}) do
-    socket
-    |> GunLean.send(reply)
+  defp parse_payload(%{payload: %{op: op}} = socket) do
+    %{socket | opcode: op}
   end
 
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
@@ -73,8 +58,7 @@ defmodule Remedy.Gateway.ShardSession do
      |> unpack_frame_to_payload(frame)
      |> parse_payload()
      |> IO.inspect()
-     |> Event.handle()
-     |> wrap_things_up()}
+     |> Event.handle()}
   end
 
   def handle_info({:gun_ws, _conn, _stream, :close}, state) do
@@ -96,7 +80,7 @@ defmodule Remedy.Gateway.ShardSession do
 
   def handle_info({:gun_up, _worker, _proto}, state) do
     Logger.warn("Reconnected after connection broke")
-    {:noreply, %{(state |> GunLean.upgrade_ws_await()) | heartbeat_ack: true}}
+    {:noreply, %{(state |> Gun.upgrade_ws_await()) | heartbeat_ack: true}}
   end
 
   def handle_cast({:status_update, payload}, state) do
@@ -122,13 +106,9 @@ defmodule Remedy.Gateway.ShardSession do
   end
 
   def handle_cast(:heartbeat, state) do
-    {:ok, ref} =
-      :timer.apply_after(state.heartbeat_interval, :gen_server, :cast, [
-        state.conn_pid,
-        :heartbeat
-      ])
+    {:ok, ref} = :timer.apply_after(state.heartbeat_interval, :gen_server, :cast, [state.conn_pid, :heartbeat])
 
-    :ok = :gun.ws_send(state.conn, state.stream, {:binary, Payload.heartbeat_payload(state.seq)})
+    :ok = :gun.ws_send(state.conn, state.stream, {:binary, Payload.heartbeat_payload(state.sequence)})
 
     {:noreply, %{state | heartbeat_ref: ref, heartbeat_ack: false, last_heartbeat_send: DateTime.utc_now()}}
   end

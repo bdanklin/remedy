@@ -1,4 +1,4 @@
-defmodule Remedy.GunLean do
+defmodule Remedy.Gun do
   @moduledoc """
   Helpers for Gun so that I can lose the erlang syntax.
 
@@ -63,8 +63,9 @@ defmodule Remedy.GunLean do
 
   def zlib_init(socket) do
     zlib_context = :zlib.open()
-    :zlib.inflateInit(zlib_context)
 
-    %{socket | zlib_context: zlib_context}
+    case :zlib.inflateInit(zlib_context) do
+      :ok -> %{socket | zlib_context: zlib_context}
+    end
   end
 end

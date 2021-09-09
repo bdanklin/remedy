@@ -3,7 +3,6 @@ defmodule Remedy.Gateway do
 
   use Supervisor
 
-  alias Remedy.Shard
   alias Remedy.Gateway.{EventAdmission, EventBuffer, Session, ShardSupervisor}
 
   require Logger
@@ -133,8 +132,10 @@ defmodule Remedy.GatewayATC do
 
   @min_redial 5500
 
-  def request_connect do
-    GenServer.call(__MODULE__, {:request_connect}, :infinity)
+  def request_connect(state) do
+    case GenServer.call(__MODULE__, {:request_connect}, :infinity) do
+      :ok -> state
+    end
   end
 
   def handle_call({:request_connect}, _from, state) do

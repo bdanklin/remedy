@@ -2,14 +2,15 @@ defmodule Remedy.Shard.Event do
   @moduledoc """
   Handles what to do with events as they arrive from the gateway.
 
+  ## Intake Format
+
   Arrives as a %Websocket{}.
 
   ## Return Format
 
-  - `{:reply, reply, socket}` - If an event requires an immediate response.
-  - `{:noreply, socket}` - If an event does not require a response.
+  Returns a %Websocket{}
 
-  No further processing should be done here as the socket needs to be responsive.
+  Handle the immediate returns and pass all further processing to Dispatch. No further processing should be done here as the socket needs to be responsive. ie wait until after dispatch to perform caching events
 
   > Send the dispatch events to the producer but I kind of feel like they should be sent by the Shard Session to maintain some sense of context.
 
@@ -29,7 +30,7 @@ defmodule Remedy.Shard.Event do
 
   def handle(:heartbeat, _payload, state) do
     Logger.debug("HEARTBEAT PING")
-    {state, Payload.heartbeat_payload(state.seq)}
+    {state, Payload.heartbeat_payload(state.sequenceuence)}
   end
 
   def handle(:heartbeat_ack, _payload, state) do

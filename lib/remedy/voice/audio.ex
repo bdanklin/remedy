@@ -28,7 +28,7 @@
 #     <<
 #       0x80::8,
 #       0x78::8,
-#       voice.rtp_sequence::16,
+#       voice.rtp_sequenceuence::16,
 #       voice.rtp_timestamp::32,
 #       voice.ssrc::32
 #     >>
@@ -123,13 +123,13 @@
 
 #         %{
 #           v
-#           | rtp_sequence: v.rtp_sequence + 1,
+#           | rtp_sequenceuence: v.rtp_sequenceuence + 1,
 #             rtp_timestamp: v.rtp_timestamp + @samples_per_frame
 #         }
 #       end)
 
 #     {Voice.update_voice(voice.guild_id,
-#        rtp_sequence: voice.rtp_sequence,
+#        rtp_sequenceuence: voice.rtp_sequenceuence,
 #        rtp_timestamp: voice.rtp_timestamp,
 #        # If using raw audio and it isn't stateful, update its state manually
 #        raw_audio:

@@ -58,7 +58,7 @@ defmodule Remedy.Gateway.Intents do
     DIRECT_MESSAGE_TYPING: 1 <<< 14
   ]
 
-  @gateway_intent Application.compile_env(:remedy, :gateway_intents)
+  @gateway_intent Application.get_env(:remedy, :gateway_intents)
   def get do
     @gateway_intent
     |> resolve()

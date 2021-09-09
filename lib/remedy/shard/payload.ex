@@ -6,8 +6,8 @@ defmodule Remedy.Shard.Payload do
   @large_threshold 250
 
   @doc false
-  def heartbeat_payload(sequence) do
-    sequence
+  def heartbeat_payload(sequenceuence) do
+    sequenceuence
     |> build_payload("HEARTBEAT")
   end
 
@@ -37,7 +37,7 @@ defmodule Remedy.Shard.Payload do
     %{
       "token" => Application.get_env(:remedy, :token),
       "session_id" => state.session,
-      "seq" => state.seq
+      "sequence" => state.sequence
     }
     |> build_payload("RESUME")
   end

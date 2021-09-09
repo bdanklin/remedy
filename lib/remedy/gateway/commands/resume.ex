@@ -5,15 +5,15 @@ defmodule Remedy.Gateway.Commands.Resume do
   embedded_schema do
     field :token, :string
     field :session_id, :string
-    field :seq, :integer
+    field :sequence, :integer
   end
 
   def payload(state, opts \\ [])
 
-  def payload(%Websocket{session: session_id, seq: seq}, _opts) do
+  def payload(%Websocket{session: session_id, sequence: sequence}, _opts) do
     %{
       session_id: session_id,
-      seq: seq,
+      sequence: sequence,
       token: Application.get_env(:remedy, :token)
     }
     |> build_payload()

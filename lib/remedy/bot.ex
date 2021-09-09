@@ -6,11 +6,12 @@ defmodule Remedy.Bot do
   use Agent
   use Remedy.Schema
 
+  @doc false
   def start_link(_args) do
     Agent.start_link(fn -> nil end, name: __MODULE__)
   end
 
-  @doc ~S"""
+  @doc """
   Returns the current user's state.
   """
   @spec get() :: User.t() | nil

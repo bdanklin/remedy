@@ -3,73 +3,17 @@ defmodule Remedy.Gateway do
 
   use Supervisor
 
-  alias Remedy.Gateway.{EventAdmission, EventBuffer, Session, ShardSupervisor}
+  alias Remedy.Gateway.{EventAdmission, EventBuffer, ShardSupervisor}
 
   require Logger
 
-  @gateway "/gateway"
   @gateway_bot "/gateway/bot"
 
   def start_link(_args) do
     {url, gateway_shard_count} = gateway()
 
-    shards =
-      case Application.get_env(:remedy, :num_shards, :auto) do
-        :auto ->
-          gateway_shard_count
-
-        ^gateway_shard_count ->
-          gateway_shard_count
-
-        shard_count when is_integer(shard_count) and shard_count > 0 ->
-          Logger.warn(
-            "Configured shard count (#{shard_count}) " <>
-              "differs from Discord Gateway's recommended shard count (#{gateway_shard_count}). " <>
-              "Consider using `num_shards: :auto` option in your Remedy config."
-          )
-
-          shard_count
-
-        value ->
-          raise ~s("#{value}" is not a valid shard count)
-      end
-
-    Supervisor.start_link(
-      __MODULE__,
-      %{url: url, shards: shards},
-      name: __MODULE__
-    )
+    Supervisor.start_link(__MODULE__, %{url: url, shards: gateway_shard_count}, name: __MODULE__)
   end
-
-  def update_status(status, game, stream, type) do
-    __MODULE__
-    |> Supervisor.which_children()
-    |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard end)
-    |> Enum.map(fn {_id, pid, _type, _modules} -> Supervisor.which_children(pid) end)
-    |> List.flatten()
-    |> Enum.map(fn {_id, pid, _type, _modules} ->
-      Session.update_status(pid, status, game, stream, type)
-    end)
-  end
-
-  # def update_voice_state(guild_id, channel_id, self_mute, self_deaf) do
-  #   case GuildShard.get_shard(guild_id) do
-  #     {:ok, shard_id} ->
-  #       ShardSupervisor
-  #       |> Supervisor.which_children()
-  #       |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard end)
-  #       |> Enum.filter(fn {id, _pid, _type, _modules} -> id == shard_id end)
-  #       |> Enum.map(fn {_id, pid, _type, _modules} -> Supervisor.which_children(pid) end)
-  #       |> List.flatten()
-  #       |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard.Session end)
-  #       |> List.first()
-  #       |> elem(1)
-  #       |> Session.update_voice_state(guild_id, channel_id, self_mute, self_deaf)
-
-  #     {:error, :id_not_found} ->
-  #       raise CacheError, key: guild_id, cache_name: GuildShardMapping
-  #   end
-  # end
 
   @doc false
   def init(%{url: url, shards: shards}) do
@@ -86,6 +30,10 @@ defmodule Remedy.Gateway do
 
   defp shard_worker(gateway, shard),
     do: Supervisor.child_spec({ShardSupervisor, %{gateway: gateway, shard: shard}}, id: shard)
+
+  def num_shards do
+    gateway() |> Tuple.to_list() |> List.last()
+  end
 
   @doc """
   Returns the gateway url and shard count for current websocket connections.
@@ -111,6 +59,7 @@ defmodule Remedy.Gateway do
 
       {:ok, body} ->
         body = Poison.decode!(body)
+        IO.inspect(body)
 
         "wss://" <> url = body["url"]
         shards = if body["shards"], do: body["shards"], else: 1
@@ -184,40 +133,5 @@ defmodule Remedy.GatewayATC do
 
   def init(state) do
     {:ok, state}
-  end
-end
-
-defmodule Remedy.GatewayStatus do
-  @moduledoc """
-  Simple cache that stores information for the current user.
-  """
-
-  use Agent
-  use Remedy.Schema
-
-  def start_link(%{}) do
-    Agent.start_link(fn -> nil end, name: __MODULE__)
-  end
-
-  @doc ~S"""
-  Returns the current user's state.
-  """
-  @spec get() :: User.t() | nil
-  def get do
-    Agent.get(__MODULE__, fn user -> user end)
-  end
-
-  def put(%User{} = user) do
-    Agent.update(__MODULE__, fn _ -> user end)
-  end
-
-  def update(%{} = values) do
-    Agent.update(__MODULE__, fn state ->
-      struct(state, values)
-    end)
-  end
-
-  def delete do
-    Agent.update(__MODULE__, fn _ -> nil end)
   end
 end

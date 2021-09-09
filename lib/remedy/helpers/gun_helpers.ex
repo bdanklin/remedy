@@ -5,7 +5,7 @@ defmodule Remedy.Gun do
   Everything takes a `%Websocket{}` and returns a `%Websocket{}` or raises.
   """
   alias Remedy.Gateway.Websocket
-  @gateway_qs "/?compress=zlib-stream&encoding=etf&v=6"
+  @gateway_qs "/?compress=zlib-stream&encoding=etf&v=9"
   @gun_opts %{protocols: [:http], retry: 1_000_000_000}
   @gun_port 443
   @gun_timeout_connect 10_000
@@ -51,14 +51,16 @@ defmodule Remedy.Gun do
   end
 
   @doc """
-  Send a bullet?
+  Send the payload.
   """
-  def send(%{worker: worker, stream: stream} = socket, reply) do
-    case :gun.ws_send(worker, stream, {:binary, reply}) do
-      :ok -> socket
-    end
+  def send(%{worker: worker, stream: stream, payload: payload} = socket) do
+    :gun.ws_send(worker, stream, {:binary, payload})
+    socket
   end
 
+  #####
+  ### Non :gun but still helper with Gun
+  #####
   def zlib_init(socket)
 
   def zlib_init(socket) do
@@ -67,5 +69,15 @@ defmodule Remedy.Gun do
     case :zlib.inflateInit(zlib_context) do
       :ok -> %{socket | zlib_context: zlib_context}
     end
+  end
+
+  def close(%Websocket{worker: worker, stream: stream} = socket) do
+    case :gun.ws_send(worker, stream, :close) do
+      :ok -> socket
+    end
+  end
+
+  def unpack_frame(%Websocket{zlib_context: zlib_context} = socket, frame) do
+    %{socket | payload: :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()}
   end
 end

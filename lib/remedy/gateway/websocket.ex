@@ -9,6 +9,7 @@ defmodule Remedy.Gateway.Websocket do
     field :shard, :integer
     field :session, :integer
     field :shard_pid, :any, virtual: true
+
     field :worker, :any, virtual: true
     field :conn_pid, :any, virtual: true
     field :stream, :any, virtual: true
@@ -18,18 +19,19 @@ defmodule Remedy.Gateway.Websocket do
     # Heartbeat
     field :last_heartbeat_send, :utc_datetime
     field :last_heartbeat_ack, :utc_datetime
-    field :heartbeat_ack, :boolean
+    field :heartbeat_ack, :boolean, default: false
     field :heartbeat_interval, :integer
-    field :heartbeat_ref, :any, virtual: true
+    field :heartbeat_timer, :any, virtual: true
 
     # Raw ETF. Not guaranteed to be readable
     field :payload, :any, virtual: true
 
     # Payload items that can actually be used.
-    field :opcode, :integer
-    field :sequence, :integer
-    field :data, :map
-    field :event_name, :string
+    field :opcode, :integer, default: 0
+    field :sequence, :integer, default: 0
+    field :data, :map, default: %{}
+    field :event, :string, default: nil
+    field :token, :string, redact: true, default: Application.get_env(:remedy, :token)
   end
 
   @doc """

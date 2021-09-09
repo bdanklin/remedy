@@ -4,9 +4,6 @@ defmodule Remedy.Constants do
   def base_url,
     do: "https://discord.com/api/v9"
 
-  def cdn_url,
-    do: "https://cdn.discordapp.com"
-
   def channel(channel_id),
     do: "/channels/#{channel_id}"
 
@@ -116,12 +113,6 @@ defmodule Remedy.Constants do
   def channel_call_ring(channel_id), do: "/channels/#{channel_id}/call/ring"
   def group_recipient(group_id, user_id), do: "/channels/#{group_id}/recipients/#{user_id}"
   def guild_me_nick(guild_id), do: "/guilds/#{guild_id}/members/@me/nick"
-
-  def cdn_avatar(id, avatar, image_format), do: "/avatars/#{id}/#{avatar}.#{image_format}"
-  def cdn_embed_avatar(image_name), do: "/embed/avatars/#{image_name}.png"
-  def cdn_emoji(id, image_format), do: "/emojis/#{id}.#{image_format}"
-  def cdn_icon(id, icon, image_format), do: "/icons/#{id}/#{icon}.#{image_format}"
-  def cdn_splash(id, splash, image_format), do: "/splashes/#{id}/#{splash}.#{image_format}"
 
   def discord_epoch, do: 1_420_070_400_000
 

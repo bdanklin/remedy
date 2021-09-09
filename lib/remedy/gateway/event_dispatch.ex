@@ -1,41 +1,14 @@
-defmodule Remedy.Shard.Dispatch do
-  alias Remedy.Bot
-  alias Remedy.Shard.{Intents, Session}
-
-  alias Remedy.Struct.Event.{
-    ChannelPinsUpdate,
-    GuildBanAdd,
-    GuildBanRemove,
-    GuildIntegrationsUpdate,
-    InviteCreate,
-    InviteDelete,
-    MessageDelete,
-    MessageDeleteBulk,
-    MessageReactionAdd,
-    MessageReactionRemove,
-    MessageReactionRemoveAll,
-    MessageReactionRemoveEmoji,
-    SpeakingUpdate,
-    TypingStart,
-    VoiceReady,
-    VoiceServerUpdate,
-    VoiceState
-  }
-
-  alias Remedy.Struct.{Guild, Interaction, Message, User}
-  alias Remedy.Struct.Guild.UnavailableGuild
-  alias Remedy.Util
-
+defmodule Remedy.Shard.EventDispatch do
   require Logger
-
+  use Remedy.Schema
   @large_threshold 250
 
-  def handle({payload, state}) do
+  def handle(socket) do
     if Application.get_env(:remedy, :log_full_events),
-      do: Logger.debug(inspect(payload.d, pretty: true))
+      do: Logger.debug(inspect(socket.payload.d, pretty: true))
 
-    payload.t
-    |> handle_event(payload.d, state)
+    socket.payload.t
+    |> handle_event(socket.payload.d, socket)
     |> format_event()
   end
 

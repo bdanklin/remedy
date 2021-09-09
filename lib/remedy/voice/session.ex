@@ -131,7 +131,7 @@
 #       ) do
 #     # Try to cancel the internal timer, but
 #     # do not explode if it was already cancelled.
-#     :timer.cancel(state.heartbeat_ref)
+#     :timer.cancel(state.heartbeat_timer)
 #     {:noreply, state}
 #   end
 
@@ -142,7 +142,7 @@
 #     {:noreply, %{state | heartbeat_ack: true}}
 #   end
 
-#   def handle_cast(:heartbeat, %{heartbeat_ack: false, heartbeat_ref: timer_ref} = state) do
+#   def handle_cast(:heartbeat, %{heartbeat_ack: false, heartbeat_timer: timer_ref} = state) do
 #     Logger.warn("heartbeat_ack not received in time, disconnecting")
 #     {:ok, :cancel} = :timer.cancel(timer_ref)
 #     :gun.ws_send(state.conn, state.stream, :close)
@@ -159,7 +159,7 @@
 #     :ok = :gun.ws_send(state.conn, state.stream, {:text, Payload.heartbeat_payload()})
 
 #     {:noreply,
-#      %{state | heartbeat_ref: ref, heartbeat_ack: false, last_heartbeat_send: DateTime.utc_now()}}
+#      %{state | heartbeat_timer: ref, heartbeat_ack: false, last_heartbeat_send: DateTime.utc_now()}}
 #   end
 
 #   def handle_cast(:voice_ready, state) do

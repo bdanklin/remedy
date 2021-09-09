@@ -15,15 +15,11 @@ defmodule Remedy.Gateway.Commands.UpdatePresence do
     afk: false
   }
 
-  def payload(state, opts \\ [])
+  def payload(socket, opts \\ [])
 
-  def payload(%Websocket{}, opts) do
+  def payload(socket, opts) do
     opts
     |> Enum.into(@defaults)
-    |> build_payload()
-  end
-
-  def validate(changeset) do
-    changeset
+    |> build_payload(socket)
   end
 end

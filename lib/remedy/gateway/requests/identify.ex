@@ -37,17 +37,17 @@ defmodule Remedy.Gateway.Commands.Identify do
     field :intents, :integer
   end
 
-  def payload(state, opts \\ [])
+  def payload(socket, opts \\ [])
 
-  def payload(%Websocket{shard: shard}, opts) do
+  def payload(%Websocket{shard: shard} = socket, opts) do
     [
       {:compress, opts[:compress]},
       {:large_threshold, opts[:large_threshold]},
-      {:shard, [shard, Util.num_shards()]}
+      {:shard, [shard, Remedy.Gateway.num_shards()]}
     ]
     |> Enum.into(@defaults)
     |> Map.merge(@env)
-    |> build_payload()
+    |> build_payload(socket)
   end
 
   def payload(term, _opts),

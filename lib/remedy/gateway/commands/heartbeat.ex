@@ -3,15 +3,15 @@ defmodule Remedy.Gateway.Commands.Heartbeat do
   use Remedy.Schema, :payload
 
   embedded_schema do
-    field :heartbeat_interval, :integer
   end
 
-  def payload(state, opts \\ [])
+  def payload(socket, opts \\ [])
 
-  def payload(%Websocket{heartbeat_interval: heartbeat_interval}, _opts) do
-    %{
-      heartbeat_interval: heartbeat_interval
-    }
-    |> build_payload()
+  def payload(%Websocket{sequence: nil} = socket, _opts) do
+    build_payload(nil, socket)
+  end
+
+  def payload(%Websocket{sequence: sequence} = socket, _opts) do
+    build_payload(sequence + 1, socket)
   end
 end

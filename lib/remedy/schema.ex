@@ -54,6 +54,7 @@ defmodule Remedy.Schema do
         UpdateVoiceState
       }
 
+      import Remedy.OpcodeHelpers
       alias Remedy.Gateway.Payload
       alias Remedy.Gateway.Websocket
     end
@@ -149,8 +150,14 @@ defmodule Remedy.Schema.Payload do
         |> Morphix.stringmorphiform!()
       end
 
-      def build_payload(data),
-        do: data |> new() |> Payload.build(command())
+      def build_payload(nil, socket),
+        do: Payload.build(nil, command(), socket)
+
+      def build_payload(data, socket) when is_integer(data),
+        do: Payload.build(data, command(), socket)
+
+      def build_payload(data, socket),
+        do: data |> new() |> Payload.build(command(), socket)
 
       def command do
         __MODULE__

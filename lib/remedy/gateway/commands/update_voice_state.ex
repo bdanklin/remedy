@@ -16,11 +16,11 @@ defmodule Remedy.Gateway.Commands.UpdateVoiceState do
     self_deaf: false
   }
 
-  def payload(state, opts \\ [])
+  def payload(socket, opts \\ [])
 
-  def payload(%Websocket{}, opts) do
+  def payload(socket, opts) do
     opts
     |> Enum.into(@defaults)
-    |> build_payload()
+    |> build_payload(socket)
   end
 end

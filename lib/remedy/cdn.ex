@@ -6,14 +6,16 @@ defmodule Remedy.CDN do
 
   Each function takes the required parameters to directly access a resource.
 
-  > Some functions may directly take a struct, for example `%User{} |> CDN.user_avatar()`. But these are undocumented.
-
   ## Format
 
   All images are returned as either a `.png` or a `.gif` if the asset is animated. This is done automatically.
 
   ## Size
+
+  Images can be requested of a size in `[16, 32, 64, 128, 256, 512, 1024, 2048, 4096]`. This is given as an optional final argument to any of the functions in this module. Arguments given will be rounded to the next largest, or the largest size if you try to go over.
+
   """
+
   @cdn "https://cdn.discordapp.com"
 
   def custom_emoji(id, size \\ nil) do
@@ -94,7 +96,7 @@ defmodule Remedy.CDN do
 
   defp put_size(term, nil), do: term
 
-  defp put_size(term, size) when is_integer(size) when size in [16, 32, 64, 128, 256, 512, 1024, 2048, 096] do
+  defp put_size(term, size) when is_integer(size) when size in [16, 32, 64, 128, 256, 512, 1024, 2048, 4096] do
     term <> "?size=#{to_string(size)}"
   end
 

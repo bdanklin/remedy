@@ -9,10 +9,10 @@ defmodule Remedy.CommandHelpers do
     UpdateVoiceState
   }
 
-  def heartbeat(state, opts \\ []), do: Heartbeat.payload(state, opts)
-  def identify(state, opts \\ []), do: Identify.payload(state, opts)
-  def request_guild_members(state, opts \\ []), do: RequestGuildMembers.payload(state, opts)
-  def resume(state, opts \\ []), do: Resume.payload(state, opts)
-  def update_presence(state, opts \\ []), do: UpdatePresence.payload(state, opts)
-  def update_voice_state(state, opts \\ []), do: UpdateVoiceState.payload(state, opts)
+  def heartbeat(socket, opts \\ []), do: Heartbeat.payload(socket, opts)
+  def identify(socket, opts \\ []), do: Identify.payload(socket, opts)
+  def request_guild_members(socket, opts \\ []), do: RequestGuildMembers.payload(socket, opts)
+  def resume(socket, opts \\ []), do: Resume.payload(socket, opts)
+  def update_presence(socket, opts \\ []), do: UpdatePresence.payload(socket, opts)
+  def update_voice_state(socket, opts \\ []), do: UpdateVoiceState.payload(socket, opts)
 end

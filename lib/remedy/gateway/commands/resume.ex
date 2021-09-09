@@ -8,14 +8,14 @@ defmodule Remedy.Gateway.Commands.Resume do
     field :sequence, :integer
   end
 
-  def payload(state, opts \\ [])
+  def payload(socket, opts \\ [])
 
-  def payload(%Websocket{session: session_id, sequence: sequence}, _opts) do
+  def payload(%Websocket{session: session_id, sequence: sequence} = socket, _opts) do
     %{
       session_id: session_id,
       sequence: sequence,
       token: Application.get_env(:remedy, :token)
     }
-    |> build_payload()
+    |> build_payload(socket)
   end
 end

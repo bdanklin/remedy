@@ -16,7 +16,7 @@
 #     :last_heartbeat_ack,
 #     :heartbeat_ack,
 #     :heartbeat_interval,
-#     :heartbeat_ref
+#     :heartbeat_timer
 #   ]
 
 #   @typedoc "The guild id that this voice websocket state applies to"
@@ -62,7 +62,7 @@
 #   @type heartbeat_interval :: integer | nil
 
 #   @typedoc "Time ref for the heartbeat"
-#   @type heartbeat_ref :: :timer.tref() | nil
+#   @type heartbeat_timer :: :timer.tref() | nil
 
 #   @type t :: %__MODULE__{
 #           guild_id: guild_id,
@@ -77,6 +77,6 @@
 #           last_heartbeat_ack: last_heartbeat_ack,
 #           heartbeat_ack: heartbeat_ack,
 #           heartbeat_interval: heartbeat_interval,
-#           heartbeat_ref: heartbeat_ref
+#           heartbeat_timer: heartbeat_timer
 #         }
 # end

@@ -10,7 +10,7 @@
     <title>Remedy.Gun — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-fd8d5d0ee7.js"></script>
+    <script src="dist/sidebar_items-77c70111fa.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -86,7 +86,7 @@ Remedy
       <h1>
 Remedy.Gun <small class="app-vsn">(Remedy v0.5.2)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/gun_helpers.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -114,6 +114,13 @@ Remedy.Gun <small class="app-vsn">(Remedy v0.5.2)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#close/1">close(socket)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#open_await/1">open_await(socket)</a>
 
   </div>
@@ -123,11 +130,18 @@ Remedy.Gun <small class="app-vsn">(Remedy v0.5.2)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#send/2">send(socket, reply)</a>
+    <a href="#send/1">send(socket)</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Send a bullet?</p></div>
+    <div class="summary-synopsis"><p>Send the payload.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#unpack_frame/2">unpack_frame(socket, frame)</a>
+
+  </div>
 
 </div>
 <div class="summary-row">
@@ -161,6 +175,28 @@ Remedy.Gun <small class="app-vsn">(Remedy v0.5.2)</small>
 Functions
           </h1>
           <div class="functions-list">
+<section class="detail" id="close/1">
+
+  <div class="detail-header">
+    <a href="#close/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">close(socket)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/gun_helpers.ex#L74" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
 <section class="detail" id="open_await/1">
 
   <div class="detail-header">
@@ -170,7 +206,7 @@ Functions
     </a>
     <h1 class="signature">open_await(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/gun_helpers.ex#L16" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -183,16 +219,16 @@ Functions
 <p>Combines <code class="inline">:gun.open</code> and <code class="inline">:gun.await_up</code>. Because we use them both together anytime we use them anyway.</p>
   </section>
 </section>
-<section class="detail" id="send/2">
+<section class="detail" id="send/1">
 
   <div class="detail-header">
-    <a href="#send/2" class="detail-link" title="Link to this function">
+    <a href="#send/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">send(socket, reply)</h1>
+    <h1 class="signature">send(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L56" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/gun_helpers.ex#L56" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -202,7 +238,29 @@ Functions
 
   <section class="docstring">
 
-<p>Send a bullet?</p>
+<p>Send the payload.</p>
+  </section>
+</section>
+<section class="detail" id="unpack_frame/2">
+
+  <div class="detail-header">
+    <a href="#unpack_frame/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">unpack_frame(socket, frame)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/gun_helpers.ex#L80" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
   </section>
 </section>
 <section class="detail" id="upgrade_ws_await/1">
@@ -214,7 +272,7 @@ Functions
     </a>
     <h1 class="signature">upgrade_ws_await(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L41" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/gun_helpers.ex#L41" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -236,7 +294,7 @@ Functions
     </a>
     <h1 class="signature">zlib_init(socket)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L62" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/gun_helpers.ex#L64" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

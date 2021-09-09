@@ -1,9 +1,7 @@
 defmodule Remedy.Gateway.Commands.Identify do
-  @moduledoc """
-  Identify
-  """
+  @moduledoc false
+
   alias Remedy.Gateway.Intents
-  alias Remedy.Util
   use Remedy.Schema, :payload
 
   @default_compress false

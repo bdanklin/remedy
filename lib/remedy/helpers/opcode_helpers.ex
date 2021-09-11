@@ -40,6 +40,10 @@ defmodule Remedy.OpcodeHelpers do
     ]
   end
 
+  def mod_from_event(k) do
+    Module.concat([to_string(k) |> String.downcase() |> Recase.to_pascal()])
+  end
+
   def op_code(event)
       when is_binary(event)
       when event in [
@@ -63,4 +67,13 @@ defmodule Remedy.OpcodeHelpers do
 
   def op_code(event), do: opcodes()[event]
   def op_event(opcode), do: Enum.find(opcodes(), fn {_, v} -> v == opcode end) |> Tuple.to_list() |> List.first()
+
+  def event_from_mod do
+    __MODULE__
+    |> to_string()
+    |> String.split(".")
+    |> List.last()
+    |> Recase.to_snake()
+    |> String.upcase()
+  end
 end

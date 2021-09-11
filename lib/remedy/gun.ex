@@ -74,4 +74,10 @@ defmodule Remedy.Gun do
       :ok -> socket
     end
   end
+
+  def unpack_frame(%Websocket{zlib_context: zlib_context} = socket, frame) do
+    payload = :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()
+
+    {payload, socket}
+  end
 end

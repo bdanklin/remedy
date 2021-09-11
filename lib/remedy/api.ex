@@ -5,6 +5,42 @@ defmodule Remedy.Api do
 
   alias Remedy.{Bot, Constants, Util}
 
+  import Sunbake.Snowflake,
+    only: [is_snowflake: 1],
+    warn: false
+
+  alias Remedy.Schema.{
+    App,
+    AuditLog,
+    AuditLogChange,
+    AuditLogEntry,
+    AuditLogOption,
+    Ban,
+    Channel,
+    Command,
+    Component,
+    Embed,
+    Emoji,
+    Guild,
+    Interaction,
+    InteractionData,
+    InteractionDataOption,
+    InteractionDataResolved,
+    Member,
+    Message,
+    Overwrite,
+    Role,
+    StageInstance,
+    Sticker,
+    StickerPack,
+    Team,
+    TeamMember,
+    User,
+    Voice,
+    VoiceState,
+    Webhook
+  }
+
   @type error :: {:error, Remedy.ApiError.t() | HTTPoison.Error.t()}
 
   @type limit :: integer | :infinity

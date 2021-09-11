@@ -2,7 +2,7 @@ defmodule Remedy.Gateway.Session do
   @moduledoc false
   alias Remedy.{Gun, GatewayATC}
   alias Remedy.Gateway.{Websocket, EventAdmission}
-  import Remedy.{CommandHelpers, OpcodeHelpers}
+  import Remedy.OpcodeHelpers
 
   alias Remedy.Gateway.Commands.{
     Heartbeat,
@@ -32,54 +32,6 @@ defmodule Remedy.Gateway.Session do
      |> Gun.open_await()
      |> Gun.upgrade_ws_await()
      |> Gun.zlib_init()}
-  end
-
-  ###########################
-  #### Gun Message Receivers
-  ## These are events received by the gun worker.
-  ## They are kinda ugly and I suppose this is the
-  ## only place they should go
-
-  def unpack_frame(%Websocket{zlib_context: zlib_context} = socket, frame) do
-    %{socket | payload: :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()}
-    |> parse_opcode()
-    |> parse_event()
-    |> parse_sequence()
-    |> parse_data()
-    |> drop_payload()
-  end
-
-  def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
-    {:noreply,
-     socket
-     |> Gun.unpack_frame(frame)
-     |> log_event("gun_ws")
-     |> handle()}
-  end
-
-  def handle_info({:gun_ws, _conn, _stream, :close}, state) do
-    {:noreply,
-     state
-     |> log_event("WEBSOCKET CLOSED, UNKNOWN REASON")}
-  end
-
-  def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, state) do
-    {:noreply,
-     state
-     |> log_event("WEBSOCKET CLOSED WITH ERROR: #{errno}, REASON: #{inspect(reason)}")}
-  end
-
-  def handle_info({:gun_down, _, _, _, _}, socket) do
-    {:noreply,
-     socket
-     |> stop_the_heart()
-     |> log_event("GUN DOWN")}
-  end
-
-  def handle_info({:gun_up, _worker, _proto}, socket) do
-    {:noreply,
-     socket
-     |> log_event("RECONNECTED AFTER INTERRUPTION")}
   end
 
   #######################
@@ -116,9 +68,7 @@ defmodule Remedy.Gateway.Session do
   #######################
   #### Pacemaker
 
-  def handle(socket)
-
-  def handle(%Websocket{payload_event: payload_event} = socket), do: handle(payload_event, socket)
+  def handle(%Websocket{payload_op_event: payload_op_event} = socket), do: handle(payload_op_event, socket)
 
   # ⬇ OP CODE 1 - DISPATCH
   def handle(:DISPATCH, socket) do
@@ -239,6 +189,42 @@ defmodule Remedy.Gateway.Session do
   # payload = Payload.request_members_payload(guild_id, limit)
   # GenServer.cast(pid, {:request_guild_members, payload})
   # end
+
+  @doc """
+  Triggered when a
+  """
+  def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
+    {:noreply,
+     socket
+     |> Gun.unpack_frame(frame)
+     |> log_event("gun_ws")
+     |> handle()}
+  end
+
+  def handle_info({:gun_ws, _conn, _stream, :close}, state) do
+    {:noreply,
+     state
+     |> log_event("WEBSOCKET CLOSED, UNKNOWN REASON")}
+  end
+
+  def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, state) do
+    {:noreply,
+     state
+     |> log_event("WEBSOCKET CLOSED WITH ERROR: #{errno}, REASON: #{inspect(reason)}")}
+  end
+
+  def handle_info({:gun_down, _, _, _, _}, socket) do
+    {:noreply,
+     socket
+     |> stop_the_heart()
+     |> log_event("GUN DOWN")}
+  end
+
+  def handle_info({:gun_up, _worker, _proto}, socket) do
+    {:noreply,
+     socket
+     |> log_event("RECONNECTED AFTER INTERRUPTION")}
+  end
 
   def send_heartbeat(socket, opts \\ []), do: Heartbeat.payload(socket, opts) |> Gun.send()
   def send_identify(socket, opts \\ []), do: Identify.payload(socket, opts) |> IO.inspect() |> Gun.send()

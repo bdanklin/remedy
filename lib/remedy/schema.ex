@@ -2,8 +2,10 @@ defmodule Remedy.Schema do
   @moduledoc false
 
   defmacro __using__(_env) do
+    parent = __MODULE__
+
     quote do
-      alias Remedy.Schema
+      alias unquote(parent)
 
       alias Remedy.Schema.{
         App,

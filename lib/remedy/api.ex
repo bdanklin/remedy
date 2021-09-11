@@ -1,12 +1,9 @@
 defmodule Remedy.Api do
   @moduledoc false
   use Bitwise
-  use Remedy.Schema
+  import Remedy.ModelHelpers
 
-  import Sunbake.Snowflake, only: [is_snowflake: 1]
-
-  alias Remedy.Bot
-  alias Remedy.{Constants, Util}
+  alias Remedy.{Bot, Constants, Util}
 
   @type error :: {:error, Remedy.ApiError.t() | HTTPoison.Error.t()}
 

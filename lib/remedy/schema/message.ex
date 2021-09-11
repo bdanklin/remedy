@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Message do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "messages" do
@@ -41,7 +41,7 @@ end
 
 defmodule Remedy.Schema.MessageFlags do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   use BattleStandard
 
   @flag_bits [

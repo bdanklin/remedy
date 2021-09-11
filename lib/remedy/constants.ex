@@ -116,34 +116,6 @@ defmodule Remedy.Constants do
 
   def discord_epoch, do: 1_420_070_400_000
 
-  def opcodes do
-    %{
-      "DISPATCH" => 0,
-      "HEARTBEAT" => 1,
-      "IDENTIFY" => 2,
-      "STATUS_UPDATE" => 3,
-      "VOICE_STATUS_UPDATE" => 4,
-      "VOICE_SERVER_PING" => 5,
-      "RESUME" => 6,
-      "RECONNECT" => 7,
-      "REQUEST_GUILD_MEMBERS" => 8,
-      "INVALID_SESSION" => 9,
-      "HELLO" => 10,
-      "HEARTBEAT_ACK" => 11,
-      "SYNC_GUILD" => 12,
-      "SYNC_CALL" => 13
-    }
-  end
-
-  def opcode_from_name(event) do
-    opcodes()[event]
-  end
-
-  def atom_from_opcode(opcode) do
-    {k, _} = Enum.find(opcodes(), fn {_, v} -> v == opcode end)
-    k |> String.downcase() |> String.to_atom()
-  end
-
   # Voice Gateway has a separate set of opcodes
   def voice_opcodes do
     %{

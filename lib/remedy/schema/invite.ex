@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Invite do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key {:code, :string, autogenerate: false}
 
   schema "invites" do

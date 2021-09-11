@@ -1,6 +1,6 @@
 defmodule Remedy.Gateway.Events.Ready do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :v, :integer

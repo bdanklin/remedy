@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Webhook do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key {:id, Snowflake, autogenerate: false}
 
   schema "webhooks" do
@@ -20,7 +20,7 @@ end
 
 defmodule Remedy.Schema.IncomingWebhook do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "webhooks" do
@@ -36,7 +36,7 @@ end
 
 defmodule Remedy.Schema.ApplicationWebhook do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "webhooks" do

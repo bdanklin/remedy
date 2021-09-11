@@ -1,12 +1,9 @@
 defmodule Remedy.Schema do
   @moduledoc false
-  defp schema_helpers do
-    parent = __MODULE__
 
+  defmacro __using__(_env) do
     quote do
-      alias unquote(parent)
-      import Sunbake.Snowflake, only: [is_snowflake: 1]
-      alias Sunbake.{ISO8601, Snowflake}
+      alias Remedy.Schema
 
       alias Remedy.Schema.{
         App,
@@ -39,61 +36,16 @@ defmodule Remedy.Schema do
         VoiceState,
         Webhook
       }
-    end
-  end
 
-  defp payload_helpers do
-    quote do
-      alias Remedy.Gateway.Commands.{
-        Heartbeat,
-        Hello,
-        Identify,
-        RequestGuildMembers,
-        Resume,
-        UpdatePresence,
-        UpdateVoiceState
-      }
-
-      import Remedy.OpcodeHelpers
-      alias Remedy.Gateway.Payload
-      alias Remedy.Gateway.Websocket
-    end
-  end
-
-  defmacro __using__(:model) do
-    quote do
       use Ecto.Schema
       import Ecto.Changeset
-      unquote(schema_helpers())
-      @before_compile Schema.Model
+      import Sunbake.Snowflake, only: [is_snowflake: 1]
+      alias Sunbake.{ISO8601, Snowflake}
 
-      def validate(changeset), do: changeset
-      defoverridable validate: 1
+      @before_compile Schema
     end
   end
 
-  defmacro __using__(:payload) do
-    quote do
-      use Ecto.Schema
-      import Ecto.Changeset
-      unquote(schema_helpers())
-      unquote(payload_helpers())
-      @before_compile Schema.Payload
-
-      def validate(changeset), do: changeset
-      defoverridable validate: 1
-    end
-  end
-
-  defmacro __using__(_) do
-    quote do
-      unquote(schema_helpers())
-    end
-  end
-end
-
-defmodule Remedy.Schema.Model do
-  @moduledoc false
   defmacro __before_compile__(_env) do
     quote do
       alias __MODULE__
@@ -101,71 +53,17 @@ defmodule Remedy.Schema.Model do
       def new(params) do
         params
         |> changeset()
-        |> apply_changes()
-      end
-
-      def changeset(params), do: changeset(%__MODULE__{}, params)
-
-      def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-      def changeset(%__MODULE__{} = model, params) do
-        model
-        |> cast(params, castable())
-        |> cast_embeds()
-        |> apply_changes()
-
-        #        |> Morphix.atomorphiform!()
-      end
-
-      defp cast_embeds(cast_model) do
-        Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-      end
-
-      defp castable do
-        __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
-      end
-    end
-  end
-end
-
-defmodule Remedy.Schema.Payload do
-  @moduledoc false
-  defmacro __before_compile__(_env) do
-    quote do
-      alias __MODULE__
-      alias Remedy.Gateway.Payload
-
-      defp new(params \\ %{}), do: changeset(params)
-
-      def changeset(params), do: changeset(%__MODULE__{}, params)
-      def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-      def changeset(%__MODULE__{} = model, params) do
-        model
-        |> cast(params, castable())
         |> validate()
-        |> cast_embeds()
         |> apply_changes()
-        |> Map.from_struct()
-        |> Morphix.stringmorphiform!()
       end
 
-      def build_payload(nil, socket),
-        do: Payload.build(nil, command(), socket)
+      def changeset(params), do: changeset(%__MODULE__{}, params)
+      def changeset(nil, params), do: changeset(%__MODULE__{}, params)
 
-      def build_payload(data, socket) when is_integer(data),
-        do: Payload.build(data, command(), socket)
-
-      def build_payload(data, socket),
-        do: data |> new() |> Payload.build(command(), socket)
-
-      def command do
-        __MODULE__
-        |> to_string()
-        |> String.split(".")
-        |> List.last()
-        |> Recase.to_snake()
-        |> String.upcase()
+      def changeset(%__MODULE__{} = model, params) do
+        model
+        |> cast(params, castable())
+        |> cast_embeds()
       end
 
       defp cast_embeds(cast_model) do
@@ -175,6 +73,9 @@ defmodule Remedy.Schema.Payload do
       defp castable do
         __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
       end
+
+      def validate(changeset), do: changeset
+      defoverridable validate: 1
     end
   end
 end

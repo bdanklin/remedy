@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.AuditLog do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key false
 
   embedded_schema do
@@ -15,7 +15,7 @@ end
 
 defmodule Remedy.Schema.AuditLogEntry do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
@@ -30,7 +30,7 @@ end
 
 defmodule Remedy.Schema.AuditLogOption do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key false
   embedded_schema do
@@ -48,7 +48,7 @@ end
 
 defmodule Remedy.Schema.AuditLogChange do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key false
   embedded_schema do

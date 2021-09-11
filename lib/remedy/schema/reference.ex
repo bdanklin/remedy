@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Reference do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key false
 
   embedded_schema do

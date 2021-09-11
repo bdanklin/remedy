@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Command do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do

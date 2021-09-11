@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.VoiceRegion do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key {:id, :string, autogenerate: false}
 
   schema "voice_regions" do

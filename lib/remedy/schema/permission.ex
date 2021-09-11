@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Permission do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   use BattleStandard
 
   @type t :: %__MODULE__{
@@ -127,7 +127,7 @@ end
 defmodule Remedy.Schema.PermissionOverwrite do
   @moduledoc false
   # type	int	either 0 (role) or 1 (member) <- use to build changeset
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key false
 
   embedded_schema do

@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Guild do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   alias Remedy.CDN
   @primary_key {:id, Snowflake, autogenerate: false}
 

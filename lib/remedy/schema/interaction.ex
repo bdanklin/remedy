@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Interaction do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key {:id, Snowflake, autogenerate: false}
 
   schema "interaction" do
@@ -23,7 +23,7 @@ defmodule Remedy.Schema.InteractionData do
 
   Should probably be the center point of any command framework
   """
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key false
 
   embedded_schema do
@@ -41,7 +41,7 @@ end
 
 defmodule Remedy.Schema.InteractionDataOption do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :name, :string
@@ -53,7 +53,7 @@ end
 
 defmodule Remedy.Schema.InteractionDataResolved do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     embeds_many :users, User

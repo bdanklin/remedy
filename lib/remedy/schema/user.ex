@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.User do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   alias Remedy.CDN
   @primary_key {:id, Snowflake, autogenerate: false}
 
@@ -63,7 +63,7 @@ end
 
 defmodule Remedy.Schema.UserFlags do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @type t :: %__MODULE__{
           DISCORD_EMPLOYEE: boolean(),

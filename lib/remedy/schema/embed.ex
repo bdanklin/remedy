@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Embed do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   alias Embed.{Author, Field, Footer, Provider, Thumbnail, Video}
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -24,7 +24,7 @@ end
 
 defmodule Remedy.Schema.Embed.Field do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :name, :string, required: true
@@ -35,7 +35,7 @@ end
 
 defmodule Remedy.Schema.Embed.Author do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :name
@@ -47,7 +47,7 @@ end
 
 defmodule Remedy.Schema.Embed.Footer do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :text, :string, required: true
@@ -58,7 +58,7 @@ end
 
 defmodule Remedy.Schema.Embed.Image do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :url, :string
@@ -70,7 +70,7 @@ end
 
 defmodule Remedy.Schema.Embed.Provider do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :provider, :string
@@ -80,7 +80,7 @@ end
 
 defmodule Remedy.Schema.Embed.Thumbnail do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   embedded_schema do
     field :url, :string

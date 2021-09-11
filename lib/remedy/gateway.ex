@@ -3,7 +3,7 @@ defmodule Remedy.Gateway do
 
   use Supervisor
 
-  alias Remedy.Gateway.{EventAdmission, EventBuffer, ShardSupervisor}
+  alias Remedy.Gateway.{EventAdmission, EventBuffer, SessionSupervisor}
 
   require Logger
 
@@ -29,7 +29,7 @@ defmodule Remedy.Gateway do
   defp shard_workers(gateway, shards), do: for(shard <- 0..(shards - 1), into: [], do: shard_worker(gateway, shard))
 
   defp shard_worker(gateway, shard),
-    do: Supervisor.child_spec({ShardSupervisor, %{gateway: gateway, shard: shard}}, id: shard)
+    do: Supervisor.child_spec({SessionSupervisor, %{gateway: gateway, shard: shard}}, id: shard)
 
   def num_shards do
     gateway() |> Tuple.to_list() |> List.last()

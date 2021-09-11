@@ -1,10 +1,12 @@
 defmodule Remedy.Bot do
+  defstruct [:hello]
+
   @moduledoc """
   Simple cache that stores information for the current user.
   """
 
   use Agent
-  use Remedy.Schema
+  use Remedy.Schema, :models
 
   @doc false
   def start_link(_args) do

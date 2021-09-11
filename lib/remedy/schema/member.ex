@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Member do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key false
 
   schema "members" do

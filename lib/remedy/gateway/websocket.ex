@@ -2,36 +2,44 @@ defmodule Remedy.Gateway.Websocket do
   @moduledoc """
   Contains all the information required to maintain the gateway websocket connection to Discord.
   """
-  use Remedy.Schema, :model
+  use Remedy.Schema
+
+  @type shard :: :integer
+  @type session_id :: String.t()
+  @type shard_pid :: pid()
+  @type heartbeat_interval :: integer()
+  @type worker :: pid()
 
   @primary_key false
   embedded_schema do
+    # We know all this when connecting
+    field :token, :string, redact: true, default: Application.get_env(:remedy, :token)
     field :shard, :integer
-    field :session, :integer
-    field :shard_pid, :any, virtual: true
-
-    field :worker, :any, virtual: true
-    field :conn_pid, :any, virtual: true
-    field :stream, :any, virtual: true
     field :gateway, :string
+
+    # Need to store to maintain connection
+    field :session_id, :integer
+    field :shard_pid, :any, virtual: true
+    field :heartbeat_interval, :integer
+
+    # Gun INfo
+    field :gun_worker, :any, virtual: true
+    field :gun_conn, :any, virtual: true
+    field :gun_data_stream, :any, virtual: true
     field :zlib_context, :any, virtual: true
 
     # Heartbeat
     field :last_heartbeat_send, :utc_datetime
     field :last_heartbeat_ack, :utc_datetime
+    field :last_heartbeat_latency, :integer
     field :heartbeat_ack, :boolean, default: false
-    field :heartbeat_interval, :integer
     field :heartbeat_timer, :any, virtual: true
 
-    # Raw ETF. Not guaranteed to be readable
-    field :payload, :any, virtual: true
-
     # Payload items that can actually be used.
-    field :opcode, :integer, default: 0
-    field :sequence, :integer, default: 0
-    field :data, :map, default: %{}
-    field :event, :string, default: nil
-    field :token, :string, redact: true, default: Application.get_env(:remedy, :token)
+    field :payload_op_code, :integer, default: 0
+    field :payload_sequence, :integer, default: 0
+    field :payload_data, :any, virtual: true
+    field :payload_op_event, :string, default: nil
   end
 
   @doc """

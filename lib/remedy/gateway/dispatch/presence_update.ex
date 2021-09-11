@@ -1,6 +1,6 @@
-defmodule Remedy.Gateway.Commands.Hello do
+defmodule Remedy.Schema.PresenceUpdate do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key {:id, Snowflake, autogenerate: false}
 
   # either "idle", "dnd", "online", or "offline"

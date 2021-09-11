@@ -1,6 +1,6 @@
 defmodule Remedy.Gateway.Intents do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   use BattleStandard
   @primary_key false
 

@@ -541,7 +541,7 @@
 # def update_voice_state(guild_id, channel_id, self_mute, self_deaf) do
 #   case GuildShard.get_shard(guild_id) do
 #     {:ok, shard_id} ->
-#       ShardSupervisor
+#       SessionSupervisor
 #       |> Supervisor.which_children()
 #       |> Enum.filter(fn {_id, _pid, _type, [modules]} -> modules == Remedy.Shard end)
 #       |> Enum.filter(fn {id, _pid, _type, _modules} -> id == shard_id end)

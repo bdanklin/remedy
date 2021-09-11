@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.StickerPack do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   @primary_key {:id, Snowflake, autogenerate: false}
 
   schema "sticker_packs" do

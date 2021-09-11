@@ -5,7 +5,7 @@ defmodule Remedy.Voice.Supervisor do
 
   alias Remedy.Voice.Session
   alias Remedy.Voice.Websocket
-  use Remedy.Schema
+  import Remedy.ModelHelpers
   require Logger
 
   def start_link(_opts) do

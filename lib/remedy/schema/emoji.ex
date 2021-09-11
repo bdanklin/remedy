@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Emoji do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   alias Remedy.CDN
 
   @type t :: %__MODULE__{

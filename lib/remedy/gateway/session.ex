@@ -3,6 +3,17 @@ defmodule Remedy.Gateway.Session do
   alias Remedy.{Gun, GatewayATC}
   alias Remedy.Gateway.{Websocket, EventAdmission}
   import Remedy.{CommandHelpers, OpcodeHelpers}
+
+  alias Remedy.Gateway.Commands.{
+    Heartbeat,
+    Hello,
+    Identify,
+    RequestGuildMembers,
+    Resume,
+    UpdatePresence,
+    UpdateVoiceState
+  }
+
   require Logger
   use GenServer
 
@@ -18,25 +29,31 @@ defmodule Remedy.Gateway.Session do
     {:noreply,
      socket
      |> GatewayATC.request_connect()
-     |> log_event("Runway Clear")
      |> Gun.open_await()
-     |> log_event("Connection Open")
      |> Gun.upgrade_ws_await()
-     |> log_event("Websocket Connected")
-     |> Gun.zlib_init()
-     |> log_event("Connection Established")}
+     |> Gun.zlib_init()}
   end
 
-  #######################
+  ###########################
   #### Gun Message Receivers
+  ## These are events received by the gun worker.
+  ## They are kinda ugly and I suppose this is the
+  ## only place they should go
+
+  def unpack_frame(%Websocket{zlib_context: zlib_context} = socket, frame) do
+    %{socket | payload: :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()}
+    |> parse_opcode()
+    |> parse_event()
+    |> parse_sequence()
+    |> parse_data()
+    |> drop_payload()
+  end
 
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
     {:noreply,
      socket
      |> Gun.unpack_frame(frame)
-     |> parse_opcode()
-     |> parse_event()
-     |> parse_sequence()
+     |> log_event("gun_ws")
      |> handle()}
   end
 
@@ -62,7 +79,6 @@ defmodule Remedy.Gateway.Session do
   def handle_info({:gun_up, _worker, _proto}, socket) do
     {:noreply,
      socket
-     |> Gun.upgrade_ws_await()
      |> log_event("RECONNECTED AFTER INTERRUPTION")}
   end
 
@@ -80,10 +96,7 @@ defmodule Remedy.Gateway.Session do
   def handle_info(:HEARTBEAT, socket) do
     {:noreply,
      socket
-     |> heartbeat()
-     |> IO.inspect()
-     |> Gun.send()
-     |> pacemaker()}
+     |> start_pacemaker()}
   end
 
   defp stop_the_heart(%Websocket{heartbeat_timer: heartbeat_timer} = socket) do
@@ -92,8 +105,9 @@ defmodule Remedy.Gateway.Session do
     socket
   end
 
-  defp pacemaker(%Websocket{heartbeat_interval: heartbeat_interval} = socket) do
+  defp start_pacemaker(%Websocket{heartbeat_interval: heartbeat_interval} = socket) do
     socket
+    |> send_heartbeat()
     |> Map.put(:heartbeat_timer, Process.send_after(self(), :HEARTBEAT, heartbeat_interval))
     |> Map.put(:heartbeat_ack, false)
     |> Map.put(:last_heartbeat_send, DateTime.utc_now())
@@ -104,47 +118,56 @@ defmodule Remedy.Gateway.Session do
 
   def handle(socket)
 
-  def handle(%Websocket{event: event} = socket), do: handle(event, socket)
+  def handle(%Websocket{payload_event: payload_event} = socket), do: handle(payload_event, socket)
 
   # ⬇ OP CODE 1 - DISPATCH
   def handle(:DISPATCH, socket) do
-    EventAdmission.digest(socket)
+    dispatch_digest(socket)
 
     socket
-    |> log_event()
   end
 
   # ⬇ OP CODE 10 - DISPATCH
   # todo: If session exists, resume instead of identify
-  def handle(:HELLO, %Websocket{payload: %{d: %{heartbeat_interval: heartbeat_interval}}} = socket) do
+  def handle(:HELLO, %Websocket{payload_data: %{heartbeat_interval: heartbeat_interval}} = socket) do
     %Websocket{socket | heartbeat_interval: heartbeat_interval}
-    |> pacemaker()
-    |> heartbeat()
-    |> Gun.send()
-    |> identify()
-    |> Gun.send()
     |> log_event()
+    |> start_pacemaker()
+    |> send_identify()
+    |> IO.inspect(label: "identify")
+  end
+
+  # ⬇ OP CODE 11 - HEARTBEAT_ACK - When the session is down. send identify
+  def handle(:HEARTBEAT_ACK, %Websocket{heartbeat_ack: true, session_id: nil} = socket) do
+    %Websocket{socket | heartbeat_ack: true, last_heartbeat_ack: DateTime.utc_now()}
+    |> send_identify()
+    |> log_event(:HEARTBEAT_ACK)
+    |> IO.inspect()
   end
 
   # ⬇ OP CODE 11 - HEARTBEAT_ACK
   def handle(:HEARTBEAT_ACK, socket) do
     %Websocket{socket | heartbeat_ack: true, last_heartbeat_ack: DateTime.utc_now()}
     |> log_event(:HEARTBEAT_ACK)
+    |> IO.inspect()
   end
 
   # ⬇ OP CODE 9 - INVALID_SESSION
   def handle(:INVALID_SESSION, socket) do
     socket
-    |> identify()
-    |> Gun.send()
+    |> send_identify()
     |> log_event(:INVALID_SESSION)
   end
 
   def handle(:RECONNECT, socket) do
     socket
-    |> identify()
-    |> Gun.send()
+    |> send_identify()
     |> log_event(:RECONNECT)
+  end
+
+  def handle(:READY, socket) do
+    socket
+    |> IO.inspect()
   end
 
   def handle(event, state) do
@@ -191,21 +214,6 @@ defmodule Remedy.Gateway.Session do
   end
 
   ##############
-  ##### Parsers
-
-  defp parse_opcode(%{payload: %{op: op}} = socket) do
-    %{socket | opcode: op}
-  end
-
-  defp parse_event(%{opcode: opcode} = socket) do
-    %{socket | event: event_atom(opcode)}
-  end
-
-  defp parse_sequence(%{payload: %{s: s}} = socket) do
-    %{socket | sequence: s}
-  end
-
-  ##############
   ##### Stuff to Uncomment and Fix
 
   # def update_status(pid, status, game, stream, type) do
@@ -231,4 +239,31 @@ defmodule Remedy.Gateway.Session do
   # payload = Payload.request_members_payload(guild_id, limit)
   # GenServer.cast(pid, {:request_guild_members, payload})
   # end
+
+  def send_heartbeat(socket, opts \\ []), do: Heartbeat.payload(socket, opts) |> Gun.send()
+  def send_identify(socket, opts \\ []), do: Identify.payload(socket, opts) |> IO.inspect() |> Gun.send()
+  def send_request_guild_members(socket, opts \\ []), do: RequestGuildMembers.payload(socket, opts)
+  def send_resume(socket, opts \\ []), do: Resume.payload(socket, opts)
+  def send_update_presence(socket, opts \\ []), do: UpdatePresence.payload(socket, opts)
+  def send_update_voice_state(socket, opts \\ []), do: UpdateVoiceState.payload(socket, opts)
+end
+
+defmodule Remedy.Gateway.SessionSupervisor do
+  @moduledoc false
+
+  use Supervisor
+
+  alias Remedy.Gateway.Session
+
+  def start_link(%{shard: shard} = opts) do
+    Supervisor.start_link(__MODULE__, opts, name: :"Shard-#{shard}")
+  end
+
+  def init(opts) do
+    children = [
+      {Session, opts}
+    ]
+
+    Supervisor.init(children, strategy: :one_for_all, max_restarts: 3, max_seconds: 60)
+  end
 end

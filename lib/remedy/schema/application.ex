@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.App do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "applications" do
@@ -27,7 +27,7 @@ end
 
 defmodule Remedy.Schema.Team do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
   alias Remedy.Schema.TeamMember
 
   @primary_key {:id, :id, autogenerate: false}
@@ -42,7 +42,7 @@ end
 
 defmodule Remedy.Schema.TeamMember do
   @moduledoc false
-  use Remedy.Schema, :model
+  use Remedy.Schema
 
   @primary_key false
   schema "team_members" do

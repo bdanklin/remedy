@@ -3,41 +3,27 @@ defmodule Remedy.Api do
   use Bitwise
   import Remedy.ModelHelpers
 
-  alias Remedy.{Bot, Constants, Util}
+  alias Remedy.{Bot, Endpoints, Util}
+  alias Remedy.Api.{Base, Bucket, Endpoints, Ratelimiter}
 
   import Sunbake.Snowflake,
     only: [is_snowflake: 1],
     warn: false
 
   alias Remedy.Schema.{
-    App,
     AuditLog,
     AuditLogChange,
     AuditLogEntry,
     AuditLogOption,
-    Ban,
     Channel,
-    Command,
-    Component,
     Embed,
     Emoji,
     Guild,
     Interaction,
-    InteractionData,
-    InteractionDataOption,
-    InteractionDataResolved,
     Member,
     Message,
-    Overwrite,
     Role,
-    StageInstance,
-    Sticker,
-    StickerPack,
-    Team,
-    TeamMember,
     User,
-    Voice,
-    VoiceState,
     Webhook
   }
 
@@ -197,7 +183,7 @@ defmodule Remedy.Api do
 
     request = %{
       method: :post,
-      route: Constants.channel_messages(channel_id),
+      route: Endpoints.channel_messages(channel_id),
       body: {:multipart, [create_multipart(file), {"payload_json", payload_json}]},
       options: [],
       headers: [
@@ -218,7 +204,7 @@ defmodule Remedy.Api do
   end
 
   defp create_message_with_json(channel_id, options) do
-    request(:post, Constants.channel_messages(channel_id), options)
+    request(:post, Endpoints.channel_messages(channel_id), options)
     |> handle_request_with_decode({:struct, Message})
   end
 
@@ -274,13 +260,13 @@ defmodule Remedy.Api do
 
   def edit_message(channel_id, message_id, %{} = options)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:patch, Constants.channel_message(channel_id, message_id), options)
+    request(:patch, Endpoints.channel_message(channel_id, message_id), options)
     |> handle_request_with_decode({:struct, Message})
   end
 
   def edit_message(channel_id, message_id, content)
       when is_snowflake(channel_id) and is_snowflake(message_id) and is_binary(content) do
-    request(:patch, Constants.channel_message(channel_id, message_id), %{content: content})
+    request(:patch, Endpoints.channel_message(channel_id, message_id), %{content: content})
     |> handle_request_with_decode({:struct, Message})
   end
 
@@ -330,7 +316,7 @@ defmodule Remedy.Api do
   @spec delete_message(Channel.id(), Message.id()) :: error | {:ok}
   def delete_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:delete, Constants.channel_message(channel_id, message_id))
+    request(:delete, Endpoints.channel_message(channel_id, message_id))
   end
 
   @doc ~S"""
@@ -365,7 +351,7 @@ defmodule Remedy.Api do
     do: create_reaction(channel_id, message_id, Emoji.api_name(emoji))
 
   def create_reaction(channel_id, message_id, emoji_api_name) do
-    request(:put, Constants.channel_reaction_me(channel_id, message_id, emoji_api_name))
+    request(:put, Endpoints.channel_reaction_me(channel_id, message_id, emoji_api_name))
   end
 
   @doc ~S"""
@@ -385,7 +371,7 @@ defmodule Remedy.Api do
     do: delete_own_reaction(channel_id, message_id, Emoji.api_name(emoji))
 
   def delete_own_reaction(channel_id, message_id, emoji_api_name) do
-    request(:delete, Constants.channel_reaction_me(channel_id, message_id, emoji_api_name))
+    request(:delete, Endpoints.channel_reaction_me(channel_id, message_id, emoji_api_name))
   end
 
   @doc ~S"""
@@ -406,7 +392,7 @@ defmodule Remedy.Api do
     do: delete_user_reaction(channel_id, message_id, Emoji.api_name(emoji), user_id)
 
   def delete_user_reaction(channel_id, message_id, emoji_api_name, user_id) do
-    request(:delete, Constants.channel_reaction(channel_id, message_id, emoji_api_name, user_id))
+    request(:delete, Endpoints.channel_reaction(channel_id, message_id, emoji_api_name, user_id))
   end
 
   @doc ~S"""
@@ -428,7 +414,7 @@ defmodule Remedy.Api do
   def delete_reaction(channel_id, message_id, emoji_api_name) do
     request(
       :delete,
-      Constants.channel_reactions_delete_emoji(channel_id, message_id, emoji_api_name)
+      Endpoints.channel_reactions_delete_emoji(channel_id, message_id, emoji_api_name)
     )
   end
 
@@ -449,7 +435,7 @@ defmodule Remedy.Api do
     do: get_reactions(channel_id, message_id, Emoji.api_name(emoji))
 
   def get_reactions(channel_id, message_id, emoji_api_name) do
-    request(:get, Constants.channel_reactions_get(channel_id, message_id, emoji_api_name))
+    request(:get, Endpoints.channel_reactions_get(channel_id, message_id, emoji_api_name))
     |> handle_request_with_decode({:list, {:struct, User}})
   end
 
@@ -464,7 +450,7 @@ defmodule Remedy.Api do
 
   @spec delete_all_reactions(Channel.id(), Message.id()) :: error | {:ok}
   def delete_all_reactions(channel_id, message_id) do
-    request(:delete, Constants.channel_reactions_delete(channel_id, message_id))
+    request(:delete, Endpoints.channel_reactions_delete(channel_id, message_id))
   end
 
   @doc ~S"""
@@ -481,7 +467,7 @@ defmodule Remedy.Api do
   """
   @spec get_channel(Channel.id()) :: error | {:ok, Channel.t()}
   def get_channel(channel_id) when is_snowflake(channel_id) do
-    request(:get, Constants.channel(channel_id))
+    request(:get, Endpoints.channel(channel_id))
     |> handle_request_with_decode({:struct, Channel})
   end
 
@@ -535,7 +521,7 @@ defmodule Remedy.Api do
   def modify_channel(channel_id, %{} = options, reason) when is_snowflake(channel_id) do
     %{
       method: :patch,
-      route: Constants.channel(channel_id),
+      route: Endpoints.channel(channel_id),
       body: options,
       options: [],
       headers: maybe_add_reason(reason)
@@ -568,7 +554,7 @@ defmodule Remedy.Api do
   def delete_channel(channel_id, reason \\ nil) when is_snowflake(channel_id) do
     %{
       method: :delete,
-      route: Constants.channel(channel_id),
+      route: Endpoints.channel(channel_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -634,7 +620,7 @@ defmodule Remedy.Api do
         non_empty_locator -> [{:limit, limit}, non_empty_locator]
       end
 
-    request(:get, Constants.channel_messages(channel_id), "", params: qs_params)
+    request(:get, Endpoints.channel_messages(channel_id), "", params: qs_params)
     |> handle_request_with_decode({:list, {:struct, Message}})
   end
 
@@ -654,7 +640,7 @@ defmodule Remedy.Api do
   @spec get_channel_message(Channel.id(), Message.id()) :: error | {:ok, Message.t()}
   def get_channel_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:get, Constants.channel_message(channel_id, message_id))
+    request(:get, Endpoints.channel_message(channel_id, message_id))
     |> handle_request_with_decode({:struct, Message})
   end
 
@@ -703,7 +689,7 @@ defmodule Remedy.Api do
     |> Stream.map(fn message_chunk ->
       request(
         :post,
-        Constants.channel_bulk_delete(channel_id),
+        Endpoints.channel_bulk_delete(channel_id),
         %{messages: message_chunk}
       )
     end)
@@ -741,7 +727,7 @@ defmodule Remedy.Api do
   def edit_channel_permissions(channel_id, overwrite_id, permission_info, reason \\ nil) do
     request(%{
       method: :put,
-      route: Constants.channel_permission(channel_id, overwrite_id),
+      route: Endpoints.channel_permission(channel_id, overwrite_id),
       body: permission_info,
       options: [],
       headers: maybe_add_reason(reason)
@@ -759,7 +745,7 @@ defmodule Remedy.Api do
   def delete_channel_permissions(channel_id, overwrite_id, reason \\ nil) do
     request(%{
       method: :delete,
-      route: Constants.channel_permission(channel_id, overwrite_id),
+      route: Endpoints.channel_permission(channel_id, overwrite_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -784,7 +770,7 @@ defmodule Remedy.Api do
 
   @spec get_channel_invites(Channel.id()) :: error | {:ok, [Invite.detailed_invite()]}
   def get_channel_invites(channel_id) when is_snowflake(channel_id) do
-    request(:get, Constants.channel_invites(channel_id))
+    request(:get, Endpoints.channel_invites(channel_id))
     |> handle_request_with_decode({:list, {:struct, Invite}})
   end
 
@@ -830,7 +816,7 @@ defmodule Remedy.Api do
       when is_snowflake(channel_id) and is_map(options) do
     %{
       method: :post,
-      route: Constants.channel_invites(channel_id),
+      route: Endpoints.channel_invites(channel_id),
       body: options,
       options: [],
       headers: maybe_add_reason(reason)
@@ -859,7 +845,7 @@ defmodule Remedy.Api do
   """
   @spec start_typing(integer) :: error | {:ok}
   def start_typing(channel_id) do
-    request(:post, Constants.channel_typing(channel_id))
+    request(:post, Endpoints.channel_typing(channel_id))
   end
 
   @doc ~S"""
@@ -877,7 +863,7 @@ defmodule Remedy.Api do
   """
   @spec get_pinned_messages(Channel.id()) :: error | {:ok, [Message.t()]}
   def get_pinned_messages(channel_id) when is_snowflake(channel_id) do
-    request(:get, Constants.channel_pins(channel_id))
+    request(:get, Endpoints.channel_pins(channel_id))
     |> handle_request_with_decode({:list, {:struct, Message}})
   end
 
@@ -900,7 +886,7 @@ defmodule Remedy.Api do
   @spec add_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
   def add_pinned_channel_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:put, Constants.channel_pin(channel_id, message_id))
+    request(:put, Endpoints.channel_pin(channel_id, message_id))
   end
 
   @doc """
@@ -916,7 +902,7 @@ defmodule Remedy.Api do
   @spec delete_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
   def delete_pinned_channel_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:delete, Constants.channel_pin(channel_id, message_id))
+    request(:delete, Endpoints.channel_pin(channel_id, message_id))
   end
 
   @doc ~S"""
@@ -928,7 +914,7 @@ defmodule Remedy.Api do
   """
   @spec list_guild_emojis(Guild.id()) :: error | {:ok, [Emoji.t()]}
   def list_guild_emojis(guild_id) do
-    request(:get, Constants.guild_emojis(guild_id))
+    request(:get, Endpoints.guild_emojis(guild_id))
     |> handle_request_with_decode({:list, {:struct, Emoji}})
   end
 
@@ -941,7 +927,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_emoji(Guild.id(), Emoji.id()) :: error | {:ok, Emoji.t()}
   def get_guild_emoji(guild_id, emoji_id) do
-    request(:get, Constants.guild_emoji(guild_id, emoji_id))
+    request(:get, Endpoints.guild_emoji(guild_id, emoji_id))
     |> handle_request_with_decode({:struct, Emoji})
   end
 
@@ -982,7 +968,7 @@ defmodule Remedy.Api do
   def create_guild_emoji(guild_id, %{} = options, reason) do
     %{
       method: :post,
-      route: Constants.guild_emojis(guild_id),
+      route: Endpoints.guild_emojis(guild_id),
       body: options,
       options: [],
       headers: maybe_add_reason(reason)
@@ -1022,7 +1008,7 @@ defmodule Remedy.Api do
   def modify_guild_emoji(guild_id, emoji_id, %{} = options, reason) do
     %{
       method: :patch,
-      route: Constants.guild_emoji(guild_id, emoji_id),
+      route: Endpoints.guild_emoji(guild_id, emoji_id),
       body: options,
       options: [],
       headers: maybe_add_reason(reason)
@@ -1046,7 +1032,7 @@ defmodule Remedy.Api do
     do:
       request(%{
         method: :delete,
-        route: Constants.guild_emoji(guild_id, emoji_id),
+        route: Endpoints.guild_emoji(guild_id, emoji_id),
         body: "",
         options: [],
         headers: maybe_add_reason(reason)
@@ -1064,7 +1050,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_audit_log(Guild.id(), options) :: {:ok, AuditLog.t()} | error
   def get_guild_audit_log(guild_id, options \\ []) do
-    request(:get, Constants.guild_audit_logs(guild_id), "", params: options)
+    request(:get, Endpoints.guild_audit_logs(guild_id), "", params: options)
     |> handle_request_with_decode({:struct, AuditLog})
   end
 
@@ -1082,7 +1068,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild(Guild.id()) :: error | {:ok, Guild.rest_guild()}
   def get_guild(guild_id) when is_snowflake(guild_id) do
-    request(:get, Constants.guild(guild_id))
+    request(:get, Endpoints.guild(guild_id))
     |> handle_request_with_decode({:struct, Guild})
   end
 
@@ -1137,7 +1123,7 @@ defmodule Remedy.Api do
 
     %{
       method: :patch,
-      route: Constants.guild(guild_id),
+      route: Endpoints.guild(guild_id),
       body: options,
       options: [],
       headers: maybe_add_reason(reason)
@@ -1163,7 +1149,7 @@ defmodule Remedy.Api do
   """
   @spec delete_guild(Guild.id()) :: error | {:ok}
   def delete_guild(guild_id) when is_snowflake(guild_id) do
-    request(:delete, Constants.guild(guild_id))
+    request(:delete, Endpoints.guild(guild_id))
   end
 
   @doc ~S"""
@@ -1180,7 +1166,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_channels(Guild.id()) :: error | {:ok, [Channel.guild_channel()]}
   def get_guild_channels(guild_id) when is_snowflake(guild_id) do
-    request(:get, Constants.guild_channels(guild_id))
+    request(:get, Endpoints.guild_channels(guild_id))
     |> handle_request_with_decode({:list, {:struct, Channel}})
   end
 
@@ -1220,7 +1206,7 @@ defmodule Remedy.Api do
     do: create_guild_channel(guild_id, Map.new(options))
 
   def create_guild_channel(guild_id, %{} = options) when is_snowflake(guild_id) do
-    request(:post, Constants.guild_channels(guild_id), options)
+    request(:post, Endpoints.guild_channels(guild_id), options)
     |> handle_request_with_decode({:struct, Channel})
   end
 
@@ -1245,7 +1231,7 @@ defmodule Remedy.Api do
           error | {:ok}
   def modify_guild_channel_positions(guild_id, positions)
       when is_snowflake(guild_id) and is_list(positions) do
-    request(:patch, Constants.guild_channels(guild_id), positions)
+    request(:patch, Endpoints.guild_channels(guild_id), positions)
   end
 
   @doc """
@@ -1261,7 +1247,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_member(Guild.id(), User.id()) :: error | {:ok, Member.t()}
   def get_guild_member(guild_id, user_id) when is_snowflake(guild_id) and is_snowflake(user_id) do
-    request(:get, Constants.guild_member(guild_id, user_id))
+    request(:get, Endpoints.guild_member(guild_id, user_id))
     |> handle_request_with_decode({:struct, Member})
   end
 
@@ -1288,7 +1274,7 @@ defmodule Remedy.Api do
     do: list_guild_members(guild_id, Map.new(options))
 
   def list_guild_members(guild_id, %{} = options) when is_snowflake(guild_id) do
-    request(:get, Constants.guild_members(guild_id), "", params: options)
+    request(:get, Endpoints.guild_members(guild_id), "", params: options)
     |> handle_request_with_decode({:list, {:struct, Member}})
   end
 
@@ -1333,7 +1319,7 @@ defmodule Remedy.Api do
 
   def add_guild_member(guild_id, user_id, %{} = options)
       when is_snowflake(guild_id) and is_snowflake(user_id) do
-    request(:put, Constants.guild_member(guild_id, user_id), options)
+    request(:put, Endpoints.guild_member(guild_id, user_id), options)
     |> handle_request_with_decode({:struct, Member})
   end
 
@@ -1369,7 +1355,7 @@ defmodule Remedy.Api do
 
   def modify_guild_member(guild_id, user_id, %{} = options)
       when is_snowflake(guild_id) and is_snowflake(user_id) do
-    request(:patch, Constants.guild_member(guild_id, user_id), options)
+    request(:patch, Endpoints.guild_member(guild_id, user_id), options)
   end
 
   @doc """
@@ -1390,7 +1376,7 @@ defmodule Remedy.Api do
   """
   @spec modify_current_user_nick(Guild.id(), options) :: error | {:ok, %{nick: String.t()}}
   def modify_current_user_nick(guild_id, options \\ %{}) do
-    request(:patch, Constants.guild_me_nick(guild_id), options)
+    request(:patch, Endpoints.guild_me_nick(guild_id), options)
     |> handle_request_with_decode()
   end
 
@@ -1405,7 +1391,7 @@ defmodule Remedy.Api do
   def add_guild_member_role(guild_id, user_id, role_id, reason \\ nil) do
     request(%{
       method: :put,
-      route: Constants.guild_member_role(guild_id, user_id, role_id),
+      route: Endpoints.guild_member_role(guild_id, user_id, role_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -1424,7 +1410,7 @@ defmodule Remedy.Api do
   def remove_guild_member_role(guild_id, user_id, role_id, reason \\ nil) do
     request(%{
       method: :delete,
-      route: Constants.guild_member_role(guild_id, user_id, role_id),
+      route: Endpoints.guild_member_role(guild_id, user_id, role_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -1453,7 +1439,7 @@ defmodule Remedy.Api do
       when is_snowflake(guild_id) and is_snowflake(user_id) do
     request(%{
       method: :delete,
-      route: Constants.guild_member(guild_id, user_id),
+      route: Endpoints.guild_member(guild_id, user_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -1466,7 +1452,7 @@ defmodule Remedy.Api do
   @doc since: "0.5.0"
   @spec get_guild_ban(integer, integer) :: error | {:ok, Guild.Ban.t()}
   def get_guild_ban(guild_id, user_id) do
-    request(:get, Constants.guild_ban(guild_id, user_id))
+    request(:get, Endpoints.guild_ban(guild_id, user_id))
     |> handle_request_with_decode({:struct, Guild.Ban})
   end
 
@@ -1477,7 +1463,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_bans(integer) :: error | {:ok, [Remedy.Struct.User.t()]}
   def get_guild_bans(guild_id) do
-    request(:get, Constants.guild_bans(guild_id))
+    request(:get, Endpoints.guild_bans(guild_id))
     |> handle_request_with_decode
   end
 
@@ -1491,7 +1477,7 @@ defmodule Remedy.Api do
   def create_guild_ban(guild_id, user_id, days_to_delete, reason \\ nil) do
     request(%{
       method: :put,
-      route: Constants.guild_ban(guild_id, user_id),
+      route: Endpoints.guild_ban(guild_id, user_id),
       body: %{"delete-message-days": days_to_delete},
       options: [],
       headers: maybe_add_reason(reason)
@@ -1508,7 +1494,7 @@ defmodule Remedy.Api do
   def remove_guild_ban(guild_id, user_id, reason \\ nil) do
     request(%{
       method: :delete,
-      route: Constants.guild_ban(guild_id, user_id),
+      route: Endpoints.guild_ban(guild_id, user_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -1528,7 +1514,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_roles(Guild.id()) :: error | {:ok, [Role.t()]}
   def get_guild_roles(guild_id) when is_snowflake(guild_id) do
-    request(:get, Constants.guild_roles(guild_id))
+    request(:get, Endpoints.guild_roles(guild_id))
     |> handle_request_with_decode({:list, {:struct, Role}})
   end
 
@@ -1565,7 +1551,7 @@ defmodule Remedy.Api do
   def create_guild_role(guild_id, %{} = options, reason) when is_snowflake(guild_id) do
     %{
       method: :post,
-      route: Constants.guild_roles(guild_id),
+      route: Endpoints.guild_roles(guild_id),
       body: options,
       options: [],
       headers: maybe_add_reason(reason)
@@ -1599,7 +1585,7 @@ defmodule Remedy.Api do
       when is_snowflake(guild_id) and is_list(positions) do
     %{
       method: :patch,
-      route: Constants.guild_roles(guild_id),
+      route: Endpoints.guild_roles(guild_id),
       body: positions,
       options: [],
       headers: maybe_add_reason(reason)
@@ -1643,7 +1629,7 @@ defmodule Remedy.Api do
       when is_snowflake(guild_id) and is_snowflake(role_id) do
     %{
       method: :patch,
-      route: Constants.guild_role(guild_id, role_id),
+      route: Endpoints.guild_role(guild_id, role_id),
       body: options,
       options: [],
       headers: maybe_add_reason(reason)
@@ -1673,7 +1659,7 @@ defmodule Remedy.Api do
       when is_snowflake(guild_id) and is_snowflake(role_id) do
     request(%{
       method: :delete,
-      route: Constants.guild_role(guild_id, role_id),
+      route: Endpoints.guild_role(guild_id, role_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -1696,7 +1682,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_prune_count(Guild.id(), 1..30) :: error | {:ok, %{pruned: integer}}
   def get_guild_prune_count(guild_id, days) when is_snowflake(guild_id) and days in 1..30 do
-    request(:get, Constants.guild_prune(guild_id), "", params: [days: days])
+    request(:get, Endpoints.guild_prune(guild_id), "", params: [days: days])
     |> handle_request_with_decode
   end
 
@@ -1723,7 +1709,7 @@ defmodule Remedy.Api do
       when is_snowflake(guild_id) and days in 1..30 do
     %{
       method: :post,
-      route: Constants.guild_prune(guild_id),
+      route: Endpoints.guild_prune(guild_id),
       body: "",
       options: [params: [days: days]],
       headers: maybe_add_reason(reason)
@@ -1739,7 +1725,7 @@ defmodule Remedy.Api do
   """
   @spec get_voice_region(integer) :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
   def get_voice_region(guild_id) do
-    request(:get, Constants.guild_voice_regions(guild_id))
+    request(:get, Endpoints.guild_voice_regions(guild_id))
     |> handle_request_with_decode
   end
 
@@ -1759,7 +1745,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_invites(Guild.id()) :: error | {:ok, [Invite.detailed_invite()]}
   def get_guild_invites(guild_id) when is_snowflake(guild_id) do
-    request(:get, Constants.guild_invites(guild_id))
+    request(:get, Endpoints.guild_invites(guild_id))
     |> handle_request_with_decode({:list, {:struct, Invite}})
   end
 
@@ -1771,7 +1757,7 @@ defmodule Remedy.Api do
   @spec get_guild_integrations(Guild.id()) ::
           error | {:ok, [Remedy.Struct.Guild.Integration.t()]}
   def get_guild_integrations(guild_id) do
-    request(:get, Constants.guild_integrations(guild_id))
+    request(:get, Endpoints.guild_integrations(guild_id))
     |> handle_request_with_decode
   end
 
@@ -1789,7 +1775,7 @@ defmodule Remedy.Api do
           id: integer
         }) :: error | {:ok}
   def create_guild_integrations(guild_id, options) do
-    request(:post, Constants.guild_integrations(guild_id), options)
+    request(:post, Endpoints.guild_integrations(guild_id), options)
   end
 
   @doc """
@@ -1808,7 +1794,7 @@ defmodule Remedy.Api do
           enable_emoticons: boolean
         }) :: error | {:ok}
   def modify_guild_integrations(guild_id, integration_id, options) do
-    request(:patch, Constants.guild_integration(guild_id, integration_id), options)
+    request(:patch, Endpoints.guild_integration(guild_id, integration_id), options)
   end
 
   @doc """
@@ -1818,7 +1804,7 @@ defmodule Remedy.Api do
   """
   @spec delete_guild_integrations(integer, integer) :: error | {:ok}
   def delete_guild_integrations(guild_id, integration_id) do
-    request(:delete, Constants.guild_integration(guild_id, integration_id))
+    request(:delete, Endpoints.guild_integration(guild_id, integration_id))
   end
 
   @doc """
@@ -1828,7 +1814,7 @@ defmodule Remedy.Api do
   """
   @spec sync_guild_integrations(integer, integer) :: error | {:ok}
   def sync_guild_integrations(guild_id, integration_id) do
-    request(:post, Constants.guild_integration_sync(guild_id, integration_id))
+    request(:post, Endpoints.guild_integration_sync(guild_id, integration_id))
   end
 
   @doc """
@@ -1836,7 +1822,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_embed(integer) :: error | {:ok, map}
   def get_guild_embed(guild_id) do
-    request(:get, Constants.guild_embed(guild_id))
+    request(:get, Endpoints.guild_embed(guild_id))
   end
 
   @doc """
@@ -1844,7 +1830,7 @@ defmodule Remedy.Api do
   """
   @spec modify_guild_embed(integer, map) :: error | {:ok, map}
   def modify_guild_embed(guild_id, options) do
-    request(:patch, Constants.guild_embed(guild_id), options)
+    request(:patch, Endpoints.guild_embed(guild_id), options)
     |> handle_request_with_decode
   end
 
@@ -1868,7 +1854,7 @@ defmodule Remedy.Api do
   """
   @spec get_invite(Invite.code(), options) :: error | {:ok, Invite.simple_invite()}
   def get_invite(invite_code, options \\ []) when is_binary(invite_code) do
-    request(:get, Constants.invite(invite_code), "", params: options)
+    request(:get, Endpoints.invite(invite_code), "", params: options)
     |> handle_request_with_decode({:struct, Invite})
   end
 
@@ -1888,7 +1874,7 @@ defmodule Remedy.Api do
   """
   @spec delete_invite(Invite.code()) :: error | {:ok, Invite.simple_invite()}
   def delete_invite(invite_code) when is_binary(invite_code) do
-    request(:delete, Constants.invite(invite_code))
+    request(:delete, Endpoints.invite(invite_code))
     |> handle_request_with_decode({:struct, Invite})
   end
 
@@ -1900,7 +1886,7 @@ defmodule Remedy.Api do
   """
   @spec get_user(User.id()) :: error | {:ok, User.t()}
   def get_user(user_id) do
-    request(:get, Constants.user(user_id))
+    request(:get, Endpoints.user(user_id))
     |> handle_request_with_decode({:struct, User})
   end
 
@@ -1916,7 +1902,7 @@ defmodule Remedy.Api do
   """
   @spec get_current_user() :: error | {:ok, User.t()}
   def get_current_user do
-    request(:get, Constants.me())
+    request(:get, Endpoints.me())
     |> handle_request_with_decode({:struct, User})
   end
 
@@ -1941,7 +1927,7 @@ defmodule Remedy.Api do
     do: modify_current_user(Map.new(options))
 
   def modify_current_user(%{} = options) do
-    request(:patch, Constants.me(), options)
+    request(:patch, Endpoints.me(), options)
     |> handle_request_with_decode({:struct, User})
   end
 
@@ -1974,7 +1960,7 @@ defmodule Remedy.Api do
     do: get_current_user_guilds(Map.new(options))
 
   def get_current_user_guilds(options) when is_map(options) do
-    request(:get, Constants.me_guilds(), "", params: options)
+    request(:get, Endpoints.me_guilds(), "", params: options)
     |> handle_request_with_decode({:list, {:struct, Guild}})
   end
 
@@ -1987,7 +1973,7 @@ defmodule Remedy.Api do
   def leave_guild(guild_id) do
     request(%{
       method: :delete,
-      route: Constants.me_guild(guild_id),
+      route: Endpoints.me_guild(guild_id),
       body: "",
       options: [],
       headers: []
@@ -2008,7 +1994,7 @@ defmodule Remedy.Api do
   """
   @spec get_user_dms() :: error | {:ok, [Channel.dm_channel()]}
   def get_user_dms do
-    request(:get, Constants.me_channels())
+    request(:get, Endpoints.me_channels())
     |> handle_request_with_decode({:list, {:struct, Channel}})
   end
 
@@ -2026,7 +2012,7 @@ defmodule Remedy.Api do
   """
   @spec create_dm(User.id()) :: error | {:ok, Channel.dm_channel()}
   def create_dm(user_id) when is_snowflake(user_id) do
-    request(:post, Constants.me_channels(), %{recipient_id: user_id})
+    request(:post, Endpoints.me_channels(), %{recipient_id: user_id})
     |> handle_request_with_decode({:struct, Channel})
   end
 
@@ -2048,7 +2034,7 @@ defmodule Remedy.Api do
   @spec create_group_dm([String.t()], %{optional(User.id()) => String.t()}) ::
           error | {:ok, Channel.group_dm_channel()}
   def create_group_dm(access_tokens, nicks) when is_list(access_tokens) and is_map(nicks) do
-    request(:post, Constants.me_channels(), %{access_tokens: access_tokens, nicks: nicks})
+    request(:post, Endpoints.me_channels(), %{access_tokens: access_tokens, nicks: nicks})
     |> handle_request_with_decode({:struct, Channel})
   end
 
@@ -2057,7 +2043,7 @@ defmodule Remedy.Api do
   """
   @spec get_user_connections() :: error | {:ok, list()}
   def get_user_connections do
-    request(:get, Constants.me_connections())
+    request(:get, Endpoints.me_connections())
     |> handle_request_with_decode
   end
 
@@ -2066,7 +2052,7 @@ defmodule Remedy.Api do
   """
   @spec list_voice_regions() :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
   def list_voice_regions do
-    request(:get, Constants.regions())
+    request(:get, Endpoints.regions())
     |> handle_request_with_decode
   end
 
@@ -2091,7 +2077,7 @@ defmodule Remedy.Api do
   def create_webhook(channel_id, args, reason \\ nil) do
     %{
       method: :post,
-      route: Constants.webhooks_channel(channel_id),
+      route: Endpoints.webhooks_channel(channel_id),
       body: args,
       options: [],
       headers: maybe_add_reason(reason)
@@ -2108,7 +2094,7 @@ defmodule Remedy.Api do
   """
   @spec get_channel_webhooks(Channel.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
   def get_channel_webhooks(channel_id) do
-    request(:get, Constants.webhooks_channel(channel_id))
+    request(:get, Endpoints.webhooks_channel(channel_id))
     |> handle_request_with_decode
   end
 
@@ -2120,7 +2106,7 @@ defmodule Remedy.Api do
   """
   @spec get_guild_webhooks(Guild.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
   def get_guild_webhooks(guild_id) do
-    request(:get, Constants.webhooks_guild(guild_id))
+    request(:get, Endpoints.webhooks_guild(guild_id))
     |> handle_request_with_decode
   end
 
@@ -2132,7 +2118,7 @@ defmodule Remedy.Api do
   """
   @spec get_webhook(Webhook.id()) :: error | {:ok, Remedy.Struct.Webhook.t()}
   def get_webhook(webhook_id) do
-    request(:get, Constants.webhook(webhook_id))
+    request(:get, Endpoints.webhook(webhook_id))
     |> handle_request_with_decode
   end
 
@@ -2149,7 +2135,7 @@ defmodule Remedy.Api do
   @spec get_webhook_with_token(Webhook.id(), Webhook.token()) ::
           error | {:ok, Remedy.Struct.Webhook.t()}
   def get_webhook_with_token(webhook_id, webhook_token) do
-    request(:get, Constants.webhook_token(webhook_id, webhook_token))
+    request(:get, Endpoints.webhook_token(webhook_id, webhook_token))
     |> handle_request_with_decode
   end
 
@@ -2174,7 +2160,7 @@ defmodule Remedy.Api do
   def modify_webhook(webhook_id, args, reason \\ nil) do
     %{
       method: :patch,
-      route: Constants.webhook(webhook_id),
+      route: Endpoints.webhook(webhook_id),
       body: args,
       options: [],
       headers: maybe_add_reason(reason)
@@ -2209,7 +2195,7 @@ defmodule Remedy.Api do
   def modify_webhook_with_token(webhook_id, webhook_token, args, reason \\ nil) do
     %{
       method: :patch,
-      route: Constants.webhook_token(webhook_id, webhook_token),
+      route: Endpoints.webhook_token(webhook_id, webhook_token),
       body: args,
       options: [],
       headers: maybe_add_reason(reason)
@@ -2229,7 +2215,7 @@ defmodule Remedy.Api do
   def delete_webhook(webhook_id, reason \\ nil) do
     request(%{
       method: :delete,
-      route: Constants.webhook(webhook_id),
+      route: Endpoints.webhook(webhook_id),
       body: "",
       options: [],
       headers: maybe_add_reason(reason)
@@ -2298,7 +2284,7 @@ defmodule Remedy.Api do
   def execute_webhook(webhook_id, webhook_token, %{file: _} = args, wait) do
     request_multipart(
       :post,
-      Constants.webhook_token(webhook_id, webhook_token),
+      Endpoints.webhook_token(webhook_id, webhook_token),
       args,
       params: [wait: wait]
     )
@@ -2307,7 +2293,7 @@ defmodule Remedy.Api do
   def execute_webhook(webhook_id, webhook_token, %{content: _} = args, wait) do
     request(
       :post,
-      Constants.webhook_token(webhook_id, webhook_token),
+      Endpoints.webhook_token(webhook_id, webhook_token),
       args,
       params: [wait: wait]
     )
@@ -2322,7 +2308,7 @@ defmodule Remedy.Api do
   """
   @spec execute_slack_webhook(Webhook.id(), Webhook.token(), boolean) :: error | {:ok}
   def execute_slack_webhook(webhook_id, webhook_token, wait \\ false) do
-    request(:post, Constants.webhook_slack(webhook_id, webhook_token), params: [wait: wait])
+    request(:post, Endpoints.webhook_slack(webhook_id, webhook_token), params: [wait: wait])
   end
 
   @doc """
@@ -2334,7 +2320,7 @@ defmodule Remedy.Api do
   """
   @spec execute_git_webhook(Webhook.id(), Webhook.token(), boolean) :: error | {:ok}
   def execute_git_webhook(webhook_id, webhook_token, wait \\ false) do
-    request(:post, Constants.webhook_git(webhook_id, webhook_token), params: [wait: wait])
+    request(:post, Endpoints.webhook_git(webhook_id, webhook_token), params: [wait: wait])
   end
 
   @doc """
@@ -2362,7 +2348,7 @@ defmodule Remedy.Api do
   """
   @spec get_application_information() :: error | {:ok, map()}
   def get_application_information do
-    request(:get, Constants.application_information())
+    request(:get, Endpoints.application_information())
     |> handle_request_with_decode
   end
 
@@ -2395,7 +2381,7 @@ defmodule Remedy.Api do
   @spec get_global_application_commands() :: {:ok, [map()]} | error
   @spec get_global_application_commands(User.id()) :: {:ok, [map()]} | error
   def get_global_application_commands(application_id \\ Bot.get().id) do
-    request(:get, Constants.global_application_commands(application_id))
+    request(:get, Endpoints.global_application_commands(application_id))
     |> handle_request_with_decode
   end
 
@@ -2427,7 +2413,7 @@ defmodule Remedy.Api do
   @spec create_global_application_command(map()) :: {:ok, map()} | error
   @spec create_global_application_command(User.id(), map()) :: {:ok, map()} | error
   def create_global_application_command(application_id \\ Bot.get().id, command) do
-    request(:post, Constants.global_application_commands(application_id), command)
+    request(:post, Endpoints.global_application_commands(application_id), command)
     |> handle_request_with_decode
   end
 
@@ -2453,7 +2439,7 @@ defmodule Remedy.Api do
         command_id,
         command
       ) do
-    request(:patch, Constants.global_application_command(application_id, command_id), command)
+    request(:patch, Endpoints.global_application_command(application_id, command_id), command)
     |> handle_request_with_decode
   end
 
@@ -2468,7 +2454,7 @@ defmodule Remedy.Api do
   @spec delete_global_application_command(Snowflake.t()) :: {:ok} | error
   @spec delete_global_application_command(User.id(), Snowflake.t()) :: {:ok} | error
   def delete_global_application_command(application_id \\ Bot.get().id, command_id) do
-    request(:delete, Constants.global_application_command(application_id, command_id))
+    request(:delete, Endpoints.global_application_command(application_id, command_id))
   end
 
   @doc """
@@ -2496,14 +2482,14 @@ defmodule Remedy.Api do
   @spec bulk_overwrite_global_application_commands([map()]) :: {:ok, [map()]} | error
   @spec bulk_overwrite_global_application_commands(User.id(), [map()]) :: {:ok, [map()]} | error
   def bulk_overwrite_global_application_commands(application_id \\ Bot.get().id, commands) do
-    request(:put, Constants.global_application_commands(application_id), commands)
+    request(:put, Endpoints.global_application_commands(application_id), commands)
     |> handle_request_with_decode
   end
 
   @spec get_guild_application_commands(Guild.id()) :: {:ok, [map()]} | error
   @spec get_guild_application_commands(User.id(), Guild.id()) :: {:ok, [map()]} | error
   def get_guild_application_commands(application_id \\ Bot.get().id, guild_id) do
-    request(:get, Constants.guild_application_commands(application_id, guild_id))
+    request(:get, Endpoints.guild_application_commands(application_id, guild_id))
     |> handle_request_with_decode
   end
 
@@ -2514,7 +2500,7 @@ defmodule Remedy.Api do
         guild_id,
         command
       ) do
-    request(:post, Constants.guild_application_commands(application_id, guild_id), command)
+    request(:post, Endpoints.guild_application_commands(application_id, guild_id), command)
     |> handle_request_with_decode
   end
 
@@ -2529,7 +2515,7 @@ defmodule Remedy.Api do
       ) do
     request(
       :patch,
-      Constants.guild_application_command(application_id, guild_id, command_id),
+      Endpoints.guild_application_command(application_id, guild_id, command_id),
       command
     )
     |> handle_request_with_decode
@@ -2541,7 +2527,7 @@ defmodule Remedy.Api do
         guild_id,
         command_id
       ) do
-    request(:delete, Constants.guild_application_command(application_id, guild_id, command_id))
+    request(:delete, Endpoints.guild_application_command(application_id, guild_id, command_id))
   end
 
   @doc """
@@ -2571,7 +2557,7 @@ defmodule Remedy.Api do
         guild_id,
         commands
       ) do
-    request(:put, Constants.guild_application_commands(application_id, guild_id), commands)
+    request(:put, Endpoints.guild_application_commands(application_id, guild_id), commands)
     |> handle_request_with_decode
   end
 
@@ -2617,7 +2603,7 @@ defmodule Remedy.Api do
   """
   @spec create_interaction_response(Interaction.id(), Interaction.token(), map()) :: {:ok} | error
   def create_interaction_response(id, token, response) do
-    request(:post, Constants.interaction_callback(id, token), response)
+    request(:post, Endpoints.interaction_callback(id, token), response)
   end
 
   # edit original interaction response is purposefully not implemented
@@ -2652,7 +2638,7 @@ defmodule Remedy.Api do
         token,
         message_id
       ) do
-    request(:delete, Constants.interaction_followup_message(application_id, token, message_id))
+    request(:delete, Endpoints.interaction_followup_message(application_id, token, message_id))
   end
 
   @spec maybe_add_reason(String.t() | nil) :: list()
@@ -2737,11 +2723,12 @@ defmodule Remedy.Api do
   defp handle_request_with_decode({:ok}, _type), do: {:ok}
   defp handle_request_with_decode({:error, _} = error, _type), do: error
 
-  defp handle_request_with_decode({:ok, body}, type) do
+  defp handle_request_with_decode({:ok, body}, _type) do
     convert =
       body
       |> Poison.decode!(keys: :atoms)
-      |> Util.cast(type)
+
+    # |> Util.cast(type)
 
     {:ok, convert}
   end

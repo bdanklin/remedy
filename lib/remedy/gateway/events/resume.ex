@@ -8,7 +8,7 @@ defmodule Remedy.Gateway.Events.Resume do
     field :sequence, :integer
   end
 
-  def payload(%Websocket{session_id: session_id, payload_sequence: payload_sequence} = _socket, _opts) do
+  def send(%Websocket{session_id: session_id, payload_sequence: payload_sequence} = _socket, _opts) do
     %__MODULE__{
       token_id: Application.get_env(:remedy, :token),
       session_id: session_id,

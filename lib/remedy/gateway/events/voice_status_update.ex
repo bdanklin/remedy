@@ -1,4 +1,4 @@
-defmodule Remedy.Gateway.Events.UpdateVoiceState do
+defmodule Remedy.Gateway.Events.VoiceStatusUpdate do
   @moduledoc false
   use Remedy.Gateway.Payload
 
@@ -9,12 +9,12 @@ defmodule Remedy.Gateway.Events.UpdateVoiceState do
     field :self_deaf, :boolean, default: false
   end
 
-  def payload(_socket, opts) do
-    %__MODULE__{
-      guild_id: opts[:guild_id],
-      channel_id: opts[:channel_id],
-      self_mute: opts[:self_mute] || false,
-      self_deaf: opts[:self_deaf] || false
-    }
+  def payload(socket, opts) do
+    {%__MODULE__{
+       guild_id: opts[:guild_id],
+       channel_id: opts[:channel_id],
+       self_mute: opts[:self_mute] || false,
+       self_deaf: opts[:self_deaf] || false
+     }, socket}
   end
 end

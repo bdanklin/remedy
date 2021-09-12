@@ -59,7 +59,6 @@ defmodule Remedy.Gateway do
 
       {:ok, body} ->
         body = Poison.decode!(body)
-        IO.inspect(body)
 
         "wss://" <> url = body["url"]
         shards = if body["shards"], do: body["shards"], else: 1

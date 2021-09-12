@@ -3,7 +3,7 @@
 
 #   alias Remedy.Cache.{ChannelCache, GuildCache}
 #   alias Remedy.Constants
-#   alias Remedy.Gateway.EventAdmission
+#   alias Remedy.Gateway.EventBroadcaster
 #   alias Remedy.Voice.Websocket
 #   alias Remedy.Voice
 #   alias Remedy.Voice.{Event, Payload}

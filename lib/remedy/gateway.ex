@@ -3,7 +3,7 @@ defmodule Remedy.Gateway do
 
   use Supervisor
 
-  alias Remedy.Gateway.{EventAdmission, EventBuffer, SessionSupervisor}
+  alias Remedy.Gateway.{EventBroadcaster, EventBuffer, SessionSupervisor}
 
   require Logger
 
@@ -19,7 +19,7 @@ defmodule Remedy.Gateway do
   def init(%{url: url, shards: shards}) do
     children =
       [
-        EventAdmission,
+        EventBroadcaster,
         EventBuffer
       ] ++ shard_workers(url, shards)
 

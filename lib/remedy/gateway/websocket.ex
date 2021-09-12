@@ -18,7 +18,7 @@ defmodule Remedy.Gateway.Websocket do
     field :gateway, :string
 
     # Need to store to maintain connection
-    field :session_id, :integer
+    field :session_id, :string
     field :shard_pid, :any, virtual: true
     field :heartbeat_interval, :integer
 
@@ -31,15 +31,15 @@ defmodule Remedy.Gateway.Websocket do
     # Heartbeat
     field :last_heartbeat_send, :utc_datetime
     field :last_heartbeat_ack, :utc_datetime
-    field :last_heartbeat_latency, :integer
     field :heartbeat_ack, :boolean, default: false
     field :heartbeat_timer, :any, virtual: true
 
     # Payload items that can actually be used.
     field :payload_op_code, :integer, default: 0
-    field :payload_sequence, :integer, default: 0
+    field :payload_op_event, :string, default: ""
+    field :payload_sequence, :integer
     field :payload_data, :any, virtual: true
-    field :payload_op_event, :string, default: nil
+    field :payload_dispatch_event, :string
   end
 
   @doc """

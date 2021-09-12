@@ -302,7 +302,7 @@ defmodule Remedy.Shard.EventDispatch do
 end
 
 ### Genstage stuff below here. Don't worry about it too much 🦆🦆🦆🦆
-defmodule Remedy.Gateway.EventAdmission do
+defmodule Remedy.Gateway.EventBroadcaster do
   @moduledoc false
 
   use GenStage
@@ -321,7 +321,6 @@ defmodule Remedy.Gateway.EventAdmission do
     GenStage.cast(__MODULE__, {:notify, socket})
   end
 
-  @spec handle_cast({:notify, any}, {:queue.queue(any), any}) :: {:noreply, list, {any, any}, :hibernate}
   def handle_cast({:notify, socket}, {queue, demand}) do
     dispatch_events(:queue.in(socket, queue), demand, [])
   end
@@ -345,7 +344,7 @@ defmodule Remedy.Gateway.EventBuffer do
   use GenStage
 
   alias Remedy.Shard.Dispatch
-  alias Remedy.Gateway.EventAdmission
+  alias Remedy.Gateway.EventBroadcaster
 
   require Logger
 
@@ -354,7 +353,7 @@ defmodule Remedy.Gateway.EventBuffer do
   end
 
   def init(_opts) do
-    {:producer_consumer, [], subscribe_to: [EventAdmission]}
+    {:producer_consumer, [], subscribe_to: [EventBroadcaster]}
   end
 
   def handle_events(events, _from, state) do

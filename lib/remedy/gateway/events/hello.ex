@@ -1,21 +1,16 @@
 defmodule Remedy.Gateway.Events.Hello do
   @moduledoc false
-  use Remedy.Schema
-  @primary_key false
+  use Remedy.Gateway.Payload
 
-  # either "idle", "dnd", "online", or "offline"
-
-  embedded_schema do
-    field :heartbeat_interval, :integer
+  def digest(%Websocket{session_id: session_id} = socket, payload) when is_binary(session_id) do
+    %Websocket{socket | heartbeat_interval: payload["heartbeat_interval"]}
+    |> Session.start_pacemaker()
+    |> Payload.send(:RESUME)
   end
 
-  def digest(socket, )
+  def digest(%Websocket{} = socket, payload) do
+    %Websocket{socket | heartbeat_interval: payload["heartbeat_interval"]}
+    |> Session.start_pacemaker()
+    |> Payload.send(:IDENTIFY)
+  end
 end
-
-# def handle(:HELLO, %Websocket{payload_data: %{heartbeat_interval: heartbeat_interval}} = socket) do
-# %Websocket{socket | heartbeat_interval: heartbeat_interval}
-# |> log_event()
-# |> start_pacemaker()
-# |> send_identify()
-# |> IO.inspect(label: "identify")
-# end

@@ -69,7 +69,11 @@ defmodule Remedy.MixProject do
 
   defp deps do
     [
-      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      # Code Analysis
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:credo, "~> 1.4", only: [:dev], runtime: false},
+      {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
+      {:doctor, "~> 0.18.0", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.15", only: [:dev]},
       {:recon, "~> 2.3", only: [:dev]},
       {:progress_bar, "~> 2.0"},
@@ -79,7 +83,6 @@ defmodule Remedy.MixProject do
       {:gun, "~> 2.0", hex: :remedy_gun},
       {:kcl, "~> 1.4"},
       {:porcelain, "~> 2.0"},
-      {:credo, "~> 1.4"},
       {:gen_stage, "~> 1.0"},
       {:unsafe, "~> 1.0"},
       {:ecto, "~> 3.7"},

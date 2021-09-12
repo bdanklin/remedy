@@ -4,11 +4,9 @@ defmodule Remedy.Gateway.Events.Identify do
   alias Remedy.Gateway.Intents
   use Remedy.Gateway.Payload
 
-  @large_threshold 50
-
-  def send(%Websocket{shard: shard} = socket, _opts) do
+  def send(%Websocket{shard: shard, token: token}, _opts) do
     %{
-      "token" => Application.get_env(:remedy, :token),
+      "token" => token,
       "properties" => %{
         "$os" => to_string(:erlang.system_info(:system_architecture)),
         "$browser" => "Remedy",
@@ -17,7 +15,7 @@ defmodule Remedy.Gateway.Events.Identify do
         "$referring_domain" => ""
       },
       "compress" => true,
-      "large_threshold" => @large_threshold,
+      "large_threshold" => 250,
       "shard" => [shard, Util.num_shards()],
       "intents" => Intents.get()
     }

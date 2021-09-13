@@ -76,4 +76,9 @@ defmodule Remedy.OpcodeHelpers do
     |> Recase.to_snake()
     |> String.upcase()
   end
+
+  def op_from_mod do
+    event_from_mod()
+    |> op_code()
+  end
 end

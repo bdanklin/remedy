@@ -14,9 +14,9 @@ defmodule Remedy.Application do
     children = [
       Remedy.Api.Ratelimiter,
       Remedy.GatewayATC,
-      Remedy.Gateway,
+      Remedy.Gateway
       # Remedy.Voice.Supervisor,
-      Remedy.Bot
+      # Remedy.Bot
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)

@@ -8,7 +8,7 @@ defmodule Remedy.Api.Ratelimiter do
 
   alias Remedy.Api.{Base, Bucket}
   alias Remedy.ApiError
-  alias Remedy.Util
+  import Remedy.TimeHelpers
 
   require Logger
 
@@ -28,7 +28,7 @@ defmodule Remedy.Api.Ratelimiter do
   """
   @spec start_link([]) :: on_start
   def start_link([]) do
-    GenServer.start_link(__MODULE__, [], name: Ratelimiter)
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def init([]) do
@@ -93,7 +93,7 @@ defmodule Remedy.Api.Ratelimiter do
     retry_after = to_integer(Map.get(kept_headers, "retry-after"))
     origin_timestamp = date_string_to_unix(Map.get(kept_headers, "date"))
 
-    latency = abs(origin_timestamp - Util.now())
+    latency = abs(origin_timestamp - now())
 
     if global_limit, do: update_global_bucket(route, 0, retry_after, latency)
     if reset, do: update_bucket(route, remaining, reset, latency)
@@ -106,7 +106,7 @@ defmodule Remedy.Api.Ratelimiter do
   end
 
   defp update_global_bucket(_route, _remaining, retry_after, latency) do
-    Bucket.update_bucket("GLOBAL", 0, retry_after + Util.now(), latency)
+    Bucket.update_bucket("GLOBAL", 0, retry_after + now(), latency)
   end
 
   defp wait_for_timeout(request, timeout, from) do

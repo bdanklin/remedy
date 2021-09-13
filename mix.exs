@@ -94,9 +94,6 @@ defmodule Remedy.MixProject do
   end
 
   def dialyzer do
-    [
-      plt_add_deps: :app_tree,
-      plt_add_apps: [:mix]
-    ]
+    [plt_add_deps: :app_tree, plt_add_apps: [:mix]]
   end
 end

@@ -2,7 +2,7 @@ defmodule Remedy.Gateway.Session do
   @moduledoc false
   alias Remedy.{Gun, GatewayATC}
   alias Remedy.Gateway.{Pacemaker, Payload, Websocket}
-
+  import Remedy.OpcodeHelpers
   require Logger
   use GenServer
 
@@ -43,8 +43,19 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
-    Logger.debug("DISPATCH")
-    {:noreply, socket |> Payload.digest(frame)}
+    {payload, socket} = Gun.unpack_frame(socket, frame)
+    Logger.debug("#{payload["t"]}")
+
+    {:noreply,
+     %Websocket{
+       socket
+       | payload_op_code: payload.op,
+         payload_op_event: op_event(payload.op),
+         payload_sequence: payload["seq"],
+         payload_data: payload["d"],
+         payload_dispatch_event: payload["t"]
+     }
+     |> Payload.digest(op_event(payload.op), payload["d"])}
   end
 
   def handle_info({:gun_ws, _conn, _stream, :close}, state) do
@@ -74,6 +85,15 @@ defmodule Remedy.Gateway.Session do
      socket
      |> Gun.close()
      |> Pacemaker.stop(), {:continue, :establish_connection}}
+  end
+
+  def handle_info(:HEARTBEAT, %{heartbeat_ack: true} = socket) do
+    Logger.debug("LUB")
+
+    {:noreply,
+     socket
+     |> Payload.send(:HEARTBEAT)
+     |> Pacemaker.start()}
   end
 end
 

@@ -10,7 +10,7 @@
     <title>Remedy.Gateway.Events.Reconnect — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-f2b82f2f25.js"></script>
+    <script src="dist/sidebar_items-1e16c31ec5.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -110,7 +110,21 @@ Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.2)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle/2">handle(socket, opts)</a>
+    <a href="#build_payload/2">build_payload(socket, opts)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#digest/2">digest(socket, payload)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#payload/2">payload(socket, payload)</a>
 
   </div>
 
@@ -130,16 +144,67 @@ Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.2)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="handle/2">
+<section class="detail" id="build_payload/2">
 
   <div class="detail-header">
-    <a href="#handle/2" class="detail-link" title="Link to this function">
+    <a href="#build_payload/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">handle(socket, opts)</h1>
+    <h1 class="signature">build_payload(socket, opts)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L2" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="digest/2">
+
+  <div class="detail-header">
+    <a href="#digest/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">digest(socket, payload)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L6" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>digest(<a href="Remedy.Gateway.Websocket.html#t:t/0">Remedy.Gateway.Websocket.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="Remedy.Gateway.Websocket.html#t:t/0">Remedy.Gateway.Websocket.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="payload/2">
+
+  <div class="detail-header">
+    <a href="#payload/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">payload(socket, payload)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

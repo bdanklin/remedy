@@ -10,7 +10,7 @@
     <title>Remedy.Gateway.Payload — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-f2b82f2f25.js"></script>
+    <script src="dist/sidebar_items-1e16c31ec5.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -99,27 +99,7 @@ Remedy.Gateway.Payload <small>behaviour</small> <small class="app-vsn">(Remedy v
   <a href="#module-fields" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Fields
 </h2>
-<ul><li><code class="inline">op:</code> Opcode.</li><li><code class="inline">d:</code>  Data.</li><li><code class="inline">s:</code>  Sequence.</li><li><code class="inline">t:</code>  Event Name.</li></ul><h2 id="module-sending" class="section-heading">
-  <a href="#module-sending" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Sending
-</h2>
-<h3 id="module-send-2" class="section-heading">
-  <a href="#module-send-2" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  <a href="#send/2"><code class="inline">send/2</code></a>
-</h3>
-<p>Any event that will be delivered to discord must contain a <a href="#send/2"><code class="inline">send/2</code></a> function. It is given the socket and a keyword list of options, and returns just the payload data. This will be dispatched upon receiving an event of the module name converted to <strong>discord</strong> case.</p><p>For example: if the session receives a message of <code class="inline">:HEARTBEAT</code>. The socket will immediately be passed to <code class="inline">Payload.Heartbeat.send/2</code>. Therefore the <code class="inline">%Websocket{}</code> struct must contain all of the required information to return the heartbeat. <strong>Once the payload has been sent, the payload field will be cleared.</strong></p><p>The only requirement of <code class="inline">payload/2</code> is that it returns the payload data. the other fields will automatically be calculated. The <code class="inline">HeartbeatAck</code> module simply returns the</p><h2 id="module-receiving" class="section-heading">
-  <a href="#module-receiving" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Receiving
-</h2>
-<h3 id="module-intake-2" class="section-heading">
-  <a href="#module-intake-2" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  <code class="inline">intake/2</code>
-</h3>
-<p>Some payloads coming from discord should be immediately decoded and their information added to the socket. For each of these data types an <code class="inline">intake/2</code> function should be included</p><p>Mappings to use these functions are provided from within the <code class="inline">Remedy.Gateway</code> module.</p><h2 id="module-dispatching" class="section-heading">
-  <a href="#module-dispatching" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Dispatching
-</h2>
-<p>Events that are dispatched to our consumer will generally require more expenisve processing, such as caching etc. This</p><p>Modules that <code class="inline">use Payload</code> will have their data packed and passed to this function through the <code class="inline">send</code> callback.</p><p>The callback described above is only required to return the raw data. It is further</p>
+<ul><li><code class="inline">op:</code> Opcode.</li><li><code class="inline">d:</code>  Data.</li><li><code class="inline">s:</code>  Sequence.</li><li><code class="inline">t:</code>  Event Name.</li></ul>
         </section>
 
 
@@ -231,7 +211,7 @@ Types
     </a>
     <h1 class="signature">opts()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L100" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L60" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -260,7 +240,7 @@ Types
     </a>
     <h1 class="signature">payload()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L98" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L58" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -273,7 +253,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>payload() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+          <pre>payload() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>() | nil</pre>
 
       </div>
 
@@ -289,7 +269,7 @@ Types
     </a>
     <h1 class="signature">socket()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L99" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L59" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -331,7 +311,7 @@ Callbacks
     </a>
     <h1 class="signature">digest(socket, payload)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L118" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L78" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -362,7 +342,7 @@ Callbacks
     </a>
     <h1 class="signature">payload(socket, opts)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L109" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L69" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -406,7 +386,7 @@ Functions
     </a>
     <h1 class="signature">digest(socket, event, payload)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L132" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L113" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -438,7 +418,7 @@ Functions
     </a>
     <h1 class="signature">send(socket, event, opts \\ [])</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L141" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/payload.ex#L122" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

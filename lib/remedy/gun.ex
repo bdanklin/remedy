@@ -19,8 +19,8 @@ defmodule Remedy.Gun do
 
   def open_await(%Websocket{gateway: gateway} = socket) do
     case :gun.open(:binary.bin_to_list(gateway), @gun_port, @gun_opts) do
-      {:ok, worker} ->
-        %{socket | worker: worker} |> await_up()
+      {:ok, gun_worker} ->
+        %{socket | gun_worker: gun_worker} |> await_up()
     end
   end
 
@@ -38,7 +38,7 @@ defmodule Remedy.Gun do
   def upgrade_ws_await(socket)
 
   def upgrade_ws_await(%Websocket{gun_worker: gun_worker} = socket) do
-    %{socket | stream: :gun.ws_upgrade(gun_worker, @gateway_qs)} |> await_ws()
+    %{socket | gun_data_stream: :gun.ws_upgrade(gun_worker, @gateway_qs)} |> await_ws()
   end
 
   defp await_ws(%{gun_worker: gun_worker, gun_data_stream: gun_data_stream} = state) do

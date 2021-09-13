@@ -74,7 +74,7 @@ defmodule Remedy.Gateway.Payload do
 
   If the behaviour is not described. Passing this function will just pass the socket back to session to continue doing what it do.
   """
-  @callback payload(socket, opts) :: {any(), Websocket.t()}
+  @callback payload(socket, opts) :: {payload, socket}
 
   @doc """
   Digest the data frame from Discord and loads the data into the socket. For example:

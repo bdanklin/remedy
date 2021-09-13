@@ -1,10 +1,22 @@
 defmodule Remedy.Gateway.Session do
   @moduledoc false
   alias Remedy.{Gun, GatewayATC}
-  alias Remedy.Gateway.Websocket
+  alias Remedy.Gateway.{Pacemaker, Payload, Websocket}
 
   require Logger
   use GenServer
+
+  def update_presence(shard, opts \\ []) do
+    GenServer.cast(:"Shard-#{shard}", {:status_update, opts})
+  end
+
+  def voice_status_update(shard, opts \\ []) do
+    GenServer.cast(:"Shard-#{shard}", {:update_voice_state, opts})
+  end
+
+  def request_guild_members(shard, opts \\ []) do
+    GenServer.cast(:"Shard-#{shard}", {:request_guild_members, opts})
+  end
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
@@ -15,17 +27,23 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_continue(:establish_connection, socket) do
-    {:noreply,
-     socket
-     |> GatewayATC.request_connect()
-     |> Gun.open_await()
-     |> Gun.upgrade_ws_await()
-     |> Gun.zlib_init()}
+    {:noreply, socket |> GatewayATC.request_connect() |> Gun.open_await() |> Gun.upgrade_ws_await() |> Gun.zlib_init()}
   end
 
-  ## Gun Messages
+  def handle_cast({:status_update, opts}, socket) do
+    Payload.send(socket, :STATUS_UPDATE, opts)
+  end
+
+  def handle_cast({:voice_status_update, opts}, socket) do
+    Payload.send(socket, :VOICE_STATUS_UPDATE, opts)
+  end
+
+  def handle_cast({:request_guild_members, opts}, socket) do
+    Payload.send(socket, :REQUEST_GUILD_MEMBERS, opts)
+  end
 
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
+    Logger.debug("DISPATCH")
     {:noreply, socket |> Payload.digest(frame)}
   end
 
@@ -57,68 +75,6 @@ defmodule Remedy.Gateway.Session do
      |> Gun.close()
      |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
-
-  ## Pacemaker Messages
-
-  def handle_info(:HEARTBEAT, socket) do
-    {:noreply,
-     socket
-     |> Pacemaker.start()}
-  end
-
-  def handle(%Websocket{payload_op_event: payload_op_event} = socket) do
-    handle(payload_op_event, socket)
-  end
-
-  def handle(event, state) do
-    Logger.warn("UNHANDLED GATEWAY EVENT #{event}")
-    state
-  end
-
-  ################
-  #### Handle Cast From API
-
-  def handle_cast({:status_update, payload}, state) do
-    :ok = :gun.ws_send(state.conn, state.stream, {:binary, payload})
-    {:noreply, state}
-  end
-
-  def handle_cast({:update_voice_state, payload}, state) do
-    :ok = :gun.ws_send(state.conn, state.stream, {:binary, payload})
-    {:noreply, state}
-  end
-
-  def handle_cast({:request_guild_members, payload}, state) do
-    :ok = :gun.ws_send(state.conn, state.stream, {:binary, payload})
-    {:noreply, state}
-  end
-
-  ##############
-  ##### Stuff to Uncomment and Fix
-
-  # def update_status(pid, status, game, stream, type) do
-  #   {idle_since, afk} =
-  #     case status do
-  #       "idle" ->
-  #         {Util.now(), true}
-
-  #       _ ->
-  #         {0, false}
-  #     end
-
-  #   payload = Payload.status_update_payload(idle_since, game, stream, status, afk, type)
-  #   GenServer.cast(pid, {:status_update, payload})
-  # end
-
-  # def update_voice_state(pid, guild_id, channel_id, self_mute, self_deaf) do
-  # payload = Payload.update_voice_state_payload(guild_id, channel_id, self_mute, self_deaf)
-  # GenServer.cast(pid, {:update_voice_state, payload})
-  # end
-
-  # def request_guild_members(pid, guild_id, limit \\ 0) do
-  # payload = Payload.request_members_payload(guild_id, limit)
-  # GenServer.cast(pid, {:request_guild_members, payload})
-  # end
 end
 
 defmodule Remedy.Gateway.SessionSupervisor do

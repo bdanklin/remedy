@@ -8,11 +8,11 @@ defmodule Remedy.Gateway.Events.RequestGuildMembers do
     field :limit, :boolean, default: false
   end
 
-  def send(_socket, opts \\ []) do
-    %__MODULE__{
-      guild_id: opts.guild_id,
-      query: opts.query,
-      limit: opts.limit || false
-    }
+  def send(socket, opts \\ []) do
+    {%__MODULE__{
+       guild_id: opts.guild_id,
+       query: opts.query,
+       limit: opts.limit || false
+     }, socket}
   end
 end

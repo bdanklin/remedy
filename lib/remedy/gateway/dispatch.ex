@@ -317,12 +317,12 @@ defmodule Remedy.Gateway.EventBroadcaster do
     {:producer, {:queue.new(), 0}, dispatcher: GenStage.DemandDispatcher}
   end
 
-  def digest(socket) do
-    GenStage.cast(__MODULE__, {:notify, socket})
+  def digest(event) do
+    GenStage.cast(__MODULE__, {:notify, event})
   end
 
-  def handle_cast({:notify, socket}, {queue, demand}) do
-    dispatch_events(:queue.in(socket, queue), demand, [])
+  def handle_cast({:notify, event}, {queue, demand}) do
+    dispatch_events(:queue.in(event, queue), demand, [])
   end
 
   def handle_demand(incoming_demand, {queue, demand}) do

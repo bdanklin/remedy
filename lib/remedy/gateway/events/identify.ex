@@ -4,7 +4,7 @@ defmodule Remedy.Gateway.Events.Identify do
   alias Remedy.Gateway.Intents
   use Remedy.Gateway.Payload
 
-  def send(%Websocket{shard: shard, token: token}, _opts) do
+  def payload(%Websocket{shard: shard, token: token}, _opts) do
     %{
       "token" => token,
       "properties" => %{

@@ -55,7 +55,6 @@ defmodule Remedy.Schema do
       def new(params) do
         params
         |> changeset()
-        |> validate()
         |> apply_changes()
       end
 
@@ -63,9 +62,7 @@ defmodule Remedy.Schema do
       def changeset(nil, params), do: changeset(%__MODULE__{}, params)
 
       def changeset(%__MODULE__{} = model, params) do
-        model
-        |> cast(params, castable())
-        |> cast_embeds()
+        cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)) |> cast_embeds()
       end
 
       defp cast_embeds(cast_model) do
@@ -75,9 +72,6 @@ defmodule Remedy.Schema do
       defp castable do
         __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
       end
-
-      def validate(changeset), do: changeset
-      defoverridable validate: 1
     end
   end
 end

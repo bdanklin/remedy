@@ -10,7 +10,7 @@
     <title>Remedy.Gateway.Websocket — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-3c984b7bb7.js"></script>
+    <script src="dist/sidebar_items-f2b82f2f25.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -108,6 +108,153 @@ Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.2)</small>
             Summary
           </h1>
 
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:gateway/0">gateway()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:gun_conn/0">gun_conn()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:gun_data_stream/0">gun_data_stream()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:gun_worker/0">gun_worker()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:heartbeat_ack/0">heartbeat_ack()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:heartbeat_interval/0">heartbeat_interval()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:heartbeat_timer/0">heartbeat_timer()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:last_heartbeat_ack/0">last_heartbeat_ack()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:last_heartbeat_send/0">last_heartbeat_send()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:payload_data/0">payload_data()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:payload_dispatch_event/0">payload_dispatch_event()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:payload_op_code/0">payload_op_code()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:payload_op_event/0">payload_op_event()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:payload_sequence/0">payload_sequence()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:session_id/0">session_id()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:shard/0">shard()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:shard_pid/0">shard_pid()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:token/0">token()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:zlib_context/0">zlib_context()</a>
+
+  </div>
+
+</div>
+
+  </div>
+
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
@@ -142,18 +289,624 @@ Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.2)</small>
   </div>
 
 </div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#validate/1">validate(changeset)</a>
-
-  </div>
-
-</div>
 
   </div>
 
         </section>
 
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:gateway/0">
+
+  <div class="detail-header">
+    <a href="#t:gateway/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">gateway()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L31" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>gateway() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:gun_conn/0">
+
+  <div class="detail-header">
+    <a href="#t:gun_conn/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">gun_conn()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L36" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>gun_conn() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:gun_data_stream/0">
+
+  <div class="detail-header">
+    <a href="#t:gun_data_stream/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">gun_data_stream()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L37" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>gun_data_stream() :: Stream.t()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:gun_worker/0">
+
+  <div class="detail-header">
+    <a href="#t:gun_worker/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">gun_worker()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L35" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>gun_worker() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:heartbeat_ack/0">
+
+  <div class="detail-header">
+    <a href="#t:heartbeat_ack/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">heartbeat_ack()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L41" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>heartbeat_ack() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:heartbeat_interval/0">
+
+  <div class="detail-header">
+    <a href="#t:heartbeat_interval/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">heartbeat_interval()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L34" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>heartbeat_interval() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:heartbeat_timer/0">
+
+  <div class="detail-header">
+    <a href="#t:heartbeat_timer/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">heartbeat_timer()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L42" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>heartbeat_timer() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:last_heartbeat_ack/0">
+
+  <div class="detail-header">
+    <a href="#t:last_heartbeat_ack/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">last_heartbeat_ack()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L40" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>last_heartbeat_ack() :: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:last_heartbeat_send/0">
+
+  <div class="detail-header">
+    <a href="#t:last_heartbeat_send/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">last_heartbeat_send()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L39" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>last_heartbeat_send() :: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:payload_data/0">
+
+  <div class="detail-header">
+    <a href="#t:payload_data/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">payload_data()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L46" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>payload_data() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:payload_dispatch_event/0">
+
+  <div class="detail-header">
+    <a href="#t:payload_dispatch_event/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">payload_dispatch_event()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L47" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>payload_dispatch_event() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:payload_op_code/0">
+
+  <div class="detail-header">
+    <a href="#t:payload_op_code/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">payload_op_code()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L43" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>payload_op_code() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:payload_op_event/0">
+
+  <div class="detail-header">
+    <a href="#t:payload_op_event/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">payload_op_event()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L44" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>payload_op_event() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:payload_sequence/0">
+
+  <div class="detail-header">
+    <a href="#t:payload_sequence/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">payload_sequence()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L45" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>payload_sequence() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:session_id/0">
+
+  <div class="detail-header">
+    <a href="#t:session_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">session_id()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L32" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>session_id() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:shard/0">
+
+  <div class="detail-header">
+    <a href="#t:shard/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">shard()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L30" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>shard() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:shard_pid/0">
+
+  <div class="detail-header">
+    <a href="#t:shard_pid/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">shard_pid()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L33" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>shard_pid() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">t()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L7" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>t() :: %Remedy.Gateway.Websocket{
+  gateway: <a href="#t:gateway/0">gateway</a>(),
+  gun_conn: <a href="#t:gun_conn/0">gun_conn</a>(),
+  gun_data_stream: <a href="#t:gun_data_stream/0">gun_data_stream</a>(),
+  gun_worker: <a href="#t:gun_worker/0">gun_worker</a>(),
+  heartbeat_ack: <a href="#t:heartbeat_ack/0">heartbeat_ack</a>(),
+  heartbeat_interval: <a href="#t:heartbeat_interval/0">heartbeat_interval</a>(),
+  heartbeat_timer: <a href="#t:heartbeat_timer/0">heartbeat_timer</a>(),
+  last_heartbeat_ack: <a href="#t:last_heartbeat_ack/0">last_heartbeat_ack</a>(),
+  last_heartbeat_send: <a href="#t:last_heartbeat_send/0">last_heartbeat_send</a>(),
+  payload_data: <a href="#t:payload_data/0">payload_data</a>(),
+  payload_dispatch_event: <a href="#t:payload_dispatch_event/0">payload_dispatch_event</a>(),
+  payload_op_code: <a href="#t:payload_op_code/0">payload_op_code</a>(),
+  payload_op_event: <a href="#t:payload_op_event/0">payload_op_event</a>(),
+  payload_sequence: <a href="#t:payload_sequence/0">payload_sequence</a>(),
+  session_id: <a href="#t:session_id/0">session_id</a>(),
+  shard: <a href="#t:shard/0">shard</a>(),
+  shard_pid: <a href="#t:shard_pid/0">shard_pid</a>(),
+  token: <a href="#t:token/0">token</a>(),
+  zlib_context: <a href="#t:zlib_context/0">zlib_context</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:token/0">
+
+  <div class="detail-header">
+    <a href="#t:token/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">token()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L29" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>token() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:zlib_context/0">
+
+  <div class="detail-header">
+    <a href="#t:zlib_context/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">zlib_context()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L38" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>zlib_context() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
 
         <section id="functions" class="details-list">
           <h1 class="section-heading">
@@ -217,7 +970,7 @@ Functions
     </a>
     <h1 class="signature">get_shard_latency(state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L42" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L82" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -240,28 +993,6 @@ Functions
     <h1 class="signature">new(params)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="validate/1">
-
-  <div class="detail-header">
-    <a href="#validate/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">validate(changeset)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L5" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

@@ -1,4 +1,5 @@
 404.html
+Remedy.Api.Endpoints.html
 Remedy.Api.Ratelimiter.html
 Remedy.ApiError.html
 Remedy.Bot.html
@@ -7,10 +8,13 @@ Remedy.Cache.html
 Remedy.CacheError.html
 Remedy.Consumer.html
 Remedy.EnvironmentVariableError.html
-Remedy.Gateway.Pacemaker.html
+Remedy.Gateway.Dispatch.ChannelCreate.html
+Remedy.Gateway.Events.Reconnect.html
+Remedy.Gateway.Payload.html
 Remedy.Gateway.Websocket.html
 Remedy.GatewayATC.html
 Remedy.Gun.html
+Remedy.ModelHelpers.html
 Remedy.Permission.html
 Remedy.Schema.InteractionData.html
 Remedy.Shard.EventDispatch.html
@@ -31,7 +35,6 @@ Remedy.Struct.Event.VoiceReady.html
 Remedy.Struct.Event.VoiceServerUpdate.html
 Remedy.Struct.Event.VoiceState.html
 Remedy.TimeHelpers.html
-Remedy.Util.html
 Remedy.VoiceError.html
 Remedy.html
 api-reference.html
@@ -42,8 +45,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-ca8cb789a4.js
-dist/sidebar_items-3c984b7bb7.js
+dist/search_items-0c5e4949f3.js
+dist/sidebar_items-f2b82f2f25.js
 index.html
 introduction.html
 search.html

@@ -10,7 +10,7 @@
     <title>Remedy.TimeHelpers — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-3c984b7bb7.js"></script>
+    <script src="dist/sidebar_items-f2b82f2f25.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,6 +114,33 @@ Remedy.TimeHelpers <small class="app-vsn">(Remedy v0.5.2)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#now/0">now()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns the number of milliseconds since unix epoch.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#now_iso/0">now_iso()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns the current date as an ISO formatted string.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#usec_now/0">usec_now()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns the number of microseconds since unix epoch.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#utc_now_ms/0">utc_now_ms()</a>
 
   </div>
@@ -136,6 +163,93 @@ Remedy.TimeHelpers <small class="app-vsn">(Remedy v0.5.2)</small>
 Functions
           </h1>
           <div class="functions-list">
+<section class="detail" id="now/0">
+
+  <div class="detail-header">
+    <a href="#now/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">now()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L18" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>now() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+<p>Returns the number of milliseconds since unix epoch.</p>
+  </section>
+</section>
+<section class="detail" id="now_iso/0">
+
+  <div class="detail-header">
+    <a href="#now_iso/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">now_iso()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L36" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>now_iso() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Returns the current date as an ISO formatted string.</p>
+  </section>
+</section>
+<section class="detail" id="usec_now/0">
+
+  <div class="detail-header">
+    <a href="#usec_now/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">usec_now()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L27" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>usec_now() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+<p>Returns the number of microseconds since unix epoch.</p>
+  </section>
+</section>
 <section class="detail" id="utc_now_ms/0">
 
   <div class="detail-header">

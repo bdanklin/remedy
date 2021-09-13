@@ -10,7 +10,7 @@
     <title>Remedy.Bot — Remedy v0.5.2</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-3c984b7bb7.js"></script>
+    <script src="dist/sidebar_items-f2b82f2f25.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,11 +114,9 @@ Remedy.Bot <small class="app-vsn">(Remedy v0.5.2)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#child_spec/1">child_spec(arg)</a>
+    <a href="#delete/0">delete()</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
 
 </div>
 <div class="summary-row">
@@ -127,7 +125,26 @@ Remedy.Bot <small class="app-vsn">(Remedy v0.5.2)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Returns the current user's state.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#put/1">put(user)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/1">start_link(args)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update/1">update(values)</a>
+
+  </div>
 
 </div>
 
@@ -145,16 +162,16 @@ Remedy.Bot <small class="app-vsn">(Remedy v0.5.2)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="child_spec/1">
+<section class="detail" id="delete/0">
 
   <div class="detail-header">
-    <a href="#child_spec/1" class="detail-link" title="Link to this function">
+    <a href="#delete/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">child_spec(arg)</h1>
+    <h1 class="signature">delete()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L6" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L27" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -164,7 +181,7 @@ Functions
 
   <section class="docstring">
 
-<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
+
   </section>
 </section>
 <section class="detail" id="get/0">
@@ -176,7 +193,7 @@ Functions
     </a>
     <h1 class="signature">get()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L18" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L13" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -189,11 +206,77 @@ Functions
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get() :: Remedy.Schema.User.t() | nil</pre>
+          <pre>get() :: User.t() | nil</pre>
 
       </div>
 
-<p>Returns the current user's state.</p>
+
+  </section>
+</section>
+<section class="detail" id="put/1">
+
+  <div class="detail-header">
+    <a href="#put/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">put(user)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L17" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">start_link(args)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L8" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="update/1">
+
+  <div class="detail-header">
+    <a href="#update/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update(values)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L21" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
   </section>
 </section>
 

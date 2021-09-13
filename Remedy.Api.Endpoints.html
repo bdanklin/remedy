@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.25.1">
+    <meta name="project" content="Remedy v0.5.2">
+
+    <title>Remedy.Api.Endpoints — Remedy v0.5.2</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-f2b82f2f25.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName">
+Remedy
+      </a>
+      <strong class="sidebar-projectVersion">
+        v0.5.2
+      </strong>
+    </div>
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+Remedy.Api.Endpoints <small class="app-vsn">(Remedy v0.5.2)</small>
+
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L1" title="View Source" class="view-source" rel="help">
+            <span class="icon-code" aria-hidden="true"></span>
+            <span class="sr-only">View Source</span>
+          </a>
+
+      </h1>
+
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#application_information/0">application_information()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel/1">channel(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_bulk_delete/1">channel_bulk_delete(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_call_ring/1">channel_call_ring(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_invites/1">channel_invites(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_message/2">channel_message(channel_id, message_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_messages/1">channel_messages(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_permission/2">channel_permission(channel_id, overwrite_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_permissions/1">channel_permissions(chanID)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_pin/2">channel_pin(channel_id, message_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_pins/1">channel_pins(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_reaction/4">channel_reaction(channel_id, message_id, emoji, user_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_reaction_me/3">channel_reaction_me(channel_id, message_id, emoji)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_reactions_delete/2">channel_reactions_delete(channel_id, message_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_reactions_delete_emoji/3">channel_reactions_delete_emoji(channel_id, message_id, emoji)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_reactions_get/3">channel_reactions_get(channel_id, message_id, emoji)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channel_typing/1">channel_typing(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#channels/0">channels()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#global_application_command/2">global_application_command(application_id, command_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#global_application_commands/1">global_application_commands(application_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#group_recipient/2">group_recipient(group_id, user_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild/1">guild(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_application_command/3">guild_application_command(application_id, guild_id, command_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_application_commands/2">guild_application_commands(application_id, guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_audit_logs/1">guild_audit_logs(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_ban/2">guild_ban(guild_id, user_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_bans/1">guild_bans(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_channels/1">guild_channels(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_embed/1">guild_embed(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_emoji/2">guild_emoji(guild_id, emoji_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_emojis/1">guild_emojis(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_integration/2">guild_integration(guild_id, integration_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_integration_sync/2">guild_integration_sync(guild_id, integration_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_integrations/1">guild_integrations(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_invites/1">guild_invites(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_me_nick/1">guild_me_nick(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_member/2">guild_member(guild_id, user_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_member_role/3">guild_member_role(guild_id, user_id, role_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_members/1">guild_members(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_prune/1">guild_prune(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_role/2">guild_role(guild_id, role_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_roles/1">guild_roles(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guild_voice_regions/1">guild_voice_regions(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#guilds/0">guilds()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#interaction_callback/2">interaction_callback(interaction_id, interaction_token)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#interaction_followup_message/3">interaction_followup_message(application_id, interaction_token, message_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#invite/1">invite(invite_code)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#me/0">me()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#me_channels/0">me_channels()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#me_connections/0">me_connections()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#me_guild/1">me_guild(guild_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#me_guilds/0">me_guilds()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#regions/0">regions()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#user/1">user(user_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#webhook/1">webhook(webhook_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#webhook_git/2">webhook_git(webhook_id, webhook_token)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#webhook_slack/2">webhook_slack(webhook_id, webhook_token)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#webhook_token/2">webhook_token(webhook_id, webhook_token)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#webhooks_channel/1">webhooks_channel(channel_id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#webhooks_guild/1">webhooks_guild(guild_id)</a>
+
+  </div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="application_information/0">
+
+  <div class="detail-header">
+    <a href="#application_information/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">application_information()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L91" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel/1">
+
+  <div class="detail-header">
+    <a href="#channel/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L2" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_bulk_delete/1">
+
+  <div class="detail-header">
+    <a href="#channel_bulk_delete/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_bulk_delete(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L22" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_call_ring/1">
+
+  <div class="detail-header">
+    <a href="#channel_call_ring/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_call_ring(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L112" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_invites/1">
+
+  <div class="detail-header">
+    <a href="#channel_invites/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_invites(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L26" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_message/2">
+
+  <div class="detail-header">
+    <a href="#channel_message/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_message(channel_id, message_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L6" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_messages/1">
+
+  <div class="detail-header">
+    <a href="#channel_messages/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_messages(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L4" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_permission/2">
+
+  <div class="detail-header">
+    <a href="#channel_permission/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_permission(channel_id, overwrite_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L24" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_permissions/1">
+
+  <div class="detail-header">
+    <a href="#channel_permissions/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_permissions(chanID)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L110" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_pin/2">
+
+  <div class="detail-header">
+    <a href="#channel_pin/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_pin(channel_id, message_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L29" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_pins/1">
+
+  <div class="detail-header">
+    <a href="#channel_pins/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_pins(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L28" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_reaction/4">
+
+  <div class="detail-header">
+    <a href="#channel_reaction/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_reaction(channel_id, message_id, emoji, user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L11" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_reaction_me/3">
+
+  <div class="detail-header">
+    <a href="#channel_reaction_me/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_reaction_me(channel_id, message_id, emoji)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L8" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_reactions_delete/2">
+
+  <div class="detail-header">
+    <a href="#channel_reactions_delete/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_reactions_delete(channel_id, message_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L17" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_reactions_delete_emoji/3">
+
+  <div class="detail-header">
+    <a href="#channel_reactions_delete_emoji/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_reactions_delete_emoji(channel_id, message_id, emoji)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L19" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_reactions_get/3">
+
+  <div class="detail-header">
+    <a href="#channel_reactions_get/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_reactions_get(channel_id, message_id, emoji)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L14" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channel_typing/1">
+
+  <div class="detail-header">
+    <a href="#channel_typing/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channel_typing(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L27" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="channels/0">
+
+  <div class="detail-header">
+    <a href="#channels/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">channels()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L111" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="global_application_command/2">
+
+  <div class="detail-header">
+    <a href="#global_application_command/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">global_application_command(application_id, command_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L93" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="global_application_commands/1">
+
+  <div class="detail-header">
+    <a href="#global_application_commands/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">global_application_commands(application_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L96" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="group_recipient/2">
+
+  <div class="detail-header">
+    <a href="#group_recipient/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">group_recipient(group_id, user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L113" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild/1">
+
+  <div class="detail-header">
+    <a href="#guild/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L32" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_application_command/3">
+
+  <div class="detail-header">
+    <a href="#guild_application_command/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_application_command(application_id, guild_id, command_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L98" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_application_commands/2">
+
+  <div class="detail-header">
+    <a href="#guild_application_commands/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_application_commands(application_id, guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L101" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_audit_logs/1">
+
+  <div class="detail-header">
+    <a href="#guild_audit_logs/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_audit_logs(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L40" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_ban/2">
+
+  <div class="detail-header">
+    <a href="#guild_ban/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_ban(guild_id, user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L42" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_bans/1">
+
+  <div class="detail-header">
+    <a href="#guild_bans/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_bans(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L41" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_channels/1">
+
+  <div class="detail-header">
+    <a href="#guild_channels/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_channels(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L33" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_embed/1">
+
+  <div class="detail-header">
+    <a href="#guild_embed/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_embed(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L56" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_emoji/2">
+
+  <div class="detail-header">
+    <a href="#guild_emoji/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_emoji(guild_id, emoji_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L58" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_emojis/1">
+
+  <div class="detail-header">
+    <a href="#guild_emojis/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_emojis(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L57" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_integration/2">
+
+  <div class="detail-header">
+    <a href="#guild_integration/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_integration(guild_id, integration_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L50" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_integration_sync/2">
+
+  <div class="detail-header">
+    <a href="#guild_integration_sync/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_integration_sync(guild_id, integration_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L53" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_integrations/1">
+
+  <div class="detail-header">
+    <a href="#guild_integrations/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_integrations(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L48" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_invites/1">
+
+  <div class="detail-header">
+    <a href="#guild_invites/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_invites(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L47" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_me_nick/1">
+
+  <div class="detail-header">
+    <a href="#guild_me_nick/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_me_nick(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L114" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_member/2">
+
+  <div class="detail-header">
+    <a href="#guild_member/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_member(guild_id, user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L35" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_member_role/3">
+
+  <div class="detail-header">
+    <a href="#guild_member_role/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_member_role(guild_id, user_id, role_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L37" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_members/1">
+
+  <div class="detail-header">
+    <a href="#guild_members/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_members(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L34" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_prune/1">
+
+  <div class="detail-header">
+    <a href="#guild_prune/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_prune(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L45" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_role/2">
+
+  <div class="detail-header">
+    <a href="#guild_role/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_role(guild_id, role_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L44" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_roles/1">
+
+  <div class="detail-header">
+    <a href="#guild_roles/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_roles(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L43" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guild_voice_regions/1">
+
+  <div class="detail-header">
+    <a href="#guild_voice_regions/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guild_voice_regions(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L46" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="guilds/0">
+
+  <div class="detail-header">
+    <a href="#guilds/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">guilds()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L31" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="interaction_callback/2">
+
+  <div class="detail-header">
+    <a href="#interaction_callback/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">interaction_callback(interaction_id, interaction_token)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L104" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="interaction_followup_message/3">
+
+  <div class="detail-header">
+    <a href="#interaction_followup_message/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">interaction_followup_message(application_id, interaction_token, message_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L107" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="invite/1">
+
+  <div class="detail-header">
+    <a href="#invite/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">invite(invite_code)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L88" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="me/0">
+
+  <div class="detail-header">
+    <a href="#me/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">me()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L73" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="me_channels/0">
+
+  <div class="detail-header">
+    <a href="#me_channels/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">me_channels()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L82" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="me_connections/0">
+
+  <div class="detail-header">
+    <a href="#me_connections/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">me_connections()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L85" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="me_guild/1">
+
+  <div class="detail-header">
+    <a href="#me_guild/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">me_guild(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L79" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="me_guilds/0">
+
+  <div class="detail-header">
+    <a href="#me_guilds/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">me_guilds()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L76" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="regions/0">
+
+  <div class="detail-header">
+    <a href="#regions/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">regions()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L89" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="user/1">
+
+  <div class="detail-header">
+    <a href="#user/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">user(user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L71" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="webhook/1">
+
+  <div class="detail-header">
+    <a href="#webhook/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">webhook(webhook_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L62" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="webhook_git/2">
+
+  <div class="detail-header">
+    <a href="#webhook_git/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">webhook_git(webhook_id, webhook_token)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L65" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="webhook_slack/2">
+
+  <div class="detail-header">
+    <a href="#webhook_slack/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">webhook_slack(webhook_id, webhook_token)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L68" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="webhook_token/2">
+
+  <div class="detail-header">
+    <a href="#webhook_token/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">webhook_token(webhook_id, webhook_token)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L63" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="webhooks_channel/1">
+
+  <div class="detail-header">
+    <a href="#webhooks_channel/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">webhooks_channel(channel_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L61" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="webhooks_guild/1">
+
+  <div class="detail-header">
+    <a href="#webhooks_guild/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">webhooks_guild(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/endpoints.ex#L60" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.1) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

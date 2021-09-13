@@ -51,14 +51,13 @@ defmodule Remedy.Gun do
   Send the payload.
   """
   def send(payload, %Websocket{gun_worker: gun_worker, gun_data_stream: gun_data_stream} = socket) do
+    IO.inspect(:erlang.binary_to_term(payload), label: "SENDING PAYLOAD")
+
     case :gun.ws_send(gun_worker, gun_data_stream, {:binary, payload}) do
       :ok -> socket
     end
   end
 
-  #####
-  ### Non :gun but still helper with Gun
-  #####
   def zlib_init(socket)
 
   def zlib_init(socket) do

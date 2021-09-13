@@ -9,7 +9,7 @@ defmodule Remedy.Gateway.Events.VoiceStatusUpdate do
     field :self_deaf, :boolean, default: false
   end
 
-  def payload(socket, opts) do
+  defp payload(socket, %{guild_id: _guild_id, channel_id: _channel_id} = opts) do
     {%__MODULE__{
        guild_id: opts[:guild_id],
        channel_id: opts[:channel_id],

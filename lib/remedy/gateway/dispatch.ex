@@ -1,4 +1,4 @@
-defmodule Remedy.Shard.EventDispatch do
+defmodule Remedy.Shard.Dispatch do
   require Logger
 
   @large_threshold 250
@@ -343,8 +343,7 @@ defmodule Remedy.Gateway.EventBuffer do
 
   use GenStage
 
-  alias Remedy.Shard.Dispatch
-  alias Remedy.Gateway.EventBroadcaster
+  alias Remedy.Gateway.{Dispatch, EventBroadcaster}
 
   require Logger
 

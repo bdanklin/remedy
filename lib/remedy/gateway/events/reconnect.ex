@@ -1,6 +1,7 @@
 defmodule Remedy.Gateway.Events.Reconnect do
-  def handle(socket, _opts) do
-    socket
-    |> Payload.send(:RESUME)
+  use Remedy.Gateway.Payload
+
+  defp digest(socket, _payload) do
+    socket |> Payload.send(:RESUME)
   end
 end

@@ -6,6 +6,8 @@ defmodule Remedy.Gateway.Session do
   require Logger
   use GenServer
 
+  ### External
+
   def update_presence(shard, opts \\ []) do
     GenServer.cast(:"Shard-#{shard}", {:status_update, opts})
   end
@@ -17,6 +19,8 @@ defmodule Remedy.Gateway.Session do
   def request_guild_members(shard, opts \\ []) do
     GenServer.cast(:"Shard-#{shard}", {:request_guild_members, opts})
   end
+
+  ### Internal
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
@@ -42,6 +46,24 @@ defmodule Remedy.Gateway.Session do
     Payload.send(socket, :REQUEST_GUILD_MEMBERS, opts)
   end
 
+  def handle_cast(:heartbeat, %{heartbeat_ack: false} = socket) do
+    Logger.debug("NO RESPONSE TO HEARTBEAT")
+
+    {:noreply,
+     socket
+     |> Gun.close()
+     |> Pacemaker.stop(), {:continue, :establish_connection}}
+  end
+
+  def handle_cast(:heartbeat, %{heartbeat_ack: true} = socket) do
+    Logger.debug("LUB")
+
+    {:noreply,
+     socket
+     |> Payload.send(:HEARTBEAT)
+     |> Pacemaker.start()}
+  end
+
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
     {payload, socket} = Gun.unpack_frame(socket, frame)
     Logger.debug("#{payload["t"]}")
@@ -50,12 +72,11 @@ defmodule Remedy.Gateway.Session do
      %Websocket{
        socket
        | payload_op_code: payload.op,
-         payload_op_event: op_event(payload.op),
-         payload_sequence: payload["seq"],
-         payload_data: payload["d"],
-         payload_dispatch_event: payload["t"]
+         payload_op_event: event_from_op(payload.op),
+         payload_sequence: payload[:s] || payload["s"],
+         payload_dispatch_event: payload[:t] || payload["t"]
      }
-     |> Payload.digest(op_event(payload.op), payload["d"])}
+     |> Payload.digest(event_from_op(payload.op), payload[:d] || payload["d"])}
   end
 
   def handle_info({:gun_ws, _conn, _stream, :close}, state) do
@@ -76,24 +97,6 @@ defmodule Remedy.Gateway.Session do
   def handle_info({:gun_up, _worker, _proto}, socket) do
     Logger.debug("RECONNECTED AFTER INTERRUPTION")
     {:noreply, socket}
-  end
-
-  def handle_info(:HEARTBEAT, %{heartbeat_ack: false} = socket) do
-    Logger.debug("NO RESPONSE TO HEARTBEAT")
-
-    {:noreply,
-     socket
-     |> Gun.close()
-     |> Pacemaker.stop(), {:continue, :establish_connection}}
-  end
-
-  def handle_info(:HEARTBEAT, %{heartbeat_ack: true} = socket) do
-    Logger.debug("LUB")
-
-    {:noreply,
-     socket
-     |> Payload.send(:HEARTBEAT)
-     |> Pacemaker.start()}
   end
 end
 

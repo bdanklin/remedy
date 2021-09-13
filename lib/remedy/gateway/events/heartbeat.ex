@@ -2,9 +2,9 @@ defmodule Remedy.Gateway.Events.Heartbeat do
   @moduledoc false
   use Remedy.Gateway.Payload
 
-  def payload(%Websocket{payload_sequence: payload_sequence}, _opts) do
-    payload_sequence || nil
+  defp payload(%Websocket{} = socket, _opts) do
+    {%{}, socket}
   end
 
-
+  defp digest(socket, _payload), do: socket
 end

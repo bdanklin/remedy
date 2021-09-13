@@ -22,34 +22,32 @@ defmodule Remedy.Gateway.Websocket do
           payload_op_code: payload_op_code,
           payload_op_event: payload_op_event,
           payload_sequence: payload_sequence,
-          payload_data: payload_data,
           payload_dispatch_event: payload_dispatch_event
         }
 
   @type token :: String.t()
   @type shard :: integer()
   @type gateway :: String.t()
-  @type session_id :: String.t()
+  @type session_id :: String.t() | nil
   @type shard_pid :: pid()
   @type heartbeat_interval :: integer()
   @type gun_worker :: pid()
   @type gun_conn :: pid()
   @type gun_data_stream :: Stream.t()
   @type zlib_context :: term()
-  @type last_heartbeat_send :: DateTime.t()
-  @type last_heartbeat_ack :: DateTime.t()
+  @type last_heartbeat_send :: DateTime.t() | nil
+  @type last_heartbeat_ack :: DateTime.t() | nil
   @type heartbeat_ack :: boolean()
   @type heartbeat_timer :: integer()
   @type payload_op_code :: integer()
   @type payload_op_event :: atom()
   @type payload_sequence :: integer()
-  @type payload_data :: any()
   @type payload_dispatch_event :: atom()
 
   @primary_key false
   embedded_schema do
     # We know all this when connecting
-    field :token, :string, redact: true, default: Application.get_env(:remedy, :token)
+    field :token, :string, default: Application.get_env(:remedy, :token)
     field :shard, :integer
     field :gateway, :string
     # Need to store to maintain connection
@@ -57,8 +55,8 @@ defmodule Remedy.Gateway.Websocket do
     field :shard_pid, :any, virtual: true
     field :heartbeat_interval, :integer
     # Heartbeat
-    field :last_heartbeat_send, :utc_datetime
-    field :last_heartbeat_ack, :utc_datetime
+    field :last_heartbeat_send, :utc_datetime, default: DateTime.truncate(DateTime.utc_now(), :second)
+    field :last_heartbeat_ack, :utc_datetime, default: DateTime.truncate(DateTime.utc_now(), :second)
     field :heartbeat_ack, :boolean, default: false
     field :heartbeat_timer, :any, virtual: true
     # Gun INfo
@@ -70,7 +68,6 @@ defmodule Remedy.Gateway.Websocket do
     field :payload_op_code, :integer, default: 0
     field :payload_op_event, :string, default: ""
     field :payload_sequence, :integer
-    field :payload_data, :any, virtual: true
     field :payload_dispatch_event, :any, virtual: true
   end
 

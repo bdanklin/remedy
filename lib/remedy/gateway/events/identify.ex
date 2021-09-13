@@ -5,7 +5,7 @@ defmodule Remedy.Gateway.Events.Identify do
   alias Remedy.Gateway
   use Remedy.Gateway.Payload
 
-  defp payload(%Websocket{shard: shard, token: token} = socket, _opts) do
+  def payload(%Websocket{shard: shard, token: token} = socket, _opts) do
     {%{
        token: token,
        properties: %{

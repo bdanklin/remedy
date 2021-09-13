@@ -9,7 +9,7 @@ defmodule Remedy.Gateway.Events.UpdatePresence do
     embeds_one :activity, Activity
   end
 
-  defp payload(socket, %{activity: %{} = _activity} = opts) do
+  def payload(socket, %{activity: %{} = _activity} = opts) do
     {%__MODULE__{
        since: opts[:since] || 91_879_201,
        status: opts[:status] || "online",

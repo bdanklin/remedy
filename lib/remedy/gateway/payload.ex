@@ -18,6 +18,7 @@ defmodule Remedy.Gateway.Payload do
     parent = __MODULE__
 
     quote do
+      @behaviour unquote(parent)
       alias unquote(parent)
       import Remedy.OpcodeHelpers
       use Ecto.Schema
@@ -29,7 +30,10 @@ defmodule Remedy.Gateway.Payload do
   end
 
   defmacro __before_compile__(_) do
+    parent = __MODULE__
+
     quote do
+      alias unquote(parent)
       def build_payload(socket, opts), do: payload(socket, opts) |> send_out()
 
       defp send_out({nil, socket}), do: socket
@@ -44,16 +48,16 @@ defmodule Remedy.Gateway.Payload do
         |> Remedy.Gun.send(socket)
       end
 
-      defp digest(socket, payload), do: socket
-      defp payload(socket, _payload), do: {nil, socket}
+      def digest(socket, payload), do: socket
+
+      def payload(socket, _payload), do: {nil, socket}
       defp crush(map), do: map |> flatten() |> Morphix.stringmorphiform!()
       defp flatten(map), do: :maps.map(&dfl/2, map)
       defp dfl(_key, value), do: enm(value)
       defp enm(list) when is_list(list), do: Enum.map(list, &enm/1)
       defp enm(%{__struct__: _} = strct), do: :maps.map(&dfl/2, Map.from_struct(strct))
       defp enm(data), do: data
-
-      defoverridable(digest: 2, payload: 2)
+      defoverridable Payload
     end
   end
 

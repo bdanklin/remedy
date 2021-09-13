@@ -3,8 +3,8 @@ defmodule Remedy.Api do
   use Bitwise
   import Remedy.ModelHelpers
 
-  alias Remedy.{Bot, Endpoints, Util}
-  alias Remedy.Api.{Base, Bucket, Endpoints, Ratelimiter}
+  alias Remedy.{Bot, Endpoints}
+  alias Remedy.Api.{Endpoints, Ratelimiter}
 
   import Sunbake.Snowflake,
     only: [is_snowflake: 1],
@@ -12,9 +12,7 @@ defmodule Remedy.Api do
 
   alias Remedy.Schema.{
     AuditLog,
-    AuditLogChange,
     AuditLogEntry,
-    AuditLogOption,
     Channel,
     Embed,
     Emoji,

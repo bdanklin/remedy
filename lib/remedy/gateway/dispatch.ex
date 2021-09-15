@@ -1,54 +1,40 @@
-defmodule Remedy.Shard.Dispatch do
-  require Logger
-
-  @large_threshold 250
-
-  def handle(socket) do
-    if Application.get_env(:remedy, :log_full_events),
-      do: Logger.debug(inspect(socket.payload.d, pretty: true))
-
-    socket.payload.t
-    |> handle_event(socket.payload.d, socket)
-    |> format_event()
-  end
-
-  defp format_event(events) when is_list(events),
-    do: for(event <- events, do: format_event(event))
-
-  # Handles the case of not finding users in the user cache
-  defp format_event({_name, :noop, _state}), do: :noop
-  defp format_event({_name, event_info, _state} = event) when is_tuple(event_info), do: event
-  defp format_event({name, event_info, state}), do: {name, event_info, state}
-  defp format_event(:noop), do: :noop
-
-  defp check_new_or_unavailable(guild_id) do
-    case :ets.lookup(:unavailable_guilds, guild_id) do
-      [] -> :GUILD_CREATE
-      [_] -> :GUILD_AVAILABLE
+defmodule Remedy.Gateway.Dispatch do
+  defmacro __using__(_env) do
+    quote do
+      import Remedy.{DispatchHelpers, ModelHelpers}
+      import Ecto.Changeset
+      import Sunbake.Snowflake, only: [is_snowflake: 1]
+      alias Remedy.Cache
+      alias Sunbake.{ISO8601, Snowflake}
+      use Ecto.Schema
     end
   end
 
-  def handle_event(:CHANNEL_CREATE = event, p, state) do
-    {event, ChannelCache.create(p), state}
+  @type payload :: any()
+  @type socket :: Websocket.t()
+  @type event :: atom()
+
+  @callback handle({event, payload, socket}) :: {event, payload, socket}
+
+  require Logger
+
+  @large_threshold 250
+  def handle({event, payload, _socket} = dispatch) do
+    Logger.debug("#{event}")
+
+    if Application.get_env(:remedy, :log_everything, false),
+      do: Logger.debug("#{inspect(event)}, #{inspect(payload)}")
+
+    mod_from_dispatch(event).handle(dispatch)
   end
 
-  def handle_event(:CHANNEL_DELETE = event, %{type: 1} = p, state) do
-    {event, ChannelCache.delete(p.id), state}
+  defp mod_from_dispatch(k) do
+    to_string(k)
+    |> String.downcase()
+    |> Recase.to_pascal()
+    |> List.wrap()
+    |> Module.concat()
   end
-
-  def handle_event(:CHANNEL_DELETE = event, %{type: t} = p, state) when t in [0, 2] do
-    {event, GuildCache.channel_delete(p.guild_id, p.id), state}
-  end
-
-  def handle_event(:CHANNEL_UPDATE = event, p, state) do
-    {event, GuildCache.channel_update(p.guild_id, p), state}
-  end
-
-  def handle_event(:CHANNEL_DELETE, _p, _state) do
-    :noop
-  end
-
-  def handle_event(:CHANNEL_PINS_ACK = event, p, state), do: {event, p, state}
 
   def handle_event(:CHANNEL_PINS_UPDATE = event, p, state) do
     {event, ChannelPinsUpdate.to_struct(p), state}
@@ -62,6 +48,7 @@ defmodule Remedy.Shard.Dispatch do
     {event, GuildBanRemove.to_struct(p), state}
   end
 
+  # = =========================
   # def handle_event(:GUILD_CREATE, %{unavailable: true} = guild, state) do
   #   :ets.insert(:unavailable_guilds, {guild.id, guild})
   #   {:GUILD_UNAVAILABLE, UnavailableGuild.to_struct(guild), state}
@@ -102,7 +89,6 @@ defmodule Remedy.Shard.Dispatch do
     guild = Util.cast(guild, {:struct, Guild})
 
     true = GuildCache.create(guild)
-    {check_new_or_unavailable(guild.id), guild, state}
   end
 
   def handle_event(:GUILD_UPDATE = event, p, state),
@@ -301,7 +287,8 @@ defmodule Remedy.Shard.Dispatch do
   end
 end
 
-### Genstage stuff below here. Don't worry about it too much 🦆🦆🦆🦆
+### 🦆🦆🦆🦆 Genstage stuff below here. Don't worry about it too much 🦆🦆🦆🦆
+
 defmodule Remedy.Gateway.EventBroadcaster do
   @moduledoc false
 
@@ -309,16 +296,19 @@ defmodule Remedy.Gateway.EventBroadcaster do
 
   require Logger
 
+  @doc """
+
+  """
+  def digest(event) do
+    GenStage.cast(__MODULE__, {:notify, event})
+  end
+
   def start_link(opts) do
     GenStage.start_link(__MODULE__, opts, name: __MODULE__)
   end
 
   def init(_opts) do
     {:producer, {:queue.new(), 0}, dispatcher: GenStage.DemandDispatcher}
-  end
-
-  def digest(event) do
-    GenStage.cast(__MODULE__, {:notify, event})
   end
 
   def handle_cast({:notify, event}, {queue, demand}) do

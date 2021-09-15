@@ -39,6 +39,22 @@ defmodule Remedy.OpcodeHelpers do
     OPCODE_HELPERS: 999
   }
 
+  @type event ::
+          :DISPATCH
+          | :HEARTBEAT
+          | :IDENTIFY
+          | :STATUS_UPDATE
+          | :VOICE_STATUS_UPDATE
+          | :VOICE_SERVER_PING
+          | :RESUME
+          | :RECONNECT
+          | :REQUEST_GUILD_MEMBERS
+          | :INVALID_SESSION
+          | :HELLO
+          | :HEARTBEAT_ACK
+          | :SYNC_GUILD
+          | :SYNC_CALL
+
   @doc """
   Convert the event to its Module form
 

@@ -46,7 +46,7 @@ defmodule Remedy.Gateway.Session do
     Payload.send(socket, :REQUEST_GUILD_MEMBERS, opts)
   end
 
-  def handle_cast(:heartbeat, %{heartbeat_ack: false} = socket) do
+  def handle_info(:HEARTBEAT, %{heartbeat_ack: false} = socket) do
     Logger.debug("NO RESPONSE TO HEARTBEAT")
 
     {:noreply,
@@ -55,7 +55,7 @@ defmodule Remedy.Gateway.Session do
      |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
 
-  def handle_cast(:heartbeat, %{heartbeat_ack: true} = socket) do
+  def handle_info(:HEARTBEAT, %{heartbeat_ack: true} = socket) do
     Logger.debug("LUB")
 
     {:noreply,
@@ -66,17 +66,18 @@ defmodule Remedy.Gateway.Session do
 
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
     {payload, socket} = Gun.unpack_frame(socket, frame)
-    Logger.debug("#{payload["t"]}")
+    Logger.debug("#{payload[:t]}")
 
     {:noreply,
      %Websocket{
        socket
        | payload_op_code: payload.op,
          payload_op_event: event_from_op(payload.op),
-         payload_sequence: payload[:s] || payload["s"],
-         payload_dispatch_event: payload[:t] || payload["t"]
+         payload_sequence: payload[:s],
+         payload_dispatch_event: payload[:t]
      }
-     |> Payload.digest(event_from_op(payload.op), payload[:d] || payload["d"])}
+     |> IO.inspect(label: "PAYLOAD RECEIVED")
+     |> Payload.digest(event_from_op(payload.op), payload[:d])}
   end
 
   def handle_info({:gun_ws, _conn, _stream, :close}, state) do

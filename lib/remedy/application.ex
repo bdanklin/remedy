@@ -15,8 +15,6 @@ defmodule Remedy.Application do
       Remedy.Api.Ratelimiter,
       Remedy.GatewayATC,
       Remedy.Gateway
-      # Remedy.Voice.Supervisor,
-      # Remedy.Bot
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)

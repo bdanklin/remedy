@@ -24,4 +24,15 @@ defmodule Remedy.Gateway.Event.ChannelPinsUpdate do
           channel_id: channel_id,
           last_pin_timestamp: last_pin_timestamp
         }
+
+  def handle({event, payload, socket}) do
+    %{
+      id: payload.channel_id,
+      guild_id: payload.guild_id,
+      last_pin_timestamp: payload.last_pin_timestamp
+    }
+    |> Cache.update_channel()
+
+    {event, new(payload), socket}
+  end
 end

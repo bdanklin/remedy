@@ -5,9 +5,9 @@ defmodule Remedy.Gateway.Events.Identify do
   alias Remedy.Gateway
   use Remedy.Gateway.Payload
 
-  def payload(%Websocket{shard: shard, token: token} = socket, _opts) do
+  def payload(%Websocket{shard: shard} = socket, _opts) do
     {%{
-       token: token,
+       token: Application.get_env(:remedy, :token),
        properties: %{
          "$os" => "#{to_string(:erlang.system_info(:system_architecture))}",
          "$browser" => "Remedy",

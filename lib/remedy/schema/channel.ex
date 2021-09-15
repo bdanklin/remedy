@@ -28,8 +28,6 @@ defmodule Remedy.Schema.Channel do
 
     belongs_to :owner, User
 
-    #   has_many :recipients, User
-
     belongs_to :guild, Guild
 
     embeds_many :permission_overwrites, PermissionOverwrite

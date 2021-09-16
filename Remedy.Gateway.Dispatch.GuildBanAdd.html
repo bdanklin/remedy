@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.2">
+    <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Struct.Event.MessageDeleteBulk — Remedy v0.5.2</title>
+    <title>Remedy.Gateway.Dispatch.GuildBanAdd — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-1e16c31ec5.js"></script>
+    <script src="dist/sidebar_items-1ae39ad4a8.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.5.2
+        v0.5.3
       </strong>
     </div>
 
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Struct.Event.MessageDeleteBulk <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Gateway.Dispatch.GuildBanAdd <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_ban_add.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,11 @@ Remedy.Struct.Event.MessageDeleteBulk <small class="app-vsn">(Remedy v0.5.2)</sm
 
 
         <section id="moduledoc">
-<p>Struct representing a Message Delete Bulk event</p>
+<p>Dispatched when a new guild ban is created.</p><h2 id="module-payload" class="section-heading">
+  <a href="#module-payload" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Payload:
+</h2>
+<ul><li><code class="inline">%Remedy.Schema.Ban{}</code></li></ul>
         </section>
 
 
@@ -108,40 +112,13 @@ Remedy.Struct.Event.MessageDeleteBulk <small class="app-vsn">(Remedy v0.5.2)</sm
             Summary
           </h1>
 
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:channel_id/0">channel_id()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Channel id of the deleted message</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:guild_id/0">guild_id()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Guild id of the deleted message</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:ids/0">ids()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Ids of the deleted messages</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#handle/1">handle(arg)</a>
 
   </div>
 
@@ -152,25 +129,25 @@ Remedy.Struct.Event.MessageDeleteBulk <small class="app-vsn">(Remedy v0.5.2)</sm
         </section>
 
 
-        <section id="types" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#types">
+            <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types
+Functions
           </h1>
-          <div class="types-list">
-<section class="detail" id="t:channel_id/0">
+          <div class="functions-list">
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#t:channel_id/0" class="detail-link" title="Link to this type">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">channel_id()</h1>
+    <h1 class="signature">handle(arg)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L15" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_ban_add.ex#L13" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -179,104 +156,6 @@ Types
   </div>
 
   <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>channel_id() :: Remedy.Struct.Channel.id()</pre>
-
-      </div>
-
-<p>Channel id of the deleted message</p>
-  </section>
-</section>
-<section class="detail" id="t:guild_id/0">
-
-  <div class="detail-header">
-    <a href="#t:guild_id/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">guild_id()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L22" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>guild_id() :: Remedy.Struct.Guild.id() | nil</pre>
-
-      </div>
-
-<p>Guild id of the deleted message</p><p><code class="inline">nil</code> if a non-guild message was deleted.</p>
-  </section>
-</section>
-<section class="detail" id="t:ids/0">
-
-  <div class="detail-header">
-    <a href="#t:ids/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">ids()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L25" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>ids() :: [Remedy.Struct.Message.id(), ...]</pre>
-
-      </div>
-
-<p>Ids of the deleted messages</p>
-  </section>
-</section>
-<section class="detail" id="t:t/0">
-
-  <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">t()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L27" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>t() :: %Remedy.Struct.Event.MessageDeleteBulk{
-  channel_id: <a href="#t:channel_id/0">channel_id</a>(),
-  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
-  ids: <a href="#t:ids/0">ids</a>()
-}</pre>
-
-      </div>
 
 
   </section>

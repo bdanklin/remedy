@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.2">
+    <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.GatewayATC — Remedy v0.5.2</title>
+    <title>Remedy.Gateway.Dispatch.GuildCreate — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-1e16c31ec5.js"></script>
+    <script src="dist/sidebar_items-1ae39ad4a8.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.5.2
+        v0.5.3
       </strong>
     </div>
 
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.GatewayATC <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Gateway.Dispatch.GuildCreate <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway.ex#L72" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_create.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,11 @@ Remedy.GatewayATC <small class="app-vsn">(Remedy v0.5.2)</small>
 
 
         <section id="moduledoc">
-<p>Gateway Air Traffic Control</p>
+<p>Dispatched when a new guild channel is created, relevant to the current user.</p><h2 id="module-payload" class="section-heading">
+  <a href="#module-payload" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Payload:
+</h2>
+<ul><li>%Remedy.Schema.Guild{}.</li></ul>
         </section>
 
 
@@ -114,32 +118,7 @@ Remedy.GatewayATC <small class="app-vsn">(Remedy v0.5.2)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#child_spec/1">child_spec(init_arg)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#init/1">init(state)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/elixir/GenServer.html#c:init/1"><code class="inline">GenServer.init/1</code></a>.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#request_connect/1">request_connect(state)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#start_link/1">start_link(args)</a>
+    <a href="#handle/1">handle(arg)</a>
 
   </div>
 
@@ -159,82 +138,16 @@ Remedy.GatewayATC <small class="app-vsn">(Remedy v0.5.2)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="child_spec/1">
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#child_spec/1" class="detail-link" title="Link to this function">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">child_spec(init_arg)</h1>
+    <h1 class="signature">handle(arg)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway.ex#L77" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
-  </section>
-</section>
-<section class="detail" id="init/1">
-
-  <div class="detail-header">
-    <a href="#init/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">init(state)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway.ex#L133" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>Callback implementation for <a href="https://hexdocs.pm/elixir/GenServer.html#c:init/1"><code class="inline">GenServer.init/1</code></a>.</p>
-  </section>
-</section>
-<section class="detail" id="request_connect/1">
-
-  <div class="detail-header">
-    <a href="#request_connect/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">request_connect(state)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway.ex#L83" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="start_link/1">
-
-  <div class="detail-header">
-    <a href="#start_link/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">start_link(args)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway.ex#L129" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_create.ex#L15" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

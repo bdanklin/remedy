@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.2">
+    <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Struct.Event.InviteCreate — Remedy v0.5.2</title>
+    <title>Remedy.Gateway.Dispatch.InviteDelete — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-1e16c31ec5.js"></script>
+    <script src="dist/sidebar_items-1ae39ad4a8.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.5.2
+        v0.5.3
       </strong>
     </div>
 
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Struct.Event.InviteCreate <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Gateway.Dispatch.InviteDelete <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,7 @@ Remedy.Struct.Event.InviteCreate <small class="app-vsn">(Remedy v0.5.2)</small>
 
 
         <section id="moduledoc">
-<p>Struct representing an Invite Create event</p>
+<p>Struct representing an Invite Delete event</p>
         </section>
 
 
@@ -132,15 +132,6 @@ Remedy.Struct.Event.InviteCreate <small class="app-vsn">(Remedy v0.5.2)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:created_at/0">created_at()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>The time at which the invite was created.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#t:guild_id/0">guild_id()</a>
 
   </div>
@@ -150,72 +141,44 @@ Remedy.Struct.Event.InviteCreate <small class="app-vsn">(Remedy v0.5.2)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:inviter/0">inviter()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>The user that created the invite.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:max_age/0">max_age()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Duration (in seconds) after which the invite expires.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:max_uses/0">max_uses()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Max number of times this invite can be used.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#t:t/0">t()</a>
 
   </div>
 
 </div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:target_user/0">target_user()</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Partially populated user struct of the target user for this invite.</p></div>
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/1">changeset(params)</a>
+
+  </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:target_user_type/0">target_user_type()</a>
+    <a href="#changeset/2">changeset(model, params)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>The type of user target for this invite.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:temporary/0">temporary()</a>
+    <a href="#handle/1">handle(arg)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Whether this invite only grants temporary membership.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:uses/0">uses()</a>
+    <a href="#new/1">new(params)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Number of times this invite has been used.</p></div>
 
 </div>
 
@@ -242,7 +205,7 @@ Types
     </a>
     <h1 class="signature">channel_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L26" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L17" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -255,7 +218,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>channel_id() :: Remedy.Struct.Channel.id()</pre>
+          <pre>channel_id() :: Remedy.Schema.Channel.id()</pre>
 
       </div>
 
@@ -271,7 +234,7 @@ Types
     </a>
     <h1 class="signature">code()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L31" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L27" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -291,35 +254,6 @@ Types
 <p>The unique invite code.</p>
   </section>
 </section>
-<section class="detail" id="t:created_at/0">
-
-  <div class="detail-header">
-    <a href="#t:created_at/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">created_at()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L36" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>created_at() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-<p>The time at which the invite was created.</p>
-  </section>
-</section>
 <section class="detail" id="t:guild_id/0">
 
   <div class="detail-header">
@@ -329,7 +263,7 @@ Types
     </a>
     <h1 class="signature">guild_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L41" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L22" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -342,98 +276,11 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>guild_id() :: Remedy.Struct.Guild.id() | nil</pre>
+          <pre>guild_id() :: Remedy.Schema.Guild.id() | nil</pre>
 
       </div>
 
 <p>Guild id of the guild this invite is for.</p>
-  </section>
-</section>
-<section class="detail" id="t:inviter/0">
-
-  <div class="detail-header">
-    <a href="#t:inviter/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">inviter()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L46" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>inviter() :: Remedy.Struct.User.t() | nil</pre>
-
-      </div>
-
-<p>The user that created the invite.</p>
-  </section>
-</section>
-<section class="detail" id="t:max_age/0">
-
-  <div class="detail-header">
-    <a href="#t:max_age/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">max_age()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L51" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>max_age() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
-
-      </div>
-
-<p>Duration (in seconds) after which the invite expires.</p>
-  </section>
-</section>
-<section class="detail" id="t:max_uses/0">
-
-  <div class="detail-header">
-    <a href="#t:max_uses/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">max_uses()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L56" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>max_uses() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
-
-      </div>
-
-<p>Max number of times this invite can be used.</p>
   </section>
 </section>
 <section class="detail" id="t:t/0">
@@ -445,7 +292,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L78" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L29" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -458,18 +305,11 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>t() :: %Remedy.Struct.Event.InviteCreate{
+          <pre>t() :: %Remedy.Gateway.Dispatch.InviteDelete{
   channel_id: <a href="#t:channel_id/0">channel_id</a>(),
   code: <a href="#t:code/0">code</a>(),
-  created_at: <a href="#t:created_at/0">created_at</a>(),
   guild_id: <a href="#t:guild_id/0">guild_id</a>(),
-  inviter: <a href="#t:inviter/0">inviter</a>(),
-  max_age: <a href="#t:max_age/0">max_age</a>(),
-  max_uses: <a href="#t:max_uses/0">max_uses</a>(),
-  target_user: <a href="#t:target_user/0">target_user</a>(),
-  target_user_type: <a href="#t:target_user_type/0">target_user_type</a>(),
-  temporary: <a href="#t:temporary/0">temporary</a>(),
-  uses: <a href="#t:uses/0">uses</a>()
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
 }</pre>
 
       </div>
@@ -477,16 +317,29 @@ Types
 
   </section>
 </section>
-<section class="detail" id="t:target_user/0">
+
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="changeset/1">
 
   <div class="detail-header">
-    <a href="#t:target_user/0" class="detail-link" title="Link to this type">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">target_user()</h1>
+    <h1 class="signature">changeset(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L61" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -496,26 +349,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>target_user() :: Remedy.Struct.User.t() | nil</pre>
-
-      </div>
-
-<p>Partially populated user struct of the target user for this invite.</p>
   </section>
 </section>
-<section class="detail" id="t:target_user_type/0">
+<section class="detail" id="changeset/2">
 
   <div class="detail-header">
-    <a href="#t:target_user_type/0" class="detail-link" title="Link to this type">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">target_user_type()</h1>
+    <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L66" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -525,26 +371,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>target_user_type() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil</pre>
-
-      </div>
-
-<p>The type of user target for this invite.</p>
   </section>
 </section>
-<section class="detail" id="t:temporary/0">
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#t:temporary/0" class="detail-link" title="Link to this type">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">temporary()</h1>
+    <h1 class="signature">handle(arg)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L71" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L35" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -554,26 +393,19 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>temporary() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
-
-      </div>
-
-<p>Whether this invite only grants temporary membership.</p>
   </section>
 </section>
-<section class="detail" id="t:uses/0">
+<section class="detail" id="new/1">
 
   <div class="detail-header">
-    <a href="#t:uses/0" class="detail-link" title="Link to this type">
+    <a href="#new/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">uses()</h1>
+    <h1 class="signature">new(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_create.ex#L76" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/invite_delete.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -583,14 +415,7 @@ Types
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>uses() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
-
-      </div>
-
-<p>Number of times this invite has been used.</p>
   </section>
 </section>
 

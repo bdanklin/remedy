@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Gateway.Events.Reconnect — Remedy v0.5.3</title>
+    <title>Remedy.Gateway.Dispatch.MessageReactionRemoveAll — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-1ae39ad4a8.js"></script>
@@ -84,15 +84,19 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.3)</small>
+Remedy.Gateway.Dispatch.MessageReactionRemoveAll <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_reaction_remove_all.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
 
       </h1>
 
+
+        <section id="moduledoc">
+<p>Sent when a user explicitly removes all reactions from a message</p>
+        </section>
 
 
         <section id="summary" class="details-list">
@@ -104,29 +108,44 @@ Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.3)</small>
             Summary
           </h1>
 
-  <div class="summary-functions summary">
+  <div class="summary-types summary">
     <h2>
-      <a href="#functions">Functions</a>
+      <a href="#types">Types</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#build_payload/2">build_payload(socket, opts)</a>
+    <a href="#t:channel_id/0">channel_id()</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>ID of the channel in which the message resides.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#digest/2">digest(socket, payload)</a>
+    <a href="#t:guild_id/0">guild_id()</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>ID of the guild for the message, if applicable.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#payload/2">payload(socket, payload)</a>
+    <a href="#t:message_id/0">message_id()</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>ID of the message from which all reactions were removed.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Event sent when a user explicitly removes all reactions from a message</p></div>
 
 </div>
 
@@ -135,25 +154,25 @@ Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.3)</small>
         </section>
 
 
-        <section id="functions" class="details-list">
+        <section id="types" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#functions">
+            <a class="hover-link" href="#types">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Functions
+Types
           </h1>
-          <div class="functions-list">
-<section class="detail" id="build_payload/2">
+          <div class="types-list">
+<section class="detail" id="t:channel_id/0">
 
   <div class="detail-header">
-    <a href="#build_payload/2" class="detail-link" title="Link to this function">
+    <a href="#t:channel_id/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">build_payload(socket, opts)</h1>
+    <h1 class="signature">channel_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L2" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_reaction_remove_all.ex#L10" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -163,19 +182,26 @@ Functions
 
   <section class="docstring">
 
+      <h2>Specs</h2>
+      <div class="specs">
 
+          <pre>channel_id() :: Remedy.Struct.Channel.id()</pre>
+
+      </div>
+
+<p>ID of the channel in which the message resides.</p>
   </section>
 </section>
-<section class="detail" id="digest/2">
+<section class="detail" id="t:guild_id/0">
 
   <div class="detail-header">
-    <a href="#digest/2" class="detail-link" title="Link to this function">
+    <a href="#t:guild_id/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">digest(socket, payload)</h1>
+    <h1 class="signature">guild_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L4" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_reaction_remove_all.ex#L16" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -185,19 +211,26 @@ Functions
 
   <section class="docstring">
 
+      <h2>Specs</h2>
+      <div class="specs">
 
+          <pre>guild_id() :: Remedy.Struct.Guild.id() | nil</pre>
+
+      </div>
+
+<p>ID of the guild for the message, if applicable.</p>
   </section>
 </section>
-<section class="detail" id="payload/2">
+<section class="detail" id="t:message_id/0">
 
   <div class="detail-header">
-    <a href="#payload/2" class="detail-link" title="Link to this function">
+    <a href="#t:message_id/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">payload(socket, payload)</h1>
+    <h1 class="signature">message_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_reaction_remove_all.ex#L13" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -207,7 +240,47 @@ Functions
 
   <section class="docstring">
 
+      <h2>Specs</h2>
+      <div class="specs">
 
+          <pre>message_id() :: Remedy.Struct.Message.id()</pre>
+
+      </div>
+
+<p>ID of the message from which all reactions were removed.</p>
+  </section>
+</section>
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">t()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_reaction_remove_all.ex#L19" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>t() :: %Remedy.Gateway.Dispatch.MessageReactionRemoveAll{
+  channel_id: <a href="#t:channel_id/0">channel_id</a>(),
+  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
+  message_id: <a href="#t:message_id/0">message_id</a>()
+}</pre>
+
+      </div>
+
+<p>Event sent when a user explicitly removes all reactions from a message</p>
   </section>
 </section>
 

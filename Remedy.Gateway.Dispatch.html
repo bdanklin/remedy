@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Gateway.Events.Reconnect — Remedy v0.5.3</title>
+    <title>Remedy.Gateway.Dispatch — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-1ae39ad4a8.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.3)</small>
+Remedy.Gateway.Dispatch <small>behaviour</small> <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -104,27 +104,62 @@ Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.3)</small>
             Summary
           </h1>
 
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:event/0">event()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:payload/0">payload()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:socket/0">socket()</a>
+
+  </div>
+
+</div>
+
+  </div>
+
+  <div class="summary-callbacks summary">
+    <h2>
+      <a href="#callbacks">Callbacks</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:handle/1">handle({})</a>
+
+  </div>
+
+</div>
+
+  </div>
+
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#build_payload/2">build_payload(socket, opts)</a>
+    <a href="#handle/1">handle(dispatch)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#digest/2">digest(socket, payload)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#payload/2">payload(socket, payload)</a>
+    <a href="#handle_event/3">handle_event(event, p, state)</a>
 
   </div>
 
@@ -135,6 +170,148 @@ Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.3)</small>
         </section>
 
 
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:event/0">
+
+  <div class="detail-header">
+    <a href="#t:event/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">event()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L4" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>event() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:payload/0">
+
+  <div class="detail-header">
+    <a href="#t:payload/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">payload()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L2" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>payload() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:socket/0">
+
+  <div class="detail-header">
+    <a href="#t:socket/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">socket()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L3" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>socket() :: Websocket.t()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
+
+        <section id="callbacks" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#callbacks">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Callbacks
+          </h1>
+          <div class="callbacks-list">
+<section class="detail" id="c:handle/1">
+
+  <div class="detail-header">
+    <a href="#c:handle/1" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">handle({})</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L6" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>handle({<a href="#t:event/0">event</a>(), <a href="#t:payload/0">payload</a>(), <a href="#t:socket/0">socket</a>()}) :: {<a href="#t:event/0">event</a>(), <a href="#t:payload/0">payload</a>(), <a href="#t:socket/0">socket</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
+
         <section id="functions" class="details-list">
           <h1 class="section-heading">
             <a class="hover-link" href="#functions">
@@ -144,16 +321,16 @@ Remedy.Gateway.Events.Reconnect <small class="app-vsn">(Remedy v0.5.3)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="build_payload/2">
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#build_payload/2" class="detail-link" title="Link to this function">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">build_payload(socket, opts)</h1>
+    <h1 class="signature">handle(dispatch)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L2" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L10" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -166,38 +343,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="digest/2">
+<section class="detail" id="handle_event/3">
 
   <div class="detail-header">
-    <a href="#digest/2" class="detail-link" title="Link to this function">
+    <a href="#handle_event/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">digest(socket, payload)</h1>
+    <h1 class="signature">handle_event(event, p, state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L4" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="payload/2">
-
-  <div class="detail-header">
-    <a href="#payload/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">payload(socket, payload)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/events/reconnect.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch.ex#L27" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

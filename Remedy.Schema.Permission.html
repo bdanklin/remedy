@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.2">
+    <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Permission — Remedy v0.5.2</title>
+    <title>Remedy.Schema.Permission — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-1e16c31ec5.js"></script>
+    <script src="dist/sidebar_items-1ae39ad4a8.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.5.2
+        v0.5.3
       </strong>
     </div>
 
@@ -84,29 +84,15 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Permission <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Schema.Permission <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
 
       </h1>
 
-
-        <section id="moduledoc">
-<p>Functions that work on permissions.</p><p>Some functions return a list of permissions. You can use enumerable functions
-to work with permissions:</p><pre><code class="Elixir">alias Remedy.Cache.GuildCache
-alias Remedy.Struct.Guild.Member
-
-guild = GuildCache.get!(279093381723062272)
-member = Map.get(guild.members, 177888205536886784)
-member_perms = Member.guild_permissions(member, guild)
-
-if :administrator in member_perms do
-  IO.puts(&quot;This user has the administrator permission.&quot;)
-end</code></pre>
-        </section>
 
 
         <section id="summary" class="details-list">
@@ -142,28 +128,7 @@ end</code></pre>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:general_permission/0">general_permission()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#t:t/0">t()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:text_permission/0">text_permission()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:voice_permission/0">voice_permission()</a>
 
   </div>
 
@@ -182,6 +147,20 @@ end</code></pre>
   </div>
 
     <div class="summary-synopsis"><p>Returns a list of all permissions.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/1">changeset(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/2">changeset(model, params)</a>
+
+  </div>
 
 </div>
 <div class="summary-row">
@@ -213,11 +192,25 @@ end</code></pre>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#from_integer/1">from_integer(flag_value)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#is_permission/1">is_permission(term)</a>
 
   </div>
 
     <div class="summary-synopsis"><p>Returns <code class="inline">true</code> if <code class="inline">term</code> is a permission; otherwise returns <code class="inline">false</code>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#new/1">new(params)</a>
+
+  </div>
 
 </div>
 <div class="summary-row">
@@ -236,6 +229,13 @@ end</code></pre>
   </div>
 
     <div class="summary-synopsis"><p>Converts the given enumerable of permissions to a bitset.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#to_integer/1">to_integer(flag_struct)</a>
+
+  </div>
 
 </div>
 
@@ -262,7 +262,7 @@ Types
     </a>
     <h1 class="signature">bit()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L27" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L8" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -291,7 +291,7 @@ Types
     </a>
     <h1 class="signature">bitset()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L32" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L13" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -311,48 +311,6 @@ Types
 <p>Represents a set of permissions as a bitvalue.</p>
   </section>
 </section>
-<section class="detail" id="t:general_permission/0">
-
-  <div class="detail-header">
-    <a href="#t:general_permission/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">general_permission()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L34" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>general_permission() ::
-  :create_instant_invite
-  | :kick_members
-  | :ban_members
-  | :administrator
-  | :manage_channels
-  | :manage_guild
-  | :view_audit_log
-  | :view_channel
-  | :change_nickname
-  | :manage_nicknames
-  | :manage_roles
-  | :manage_webhooks
-  | :manage_emojis</pre>
-
-      </div>
-
-
-  </section>
-</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -362,7 +320,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L69" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L15" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -375,81 +333,46 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>t() :: <a href="#t:general_permission/0">general_permission</a>() | <a href="#t:text_permission/0">text_permission</a>() | <a href="#t:voice_permission/0">voice_permission</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:text_permission/0">
-
-  <div class="detail-header">
-    <a href="#t:text_permission/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">text_permission()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L49" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>text_permission() ::
-  :add_reactions
-  | :send_messages
-  | :send_tts_messages
-  | :manage_messages
-  | :embed_links
-  | :attach_files
-  | :read_message_history
-  | :mention_everyone
-  | :use_external_emojis</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:voice_permission/0">
-
-  <div class="detail-header">
-    <a href="#t:voice_permission/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">voice_permission()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L60" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>voice_permission() ::
-  :connect
-  | :speak
-  | :mute_members
-  | :deafen_members
-  | :move_members
-  | :use_vad
-  | :priority_speaker</pre>
+          <pre>t() :: %Remedy.Schema.Permission{
+  ADD_REACTIONS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  ADMINISTRATOR: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  ATTACH_FILES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  BAN_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  CHANGE_NICKNAME: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  CONNECT: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  CREATE_INSTANT_INVITE: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  DEAFEN_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  EMBED_LINKS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  KICK_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_CHANNELS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_EMOJIS_AND_STICKERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_GUILD: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_MESSAGES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_NICKNAMES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_ROLES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_THREADS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MANAGE_WEBHOOKS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MENTION_EVERYONE: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MOVE_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  MUTE_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  PRIORITY_SPEAKER: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  READ_MESSAGE_HISTORY: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  REQUEST_TO_SPEAK: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  SEND_MESSAGES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  SEND_TTS_MESSAGES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  SPEAK: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  STREAM: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  USE_APPLICATION_COMMANDS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  USE_EXTERNAL_EMOJIS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  USE_EXTERNAL_STICKERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  USE_PRIVATE_THREADS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  USE_PUBLIC_THREADS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  USE_VAD: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  VIEW_AUDIT_LOG: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  VIEW_CHANNEL: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  VIEW_GUILD_INSIGHTS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
+}</pre>
 
       </div>
 
@@ -478,7 +401,7 @@ Functions
     </a>
     <h1 class="signature">all()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L128" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L157" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -488,14 +411,51 @@ Functions
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>all() :: [<a href="#t:t/0">t</a>()]</pre>
-
-      </div>
-
 <p>Returns a list of all permissions.</p>
+  </section>
+</section>
+<section class="detail" id="changeset/1">
+
+  <div class="detail-header">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="changeset/2">
+
+  <div class="detail-header">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(model, params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
   </section>
 </section>
 <section class="detail" id="from_bit/1">
@@ -507,7 +467,7 @@ Functions
     </a>
     <h1 class="signature">from_bit(bit)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L146" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L175" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -544,7 +504,7 @@ iex&gt; Remedy.Permission.from_bit(0)
     </a>
     <h1 class="signature">from_bit!(bit)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L164" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L193" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -581,7 +541,7 @@ iex&gt; Remedy.Permission.from_bit!(0)
     </a>
     <h1 class="signature">from_bitset(bitset)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L187" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L216" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -609,6 +569,28 @@ iex&gt; Remedy.Permission.from_bitset(0x4000000000000)
 []</code></pre>
   </section>
 </section>
+<section class="detail" id="from_integer/1">
+
+  <div class="detail-header">
+    <a href="#from_integer/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">from_integer(flag_value)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
 <section class="detail" id="is_permission/1">
 
   <div class="detail-header">
@@ -618,7 +600,7 @@ iex&gt; Remedy.Permission.from_bitset(0x4000000000000)
     </a>
     <h1 class="signature">is_permission(term)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L122" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L151" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -641,16 +623,16 @@ iex&gt; Remedy.Permission.is_permission(:not_a_permission)
 false</code></pre>
   </section>
 </section>
-<section class="detail" id="to_bit/1">
+<section class="detail" id="new/1">
 
   <div class="detail-header">
-    <a href="#to_bit/1" class="detail-link" title="Link to this function">
+    <a href="#new/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">to_bit(permission)</h1>
+    <h1 class="signature">new(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L210" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -660,12 +642,27 @@ false</code></pre>
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>to_bit(<a href="#t:t/0">t</a>()) :: <a href="#t:bit/0">bit</a>()</pre>
+  </section>
+</section>
+<section class="detail" id="to_bit/1">
 
-      </div>
+  <div class="detail-header">
+    <a href="#to_bit/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">to_bit(permission)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L239" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
 
 <p>Converts the given permission to a bit.</p><h2 id="to_bit/1-examples" class="section-heading">
   <a href="#to_bit/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
@@ -684,7 +681,7 @@ false</code></pre>
     </a>
     <h1 class="signature">to_bitset(permissions)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/permission.ex#L223" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L252" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -707,6 +704,28 @@ false</code></pre>
 </h2>
 <pre><code class="Elixir">iex&gt; Remedy.Permission.to_bitset([:administrator, :create_instant_invite])
 9</code></pre>
+  </section>
+</section>
+<section class="detail" id="to_integer/1">
+
+  <div class="detail-header">
+    <a href="#to_integer/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">to_integer(flag_struct)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
   </section>
 </section>
 

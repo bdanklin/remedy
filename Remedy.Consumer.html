@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.2">
+    <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Consumer — Remedy v0.5.2</title>
+    <title>Remedy.Consumer — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-1e16c31ec5.js"></script>
+    <script src="dist/sidebar_items-1ae39ad4a8.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.5.2
+        v0.5.3
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Consumer <small>behaviour</small> <small class="app-vsn">(Remedy v0.5.2)</small>
+Remedy.Consumer <small>behaviour</small> <small class="app-vsn">(Remedy v0.5.3)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -764,7 +764,7 @@ Types
       <div class="specs">
 
           <pre>guild_ban_remove() ::
-  {:GUILD_BAN_REMOVE, <a href="Remedy.Struct.Event.GuildBanRemove.html#t:t/0">Remedy.Struct.Event.GuildBanRemove.t</a>(),
+  {:GUILD_BAN_REMOVE, Remedy.Struct.Event.GuildBanRemove.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -890,7 +890,7 @@ Types
       <div class="specs">
 
           <pre>guild_integrations_update() ::
-  {:GUILD_INTEGRATIONS_UPDATE, <a href="Remedy.Struct.Event.GuildIntegrationsUpdate.html#t:t/0">Remedy.Struct.Event.GuildIntegrationsUpdate.t</a>(),
+  {:GUILD_INTEGRATIONS_UPDATE, Remedy.Struct.Event.GuildIntegrationsUpdate.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1267,7 +1267,7 @@ Types
       <div class="specs">
 
           <pre>message_delete() ::
-  {:MESSAGE_DELETE, <a href="Remedy.Struct.Event.MessageDelete.html#t:t/0">Remedy.Struct.Event.MessageDelete.t</a>(),
+  {:MESSAGE_DELETE, Remedy.Struct.Event.MessageDelete.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1298,7 +1298,7 @@ Types
       <div class="specs">
 
           <pre>message_delete_bulk() ::
-  {:MESSAGE_DELETE_BULK, <a href="Remedy.Struct.Event.MessageDeleteBulk.html#t:t/0">Remedy.Struct.Event.MessageDeleteBulk.t</a>(),
+  {:MESSAGE_DELETE_BULK, Remedy.Struct.Event.MessageDeleteBulk.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1329,7 +1329,7 @@ Types
       <div class="specs">
 
           <pre>message_reaction_add() ::
-  {:MESSAGE_REACTION_ADD, <a href="Remedy.Struct.Event.MessageReactionAdd.html#t:t/0">Remedy.Struct.Event.MessageReactionAdd.t</a>(),
+  {:MESSAGE_REACTION_ADD, Remedy.Struct.Event.MessageReactionAdd.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1360,7 +1360,7 @@ Types
       <div class="specs">
 
           <pre>message_reaction_remove() ::
-  {:MESSAGE_REACTION_REMOVE, <a href="Remedy.Struct.Event.MessageReactionRemove.html#t:t/0">Remedy.Struct.Event.MessageReactionRemove.t</a>(),
+  {:MESSAGE_REACTION_REMOVE, Remedy.Struct.Event.MessageReactionRemove.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1392,7 +1392,7 @@ Types
 
           <pre>message_reaction_remove_all() ::
   {:MESSAGE_REACTION_REMOVE_ALL,
-   <a href="Remedy.Struct.Event.MessageReactionRemoveAll.html#t:t/0">Remedy.Struct.Event.MessageReactionRemoveAll.t</a>(),
+   Remedy.Struct.Event.MessageReactionRemoveAll.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1424,7 +1424,7 @@ Types
 
           <pre>message_reaction_remove_emoji() ::
   {:MESSAGE_REACTION_REMOVE_EMOJI,
-   <a href="Remedy.Struct.Event.MessageReactionRemoveEmoji.html#t:t/0">Remedy.Struct.Event.MessageReactionRemoveEmoji.t</a>(),
+   Remedy.Struct.Event.MessageReactionRemoveEmoji.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1576,7 +1576,7 @@ Types
       <div class="specs">
 
           <pre>typing_start() ::
-  {:TYPING_START, <a href="Remedy.Struct.Event.TypingStart.html#t:t/0">Remedy.Struct.Event.TypingStart.t</a>(),
+  {:TYPING_START, Remedy.Struct.Event.TypingStart.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1668,7 +1668,7 @@ Types
       <div class="specs">
 
           <pre>voice_ready() ::
-  {:VOICE_READY, <a href="Remedy.Struct.Event.VoiceReady.html#t:t/0">Remedy.Struct.Event.VoiceReady.t</a>(),
+  {:VOICE_READY, Remedy.Struct.Event.VoiceReady.t(),
    Remedy.Struct.VoiceWSState.t()}</pre>
 
       </div>
@@ -1699,7 +1699,7 @@ Types
       <div class="specs">
 
           <pre>voice_server_update() ::
-  {:VOICE_SERVER_UPDATE, <a href="Remedy.Struct.Event.VoiceServerUpdate.html#t:t/0">Remedy.Struct.Event.VoiceServerUpdate.t</a>(),
+  {:VOICE_SERVER_UPDATE, Remedy.Struct.Event.VoiceServerUpdate.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>
@@ -1730,7 +1730,7 @@ Types
       <div class="specs">
 
           <pre>voice_speaking_update() ::
-  {:VOICE_SPEAKING_UPDATE, <a href="Remedy.Struct.Event.SpeakingUpdate.html#t:t/0">Remedy.Struct.Event.SpeakingUpdate.t</a>(),
+  {:VOICE_SPEAKING_UPDATE, Remedy.Struct.Event.SpeakingUpdate.t(),
    Remedy.Struct.VoiceWSState.t()}</pre>
 
       </div>
@@ -1761,7 +1761,7 @@ Types
       <div class="specs">
 
           <pre>voice_state_update() ::
-  {:VOICE_STATE_UPDATE, <a href="Remedy.Struct.Event.VoiceState.html#t:t/0">Remedy.Struct.Event.VoiceState.t</a>(),
+  {:VOICE_STATE_UPDATE, Remedy.Struct.Event.VoiceState.t(),
    Remedy.Struct.Websocket.t()}</pre>
 
       </div>

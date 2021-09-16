@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.Command do
-   @moduledoc """
+  @moduledoc """
   Discord Command Object
   """
   use Remedy.Schema

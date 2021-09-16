@@ -5,8 +5,6 @@ defmodule Remedy.Api.Base do
   @base_url "https://discord.com/api/v9"
   use HTTPoison.Base
 
-
-
   def process_url(url) do
     URI.encode(@base_url <> url)
   end

@@ -31,7 +31,12 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_continue(:establish_connection, socket) do
-    {:noreply, socket |> GatewayATC.request_connect() |> Gun.open_await() |> Gun.upgrade_ws_await() |> Gun.zlib_init()}
+    {:noreply,
+     socket
+     |> GatewayATC.request_connect()
+     |> Gun.open_await()
+     |> Gun.upgrade_ws_await()
+     |> Gun.zlib_init()}
   end
 
   def handle_cast({:status_update, opts}, socket) do

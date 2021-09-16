@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.Component do
-    @moduledoc """
+  @moduledoc """
   Discord Message Component Object
   """
   use Remedy.Schema

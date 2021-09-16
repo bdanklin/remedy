@@ -50,7 +50,8 @@ defmodule Remedy.Consumer do
           {:CHANNEL_DELETE, Channel.t(), Websocket.t()}
 
   @type channel_update ::
-          {:CHANNEL_UPDATE, {old_channel :: Channel.t() | nil, new_channel :: Channel.t()}, Websocket.t()}
+          {:CHANNEL_UPDATE, {old_channel :: Channel.t() | nil, new_channel :: Channel.t()},
+           Websocket.t()}
   @type channel_pins_ack ::
           {:CHANNEL_PINS_ACK, map, Websocket.t()}
   @type channel_pins_update ::
@@ -64,32 +65,40 @@ defmodule Remedy.Consumer do
   @type guild_available ::
           {:GUILD_AVAILABLE, new_guild :: Remedy.Struct.Guild.t(), Websocket.t()}
   @type guild_unavailable ::
-          {:GUILD_UNAVAILABLE, unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(), Websocket.t()}
+          {:GUILD_UNAVAILABLE, unavailable_guild :: Remedy.Struct.Guild.UnavailableGuild.t(),
+           Websocket.t()}
   @type guild_update ::
-          {:GUILD_UPDATE, {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()}, Websocket.t()}
+          {:GUILD_UPDATE,
+           {old_guild :: Remedy.Struct.Guild.t(), new_guild :: Remedy.Struct.Guild.t()},
+           Websocket.t()}
   @type guild_delete ::
-          {:GUILD_DELETE, {old_guild :: Remedy.Struct.Guild.t(), unavailable :: boolean}, Websocket.t()}
+          {:GUILD_DELETE, {old_guild :: Remedy.Struct.Guild.t(), unavailable :: boolean},
+           Websocket.t()}
   @type guild_emojis_update ::
           {:GUILD_EMOJIS_UPDATE,
-           {guild_id :: integer, old_emojis :: [Remedy.Struct.Emoji.t()], new_emojis :: [Remedy.Struct.Emoji.t()]},
-           Websocket.t()}
+           {guild_id :: integer, old_emojis :: [Remedy.Struct.Emoji.t()],
+            new_emojis :: [Remedy.Struct.Emoji.t()]}, Websocket.t()}
   @type guild_integrations_update ::
           {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), Websocket.t()}
   @type guild_member_add ::
-          {:GUILD_MEMBER_ADD, {guild_id :: integer, new_member :: Remedy.Struct.Guild.Member.t()}, Websocket.t()}
+          {:GUILD_MEMBER_ADD, {guild_id :: integer, new_member :: Remedy.Struct.Guild.Member.t()},
+           Websocket.t()}
   @type guild_members_chunk ::
           {:GUILD_MEMBERS_CHUNK, map, Websocket.t()}
   @type guild_member_remove ::
-          {:GUILD_MEMBER_REMOVE, {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t()}, Websocket.t()}
+          {:GUILD_MEMBER_REMOVE,
+           {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t()}, Websocket.t()}
 
   @type guild_member_update ::
           {:GUILD_MEMBER_UPDATE,
            {guild_id :: integer, old_member :: Remedy.Struct.Guild.Member.t() | nil,
             new_member :: Remedy.Struct.Guild.Member.t()}, Websocket.t()}
   @type guild_role_create ::
-          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Remedy.Struct.Guild.Role.t()}, Websocket.t()}
+          {:GUILD_ROLE_CREATE, {guild_id :: integer, new_role :: Remedy.Struct.Guild.Role.t()},
+           Websocket.t()}
   @type guild_role_delete ::
-          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t()}, Websocket.t()}
+          {:GUILD_ROLE_DELETE, {guild_id :: integer, old_role :: Remedy.Struct.Guild.Role.t()},
+           Websocket.t()}
 
   @type guild_role_update ::
           {:GUILD_ROLE_UPDATE,
@@ -114,7 +123,8 @@ defmodule Remedy.Consumer do
   @type message_ack :: {:MESSAGE_ACK, map, Websocket.t()}
 
   @type presence_update ::
-          {:PRESENCE_UPDATE, {guild_id :: integer, old_presence :: map | nil, new_presence :: map}, Websocket.t()}
+          {:PRESENCE_UPDATE,
+           {guild_id :: integer, old_presence :: map | nil, new_presence :: map}, Websocket.t()}
   @type ready ::
           {:READY, Ready.t(), Websocket.t()}
   @type resumed ::
@@ -124,7 +134,9 @@ defmodule Remedy.Consumer do
   @type user_settings_update :: no_return
 
   @type user_update ::
-          {:USER_UPDATE, {old_user :: Remedy.Struct.User.t() | nil, new_user :: Remedy.Struct.User.t()}, Websocket.t()}
+          {:USER_UPDATE,
+           {old_user :: Remedy.Struct.User.t() | nil, new_user :: Remedy.Struct.User.t()},
+           Websocket.t()}
 
   @type voice_ready :: {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}
 

@@ -1,5 +1,5 @@
 defmodule Remedy.Gateway.Events.InvalidSession do
-@moduledoc false
+  @moduledoc false
   use Remedy.Gateway.Payload
 
   def digest(socket, true) do

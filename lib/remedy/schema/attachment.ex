@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.Attachment do
-   @moduledoc """
+  @moduledoc """
   Discord Attachment Object
   """
   use Remedy.Schema

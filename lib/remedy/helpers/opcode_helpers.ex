@@ -189,8 +189,6 @@ defmodule Remedy.OpcodeHelpers do
     |> List.first()
   end
 
-
-
   def discord_epoch, do: 1_420_070_400_000
 
   # Voice Gateway has a separate set of opcodes

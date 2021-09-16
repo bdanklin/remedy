@@ -1,8 +1,19 @@
 defmodule Remedy.Schema.VoiceRegion do
-  @moduledoc false
+  @doc """
+  Voice Region
+  """
   use Remedy.Schema
-  @primary_key {:id, :string, autogenerate: false}
 
+  @type t :: %__MODULE__{
+          id: Snowflake.t(),
+          name: String.t(),
+          vip: boolean(),
+          optimal: boolean(),
+          deprecated: boolean(),
+          custom: boolean()
+        }
+
+  @primary_key {:id, :string, autogenerate: false}
   schema "voice_regions" do
     field :name, :string
     field :vip, :boolean

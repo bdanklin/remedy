@@ -3,8 +3,17 @@ defmodule Remedy.Schema.AuditLog do
   Discord Audit Log Object
   """
   use Remedy.Schema
-  @primary_key false
 
+  @type t :: %__MODULE__{
+          guild: Guild.t(),
+          webhooks: [Webhook.t()],
+          users: [User.t()],
+          audit_log_entries: [AuditLogEntry.t()],
+          integrations: [Integration.t()],
+          threads: [Thread.t()]
+        }
+
+  @primary_key false
   embedded_schema do
     belongs_to :guild, Guild
     embeds_many :webhooks, Webhook
@@ -20,6 +29,15 @@ defmodule Remedy.Schema.AuditLogEntry do
   Discord Audit Log Entry Object
   """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          target_id: String.t(),
+          action_type: integer(),
+          reason: String.t(),
+          user: User.t(),
+          options: [AuditLogOption.t()],
+          changes: [AuditLogChange.t()]
+        }
 
   @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
@@ -37,6 +55,18 @@ defmodule Remedy.Schema.AuditLogOption do
   Discord Audit Log Option Object
   """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          delete_member_days: String.t(),
+          members_removed: String.t(),
+          channel: Channel.t(),
+          message_id: Snowflake.t(),
+          count: String.t(),
+          id: Snowflake,
+          overwrite: PermissionOverwrite.t(),
+          type: String.t(),
+          role_name: String.t()
+        }
 
   @primary_key false
   embedded_schema do
@@ -57,6 +87,12 @@ defmodule Remedy.Schema.AuditLogChange do
   Discord Audit Log Change Object
   """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          new_value: term(),
+          old_value: term(),
+          key: term()
+        }
 
   @primary_key false
   embedded_schema do

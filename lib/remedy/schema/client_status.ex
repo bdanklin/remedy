@@ -5,7 +5,13 @@ defmodule Remedy.Schema.ClientStatus do
   use Remedy.Schema
   @primary_key false
 
-  schema "client_statuses" do
+  @type t :: %__MODULE__{
+          desktop: String.t(),
+          mobile: String.t(),
+          web: String.t()
+        }
+
+  embedded_schema do
     field :desktop, :string
     field :mobile, :string
     field :web, :string

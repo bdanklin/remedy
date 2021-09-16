@@ -1,8 +1,23 @@
 defmodule Remedy.Schema.Interaction do
-  @moduledoc false
+  @moduledoc """
+  Interaction Object
+  """
   use Remedy.Schema
-  @primary_key {:id, Snowflake, autogenerate: false}
 
+  @type t :: %__MODULE__{
+          type: integer(),
+          data: InteractionData.t(),
+          token: String.t(),
+          version: integer(),
+          channel: Channel.t(),
+          member: Member.t(),
+          user: User.t(),
+          message: Message.t(),
+          guild: Guild.t(),
+          application: App.t()
+        }
+
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "interaction" do
     field :type, :integer
     embeds_one :data, InteractionData
@@ -24,8 +39,20 @@ defmodule Remedy.Schema.InteractionData do
   Should probably be the center point of any command framework
   """
   use Remedy.Schema
-  @primary_key false
 
+  @type t :: %__MODULE__{
+          id: Snowflake.t(),
+          name: String.t(),
+          type: integer(),
+          custom_id: String.t(),
+          component_type: integer(),
+          values: [String.t()],
+          target_id: Snowflake.t(),
+          resolved: InteractionDataResolved.t(),
+          options: [InteractionDataOption.t()]
+        }
+
+  @primary_key false
   embedded_schema do
     field :id, Snowflake
     field :name, :string
@@ -40,8 +67,17 @@ defmodule Remedy.Schema.InteractionData do
 end
 
 defmodule Remedy.Schema.InteractionDataOption do
-  @moduledoc false
+  @moduledoc """
+  Interaction Data Option Object
+  """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          name: String.t(),
+          type: integer(),
+          value: String.t(),
+          options: [__MODULE__.t()]
+        }
 
   embedded_schema do
     field :name, :string
@@ -52,8 +88,18 @@ defmodule Remedy.Schema.InteractionDataOption do
 end
 
 defmodule Remedy.Schema.InteractionDataResolved do
-  @moduledoc false
+  @moduledoc """
+  Interaction Data Resolved Object
+  """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          users: [User.t()],
+          members: [Member.t()],
+          roles: [Role.t()],
+          channels: [Channel.t()],
+          messages: [Message.t()]
+        }
 
   embedded_schema do
     embeds_many :users, User
@@ -62,25 +108,4 @@ defmodule Remedy.Schema.InteractionDataResolved do
     embeds_many :channels, Channels
     embeds_many :messages, Messages
   end
-
-  # defp map_parse(nil, _target_type) do
-  #   nil
-  # end
-
-  # defp map_parse(structure, target_type) do
-  #   # Conversion of digit strings to integers is performed in `Util.safe_atom_map`.
-  #   structure
-  #   |> Enum.map(fn {k, v} -> {k, Util.cast(v, target_type)} end)
-  #   |> :maps.from_list()
-  # end
-
-  # def to_struct(map) do
-  #   %__MODULE__{
-  #     users: map_parse(map[:users], {:struct, User}),
-  #     members: map_parse(map[:members], {:struct, Member}),
-  #     roles: map_parse(map[:roles], {:struct, Role}),
-  #     channels: map_parse(map[:channels], {:struct, Channel}),
-  #     messages: map_parse(map[:messages], {:struct, Message})
-  #   }
-  # end
 end

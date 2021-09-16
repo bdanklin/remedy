@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.User do
-  @moduledoc false
+  @moduledoc """
+  User Schema
+  """
   use Remedy.Schema
   alias Remedy.CDN
   @primary_key {:id, Snowflake, autogenerate: false}

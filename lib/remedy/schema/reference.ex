@@ -1,8 +1,16 @@
 defmodule Remedy.Schema.Reference do
-  @moduledoc false
+  @doc """
+  Reference Object
+  """
   use Remedy.Schema
-  @primary_key false
 
+  @type t :: %__MODULE__{
+          message: Message.t(),
+          channel: Channel.t(),
+          guild: Guild.t()
+        }
+
+  @primary_key false
   embedded_schema do
     belongs_to :message, Message
     belongs_to :channel, Channel

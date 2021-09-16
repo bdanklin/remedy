@@ -3,8 +3,13 @@ defmodule Remedy.Schema.Activity do
   Discord Activity Object
   """
   use Remedy.Schema
-  @primary_key false
 
+  @type t :: %__MODULE__{
+          type: integer(),
+          party_id: String.t()
+        }
+
+  @primary_key false
   embedded_schema do
     field :type, :integer
     field :party_id, :string

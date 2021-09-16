@@ -1,8 +1,18 @@
 defmodule Remedy.Schema.Presence do
-  @moduledoc false
+  @moduledoc """
+  Presence object
+  """
   use Remedy.Schema
-  @primary_key {:code, :string, autogenerate: false}
 
+  @type t :: %__MODULE__{
+          user: User.t(),
+          guild_id: Snowflake.t(),
+          status: String.t(),
+          activities: [Activity.t()],
+          client_status: ClientStatus.t()
+        }
+
+  @primary_key {:code, :string, autogenerate: false}
   schema "presences" do
     belongs_to :user, User
     field :guild_id, Snowflake

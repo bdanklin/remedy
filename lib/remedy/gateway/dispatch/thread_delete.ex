@@ -1,4 +1,4 @@
-defmodule Remedy.Gateway.Dispatch.ThreadCreate do
+defmodule Remedy.Gateway.Dispatch.ThreadDelete do
   @moduledoc """
   Dispatched when a new guild channel is created, relevant to the current user.
 

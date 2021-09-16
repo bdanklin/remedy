@@ -1,9 +1,19 @@
 defmodule Remedy.Schema.StickerPack do
-  @moduledoc false
+  @doc """
+  Sticker Pack
+  """
   use Remedy.Schema
-  @primary_key {:id, Snowflake, autogenerate: false}
 
-  schema "sticker_packs" do
+  @type t :: %__MODULE__{
+          name: String.t(),
+          description: String.t(),
+          banner_asset_id: Snowflake.t(),
+          cover_sticker: Sticker.t(),
+          stickers: [Sticker.t()]
+        }
+
+  @primary_key {:id, Snowflake, autogenerate: false}
+  embedded_schema do
     field :name, :string
     field :description, :string
     field :banner_asset_id, Snowflake, virtual: true

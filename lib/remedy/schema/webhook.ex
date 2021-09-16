@@ -1,8 +1,10 @@
 defmodule Remedy.Schema.Webhook do
-  @moduledoc false
+  @moduledoc """
+  Webhook
+  """
   use Remedy.Schema
-  @primary_key {:id, Snowflake, autogenerate: false}
 
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "webhooks" do
     field :avatar, :string
     field :name, :string
@@ -19,7 +21,9 @@ defmodule Remedy.Schema.Webhook do
 end
 
 defmodule Remedy.Schema.IncomingWebhook do
-  @moduledoc false
+  @moduledoc """
+  Incoming Webhook
+  """
   use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -35,7 +39,9 @@ defmodule Remedy.Schema.IncomingWebhook do
 end
 
 defmodule Remedy.Schema.ApplicationWebhook do
-  @moduledoc false
+  @moduledoc """
+  Application Webhook
+  """
   use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}

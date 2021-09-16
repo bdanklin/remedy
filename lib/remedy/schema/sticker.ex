@@ -1,13 +1,27 @@
 defmodule Remedy.Schema.Sticker do
-  @moduledoc false
+  @doc """
+  Sticker
+  """
   use Remedy.Schema
   @primary_key {:id, Snowflake, autogenerate: false}
 
-  schema "stickers" do
+  @type t :: %__MODULE__{
+          name: String.t(),
+          description: String.t(),
+          tags: String.t(),
+          type: integer(),
+          format_type: integer(),
+          available: boolean(),
+          sort_value: integer(),
+          sticker_pack: StickerPack.t(),
+          guild: Guild.t(),
+          user: User.t()
+        }
+
+  embedded_schema do
     field :name, :string
     field :description, :string
     field :tags, :string
-    #  field :asset, :string	Deprecated previously the sticker asset hash, now an empty string
     field :type, :integer
     field :format_type, :integer
     field :available, :boolean

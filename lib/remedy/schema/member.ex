@@ -1,8 +1,24 @@
 defmodule Remedy.Schema.Member do
-  @moduledoc false
+  @moduledoc """
+  Guild Member Object
+  """
   use Remedy.Schema
-  @primary_key false
 
+  @type t :: %__MODULE__{
+          nick: String.t(),
+          joined_at: ISO8601.t(),
+          premium_since: ISO8601.t(),
+          deaf: boolean(),
+          mute: boolean(),
+          pending: boolean(),
+          permissions: String.t(),
+          roles: [Role.t()],
+          member_roles: Role,
+          user: User.t(),
+          guild: Guild.t()
+        }
+
+  @primary_key false
   schema "members" do
     field :nick, :string
     field :joined_at, ISO8601
@@ -11,7 +27,7 @@ defmodule Remedy.Schema.Member do
     field :mute, :boolean
     field :pending, :boolean, default: false
     field :permissions, :string
-    field :roles, {:array, Snowflake}, virtual: true
+    embeds_many :roles, Role
     embeds_many :member_roles, Role
     belongs_to :user, User
     belongs_to :guild, Guild

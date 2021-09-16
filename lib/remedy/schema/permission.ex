@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.Permission do
+  @moduledoc """
+  Permissions Object
+  """
   use Remedy.Schema
   use BattleStandard
 

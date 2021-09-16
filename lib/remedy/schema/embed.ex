@@ -5,6 +5,22 @@ defmodule Remedy.Schema.Embed do
   use Remedy.Schema
   alias Embed.{Author, Field, Footer, Provider, Thumbnail, Video}
 
+  @type t :: %__MODULE__{
+          title: String.t(),
+          type: String.t(),
+          description: String.t(),
+          url: String.t(),
+          timestamp: ISO8601.t(),
+          color: integer(),
+          fields: [EmbedField.t()],
+          author: EmbedAuthor.t(),
+          footer: EmbedFooter.t(),
+          image: EmbedImage.t(),
+          provider: Provider.t(),
+          thumbnail: Thumbnail.t(),
+          video: Video.t()
+        }
+
   @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
     field :title, :string
@@ -30,6 +46,12 @@ defmodule Remedy.Schema.EmbedField do
   """
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          name: String.t(),
+          value: String.t(),
+          inline: boolean()
+        }
+
   embedded_schema do
     field :name, :string, required: true
     field :value, :string, required: true
@@ -42,6 +64,13 @@ defmodule Remedy.Schema.EmbedAuthor do
   Discord Embed Author Object
   """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          name: String.t(),
+          url: String.t(),
+          icon_url: String.t(),
+          proxy_icon_url: String.t()
+        }
 
   embedded_schema do
     field :name
@@ -57,6 +86,12 @@ defmodule Remedy.Schema.EmbedFooter do
   """
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          text: String.t(),
+          icon_url: String.t(),
+          proxy_icon_url: String.t()
+        }
+
   embedded_schema do
     field :text, :string, required: true
     field :icon_url
@@ -69,6 +104,13 @@ defmodule Remedy.Schema.EmbedImage do
   Discord Embed Image Object
   """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          url: String.t(),
+          proxy_url: String.t(),
+          height: integer(),
+          width: integer()
+        }
 
   embedded_schema do
     field :url, :string
@@ -84,6 +126,11 @@ defmodule Remedy.Schema.EmbedProvider do
   """
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          provider: String.t(),
+          url: String.t()
+        }
+
   embedded_schema do
     field :provider, :string
     field :url, :string
@@ -95,6 +142,13 @@ defmodule Remedy.Schema.EmbedThumbnail do
   Discord Embed Thumbnail Object
   """
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          url: String.t(),
+          proxy_url: String.t(),
+          height: integer(),
+          width: integer()
+        }
 
   embedded_schema do
     field :url, :string

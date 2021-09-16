@@ -1,8 +1,16 @@
 defmodule Remedy.Schema.Reaction do
-  @moduledoc false
+  @doc """
+  Message Reaction Object
+  """
   use Remedy.Schema
-  @primary_key false
 
+  @type t :: %__MODULE__{
+          count: integer(),
+          me: boolean(),
+          emoji: Emoji.t()
+        }
+
+  @primary_key false
   embedded_schema do
     field :count, :integer
     field :me, :boolean

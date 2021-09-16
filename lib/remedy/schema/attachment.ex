@@ -4,8 +4,18 @@ defmodule Remedy.Schema.Attachment do
   """
   use Remedy.Schema
 
-  @primary_key {:id, Snowflake, autogenerate: false}
-  schema "attachments" do
+  @type t :: %__MODULE__{
+          filename: String.t(),
+          content_type: String.t(),
+          size: integer(),
+          url: String.t(),
+          proxy_url: String.t(),
+          height: integer(),
+          width: integer()
+        }
+
+  @primary_key false
+  embedded_schema do
     field :filename, :string, required: true
     field :content_type, :string, required: true
     field :size, :integer, required: true

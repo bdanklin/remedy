@@ -1,8 +1,21 @@
 defmodule Remedy.Schema.Role do
-  @moduledoc false
+  @doc """
+  Role
+  """
   use Remedy.Schema
-  @primary_key {:id, Snowflake, autogenerate: false}
 
+  @type t :: %__MODULE__{
+          name: String.t(),
+          color: integer(),
+          hoist: boolean(),
+          position: integer(),
+          permissions: String.t(),
+          managed: boolean(),
+          mentionable: boolean(),
+          guild: Guild.t()
+        }
+
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "roles" do
     field :name, :string
     field :color, :integer

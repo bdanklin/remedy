@@ -3,7 +3,7 @@ defmodule Remedy.MixProject do
 
   @app :remedy
   @name "Remedy"
-  @version "0.5.3"
+  @version "0.5.4"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
   @description "Discord Library in Elixir."
@@ -64,11 +64,11 @@ defmodule Remedy.MixProject do
 
   def groups_for_modules do
     [
-      Schema: [
-        ~r/Remedy.Schema/
-      ],
       Dispatch: [
         ~r/Remedy.Gateway.Dispatch/
+      ],
+      Schema: [
+        ~r/Remedy.Schema/
       ],
       Helpers: [
         Remedy.DispatchHelpers,

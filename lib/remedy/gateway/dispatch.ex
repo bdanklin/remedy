@@ -1,15 +1,4 @@
 defmodule Remedy.Gateway.Dispatch do
-  defmacro __using__(_env) do
-    quote do
-      import Remedy.{DispatchHelpers, ModelHelpers}
-      import Ecto.Changeset
-      import Sunbake.Snowflake, only: [is_snowflake: 1]
-      alias Remedy.Cache
-      alias Sunbake.{ISO8601, Snowflake}
-      use Ecto.Schema
-    end
-  end
-
   @type payload :: any()
   @type socket :: Websocket.t()
   @type event :: atom()
@@ -18,7 +7,6 @@ defmodule Remedy.Gateway.Dispatch do
 
   require Logger
 
-  @large_threshold 250
   def handle({event, payload, _socket} = dispatch) do
     Logger.debug("#{event}")
 
@@ -34,96 +22,6 @@ defmodule Remedy.Gateway.Dispatch do
     |> Recase.to_pascal()
     |> List.wrap()
     |> Module.concat()
-  end
-
-  def handle_event(:CHANNEL_PINS_UPDATE = event, p, state) do
-    {event, ChannelPinsUpdate.to_struct(p), state}
-  end
-
-  def handle_event(:GUILD_BAN_ADD = event, p, state) do
-    {event, GuildBanAdd.to_struct(p), state}
-  end
-
-  def handle_event(:GUILD_BAN_REMOVE = event, p, state) do
-    {event, GuildBanRemove.to_struct(p), state}
-  end
-
-  # = =========================
-  # def handle_event(:GUILD_CREATE, %{unavailable: true} = guild, state) do
-  #   :ets.insert(:unavailable_guilds, {guild.id, guild})
-  #   {:GUILD_UNAVAILABLE, UnavailableGuild.to_struct(guild), state}
-  # end
-
-  def handle_event(:GUILD_CREATE, p, state) do
-    # Ensures every channel will have an associated guild_id
-    channels_with_guild_id =
-      p.channels
-      |> Enum.map(fn channel -> Map.put(channel, :guild_id, p.id) end)
-
-    guild = %{p | channels: channels_with_guild_id}
-
-    guild.members
-    |> Enum.each(fn member -> UserCache.create(member.user) end)
-
-    :ets.insert(:guild_shard_map, {guild.id, state.shard})
-
-    Enum.each(guild.channels, fn channel ->
-      :ets.insert(:channel_guild_map, {channel.id, guild.id})
-    end)
-
-    has_members = Intents.has_intent?(:guild_members)
-    has_presences = Intents.has_intent?(:guild_presences)
-
-    intents_should_request? = has_members and not has_presences
-    large_server? = guild.member_count >= @large_threshold
-
-    should_request? = large_server? or intents_should_request?
-
-    if should_request? and Application.get_env(:remedy, :request_guild_members, false) do
-      Session.request_guild_members(state.conn_pid, guild.id)
-    end
-
-    {presences, guild} = Map.pop(guild, :presences, [])
-    PresenceCache.bulk_create(guild.id, presences)
-
-    guild = Util.cast(guild, {:struct, Guild})
-
-    true = GuildCache.create(guild)
-  end
-
-  def handle_event(:GUILD_UPDATE = event, p, state),
-    do: {event, GuildCache.update(p), state}
-
-  def handle_event(:GUILD_DELETE = event, p, state) do
-    :ets.delete(:guild_shard_map, p.id)
-    {event, {GuildCache.delete(p.id), Map.get(p, :unavailable, false)}, state}
-  end
-
-  def handle_event(:GUILD_EMOJIS_UPDATE = event, p, state),
-    do: {event, GuildCache.emoji_update(p.guild_id, p.emojis), state}
-
-  def handle_event(:GUILD_INTEGRATIONS_UPDATE = event, p, state) do
-    {event, GuildIntegrationsUpdate.to_struct(p), state}
-  end
-
-  def handle_event(:GUILD_MEMBER_ADD = event, p, state) do
-    UserCache.create(p.user)
-    {event, GuildCache.member_add(p.guild_id, p), state}
-  end
-
-  def handle_event(:GUILD_MEMBERS_CHUNK = event, p, state) do
-    UserCache.bulk_create(p.members)
-    GuildCache.member_chunk(p.guild_id, p.members)
-
-    # note: not casted at the moment, deemed mostly internal
-    {event, p, state}
-  end
-
-  def handle_event(:GUILD_MEMBER_REMOVE = event, p, state),
-    do: {event, GuildCache.member_remove(p.guild_id, p.user), state}
-
-  def handle_event(:GUILD_MEMBER_UPDATE = event, %{guild_id: guild_id} = p, state) do
-    {event, GuildCache.member_update(guild_id, p), state}
   end
 
   def handle_event(:GUILD_ROLE_CREATE = event, p, state),

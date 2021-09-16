@@ -2,6 +2,7 @@ defmodule Remedy.Api do
   @moduledoc """
   Hello
   """
+
   use Bitwise
   import Remedy.ModelHelpers
 
@@ -215,6 +216,7 @@ defmodule Remedy.Api do
   @doc ~S"""
   Same as `create_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
+
   @spec create_message!(Channel.id() | Message.t(), options | String.t()) ::
           no_return | Message.t()
   def create_message!(channel_id, options) do
@@ -277,6 +279,7 @@ defmodule Remedy.Api do
   @doc ~S"""
   Same as `edit_message/3`, but raises `Remedy.ApiError` in case of failure.
   """
+
   @spec edit_message!(Channel.id(), Message.id(), options) :: no_return | Message.t()
   def edit_message!(channel_id, message_id, options) do
     edit_message(channel_id, message_id, options)
@@ -287,6 +290,7 @@ defmodule Remedy.Api do
   Same as `edit_message/3`, but takes a `Remedy.Struct.Message` instead of a
   `channel_id` and `message_id`.
   """
+
   @spec edit_message(Message.t(), options) :: error | {:ok, Message.t()}
   def edit_message(%Message{id: id, channel_id: c_id}, options) do
     edit_message(c_id, id, options)
@@ -368,6 +372,7 @@ defmodule Remedy.Api do
 
   See `create_reaction/3` for similar examples.
   """
+
   @spec delete_own_reaction(Channel.id(), Message.id(), emoji) :: error | {:ok}
   def delete_own_reaction(channel_id, message_id, emoji)
 
@@ -469,6 +474,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Channel{id: 381889573426429952}}
   ```
   """
+
   @spec get_channel(Channel.id()) :: error | {:ok, Channel.t()}
   def get_channel(channel_id) when is_snowflake(channel_id) do
     request(:get, Endpoints.channel(channel_id))
@@ -515,6 +521,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Channel{id: 41771983423143933}}
   ```
   """
+
   @spec modify_channel(Channel.id(), options, AuditLogEntry.reason()) ::
           error | {:ok, Channel.t()}
   def modify_channel(channel_id, options, reason \\ nil)
@@ -554,6 +561,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Channel{id: 421533712753360896}}
   ```
   """
+
   @spec delete_channel(Channel.id(), AuditLogEntry.reason()) :: error | {:ok, Channel.t()}
   def delete_channel(channel_id, reason \\ nil) when is_snowflake(channel_id) do
     %{
@@ -582,6 +590,7 @@ defmodule Remedy.Api do
   Remedy.Api.get_channel_messages(43189401384091, 5, {:before, 130230401384})
   ```
   """
+
   @spec get_channel_messages(Channel.id(), limit, locator) :: error | {:ok, [Message.t()]}
   def get_channel_messages(channel_id, limit, locator \\ {}) when is_snowflake(channel_id) do
     get_messages_sync(channel_id, limit, [], locator)
@@ -641,6 +650,7 @@ defmodule Remedy.Api do
   Remedy.Api.get_channel_message(43189401384091, 198238475613443)
   ```
   """
+
   @spec get_channel_message(Channel.id(), Message.id()) :: error | {:ok, Message.t()}
   def get_channel_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
@@ -662,6 +672,7 @@ defmodule Remedy.Api do
   `Filter` is an optional parameter that specifies whether messages sent over
   two weeks ago should be filtered out; defaults to `true`.
   """
+
   @spec bulk_delete_messages(integer, [Remedy.Struct.Message.id()], boolean) :: error | {:ok}
   def bulk_delete_messages(channel_id, messages, filter \\ true)
 
@@ -832,6 +843,7 @@ defmodule Remedy.Api do
   @doc ~S"""
   Same as `create_channel_invite/2`, but raises `Remedy.ApiError` in case of failure.
   """
+
   @spec create_channel_invite!(Channel.id(), options, AuditLogEntry.reason()) ::
           no_return | Invite.detailed_invite()
   def create_channel_invite!(channel_id, options \\ [], reason \\ nil) do
@@ -847,6 +859,7 @@ defmodule Remedy.Api do
 
   Returns `{:ok}` if successful. `error` otherwise.
   """
+
   @spec start_typing(integer) :: error | {:ok}
   def start_typing(channel_id) do
     request(:post, Endpoints.channel_typing(channel_id))
@@ -865,6 +878,7 @@ defmodule Remedy.Api do
   Remedy.Api.get_pinned_messages(43189401384091)
   ```
   """
+
   @spec get_pinned_messages(Channel.id()) :: error | {:ok, [Message.t()]}
   def get_pinned_messages(channel_id) when is_snowflake(channel_id) do
     request(:get, Endpoints.channel_pins(channel_id))
@@ -887,6 +901,7 @@ defmodule Remedy.Api do
   Remedy.Api.add_pinned_channel_message(43189401384091, 18743893102394)
   ```
   """
+
   @spec add_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
   def add_pinned_channel_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
@@ -903,6 +918,7 @@ defmodule Remedy.Api do
 
   Returns `{:ok}` if successful. `error` otherwise.
   """
+
   @spec delete_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
   def delete_pinned_channel_message(channel_id, message_id)
       when is_snowflake(channel_id) and is_snowflake(message_id) do
@@ -916,6 +932,7 @@ defmodule Remedy.Api do
 
   If successful, returns `{:ok, emojis}`. Otherwise, returns `t:Remedy.Api.error/0`.
   """
+
   @spec list_guild_emojis(Guild.id()) :: error | {:ok, [Emoji.t()]}
   def list_guild_emojis(guild_id) do
     request(:get, Endpoints.guild_emojis(guild_id))
@@ -929,6 +946,7 @@ defmodule Remedy.Api do
 
   If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.Api.error/0`.
   """
+
   @spec get_guild_emoji(Guild.id(), Emoji.id()) :: error | {:ok, Emoji.t()}
   def get_guild_emoji(guild_id, emoji_id) do
     request(:get, Endpoints.guild_emoji(guild_id, emoji_id))
@@ -962,6 +980,7 @@ defmodule Remedy.Api do
   Remedy.Api.create_guild_emoji(43189401384091, name: "remedy", image: image, roles: [])
   ```
   """
+
   @spec create_guild_emoji(Guild.id(), options, AuditLogEntry.reason()) ::
           error | {:ok, Emoji.t()}
   def create_guild_emoji(guild_id, options, reason \\ nil)
@@ -1002,6 +1021,7 @@ defmodule Remedy.Api do
   Remedy.Api.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
   ```
   """
+
   @spec modify_guild_emoji(Guild.id(), Emoji.id(), options, AuditLogEntry.reason()) ::
           error | {:ok, Emoji.t()}
   def modify_guild_emoji(guild_id, emoji_id, options \\ %{}, reason \\ nil)
@@ -1031,6 +1051,7 @@ defmodule Remedy.Api do
 
   If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.Api.error/0`.
   """
+
   @spec delete_guild_emoji(Guild.id(), Emoji.id(), AuditLogEntry.reason()) :: error | {:ok}
   def delete_guild_emoji(guild_id, emoji_id, reason \\ nil),
     do:
@@ -1052,6 +1073,7 @@ defmodule Remedy.Api do
     * `:before` (`t:Remedy.Struct.Snowflake.t/0`) - filter the log before a certain entry ID
     * `:limit` (`t:pos_integer/0`) - how many entries are returned (default 50, minimum 1, maximum 100)
   """
+
   @spec get_guild_audit_log(Guild.id(), options) :: {:ok, AuditLog.t()} | error
   def get_guild_audit_log(guild_id, options \\ []) do
     request(:get, Endpoints.guild_audit_logs(guild_id), "", params: options)
@@ -1070,6 +1092,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Guild{id: 81384788765712384}}
   ```
   """
+
   @spec get_guild(Guild.id()) :: error | {:ok, Guild.rest_guild()}
   def get_guild(guild_id) when is_snowflake(guild_id) do
     request(:get, Endpoints.guild(guild_id))
@@ -1115,6 +1138,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Guild{id: 451824027976073216, name: "Nose Drum", ...}}
   ```
   """
+
   @spec modify_guild(Guild.id(), options, AuditLogEntry.reason()) ::
           error | {:ok, Guild.rest_guild()}
   def modify_guild(guild_id, options \\ [], reason \\ nil)
@@ -1151,6 +1175,7 @@ defmodule Remedy.Api do
   {:ok}
   ```
   """
+
   @spec delete_guild(Guild.id()) :: error | {:ok}
   def delete_guild(guild_id) when is_snowflake(guild_id) do
     request(:delete, Endpoints.guild(guild_id))
@@ -1168,6 +1193,7 @@ defmodule Remedy.Api do
   {:ok, [%Remedy.Struct.Channel{guild_id: 81384788765712384} | _]}
   ```
   """
+
   @spec get_guild_channels(Guild.id()) :: error | {:ok, [Channel.guild_channel()]}
   def get_guild_channels(guild_id) when is_snowflake(guild_id) do
     request(:get, Endpoints.guild_channels(guild_id))
@@ -1203,6 +1229,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Channel{guild_id: 81384788765712384}}
   ```
   """
+
   @spec create_guild_channel(Guild.id(), options) :: error | {:ok, Channel.guild_channel()}
   def create_guild_channel(guild_id, options)
 
@@ -1231,6 +1258,7 @@ defmodule Remedy.Api do
   {:ok}
   ```
   """
+
   @spec modify_guild_channel_positions(Guild.id(), [%{id: integer, position: integer}]) ::
           error | {:ok}
   def modify_guild_channel_positions(guild_id, positions)
@@ -1249,6 +1277,7 @@ defmodule Remedy.Api do
   Remedy.Api.get_guild_member(4019283754613, 184937267485)
   ```
   """
+
   @spec get_guild_member(Guild.id(), User.id()) :: error | {:ok, Member.t()}
   def get_guild_member(guild_id, user_id) when is_snowflake(guild_id) and is_snowflake(user_id) do
     request(:get, Endpoints.guild_member(guild_id, user_id))
@@ -1271,6 +1300,7 @@ defmodule Remedy.Api do
   Remedy.Api.list_guild_members(41771983423143937, limit: 1)
   ```
   """
+
   @spec list_guild_members(Guild.id(), options) :: error | {:ok, [Member.t()]}
   def list_guild_members(guild_id, options \\ %{})
 
@@ -1315,6 +1345,7 @@ defmodule Remedy.Api do
   )
   ```
   """
+
   @spec add_guild_member(Guild.id(), User.id(), options) :: error | {:ok, Member.t()} | {:ok}
   def add_guild_member(guild_id, user_id, options)
 
@@ -1351,6 +1382,7 @@ defmodule Remedy.Api do
   {:ok}
   ```
   """
+
   @spec modify_guild_member(Guild.id(), User.id(), options) :: error | {:ok}
   def modify_guild_member(guild_id, user_id, options \\ %{})
 
@@ -1378,6 +1410,7 @@ defmodule Remedy.Api do
   {:ok, %{nick: "Remedy"}}
   ```
   """
+
   @spec modify_current_user_nick(Guild.id(), options) :: error | {:ok, %{nick: String.t()}}
   def modify_current_user_nick(guild_id, options \\ %{}) do
     request(:patch, Endpoints.guild_me_nick(guild_id), options)
@@ -1391,6 +1424,7 @@ defmodule Remedy.Api do
   User to add role to is specified by `guild_id` and `user_id`.
   An optional `reason` can be given for the audit log.
   """
+
   @spec add_guild_member_role(integer, integer, integer, AuditLogEntry.reason()) :: error | {:ok}
   def add_guild_member_role(guild_id, user_id, role_id, reason \\ nil) do
     request(%{
@@ -1409,6 +1443,7 @@ defmodule Remedy.Api do
   User to remove role from is specified by `guild_id` and `user_id`.
   An optional `reason` can be given for the audit log.
   """
+
   @spec remove_guild_member_role(integer, integer, integer, AuditLogEntry.reason()) ::
           error | {:ok}
   def remove_guild_member_role(guild_id, user_id, role_id, reason \\ nil) do
@@ -1438,6 +1473,7 @@ defmodule Remedy.Api do
   {:ok}
   ```
   """
+
   @spec remove_guild_member(Guild.id(), User.id(), AuditLogEntry.reason()) :: error | {:ok}
   def remove_guild_member(guild_id, user_id, reason \\ nil)
       when is_snowflake(guild_id) and is_snowflake(user_id) do
@@ -1453,6 +1489,7 @@ defmodule Remedy.Api do
   @doc """
   Gets a ban object for the given user from a guild.
   """
+
   @doc since: "0.5.0"
   @spec get_guild_ban(integer, integer) :: error | {:ok, Guild.Ban.t()}
   def get_guild_ban(guild_id, user_id) do
@@ -1465,6 +1502,7 @@ defmodule Remedy.Api do
 
   Guild to get bans for is specified by `guild_id`.
   """
+
   @spec get_guild_bans(integer) :: error | {:ok, [Remedy.Struct.User.t()]}
   def get_guild_bans(guild_id) do
     request(:get, Endpoints.guild_bans(guild_id))
@@ -1477,6 +1515,7 @@ defmodule Remedy.Api do
   User to delete is specified by `guild_id` and `user_id`.
   An optional `reason` can be specified for the audit log.
   """
+
   @spec create_guild_ban(integer, integer, integer, AuditLogEntry.reason()) :: error | {:ok}
   def create_guild_ban(guild_id, user_id, days_to_delete, reason \\ nil) do
     request(%{
@@ -1494,6 +1533,7 @@ defmodule Remedy.Api do
   User to unban is specified by `guild_id` and `user_id`.
   An optional `reason` can be specified for the audit log.
   """
+
   @spec remove_guild_ban(integer, integer, AuditLogEntry.reason()) :: error | {:ok}
   def remove_guild_ban(guild_id, user_id, reason \\ nil) do
     request(%{
@@ -1516,6 +1556,7 @@ defmodule Remedy.Api do
   Remedy.Api.get_guild_roles(147362948571673)
   ```
   """
+
   @spec get_guild_roles(Guild.id()) :: error | {:ok, [Role.t()]}
   def get_guild_roles(guild_id) when is_snowflake(guild_id) do
     request(:get, Endpoints.guild_roles(guild_id))
@@ -1546,6 +1587,7 @@ defmodule Remedy.Api do
   Remedy.Api.create_guild_role(41771983423143937, name: "remedy-club", hoist: true)
   ```
   """
+
   @spec create_guild_role(Guild.id(), options, AuditLogEntry.reason()) :: error | {:ok, Role.t()}
   def create_guild_role(guild_id, options, reason \\ nil)
 
@@ -1580,6 +1622,7 @@ defmodule Remedy.Api do
   Remedy.Api.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
   ```
   """
+
   @spec modify_guild_role_positions(
           Guild.id(),
           [%{id: Role.id(), position: integer}],
@@ -1622,6 +1665,7 @@ defmodule Remedy.Api do
   Remedy.Api.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
   ```
   """
+
   @spec modify_guild_role(Guild.id(), Role.id(), options, AuditLogEntry.reason()) ::
           error | {:ok, Role.t()}
   def modify_guild_role(guild_id, role_id, options, reason \\ nil)
@@ -1658,6 +1702,7 @@ defmodule Remedy.Api do
   Remedy.Api.delete_guild_role(41771983423143937, 392817238471936)
   ```
   """
+
   @spec delete_guild_role(Guild.id(), Role.id(), AuditLogEntry.reason()) :: error | {:ok}
   def delete_guild_role(guild_id, role_id, reason \\ nil)
       when is_snowflake(guild_id) and is_snowflake(role_id) do
@@ -1684,6 +1729,7 @@ defmodule Remedy.Api do
   {:ok, %{pruned: 0}}
   ```
   """
+
   @spec get_guild_prune_count(Guild.id(), 1..30) :: error | {:ok, %{pruned: integer}}
   def get_guild_prune_count(guild_id, days) when is_snowflake(guild_id) and days in 1..30 do
     request(:get, Endpoints.guild_prune(guild_id), "", params: [days: days])
@@ -1707,6 +1753,7 @@ defmodule Remedy.Api do
   {:ok, %{pruned: 0}}
   ```
   """
+
   @spec begin_guild_prune(Guild.id(), 1..30, AuditLogEntry.reason()) ::
           error | {:ok, %{pruned: integer}}
   def begin_guild_prune(guild_id, days, reason \\ nil)
@@ -1727,6 +1774,7 @@ defmodule Remedy.Api do
 
   Guild to get voice regions for is specified by `guild_id`.
   """
+
   @spec get_voice_region(integer) :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
   def get_voice_region(guild_id) do
     request(:get, Endpoints.guild_voice_regions(guild_id))
@@ -1747,6 +1795,7 @@ defmodule Remedy.Api do
   {:ok, [%Remedy.Struct.Invite{} | _]}
   ```
   """
+
   @spec get_guild_invites(Guild.id()) :: error | {:ok, [Invite.detailed_invite()]}
   def get_guild_invites(guild_id) when is_snowflake(guild_id) do
     request(:get, Endpoints.guild_invites(guild_id))
@@ -1758,6 +1807,7 @@ defmodule Remedy.Api do
 
   Guild to get integrations for is specified by `guild_id`.
   """
+
   @spec get_guild_integrations(Guild.id()) ::
           error | {:ok, [Remedy.Struct.Guild.Integration.t()]}
   def get_guild_integrations(guild_id) do
@@ -1774,6 +1824,7 @@ defmodule Remedy.Api do
    * `type` - Integration type.
    * `id` - Integeration id.
   """
+
   @spec create_guild_integrations(integer, %{
           type: String.t(),
           id: integer
@@ -1792,6 +1843,7 @@ defmodule Remedy.Api do
    * `expire_grace_period` - Period where the integration will ignore elapsed subs.
    * `enable_emoticons` - Whether emoticons should be synced.
   """
+
   @spec modify_guild_integrations(integer, integer, %{
           expire_behaviour: integer,
           expire_grace_period: integer,
@@ -1806,6 +1858,7 @@ defmodule Remedy.Api do
 
   Integration to delete is specified by `guild_id` and `integeration_id`.
   """
+
   @spec delete_guild_integrations(integer, integer) :: error | {:ok}
   def delete_guild_integrations(guild_id, integration_id) do
     request(:delete, Endpoints.guild_integration(guild_id, integration_id))
@@ -1816,6 +1869,7 @@ defmodule Remedy.Api do
 
   Integration to sync is specified by `guild_id` and `integeration_id`.
   """
+
   @spec sync_guild_integrations(integer, integer) :: error | {:ok}
   def sync_guild_integrations(guild_id, integration_id) do
     request(:post, Endpoints.guild_integration_sync(guild_id, integration_id))
@@ -1824,6 +1878,7 @@ defmodule Remedy.Api do
   @doc """
   Gets a guild embed.
   """
+
   @spec get_guild_embed(integer) :: error | {:ok, map}
   def get_guild_embed(guild_id) do
     request(:get, Endpoints.guild_embed(guild_id))
@@ -1832,6 +1887,7 @@ defmodule Remedy.Api do
   @doc """
   Modifies a guild embed.
   """
+
   @spec modify_guild_embed(integer, map) :: error | {:ok, map}
   def modify_guild_embed(guild_id, options) do
     request(:patch, Endpoints.guild_embed(guild_id), options)
@@ -1856,6 +1912,7 @@ defmodule Remedy.Api do
   Remedy.Api.get_invite("zsjUsC", with_counts: true)
   ```
   """
+
   @spec get_invite(Invite.code(), options) :: error | {:ok, Invite.simple_invite()}
   def get_invite(invite_code, options \\ []) when is_binary(invite_code) do
     request(:get, Endpoints.invite(invite_code), "", params: options)
@@ -1876,6 +1933,7 @@ defmodule Remedy.Api do
   Remedy.Api.delete_invite("zsjUsC")
   ```
   """
+
   @spec delete_invite(Invite.code()) :: error | {:ok, Invite.simple_invite()}
   def delete_invite(invite_code) when is_binary(invite_code) do
     request(:delete, Endpoints.invite(invite_code))
@@ -1888,6 +1946,7 @@ defmodule Remedy.Api do
   If the request is successful, this function returns `{:ok, user}`, where
   `user` is a `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
   """
+
   @spec get_user(User.id()) :: error | {:ok, User.t()}
   def get_user(user_id) do
     request(:get, Endpoints.user(user_id))
@@ -1904,6 +1963,7 @@ defmodule Remedy.Api do
   If the request is successful, this function returns `{:ok, user}`, where
   `user` is remedy's `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
   """
+
   @spec get_current_user() :: error | {:ok, User.t()}
   def get_current_user do
     request(:get, Endpoints.me())
@@ -1924,6 +1984,7 @@ defmodule Remedy.Api do
   Remedy.Api.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
   ```
   """
+
   @spec modify_current_user(options) :: error | {:ok, User.t()}
   def modify_current_user(options)
 
@@ -1957,6 +2018,7 @@ defmodule Remedy.Api do
   {:ok, [%Remedy.Struct.Guild{}]}
   ```
   """
+
   @spec get_current_user_guilds(options) :: error | {:ok, [Guild.user_guild()]}
   def get_current_user_guilds(options \\ [])
 
@@ -1973,6 +2035,7 @@ defmodule Remedy.Api do
 
   Guild to leave is specified by `guild_id`.
   """
+
   @spec leave_guild(integer) :: error | {:ok}
   def leave_guild(guild_id) do
     request(%{
@@ -1996,6 +2059,7 @@ defmodule Remedy.Api do
   {:ok, [%Remedy.Struct.Channel{type: 1} | _]}
   ```
   """
+
   @spec get_user_dms() :: error | {:ok, [Channel.dm_channel()]}
   def get_user_dms do
     request(:get, Endpoints.me_channels())
@@ -2014,6 +2078,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Channel{type: 1}}
   ```
   """
+
   @spec create_dm(User.id()) :: error | {:ok, Channel.dm_channel()}
   def create_dm(user_id) when is_snowflake(user_id) do
     request(:post, Endpoints.me_channels(), %{recipient_id: user_id})
@@ -2035,6 +2100,7 @@ defmodule Remedy.Api do
   {:ok, %Remedy.Struct.Channel{type: 3}}
   ```
   """
+
   @spec create_group_dm([String.t()], %{optional(User.id()) => String.t()}) ::
           error | {:ok, Channel.group_dm_channel()}
   def create_group_dm(access_tokens, nicks) when is_list(access_tokens) and is_map(nicks) do
@@ -2045,6 +2111,7 @@ defmodule Remedy.Api do
   @doc """
   Gets a list of user connections.
   """
+
   @spec get_user_connections() :: error | {:ok, list()}
   def get_user_connections do
     request(:get, Endpoints.me_connections())
@@ -2054,6 +2121,7 @@ defmodule Remedy.Api do
   @doc """
   Gets a list of voice regions.
   """
+
   @spec list_voice_regions() :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
   def list_voice_regions do
     request(:get, Endpoints.regions())
@@ -2070,6 +2138,7 @@ defmodule Remedy.Api do
       - `avatar` - Base64 128x128 jpeg image for the default avatar.
     - `reason` - An optional reason for the guild audit log.
   """
+
   @spec create_webhook(
           Channel.id(),
           %{
@@ -2096,6 +2165,7 @@ defmodule Remedy.Api do
   ## Parameters
     - `channel_id` - Channel to get webhooks for.
   """
+
   @spec get_channel_webhooks(Channel.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
   def get_channel_webhooks(channel_id) do
     request(:get, Endpoints.webhooks_channel(channel_id))
@@ -2108,6 +2178,7 @@ defmodule Remedy.Api do
   ## Parameters
     - `guild_id` - Guild to get webhooks for.
   """
+
   @spec get_guild_webhooks(Guild.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
   def get_guild_webhooks(guild_id) do
     request(:get, Endpoints.webhooks_guild(guild_id))
@@ -2120,6 +2191,7 @@ defmodule Remedy.Api do
   ## Parameters
     - `webhook_id` - Id of the webhook to get.
   """
+
   @spec get_webhook(Webhook.id()) :: error | {:ok, Remedy.Struct.Webhook.t()}
   def get_webhook(webhook_id) do
     request(:get, Endpoints.webhook(webhook_id))
@@ -2136,6 +2208,7 @@ defmodule Remedy.Api do
     - `webhook_id` - Id of the webhook to get.
     - `webhook_token` - Token of the webhook to get.
   """
+
   @spec get_webhook_with_token(Webhook.id(), Webhook.token()) ::
           error | {:ok, Remedy.Struct.Webhook.t()}
   def get_webhook_with_token(webhook_id, webhook_token) do
@@ -2153,6 +2226,7 @@ defmodule Remedy.Api do
       - `avatar` - Base64 128x128 jpeg image for the default avatar.
     - `reason` - An optional reason for the guild audit log.
   """
+
   @spec modify_webhook(
           Webhook.id(),
           %{
@@ -2187,6 +2261,7 @@ defmodule Remedy.Api do
       - `avatar` - Base64 128x128 jpeg image for the default avatar.
     - `reason` - An optional reason for the guild audit log.
   """
+
   @spec modify_webhook_with_token(
           Webhook.id(),
           Webhook.token(),
@@ -2215,6 +2290,7 @@ defmodule Remedy.Api do
     - `webhook_id` - Id of webhook to delete.
     - `reason` - An optional reason for the guild audit log.
   """
+
   @spec delete_webhook(Webhook.id(), AuditLogEntry.reason()) :: error | {:ok}
   def delete_webhook(webhook_id, reason \\ nil) do
     request(%{
@@ -2310,6 +2386,7 @@ defmodule Remedy.Api do
     - `webhook_id` - Id of the webhook to execute.
     - `webhook_token` - Token of the webhook to execute.
   """
+
   @spec execute_slack_webhook(Webhook.id(), Webhook.token(), boolean) :: error | {:ok}
   def execute_slack_webhook(webhook_id, webhook_token, wait \\ false) do
     request(:post, Endpoints.webhook_slack(webhook_id, webhook_token), params: [wait: wait])
@@ -2322,6 +2399,7 @@ defmodule Remedy.Api do
     - `webhook_id` - Id of the webhook to execute.
     - `webhook_token` - Token of the webhook to execute.
   """
+
   @spec execute_git_webhook(Webhook.id(), Webhook.token(), boolean) :: error | {:ok}
   def execute_git_webhook(webhook_id, webhook_token, wait \\ false) do
     request(:post, Endpoints.webhook_git(webhook_id, webhook_token), params: [wait: wait])
@@ -2350,6 +2428,7 @@ defmodule Remedy.Api do
   }}
   ```
   """
+
   @spec get_application_information() :: error | {:ok, map()}
   def get_application_information do
     request(:get, Endpoints.application_information())
@@ -2382,6 +2461,7 @@ defmodule Remedy.Api do
    ]}
   ```
   """
+
   @spec get_global_application_commands() :: {:ok, [map()]} | error
   @spec get_global_application_commands(User.id()) :: {:ok, [map()]} | error
   def get_global_application_commands(application_id \\ Bot.get().id) do
@@ -2414,6 +2494,7 @@ defmodule Remedy.Api do
   )
   ```
   """
+
   @spec create_global_application_command(map()) :: {:ok, map()} | error
   @spec create_global_application_command(User.id(), map()) :: {:ok, map()} | error
   def create_global_application_command(application_id \\ Bot.get().id, command) do
@@ -2436,6 +2517,7 @@ defmodule Remedy.Api do
   The updated command. See the official reference:
   https://discord.com/developers/docs/interactions/slash-commands#edit-global-application-command
   """
+
   @spec edit_global_application_command(Snowflake.t(), map()) :: {:ok, map()} | error
   @spec edit_global_application_command(User.id(), Snowflake.t(), map()) :: {:ok, map()} | error
   def edit_global_application_command(
@@ -2455,6 +2537,7 @@ defmodule Remedy.Api do
     If not given, this will be fetched from `Me`.
   - `command_id`: The current snowflake of the command.
   """
+
   @spec delete_global_application_command(Snowflake.t()) :: {:ok} | error
   @spec delete_global_application_command(User.id(), Snowflake.t()) :: {:ok} | error
   def delete_global_application_command(application_id \\ Bot.get().id, command_id) do
@@ -2552,6 +2635,7 @@ defmodule Remedy.Api do
   Updated list of guild application commands. See the official reference:
   https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-guild-application-commands
   """
+
   @doc since: "0.5.0"
   @spec bulk_overwrite_guild_application_commands(Guild.id(), [map()]) :: {:ok, [map()]} | error
   @spec bulk_overwrite_guild_application_commands(User.id(), Guild.id(), [map()]) ::
@@ -2575,6 +2659,7 @@ defmodule Remedy.Api do
   Same as `create_interaction_response/3`, but directly takes the
   `t:Remedy.Struct.Interaction.t/0` received from the gateway.
   """
+
   @spec create_interaction_response(Interaction.t(), map()) :: {:ok} | error
   def create_interaction_response(interaction, response) do
     create_interaction_response(interaction.id, interaction.token, response)
@@ -2605,6 +2690,7 @@ defmodule Remedy.Api do
   original `t:Remedy.Struct.Interaction.t/0` can also be passed
   directly. See `create_interaction_response/1`.
   """
+
   @spec create_interaction_response(Interaction.id(), Interaction.token(), map()) :: {:ok} | error
   def create_interaction_response(id, token, response) do
     request(:post, Endpoints.interaction_callback(id, token), response)
@@ -2618,6 +2704,7 @@ defmodule Remedy.Api do
 
   Delegates to ``execute_webhook/3``, see the function for more details.
   """
+
   @spec create_followup_message(Interaction.token(), map()) :: {:ok} | error
   @spec create_followup_message(User.id(), Interaction.token(), map()) :: {:ok} | error
   def create_followup_message(application_id \\ Bot.get().id, token, webhook_payload) do
@@ -2714,6 +2801,7 @@ defmodule Remedy.Api do
   @doc """
   Returns the token of the bot.
   """
+
   @spec get_token() :: String.t()
   def get_token do
     Application.get_env(:remedy, :token)

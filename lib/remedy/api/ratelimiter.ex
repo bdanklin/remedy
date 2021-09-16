@@ -1,8 +1,5 @@
 defmodule Remedy.Api.Ratelimiter do
-  @moduledoc """
-  Ratelimit implimentation specific to Discord's API.
-  Only to be used when starting in a rest-only manner.
-  """
+  @moduledoc false
 
   use GenServer
 
@@ -110,7 +107,9 @@ defmodule Remedy.Api.Ratelimiter do
   end
 
   defp wait_for_timeout(request, timeout, from) do
-    Logger.info("RATELIMITER: Waiting #{timeout}ms to process request with route #{request.route}")
+    Logger.info(
+      "RATELIMITER: Waiting #{timeout}ms to process request with route #{request.route}"
+    )
 
     Process.sleep(timeout)
     GenServer.call(Ratelimiter, {:queue, request, from}, :infinity)
@@ -170,7 +169,7 @@ defmodule Remedy.Api.Ratelimiter do
         {:ok}
 
       {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
-        {:error, %ApiError{status_code: code, response: Poison.decode!(body, keys: :atoms)}}
+        {:error, %ApiError{status_code: code, response: Jason.decode!(body, keys: :atoms)}}
     end
   end
 

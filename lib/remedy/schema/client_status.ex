@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.ClientStatus do
-  @moduledoc false
+  @moduledoc """
+  Discord Client Status Object
+  """
   use Remedy.Schema
   @primary_key false
 

@@ -1,4 +1,7 @@
 defmodule Remedy.Gateway.Dispatch do
+  @moduledoc """
+  Gateway Dispatching
+  """
   @type payload :: any()
   @type socket :: Websocket.t()
   @type event :: atom()

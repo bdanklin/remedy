@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Channel do
-  @moduledoc false
+  @moduledoc """
+  Discord Channel Object
+  """
   use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}

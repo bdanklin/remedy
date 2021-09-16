@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Embed do
-  @moduledoc false
+  @moduledoc """
+  Discord Embed Object
+  """
   use Remedy.Schema
   alias Embed.{Author, Field, Footer, Provider, Thumbnail, Video}
 
@@ -22,8 +24,10 @@ defmodule Remedy.Schema.Embed do
   end
 end
 
-defmodule Remedy.Schema.Embed.Field do
-  @moduledoc false
+defmodule Remedy.Schema.EmbedField do
+  @moduledoc """
+  Discord Embed Field Object
+  """
   use Remedy.Schema
 
   embedded_schema do
@@ -33,8 +37,10 @@ defmodule Remedy.Schema.Embed.Field do
   end
 end
 
-defmodule Remedy.Schema.Embed.Author do
-  @moduledoc false
+defmodule Remedy.Schema.EmbedAuthor do
+  @moduledoc """
+  Discord Embed Author Object
+  """
   use Remedy.Schema
 
   embedded_schema do
@@ -45,8 +51,10 @@ defmodule Remedy.Schema.Embed.Author do
   end
 end
 
-defmodule Remedy.Schema.Embed.Footer do
-  @moduledoc false
+defmodule Remedy.Schema.EmbedFooter do
+  @moduledoc """
+  Discord Embed Footer Object
+  """
   use Remedy.Schema
 
   embedded_schema do
@@ -56,8 +64,10 @@ defmodule Remedy.Schema.Embed.Footer do
   end
 end
 
-defmodule Remedy.Schema.Embed.Image do
-  @moduledoc false
+defmodule Remedy.Schema.EmbedImage do
+  @moduledoc """
+  Discord Embed Image Object
+  """
   use Remedy.Schema
 
   embedded_schema do
@@ -68,8 +78,10 @@ defmodule Remedy.Schema.Embed.Image do
   end
 end
 
-defmodule Remedy.Schema.Embed.Provider do
-  @moduledoc false
+defmodule Remedy.Schema.EmbedProvider do
+  @moduledoc """
+  Discord Embed Provider Object
+  """
   use Remedy.Schema
 
   embedded_schema do
@@ -78,8 +90,10 @@ defmodule Remedy.Schema.Embed.Provider do
   end
 end
 
-defmodule Remedy.Schema.Embed.Thumbnail do
-  @moduledoc false
+defmodule Remedy.Schema.EmbedThumbnail do
+  @moduledoc """
+  Discord Embed Thumbnail Object
+  """
   use Remedy.Schema
 
   embedded_schema do

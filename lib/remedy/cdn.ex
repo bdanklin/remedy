@@ -83,7 +83,7 @@ defmodule Remedy.CDN do
     |> encode(sticker_pack_banner_asset_id, size)
   end
 
-  ######
+  ##
   #### Private
   #####
 
@@ -96,7 +96,9 @@ defmodule Remedy.CDN do
 
   defp put_size(term, nil), do: term
 
-  defp put_size(term, size) when is_integer(size) when size in [16, 32, 64, 128, 256, 512, 1024, 2048, 4096] do
+  defp put_size(term, size)
+       when is_integer(size)
+       when size in [16, 32, 64, 128, 256, 512, 1024, 2048, 4096] do
     term <> "?size=#{to_string(size)}"
   end
 

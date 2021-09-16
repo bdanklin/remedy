@@ -71,90 +71,48 @@ defmodule Remedy.Api do
   #   Supervisor.update_voice_state(guild_id, channel_id, self_mute, self_deaf)
   # end
 
-  @doc ~S"""
+  @doc """
   Posts a message to a guild text or DM channel.
 
-  This endpoint requires the `VIEW_CHANNEL` and `SEND_MESSAGES` permissions. It
-  may situationally need the `SEND_MESSAGES_TTS` permission. It fires the
-  `t:Remedy.Consumer.message_create/0` event.
+  ## Required Intents
 
-  If `options` is a string, `options` will be used as the message's content.
+  - `:VIEW_CHANNEL`
+  - `:SEND_MESSAGES`
+  - `:SEND_MESSAGES_TTS` (optional)
 
-  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.Api.error/0`.
+  ## Fired Events
+
+  - `t:Remedy.Gateway.Dispatch.message_create/0`.
 
   ## Options
 
-    * `:content` (string) - the message contents (up to 2000 characters)
-    * `:nonce` (`t:Sunbake.Snowflake.t/0`) - a nonce that can be used for
-    optimistic message sending
-    * `:tts` (boolean) - true if this is a TTS message
-    * `:file` (`t:Path.t/0` | map) - the path of the file being sent, or a map with the following keys
-    if sending a binary from memory
-      * `:name` (string) - the name of the file
-      * `:body` (string) - binary you wish to send
-    * `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
-    * `:allowed_mentions` - See "Allowed mentions" below
-    * `:message_reference` (`map`) - See "Message references" below
+    - `:content` (string) - the message contents (up to 2000 characters)
+    - `:nonce` (`t:Sunbake.Snowflake.t/0`) - a nonce that can be used for optimistic message sending
+    - `:tts` (boolean) - true if this is a TTS message
+    - `:file` (`t:Path.t/0` | map) - the path of the file being sent, or a map with the following keys if sending a binary from memory
+    - `:name` (string) - the name of the file
+    - `:body` (string) - binary you wish to send
+    - `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
+    - `:allowed_mentions` - See "Allowed mentions" below
+    - `:message_reference` (`map`) - See "Message references" below
 
-    At least one of the following is required: `:content`, `:file`, `:embed`.
+   > Note: At least one of the following is required: `:content`, `:file`, `:embed`.
 
-  ## Allowed mentions
+  ### Allowed mentions
+    - `:all` (default) - Ping everything as usual
+    - `:none` - Nobody will be pinged
+    - `:everyone` - Allows to ping @here and @everone
+    - `:users` - Allows to ping users
+    - `:roles` - Allows to ping roles
+    - `{:users, list}` - Allows to ping list of users. Can contain up to 100 ids of users.
+    - `{:roles, list}` - Allows to ping list of roles. Can contain up to 100 ids of roles.
 
-  With this option you can control when content from a message should trigger a ping.
-  Consider using this option when you are going to display user_generated content.
-
-  ### Allowed values
-    * `:all` (default) - Ping everything as usual
-    * `:none` - Nobody will be pinged
-    * `:everyone` - Allows to ping @here and @everone
-    * `:users` - Allows to ping users
-    * `:roles` - Allows to ping roles
-    * `{:users, list}` - Allows to ping list of users. Can contain up to 100 ids of users.
-    * `{:roles, list}` - Allows to ping list of roles. Can contain up to 100 ids of roles.
-    * list - a list containing the values above.
-
-  ### Message reference
-
-  You can create a reply to another message on guilds using this option, given
-  that you have the ``VIEW_MESSAGE_HISTORY`` permission. To do so, include the
-  ``message_reference`` field in your call. The complete structure
-  documentation can be found [on the Discord Developer
-  Portal](https://discord.com/developers/docs/resources/channel#message-object-message-reference-structure),
-  but simply passing ``message_id`` will suffice:
-
-  ```elixir
-  def my_command(msg) do
-    # Reply to the author - ``msg`` is a ``Remedy.Struct.Message``
-    Remedy.Api.create_message(
-      msg.channel_id,
-      content: "Hello",
-      message_reference: %{message_id: msg.id}
-    )
-  end
-  ```
-
-  Passing a list will merge the settings provided
 
   ## Examples
 
-  ```Elixir
-  Remedy.Api.create_message(43189401384091, content: "hello world!")
+      iex> Remedy.Api.create_message(872417560094732331, content: "hello world!")
+      {:ok, %Message{}}
 
-  Remedy.Api.create_message(43189401384091, "hello world!")
-
-  import Remedy.Struct.Embed
-  embed =
-    %Remedy.Struct.Embed{}
-    |> put_title("embed")
-    |> put_description("new desc")
-  Remedy.Api.create_message(43189401384091, embed: embed)
-
-  Remedy.Api.create_message(43189401384091, file: "/path/to/file.txt")
-
-  Remedy.Api.create_message(43189401384091, content: "hello world!", embed: embed, file: "/path/to/file.txt")
-
-  Remedy.Api.create_message(43189401384091, content: "Hello @everyone", allowed_mentions: :none)
-  ```
   """
 
   @spec create_message(Channel.id() | Message.t(), options | String.t()) ::
@@ -183,7 +141,7 @@ defmodule Remedy.Api do
     payload_json =
       options
       |> Map.delete(:file)
-      |> Poison.encode!()
+      |> Jason.encode!()
 
     request = %{
       method: :post,
@@ -213,7 +171,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Message})
   end
 
-  @doc ~S"""
+  @doc """
   Same as `create_message/2`, but raises `Remedy.ApiError` in case of failure.
   """
 
@@ -224,7 +182,7 @@ defmodule Remedy.Api do
     |> bangify
   end
 
-  @doc ~S"""
+  @doc """
   Edits a previously sent message in a channel.
 
   This endpoint requires the `VIEW_CHANNEL` permission. It fires the
@@ -276,7 +234,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Message})
   end
 
-  @doc ~S"""
+  @doc """
   Same as `edit_message/3`, but raises `Remedy.ApiError` in case of failure.
   """
 
@@ -286,7 +244,7 @@ defmodule Remedy.Api do
     |> bangify
   end
 
-  @doc ~S"""
+  @doc """
   Same as `edit_message/3`, but takes a `Remedy.Struct.Message` instead of a
   `channel_id` and `message_id`.
   """
@@ -296,7 +254,7 @@ defmodule Remedy.Api do
     edit_message(c_id, id, options)
   end
 
-  @doc ~S"""
+  @doc """
   Same as `delete_message/2`, but takes a `Remedy.Struct.Message` instead of a
   `channel_id` and `message_id`.
   """
@@ -306,7 +264,7 @@ defmodule Remedy.Api do
     delete_message(c_id, id)
   end
 
-  @doc ~S"""
+  @doc """
   Deletes a message.
 
   This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_MESSAGES' permission. It
@@ -327,7 +285,7 @@ defmodule Remedy.Api do
     request(:delete, Endpoints.channel_message(channel_id, message_id))
   end
 
-  @doc ~S"""
+  @doc """
   Creates a reaction for a message.
 
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
@@ -362,7 +320,7 @@ defmodule Remedy.Api do
     request(:put, Endpoints.channel_reaction_me(channel_id, message_id, emoji_api_name))
   end
 
-  @doc ~S"""
+  @doc """
   Deletes a reaction the current user has made for the message.
 
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
@@ -383,7 +341,7 @@ defmodule Remedy.Api do
     request(:delete, Endpoints.channel_reaction_me(channel_id, message_id, emoji_api_name))
   end
 
-  @doc ~S"""
+  @doc """
   Deletes another user's reaction from a message.
 
   This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
@@ -404,7 +362,7 @@ defmodule Remedy.Api do
     request(:delete, Endpoints.channel_reaction(channel_id, message_id, emoji_api_name, user_id))
   end
 
-  @doc ~S"""
+  @doc """
   Deletes all reactions of a given emoji from a message.
 
   This endpoint requires the `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove_emoji/0` event.
@@ -427,7 +385,7 @@ defmodule Remedy.Api do
     )
   end
 
-  @doc ~S"""
+  @doc """
   Gets all users who reacted with an emoji.
 
   This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY` permissions.
@@ -448,7 +406,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, User}})
   end
 
-  @doc ~S"""
+  @doc """
   Deletes all reactions from a message.
 
   This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
@@ -462,7 +420,7 @@ defmodule Remedy.Api do
     request(:delete, Endpoints.channel_reactions_delete(channel_id, message_id))
   end
 
-  @doc ~S"""
+  @doc """
   Gets a channel.
 
   If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -481,7 +439,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Channel})
   end
 
-  @doc ~S"""
+  @doc """
   Modifies a channel's settings.
 
   An optional `reason` can be given for the guild audit log.
@@ -541,7 +499,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Channel})
   end
 
-  @doc ~S"""
+  @doc """
   Deletes a channel.
 
   An optional `reason` can be provided for the guild audit log.
@@ -575,7 +533,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Channel})
   end
 
-  @doc ~S"""
+  @doc """
   Retrieves a channel's messages around a `locator` up to a `limit`.
 
   This endpoint requires the 'VIEW_CHANNEL' permission. If the current user
@@ -637,7 +595,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Message}})
   end
 
-  @doc ~S"""
+  @doc """
   Retrieves a message from a channel.
 
   This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
@@ -767,7 +725,7 @@ defmodule Remedy.Api do
     })
   end
 
-  @doc ~S"""
+  @doc """
   Gets a list of invites for a channel.
 
   This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_CHANNELS' permissions.
@@ -789,7 +747,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Invite}})
   end
 
-  @doc ~S"""
+  @doc """
   Creates an invite for a guild channel.
 
   An optional `reason` can be provided for the audit log.
@@ -840,7 +798,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Invite})
   end
 
-  @doc ~S"""
+  @doc """
   Same as `create_channel_invite/2`, but raises `Remedy.ApiError` in case of failure.
   """
 
@@ -865,7 +823,7 @@ defmodule Remedy.Api do
     request(:post, Endpoints.channel_typing(channel_id))
   end
 
-  @doc ~S"""
+  @doc """
   Retrieves all pinned messages from a channel.
 
   This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
@@ -885,7 +843,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Message}})
   end
 
-  @doc ~S"""
+  @doc """
   Pins a message in a channel.
 
   This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
@@ -925,7 +883,7 @@ defmodule Remedy.Api do
     request(:delete, Endpoints.channel_pin(channel_id, message_id))
   end
 
-  @doc ~S"""
+  @doc """
   Gets a list of emojis for a given guild.
 
   This endpoint requires the `MANAGE_EMOJIS` permission.
@@ -939,7 +897,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Emoji}})
   end
 
-  @doc ~S"""
+  @doc """
   Gets an emoji for the given guild and emoji ids.
 
   This endpoint requires the `MANAGE_EMOJIS` permission.
@@ -953,7 +911,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Emoji})
   end
 
-  @doc ~S"""
+  @doc """
   Creates a new emoji for the given guild.
 
   This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
@@ -1000,7 +958,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Emoji})
   end
 
-  @doc ~S"""
+  @doc """
   Modify the given emoji.
 
   This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
@@ -1041,7 +999,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Emoji})
   end
 
-  @doc ~S"""
+  @doc """
   Deletes the given emoji.
 
   An optional `reason` can be provided for the audit log.
@@ -1063,7 +1021,7 @@ defmodule Remedy.Api do
         headers: maybe_add_reason(reason)
       })
 
-  @doc ~S"""
+  @doc """
   Get the `t:Remedy.Struct.Guild.AuditLog.t/0` for the given `guild_id`.
 
   ## Options
@@ -1080,7 +1038,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, AuditLog})
   end
 
-  @doc ~S"""
+  @doc """
   Gets a guild.
 
   If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -1160,7 +1118,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Guild})
   end
 
-  @doc ~S"""
+  @doc """
   Deletes a guild.
 
   This endpoint requires that the current user is the owner of the guild.
@@ -1181,7 +1139,7 @@ defmodule Remedy.Api do
     request(:delete, Endpoints.guild(guild_id))
   end
 
-  @doc ~S"""
+  @doc """
   Gets a list of guild channels.
 
   If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -1312,7 +1270,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Member}})
   end
 
-  @doc ~S"""
+  @doc """
   Puts a user in a guild.
 
   This endpoint fires the `t:Remedy.Consumer.guild_member_add/0` event.
@@ -1358,7 +1316,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Member})
   end
 
-  @doc ~S"""
+  @doc """
   Modifies a guild member's attributes.
 
   This endpoint fires the `t:Remedy.Consumer.guild_member_update/0` event.
@@ -1545,7 +1503,7 @@ defmodule Remedy.Api do
     })
   end
 
-  @doc ~S"""
+  @doc """
   Gets a guild's roles.
 
   If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -1563,7 +1521,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Role}})
   end
 
-  @doc ~S"""
+  @doc """
   Creates a guild role.
 
   An optional reason for the audit log can be provided via `reason`.
@@ -1606,7 +1564,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Role})
   end
 
-  @doc ~S"""
+  @doc """
   Reorders a guild's roles.
 
   This endpoint requires the `MANAGE_ROLES` permission. It fires multiple
@@ -1641,7 +1599,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Role}})
   end
 
-  @doc ~S"""
+  @doc """
   Modifies a guild role.
 
   This endpoint requires the `MANAGE_ROLES` permission. It fires a
@@ -1686,7 +1644,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Role})
   end
 
-  @doc ~S"""
+  @doc """
   Deletes a role from a guild.
 
   An optional `reason` can be specified for the audit log.
@@ -1781,7 +1739,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode
   end
 
-  @doc ~S"""
+  @doc """
   Gets a list of invites for a guild.
 
   This endpoint requires the `MANAGE_GUILD` permission.
@@ -1894,7 +1852,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode
   end
 
-  @doc ~S"""
+  @doc """
   Gets an invite by its `invite_code`.
 
   If successful, returns `{:ok, invite}`. Otherwise, returns a
@@ -1919,7 +1877,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Invite})
   end
 
-  @doc ~S"""
+  @doc """
   Deletes an invite by its `invite_code`.
 
   This endpoint requires the `MANAGE_CHANNELS` permission.
@@ -1970,7 +1928,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, User})
   end
 
-  @doc ~S"""
+  @doc """
   Changes the username or avatar of the current user.
 
   ## Options
@@ -2066,7 +2024,7 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:list, {:struct, Channel}})
   end
 
-  @doc ~S"""
+  @doc """
   Create a new DM channel with a user.
 
   If successful, returns `{:ok, dm_channel}`. Otherwise, returns a `t:Remedy.Api.error/0`.
@@ -2808,7 +2766,7 @@ defmodule Remedy.Api do
   end
 
   defp handle_request_with_decode(response)
-  defp handle_request_with_decode({:ok, body}), do: {:ok, Poison.decode!(body, keys: :atoms)}
+  defp handle_request_with_decode({:ok, body}), do: {:ok, Jason.decode!(body, keys: :atoms)}
   defp handle_request_with_decode({:error, _} = error), do: error
 
   defp handle_request_with_decode(response, type)
@@ -2818,7 +2776,7 @@ defmodule Remedy.Api do
   defp handle_request_with_decode({:ok, body}, _type) do
     convert =
       body
-      |> Poison.decode!(keys: :atoms)
+      |> Jason.decode!(keys: :atoms)
 
     # |> Util.cast(type)
 

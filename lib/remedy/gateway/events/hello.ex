@@ -1,7 +1,5 @@
 defmodule Remedy.Gateway.Events.Hello do
-  @doc """
-  Hello
-  """
+@moduledoc false
   use Remedy.Gateway.Payload
 
   def digest(%Websocket{session_id: nil} = socket, %{heartbeat_interval: heartbeat_interval}) do

@@ -1,11 +1,6 @@
 defmodule Remedy.Gun do
+  @moduledoc false
   require Logger
-
-  @moduledoc """
-  Helpers for Gun so that I can lose the erlang syntax.
-
-  Everything takes a `%Websocket{}` and returns a `%Websocket{}`.
-  """
   alias Remedy.Gateway.Websocket
   @gateway_qs "/?compress=zlib-stream&encoding=etf&v=9"
   @gun_opts %{protocols: [:http], retry: 1_000_000_000}
@@ -75,7 +70,8 @@ defmodule Remedy.Gun do
   end
 
   def unpack_frame(%Websocket{zlib_context: zlib_context} = socket, frame) do
-    payload = :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()
+    payload =
+      :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()
 
     {payload, socket}
   end

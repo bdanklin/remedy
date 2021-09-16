@@ -2,18 +2,18 @@ defmodule Remedy.Api.Base do
   @moduledoc false
 
   @version Remedy.MixProject.project()[:version]
-
+  @base_url "https://discord.com/api/v9"
   use HTTPoison.Base
 
-  alias Remedy.Constants
+
 
   def process_url(url) do
-    URI.encode(Constants.base_url() <> url)
+    URI.encode(@base_url <> url)
   end
 
   def process_request_body(""), do: ""
   def process_request_body({:multipart, _} = body), do: body
-  def process_request_body(body), do: Poison.encode!(body)
+  def process_request_body(body), do: Jason.encode!(body)
 
   def process_request_headers(headers) do
     user_agent = [

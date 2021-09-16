@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Guild do
-  @moduledoc false
+  @moduledoc """
+  Discord Guild Object
+  """
   use Remedy.Schema
   alias Remedy.CDN
   @primary_key {:id, Snowflake, autogenerate: false}

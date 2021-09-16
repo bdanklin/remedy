@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Attachment do
-  @moduledoc false
+   @moduledoc """
+  Discord Attachment Object
+  """
   use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}

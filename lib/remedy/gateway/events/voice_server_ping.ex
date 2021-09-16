@@ -1,3 +1,3 @@
 defmodule Remedy.Gateway.Events.VoiceServerPing do
-  # use Remedy.Gateway.Payload
+@moduledoc false
 end

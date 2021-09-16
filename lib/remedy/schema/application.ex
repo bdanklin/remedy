@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.App do
-  @moduledoc false
+  @moduledoc """
+  Discord Application Object
+  """
   use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -26,26 +28,30 @@ defmodule Remedy.Schema.App do
 end
 
 defmodule Remedy.Schema.Team do
-  @moduledoc false
+  @moduledoc """
+  Discord Team Object
+  """
   use Remedy.Schema
   alias Remedy.Schema.TeamMember
 
   @primary_key {:id, :id, autogenerate: false}
-  schema "teams" do
+  embedded_schema do
     field :icon, :string
     field :name, :string
     field :owner_user_id, Snowflake
     has_one :application, App
-    has_many :members, TeamMember
+    has_many :team_members, TeamMember
   end
 end
 
 defmodule Remedy.Schema.TeamMember do
-  @moduledoc false
+  @moduledoc """
+  Discord Team Member Object
+  """
   use Remedy.Schema
 
   @primary_key false
-  schema "team_members" do
+  embedded_schema do
     field :membership_state, :integer
     field :permissions, {:array, :string}
     belongs_to :team, Team

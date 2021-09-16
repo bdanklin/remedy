@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Component do
-  @moduledoc false
+    @moduledoc """
+  Discord Message Component Object
+  """
   use Remedy.Schema
 
   @primary_key false

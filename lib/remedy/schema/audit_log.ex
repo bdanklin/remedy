@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.AuditLog do
-  @moduledoc false
+  @moduledoc """
+  Discord Audit Log Object
+  """
   use Remedy.Schema
   @primary_key false
 
@@ -14,7 +16,9 @@ defmodule Remedy.Schema.AuditLog do
 end
 
 defmodule Remedy.Schema.AuditLogEntry do
-  @moduledoc false
+  @moduledoc """
+  Discord Audit Log Entry Object
+  """
   use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -29,7 +33,9 @@ defmodule Remedy.Schema.AuditLogEntry do
 end
 
 defmodule Remedy.Schema.AuditLogOption do
-  @moduledoc false
+  @moduledoc """
+  Discord Audit Log Option Object
+  """
   use Remedy.Schema
 
   @primary_key false
@@ -47,7 +53,9 @@ defmodule Remedy.Schema.AuditLogOption do
 end
 
 defmodule Remedy.Schema.AuditLogChange do
-  @moduledoc false
+  @moduledoc """
+  Discord Audit Log Change Object
+  """
   use Remedy.Schema
 
   @primary_key false

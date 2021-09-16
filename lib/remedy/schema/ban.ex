@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Ban do
-  @moduledoc false
+  @moduledoc """
+  Discord Ban Object
+  """
   use Remedy.Schema
   @primary_key false
 

@@ -189,8 +189,7 @@ defmodule Remedy.OpcodeHelpers do
     |> List.first()
   end
 
-  def base_url,
-    do: "https://discord.com/api/v9"
+
 
   def discord_epoch, do: 1_420_070_400_000
 

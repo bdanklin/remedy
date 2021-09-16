@@ -1,7 +1,5 @@
 defmodule Remedy.Gateway.Events.Heartbeat do
-  @doc """
-  Heartbeat
-  """
+@moduledoc false
   use Remedy.Gateway.Payload
 
   def payload(%Websocket{} = socket, _opts) do

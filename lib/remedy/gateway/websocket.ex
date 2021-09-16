@@ -55,8 +55,8 @@ defmodule Remedy.Gateway.Websocket do
     field :shard_pid, :any, virtual: true
     field :heartbeat_interval, :integer
     # Heartbeat
-    field :last_heartbeat_send, :utc_datetime, default: DateTime.truncate(DateTime.utc_now(), :second)
-    field :last_heartbeat_ack, :utc_datetime, default: DateTime.truncate(DateTime.utc_now(), :second)
+    field :last_heartbeat_send, :utc_datetime
+    field :last_heartbeat_ack, :utc_datetime
     field :heartbeat_ack, :boolean, default: false
     field :heartbeat_timer, :any, virtual: true
     # Gun INfo

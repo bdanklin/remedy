@@ -58,23 +58,14 @@ defmodule Remedy.MixProject do
   def nest_for_modules do
     [
       Remedy.Gateway.Dispatch,
-      Remedy.Gateway.Events
+      Remedy.Schema
     ]
   end
 
   def groups_for_modules do
     [
-      Api: [
-        ~r/Remedy.Api/
-      ],
-      Cache: [
-        ~r/Remedy.Cache/
-      ],
       Schema: [
         ~r/Remedy.Schema/
-      ],
-      Event: [
-        ~r/Remedy.Gateway.Event/
       ],
       Dispatch: [
         ~r/Remedy.Gateway.Dispatch/
@@ -114,21 +105,20 @@ defmodule Remedy.MixProject do
 
   defp deps do
     [
-      # Code Analysis
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:credo, "~> 1.4", only: [:dev], runtime: false},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
       {:doctor, "~> 0.18.0", only: [:dev], runtime: false},
+      {:unsafe, "~> 1.0", runtime: false},
       {:ex_doc, "~> 0.15", only: [:dev]},
       {:recon, "~> 2.3", only: [:dev]},
+      {:mix_unused, "~> 0.1.0", only: [:dev]},
       {:progress_bar, "~> 2.0"},
       {:httpoison, "~> 1.7"},
-      {:poison, "~> 3.0"},
       {:gun, "~> 2.0", hex: :remedy_gun},
       {:kcl, "~> 1.4"},
       {:porcelain, "~> 2.0"},
       {:gen_stage, "~> 1.0"},
-      {:unsafe, "~> 1.0"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
       {:sunbake, "~> 0.2.0"},

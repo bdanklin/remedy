@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Activity do
-  @moduledoc false
+  @moduledoc """
+  Discord Activity Object
+  """
   use Remedy.Schema
   @primary_key false
 

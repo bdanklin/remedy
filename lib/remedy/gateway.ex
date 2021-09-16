@@ -57,7 +57,7 @@ defmodule Remedy.Gateway do
         raise(Remedy.ApiError, status_code: code, message: message)
 
       {:ok, body} ->
-        body = Poison.decode!(body)
+        body = Jason.decode!(body)
 
         "wss://" <> url = body["url"]
         shards = if body["shards"], do: body["shards"], else: 1

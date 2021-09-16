@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Emoji do
-  @moduledoc false
+  @moduledoc """
+  Discord Emoji Object
+  """
   use Remedy.Schema
   alias Remedy.CDN
 

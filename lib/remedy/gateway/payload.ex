@@ -1,18 +1,5 @@
 defmodule Remedy.Gateway.Payload do
-  @moduledoc """
-  Payload represents the data packet set to discord through the API. All processing of the payload should be done within this context as it will be cleared upon returning to the session process.
-
-  > These functions exist to attempt friendly discourse with the ill mannered Discord gateway. Documentation is included for completeness but using them is at your peril!
-
-  ## Fields
-
-  - `op:` Opcode.
-  - `d:`  Data.
-  - `s:`  Sequence.
-  - `t:`  Event Name.
-
-
-  """
+  @moduledoc false
 
   defmacro __using__(_) do
     parent = __MODULE__
@@ -55,26 +42,20 @@ defmodule Remedy.Gateway.Payload do
     end
   end
 
+  @typedoc false
   @type payload :: any | nil
+  @typedoc false
   @type socket :: Websocket.t()
+  @typedoc false
   @type opts :: list() | nil
 
-  @doc """
-  Describes how to take the current socket state and construct the payload data for this modules event type.
-
-  For example: `Heartbeat.send/2` will take the socket, and a keyword list of options, and construct the payload data for the event of type `:HEARTBEAT`. It is the responsibility of the developer to ensure that all events required to be sent implement this function.
-
-  If the behaviour is not described. Passing this function will just pass the socket back to session to continue doing what it do.
-  """
+  ##   Describes how to take the current socket state and construct the payload data for this modules event type.
+  ##   For example: `Heartbeat.send/2` will take the socket, and a keyword list of options, and construct the payload data for the event of type `:HEARTBEAT`. It is the responsibility of the developer to ensure that all events required to be sent implement this function.
+  ##   If the behaviour is not described. Passing this function will just pass the socket back to session to continue doing ## what it do.
+  @doc false
   @callback payload(socket, opts) :: {payload, socket}
 
-  @doc """
-  Digest the data frame from Discord and loads the data into the socket. For example:
-
-  - The `:heartbeat_ack` flag on the websocket needs to be set to true once the `:HEARTBEAT_ACK` event is received from discord.
-
-  In short. Do what you need to do with the payload. because its going away
-  """
+  @doc false
   @callback digest(socket, payload) :: socket
 
   @optional_callbacks payload: 2, digest: 2
@@ -104,20 +85,16 @@ defmodule Remedy.Gateway.Payload do
 
   require Logger
 
-  @doc """
-  Digest the data frame into the socket.
+  # delegates to {Command}.digest
 
-  Delegates the digestion to the appropriate module. It is that modules responsibility to implement the `digest/2` callback and return the `%Websocket{}`
-  """
   @spec digest(Websocket.t(), any, binary) :: Websocket.t()
   def digest(socket, event, payload),
     do: module_delegate(event).digest(socket, payload)
 
-  @doc """
-  Sends a command based on the current websocket state.
+  ## delegates to command.send. eg calling `Payload.send(:READY)` will send a properly constructed ready command to discord.
 
-  Using this will invoke the appropriate modules
-  """
+  ## Due to some functions requiring additional parameters that cannot be preconfigured, external API functionality is provided through the Gateway module. ( maybe )
+
   @spec send(Websocket.t(), any, any) :: any
   def send(socket, event, opts \\ []) when is_op_event(event) do
     module_delegate(event).build_payload(socket, opts)

@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.Command do
-  @moduledoc false
+   @moduledoc """
+  Discord Command Object
+  """
   use Remedy.Schema
 
   @primary_key {:id, Snowflake, autogenerate: false}

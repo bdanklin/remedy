@@ -3,6 +3,7 @@ Remedy.Api.Endpoints.html
 Remedy.Api.Ratelimiter.html
 Remedy.Api.html
 Remedy.ApiError.html
+Remedy.Bot.html
 Remedy.CDN.html
 Remedy.Cache.html
 Remedy.CacheError.html
@@ -70,8 +71,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-fc77d9716b.js
-dist/sidebar_items-1ae39ad4a8.js
+dist/search_items-97c7097096.js
+dist/sidebar_items-288a65f639.js
 index.html
 introduction.html
 search.html

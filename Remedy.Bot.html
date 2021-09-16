@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Gateway.Dispatch.GuildUpdate — Remedy v0.5.3</title>
+    <title>Remedy.Bot — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-288a65f639.js"></script>
@@ -84,23 +84,15 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Gateway.Dispatch.GuildUpdate <small class="app-vsn">(Remedy v0.5.3)</small>
+Remedy.Bot <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_update.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
 
       </h1>
 
-
-        <section id="moduledoc">
-<p>Dispatched when a new guild channel is created, relevant to the current user.</p><h2 id="module-payload" class="section-heading">
-  <a href="#module-payload" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Payload:
-</h2>
-<ul><li>%Remedy.Schema.Guild{}.</li></ul>
-        </section>
 
 
         <section id="summary" class="details-list">
@@ -118,7 +110,25 @@ Remedy.Gateway.Dispatch.GuildUpdate <small class="app-vsn">(Remedy v0.5.3)</smal
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle/1">handle(arg)</a>
+    <a href="#child_spec/1">child_spec(init_arg)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#init/1">init(args)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/elixir/GenServer.html#c:init/1"><code class="inline">GenServer.init/1</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/1">start_link(init_args)</a>
 
   </div>
 
@@ -138,16 +148,60 @@ Remedy.Gateway.Dispatch.GuildUpdate <small class="app-vsn">(Remedy v0.5.3)</smal
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="handle/1">
+<section class="detail" id="child_spec/1">
 
   <div class="detail-header">
-    <a href="#handle/1" class="detail-link" title="Link to this function">
+    <a href="#child_spec/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">handle(arg)</h1>
+    <h1 class="signature">child_spec(init_arg)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_update.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L2" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="init/1">
+
+  <div class="detail-header">
+    <a href="#init/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">init(args)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L8" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="https://hexdocs.pm/elixir/GenServer.html#c:init/1"><code class="inline">GenServer.init/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">start_link(init_args)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/bot.ex#L4" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

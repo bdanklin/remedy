@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.VoiceState do
+defmodule Remedy.Gateway.Dispatch.VoiceState do
   @moduledoc "Represents a user's voice connection status"
   @moduledoc since: "0.5.0"
 

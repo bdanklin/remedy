@@ -1,15 +1,15 @@
-defmodule Remedy.Struct.Event.InviteDelete do
+defmodule Remedy.Gateway.Dispatch.InviteDelete do
   @moduledoc """
   Struct representing an Invite Delete event
   """
+  alias Remedy.Schema.{Channel, Guild}
+  use Remedy.Schema
 
-  alias Remedy.Struct.{Channel, Guild}
-
-  defstruct [
-    :channel_id,
-    :guild_id,
-    :code
-  ]
+  embedded_schema do
+    field :channel_id, Snowflake
+    field :guild_id, Snowflake
+    field :code, :string
+  end
 
   @typedoc """
   Channel id of the channel this invite is for.
@@ -32,6 +32,7 @@ defmodule Remedy.Struct.Event.InviteDelete do
           code: code
         }
 
-  @doc false
-  def to_struct(map), do: struct(__MODULE__, map)
+  def handle({event, payload, socket}) do
+    {event, payload |> new(), socket}
+  end
 end

@@ -1,5 +1,7 @@
 defmodule Remedy.Gateway.Events.HeartbeatAck do
-  @moduledoc false
+  @doc """
+  Heartbeat Acknowledge
+  """
   use Remedy.Gateway.Payload
 
   def digest(%Websocket{session_id: nil} = socket, _payload) do

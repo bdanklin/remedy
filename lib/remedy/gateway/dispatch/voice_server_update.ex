@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.VoiceServerUpdate do
+defmodule Remedy.Gateway.Dispatch.VoiceServerUpdate do
   @moduledoc "Sent when a guild's voice server is updated"
   @moduledoc since: "0.5.0"
 

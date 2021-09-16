@@ -1,5 +1,7 @@
 defmodule Remedy.Gateway.Events.Dispatch do
-  @moduledoc false
+  @doc """
+  Dispatch
+  """
   use Remedy.Gateway.Payload
   alias Remedy.Gateway.EventBroadcaster
 

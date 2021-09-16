@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.MessageReactionAdd do
+defmodule Remedy.Gateway.Dispatch.MessageReactionAdd do
   @moduledoc "Sent when a user adds a reaction to a message"
   @moduledoc since: "0.5.0"
 

@@ -1,4 +1,4 @@
-defmodule Remedy.Gateway.Event.ChannelPinsUpdate do
+defmodule Remedy.Gateway.Dispatch.ChannelPinsUpdate do
   @moduledoc false
   use Remedy.Schema
   @primary_key false

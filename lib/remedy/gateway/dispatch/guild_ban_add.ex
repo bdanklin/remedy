@@ -1,22 +1,16 @@
-defmodule Remedy.Gateway.Event.GuildBanAdd do
-  @moduledoc false
-  use Remedy.Schema
-  @primary_key false
+defmodule Remedy.Gateway.Dispatch.GuildBanAdd do
+  @moduledoc """
+  Dispatched when a new guild ban is created.
 
-  embedded_schema do
-    field :guild_id, Snowflake
-    embeds_one :guild, Guild
-    embeds_one :user, User
+  ## Payload:
+
+  - `%Remedy.Schema.Ban{}`
+
+  """
+
+  alias Remedy.Schema.Ban
+
+  def handle({event, payload, socket}) do
+    {event, Ban.new(payload), socket}
   end
-
-  @typedoc "ID of the guild"
-  @type guild_id :: Guild.id()
-
-  @typedoc "Banned user"
-  @type user :: User.t()
-
-  @type t :: %__MODULE__{
-          guild_id: guild_id,
-          user: user
-        }
 end

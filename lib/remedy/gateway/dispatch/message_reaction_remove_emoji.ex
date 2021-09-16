@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.MessageReactionRemoveEmoji do
+defmodule Remedy.Gateway.Dispatch.MessageReactionRemoveEmoji do
   @moduledoc "Sent when a bot removes all instances of a given emoji from the reactions of a message"
   @moduledoc since: "0.5.0"
 

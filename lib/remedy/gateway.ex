@@ -2,9 +2,7 @@ defmodule Remedy.Gateway do
   @moduledoc false
 
   use Supervisor
-
   alias Remedy.Gateway.{EventBroadcaster, EventBuffer, SessionSupervisor}
-
   require Logger
 
   @gateway_bot "/gateway/bot"
@@ -26,7 +24,8 @@ defmodule Remedy.Gateway do
     Supervisor.init(children, strategy: :one_for_one, max_restarts: 3, max_seconds: 60)
   end
 
-  defp shard_workers(gateway, shards), do: for(shard <- 0..(shards - 1), into: [], do: shard_worker(gateway, shard))
+  defp shard_workers(gateway, shards),
+    do: for(shard <- 0..(shards - 1), into: [], do: shard_worker(gateway, shard))
 
   defp shard_worker(gateway, shard),
     do: Supervisor.child_spec({SessionSupervisor, %{gateway: gateway, shard: shard}}, id: shard)
@@ -70,9 +69,7 @@ defmodule Remedy.Gateway do
 end
 
 defmodule Remedy.GatewayATC do
-  @moduledoc """
-  Gateway Air Traffic Control
-  """
+  @moduledoc false
 
   use GenServer
   require Logger

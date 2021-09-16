@@ -1,7 +1,16 @@
 defmodule Remedy.Schema.Permission do
-  @moduledoc false
   use Remedy.Schema
   use BattleStandard
+
+  @typedoc """
+  Represents a single permission as a bitvalue.
+  """
+  @type bit :: non_neg_integer
+
+  @typedoc """
+  Represents a set of permissions as a bitvalue.
+  """
+  @type bitset :: non_neg_integer
 
   @type t :: %__MODULE__{
           CREATE_INSTANT_INVITE: boolean(),
@@ -122,6 +131,129 @@ defmodule Remedy.Schema.Permission do
     {:USE_PRIVATE_THREADS, 1 <<< 36},
     {:USE_EXTERNAL_STICKERS, 1 <<< 37}
   ]
+  @flag_keys Keyword.keys(@flag_bits)
+  @bit_to_permission_map Map.new(@flag_bits, fn {k, v} -> {v, k} end)
+
+  @doc """
+  Returns `true` if `term` is a permission; otherwise returns `false`.
+
+  ## Examples
+
+  ```Elixir
+  iex> Remedy.Permission.is_permission(:administrator)
+  true
+
+  iex> Remedy.Permission.is_permission(:not_a_permission)
+  false
+  ```
+  """
+
+  defguard is_permission(term) when is_atom(term) and term in @flag_keys
+
+  @doc """
+  Returns a list of all permissions.
+  """
+
+  def all, do: @flag_keys
+
+  @doc """
+  Converts the given bit to a permission.
+
+  This function returns `:error` if `bit` does not map to a permission.
+
+  ## Examples
+
+  ```Elixir
+  iex> Remedy.Permission.from_bit(0x04000000)
+  {:ok, :change_nickname}
+
+  iex> Remedy.Permission.from_bit(0)
+  :error
+  ```
+  """
+  @spec from_bit(bit) :: {:ok, t} | :error
+  def from_bit(bit) do
+    Map.fetch(@bit_to_permission_map, bit)
+  end
+
+  @doc """
+  Same as `from_bit/1`, but raises `ArgumentError` in case of failure.
+
+  ## Examples
+
+  ```Elixir
+  iex> Remedy.Permission.from_bit!(0x04000000)
+  :change_nickname
+
+  iex> Remedy.Permission.from_bit!(0)
+  ** (ArgumentError) expected a valid bit, got: `0`
+  ```
+  """
+  @spec from_bit!(bit) :: t
+  def from_bit!(bit) do
+    case from_bit(bit) do
+      {:ok, perm} -> perm
+      :error -> raise(ArgumentError, "expected a valid bit, got: `#{inspect(bit)}`")
+    end
+  end
+
+  @doc """
+  Converts the given bitset to a list of permissions.
+
+  If invalid bits are given they will be omitted from the results.
+
+  ## Examples
+
+  ```Elixir
+  iex> Remedy.Permission.from_bitset(0x08000002)
+  [:manage_nicknames, :kick_members]
+
+  iex> Remedy.Permission.from_bitset(0x4000000000000)
+  []
+  ```
+  """
+  @spec from_bitset(bitset) :: [t]
+  def from_bitset(bitset) do
+    0..53
+    |> Enum.map(fn index -> 0x1 <<< index end)
+    |> Enum.filter(fn mask -> (bitset &&& mask) === mask end)
+    |> Enum.reduce([], fn bit, acc ->
+      case from_bit(bit) do
+        {:ok, perm} -> [perm | acc]
+        :error -> acc
+      end
+    end)
+  end
+
+  @doc """
+  Converts the given permission to a bit.
+
+  ## Examples
+
+  ```Elixir
+  iex> Remedy.Permission.to_bit(:administrator)
+  8
+  ```
+  """
+
+  def to_bit(permission) when is_permission(permission), do: @flag_keys[permission]
+
+  @doc """
+  Converts the given enumerable of permissions to a bitset.
+
+  ## Examples
+
+  ```Elixir
+  iex> Remedy.Permission.to_bitset([:administrator, :create_instant_invite])
+  9
+  ```
+  """
+  @spec to_bitset(Enum.t()) :: bitset
+  def to_bitset(permissions) do
+    permissions
+    |> Enum.map(&to_bit(&1))
+    |> Enum.reduce(fn bit, acc -> acc ||| bit end)
+  end
 end
 
 defmodule Remedy.Schema.PermissionOverwrite do

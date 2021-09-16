@@ -1,4 +1,4 @@
-defmodule Remedy.Schema.PresenceUpdate do
+defmodule Remedy.Gateway.Dispatch.PresenceUpdate do
   @moduledoc false
   use Remedy.Schema
   @primary_key {:id, Snowflake, autogenerate: false}

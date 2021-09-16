@@ -1,24 +1,23 @@
-defmodule Remedy.Struct.Event.InviteCreate do
+defmodule Remedy.Gateway.Dispatch.InviteCreate do
   @moduledoc """
   Struct representing an Invite Create event
   """
 
-  alias Remedy.Struct.{Channel, Guild, User}
-  alias Remedy.Util
+  use Remedy.Schema
 
-  defstruct [
-    :channel_id,
-    :code,
-    :created_at,
-    :guild_id,
-    :inviter,
-    :max_age,
-    :max_uses,
-    :target_user,
-    :target_user_type,
-    :temporary,
-    :uses
-  ]
+  embedded_schema do
+    field :channel_id, Snowflake
+    field :code, :string
+    field :created_at, ISO8601
+    field :guild_id, Snowflake
+    embeds_one :inviter, User
+    field :max_age, :integer
+    field :max_uses, :integer
+    embeds_one :target_user, User
+    field :target_type, :integer
+    field :temporary, :boolean
+    field :uses, :integer
+  end
 
   @typedoc """
   Channel id of the channel this invite is for.
@@ -84,18 +83,12 @@ defmodule Remedy.Struct.Event.InviteCreate do
           max_age: max_age,
           max_uses: max_uses,
           target_user: target_user,
-          target_user_type: target_user_type,
+          target_type: target_user_type,
           temporary: temporary,
           uses: uses
         }
 
-  @doc false
-  def to_struct(map) do
-    atom_map = map |> Map.new(fn {k, v} -> {Util.maybe_to_atom(k), v} end)
-
-    __MODULE__
-    |> struct(atom_map)
-    |> Map.update(:inviter, nil, &Util.cast(&1, {:struct, User}))
-    |> Map.update(:target_user, nil, &Util.cast(&1, {:struct, User}))
+  def handle({event, payload, socket}) do
+    {event, payload |> new(), socket}
   end
 end

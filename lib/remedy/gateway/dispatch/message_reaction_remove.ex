@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.MessageReactionRemove do
+defmodule Remedy.Gateway.Dispatch.MessageReactionRemove do
   @moduledoc "Sent when a user removes a reaction from a message"
   @moduledoc since: "0.5.0"
 

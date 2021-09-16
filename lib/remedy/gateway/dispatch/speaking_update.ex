@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.SpeakingUpdate do
+defmodule Remedy.Gateway.Dispatch.SpeakingUpdate do
   @moduledoc """
   Struct representing a Remedy-generated Speaking Update event
 

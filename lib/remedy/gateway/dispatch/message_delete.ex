@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.MessageDelete do
+defmodule Remedy.Gateway.Dispatch.MessageDelete do
   @moduledoc """
   Struct representing a Message Delete event
   """

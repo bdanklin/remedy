@@ -1,8 +1,11 @@
 defmodule Remedy.Gateway.Dispatch.ChannelUpdate do
-  use Remedy.Gateway.Dispatch
+  alias Remedy.Cache
+  alias Remedy.Schema.Channel
 
   def handle({event, payload, socket}) do
-    Cache.update_channel(payload)
+    payload
+    |> Channel.new()
+    |> Cache.update_channel()
 
     {event, payload, socket}
   end

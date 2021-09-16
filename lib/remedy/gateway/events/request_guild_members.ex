@@ -8,7 +8,7 @@ defmodule Remedy.Gateway.Events.RequestGuildMembers do
     field :limit, :boolean, default: false
   end
 
-  def payload(socket, %{guild_id: _guild_id, query: _query} = opts) do
+  def payload(%Websocket{} = socket, opts) do
     {%__MODULE__{
        guild_id: opts.guild_id,
        query: opts.query,

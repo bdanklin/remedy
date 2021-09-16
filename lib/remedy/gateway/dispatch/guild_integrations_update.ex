@@ -1,21 +1,22 @@
-defmodule Remedy.Struct.Event.GuildIntegrationsUpdate do
-  @moduledoc "Sent when a guild integration is updated"
-  @moduledoc since: "0.5.0"
+defmodule Remedy.Gateway.Dispatch.GuildUpdate do
+  @moduledoc """
+  Dispatched when a new guild channel is created, relevant to the current user.
 
-  alias Remedy.Struct.Guild
+  ## Payload:
 
-  defstruct [:guild_id]
+  - %Remedy.Schema.Guild{}.
 
-  @typedoc "ID of the guild whose integrations were updated"
-  @type guild_id :: Guild.id()
+  """
+  alias Remedy.Cache
+  alias Remedy.Schema.Guild
 
-  @typedoc "Event sent when a guild integration is updated"
-  @type t :: %__MODULE__{
-          guild_id: guild_id
-        }
+  def handle({event, payload, socket}) do
+    guild =
+      payload
+      |> Map.put(:shard, socket.shard)
+      |> Guild.new()
+      |> Cache.update_guild()
 
-  @doc false
-  def to_struct(map) do
-    %__MODULE__{guild_id: map.guild_id}
+    {event, guild, socket}
   end
 end

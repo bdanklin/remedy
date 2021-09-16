@@ -3,7 +3,7 @@ defmodule Remedy.MixProject do
 
   @app :remedy
   @name "Remedy"
-  @version "0.5.2"
+  @version "0.5.3"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
   @description "Discord Library in Elixir."
@@ -41,11 +41,56 @@ defmodule Remedy.MixProject do
       source_ref: "master",
       logo: "remedy.png",
       assets: "guides/assets",
-      extras: [
-        "hello/introduction.md"
-      ],
+      extras: extras(),
       main: "introduction",
-      extra_section: "HELLO"
+      extra_section: "HELLO",
+      nest_modules_by_prefix: nest_for_modules(),
+      groups_for_modules: groups_for_modules()
+    ]
+  end
+
+  def extras do
+    [
+      "hello/introduction.md"
+    ]
+  end
+
+  def nest_for_modules do
+    [
+      Remedy.Gateway.Dispatch,
+      Remedy.Gateway.Events
+    ]
+  end
+
+  def groups_for_modules do
+    [
+      Api: [
+        ~r/Remedy.Api/
+      ],
+      Cache: [
+        ~r/Remedy.Cache/
+      ],
+      Schema: [
+        ~r/Remedy.Schema/
+      ],
+      Event: [
+        ~r/Remedy.Gateway.Event/
+      ],
+      Dispatch: [
+        ~r/Remedy.Gateway.Dispatch/
+      ],
+      Helpers: [
+        Remedy.DispatchHelpers,
+        Remedy.ModelHelpers,
+        Remedy.OpcodeHelpers,
+        Remedy.TimeHelpers
+      ],
+      Exceptions: [
+        Remedy.EnvironmentVariableError,
+        Remedy.VoiceError,
+        Remedy.CacheError,
+        Remedy.ApiError
+      ]
     ]
   end
 

@@ -60,6 +60,9 @@ defmodule Remedy.Schema.Guild do
     ## Inferred Through Fkey
     has_many :bans, Ban
     has_many :banned_users, through: [:bans, :users]
+
+    ## Shard Info
+    field :shard, :integer
   end
 
   def splash(guild)

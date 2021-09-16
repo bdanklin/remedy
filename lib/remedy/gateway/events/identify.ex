@@ -1,5 +1,7 @@
 defmodule Remedy.Gateway.Events.Identify do
-  @moduledoc false
+  @doc """
+  Identify
+  """
 
   alias Remedy.Gateway.Intents
   alias Remedy.Gateway

@@ -1,5 +1,7 @@
 defmodule Remedy.Api do
-  @moduledoc false
+  @moduledoc """
+  Hello
+  """
   use Bitwise
   import Remedy.ModelHelpers
 
@@ -154,12 +156,15 @@ defmodule Remedy.Api do
   ```
   """
 
-  @spec create_message(Channel.id() | Message.t(), options | String.t()) :: error | {:ok, Message.t()}
+  @spec create_message(Channel.id() | Message.t(), options | String.t()) ::
+          error | {:ok, Message.t()}
   def create_message(channel_id, options)
 
-  def create_message(%Message{} = message, options), do: create_message(message.channel_id, options)
+  def create_message(%Message{} = message, options),
+    do: create_message(message.channel_id, options)
 
-  def create_message(channel_id, options) when is_list(options), do: create_message(channel_id, Map.new(options))
+  def create_message(channel_id, options) when is_list(options),
+    do: create_message(channel_id, Map.new(options))
 
   def create_message(channel_id, %{} = options) when is_snowflake(channel_id) do
     options = prepare_allowed_mentions(options)
@@ -198,7 +203,8 @@ defmodule Remedy.Api do
   end
 
   defp create_multipart(%{name: name, body: body}) do
-    {"file", body, {"form-data", [{"name", "file"}, {"filename", name}]}, [{"Content-Type", "multipart/form-data"}]}
+    {"file", body, {"form-data", [{"name", "file"}, {"filename", name}]},
+     [{"Content-Type", "multipart/form-data"}]}
   end
 
   defp create_message_with_json(channel_id, options) do

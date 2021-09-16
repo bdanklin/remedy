@@ -1,5 +1,4 @@
-  ###===#===#===#===#===#===#===#
-  ### defmodule Remedy.Api.Ratelimiter do
+defmodule Remedy.Api.Ratelimiter do
   @moduledoc """
   Ratelimit implimentation specific to Discord's API.
   Only to be used when starting in a rest-only manner.
@@ -178,9 +177,7 @@
   # Will go through headers and keep the ones that are members of the headers_to_keep MapSet (case insensitive!)
   defp filter_headers(headers, headers_to_keep) do
     headers
-    |> Stream.map(fn {key, value} ->
-      {String.downcase(key), value}
-    end)
+    |> Stream.map(fn {key, value} -> {String.downcase(key), value} end)
     |> Stream.filter(fn {key, _v} -> MapSet.member?(headers_to_keep, key) end)
     |> Enum.into(%{})
   end

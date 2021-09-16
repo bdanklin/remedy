@@ -1,4 +1,4 @@
-defmodule Remedy.Struct.Event.VoiceReady do
+defmodule Remedy.Gateway.Dispatch.VoiceReady do
   @moduledoc since: "0.5.0"
   @moduledoc """
   Struct representing a Remedy-generated Voice Ready event

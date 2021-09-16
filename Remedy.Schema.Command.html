@@ -7,10 +7,10 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Gun — Remedy v0.5.3</title>
+    <title>Remedy.Schema.Command — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-288a65f639.js"></script>
+    <script src="dist/sidebar_items-d71bc4c0c9.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Gun <small class="app-vsn">(Remedy v0.5.3)</small>
+Remedy.Schema.Command <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/command.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,7 @@ Remedy.Gun <small class="app-vsn">(Remedy v0.5.3)</small>
 
 
         <section id="moduledoc">
-<p>Helpers for Gun so that I can lose the erlang syntax.</p><p>Everything takes a <code class="inline">%Websocket{}</code> and returns a <code class="inline">%Websocket{}</code>.</p>
+<p>Discord Command Object</p>
         </section>
 
 
@@ -114,48 +114,28 @@ Remedy.Gun <small class="app-vsn">(Remedy v0.5.3)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#close/1">close(socket)</a>
+    <a href="#changeset/1">changeset(params)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#open_await/1">open_await(socket)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Combines <code class="inline">:gun.open</code> and <code class="inline">:gun.await_up</code>. Because we use them both together anytime we use them anyway.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#send/2">send(payload, socket)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Send the payload.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#unpack_frame/2">unpack_frame(socket, frame)</a>
+    <a href="#changeset/2">changeset(model, params)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#upgrade_ws_await/1">upgrade_ws_await(socket)</a>
+    <a href="#new/1">new(params)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Same as above. Upgrades the conn to websocket and holds the process until its good to go.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#zlib_init/1">zlib_init(socket)</a>
+    <a href="#validate/1">validate(model)</a>
 
   </div>
 
@@ -175,16 +155,16 @@ Remedy.Gun <small class="app-vsn">(Remedy v0.5.3)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="close/1">
+<section class="detail" id="changeset/1">
 
   <div class="detail-header">
-    <a href="#close/1" class="detail-link" title="Link to this function">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">close(socket)</h1>
+    <h1 class="signature">changeset(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L71" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/command.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -197,60 +177,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="open_await/1">
+<section class="detail" id="changeset/2">
 
   <div class="detail-header">
-    <a href="#open_await/1" class="detail-link" title="Link to this function">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">open_await(socket)</h1>
+    <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L18" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>Combines <code class="inline">:gun.open</code> and <code class="inline">:gun.await_up</code>. Because we use them both together anytime we use them anyway.</p>
-  </section>
-</section>
-<section class="detail" id="send/2">
-
-  <div class="detail-header">
-    <a href="#send/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">send(payload, socket)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L53" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>Send the payload.</p>
-  </section>
-</section>
-<section class="detail" id="unpack_frame/2">
-
-  <div class="detail-header">
-    <a href="#unpack_frame/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">unpack_frame(socket, frame)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L77" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/command.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -263,16 +199,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="upgrade_ws_await/1">
+<section class="detail" id="new/1">
 
   <div class="detail-header">
-    <a href="#upgrade_ws_await/1" class="detail-link" title="Link to this function">
+    <a href="#new/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">upgrade_ws_await(socket)</h1>
+    <h1 class="signature">new(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L38" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/command.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -282,19 +218,19 @@ Functions
 
   <section class="docstring">
 
-<p>Same as above. Upgrades the conn to websocket and holds the process until its good to go.</p>
+
   </section>
 </section>
-<section class="detail" id="zlib_init/1">
+<section class="detail" id="validate/1">
 
   <div class="detail-header">
-    <a href="#zlib_init/1" class="detail-link" title="Link to this function">
+    <a href="#validate/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">zlib_init(socket)</h1>
+    <h1 class="signature">validate(model)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gun.ex#L61" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/command.ex#L20" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

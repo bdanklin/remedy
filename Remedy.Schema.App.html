@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.1">
     <meta name="project" content="Remedy v0.5.3">
 
-    <title>Remedy.Gateway.Dispatch.IntegrationDelete — Remedy v0.5.3</title>
+    <title>Remedy.Schema.App — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-d71bc4c0c9.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Gateway.Dispatch.IntegrationDelete <small class="app-vsn">(Remedy v0.5.3)</small>
+Remedy.Schema.App <small class="app-vsn">(Remedy v0.5.3)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/integration_delete.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,11 +95,7 @@ Remedy.Gateway.Dispatch.IntegrationDelete <small class="app-vsn">(Remedy v0.5.3)
 
 
         <section id="moduledoc">
-<p>Dispatched when a new guild channel is created, relevant to the current user.</p><h2 id="module-payload" class="section-heading">
-  <a href="#module-payload" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Payload:
-</h2>
-<ul><li>%Remedy.Schema.Guild{}.</li></ul>
+<p>Discord Application Object</p>
         </section>
 
 
@@ -118,7 +114,28 @@ Remedy.Gateway.Dispatch.IntegrationDelete <small class="app-vsn">(Remedy v0.5.3)
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle/1">handle(arg)</a>
+    <a href="#changeset/1">changeset(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/2">changeset(model, params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#new/1">new(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#validate/1">validate(changeset)</a>
 
   </div>
 
@@ -138,16 +155,82 @@ Remedy.Gateway.Dispatch.IntegrationDelete <small class="app-vsn">(Remedy v0.5.3)
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="handle/1">
+<section class="detail" id="changeset/1">
 
   <div class="detail-header">
-    <a href="#handle/1" class="detail-link" title="Link to this function">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">handle(arg)</h1>
+    <h1 class="signature">changeset(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/integration_delete.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="changeset/2">
+
+  <div class="detail-header">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(model, params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="new/1">
+
+  <div class="detail-header">
+    <a href="#new/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">new(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="validate/1">
+
+  <div class="detail-header">
+    <a href="#validate/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">validate(changeset)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

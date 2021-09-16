@@ -10,7 +10,7 @@
     <title>API Reference — Remedy v0.5.3</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-288a65f639.js"></script>
+    <script src="dist/sidebar_items-d71bc4c0c9.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,23 +114,6 @@ Remedy
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.Api.Endpoints.html">Remedy.Api.Endpoints</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Api.Ratelimiter.html">Remedy.Api.Ratelimiter</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Ratelimit implimentation specific to Discord's API.
-Only to be used when starting in a rest-only manner.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="Remedy.ApiError.html">Remedy.ApiError</a>
 
   </div>
@@ -202,6 +185,8 @@ Only to be used when starting in a rest-only manner.</p></div>
     <a href="Remedy.Gateway.Dispatch.html">Remedy.Gateway.Dispatch</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Gateway Dispatching</p></div>
 
 </div>
 <div class="summary-row">
@@ -499,85 +484,6 @@ Only to be used when starting in a rest-only manner.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.Dispatch.html">Remedy.Gateway.Events.Dispatch</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.Heartbeat.html">Remedy.Gateway.Events.Heartbeat</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.HeartbeatAck.html">Remedy.Gateway.Events.HeartbeatAck</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.Hello.html">Remedy.Gateway.Events.Hello</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.Identify.html">Remedy.Gateway.Events.Identify</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.InvalidSession.html">Remedy.Gateway.Events.InvalidSession</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.Reconnect.html">Remedy.Gateway.Events.Reconnect</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.SyncCall.html">Remedy.Gateway.Events.SyncCall</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.SyncGuild.html">Remedy.Gateway.Events.SyncGuild</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Events.VoiceServerPing.html">Remedy.Gateway.Events.VoiceServerPing</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Payload.html">Remedy.Gateway.Payload</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Payload represents the data packet set to discord through the API. All processing of the payload should be done within this context as it will be cleared upon returning to the session process.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="Remedy.Gateway.Websocket.html">Remedy.Gateway.Websocket</a>
 
   </div>
@@ -587,18 +493,207 @@ Only to be used when starting in a rest-only manner.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.Gun.html">Remedy.Gun</a>
+    <a href="Remedy.ModelHelpers.html">Remedy.ModelHelpers</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Helpers for Gun so that I can lose the erlang syntax.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.ModelHelpers.html">Remedy.ModelHelpers</a>
+    <a href="Remedy.Schema.html">Remedy.Schema</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Remedy Schema Behaviour</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Activity.html">Remedy.Schema.Activity</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Activity Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.App.html">Remedy.Schema.App</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Application Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Attachment.html">Remedy.Schema.Attachment</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Attachment Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.AuditLog.html">Remedy.Schema.AuditLog</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Audit Log Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.AuditLogChange.html">Remedy.Schema.AuditLogChange</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Audit Log Change Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.AuditLogEntry.html">Remedy.Schema.AuditLogEntry</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Audit Log Entry Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.AuditLogOption.html">Remedy.Schema.AuditLogOption</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Audit Log Option Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Ban.html">Remedy.Schema.Ban</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Ban Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Channel.html">Remedy.Schema.Channel</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Channel Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.ClientStatus.html">Remedy.Schema.ClientStatus</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Client Status Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Command.html">Remedy.Schema.Command</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Command Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Component.html">Remedy.Schema.Component</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Message Component Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Embed.html">Remedy.Schema.Embed</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Embed Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.EmbedAuthor.html">Remedy.Schema.EmbedAuthor</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Embed Author Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.EmbedField.html">Remedy.Schema.EmbedField</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Embed Field Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.EmbedFooter.html">Remedy.Schema.EmbedFooter</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Embed Footer Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.EmbedImage.html">Remedy.Schema.EmbedImage</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Embed Image Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.EmbedProvider.html">Remedy.Schema.EmbedProvider</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Embed Provider Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.EmbedThumbnail.html">Remedy.Schema.EmbedThumbnail</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Embed Thumbnail Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Emoji.html">Remedy.Schema.Emoji</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Emoji Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Guild.html">Remedy.Schema.Guild</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Guild Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -615,6 +710,24 @@ Only to be used when starting in a rest-only manner.</p></div>
     <a href="Remedy.Schema.Permission.html">Remedy.Schema.Permission</a>
 
   </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.Team.html">Remedy.Schema.Team</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Team Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.TeamMember.html">Remedy.Schema.TeamMember</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Discord Team Member Object</p></div>
 
 </div>
 <div class="summary-row">

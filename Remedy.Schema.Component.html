@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.3">
+    <meta name="project" content="Remedy v0.5.4">
 
-    <title>Remedy.Schema.Component — Remedy v0.5.3</title>
+    <title>Remedy.Schema.Component — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-d71bc4c0c9.js"></script>
+    <script src="dist/sidebar_items-8c9fce9e24.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.5.3
+        v0.5.4
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.Component <small class="app-vsn">(Remedy v0.5.3)</small>
+Remedy.Schema.Component <small>behaviour</small> <small class="app-vsn">(Remedy v0.5.4)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -95,7 +95,34 @@ Remedy.Schema.Component <small class="app-vsn">(Remedy v0.5.3)</small>
 
 
         <section id="moduledoc">
-<p>Discord Message Component Object</p>
+<p>Components are a framework for adding interactive elements to the messages your app or bot sends. They're accessible, customizable, and easy to use. There are several different types of components; this documentation will outline the basics of this new framework and each example.+</p><blockquote><p>Components have been broken out into individual modules for easy distinction between them and to separate helper functions and individual type checking between component types - especially as more components are added by Discord.</p></blockquote><p>Each of the components are provided all of the valid types through this module to avoid repetition and allow new components to be added quicker and easier.</p><h2 id="module-action-row" class="section-heading">
+  <a href="#module-action-row" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Action Row
+</h2>
+<p>An Action Row is a non-interactive container component for other types of components. It has a <code class="inline">type: 1</code> and a sub-array of <code class="inline">components</code> of other types.</p><ul><li>You can have up to 5 Action Rows per message</li><li>An Action Row cannot contain another Action Row</li><li>An Action Row containing buttons cannot also contain a select menu<h2 id="module-buttons" class="section-heading">
+  <a href="#module-buttons" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Buttons
+</h2>
+Buttons are interactive components that render on messages. They have a <code class="inline">type: 2</code>, They can be clicked by users. Buttons in Nostrum are further separated into two types, detailed below. Only the <a href="#module-interaction-buttons-non-link-buttons">Interaction Button</a> will fire a <code class="inline">Nostrum.Struct.Interaction</code> when pressed.</li></ul><p><img src="https://discord.com/assets/7bb017ce52cfd6575e21c058feb3883b.png" alt="Discord Buttons"/></p><ul><li>Buttons must exist inside an Action Row</li><li>An Action Row can contain up to 5 buttons</li><li>An Action Row containing buttons cannot also contain a select menu
+For more information check out the <a href="https://discord.com/developers/docs/interactions/message-components#button-object-button-styles">Discord API Button Styles</a> for more information.</li></ul><h2 id="module-link-buttons" class="section-heading">
+  <a href="#module-link-buttons" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Link Buttons
+</h2>
+<ul><li>Link buttons <strong>do not</strong> send an <code class="inline">interaction</code> to your app when clicked</li><li>Link buttons <strong>must</strong> have a <code class="inline">url</code>, and <strong>cannot</strong> have a <code class="inline">custom_id</code></li><li>Link buttons will <strong>always</strong> use <code class="inline">style: 5</code></li></ul><h4>Link <code class="inline">style: 5</code></h4><p><img src="https://user-images.githubusercontent.com/34633373/129678527-d8d1c988-33c5-46d6-874e-2cfb2d9ba7f4.png" alt="Secondary"/></p><h2 id="module-interaction-buttons-non-link-buttons" class="section-heading">
+  <a href="#module-interaction-buttons-non-link-buttons" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Interaction Buttons ( Non-link Buttons )
+</h2>
+<blockquote><p>Discord calls these buttons &quot;Non-link Buttons&quot;  due to the fact that they do not contain a url. However it would be more accurate to call them an &quot;Interaction Button&quot; as they <strong>do</strong> fire an interaction when clicked which is far more useful for your applications interactivity. As such they are referred to as &quot;Interaction Button&quot; throughout the rest of this module.</p></blockquote><ul><li>Interaction buttons <strong>must</strong> have a <code class="inline">custom_id</code>, and <strong>cannot</strong> have a <code class="inline">url</code></li><li>Can have one of the below <code class="inline">:style</code> applied.</li></ul><h4>Primary <code class="inline">style: 1</code></h4><p><img src="https://user-images.githubusercontent.com/34633373/129678518-74790396-efcc-45f0-9a84-eba3f4c66950.png" alt="Primary"/></p><h4>Secondary <code class="inline">style: 2</code></h4><p><img src="https://user-images.githubusercontent.com/34633373/129678527-d8d1c988-33c5-46d6-874e-2cfb2d9ba7f4.png" alt="Secondary"/></p><h4>Success <code class="inline">style: 3</code></h4><p><img src="https://user-images.githubusercontent.com/34633373/129678543-5d72ba09-f042-49b6-b56a-9ae072011ee1.png" alt="Success"/></p><h4>Danger <code class="inline">style: 4</code></h4><p><img src="https://user-images.githubusercontent.com/34633373/129678473-7e4b045f-b4a3-4993-96a2-4916cb88161f.png" alt="Danger (1)"/></p><h2 id="module-emoji-buttons" class="section-heading">
+  <a href="#module-emoji-buttons" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  🐼 <del>Emoji Buttons</del>
+</h2>
+<blockquote><p>Note: The discord documentation and marketing material in relation to buttons indicates that there are three kinds of buttons: 🐼 <strong>Emoji Buttons</strong>, <strong>Link Buttons</strong> &amp; <strong>Non-Link Buttons</strong>. When in fact all buttons can contain an emoji. Because of this reason 🐼 <strong>Emoji Buttons</strong> are not included as a seperate type. Emojis will be instead handled by the two included ( superior ) button types.</p></blockquote><p><img src="http://puu.sh/I4wdq/e6c28f7c85.png" alt="emoji buttons in action"/></p><blockquote><p>The field requirements are already becoming convoluted especially considering everything so far is all still a &quot;Component&quot;. Using the sub types and helper functions will ensure all of the rules are followed when creating components.</p></blockquote><h2 id="module-select-menu" class="section-heading">
+  <a href="#module-select-menu" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Select Menu
+</h2>
+<p>Select menus are another interactive component that renders on messages. On desktop, clicking on a select menu opens a dropdown-style UI; on mobile, tapping a select menu opens up a half-sheet with the options.
+<img src="https://discord.com/assets/0845178564ed70a6c657d9b40d1de8fc.png" alt="Discord Selects"/>
+Select menus support single-select and multi-select behavior, meaning you can prompt a user to choose just one item from a list, or multiple. When a user finishes making their choice by clicking out of the dropdown or closing the half-sheet, your app will receive an interaction.</p><ul><li>Select menus <strong>must</strong> be sent inside an Action Row</li><li>An Action Row can contain <strong>only one</strong> select menu</li><li>An Action Row containing a select menu <strong>cannot</strong> also contain buttons</li></ul>
         </section>
 
 
@@ -107,6 +134,174 @@ Remedy.Schema.Component <small class="app-vsn">(Remedy v0.5.3)</small>
             </a>
             Summary
           </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:components/0">components()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A list of components to place inside an action row.
+Due to constraints of action rows, this can either be a list of up to five buttons, or a single select menu.
+Valid for <a href="#module-action-row">Action Row</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:custom_id/0">custom_id()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Used to identify the command when the interraction is sent to you from the user.
+Valid for <a href="#module-interaction-button">Interaction Buttons</a> &amp; <a href="#module-select-menu">Select Menus</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:disabled/0">disabled()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Indicates if the component is disabled or not.
+Valid for <a href="#module-buttons">Buttons</a> &amp; <a href="#module-select-menu">Select Menus</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:emoji/0">emoji()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A partial emoji to display on the object.
+Valid for <a href="#module-buttons">Buttons</a></p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:label/0">label()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A string that appears on the button, max 80 characters.
+Valid for <a href="#module-buttons">Buttons</a></p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:max_values/0">max_values()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The maximum number of permitted selections. Minimum value 0, max 25.
+Valid for <a href="#module-select-menu">Select Menus</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:min_values/0">min_values()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The minimum number of permitted selections. Minimum value 0, max 25.
+Valid for <a href="#module-select-menu">Select Menus</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:options/0">options()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A list of options for select menus, max 25.
+Valid for <a href="#module-select-menu">Select Menus</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:placeholder/0">placeholder()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Placeholder text if nothing is selected, max 100 characters
+Valid for <a href="#module-select-menu">Select Menus</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:style/0">style()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Indicates the style.
+Valid for Valid for <a href="#module-interaction-button">Interaction Buttons</a> only,</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The currently valid component types.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:type/0">type()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The type of component.
+Valid for All Types.
+| | Component Types |
+|------|-----|
+|  <code class="inline">1</code> |  Action Row |
+|  <code class="inline">2</code> |  Button |
+|  <code class="inline">3</code> |  SelectMenu |
+Check out the <a href="https://discord.com/developers/docs/interactions/message-components#component-object-component-types">Discord API Message Component Types</a> for more information.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:url/0">url()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A url for link buttons.
+Valid for: <a href="#module-buttons">Buttons</a></p></div>
+
+</div>
+
+  </div>
+
+  <div class="summary-callbacks summary">
+    <h2>
+      <a href="#callbacks">Callbacks</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:new/1">new(opts)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Create a component from the given keyword list of options</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:update/2">update(t, opts)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Updates a component with the parameters provided.</p></div>
+
+</div>
+
+  </div>
 
   <div class="summary-functions summary">
     <h2>
@@ -145,6 +340,486 @@ Remedy.Schema.Component <small class="app-vsn">(Remedy v0.5.3)</small>
 
         </section>
 
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:components/0">
+
+  <div class="detail-header">
+    <a href="#t:components/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">components()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L224" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>components() :: [SelectMenu.t() | Button.t() | nil]</pre>
+
+      </div>
+
+<p>A list of components to place inside an action row.
+Due to constraints of action rows, this can either be a list of up to five buttons, or a single select menu.
+Valid for <a href="#module-action-row">Action Row</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:custom_id/0">
+
+  <div class="detail-header">
+    <a href="#t:custom_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">custom_id()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L162" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>custom_id() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>Used to identify the command when the interraction is sent to you from the user.
+Valid for <a href="#module-interaction-button">Interaction Buttons</a> &amp; <a href="#module-select-menu">Select Menus</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:disabled/0">
+
+  <div class="detail-header">
+    <a href="#t:disabled/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">disabled()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L168" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>disabled() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil</pre>
+
+      </div>
+
+<p>Indicates if the component is disabled or not.
+Valid for <a href="#module-buttons">Buttons</a> &amp; <a href="#module-select-menu">Select Menus</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:emoji/0">
+
+  <div class="detail-header">
+    <a href="#t:emoji/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">emoji()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L186" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>emoji() :: Remedy.Schema.Emoji.partial_button_emoji() | nil</pre>
+
+      </div>
+
+<p>A partial emoji to display on the object.
+Valid for <a href="#module-buttons">Buttons</a></p>
+  </section>
+</section>
+<section class="detail" id="t:label/0">
+
+  <div class="detail-header">
+    <a href="#t:label/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">label()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L180" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>label() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>A string that appears on the button, max 80 characters.
+Valid for <a href="#module-buttons">Buttons</a></p>
+  </section>
+</section>
+<section class="detail" id="t:max_values/0">
+
+  <div class="detail-header">
+    <a href="#t:max_values/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">max_values()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L216" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>max_values() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil</pre>
+
+      </div>
+
+<p>The maximum number of permitted selections. Minimum value 0, max 25.
+Valid for <a href="#module-select-menu">Select Menus</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:min_values/0">
+
+  <div class="detail-header">
+    <a href="#t:min_values/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">min_values()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L210" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>min_values() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil</pre>
+
+      </div>
+
+<p>The minimum number of permitted selections. Minimum value 0, max 25.
+Valid for <a href="#module-select-menu">Select Menus</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:options/0">
+
+  <div class="detail-header">
+    <a href="#t:options/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">options()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L198" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>options() :: [Option.t()] | nil</pre>
+
+      </div>
+
+<p>A list of options for select menus, max 25.
+Valid for <a href="#module-select-menu">Select Menus</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:placeholder/0">
+
+  <div class="detail-header">
+    <a href="#t:placeholder/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">placeholder()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L204" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>placeholder() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>Placeholder text if nothing is selected, max 100 characters
+Valid for <a href="#module-select-menu">Select Menus</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:style/0">
+
+  <div class="detail-header">
+    <a href="#t:style/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">style()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L174" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>style() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil</pre>
+
+      </div>
+
+<p>Indicates the style.
+Valid for Valid for <a href="#module-interaction-button">Interaction Buttons</a> only,</p>
+  </section>
+</section>
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">t()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L144" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>t() :: ActionRow.t() | Button.t() | SelectMenu.t()</pre>
+
+      </div>
+
+<p>The currently valid component types.</p>
+  </section>
+</section>
+<section class="detail" id="t:type/0">
+
+  <div class="detail-header">
+    <a href="#t:type/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">type()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L156" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>type() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+<p>The type of component.
+Valid for All Types.
+| | Component Types |
+|------|-----|
+|  <code class="inline">1</code> |  Action Row |
+|  <code class="inline">2</code> |  Button |
+|  <code class="inline">3</code> |  SelectMenu |
+Check out the <a href="https://discord.com/developers/docs/interactions/message-components#component-object-component-types">Discord API Message Component Types</a> for more information.</p>
+  </section>
+</section>
+<section class="detail" id="t:url/0">
+
+  <div class="detail-header">
+    <a href="#t:url/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">url()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L192" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>url() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>A url for link buttons.
+Valid for: <a href="#module-buttons">Buttons</a></p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+        <section id="callbacks" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#callbacks">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Callbacks
+          </h1>
+          <div class="callbacks-list">
+<section class="detail" id="c:new/1">
+
+  <div class="detail-header">
+    <a href="#c:new/1" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">new(opts)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L115" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>new(opts :: [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()]) :: <a href="#t:t/0">t</a>()</pre>
+
+      </div>
+
+<p>Create a component from the given keyword list of options</p><blockquote><p>Note: While using this function directly, you are not guaranteed to produce a valid component and it is the responsibility of the user to ensure they are passing a valid combination of component attributes. eg. if you pass a button component both a <code class="inline">custom_id</code>, and a <code class="inline">url</code>, the component is invalid as only one of these fields is allowed.</p></blockquote>
+  </section>
+</section>
+<section class="detail" id="c:update/2">
+
+  <div class="detail-header">
+    <a href="#c:update/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">update(t, opts)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L122" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>update(<a href="#t:t/0">t</a>(), opts :: [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()]) :: <a href="#t:t/0">t</a>()</pre>
+
+      </div>
+
+<p>Updates a component with the parameters provided.</p><blockquote><p>Note: While using this function directly, you are not guaranteed to produce a valid component and it is the responsibility of the user to ensure they are passing a valid combination of component attributes. eg. if you pass a button component both a <code class="inline">custom_id</code>, and a <code class="inline">url</code>, the component is invalid as only one of these fields is allowed.</p></blockquote>
+  </section>
+</section>
+
+          </div>
+        </section>
 
         <section id="functions" class="details-list">
           <h1 class="section-heading">

@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.1">
-    <meta name="project" content="Remedy v0.5.3">
+    <meta name="project" content="Remedy v0.5.4">
 
-    <title>Remedy.Api — Remedy v0.5.3</title>
+    <title>Remedy.Api — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-d71bc4c0c9.js"></script>
+    <script src="dist/sidebar_items-8c9fce9e24.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.5.3
+        v0.5.4
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Api <small class="app-vsn">(Remedy v0.5.3)</small>
+Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -1402,7 +1402,7 @@ Functions
       <div class="specs">
 
           <pre>add_guild_member(Remedy.Schema.Guild.id(), Remedy.Schema.User.id(), <a href="#t:options/0">options</a>()) ::
-  <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Member.t()} | {:ok}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>()} | {:ok}</pre>
 
       </div>
 
@@ -1882,9 +1882,9 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#create_global_application_command/2-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="4724450609-1">(</span><span class="w">
-  </span><span class="p" data-group-id="4724450609-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4724450609-3">[</span><span class="p" data-group-id="4724450609-3">]</span><span class="p" data-group-id="4724450609-2">}</span><span class="w">
-</span><span class="p" data-group-id="4724450609-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="0489537589-1">(</span><span class="w">
+  </span><span class="p" data-group-id="0489537589-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0489537589-3">[</span><span class="p" data-group-id="0489537589-3">]</span><span class="p" data-group-id="0489537589-2">}</span><span class="w">
+</span><span class="p" data-group-id="0489537589-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_group_dm/2">
@@ -2141,7 +2141,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
   Remedy.Schema.Guild.id(),
   <a href="#t:options/0">options</a>(),
   Remedy.Schema.AuditLogEntry.reason()
-) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Role.t()}</pre>
+) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()}</pre>
 
       </div>
 
@@ -2179,7 +2179,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>create_interaction_response(Remedy.Schema.Interaction.t(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+          <pre>create_interaction_response(<a href="Remedy.Schema.Interaction.html#t:t/0">Remedy.Schema.Interaction.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
   {:ok} | <a href="#t:error/0">error</a>()</pre>
 
       </div>
@@ -2227,13 +2227,13 @@ object. See the linked documentation.</li></ul><h2 id="create_interaction_respon
   <a href="#create_interaction_response/3-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3913719266-1">%{</span><span class="w">
+<pre><code class="makeup elixir"><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1710223260-1">%{</span><span class="w">
   </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-  </span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3913719266-2">%{</span><span class="w">
+  </span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1710223260-2">%{</span><span class="w">
     </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;I copy and pasted this code.&quot;</span><span class="w">
-  </span><span class="p" data-group-id="3913719266-2">}</span><span class="w">
-</span><span class="p" data-group-id="3913719266-1">}</span><span class="w">
-</span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_interaction_response</span><span class="p" data-group-id="3913719266-3">(</span><span class="n">interaction</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p" data-group-id="3913719266-3">)</span></code></pre><p>As an alternative to passing the interaction ID and token, the
+  </span><span class="p" data-group-id="1710223260-2">}</span><span class="w">
+</span><span class="p" data-group-id="1710223260-1">}</span><span class="w">
+</span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_interaction_response</span><span class="p" data-group-id="1710223260-3">(</span><span class="n">interaction</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p" data-group-id="1710223260-3">)</span></code></pre><p>As an alternative to passing the interaction ID and token, the
 original <code class="inline">t:Remedy.Struct.Interaction.t/0</code> can also be passed
 directly. See <code class="inline">create_interaction_response/1</code>.</p>
   </section>
@@ -2261,9 +2261,9 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
       <div class="specs">
 
           <pre>create_message(
-  Remedy.Schema.Channel.id() | Remedy.Schema.Message.t(),
+  Remedy.Schema.Channel.id() | <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(),
   <a href="#t:options/0">options</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
-) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Message.t()}</pre>
+) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()}</pre>
 
       </div>
 
@@ -2287,8 +2287,8 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
   <a href="#create_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="4173673328-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="4173673328-1">)</span><span class="w">
-</span><span class="p" data-group-id="4173673328-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4173673328-3">%</span><span class="nc" data-group-id="4173673328-3">Message</span><span class="p" data-group-id="4173673328-3">{</span><span class="p" data-group-id="4173673328-3">}</span><span class="p" data-group-id="4173673328-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="9804184848-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="9804184848-1">)</span><span class="w">
+</span><span class="p" data-group-id="9804184848-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9804184848-3">%</span><span class="nc" data-group-id="9804184848-3">Message</span><span class="p" data-group-id="9804184848-3">{</span><span class="p" data-group-id="9804184848-3">}</span><span class="p" data-group-id="9804184848-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_message!/2">
@@ -2314,9 +2314,9 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
       <div class="specs">
 
           <pre>create_message!(
-  Remedy.Schema.Channel.id() | Remedy.Schema.Message.t(),
+  Remedy.Schema.Channel.id() | <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(),
   <a href="#t:options/0">options</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
-) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | Remedy.Schema.Message.t()</pre>
+) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()</pre>
 
       </div>
 
@@ -2461,7 +2461,7 @@ Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)
       <div class="specs">
 
           <pre>delete_channel(Remedy.Schema.Channel.id(), Remedy.Schema.AuditLogEntry.reason()) ::
-  <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Channel.t()}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()}</pre>
 
       </div>
 
@@ -2821,7 +2821,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>delete_message(Remedy.Schema.Message.t()) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
+          <pre>delete_message(<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
 
       </div>
 
@@ -3176,8 +3176,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>edit_message(Remedy.Schema.Message.t(), <a href="#t:options/0">options</a>()) ::
-  <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Message.t()}</pre>
+          <pre>edit_message(<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), <a href="#t:options/0">options</a>()) ::
+  <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()}</pre>
 
       </div>
 
@@ -3211,7 +3211,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   Remedy.Schema.Channel.id(),
   Remedy.Schema.Message.id(),
   <a href="#t:options/0">options</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
-) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Message.t()}</pre>
+) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()}</pre>
 
       </div>
 
@@ -3261,7 +3261,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
       <div class="specs">
 
           <pre>edit_message!(Remedy.Schema.Channel.id(), Remedy.Schema.Message.id(), <a href="#t:options/0">options</a>()) ::
-  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | Remedy.Schema.Message.t()</pre>
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()</pre>
 
       </div>
 
@@ -3413,21 +3413,21 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
   Example
 </h2>
 <pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_application_information</span><span class="w">
-</span><span class="p" data-group-id="1017540453-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="1017540453-2">%{</span><span class="w">
+</span><span class="p" data-group-id="1504548402-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="1504548402-2">%{</span><span class="w">
   </span><span class="ss">bot_public</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
   </span><span class="ss">bot_require_code_grant</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
   </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
   </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Baba O-Riley&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">owner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1017540453-3">%{</span><span class="w">
+  </span><span class="ss">owner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1504548402-3">%{</span><span class="w">
     </span><span class="ss">avatar</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
     </span><span class="ss">discriminator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0042&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;i own a bot&quot;</span><span class="w">
-  </span><span class="p" data-group-id="1017540453-3">}</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="1017540453-2">}</span><span class="p" data-group-id="1017540453-1">}</span></code></pre>
+  </span><span class="p" data-group-id="1504548402-3">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="1504548402-2">}</span><span class="p" data-group-id="1504548402-1">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_channel/1">
@@ -3453,7 +3453,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
       <div class="specs">
 
           <pre>get_channel(Remedy.Schema.Channel.id()) ::
-  <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Channel.t()}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()}</pre>
 
       </div>
 
@@ -3524,7 +3524,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
       <div class="specs">
 
           <pre>get_channel_message(Remedy.Schema.Channel.id(), Remedy.Schema.Message.id()) ::
-  <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Message.t()}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()}</pre>
 
       </div>
 
@@ -3560,7 +3560,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
       <div class="specs">
 
           <pre>get_channel_messages(Remedy.Schema.Channel.id(), <a href="#t:limit/0">limit</a>(), <a href="#t:locator/0">locator</a>()) ::
-  <a href="#t:error/0">error</a>() | {:ok, [Remedy.Schema.Message.t()]}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, [<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()]}</pre>
 
       </div>
 
@@ -3629,7 +3629,7 @@ return no messages.</p><p>If successful, returns <code class="inline">{:ok, mess
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get_current_user() :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.User.t()}</pre>
+          <pre>get_current_user() :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()}</pre>
 
       </div>
 
@@ -3726,15 +3726,15 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   Example
 </h2>
 <pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_global_application_commands</span><span class="w">
-</span><span class="p" data-group-id="6880676853-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
- </span><span class="p" data-group-id="6880676853-2">[</span><span class="w">
-   </span><span class="p" data-group-id="6880676853-3">%{</span><span class="w">
+</span><span class="p" data-group-id="4445687769-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="4445687769-2">[</span><span class="w">
+   </span><span class="p" data-group-id="4445687769-3">%{</span><span class="w">
      </span><span class="ss">application_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;455589479713865749&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;789841753196331029&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="w">
-   </span><span class="p" data-group-id="6880676853-3">}</span><span class="w">
- </span><span class="p" data-group-id="6880676853-2">]</span><span class="p" data-group-id="6880676853-1">}</span></code></pre>
+   </span><span class="p" data-group-id="4445687769-3">}</span><span class="w">
+ </span><span class="p" data-group-id="4445687769-2">]</span><span class="p" data-group-id="4445687769-1">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild/1">
@@ -3831,7 +3831,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
       <div class="specs">
 
           <pre>get_guild_audit_log(Remedy.Schema.Guild.id(), <a href="#t:options/0">options</a>()) ::
-  {:ok, Remedy.Schema.AuditLog.t()} | <a href="#t:error/0">error</a>()</pre>
+  {:ok, <a href="Remedy.Schema.AuditLog.html#t:t/0">Remedy.Schema.AuditLog.t</a>()} | <a href="#t:error/0">error</a>()</pre>
 
       </div>
 
@@ -4085,7 +4085,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
       <div class="specs">
 
           <pre>get_guild_member(Remedy.Schema.Guild.id(), Remedy.Schema.User.id()) ::
-  <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Member.t()}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>()}</pre>
 
       </div>
 
@@ -4154,7 +4154,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
       <div class="specs">
 
           <pre>get_guild_roles(Remedy.Schema.Guild.id()) ::
-  <a href="#t:error/0">error</a>() | {:ok, [Remedy.Schema.Role.t()]}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, [<a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()]}</pre>
 
       </div>
 
@@ -4264,7 +4264,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
       <div class="specs">
 
           <pre>get_pinned_messages(Remedy.Schema.Channel.id()) ::
-  <a href="#t:error/0">error</a>() | {:ok, [Remedy.Schema.Message.t()]}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, [<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()]}</pre>
 
       </div>
 
@@ -4298,7 +4298,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
       <div class="specs">
 
           <pre>get_reactions(Remedy.Schema.Channel.id(), Remedy.Schema.Message.id(), <a href="#t:emoji/0">emoji</a>()) ::
-  <a href="#t:error/0">error</a>() | {:ok, [Remedy.Schema.User.t()]}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, [<a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()]}</pre>
 
       </div>
 
@@ -4356,7 +4356,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get_user(Remedy.Schema.User.id()) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.User.t()}</pre>
+          <pre>get_user(Remedy.Schema.User.id()) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()}</pre>
 
       </div>
 
@@ -4611,7 +4611,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
       <div class="specs">
 
           <pre>list_guild_members(Remedy.Schema.Guild.id(), <a href="#t:options/0">options</a>()) ::
-  <a href="#t:error/0">error</a>() | {:ok, [Remedy.Schema.Member.t()]}</pre>
+  <a href="#t:error/0">error</a>() | {:ok, [<a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>()]}</pre>
 
       </div>
 
@@ -4683,7 +4683,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
   Remedy.Schema.Channel.id(),
   <a href="#t:options/0">options</a>(),
   Remedy.Schema.AuditLogEntry.reason()
-) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Channel.t()}</pre>
+) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()}</pre>
 
       </div>
 
@@ -4734,7 +4734,7 @@ Remedy.Api.modify_channel(41771983423143933)
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>modify_current_user(<a href="#t:options/0">options</a>()) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.User.t()}</pre>
+          <pre>modify_current_user(<a href="#t:options/0">options</a>()) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()}</pre>
 
       </div>
 
@@ -4839,8 +4839,8 @@ where admins and moderators receive notices from Discord in public guilds</li></
   <a href="#modify_guild/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="1096434639-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="1096434639-1">)</span><span class="w">
-</span><span class="p" data-group-id="1096434639-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1096434639-3">%</span><span class="nc" data-group-id="1096434639-3">Remedy.Struct.Guild</span><span class="p" data-group-id="1096434639-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="1096434639-3">}</span><span class="p" data-group-id="1096434639-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="0950772028-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="0950772028-1">)</span><span class="w">
+</span><span class="p" data-group-id="0950772028-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0950772028-3">%</span><span class="nc" data-group-id="0950772028-3">Remedy.Struct.Guild</span><span class="p" data-group-id="0950772028-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="0950772028-3">}</span><span class="p" data-group-id="0950772028-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_channel_positions/2">
@@ -5064,7 +5064,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
   Remedy.Schema.Role.id(),
   <a href="#t:options/0">options</a>(),
   Remedy.Schema.AuditLogEntry.reason()
-) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Role.t()}</pre>
+) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()}</pre>
 
       </div>
 
@@ -5108,7 +5108,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
   Remedy.Schema.Guild.id(),
   [%{id: Remedy.Schema.Role.id(), position: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()}],
   Remedy.Schema.AuditLogEntry.reason()
-) :: <a href="#t:error/0">error</a>() | {:ok, [Remedy.Schema.Role.t()]}</pre>
+) :: <a href="#t:error/0">error</a>() | {:ok, [<a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()]}</pre>
 
       </div>
 

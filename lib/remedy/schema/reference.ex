@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.Reference do
-  @doc """
+  @moduledoc """
   Reference Object
   """
   use Remedy.Schema

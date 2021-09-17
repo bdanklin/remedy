@@ -83,7 +83,6 @@ defmodule Remedy.ApiError do
   @type error_list_map :: %{_errors: [error]}
   @type error :: %{code: discord_status_code, message: String.t()}
 
-  # TODO: pretty print for discord errors
   @impl true
   def message(%__MODULE__{
         response: %{code: error_code, message: message, errors: errors},

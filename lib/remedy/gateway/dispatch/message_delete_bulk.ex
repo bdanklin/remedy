@@ -3,13 +3,21 @@ defmodule Remedy.Gateway.Dispatch.MessageDeleteBulk do
   Struct representing a Message Delete Bulk event
   """
 
-  alias Remedy.Struct.{Channel, Guild, Message}
+  use Remedy.Schema
+  alias Remedy.Schema.Message
+  alias Remedy.Cache
 
-  defstruct [
-    :channel_id,
-    :guild_id,
-    :ids
-  ]
+  @type t :: %__MODULE__{
+          channel_id: channel_id,
+          guild_id: guild_id,
+          ids: ids
+        }
+
+  embedded_schema do
+    field :channel_id, Snowflake
+    field :guild_id, Snowflake
+    field :ids, {:array, :integer}, virtual: true
+  end
 
   @typedoc "Channel id of the deleted message"
   @type channel_id :: Channel.id()
@@ -24,12 +32,11 @@ defmodule Remedy.Gateway.Dispatch.MessageDeleteBulk do
   @typedoc "Ids of the deleted messages"
   @type ids :: [Message.id(), ...]
 
-  @type t :: %__MODULE__{
-          channel_id: channel_id,
-          guild_id: guild_id,
-          ids: ids
-        }
+  def handle({event, %{ids: ids} = payload, socket}) do
+    for message <- ids do
+      Cache.delete_message(message)
+    end
 
-  @doc false
-  def to_struct(map), do: struct(__MODULE__, map)
+    {event, payload |> new(), socket}
+  end
 end

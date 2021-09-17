@@ -1,7 +1,5 @@
 defmodule Remedy.TimeHelpers do
-  @moduledoc """
-  Time Helpers
-  """
+  @moduledoc false
 
   @doc """
   Returns the number of ms since the Discord epoch.

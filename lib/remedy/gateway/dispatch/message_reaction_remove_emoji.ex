@@ -1,39 +1,19 @@
 defmodule Remedy.Gateway.Dispatch.MessageReactionRemoveEmoji do
-  @moduledoc "Sent when a bot removes all instances of a given emoji from the reactions of a message"
-  @moduledoc since: "0.5.0"
+  @moduledoc false
+  use Remedy.Schema
+  alias Remedy.Cache
 
-  alias Remedy.Struct.{Channel, Emoji, Guild, Message}
-  alias Remedy.Util
-
-  defstruct [:channel_id, :guild_id, :message_id, :emoji]
-
-  @typedoc "Channel in which the message resides."
-  @type channel_id :: Channel.id()
-
-  @typedoc "Guild on which the message resides, if applicable."
-  @type guild_id :: Guild.id() | nil
-
-  @typedoc "Message from which the emoji was removed."
-  @type message_id :: Message.id()
-
-  @typedoc "The (partial) emoji that was removed."
-  @type emoji :: Emoji.t()
-
-  @typedoc "Event sent when a bot removes all instances of a given emoji from the reactions of a message"
-  @type t :: %__MODULE__{
-          channel_id: channel_id,
-          guild_id: guild_id,
-          message_id: message_id,
-          emoji: emoji
-        }
+  @primary_key false
+  embedded_schema do
+    field :message_id, Snowflake
+    field :channel_id, Snowflake
+    field :last_pin_timestamp, ISO8601
+  end
 
   @doc false
-  def to_struct(map) do
-    %__MODULE__{
-      channel_id: map.channel_id,
-      guild_id: map[:guild_id],
-      message_id: map.message_id,
-      emoji: Util.cast(map.emoji, {:struct, Emoji})
-    }
+  def handle({event, %{message_id: message_id} = payload, socket}) do
+    Cache.remove_message_reactions(message_id)
+
+    {event, payload |> new(), socket}
   end
 end

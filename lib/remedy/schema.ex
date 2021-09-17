@@ -42,6 +42,7 @@ defmodule Remedy.Schema do
         Team,
         TeamMember,
         Thread,
+        UnavailableGuild,
         User,
         Voice,
         VoiceState,

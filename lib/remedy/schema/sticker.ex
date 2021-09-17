@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.Sticker do
-  @doc """
+  @moduledoc """
   Sticker
   """
   use Remedy.Schema

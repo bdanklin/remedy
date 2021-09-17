@@ -3,19 +3,7 @@ defmodule Remedy.Gateway.Dispatch.MessageDelete do
   Struct representing a Message Delete event
   """
 
-  alias Remedy.Struct.{Channel, Guild, Message}
-
-  defstruct [
-    :id,
-    :channel_id,
-    :guild_id
-  ]
-
-  @typedoc "Id of the deleted message"
-  @type id :: Message.id()
-
-  @typedoc "Channel id of the deleted message"
-  @type channel_id :: Channel.id()
+  alias Remedy.Schema.Message
 
   @typedoc """
   Guild id of the deleted message
@@ -24,19 +12,7 @@ defmodule Remedy.Gateway.Dispatch.MessageDelete do
   """
   @type guild_id :: Guild.id() | nil
 
-  @type t :: %__MODULE__{
-          id: id,
-          channel_id: channel_id,
-          guild_id: guild_id
-        }
-
-  @doc false
-  def to_struct(map) do
-    %__MODULE__{
-      id: map.id,
-      channel_id: map.channel_id,
-      # https://github.com/discord/discord-api-docs/issues/296
-      guild_id: map[:guild_id]
-    }
+  def handle({event, payload, socket}) do
+    {event, payload |> Message.new(), socket}
   end
 end

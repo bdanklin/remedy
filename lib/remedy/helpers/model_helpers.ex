@@ -1,4 +1,5 @@
 defmodule Remedy.ModelHelpers do
+  @moduledoc false
   import Sunbake.Snowflake,
     only: [is_snowflake: 1],
     warn: false

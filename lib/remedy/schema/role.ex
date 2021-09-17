@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.Role do
-  @doc """
+  @moduledoc """
   Role
   """
   use Remedy.Schema

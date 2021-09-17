@@ -44,7 +44,6 @@ defmodule Remedy.Api do
 
   @type options :: keyword | map
 
-  # TODO: Not Ideal level of abstraction for the user. needing the pid is pretty aids.
   # @spec update_shard_status(pid, status, String.t(), integer, String.t() | nil) :: :ok
   # def update_shard_status(pid, status, game, type \\ 0, stream \\ nil) do
   #   Session.update_status(pid, to_string(status), game, stream, type)

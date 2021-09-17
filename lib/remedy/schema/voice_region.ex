@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.VoiceRegion do
-  @doc """
+  @moduledoc """
   Voice Region
   """
   use Remedy.Schema

@@ -1,5 +1,5 @@
 defmodule Remedy.Schema.StageInstance do
-  @doc """
+  @moduledoc """
   Stage Instance
   """
   use Remedy.Schema

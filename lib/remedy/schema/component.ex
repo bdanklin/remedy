@@ -93,7 +93,7 @@ defmodule Remedy.Schema.Component do
         |> Enum.filter(fn {k, _} -> k in allowed_keys() end)
         |> Enum.into(%{})
         |> flatten()
-        |> Component.to_struct()
+        |> Component.new()
       end
 
       defp allowed_keys, do: Map.keys(@defaults)

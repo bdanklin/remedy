@@ -27,26 +27,6 @@ defmodule Remedy.Gateway.Dispatch do
     |> Module.concat()
   end
 
-  def handle_event(:GUILD_ROLE_CREATE = event, p, state),
-    do: {event, GuildCache.role_create(p.guild_id, p.role), state}
-
-  def handle_event(:GUILD_ROLE_DELETE = event, p, state),
-    do: {event, GuildCache.role_delete(p.guild_id, p.role_id), state}
-
-  def handle_event(:GUILD_ROLE_UPDATE = event, %{guild_id: guild_id} = p, state),
-    do: {event, GuildCache.role_update(guild_id, p.role), state}
-
-  def handle_event(:INVITE_CREATE = event, p, state),
-    do: {event, InviteCreate.to_struct(p), state}
-
-  def handle_event(:INVITE_DELETE = event, p, state),
-    do: {event, InviteDelete.to_struct(p), state}
-
-  def handle_event(:MESSAGE_CREATE = event, p, state), do: {event, Message.to_struct(p), state}
-
-  def handle_event(:MESSAGE_DELETE = event, p, state),
-    do: {event, MessageDelete.to_struct(p), state}
-
   def handle_event(:MESSAGE_DELETE_BULK = event, p, state),
     do: {event, MessageDeleteBulk.to_struct(p), state}
 

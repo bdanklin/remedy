@@ -10,7 +10,7 @@
     <title>Remedy.Gateway.Dispatch.MessageDeleteBulk — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-8c9fce9e24.js"></script>
+    <script src="dist/sidebar_items-90025b1ab5.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -149,6 +149,48 @@ Remedy.Gateway.Dispatch.MessageDeleteBulk <small class="app-vsn">(Remedy v0.5.4)
 
   </div>
 
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/1">changeset(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/2">changeset(model, params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#handle/1">handle(arg)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#new/1">new(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#validate/1">validate(changeset)</a>
+
+  </div>
+
+</div>
+
+  </div>
+
         </section>
 
 
@@ -170,7 +212,7 @@ Types
     </a>
     <h1 class="signature">channel_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L15" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L23" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -183,7 +225,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>channel_id() :: Remedy.Struct.Channel.id()</pre>
+          <pre>channel_id() :: Remedy.Schema.Channel.id()</pre>
 
       </div>
 
@@ -199,7 +241,7 @@ Types
     </a>
     <h1 class="signature">guild_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L22" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L30" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -212,7 +254,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>guild_id() :: Remedy.Struct.Guild.id() | nil</pre>
+          <pre>guild_id() :: Remedy.Schema.Guild.id() | nil</pre>
 
       </div>
 
@@ -228,7 +270,7 @@ Types
     </a>
     <h1 class="signature">ids()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L25" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L33" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -241,7 +283,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>ids() :: [Remedy.Struct.Message.id(), ...]</pre>
+          <pre>ids() :: [Remedy.Schema.Message.id(), ...]</pre>
 
       </div>
 
@@ -257,7 +299,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L27" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L10" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -273,10 +315,134 @@ Types
           <pre>t() :: %Remedy.Gateway.Dispatch.MessageDeleteBulk{
   channel_id: <a href="#t:channel_id/0">channel_id</a>(),
   guild_id: <a href="#t:guild_id/0">guild_id</a>(),
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   ids: <a href="#t:ids/0">ids</a>()
 }</pre>
 
       </div>
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="changeset/1">
+
+  <div class="detail-header">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="changeset/2">
+
+  <div class="detail-header">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(model, params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="handle/1">
+
+  <div class="detail-header">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">handle(arg)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L35" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="new/1">
+
+  <div class="detail-header">
+    <a href="#new/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">new(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="validate/1">
+
+  <div class="detail-header">
+    <a href="#validate/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">validate(changeset)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete_bulk.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
 
 
   </section>

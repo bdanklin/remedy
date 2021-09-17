@@ -10,7 +10,7 @@
     <title>Remedy.Gateway.Dispatch.MessageDelete — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-8c9fce9e24.js"></script>
+    <script src="dist/sidebar_items-90025b1ab5.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,15 +114,6 @@ Remedy.Gateway.Dispatch.MessageDelete <small class="app-vsn">(Remedy v0.5.4)</sm
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:channel_id/0">channel_id()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Channel id of the deleted message</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#t:guild_id/0">guild_id()</a>
 
   </div>
@@ -130,18 +121,16 @@ Remedy.Gateway.Dispatch.MessageDelete <small class="app-vsn">(Remedy v0.5.4)</sm
     <div class="summary-synopsis"><p>Guild id of the deleted message</p></div>
 
 </div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:id/0">id()</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Id of the deleted message</p></div>
-
-</div>
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#handle/1">handle(arg)</a>
 
   </div>
 
@@ -161,35 +150,6 @@ Remedy.Gateway.Dispatch.MessageDelete <small class="app-vsn">(Remedy v0.5.4)</sm
 Types
           </h1>
           <div class="types-list">
-<section class="detail" id="t:channel_id/0">
-
-  <div class="detail-header">
-    <a href="#t:channel_id/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">channel_id()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete.ex#L18" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>channel_id() :: Remedy.Struct.Channel.id()</pre>
-
-      </div>
-
-<p>Channel id of the deleted message</p>
-  </section>
-</section>
 <section class="detail" id="t:guild_id/0">
 
   <div class="detail-header">
@@ -199,7 +159,7 @@ Types
     </a>
     <h1 class="signature">guild_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete.ex#L25" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete.ex#L13" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -212,21 +172,34 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>guild_id() :: Remedy.Struct.Guild.id() | nil</pre>
+          <pre>guild_id() :: Guild.id() | nil</pre>
 
       </div>
 
 <p>Guild id of the deleted message</p><p><code class="inline">nil</code> if a non-guild message was deleted.</p>
   </section>
 </section>
-<section class="detail" id="t:id/0">
+
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#t:id/0" class="detail-link" title="Link to this type">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">id()</h1>
+    <h1 class="signature">handle(arg)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete.ex#L15" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -237,46 +210,6 @@ Types
   </div>
 
   <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>id() :: Remedy.Struct.Message.id()</pre>
-
-      </div>
-
-<p>Id of the deleted message</p>
-  </section>
-</section>
-<section class="detail" id="t:t/0">
-
-  <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">t()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/message_delete.ex#L27" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>t() :: %Remedy.Gateway.Dispatch.MessageDelete{
-  channel_id: <a href="#t:channel_id/0">channel_id</a>(),
-  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
-  id: <a href="#t:id/0">id</a>()
-}</pre>
-
-      </div>
 
 
   </section>

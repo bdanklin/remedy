@@ -10,7 +10,7 @@
     <title>Remedy.Api — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-90025b1ab5.js"></script>
+    <script src="dist/sidebar_items-3c0a03e395.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -215,7 +215,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#bulk_overwrite_global_application_commands/2">bulk_overwrite_global_application_commands(application_id \\ Bot.get().id, commands)</a>
+    <a href="#bulk_overwrite_global_application_commands/2">bulk_overwrite_global_application_commands(application_id \\ Cache.bot().id, commands)</a>
 
   </div>
 
@@ -224,7 +224,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#bulk_overwrite_guild_application_commands/3">bulk_overwrite_guild_application_commands(application_id \\ Bot.get().id, guild_id, commands)</a>
+    <a href="#bulk_overwrite_guild_application_commands/3">bulk_overwrite_guild_application_commands(application_id \\ Cache.bot().id, guild_id, commands)</a>
 
   </div>
 
@@ -260,7 +260,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create_followup_message/3">create_followup_message(application_id \\ Bot.get().id, token, webhook_payload)</a>
+    <a href="#create_followup_message/3">create_followup_message(application_id \\ Cache.bot().id, token, webhook_payload)</a>
 
   </div>
 
@@ -269,7 +269,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create_global_application_command/2">create_global_application_command(application_id \\ Bot.get().id, command)</a>
+    <a href="#create_global_application_command/2">create_global_application_command(application_id \\ Cache.bot().id, command)</a>
 
   </div>
 
@@ -287,7 +287,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create_guild_application_command/3">create_guild_application_command(application_id \\ Bot.get().id, guild_id, command)</a>
+    <a href="#create_guild_application_command/3">create_guild_application_command(application_id \\ Cache.bot().id, guild_id, command)</a>
 
   </div>
 
@@ -421,7 +421,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#delete_global_application_command/2">delete_global_application_command(application_id \\ Bot.get().id, command_id)</a>
+    <a href="#delete_global_application_command/2">delete_global_application_command(application_id \\ Cache.bot().id, command_id)</a>
 
   </div>
 
@@ -439,7 +439,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#delete_guild_application_command/3">delete_guild_application_command(application_id \\ Bot.get().id, guild_id, command_id)</a>
+    <a href="#delete_guild_application_command/3">delete_guild_application_command(application_id \\ Cache.bot().id, guild_id, command_id)</a>
 
   </div>
 
@@ -473,7 +473,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#delete_interaction_followup_message/3">delete_interaction_followup_message(application_id \\ Bot.get().id, token, message_id)</a>
+    <a href="#delete_interaction_followup_message/3">delete_interaction_followup_message(application_id \\ Cache.bot().id, token, message_id)</a>
 
   </div>
 
@@ -564,7 +564,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#edit_global_application_command/3">edit_global_application_command(application_id \\ Bot.get().id, command_id, command)</a>
+    <a href="#edit_global_application_command/3">edit_global_application_command(application_id \\ Cache.bot().id, command_id, command)</a>
 
   </div>
 
@@ -573,7 +573,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#edit_guild_application_command/4">edit_guild_application_command(application_id \\ Bot.get().id, guild_id, command_id, command)</a>
+    <a href="#edit_guild_application_command/4">edit_guild_application_command(application_id \\ Cache.bot().id, guild_id, command_id, command)</a>
 
   </div>
 
@@ -707,7 +707,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get_global_application_commands/1">get_global_application_commands(application_id \\ Bot.get().id)</a>
+    <a href="#get_global_application_commands/1">get_global_application_commands(application_id \\ Cache.bot().id)</a>
 
   </div>
 
@@ -725,7 +725,7 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get_guild_application_commands/2">get_guild_application_commands(application_id \\ Bot.get().id, guild_id)</a>
+    <a href="#get_guild_application_commands/2">get_guild_application_commands(application_id \\ Cache.bot().id, guild_id)</a>
 
   </div>
 
@@ -1406,7 +1406,7 @@ Functions
 
       </div>
 
-<p>Puts a user in a guild.</p><p>This endpoint fires the <a href="Remedy.Consumer.html#t:guild_member_add/0"><code class="inline">Remedy.Consumer.guild_member_add/0</code></a> event.
+<p>Puts a user in a guild.</p><p>This endpoint fires the <code class="inline">t:Remedy.Consumer.guild_member_add/0</code> event.
 It requires the <code class="inline">CREATE_INSTANT_INVITE</code> permission. Additionally, it
 situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <code class="inline">MANAGE_ROLES</code>,
 <code class="inline">MUTE_MEMBERS</code>, and <code class="inline">DEAFEN_MEMBERS</code> permissions.</p><p>If successful, returns <code class="inline">{:ok, member}</code> or <code class="inline">{:ok}</code> if the user was already a member of the
@@ -1496,8 +1496,8 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
 
 <p>Pins a message in a channel.</p><p>This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
 'MANAGE_MESSAGES' permissions. It fires the
-<a href="Remedy.Consumer.html#t:message_update/0"><code class="inline">Remedy.Consumer.message_update/0</code></a> and
-<a href="Remedy.Consumer.html#t:channel_pins_update/0"><code class="inline">Remedy.Consumer.channel_pins_update/0</code></a> events.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="add_pinned_channel_message/2-examples" class="section-heading">
+<code class="inline">t:Remedy.Consumer.message_update/0</code> and
+<code class="inline">t:Remedy.Consumer.channel_pins_update/0</code> events.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="add_pinned_channel_message/2-examples" class="section-heading">
   <a href="#add_pinned_channel_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -1537,7 +1537,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
       </div>
 
 <p>Begins a guild prune to prune members within <code class="inline">days</code>.</p><p>An optional <code class="inline">reason</code> can be provided for the guild audit log.</p><p>This endpoint requires the <code class="inline">KICK_MEMBERS</code> permission. It fires multiple
-<a href="Remedy.Consumer.html#t:guild_member_remove/0"><code class="inline">Remedy.Consumer.guild_member_remove/0</code></a> events.</p><p>If successful, returns <code class="inline">{:ok, %{pruned: pruned}}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="begin_guild_prune/3-examples" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_member_remove/0</code> events.</p><p>If successful, returns <code class="inline">{:ok, %{pruned: pruned}}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="begin_guild_prune/3-examples" class="section-heading">
   <a href="#begin_guild_prune/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -1593,7 +1593,7 @@ two weeks ago should be filtered out; defaults to <code class="inline">true</cod
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">bulk_overwrite_global_application_commands(application_id \\ Bot.get().id, commands)</h1>
+    <h1 class="signature">bulk_overwrite_global_application_commands(application_id \\ Cache.bot().id, commands)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2528" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -1638,7 +1638,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">bulk_overwrite_guild_application_commands(application_id \\ Bot.get().id, guild_id, commands)</h1>
+    <h1 class="signature">bulk_overwrite_guild_application_commands(application_id \\ Cache.bot().id, guild_id, commands)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2600" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -1810,7 +1810,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">create_followup_message(application_id \\ Bot.get().id, token, webhook_payload)</h1>
+    <h1 class="signature">create_followup_message(application_id \\ Cache.bot().id, token, webhook_payload)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2667" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -1845,7 +1845,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">create_global_application_command(application_id \\ Bot.get().id, command)</h1>
+    <h1 class="signature">create_global_application_command(application_id \\ Cache.bot().id, command)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2457" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -1882,9 +1882,9 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#create_global_application_command/2-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="1008774482-1">(</span><span class="w">
-  </span><span class="p" data-group-id="1008774482-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1008774482-3">[</span><span class="p" data-group-id="1008774482-3">]</span><span class="p" data-group-id="1008774482-2">}</span><span class="w">
-</span><span class="p" data-group-id="1008774482-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="2390934506-1">(</span><span class="w">
+  </span><span class="p" data-group-id="2390934506-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2390934506-3">[</span><span class="p" data-group-id="2390934506-3">]</span><span class="p" data-group-id="2390934506-2">}</span><span class="w">
+</span><span class="p" data-group-id="2390934506-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_group_dm/2">
@@ -1932,7 +1932,7 @@ to a nickname.</p><h2 id="create_group_dm/2-examples" class="section-heading">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">create_guild_application_command(application_id \\ Bot.get().id, guild_id, command)</h1>
+    <h1 class="signature">create_guild_application_command(application_id \\ Cache.bot().id, guild_id, command)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2542" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -2023,7 +2023,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
       </div>
 
 <p>Creates a channel for a guild.</p><p>This endpoint requires the <code class="inline">MANAGE_CHANNELS</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:channel_create/0"><code class="inline">Remedy.Consumer.channel_create/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok, channel}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_guild_channel/2-options" class="section-heading">
+<code class="inline">t:Remedy.Consumer.channel_create/0</code> event.</p><p>If successful, returns <code class="inline">{:ok, channel}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_guild_channel/2-options" class="section-heading">
   <a href="#create_guild_channel/2-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -2069,7 +2069,7 @@ the channel's permission overwrites</li><li><code class="inline">:parent_id</cod
       </div>
 
 <p>Creates a new emoji for the given guild.</p><p>This endpoint requires the <code class="inline">MANAGE_EMOJIS</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:guild_emojis_update/0"><code class="inline">Remedy.Consumer.guild_emojis_update/0</code></a> event.</p><p>An optional <code class="inline">reason</code> can be provided for the audit log.</p><p>If successful, returns <code class="inline">{:ok, emoji}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_guild_emoji/3-options" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_emojis_update/0</code> event.</p><p>An optional <code class="inline">reason</code> can be provided for the audit log.</p><p>If successful, returns <code class="inline">{:ok, emoji}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_guild_emoji/3-options" class="section-heading">
   <a href="#create_guild_emoji/3-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -2146,7 +2146,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
       </div>
 
 <p>Creates a guild role.</p><p>An optional reason for the audit log can be provided via <code class="inline">reason</code>.</p><p>This endpoint requires the <code class="inline">MANAGE_ROLES</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:guild_role_create/0"><code class="inline">Remedy.Consumer.guild_role_create/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok, role}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_guild_role/3-options" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_role_create/0</code> event.</p><p>If successful, returns <code class="inline">{:ok, role}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_guild_role/3-options" class="section-heading">
   <a href="#create_guild_role/3-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -2227,13 +2227,13 @@ object. See the linked documentation.</li></ul><h2 id="create_interaction_respon
   <a href="#create_interaction_response/3-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0369132316-1">%{</span><span class="w">
+<pre><code class="makeup elixir"><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7380941996-1">%{</span><span class="w">
   </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-  </span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0369132316-2">%{</span><span class="w">
+  </span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7380941996-2">%{</span><span class="w">
     </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;I copy and pasted this code.&quot;</span><span class="w">
-  </span><span class="p" data-group-id="0369132316-2">}</span><span class="w">
-</span><span class="p" data-group-id="0369132316-1">}</span><span class="w">
-</span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_interaction_response</span><span class="p" data-group-id="0369132316-3">(</span><span class="n">interaction</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p" data-group-id="0369132316-3">)</span></code></pre><p>As an alternative to passing the interaction ID and token, the
+  </span><span class="p" data-group-id="7380941996-2">}</span><span class="w">
+</span><span class="p" data-group-id="7380941996-1">}</span><span class="w">
+</span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_interaction_response</span><span class="p" data-group-id="7380941996-3">(</span><span class="n">interaction</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p" data-group-id="7380941996-3">)</span></code></pre><p>As an alternative to passing the interaction ID and token, the
 original <code class="inline">t:Remedy.Struct.Interaction.t/0</code> can also be passed
 directly. See <code class="inline">create_interaction_response/1</code>.</p>
   </section>
@@ -2287,8 +2287,8 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
   <a href="#create_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="1859024827-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="1859024827-1">)</span><span class="w">
-</span><span class="p" data-group-id="1859024827-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1859024827-3">%</span><span class="nc" data-group-id="1859024827-3">Message</span><span class="p" data-group-id="1859024827-3">{</span><span class="p" data-group-id="1859024827-3">}</span><span class="p" data-group-id="1859024827-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="5345479144-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="5345479144-1">)</span><span class="w">
+</span><span class="p" data-group-id="5345479144-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5345479144-3">%</span><span class="nc" data-group-id="5345479144-3">Message</span><span class="p" data-group-id="5345479144-3">{</span><span class="p" data-group-id="5345479144-3">}</span><span class="p" data-group-id="5345479144-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_message!/2">
@@ -2353,7 +2353,7 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
 <p>Creates a reaction for a message.</p><p>This endpoint requires the <code class="inline">VIEW_CHANNEL</code> and <code class="inline">READ_MESSAGE_HISTORY</code>
 permissions. Additionally, if nobody else has reacted to the message with
 the <code class="inline">emoji</code>, this endpoint requires the <code class="inline">ADD_REACTIONS</code> permission. It
-fires a <a href="Remedy.Consumer.html#t:message_reaction_add/0"><code class="inline">Remedy.Consumer.message_reaction_add/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_reaction/3-examples" class="section-heading">
+fires a <code class="inline">t:Remedy.Consumer.message_reaction_add/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="create_reaction/3-examples" class="section-heading">
   <a href="#create_reaction/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -2433,7 +2433,7 @@ Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)
       </div>
 
 <p>Deletes all reactions from a message.</p><p>This endpoint requires the <code class="inline">VIEW_CHANNEL</code>, <code class="inline">READ_MESSAGE_HISTORY</code>, and
-<code class="inline">MANAGE_MESSAGES</code> permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove_all/0"><code class="inline">Remedy.Consumer.message_reaction_remove_all/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, return <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p>
+<code class="inline">MANAGE_MESSAGES</code> permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_remove_all/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, return <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="delete_channel/2">
@@ -2467,8 +2467,8 @@ Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)
 
 <p>Deletes a channel.</p><p>An optional <code class="inline">reason</code> can be provided for the guild audit log.</p><p>If deleting a <code class="inline">t:Remedy.Struct.Channel.guild_channel/0</code>, this endpoint requires
 the <code class="inline">MANAGE_CHANNELS</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:channel_delete/0"><code class="inline">Remedy.Consumer.channel_delete/0</code></a>. If a <code class="inline">t:Remedy.Struct.Channel.channel_category/0</code>
-is deleted, then a <a href="Remedy.Consumer.html#t:channel_update/0"><code class="inline">Remedy.Consumer.channel_update/0</code></a> event will fire
+<code class="inline">t:Remedy.Consumer.channel_delete/0</code>. If a <code class="inline">t:Remedy.Struct.Channel.channel_category/0</code>
+is deleted, then a <code class="inline">t:Remedy.Consumer.channel_update/0</code> event will fire
 for each channel under the category.</p><p>If successful, returns <code class="inline">{:ok, channel}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="delete_channel/2-examples" class="section-heading">
   <a href="#delete_channel/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
@@ -2522,7 +2522,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">delete_global_application_command(application_id \\ Bot.get().id, command_id)</h1>
+    <h1 class="signature">delete_global_application_command(application_id \\ Cache.bot().id, command_id)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2500" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -2577,7 +2577,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       </div>
 
 <p>Deletes a guild.</p><p>This endpoint requires that the current user is the owner of the guild.
-It fires the <a href="Remedy.Consumer.html#t:guild_delete/0"><code class="inline">Remedy.Consumer.guild_delete/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="delete_guild/1-examples" class="section-heading">
+It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="delete_guild/1-examples" class="section-heading">
   <a href="#delete_guild/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -2594,7 +2594,7 @@ It fires the <a href="Remedy.Consumer.html#t:guild_delete/0"><code class="inline
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">delete_guild_application_command(application_id \\ Bot.get().id, guild_id, command_id)</h1>
+    <h1 class="signature">delete_guild_application_command(application_id \\ Cache.bot().id, guild_id, command_id)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2569" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -2653,7 +2653,7 @@ It fires the <a href="Remedy.Consumer.html#t:guild_delete/0"><code class="inline
       </div>
 
 <p>Deletes the given emoji.</p><p>An optional <code class="inline">reason</code> can be provided for the audit log.</p><p>This endpoint requires the <code class="inline">MANAGE_EMOJIS</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:guild_emojis_update/0"><code class="inline">Remedy.Consumer.guild_emojis_update/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p>
+<code class="inline">t:Remedy.Consumer.guild_emojis_update/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="delete_guild_integrations/2">
@@ -2718,7 +2718,7 @@ It fires the <a href="Remedy.Consumer.html#t:guild_delete/0"><code class="inline
       </div>
 
 <p>Deletes a role from a guild.</p><p>An optional <code class="inline">reason</code> can be specified for the audit log.</p><p>This endpoint requires the <code class="inline">MANAGE_ROLES</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:guild_role_delete/0"><code class="inline">Remedy.Consumer.guild_role_delete/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="delete_guild_role/3-examples" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_role_delete/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="delete_guild_role/3-examples" class="section-heading">
   <a href="#delete_guild_role/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -2734,7 +2734,7 @@ It fires the <a href="Remedy.Consumer.html#t:guild_delete/0"><code class="inline
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">delete_interaction_followup_message(application_id \\ Bot.get().id, token, message_id)</h1>
+    <h1 class="signature">delete_interaction_followup_message(application_id \\ Cache.bot().id, token, message_id)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2684" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -2895,7 +2895,7 @@ fires the <code class="inline">MESSAGE_DELETE</code> event.</p><p>If successful,
       </div>
 
 <p>Deletes a reaction the current user has made for the message.</p><p>This endpoint requires the <code class="inline">VIEW_CHANNEL</code> and <code class="inline">READ_MESSAGE_HISTORY</code>
-permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove/0"><code class="inline">Remedy.Consumer.message_reaction_remove/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p>See <a href="#create_reaction/3"><code class="inline">create_reaction/3</code></a> for similar examples.</p>
+permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_remove/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p>See <a href="#create_reaction/3"><code class="inline">create_reaction/3</code></a> for similar examples.</p>
   </section>
 </section>
 <section class="detail" id="delete_pinned_channel_message/2">
@@ -2929,8 +2929,8 @@ permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove/
 
 <p>Unpins a message in a channel.</p><p>This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
 'MANAGE_MESSAGES' permissions. It fires the
-<a href="Remedy.Consumer.html#t:message_update/0"><code class="inline">Remedy.Consumer.message_update/0</code></a> and
-<a href="Remedy.Consumer.html#t:channel_pins_update/0"><code class="inline">Remedy.Consumer.channel_pins_update/0</code></a> events.</p><p>Returns <code class="inline">{:ok}</code> if successful. <code class="inline">error</code> otherwise.</p>
+<code class="inline">t:Remedy.Consumer.message_update/0</code> and
+<code class="inline">t:Remedy.Consumer.channel_pins_update/0</code> events.</p><p>Returns <code class="inline">{:ok}</code> if successful. <code class="inline">error</code> otherwise.</p>
   </section>
 </section>
 <section class="detail" id="delete_reaction/3">
@@ -2960,7 +2960,7 @@ permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove/
 
       </div>
 
-<p>Deletes all reactions of a given emoji from a message.</p><p>This endpoint requires the <code class="inline">MANAGE_MESSAGES</code> permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove_emoji/0"><code class="inline">Remedy.Consumer.message_reaction_remove_emoji/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p>See <a href="#create_reaction/3"><code class="inline">create_reaction/3</code></a> for similar examples.</p>
+<p>Deletes all reactions of a given emoji from a message.</p><p>This endpoint requires the <code class="inline">MANAGE_MESSAGES</code> permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_remove_emoji/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p>See <a href="#create_reaction/3"><code class="inline">create_reaction/3</code></a> for similar examples.</p>
   </section>
 </section>
 <section class="detail" id="delete_user_reaction/4">
@@ -2995,7 +2995,7 @@ permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove/
       </div>
 
 <p>Deletes another user's reaction from a message.</p><p>This endpoint requires the <code class="inline">VIEW_CHANNEL</code>, <code class="inline">READ_MESSAGE_HISTORY</code>, and
-<code class="inline">MANAGE_MESSAGES</code> permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove/0"><code class="inline">Remedy.Consumer.message_reaction_remove/0</code></a> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p>See <a href="#create_reaction/3"><code class="inline">create_reaction/3</code></a> for similar examples.</p>
+<code class="inline">MANAGE_MESSAGES</code> permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_remove/0</code> event.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p>See <a href="#create_reaction/3"><code class="inline">create_reaction/3</code></a> for similar examples.</p>
   </section>
 </section>
 <section class="detail" id="delete_webhook/2">
@@ -3085,7 +3085,7 @@ permissions. It fires a <a href="Remedy.Consumer.html#t:message_reaction_remove/
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">edit_global_application_command(application_id \\ Bot.get().id, command_id, command)</h1>
+    <h1 class="signature">edit_global_application_command(application_id \\ Cache.bot().id, command_id, command)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2480" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -3127,7 +3127,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">edit_guild_application_command(application_id \\ Bot.get().id, guild_id, command_id, command)</h1>
+    <h1 class="signature">edit_guild_application_command(application_id \\ Cache.bot().id, guild_id, command_id, command)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2554" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -3216,7 +3216,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       </div>
 
 <p>Edits a previously sent message in a channel.</p><p>This endpoint requires the <code class="inline">VIEW_CHANNEL</code> permission. It fires the
-<a href="Remedy.Consumer.html#t:message_update/0"><code class="inline">Remedy.Consumer.message_update/0</code></a> event.</p><p>If <code class="inline">options</code> is a string, <code class="inline">options</code> will be used as the message's content.</p><p>If successful, returns <code class="inline">{:ok, message}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="edit_message/3-options" class="section-heading">
+<code class="inline">t:Remedy.Consumer.message_update/0</code> event.</p><p>If <code class="inline">options</code> is a string, <code class="inline">options</code> will be used as the message's content.</p><p>If successful, returns <code class="inline">{:ok, message}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="edit_message/3-options" class="section-heading">
   <a href="#edit_message/3-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -3413,21 +3413,21 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
   Example
 </h2>
 <pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_application_information</span><span class="w">
-</span><span class="p" data-group-id="9713326287-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="9713326287-2">%{</span><span class="w">
+</span><span class="p" data-group-id="8133201518-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="8133201518-2">%{</span><span class="w">
   </span><span class="ss">bot_public</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
   </span><span class="ss">bot_require_code_grant</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
   </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
   </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Baba O-Riley&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">owner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9713326287-3">%{</span><span class="w">
+  </span><span class="ss">owner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8133201518-3">%{</span><span class="w">
     </span><span class="ss">avatar</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
     </span><span class="ss">discriminator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0042&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;i own a bot&quot;</span><span class="w">
-  </span><span class="p" data-group-id="9713326287-3">}</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="9713326287-2">}</span><span class="p" data-group-id="9713326287-1">}</span></code></pre>
+  </span><span class="p" data-group-id="8133201518-3">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="8133201518-2">}</span><span class="p" data-group-id="8133201518-1">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_channel/1">
@@ -3691,7 +3691,7 @@ ID</li><li><code class="inline">:limit</code> (integer) - max number of guilds t
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">get_global_application_commands(application_id \\ Bot.get().id)</h1>
+    <h1 class="signature">get_global_application_commands(application_id \\ Cache.bot().id)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2424" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -3726,15 +3726,15 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   Example
 </h2>
 <pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_global_application_commands</span><span class="w">
-</span><span class="p" data-group-id="4730488810-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
- </span><span class="p" data-group-id="4730488810-2">[</span><span class="w">
-   </span><span class="p" data-group-id="4730488810-3">%{</span><span class="w">
+</span><span class="p" data-group-id="6090770135-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="6090770135-2">[</span><span class="w">
+   </span><span class="p" data-group-id="6090770135-3">%{</span><span class="w">
      </span><span class="ss">application_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;455589479713865749&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;789841753196331029&quot;</span><span class="p">,</span><span class="w">
      </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="w">
-   </span><span class="p" data-group-id="4730488810-3">}</span><span class="w">
- </span><span class="p" data-group-id="4730488810-2">]</span><span class="p" data-group-id="4730488810-1">}</span></code></pre>
+   </span><span class="p" data-group-id="6090770135-3">}</span><span class="w">
+ </span><span class="p" data-group-id="6090770135-2">]</span><span class="p" data-group-id="6090770135-1">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild/1">
@@ -3781,7 +3781,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">get_guild_application_commands(application_id \\ Bot.get().id, guild_id)</h1>
+    <h1 class="signature">get_guild_application_commands(application_id \\ Cache.bot().id, guild_id)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2535" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -4689,9 +4689,9 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
 
 <p>Modifies a channel's settings.</p><p>An optional <code class="inline">reason</code> can be given for the guild audit log.</p><p>If a <code class="inline">t:Remedy.Struct.Channel.guild_channel/0</code> is being modified, this
 endpoint requires the <code class="inline">MANAGE_CHANNEL</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:channel_update/0"><code class="inline">Remedy.Consumer.channel_update/0</code></a> event. If a
+<code class="inline">t:Remedy.Consumer.channel_update/0</code> event. If a
 <code class="inline">t:Remedy.Struct.Channel.channel_category/0</code> is being modified, then this
-endpoint fires multiple <a href="Remedy.Consumer.html#t:channel_update/0"><code class="inline">Remedy.Consumer.channel_update/0</code></a> events.</p><p>If successful, returns <code class="inline">{:ok, channel}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_channel/3-options" class="section-heading">
+endpoint fires multiple <code class="inline">t:Remedy.Consumer.channel_update/0</code> events.</p><p>If successful, returns <code class="inline">{:ok, channel}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_channel/3-options" class="section-heading">
   <a href="#modify_channel/3-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -4825,7 +4825,7 @@ Remedy.Api.modify_channel(41771983423143933)
       </div>
 
 <p>Modifies a guild's settings.</p><p>This endpoint requires the <code class="inline">MANAGE_GUILD</code> permission. It fires the
-<a href="Remedy.Consumer.html#t:guild_update/0"><code class="inline">Remedy.Consumer.guild_update/0</code></a> event.</p><p>An optional <code class="inline">reason</code> can be provided for the audit log.</p><p>If successful, returns <code class="inline">{:ok, guild}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_guild/3-options" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_update/0</code> event.</p><p>An optional <code class="inline">reason</code> can be provided for the audit log.</p><p>If successful, returns <code class="inline">{:ok, guild}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_guild/3-options" class="section-heading">
   <a href="#modify_guild/3-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -4839,8 +4839,8 @@ where admins and moderators receive notices from Discord in public guilds</li></
   <a href="#modify_guild/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="4490064080-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="4490064080-1">)</span><span class="w">
-</span><span class="p" data-group-id="4490064080-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4490064080-3">%</span><span class="nc" data-group-id="4490064080-3">Remedy.Struct.Guild</span><span class="p" data-group-id="4490064080-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="4490064080-3">}</span><span class="p" data-group-id="4490064080-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="9467482689-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="9467482689-1">)</span><span class="w">
+</span><span class="p" data-group-id="9467482689-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9467482689-3">%</span><span class="nc" data-group-id="9467482689-3">Remedy.Struct.Guild</span><span class="p" data-group-id="9467482689-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="9467482689-3">}</span><span class="p" data-group-id="9467482689-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_channel_positions/2">
@@ -4872,7 +4872,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
       </div>
 
 <p>Reorders a guild's channels.</p><p>This endpoint requires the <code class="inline">MANAGE_CHANNELS</code> permission. It fires multiple
-<a href="Remedy.Consumer.html#t:channel_update/0"><code class="inline">Remedy.Consumer.channel_update/0</code></a> events.</p><p>If successful, returns <code class="inline">{:ok, channels}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p><code class="inline">positions</code> is a list of maps that each map a channel id with a position.</p><h2 id="modify_guild_channel_positions/2-examples" class="section-heading">
+<code class="inline">t:Remedy.Consumer.channel_update/0</code> events.</p><p>If successful, returns <code class="inline">{:ok, channels}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p><code class="inline">positions</code> is a list of maps that each map a channel id with a position.</p><h2 id="modify_guild_channel_positions/2-examples" class="section-heading">
   <a href="#modify_guild_channel_positions/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -4945,7 +4945,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
       </div>
 
 <p>Modify the given emoji.</p><p>This endpoint requires the <code class="inline">MANAGE_EMOJIS</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:guild_emojis_update/0"><code class="inline">Remedy.Consumer.guild_emojis_update/0</code></a> event.</p><p>An optional <code class="inline">reason</code> can be provided for the audit log.</p><p>If successful, returns <code class="inline">{:ok, emoji}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_guild_emoji/4-options" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_emojis_update/0</code> event.</p><p>An optional <code class="inline">reason</code> can be provided for the audit log.</p><p>If successful, returns <code class="inline">{:ok, emoji}</code>. Otherwise, returns <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_guild_emoji/4-options" class="section-heading">
   <a href="#modify_guild_emoji/4-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -5021,7 +5021,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
 
       </div>
 
-<p>Modifies a guild member's attributes.</p><p>This endpoint fires the <a href="Remedy.Consumer.html#t:guild_member_update/0"><code class="inline">Remedy.Consumer.guild_member_update/0</code></a> event.
+<p>Modifies a guild member's attributes.</p><p>This endpoint fires the <code class="inline">t:Remedy.Consumer.guild_member_update/0</code> event.
 It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <code class="inline">MANAGE_ROLES</code>,
 <code class="inline">MUTE_MEMBERS</code>, <code class="inline">DEAFEN_MEMBERS</code>, and <code class="inline">MOVE_MEMBERS</code> permissions.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_guild_member/3-options" class="section-heading">
   <a href="#modify_guild_member/3-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
@@ -5069,7 +5069,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
       </div>
 
 <p>Modifies a guild role.</p><p>This endpoint requires the <code class="inline">MANAGE_ROLES</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:guild_role_update/0"><code class="inline">Remedy.Consumer.guild_role_update/0</code></a> event.</p><p>An optional <code class="inline">reason</code> can be specified for the audit log.</p><p>If successful, returns <code class="inline">{:ok, role}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_guild_role/4-options" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_role_update/0</code> event.</p><p>An optional <code class="inline">reason</code> can be specified for the audit log.</p><p>If successful, returns <code class="inline">{:ok, role}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="modify_guild_role/4-options" class="section-heading">
   <a href="#modify_guild_role/4-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
@@ -5113,7 +5113,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
       </div>
 
 <p>Reorders a guild's roles.</p><p>This endpoint requires the <code class="inline">MANAGE_ROLES</code> permission. It fires multiple
-<a href="Remedy.Consumer.html#t:guild_role_update/0"><code class="inline">Remedy.Consumer.guild_role_update/0</code></a> events.</p><p>If successful, returns <code class="inline">{:ok, roles}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p><code class="inline">positions</code> is a list of maps that each map a role id with a position.</p><h2 id="modify_guild_role_positions/3-examples" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_role_update/0</code> events.</p><p>If successful, returns <code class="inline">{:ok, roles}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><p><code class="inline">positions</code> is a list of maps that each map a role id with a position.</p><h2 id="modify_guild_role_positions/3-examples" class="section-heading">
   <a href="#modify_guild_role_positions/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -5266,7 +5266,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
       </div>
 
 <p>Removes a member from a guild.</p><p>This event requires the <code class="inline">KICK_MEMBERS</code> permission. It fires a
-<a href="Remedy.Consumer.html#t:guild_member_remove/0"><code class="inline">Remedy.Consumer.guild_member_remove/0</code></a> event.</p><p>An optional reason can be provided for the audit log with <code class="inline">reason</code>.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="remove_guild_member/3-examples" class="section-heading">
+<code class="inline">t:Remedy.Consumer.guild_member_remove/0</code> event.</p><p>An optional reason can be provided for the audit log with <code class="inline">reason</code>.</p><p>If successful, returns <code class="inline">{:ok}</code>. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api.error/0</code></a>.</p><h2 id="remove_guild_member/3-examples" class="section-heading">
   <a href="#remove_guild_member/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>

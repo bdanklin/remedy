@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Channel — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-90025b1ab5.js"></script>
+    <script src="dist/sidebar_items-3c0a03e395.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -149,6 +149,13 @@ Remedy.Schema.Channel <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#update/2">update(model, params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#validate/1">validate(changeset)</a>
 
   </div>
@@ -202,7 +209,6 @@ Types
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   last_message_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   last_pin_timestamp: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  member: ThreadMember.t(),
   member_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   message_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   messages: [<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()],
@@ -217,7 +223,6 @@ Types
   position: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   rate_limit_per_user: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   rtc_region: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  thread_metadata: ThreadMetadata.t(),
   topic: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   type: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   user_limit: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
@@ -294,6 +299,28 @@ Functions
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">new(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="update/2">
+
+  <div class="detail-header">
+    <a href="#update/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update(model, params)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>

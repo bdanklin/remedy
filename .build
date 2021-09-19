@@ -26,13 +26,10 @@ Remedy.Gateway.Dispatch.Interaction.html
 Remedy.Gateway.Dispatch.MessageDelete.html
 Remedy.Gateway.Dispatch.MessageDeleteBulk.html
 Remedy.Gateway.Dispatch.MessageUpdate.html
-Remedy.Gateway.Dispatch.SpeakingUpdate.html
 Remedy.Gateway.Dispatch.ThreadCreate.html
 Remedy.Gateway.Dispatch.ThreadDelete.html
-Remedy.Gateway.Dispatch.TypingStart.html
-Remedy.Gateway.Dispatch.VoiceReady.html
+Remedy.Gateway.Dispatch.UserUpdate.html
 Remedy.Gateway.Dispatch.VoiceServerUpdate.html
-Remedy.Gateway.Dispatch.VoiceState.html
 Remedy.Gateway.Dispatch.html
 Remedy.Gateway.Websocket.html
 Remedy.Schema.Activity.html
@@ -80,6 +77,7 @@ Remedy.Schema.Sticker.html
 Remedy.Schema.StickerPack.html
 Remedy.Schema.Team.html
 Remedy.Schema.TeamMember.html
+Remedy.Schema.Thread.html
 Remedy.Schema.User.html
 Remedy.Schema.VoiceRegion.html
 Remedy.Schema.Webhook.html
@@ -94,8 +92,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-459b5615c1.js
-dist/sidebar_items-90025b1ab5.js
+dist/search_items-0d081702fc.js
+dist/sidebar_items-3c0a03e395.js
 index.html
 introduction.html
 search.html

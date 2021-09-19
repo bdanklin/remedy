@@ -1,18 +1,7 @@
 defmodule Remedy.Gateway.Dispatch.SpeakingUpdate do
-  @moduledoc """
-  Struct representing a Remedy-generated Speaking Update event
-
-  Remedy will generate this event when the bot starts or stops playing audio.
-  """
-
-  defstruct [
-    :channel_id,
-    :guild_id,
-    :speaking,
-    :timed_out
-  ]
-
-  alias Remedy.Struct.{Channel, Guild}
+  @moduledoc false
+  use Remedy.Schema
+  alias Remedy.Cache
 
   @typedoc """
   Id of the channel this speaking update is occurring in.
@@ -32,7 +21,6 @@ defmodule Remedy.Gateway.Dispatch.SpeakingUpdate do
   @typedoc """
   Boolean representing if speaking update was caused by an audio timeout.
   """
-  @typedoc since: "0.5.0"
   @type timed_out :: boolean()
 
   @type t :: %__MODULE__{
@@ -42,6 +30,15 @@ defmodule Remedy.Gateway.Dispatch.SpeakingUpdate do
           timed_out: timed_out
         }
 
-  @doc false
-  def to_struct(map), do: struct(__MODULE__, map)
+  @primary_key false
+  embedded_schema do
+    field :guild_id, Snowflake
+    field :channel_id, Snowflake
+    field :speaking, :boolean
+    field :timed_out, :boolean
+  end
+
+  def handle({event, payload, socket}) do
+    {event, new(payload), socket}
+  end
 end

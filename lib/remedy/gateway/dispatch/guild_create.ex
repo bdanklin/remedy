@@ -7,7 +7,8 @@ defmodule Remedy.Gateway.Dispatch.GuildCreate do
   - %Remedy.Schema.Guild{}.
 
   """
-  @large_threshold 250
+
+  #  @large_threshold 250
 
   alias Remedy.Cache
   alias Remedy.Schema.{Channel, Guild, Member, User}

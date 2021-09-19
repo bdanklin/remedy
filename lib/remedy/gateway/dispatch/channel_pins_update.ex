@@ -3,6 +3,12 @@ defmodule Remedy.Gateway.Dispatch.ChannelPinsUpdate do
   use Remedy.Schema
   alias Remedy.Cache
 
+  @type t :: %__MODULE__{
+          guild_id: Snowflake.t(),
+          channel_id: Snowflake.t(),
+          last_pin_timestamp: ISO8601.t()
+        }
+
   @primary_key false
   embedded_schema do
     field :guild_id, Snowflake

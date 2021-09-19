@@ -1,6 +1,6 @@
-defmodule Remedy.Schema.Channel do
+defmodule Remedy.Schema.Thread do
   @moduledoc """
-  Discord Channel Object
+  Discord Thread Object
   """
   use Remedy.Schema
 
@@ -27,6 +27,8 @@ defmodule Remedy.Schema.Channel do
           owner: User.t(),
           guild: Guild.t(),
           permission_overwrites: [PermissionOverwrite.t()],
+          member: ThreadMember.t(),
+          thread_metadata: ThreadMetadata.t(),
           messages: [Message.t()]
         }
 
@@ -55,6 +57,8 @@ defmodule Remedy.Schema.Channel do
     belongs_to :owner, User
     belongs_to :guild, Guild
     embeds_many :permission_overwrites, PermissionOverwrite
+    embeds_one :member, ThreadMember
+    embeds_one :thread_metadata, ThreadMetadata
 
     has_many :messages, Message
   end

@@ -12,4 +12,8 @@ defmodule Remedy.Gateway.Dispatch.PresenceUpdate do
     embeds_one :client_status, ClientStatus
     embeds_many :activities, Activity
   end
+
+  def handle({event, payload, socket}) do
+    {event, new(payload), socket}
+  end
 end

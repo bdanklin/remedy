@@ -6,8 +6,8 @@ defmodule Remedy.Api do
   use Bitwise
   import Remedy.ModelHelpers
 
-  alias Remedy.{Bot, Endpoints}
   alias Remedy.Api.{Endpoints, Ratelimiter}
+  alias Remedy.Cache
 
   import Sunbake.Snowflake,
     only: [is_snowflake: 1],
@@ -2421,7 +2421,7 @@ defmodule Remedy.Api do
 
   @spec get_global_application_commands() :: {:ok, [map()]} | error
   @spec get_global_application_commands(User.id()) :: {:ok, [map()]} | error
-  def get_global_application_commands(application_id \\ Bot.get().id) do
+  def get_global_application_commands(application_id \\ Cache.bot().id) do
     request(:get, Endpoints.global_application_commands(application_id))
     |> handle_request_with_decode
   end
@@ -2454,7 +2454,7 @@ defmodule Remedy.Api do
 
   @spec create_global_application_command(map()) :: {:ok, map()} | error
   @spec create_global_application_command(User.id(), map()) :: {:ok, map()} | error
-  def create_global_application_command(application_id \\ Bot.get().id, command) do
+  def create_global_application_command(application_id \\ Cache.bot().id, command) do
     request(:post, Endpoints.global_application_commands(application_id), command)
     |> handle_request_with_decode
   end
@@ -2478,7 +2478,7 @@ defmodule Remedy.Api do
   @spec edit_global_application_command(Snowflake.t(), map()) :: {:ok, map()} | error
   @spec edit_global_application_command(User.id(), Snowflake.t(), map()) :: {:ok, map()} | error
   def edit_global_application_command(
-        application_id \\ Bot.get().id,
+        application_id \\ Cache.bot().id,
         command_id,
         command
       ) do
@@ -2497,7 +2497,7 @@ defmodule Remedy.Api do
 
   @spec delete_global_application_command(Snowflake.t()) :: {:ok} | error
   @spec delete_global_application_command(User.id(), Snowflake.t()) :: {:ok} | error
-  def delete_global_application_command(application_id \\ Bot.get().id, command_id) do
+  def delete_global_application_command(application_id \\ Cache.bot().id, command_id) do
     request(:delete, Endpoints.global_application_command(application_id, command_id))
   end
 
@@ -2525,14 +2525,14 @@ defmodule Remedy.Api do
   @doc since: "0.5.0"
   @spec bulk_overwrite_global_application_commands([map()]) :: {:ok, [map()]} | error
   @spec bulk_overwrite_global_application_commands(User.id(), [map()]) :: {:ok, [map()]} | error
-  def bulk_overwrite_global_application_commands(application_id \\ Bot.get().id, commands) do
+  def bulk_overwrite_global_application_commands(application_id \\ Cache.bot().id, commands) do
     request(:put, Endpoints.global_application_commands(application_id), commands)
     |> handle_request_with_decode
   end
 
   @spec get_guild_application_commands(Guild.id()) :: {:ok, [map()]} | error
   @spec get_guild_application_commands(User.id(), Guild.id()) :: {:ok, [map()]} | error
-  def get_guild_application_commands(application_id \\ Bot.get().id, guild_id) do
+  def get_guild_application_commands(application_id \\ Cache.bot().id, guild_id) do
     request(:get, Endpoints.guild_application_commands(application_id, guild_id))
     |> handle_request_with_decode
   end
@@ -2540,7 +2540,7 @@ defmodule Remedy.Api do
   @spec create_guild_application_command(Guild.id(), map()) :: {:ok, map()} | error
   @spec create_guild_application_command(User.id(), Guild.id(), map()) :: {:ok, map()} | error
   def create_guild_application_command(
-        application_id \\ Bot.get().id,
+        application_id \\ Cache.bot().id,
         guild_id,
         command
       ) do
@@ -2552,7 +2552,7 @@ defmodule Remedy.Api do
   @spec edit_guild_application_command(User.id(), Guild.id(), Snowflake.t(), map()) ::
           {:ok, map()} | error
   def edit_guild_application_command(
-        application_id \\ Bot.get().id,
+        application_id \\ Cache.bot().id,
         guild_id,
         command_id,
         command
@@ -2567,7 +2567,7 @@ defmodule Remedy.Api do
 
   @spec delete_guild_application_command(User.id(), Guild.id(), Snowflake.t()) :: {:ok} | error
   def delete_guild_application_command(
-        application_id \\ Bot.get().id,
+        application_id \\ Cache.bot().id,
         guild_id,
         command_id
       ) do
@@ -2598,7 +2598,7 @@ defmodule Remedy.Api do
   @spec bulk_overwrite_guild_application_commands(User.id(), Guild.id(), [map()]) ::
           {:ok, [map()]} | error
   def bulk_overwrite_guild_application_commands(
-        application_id \\ Bot.get().id,
+        application_id \\ Cache.bot().id,
         guild_id,
         commands
       ) do
@@ -2664,7 +2664,7 @@ defmodule Remedy.Api do
 
   @spec create_followup_message(Interaction.token(), map()) :: {:ok} | error
   @spec create_followup_message(User.id(), Interaction.token(), map()) :: {:ok} | error
-  def create_followup_message(application_id \\ Bot.get().id, token, webhook_payload) do
+  def create_followup_message(application_id \\ Cache.bot().id, token, webhook_payload) do
     execute_webhook(application_id, token, webhook_payload)
   end
 
@@ -2682,7 +2682,7 @@ defmodule Remedy.Api do
   @spec delete_interaction_followup_message(User.id(), Interaction.token(), Message.id()) ::
           {:ok} | error
   def delete_interaction_followup_message(
-        application_id \\ Bot.get().id,
+        application_id \\ Cache.bot().id,
         token,
         message_id
       ) do
@@ -2776,8 +2776,6 @@ defmodule Remedy.Api do
     convert =
       body
       |> Jason.decode!(keys: :atoms)
-
-    # |> Util.cast(type)
 
     {:ok, convert}
   end

@@ -1,12 +1,14 @@
 defmodule Remedy.Gateway.Dispatch.ChannelDelete do
   @moduledoc false
-  alias Remedy.Schema.Channel
-  alias Remedy.Cache
 
-  def handle({event, payload, socket}) do
+  alias Remedy.Cache
+  alias Remedy.Schema.Channel
+
+  def handle({event, %{id: id} = payload, socket}) do
+    Cache.delete_channel(id)
+
     {event,
      payload
-     |> Channel.new()
-     |> Cache.delete_channel(), socket}
+     |> Channel.new(), socket}
   end
 end

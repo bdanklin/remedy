@@ -25,8 +25,8 @@ defmodule Remedy.Schema.Command do
     embeds_many :options, Option
   end
 
-  def validate(model) do
-    model
+  def validate(%Ecto.Changeset{} = changeset) do
+    changeset
     |> validate_required([:name])
     |> validate_length(:name, max: 32)
   end

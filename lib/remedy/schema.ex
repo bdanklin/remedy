@@ -69,6 +69,13 @@ defmodule Remedy.Schema do
         |> apply_changes()
       end
 
+      def update(model, params) do
+        model
+        |> changeset(params)
+        |> validate()
+        |> apply_changes()
+      end
+
       def validate(changeset), do: changeset
 
       def changeset(params), do: changeset(%__MODULE__{}, params)

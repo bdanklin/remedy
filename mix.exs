@@ -113,6 +113,7 @@ defmodule Remedy.MixProject do
       {:ex_doc, "~> 0.15", only: [:dev]},
       {:recon, "~> 2.3", only: [:dev]},
       {:mix_unused, "~> 0.1.0", only: [:dev]},
+      {:jason, "~> 1.2"},
       {:progress_bar, "~> 2.0"},
       {:httpoison, "~> 1.7"},
       {:gun, "~> 2.0", hex: :remedy_gun},

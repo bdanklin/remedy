@@ -1,7 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.Ready do
   @moduledoc false
   use Remedy.Schema
-  alias Remedy.Cache
 
   embedded_schema do
     field :v, :integer
@@ -15,17 +14,17 @@ defmodule Remedy.Gateway.Dispatch.Ready do
   def handle(
         {event,
          %{
-           v: v,
-           user: user,
-           guilds: guilds,
-           session_id: session_id,
-           shard: [shard_id | num_shards],
-           application: application
+           v: _v,
+           user: _user,
+           guilds: _guilds,
+           session_id: _session_id,
+           shard: [_shard_id | _num_shards],
+           application: _application
          } = payload, socket}
       ) do
-    Gateway.process_ready(v, session_id, shard_id, num_shards)
-    Cache.put_bot(user)
-    Cache.put_app(application)
+    #  Gateway.process_ready(v, session_id, shard_id, num_shards)
+    #   Cache.put_bot(user)
+    #   Cache.put_app(application)
 
     {event, payload |> new(), socket}
   end

@@ -1,28 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.VoiceState do
-  @moduledoc "Represents a user's voice connection status"
-  @moduledoc since: "0.5.0"
-
-  alias Remedy.Struct.Channel
-  alias Remedy.Struct.Guild
-  alias Remedy.Struct.Guild.Member
-  alias Remedy.Struct.User
-  alias Remedy.Util
-
-  defstruct [
-    :guild_id,
-    :channel_id,
-    :user_id,
-    :member,
-    :session_id,
-    :deaf?,
-    :mute?,
-    :self_deaf?,
-    :self_mute?,
-    :self_stream?,
-    :self_video?,
-    :suppress?,
-    :request_to_speak_timestamp
-  ]
+  @moduledoc false
+  use Remedy.Schema
 
   @typedoc "Guild ID this voice state is for, if applicable"
   @type guild_id :: Guild.id() | nil
@@ -63,7 +41,6 @@ defmodule Remedy.Gateway.Dispatch.VoiceState do
   @typedoc "Time at which the user requested to speak, if applicable"
   @type request_to_speak_timestamp :: DateTime.t() | nil
 
-  @typedoc "Event sent when a user's voice status is updated"
   @type t :: %__MODULE__{
           guild_id: guild_id,
           channel_id: channel_id,
@@ -80,31 +57,24 @@ defmodule Remedy.Gateway.Dispatch.VoiceState do
           request_to_speak_timestamp: request_to_speak_timestamp
         }
 
-  defp convert_stamp(nil) do
-    nil
+  @primary_key false
+  embedded_schema do
+    field :guild_id, :string
+    field :channel_id, :string
+    field :user_id, :string
+    field :member, :string
+    field :session_id, :string
+    field :deaf?, :string
+    field :mute?, :string
+    field :self_deaf?, :string
+    field :self_mute?, :string
+    field :self_stream?, :string
+    field :self_video?, :string
+    field :suppress?, :string
+    field :request_to_speak_timestamp, :string
   end
 
-  defp convert_stamp(stamp) do
-    {:ok, casted, 0} = DateTime.from_iso8601(stamp)
-    casted
-  end
-
-  @doc false
-  def to_struct(map) do
-    %__MODULE__{
-      guild_id: map.guild_id,
-      channel_id: map.channel_id,
-      user_id: map.user_id,
-      member: Util.cast(map["member"], {:struct, Member}),
-      session_id: map.session_id,
-      deaf?: map.deaf,
-      mute?: map.mute,
-      self_deaf?: map.self_deaf,
-      self_mute?: map.self_mute,
-      self_stream?: map[:self_stream] || false,
-      self_video?: map.self_video,
-      suppress?: map.suppress,
-      request_to_speak_timestamp: convert_stamp(map.request_to_speak_timestamp)
-    }
+  def handle({event, payload, socket}) do
+    {event, new(payload), socket}
   end
 end

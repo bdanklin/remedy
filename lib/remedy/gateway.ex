@@ -120,7 +120,7 @@ defmodule Remedy.GatewayATC do
   defp connect(:ok), do: utc_now_ms()
 
   ############
-  ### Genserver
+  ### GenServer
   ############
 
   def start_link(_args) do

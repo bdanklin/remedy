@@ -50,9 +50,10 @@ defmodule Remedy.Gateway.Websocket do
     field :token, :string, default: Application.get_env(:remedy, :token)
     field :shard, :integer
     field :gateway, :string
-    # Need to store to maintain connection
+    field :v, :integer
     field :session_id, :string
-    field :shard_pid, :any, virtual: true
+    # Need to store to maintain connection
+    field :shard_pid, :any, virtual: true, default: self()
     field :heartbeat_interval, :integer
     # Heartbeat
     field :last_heartbeat_send, :utc_datetime

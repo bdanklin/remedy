@@ -5,18 +5,78 @@ defmodule Remedy.Gateway.Dispatch do
   @type payload :: any()
   @type socket :: Websocket.t()
   @type event :: atom()
-
   @callback handle({event, payload, socket}) :: {event, payload, socket}
+
+  @dispatch_events [
+    :CHANNEL_CREATE,
+    :CHANNEL_DELETE,
+    :CHANNEL_PINTS_UPDATE,
+    :CHANNEL_UPDATE,
+    :GUILD_BAN_ADD,
+    :GUILD_BAN_REMOVE,
+    :GUILD_CREATE,
+    :GUILD_DELETE,
+    :GUILD_EMOJIS_UPDATE,
+    :GUILD_INTEGRATIONS_UPDATE,
+    :GUILD_MEMBVER_ADD,
+    :GUILD_MEMBER_REMOVE,
+    :GUILD_MEMBER_UPDATE,
+    :GUILD_MEMBERS_CHUNK,
+    :GUILD_ROLE_CREATE,
+    :GUILD_ROLE_DELETE,
+    :GUILD_ROLE_UPDATE,
+    :GUILD_STICKERS_UPDATE,
+    :GUILD_UPDATE,
+    :INTEGRATION_CREATE,
+    :INTEGRATION_DELETE,
+    :INTEGRATION_UPDATE,
+    :INTERACTION_CREATE,
+    :INVITE_CREATE,
+    :INVITE_DELETE,
+    :MESSAGE_CREATE,
+    :MESSAGE_DELETE_BULK,
+    :MESSAGE_DELETE,
+    :MESSAGE_REACTION_ADD,
+    :MESSAGE_REACTION_REMOVE_ALL,
+    :MESSAGE_REACTION_REMOVE_EMOJI,
+    :MESSAGE_REACTION_REMOVE,
+    :MESSAGE_UPDATE,
+    :PRESENCE_UPDATE,
+    :READY,
+    :RESUMED,
+    :SPEAKING_UPDATE,
+    :STAGE_INSTANCE_CREATE,
+    :STAGE_INSTANCE_DELETE,
+    :STAGE_INSTANCE_UPDATE,
+    :THREAD_CREATE,
+    :THREAD_DELETE,
+    :THREAD_LIST_SYNC,
+    :THREAD_MEMBER_UPDATE,
+    :THREAD_MEMBERS_UPDATE,
+    :THREAD_UPDATE,
+    :TYPING_START,
+    :USER_UPDATE,
+    :VOICE_SERVER_UPDATE,
+    :VOICE_STATE_UPDATE,
+    :WEBHOOKS_UPDATE
+  ]
 
   require Logger
 
-  def handle({event, payload, _socket} = dispatch) do
+  def handle({event, payload, socket} = dispatch) do
     Logger.debug("#{event}")
 
     if Application.get_env(:remedy, :log_everything, false),
       do: Logger.debug("#{inspect(event)}, #{inspect(payload)}")
 
-    mod_from_dispatch(event).handle(dispatch)
+    case event in @dispatch_events do
+      true ->
+        mod_from_dispatch(event).handle(dispatch)
+
+      false ->
+        Logger.warn("UNHANDLED GATEWAY DISPATCH EVENT TYPE: #{event}, #{inspect(payload)}")
+        {event, payload, socket}
+    end
   end
 
   defp mod_from_dispatch(k) do
@@ -27,145 +87,7 @@ defmodule Remedy.Gateway.Dispatch do
     |> Module.concat()
   end
 
-  def handle_event(:MESSAGE_DELETE_BULK = event, p, state),
-    do: {event, MessageDeleteBulk.to_struct(p), state}
-
-  def handle_event(:MESSAGE_UPDATE = event, p, state), do: {event, Message.to_struct(p), state}
-
-  def handle_event(:MESSAGE_REACTION_ADD = event, p, state) do
-    {event, MessageReactionAdd.to_struct(p), state}
-  end
-
-  def handle_event(:MESSAGE_REACTION_REMOVE = event, p, state) do
-    {event, MessageReactionRemove.to_struct(p), state}
-  end
-
-  def handle_event(:MESSAGE_REACTION_REMOVE_ALL = event, p, state) do
-    {event, MessageReactionRemoveAll.to_struct(p), state}
-  end
-
-  def handle_event(:MESSAGE_REACTION_REMOVE_EMOJI = event, p, state) do
-    {event, MessageReactionRemoveEmoji.to_struct(p), state}
-  end
-
-  def handle_event(:MESSAGE_ACK = event, p, state), do: {event, p, state}
-
-  def handle_event(:PRESENCE_UPDATE = event, p, state) do
-    [
-      {event, PresenceCache.update(p), state}
-      | [handle_event(:USER_UPDATE, p.user, state)]
-    ]
-  end
-
-  def handle_event(:READY = event, p, state) do
-    p.private_channels
-    |> Enum.each(fn dm_channel -> ChannelCache.create(dm_channel) end)
-
-    ready_guilds =
-      p.guilds
-      |> Enum.map(fn guild -> handle_event(:GUILD_CREATE, guild, state) end)
-
-    current_user = Util.cast(p.user, {:struct, User})
-    Bot.put(current_user)
-
-    [{event, p, state}] ++ ready_guilds
-  end
-
-  def handle_event(:RESUMED = event, p, state), do: {event, p, state}
-
-  def handle_event(:TYPING_START = event, p, state) do
-    {event, TypingStart.to_struct(p), state}
-  end
-
-  def handle_event(:USER_SETTINGS_UPDATE = event, p, state), do: {event, p, state}
-
-  def handle_event(:USER_UPDATE = event, p, state) do
-    if Bot.get().id === p.id do
-      Bot.update(p)
-    end
-
-    {event, UserCache.update(p), state}
-  end
-
-  def handle_event(:VOICE_READY = event, p, state),
-    do: {event, VoiceReady.to_struct(p), state}
-
-  def handle_event(:VOICE_SPEAKING_UPDATE = event, p, state),
-    do: {event, SpeakingUpdate.to_struct(p), state}
-
-  def handle_event(:VOICE_STATE_UPDATE = event, p, state) do
-    if Bot.get().id === p.user_id do
-      if p.channel_id do
-        # Joining Channel
-        voice = Voice.get_voice(p.guild_id)
-
-        cond do
-          # Not yet in a channel:
-          is_nil(voice) or is_nil(voice.session) ->
-            Voice.update_voice(p.guild_id,
-              channel_id: p.channel_id,
-              session: p.session_id,
-              self_mute: p.self_mute,
-              self_deaf: p.self_deaf
-            )
-
-          # Already in different channel:
-          voice.channel_id != p.channel_id and is_pid(voice.session_pid) ->
-            v_ws = VoiceSession.get_ws_state(voice.session_pid)
-            # On the off-chance that we receive Voice Server Update first:
-            {new_token, new_gateway} =
-              if voice.token == v_ws.token do
-                # Need to reset
-                {nil, nil}
-              else
-                # Already updated
-                {voice.token, voice.gateway}
-              end
-
-            Voice.remove_voice(p.guild_id)
-
-            Voice.update_voice(p.guild_id,
-              channel_id: p.channel_id,
-              session: p.session_id,
-              self_mute: p.self_mute,
-              self_deaf: p.self_deaf,
-              token: new_token,
-              gateway: new_gateway
-            )
-
-          # Already in this channel:
-          true ->
-            Voice.update_voice(p.guild_id)
-        end
-      else
-        # Leaving Channel:
-        Voice.remove_voice(p.guild_id)
-      end
-    end
-
-    GuildCache.voice_state_update(p.guild_id, p)
-    {event, VoiceState.to_struct(p), state}
-  end
-
-  def handle_event(:VOICE_SERVER_UPDATE = event, p, state) do
-    Voice.update_voice(p.guild_id,
-      token: p.token,
-      gateway: p.endpoint
-    )
-
-    {event, VoiceServerUpdate.to_struct(p), state}
-  end
-
   def handle_event(:WEBHOOKS_UPDATE = event, p, state), do: {event, p, state}
-
-  def handle_event(:INTERACTION_CREATE = event, p, state) do
-    {event, Interaction.to_struct(p), state}
-  end
-
-  def handle_event(event, p, state) do
-    Logger.warn("UNHANDLED GATEWAY DISPATCH EVENT TYPE: #{event}, #{inspect(p)}")
-    {event, p, state}
-  end
 end
 
 ### 🦆🦆🦆🦆 Genstage stuff below here. Don't worry about it too much 🦆🦆🦆🦆

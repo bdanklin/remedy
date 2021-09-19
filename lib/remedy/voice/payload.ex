@@ -24,7 +24,7 @@
 #   def identify_payload(%Websocket{} = state) do
 #     %{
 #       server_id: state.guild_id,
-#       user_id: Bot.get().id,
+#       user_id: Cache.bot().id,
 #       token: state.token,
 #       session_id: state.session
 #     }

@@ -8,6 +8,10 @@ defmodule Remedy.Gateway.Session do
 
   ### External
 
+  def process_ready(v, session_id, shard) do
+    GenServer.call(:"Shard-#{shard}", {:process_ready, %{v: v, session_id: session_id}})
+  end
+
   def update_presence(shard, opts \\ []) do
     GenServer.cast(:"Shard-#{shard}", {:status_update, opts})
   end
@@ -28,6 +32,10 @@ defmodule Remedy.Gateway.Session do
 
   def init(%{gateway: gateway, shard: shard}) do
     {:ok, %Websocket{gateway: gateway, shard: shard}, {:continue, :establish_connection}}
+  end
+
+  def handle_call({:process_ready, %{v: v, session_id: session_id}}, socket) do
+    %Websocket{socket | v: v, session_id: session_id}
   end
 
   def handle_continue(:establish_connection, socket) do

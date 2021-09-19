@@ -21,7 +21,7 @@ defmodule Remedy.Schema.Presence do
     embeds_one :client_status, ClientStatus
   end
 
-  def validate(changeset) do
+  def validate(%Ecto.Changeset{} = changeset) do
     changeset
     |> validate_inclusion(:status, ["idle", "dnd", "online", "offline"])
   end

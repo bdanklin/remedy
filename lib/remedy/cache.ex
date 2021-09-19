@@ -6,7 +6,7 @@ defmodule Remedy.Cache do
   import Remedy.ModelHelpers
 
   alias Remedy.Cache.{DiscordApp, DiscordBot, Repo}
-  alias Remedy.Schema.{App, Channel, Emoji, Guild, Message, Member, Presence, Role, User}
+  alias Remedy.Schema.{App, Channel, Emoji, Guild, Message, Member, Presence, Role, Sticker, User}
 
   def update_bot(%User{} = updated_state) do
     updated_state = Map.from_struct(updated_state)
@@ -77,6 +77,11 @@ defmodule Remedy.Cache do
     |> Repo.insert!()
   end
 
+  def get_guild(id) do
+    Guild
+    |> Repo.get!(id)
+  end
+
   def update_guild(%{id: id} = guild) do
     Guild
     |> Repo.get!(id)
@@ -141,10 +146,24 @@ defmodule Remedy.Cache do
     |> Repo.update!()
   end
 
+  def update_message(id, updated_message) do
+    Message
+    |> Repo.get!(id)
+    |> Message.changeset(updated_message)
+    |> Repo.update!()
+  end
+
   def delete_message(%{id: id} = _message) do
     Message
     |> Repo.get!(id)
     |> Repo.delete!()
+  end
+
+  def remove_message_reactions(message_id) do
+    Message
+    |> Repo.get!(message_id)
+    |> Message.changeset(%{reactions: []})
+    |> Repo.update!()
   end
 
   def create_emoji(emoji) do
@@ -200,6 +219,25 @@ defmodule Remedy.Cache do
 
   def delete_role(%{id: id} = _role) do
     Role
+    |> Repo.get!(id)
+    |> Repo.delete!()
+  end
+
+  def create_sticker(sticker) do
+    sticker
+    |> Sticker.changeset()
+    |> Repo.insert!()
+  end
+
+  def update_sticker(%{id: id} = sticker) do
+    Sticker
+    |> Repo.get!(id)
+    |> Sticker.changeset(sticker)
+    |> Repo.update!()
+  end
+
+  def delete_sticker(%{id: id} = _sticker) do
+    Sticker
     |> Repo.get!(id)
     |> Repo.delete!()
   end

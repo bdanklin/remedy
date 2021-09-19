@@ -11,10 +11,9 @@ defmodule Remedy.Gateway.Dispatch.GuildStickersUpdate do
 
   def handle({event, %{stickers: stickers, guild_id: guild_id} = payload, socket}) do
     for sticker <- stickers do
-      %{sticker | guild_id: guild_id}
-      |> Cache.update_sticker()
+      {event,
+       %{sticker | guild_id: guild_id}
+       |> Cache.update_sticker(), socket}
     end
-
-    {event, payload, socket}
   end
 end

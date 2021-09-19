@@ -1,7 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.SpeakingUpdate do
   @moduledoc false
   use Remedy.Schema
-  alias Remedy.Cache
 
   @typedoc """
   Id of the channel this speaking update is occurring in.

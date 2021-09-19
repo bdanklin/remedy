@@ -9,7 +9,6 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
   """
   use Remedy.Schema
   alias Remedy.Cache
-  alias Remedy.Schema.Guild
 
   embedded_schema do
     field :guild_id, Snowflake
@@ -17,7 +16,7 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
   end
 
   def handle({event, %{guild_id: guild_id, role: role} = payload, socket}) do
-    Cache.fetch_guild!(guild_id)
+    Cache.get_guild(guild_id)
     |> Ecto.build_assoc(:role)
     |> Role.changeset(role)
     |> Cache.create_role()

@@ -16,7 +16,7 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleDelete do
     embeds_one :role, Role
   end
 
-  def handle({event, %{guild_id: guild_id, role: role} = payload, socket}) do
+  def handle({event, %{role: role} = payload, socket}) do
     role
     |> Cache.delete_role()
 

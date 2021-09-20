@@ -30,5 +30,5 @@ doc
 .mix_tasks
 
 # ignore environment variables
-.env
+*.env
 guides

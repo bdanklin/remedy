@@ -99,5 +99,14 @@ defmodule Remedy.Gateway.Dispatch.VoiceStateUpdate do
 
   def changeset(%__MODULE__{} = model, params) do
     cast(model, params, castable())
+    |> cast_embeds()
+  end
+
+  defp cast_embeds(cast_model) do
+    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  end
+
+  defp castable do
+    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
   end
 end

@@ -35,13 +35,16 @@ defmodule Remedy.Schema.Presence do
     |> apply_changes()
   end
 
-  def validate(changeset), do: changeset
+  def validate(%Ecto.Changeset{} = changeset) do
+    changeset
+    |> validate_inclusion(:status, ["idle", "dnd", "online", "offline"])
+  end
 
   def changeset(params), do: changeset(%__MODULE__{}, params)
   def changeset(nil, params), do: changeset(%__MODULE__{}, params)
 
   def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    cast(model, params, castable())
     |> cast_embeds()
   end
 
@@ -51,10 +54,5 @@ defmodule Remedy.Schema.Presence do
 
   defp castable do
     __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
-  end
-
-  def validate(%Ecto.Changeset{} = changeset) do
-    changeset
-    |> validate_inclusion(:status, ["idle", "dnd", "online", "offline"])
   end
 end

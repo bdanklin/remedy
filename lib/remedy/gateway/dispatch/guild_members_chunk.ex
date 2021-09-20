@@ -55,7 +55,7 @@ defmodule Remedy.Gateway.Dispatch.GuildMemberChunk do
   def changeset(nil, params), do: changeset(%__MODULE__{}, params)
 
   def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    cast(model, params, castable())
     |> cast_embeds()
   end
 

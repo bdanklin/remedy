@@ -9,7 +9,7 @@ defmodule Remedy.Gateway.Dispatch.GuildStickersUpdate do
   """
   alias Remedy.Cache
 
-  def handle({event, %{stickers: stickers, guild_id: guild_id} = payload, socket}) do
+  def handle({event, %{stickers: stickers, guild_id: guild_id} = _payload, socket}) do
     for sticker <- stickers do
       {event,
        %{sticker | guild_id: guild_id}

@@ -8,7 +8,12 @@ defmodule Remedy.Cache do
   alias Remedy.Cache.{DiscordApp, DiscordBot, Repo}
   alias Remedy.Schema.{App, Channel, Emoji, Guild, Message, Member, Presence, Role, Sticker, User}
 
-  def update_bot(%User{} = updated_state) do
+  def initialize_bot(app) do
+    User.new(app)
+    |> DiscordBot.update()
+  end
+
+  def update_bot(updated_state) do
     updated_state = Map.from_struct(updated_state)
 
     case bot() do
@@ -30,9 +35,12 @@ defmodule Remedy.Cache do
     DiscordBot.get()
   end
 
-  def update_app(%App{} = updated_app) do
-    updated_app = Map.from_struct(updated_app)
+  def initialize_app(app) do
+    App.new(app)
+    |> DiscordApp.update()
+  end
 
+  def update_app(updated_app) do
     case app() do
       nil ->
         App.new(updated_app)
@@ -60,14 +68,14 @@ defmodule Remedy.Cache do
 
   def update_channel(%{id: id} = channel) do
     Channel
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Channel.changeset(channel)
     |> Repo.update!()
   end
 
   def delete_channel(id) do
     Channel
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
@@ -79,19 +87,21 @@ defmodule Remedy.Cache do
 
   def get_guild(id) do
     Guild
-    |> Repo.get!(id)
+    |> Repo.get(id)
   end
+
+  def update_guilds([_ | _] = guilds), do: for(g <- guilds, do: update_guild(g))
 
   def update_guild(%{id: id} = guild) do
     Guild
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Guild.changeset(guild)
     |> Repo.update!()
   end
 
   def delete_guild(%{id: id} = _guild) do
     Guild
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
@@ -103,14 +113,14 @@ defmodule Remedy.Cache do
 
   def update_user(%{id: id} = user) do
     User
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> User.changeset(user)
     |> Repo.update!()
   end
 
   def delete_user(%{id: id} = _user) do
     User
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
@@ -122,14 +132,14 @@ defmodule Remedy.Cache do
 
   def update_member(%{id: id} = member) do
     Member
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Member.changeset(member)
     |> Repo.update!()
   end
 
   def delete_member(%{id: id} = _member) do
     Member
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
@@ -141,27 +151,27 @@ defmodule Remedy.Cache do
 
   def update_message(%{id: id} = message) do
     Message
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Message.changeset(message)
     |> Repo.update!()
   end
 
   def update_message(id, updated_message) do
     Message
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Message.changeset(updated_message)
     |> Repo.update!()
   end
 
   def delete_message(%{id: id} = _message) do
     Message
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
   def remove_message_reactions(message_id) do
     Message
-    |> Repo.get!(message_id)
+    |> Repo.get(message_id)
     |> Message.changeset(%{reactions: []})
     |> Repo.update!()
   end
@@ -174,14 +184,14 @@ defmodule Remedy.Cache do
 
   def update_emoji(%{id: id} = emoji) do
     Emoji
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Emoji.changeset(emoji)
     |> Repo.update!()
   end
 
   def delete_emoji(%{id: id} = _emoji) do
     Emoji
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
@@ -193,14 +203,14 @@ defmodule Remedy.Cache do
 
   def update_presence(%{id: id} = presence) do
     Presence
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Presence.changeset(presence)
     |> Repo.update!()
   end
 
   def delete_presence(%{id: id} = _presence) do
     Presence
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
@@ -212,14 +222,14 @@ defmodule Remedy.Cache do
 
   def update_role(%{id: id} = role) do
     Role
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Role.changeset(role)
     |> Repo.update!()
   end
 
   def delete_role(%{id: id} = _role) do
     Role
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 
@@ -231,14 +241,14 @@ defmodule Remedy.Cache do
 
   def update_sticker(%{id: id} = sticker) do
     Sticker
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Sticker.changeset(sticker)
     |> Repo.update!()
   end
 
   def delete_sticker(%{id: id} = _sticker) do
     Sticker
-    |> Repo.get!(id)
+    |> Repo.get(id)
     |> Repo.delete!()
   end
 end

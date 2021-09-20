@@ -38,13 +38,21 @@ defmodule Remedy.Schema.Component do
   - Can have one of the below `:style` applied.
 
   #### Primary `style: 1`
+
   ![Primary](https://user-images.githubusercontent.com/34633373/129678518-74790396-efcc-45f0-9a84-eba3f4c66950.png)
+
   #### Secondary `style: 2`
+
   ![Secondary](https://user-images.githubusercontent.com/34633373/129678527-d8d1c988-33c5-46d6-874e-2cfb2d9ba7f4.png)
+
   #### Success `style: 3`
+
   ![Success](https://user-images.githubusercontent.com/34633373/129678543-5d72ba09-f042-49b6-b56a-9ae072011ee1.png)
+
   #### Danger `style: 4`
+
   ![Danger (1)](https://user-images.githubusercontent.com/34633373/129678473-7e4b045f-b4a3-4993-96a2-4916cb88161f.png)
+
   ## 🐼 ~~Emoji Buttons~~
 
   > Note: The discord documentation and marketing material in relation to buttons indicates that there are three kinds of buttons: 🐼 **Emoji Buttons**, **Link Buttons** & **Non-Link Buttons**. When in fact all buttons can contain an emoji. Because of this reason 🐼 **Emoji Buttons** are not included as a seperate type. Emojis will be instead handled by the two included ( superior ) button types.
@@ -121,6 +129,7 @@ defmodule Remedy.Schema.Component do
   """
   @callback update(t(), opts :: [keyword()]) :: t()
 
+  alias Remedy.Schema.Component.{ActionRow, Button, SelectMenu}
   use Remedy.Schema
 
   embedded_schema do

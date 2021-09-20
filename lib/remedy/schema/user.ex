@@ -6,22 +6,38 @@ defmodule Remedy.Schema.User do
   alias Remedy.CDN
   @primary_key {:id, Snowflake, autogenerate: false}
 
+  @type id :: Snowflake.t()
+  @type username :: String.t()
+  @type discriminator :: integer()
+  @type avatar :: String.t()
+  @type bot :: boolean()
+  @type system :: boolean()
+  @type mfa_enabled :: boolean()
+  @type banner :: String.t()
+  @type accent_color :: integer()
+  @type locale :: String.t()
+  @type verified :: boolean()
+  @type email :: String.t()
+  @type flags :: UserFlags
+  @type premium_type :: integer()
+  @type public_flags :: integer()
+
   @type t :: %__MODULE__{
-          id: Snowflake.t(),
-          username: String.t(),
-          discriminator: integer(),
-          avatar: String.t(),
-          bot: boolean(),
-          system: boolean(),
-          mfa_enabled: boolean(),
-          banner: String.t(),
-          accent_color: integer(),
-          locale: String.t(),
-          verified: boolean(),
-          email: String.t(),
-          flags: UserFlags,
-          premium_type: integer(),
-          public_flags: integer()
+          id: id,
+          username: username,
+          discriminator: discriminator,
+          avatar: avatar,
+          bot: bot,
+          system: system,
+          mfa_enabled: mfa_enabled,
+          banner: banner,
+          accent_color: accent_color,
+          locale: locale,
+          verified: verified,
+          email: email,
+          flags: flags,
+          premium_type: premium_type,
+          public_flags: public_flags
         }
 
   schema "users" do
@@ -42,6 +58,38 @@ defmodule Remedy.Schema.User do
     has_many :messages, Message, foreign_key: :author_id
     #   has_many :channels, Channel
     has_many :guilds, Guild, foreign_key: :owner_id
+  end
+
+  def new(params) do
+    params
+    |> changeset()
+    |> validate()
+    |> apply_changes()
+  end
+
+  def update(model, params) do
+    model
+    |> changeset(params)
+    |> validate()
+    |> apply_changes()
+  end
+
+  def validate(changeset), do: changeset
+
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
+
+  def changeset(%__MODULE__{} = model, params) do
+    cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    |> cast_embeds()
+  end
+
+  defp cast_embeds(cast_model) do
+    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  end
+
+  defp castable do
+    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
   end
 
   @doc """

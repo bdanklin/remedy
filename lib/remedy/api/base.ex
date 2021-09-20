@@ -5,9 +5,7 @@ defmodule Remedy.Api.Base do
   @base_url "https://discord.com/api/v9"
   use HTTPoison.Base
 
-  def process_url(url) do
-    URI.encode(@base_url <> url)
-  end
+  def process_url(url), do: URI.encode(@base_url <> url)
 
   def process_request_body(""), do: ""
   def process_request_body({:multipart, _} = body), do: body

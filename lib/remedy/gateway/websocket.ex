@@ -58,7 +58,7 @@ defmodule Remedy.Gateway.Websocket do
     # Heartbeat
     field :last_heartbeat_send, :utc_datetime
     field :last_heartbeat_ack, :utc_datetime
-    field :heartbeat_ack, :boolean, default: false
+    field :heartbeat_ack, :boolean
     field :heartbeat_timer, :any, virtual: true
     # Gun INfo
     field :gun_worker, :any, virtual: true

@@ -8,6 +8,10 @@ defmodule Remedy.Schema do
 
   """
 
+  @callback new(params :: map()) :: struct :: map()
+  @callback update(struct :: map(), params :: map()) :: struct :: map()
+  @callback validate(changeset :: Ecto.Changeset.t()) :: changeset :: Ecto.Changeset.t()
+
   defmacro __using__(_env) do
     parent = __MODULE__
 
@@ -33,6 +37,7 @@ defmodule Remedy.Schema do
         InteractionDataResolved,
         Member,
         Message,
+        MessageReactionRemoveEmoji,
         Overwrite,
         Presence,
         Role,
@@ -46,55 +51,15 @@ defmodule Remedy.Schema do
         User,
         Voice,
         VoiceState,
-        Webhook
+        Webhook,
+        WelcomeScreen,
+        WelcomeScreenChannel
       }
 
       use Ecto.Schema
       import Ecto.Changeset
       import Sunbake.Snowflake, only: [is_snowflake: 1]
       alias Sunbake.{ISO8601, Snowflake}
-
-      @before_compile Schema
-    end
-  end
-
-  defmacro __before_compile__(_env) do
-    quote do
-      alias __MODULE__
-
-      def new(params) do
-        params
-        |> changeset()
-        |> validate()
-        |> apply_changes()
-      end
-
-      def update(model, params) do
-        model
-        |> changeset(params)
-        |> validate()
-        |> apply_changes()
-      end
-
-      def validate(changeset), do: changeset
-
-      def changeset(params), do: changeset(%__MODULE__{}, params)
-      def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-      def changeset(%__MODULE__{} = model, params) do
-        cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
-        |> cast_embeds()
-      end
-
-      defp cast_embeds(cast_model) do
-        Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-      end
-
-      defp castable do
-        __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
-      end
-
-      defoverridable(validate: 1, new: 1, changeset: 1, changeset: 2)
     end
   end
 end

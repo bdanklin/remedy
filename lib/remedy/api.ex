@@ -73,13 +73,13 @@ defmodule Remedy.Api do
   @doc """
   Posts a message to a guild text or DM channel.
 
-  ## Required Intents
+  ## Intents
 
   - `:VIEW_CHANNEL`
   - `:SEND_MESSAGES`
   - `:SEND_MESSAGES_TTS` (optional)
 
-  ## Fired Events
+  ## Events
 
   - `t:Remedy.Gateway.Dispatch.message_create/0`.
 
@@ -171,17 +171,6 @@ defmodule Remedy.Api do
   end
 
   @doc """
-  Same as `create_message/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-
-  @spec create_message!(Channel.id() | Message.t(), options | String.t()) ::
-          no_return | Message.t()
-  def create_message!(channel_id, options) do
-    create_message(channel_id, options)
-    |> bangify
-  end
-
-  @doc """
   Edits a previously sent message in a channel.
 
   This endpoint requires the `VIEW_CHANNEL` permission. It fires the
@@ -198,7 +187,7 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.edit_message(43189401384091, 1894013840914098, content: "hello world!")
 
   Remedy.Api.edit_message(43189401384091, 1894013840914098, "hello world!")
@@ -211,7 +200,7 @@ defmodule Remedy.Api do
   Remedy.Api.edit_message(43189401384091, 1894013840914098, embed: embed)
 
   Remedy.Api.edit_message(43189401384091, 1894013840914098, content: "hello world!", embed: embed)
-  ```
+
   """
 
   @spec edit_message(Channel.id(), Message.id(), options | String.t()) ::
@@ -231,16 +220,6 @@ defmodule Remedy.Api do
       when is_snowflake(channel_id) and is_snowflake(message_id) and is_binary(content) do
     request(:patch, Endpoints.channel_message(channel_id, message_id), %{content: content})
     |> handle_request_with_decode({:struct, Message})
-  end
-
-  @doc """
-  Same as `edit_message/3`, but raises `Remedy.ApiError` in case of failure.
-  """
-
-  @spec edit_message!(Channel.id(), Message.id(), options) :: no_return | Message.t()
-  def edit_message!(channel_id, message_id, options) do
-    edit_message(channel_id, message_id, options)
-    |> bangify
   end
 
   @doc """
@@ -273,9 +252,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.delete_message(43189401384091, 43189401384091)
-  ```
+
   """
 
   @spec delete_message(Channel.id(), Message.id()) :: error | {:ok}
@@ -296,7 +275,7 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   # Using a Remedy.Struct.Emoji.
   emoji = %Remedy.Struct.Emoji{id: 43819043108, name: "foxbot"}
   Remedy.Api.create_reaction(123123123123, 321321321321, emoji)
@@ -304,7 +283,7 @@ defmodule Remedy.Api do
   # Using a base 16 emoji string.
   Remedy.Api.create_reaction(123123123123, 321321321321, "\xF0\x9F\x98\x81")
 
-  ```
+
 
   For other emoji string examples, see `t:Remedy.Struct.Emoji.api_name/0`.
   """
@@ -426,10 +405,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
-  Remedy.Api.get_channel(381889573426429952)
-  {:ok, %Remedy.Struct.Channel{id: 381889573426429952}}
-  ```
+      iex> Remedy.Api.get_channel(381889573426429952)
+      {:ok, %Remedy.Struct.Channel{id: 381889573426429952}}
+
   """
 
   @spec get_channel(Channel.id()) :: error | {:ok, Channel.t()}
@@ -470,13 +448,13 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
-  Remedy.Api.modify_channel(41771983423143933, name: "elixir-remedy", topic: "remedy discussion")
-  {:ok, %Remedy.Struct.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
+      iex> Remedy.Api.modify_channel(41771983423143933, name: "elixir-remedy", topic: "remedy discussion")
+      {:ok, %Remedy.Struct.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
 
-  Remedy.Api.modify_channel(41771983423143933)
-  {:ok, %Remedy.Struct.Channel{id: 41771983423143933}}
-  ```
+
+      iex> Remedy.Api.modify_channel(41771983423143933)
+      {:ok, %Remedy.Struct.Channel{id: 41771983423143933}}
+
   """
 
   @spec modify_channel(Channel.id(), options, AuditLogEntry.reason()) ::
@@ -513,10 +491,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
-  Remedy.Api.delete_channel(421533712753360896)
-  {:ok, %Remedy.Struct.Channel{id: 421533712753360896}}
-  ```
+      iex> Remedy.Api.delete_channel(421533712753360896)
+      {:ok, %Remedy.Struct.Channel{id: 421533712753360896}}
+
   """
 
   @spec delete_channel(Channel.id(), AuditLogEntry.reason()) :: error | {:ok, Channel.t()}
@@ -543,9 +520,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
-  Remedy.Api.get_channel_messages(43189401384091, 5, {:before, 130230401384})
-  ```
+      iex> Remedy.Api.get_channel_messages(43189401384091, 5, {:before, 130230401384})
+      {:ok, %Message{}}
+
   """
 
   @spec get_channel_messages(Channel.id(), limit, locator) :: error | {:ok, [Message.t()]}
@@ -603,9 +580,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_channel_message(43189401384091, 198238475613443)
-  ```
+
   """
 
   @spec get_channel_message(Channel.id(), Message.id()) :: error | {:ok, Message.t()}
@@ -734,10 +711,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_channel_invites(43189401384091)
   {:ok, [%Remedy.Struct.Invite{} | _]}
-  ```
+
   """
 
   @spec get_channel_invites(Channel.id()) :: error | {:ok, [Invite.detailed_invite()]}
@@ -768,13 +745,13 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.create_channel_invite(41771983423143933)
   {:ok, Remedy.Struct.Invite{}}
 
   Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
   {:ok, %Remedy.Struct.Invite{}}
-  ```
+
   """
 
   @spec create_channel_invite(Channel.id(), options, AuditLogEntry.reason()) ::
@@ -795,17 +772,6 @@ defmodule Remedy.Api do
     }
     |> request()
     |> handle_request_with_decode({:struct, Invite})
-  end
-
-  @doc """
-  Same as `create_channel_invite/2`, but raises `Remedy.ApiError` in case of failure.
-  """
-
-  @spec create_channel_invite!(Channel.id(), options, AuditLogEntry.reason()) ::
-          no_return | Invite.detailed_invite()
-  def create_channel_invite!(channel_id, options \\ [], reason \\ nil) do
-    create_channel_invite(channel_id, options, reason)
-    |> bangify
   end
 
   @doc """
@@ -831,9 +797,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_pinned_messages(43189401384091)
-  ```
+
   """
 
   @spec get_pinned_messages(Channel.id()) :: error | {:ok, [Message.t()]}
@@ -854,9 +820,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.add_pinned_channel_message(43189401384091, 18743893102394)
-  ```
+
   """
 
   @spec add_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
@@ -931,11 +897,11 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   image = "data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8="
 
   Remedy.Api.create_guild_emoji(43189401384091, name: "remedy", image: image, roles: [])
-  ```
+
   """
 
   @spec create_guild_emoji(Guild.id(), options, AuditLogEntry.reason()) ::
@@ -974,9 +940,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
-  ```
+
   """
 
   @spec modify_guild_emoji(Guild.id(), Emoji.id(), options, AuditLogEntry.reason()) ::
@@ -1044,10 +1010,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_guild(81384788765712384)
   {:ok, %Remedy.Struct.Guild{id: 81384788765712384}}
-  ```
+
   """
 
   @spec get_guild(Guild.id()) :: error | {:ok, Guild.rest_guild()}
@@ -1090,10 +1056,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```elixir
+      iex>
   Remedy.Api.modify_guild(451824027976073216, name: "Nose Drum")
   {:ok, %Remedy.Struct.Guild{id: 451824027976073216, name: "Nose Drum", ...}}
-  ```
+
   """
 
   @spec modify_guild(Guild.id(), options, AuditLogEntry.reason()) ::
@@ -1127,10 +1093,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.delete_guild(81384788765712384)
   {:ok}
-  ```
+
   """
 
   @spec delete_guild(Guild.id()) :: error | {:ok}
@@ -1145,10 +1111,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_guild_channels(81384788765712384)
   {:ok, [%Remedy.Struct.Channel{guild_id: 81384788765712384} | _]}
-  ```
+
   """
 
   @spec get_guild_channels(Guild.id()) :: error | {:ok, [Channel.guild_channel()]}
@@ -1181,10 +1147,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.create_guild_channel(81384788765712384, name: "elixir-remedy", topic: "craig's domain")
   {:ok, %Remedy.Struct.Channel{guild_id: 81384788765712384}}
-  ```
+
   """
 
   @spec create_guild_channel(Guild.id(), options) :: error | {:ok, Channel.guild_channel()}
@@ -1210,10 +1176,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.modify_guild_channel_positions(279093381723062272, [%{id: 351500354581692420, position: 2}])
   {:ok}
-  ```
+
   """
 
   @spec modify_guild_channel_positions(Guild.id(), [%{id: integer, position: integer}]) ::
@@ -1230,9 +1196,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_guild_member(4019283754613, 184937267485)
-  ```
+
   """
 
   @spec get_guild_member(Guild.id(), User.id()) :: error | {:ok, Member.t()}
@@ -1253,9 +1219,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.list_guild_members(41771983423143937, limit: 1)
-  ```
+
   """
 
   @spec list_guild_members(Guild.id(), options) :: error | {:ok, [Member.t()]}
@@ -1292,7 +1258,7 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.add_guild_member(
     41771983423143937,
     18374719829378473,
@@ -1300,7 +1266,7 @@ defmodule Remedy.Api do
     nick: "remedy",
     roles: [431849301, 913809431]
   )
-  ```
+
   """
 
   @spec add_guild_member(Guild.id(), User.id(), options) :: error | {:ok, Member.t()} | {:ok}
@@ -1334,10 +1300,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.modify_guild_member(41771983423143937, 637162356451, nick: "Remedy")
   {:ok}
-  ```
+
   """
 
   @spec modify_guild_member(Guild.id(), User.id(), options) :: error | {:ok}
@@ -1362,10 +1328,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.modify_current_user_nick(41771983423143937, nick: "Remedy")
   {:ok, %{nick: "Remedy"}}
-  ```
+
   """
 
   @spec modify_current_user_nick(Guild.id(), options) :: error | {:ok, %{nick: String.t()}}
@@ -1425,10 +1391,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.remove_guild_member(1453827904102291, 18739485766253)
   {:ok}
-  ```
+
   """
 
   @spec remove_guild_member(Guild.id(), User.id(), AuditLogEntry.reason()) :: error | {:ok}
@@ -1509,9 +1475,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_guild_roles(147362948571673)
-  ```
+
   """
 
   @spec get_guild_roles(Guild.id()) :: error | {:ok, [Role.t()]}
@@ -1540,9 +1506,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.create_guild_role(41771983423143937, name: "remedy-club", hoist: true)
-  ```
+
   """
 
   @spec create_guild_role(Guild.id(), options, AuditLogEntry.reason()) :: error | {:ok, Role.t()}
@@ -1575,9 +1541,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
-  ```
+
   """
 
   @spec modify_guild_role_positions(
@@ -1618,9 +1584,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
-  ```
+
   """
 
   @spec modify_guild_role(Guild.id(), Role.id(), options, AuditLogEntry.reason()) ::
@@ -1655,9 +1621,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.delete_guild_role(41771983423143937, 392817238471936)
-  ```
+
   """
 
   @spec delete_guild_role(Guild.id(), Role.id(), AuditLogEntry.reason()) :: error | {:ok}
@@ -1681,10 +1647,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_guild_prune_count(81384788765712384, 1)
   {:ok, %{pruned: 0}}
-  ```
+
   """
 
   @spec get_guild_prune_count(Guild.id(), 1..30) :: error | {:ok, %{pruned: integer}}
@@ -1705,10 +1671,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.begin_guild_prune(81384788765712384, 1)
   {:ok, %{pruned: 0}}
-  ```
+
   """
 
   @spec begin_guild_prune(Guild.id(), 1..30, AuditLogEntry.reason()) ::
@@ -1747,10 +1713,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_guild_invites(81384788765712384)
   {:ok, [%Remedy.Struct.Invite{} | _]}
-  ```
+
   """
 
   @spec get_guild_invites(Guild.id()) :: error | {:ok, [Invite.detailed_invite()]}
@@ -1863,11 +1829,11 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_invite("zsjUsC")
 
   Remedy.Api.get_invite("zsjUsC", with_counts: true)
-  ```
+
   """
 
   @spec get_invite(Invite.code(), options) :: error | {:ok, Invite.simple_invite()}
@@ -1886,9 +1852,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.delete_invite("zsjUsC")
-  ```
+
   """
 
   @spec delete_invite(Invite.code()) :: error | {:ok, Invite.simple_invite()}
@@ -1937,9 +1903,9 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
-  ```
+
   """
 
   @spec modify_current_user(options) :: error | {:ok, User.t()}
@@ -1970,10 +1936,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   iex> Remedy.Api.get_current_user_guilds(limit: 1)
   {:ok, [%Remedy.Struct.Guild{}]}
-  ```
+
   """
 
   @spec get_current_user_guilds(options) :: error | {:ok, [Guild.user_guild()]}
@@ -2011,10 +1977,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.get_user_dms()
   {:ok, [%Remedy.Struct.Channel{type: 1} | _]}
-  ```
+
   """
 
   @spec get_user_dms() :: error | {:ok, [Channel.dm_channel()]}
@@ -2030,10 +1996,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.create_dm(150061853001777154)
   {:ok, %Remedy.Struct.Channel{type: 1}}
-  ```
+
   """
 
   @spec create_dm(User.id()) :: error | {:ok, Channel.dm_channel()}
@@ -2052,10 +2018,10 @@ defmodule Remedy.Api do
 
   ## Examples
 
-  ```Elixir
+      iex>
   Remedy.Api.create_group_dm(["6qrZcUqja7812RVdnEKjpzOL4CvHBFG"], %{41771983423143937 => "My Nickname"})
   {:ok, %Remedy.Struct.Channel{type: 3}}
-  ```
+
   """
 
   @spec create_group_dm([String.t()], %{optional(User.id()) => String.t()}) ::
@@ -2366,7 +2332,7 @@ defmodule Remedy.Api do
   Gets the bot's OAuth2 application info.
 
   ## Example
-  ```elixir
+      iex>
   Remedy.Api.get_application_information
   {:ok,
   %{
@@ -2383,7 +2349,7 @@ defmodule Remedy.Api do
       username: "i own a bot"
     },
   }}
-  ```
+
   """
 
   @spec get_application_information() :: error | {:ok, map()}
@@ -2405,7 +2371,7 @@ defmodule Remedy.Api do
 
   ## Example
 
-  ```elixir
+      iex>
   iex> Remedy.Api.get_global_application_commands
   {:ok,
    [
@@ -2416,7 +2382,7 @@ defmodule Remedy.Api do
        name: "edit"
      }
    ]}
-  ```
+
   """
 
   @spec get_global_application_commands() :: {:ok, [map()]} | error
@@ -2445,11 +2411,11 @@ defmodule Remedy.Api do
 
   ## Example
 
-  ```elixir
+      iex>
   Remedy.Api.create_application_command(
     %{name: "edit", description: "ed, man! man, ed", options: []}
   )
-  ```
+
   """
 
   @spec create_global_application_command(map()) :: {:ok, map()} | error
@@ -2633,7 +2599,7 @@ defmodule Remedy.Api do
 
   ## Example
 
-  ```elixir
+      iex>
   response = %{
     type: 4,
     data: %{
@@ -2641,7 +2607,7 @@ defmodule Remedy.Api do
     }
   }
   Remedy.Api.create_interaction_response(interaction, response)
-  ```
+
 
   As an alternative to passing the interaction ID and token, the
   original `t:Remedy.Struct.Interaction.t/0` can also be passed

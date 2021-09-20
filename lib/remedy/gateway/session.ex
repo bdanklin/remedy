@@ -8,8 +8,8 @@ defmodule Remedy.Gateway.Session do
 
   ### External
 
-  def process_ready(v, session_id, shard) do
-    GenServer.call(:"Shard-#{shard}", {:process_ready, %{v: v, session_id: session_id}})
+  def ready(shard, v, session_id) do
+    GenServer.call(:"Shard-#{shard}", {:ready, %{v: v, session_id: session_id}})
   end
 
   def update_presence(shard, opts \\ []) do
@@ -34,10 +34,6 @@ defmodule Remedy.Gateway.Session do
     {:ok, %Websocket{gateway: gateway, shard: shard}, {:continue, :establish_connection}}
   end
 
-  def handle_call({:process_ready, %{v: v, session_id: session_id}}, socket) do
-    %Websocket{socket | v: v, session_id: session_id}
-  end
-
   def handle_continue(:establish_connection, socket) do
     {:noreply,
      socket
@@ -45,6 +41,10 @@ defmodule Remedy.Gateway.Session do
      |> Gun.open_await()
      |> Gun.upgrade_ws_await()
      |> Gun.zlib_init()}
+  end
+
+  def handle_cast({:ready, %{v: v, session_id: session_id}}, socket) do
+    {:noreply, %Websocket{socket | v: v, session_id: session_id}}
   end
 
   def handle_cast({:status_update, opts}, socket) do
@@ -68,7 +68,7 @@ defmodule Remedy.Gateway.Session do
      |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
 
-  def handle_info(:HEARTBEAT, %{heartbeat_ack: true} = socket) do
+  def handle_info(:HEARTBEAT, socket) do
     Logger.debug("LUB")
 
     {:noreply,

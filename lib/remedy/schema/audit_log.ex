@@ -22,6 +22,38 @@ defmodule Remedy.Schema.AuditLog do
     embeds_many :integrations, Integration
     embeds_many :threads, Channel
   end
+
+  def new(params) do
+    params
+    |> changeset()
+    |> validate()
+    |> apply_changes()
+  end
+
+  def update(model, params) do
+    model
+    |> changeset(params)
+    |> validate()
+    |> apply_changes()
+  end
+
+  def validate(changeset), do: changeset
+
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
+
+  def changeset(%__MODULE__{} = model, params) do
+    cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    |> cast_embeds()
+  end
+
+  defp cast_embeds(cast_model) do
+    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  end
+
+  defp castable do
+    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+  end
 end
 
 defmodule Remedy.Schema.AuditLogEntry do
@@ -47,6 +79,38 @@ defmodule Remedy.Schema.AuditLogEntry do
     belongs_to :user, User
     embeds_many :options, AuditLogOption
     embeds_many :changes, Change
+  end
+
+  def new(params) do
+    params
+    |> changeset()
+    |> validate()
+    |> apply_changes()
+  end
+
+  def update(model, params) do
+    model
+    |> changeset(params)
+    |> validate()
+    |> apply_changes()
+  end
+
+  def validate(changeset), do: changeset
+
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
+
+  def changeset(%__MODULE__{} = model, params) do
+    cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    |> cast_embeds()
+  end
+
+  defp cast_embeds(cast_model) do
+    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  end
+
+  defp castable do
+    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
   end
 end
 
@@ -80,6 +144,38 @@ defmodule Remedy.Schema.AuditLogOption do
     field :type, :string
     field :role_name, :string
   end
+
+  def new(params) do
+    params
+    |> changeset()
+    |> validate()
+    |> apply_changes()
+  end
+
+  def update(model, params) do
+    model
+    |> changeset(params)
+    |> validate()
+    |> apply_changes()
+  end
+
+  def validate(changeset), do: changeset
+
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
+
+  def changeset(%__MODULE__{} = model, params) do
+    cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    |> cast_embeds()
+  end
+
+  defp cast_embeds(cast_model) do
+    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  end
+
+  defp castable do
+    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+  end
 end
 
 defmodule Remedy.Schema.AuditLogChange do
@@ -99,5 +195,37 @@ defmodule Remedy.Schema.AuditLogChange do
     field :new_value, :any, virtual: true
     field :old_value, :any, virtual: true
     field :key, :any, virtual: true
+  end
+
+  def new(params) do
+    params
+    |> changeset()
+    |> validate()
+    |> apply_changes()
+  end
+
+  def update(model, params) do
+    model
+    |> changeset(params)
+    |> validate()
+    |> apply_changes()
+  end
+
+  def validate(changeset), do: changeset
+
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
+
+  def changeset(%__MODULE__{} = model, params) do
+    cast(model, params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    |> cast_embeds()
+  end
+
+  defp cast_embeds(cast_model) do
+    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  end
+
+  defp castable do
+    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
   end
 end

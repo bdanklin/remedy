@@ -7,7 +7,7 @@ defmodule Remedy.Gateway.Pacemaker do
     %Websocket{
       socket
       | heartbeat_timer: Process.send_after(self(), :HEARTBEAT, heartbeat_interval),
-        heartbeat_ack: false,
+        heartbeat_ack: nil,
         last_heartbeat_send: DateTime.utc_now()
     }
   end

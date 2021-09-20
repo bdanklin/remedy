@@ -1,25 +1,12 @@
-defmodule Remedy.Schema.VoiceRegion do
-  @moduledoc """
-  Voice Region
-  """
+defmodule Remedy.Schema.MessageReactionRemoveEmoji do
   use Remedy.Schema
+  alias Remedy.Cache
 
-  @type t :: %__MODULE__{
-          id: Snowflake.t(),
-          name: String.t(),
-          vip: boolean(),
-          optimal: boolean(),
-          deprecated: boolean(),
-          custom: boolean()
-        }
-
-  @primary_key {:id, :string, autogenerate: false}
-  schema "voice_regions" do
-    field :name, :string
-    field :vip, :boolean
-    field :optimal, :boolean
-    field :deprecated, :boolean
-    field :custom, :boolean
+  @primary_key false
+  embedded_schema do
+    field :message_id, Snowflake
+    field :channel_id, Snowflake
+    field :last_pin_timestamp, ISO8601
   end
 
   def new(params) do

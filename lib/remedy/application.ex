@@ -15,7 +15,9 @@ defmodule Remedy.Application do
       Remedy.Api.Ratelimiter,
       Remedy.GatewayATC,
       Remedy.Gateway,
-      Remedy.Cache.Repo
+      Remedy.Cache.Repo,
+      Remedy.Cache.DiscordApp,
+      Remedy.Cache.DiscordBot
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)

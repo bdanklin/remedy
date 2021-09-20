@@ -10,7 +10,7 @@
     <title>Remedy.Api — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-bf9d94fa3d.js"></script>
+    <script src="dist/sidebar_items-7973ad2a93.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -242,15 +242,6 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create_channel_invite!/3">create_channel_invite!(channel_id, options \\ [], reason \\ nil)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Same as <a href="#create_channel_invite/2"><code class="inline">create_channel_invite/2</code></a>, but raises <a href="Remedy.ApiError.html"><code class="inline">Remedy.ApiError</code></a> in case of failure.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#create_dm/1">create_dm(user_id)</a>
 
   </div>
@@ -363,15 +354,6 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
   </div>
 
     <div class="summary-synopsis"><p>Posts a message to a guild text or DM channel.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_message!/2">create_message!(channel_id, options)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Same as <a href="#create_message/2"><code class="inline">create_message/2</code></a>, but raises <a href="Remedy.ApiError.html"><code class="inline">Remedy.ApiError</code></a> in case of failure.</p></div>
 
 </div>
 <div class="summary-row">
@@ -595,15 +577,6 @@ Remedy.Api <small class="app-vsn">(Remedy v0.5.4)</small>
   </div>
 
     <div class="summary-synopsis"><p>Edits a previously sent message in a channel.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#edit_message!/3">edit_message!(channel_id, message_id, options)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Same as <a href="#edit_message/3"><code class="inline">edit_message/3</code></a>, but raises <a href="Remedy.ApiError.html"><code class="inline">Remedy.ApiError</code></a> in case of failure.</p></div>
 
 </div>
 <div class="summary-row">
@@ -1288,7 +1261,7 @@ Types
     </a>
     <h1 class="signature">matrix()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2291" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2257" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1388,7 +1361,7 @@ Functions
     </a>
     <h1 class="signature">add_guild_member(guild_id, user_id, options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1307" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1273" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1401,7 +1374,7 @@ Functions
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>add_guild_member(Remedy.Schema.Guild.id(), Remedy.Schema.User.id(), <a href="#t:options/0">options</a>()) ::
+          <pre>add_guild_member(Remedy.Schema.Guild.id(), <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(), <a href="#t:options/0">options</a>()) ::
   <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>()} | {:ok}</pre>
 
       </div>
@@ -1418,13 +1391,13 @@ guild. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api
   <a href="#add_guild_member/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.add_guild_member(
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.add_guild_member(
   41771983423143937,
   18374719829378473,
   access_token: &quot;6qrZcUqja7812RVdnEKjpzOL4CvHBFG&quot;,
   nick: &quot;remedy&quot;,
   roles: [431849301, 913809431]
-)</code></pre>
+)</p>
   </section>
 </section>
 <section class="detail" id="add_guild_member_role/4">
@@ -1438,7 +1411,7 @@ guild. Otherwise, returns a <a href="#t:error/0"><code class="inline">Remedy.Api
     </a>
     <h1 class="signature">add_guild_member_role(guild_id, user_id, role_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1386" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1352" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1474,7 +1447,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">add_pinned_channel_message(channel_id, message_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L863" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L829" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1501,7 +1474,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
   <a href="#add_pinned_channel_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.add_pinned_channel_message(43189401384091, 18743893102394)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.add_pinned_channel_message(43189401384091, 18743893102394)</p>
   </section>
 </section>
 <section class="detail" id="begin_guild_prune/3">
@@ -1515,7 +1488,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">begin_guild_prune(guild_id, days, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1716" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1682" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1541,8 +1514,8 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
   <a href="#begin_guild_prune/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.begin_guild_prune(81384788765712384, 1)
-{:ok, %{pruned: 0}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.begin_guild_prune(81384788765712384, 1)
+{:ok, %{pruned: 0}}</p>
   </section>
 </section>
 <section class="detail" id="bulk_delete_messages/3">
@@ -1556,7 +1529,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">bulk_delete_messages(channel_id, messages, filter \\ true)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L634" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L611" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1595,7 +1568,7 @@ two weeks ago should be filtered out; defaults to <code class="inline">true</cod
     </a>
     <h1 class="signature">bulk_overwrite_global_application_commands(application_id \\ Cache.bot().id, commands)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2528" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2494" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1610,7 +1583,7 @@ two weeks ago should be filtered out; defaults to <code class="inline">true</cod
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>bulk_overwrite_global_application_commands(Remedy.Schema.User.id(), [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]) ::
+          <pre>bulk_overwrite_global_application_commands(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]) ::
   {:ok, [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]} | <a href="#t:error/0">error</a>()</pre>
 
       </div>
@@ -1640,7 +1613,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">bulk_overwrite_guild_application_commands(application_id \\ Cache.bot().id, guild_id, commands)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2600" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2566" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1656,7 +1629,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       <div class="specs">
 
           <pre>bulk_overwrite_guild_application_commands(
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.Guild.id(),
   [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]
 ) :: {:ok, [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]} | <a href="#t:error/0">error</a>()</pre>
@@ -1689,7 +1662,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">create_channel_invite(channel_id, options \\ [], reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L782" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L759" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1722,48 +1695,9 @@ membership. (default: <code class="inline">false</code>)</li><li><code class="in
   <a href="#create_channel_invite/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.create_channel_invite(41771983423143933)
-{:ok, Remedy.Struct.Invite{}}
-
-Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
-{:ok, %Remedy.Struct.Invite{}}</code></pre>
-  </section>
-</section>
-<section class="detail" id="create_channel_invite!/3">
-
-    <span id="create_channel_invite!/1"></span>
-
-    <span id="create_channel_invite!/2"></span>
-
-  <div class="detail-header">
-    <a href="#create_channel_invite!/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_channel_invite!(channel_id, options \\ [], reason \\ nil)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L806" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>create_channel_invite!(
-  Remedy.Schema.Channel.id(),
-  <a href="#t:options/0">options</a>(),
-  Remedy.Schema.AuditLogEntry.reason()
-) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | Invite.detailed_invite()</pre>
-
-      </div>
-
-<p>Same as <a href="#create_channel_invite/2"><code class="inline">create_channel_invite/2</code></a>, but raises <a href="Remedy.ApiError.html"><code class="inline">Remedy.ApiError</code></a> in case of failure.</p>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.create_channel_invite(41771983423143933)
+{:ok, Remedy.Struct.Invite{}}</p><p>Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
+{:ok, %Remedy.Struct.Invite{}}</p>
   </section>
 </section>
 <section class="detail" id="create_dm/1">
@@ -1775,7 +1709,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
     </a>
     <h1 class="signature">create_dm(user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2040" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2006" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1788,7 +1722,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>create_dm(Remedy.Schema.User.id()) ::
+          <pre>create_dm(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>()) ::
   <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Channel.dm_channel()}</pre>
 
       </div>
@@ -1797,8 +1731,8 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
   <a href="#create_dm/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.create_dm(150061853001777154)
-{:ok, %Remedy.Struct.Channel{type: 1}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.create_dm(150061853001777154)
+{:ok, %Remedy.Struct.Channel{type: 1}}</p>
   </section>
 </section>
 <section class="detail" id="create_followup_message/3">
@@ -1812,7 +1746,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
     </a>
     <h1 class="signature">create_followup_message(application_id \\ Cache.bot().id, token, webhook_payload)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2667" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2633" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1826,7 +1760,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
       <div class="specs">
 
           <pre>create_followup_message(
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.Interaction.token(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
 ) :: {:ok} | <a href="#t:error/0">error</a>()</pre>
@@ -1847,7 +1781,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
     </a>
     <h1 class="signature">create_global_application_command(application_id \\ Cache.bot().id, command)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2457" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2423" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1860,7 +1794,7 @@ Remedy.Api.create_channel_invite(41771983423143933, max_uses: 20)
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>create_global_application_command(Remedy.Schema.User.id(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+          <pre>create_global_application_command(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
   {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | <a href="#t:error/0">error</a>()</pre>
 
       </div>
@@ -1882,9 +1816,9 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#create_global_application_command/2-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="6458280078-1">(</span><span class="w">
-  </span><span class="p" data-group-id="6458280078-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6458280078-3">[</span><span class="p" data-group-id="6458280078-3">]</span><span class="p" data-group-id="6458280078-2">}</span><span class="w">
-</span><span class="p" data-group-id="6458280078-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.create_application_command(
+  %{name: &quot;edit&quot;, description: &quot;ed, man! man, ed&quot;, options: []}
+)</p>
   </section>
 </section>
 <section class="detail" id="create_group_dm/2">
@@ -1896,7 +1830,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">create_group_dm(access_tokens, nicks)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2063" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2029" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1909,7 +1843,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>create_group_dm([<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()], %{optional(Remedy.Schema.User.id()) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}) ::
+          <pre>create_group_dm([<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()], %{optional(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>()) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}) ::
   <a href="#t:error/0">error</a>() | {:ok, Remedy.Schema.Channel.group_dm_channel()}</pre>
 
       </div>
@@ -1919,8 +1853,8 @@ to a nickname.</p><h2 id="create_group_dm/2-examples" class="section-heading">
   <a href="#create_group_dm/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.create_group_dm([&quot;6qrZcUqja7812RVdnEKjpzOL4CvHBFG&quot;], %{41771983423143937 =&gt; &quot;My Nickname&quot;})
-{:ok, %Remedy.Struct.Channel{type: 3}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.create_group_dm([&quot;6qrZcUqja7812RVdnEKjpzOL4CvHBFG&quot;], %{41771983423143937 =&gt; &quot;My Nickname&quot;})
+{:ok, %Remedy.Struct.Channel{type: 3}}</p>
   </section>
 </section>
 <section class="detail" id="create_guild_application_command/3">
@@ -1934,7 +1868,7 @@ to a nickname.</p><h2 id="create_group_dm/2-examples" class="section-heading">
     </a>
     <h1 class="signature">create_guild_application_command(application_id \\ Cache.bot().id, guild_id, command)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2542" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2508" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1948,7 +1882,7 @@ to a nickname.</p><h2 id="create_group_dm/2-examples" class="section-heading">
       <div class="specs">
 
           <pre>create_guild_application_command(
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.Guild.id(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
 ) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | <a href="#t:error/0">error</a>()</pre>
@@ -1969,7 +1903,7 @@ to a nickname.</p><h2 id="create_group_dm/2-examples" class="section-heading">
     </a>
     <h1 class="signature">create_guild_ban(guild_id, user_id, days_to_delete, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1477" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1443" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2004,7 +1938,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
     </a>
     <h1 class="signature">create_guild_channel(guild_id, options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1191" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1157" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2032,8 +1966,8 @@ the channel's permission overwrites</li><li><code class="inline">:parent_id</cod
   <a href="#create_guild_channel/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.create_guild_channel(81384788765712384, name: &quot;elixir-remedy&quot;, topic: &quot;craig's domain&quot;)
-{:ok, %Remedy.Struct.Channel{guild_id: 81384788765712384}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.create_guild_channel(81384788765712384, name: &quot;elixir-remedy&quot;, topic: &quot;craig's domain&quot;)
+{:ok, %Remedy.Struct.Channel{guild_id: 81384788765712384}}</p>
   </section>
 </section>
 <section class="detail" id="create_guild_emoji/3">
@@ -2047,7 +1981,7 @@ the channel's permission overwrites</li><li><code class="inline">:parent_id</cod
     </a>
     <h1 class="signature">create_guild_emoji(guild_id, options, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L943" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L909" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2078,9 +2012,7 @@ the channel's permission overwrites</li><li><code class="inline">:parent_id</cod
   <a href="#create_guild_emoji/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">image = &quot;data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=&quot;
-
-Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: image, roles: [])</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>image = &quot;data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=&quot;</p><p>Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: image, roles: [])</p>
   </section>
 </section>
 <section class="detail" id="create_guild_integrations/2">
@@ -2092,7 +2024,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
     </a>
     <h1 class="signature">create_guild_integrations(guild_id, options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1789" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1755" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2124,7 +2056,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
     </a>
     <h1 class="signature">create_guild_role(guild_id, options, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1549" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1515" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2154,7 +2086,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
   <a href="#create_guild_role/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.create_guild_role(41771983423143937, name: &quot;remedy-club&quot;, hoist: true)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.create_guild_role(41771983423143937, name: &quot;remedy-club&quot;, hoist: true)</p>
   </section>
 </section>
 <section class="detail" id="create_interaction_response/2">
@@ -2166,7 +2098,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
     </a>
     <h1 class="signature">create_interaction_response(interaction, response)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2621" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2587" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2197,7 +2129,7 @@ Remedy.Api.create_guild_emoji(43189401384091, name: &quot;remedy&quot;, image: i
     </a>
     <h1 class="signature">create_interaction_response(id, token, response)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2652" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2618" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2227,13 +2159,11 @@ object. See the linked documentation.</li></ul><h2 id="create_interaction_respon
   <a href="#create_interaction_response/3-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2804879265-1">%{</span><span class="w">
-  </span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
-  </span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2804879265-2">%{</span><span class="w">
-    </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;I copy and pasted this code.&quot;</span><span class="w">
-  </span><span class="p" data-group-id="2804879265-2">}</span><span class="w">
-</span><span class="p" data-group-id="2804879265-1">}</span><span class="w">
-</span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_interaction_response</span><span class="p" data-group-id="2804879265-3">(</span><span class="n">interaction</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p" data-group-id="2804879265-3">)</span></code></pre><p>As an alternative to passing the interaction ID and token, the
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>response = %{
+  type: 4,
+  data: %{</p><pre><code class="makeup elixir"><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;I copy and pasted this code.&quot;</span></code></pre><p>  }
+}
+Remedy.Api.create_interaction_response(interaction, response)</p><p>As an alternative to passing the interaction ID and token, the
 original <code class="inline">t:Remedy.Struct.Interaction.t/0</code> can also be passed
 directly. See <code class="inline">create_interaction_response/1</code>.</p>
   </section>
@@ -2267,13 +2197,13 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
 
       </div>
 
-<p>Posts a message to a guild text or DM channel.</p><h2 id="create_message/2-required-intents" class="section-heading">
-  <a href="#create_message/2-required-intents" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Required Intents
+<p>Posts a message to a guild text or DM channel.</p><h2 id="create_message/2-intents" class="section-heading">
+  <a href="#create_message/2-intents" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Intents
 </h2>
-<ul><li><code class="inline">:VIEW_CHANNEL</code></li><li><code class="inline">:SEND_MESSAGES</code></li><li><code class="inline">:SEND_MESSAGES_TTS</code> (optional)</li></ul><h2 id="create_message/2-fired-events" class="section-heading">
-  <a href="#create_message/2-fired-events" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Fired Events
+<ul><li><code class="inline">:VIEW_CHANNEL</code></li><li><code class="inline">:SEND_MESSAGES</code></li><li><code class="inline">:SEND_MESSAGES_TTS</code> (optional)</li></ul><h2 id="create_message/2-events" class="section-heading">
+  <a href="#create_message/2-events" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Events
 </h2>
 <ul><li><code class="inline">t:Remedy.Gateway.Dispatch.message_create/0</code>.</li></ul><h2 id="create_message/2-options" class="section-heading">
   <a href="#create_message/2-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
@@ -2287,40 +2217,8 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
   <a href="#create_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="0041381730-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="0041381730-1">)</span><span class="w">
-</span><span class="p" data-group-id="0041381730-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0041381730-3">%</span><span class="nc" data-group-id="0041381730-3">Message</span><span class="p" data-group-id="0041381730-3">{</span><span class="p" data-group-id="0041381730-3">}</span><span class="p" data-group-id="0041381730-2">}</span></code></pre>
-  </section>
-</section>
-<section class="detail" id="create_message!/2">
-
-  <div class="detail-header">
-    <a href="#create_message!/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_message!(channel_id, options)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L179" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>create_message!(
-  Remedy.Schema.Channel.id() | <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(),
-  <a href="#t:options/0">options</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
-) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()</pre>
-
-      </div>
-
-<p>Same as <a href="#create_message/2"><code class="inline">create_message/2</code></a>, but raises <a href="Remedy.ApiError.html"><code class="inline">Remedy.ApiError</code></a> in case of failure.</p>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="9790197618-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="9790197618-1">)</span><span class="w">
+</span><span class="p" data-group-id="9790197618-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9790197618-3">%</span><span class="nc" data-group-id="9790197618-3">Message</span><span class="p" data-group-id="9790197618-3">{</span><span class="p" data-group-id="9790197618-3">}</span><span class="p" data-group-id="9790197618-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_reaction/3">
@@ -2332,7 +2230,7 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
     </a>
     <h1 class="signature">create_reaction(channel_id, message_id, emoji)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L313" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L292" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2357,13 +2255,8 @@ fires a <code class="inline">t:Remedy.Consumer.message_reaction_add/0</code> eve
   <a href="#create_reaction/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir"># Using a Remedy.Struct.Emoji.
-emoji = %Remedy.Struct.Emoji{id: 43819043108, name: &quot;foxbot&quot;}
-Remedy.Api.create_reaction(123123123123, 321321321321, emoji)
-
-# Using a base 16 emoji string.
-Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)
-</code></pre><p>For other emoji string examples, see <code class="inline">t:Remedy.Struct.Emoji.api_name/0</code>.</p>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><h1>Using a Remedy.Struct.Emoji.</h1><p>emoji = %Remedy.Struct.Emoji{id: 43819043108, name: &quot;foxbot&quot;}
+Remedy.Api.create_reaction(123123123123, 321321321321, emoji)</p><h1>Using a base 16 emoji string.</h1><p>Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)</p><p>For other emoji string examples, see <code class="inline">t:Remedy.Struct.Emoji.api_name/0</code>.</p>
   </section>
 </section>
 <section class="detail" id="create_webhook/3">
@@ -2377,7 +2270,7 @@ Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)
     </a>
     <h1 class="signature">create_webhook(channel_id, args, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2107" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2073" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2414,7 +2307,7 @@ Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)
     </a>
     <h1 class="signature">delete_all_reactions(channel_id, message_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L418" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L397" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2447,7 +2340,7 @@ Remedy.Api.create_reaction(123123123123, 321321321321, &quot;😁&quot;)
     </a>
     <h1 class="signature">delete_channel(channel_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L523" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L500" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2473,8 +2366,8 @@ for each channel under the category.</p><p>If successful, returns <code class="i
   <a href="#delete_channel/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.delete_channel(421533712753360896)
-{:ok, %Remedy.Struct.Channel{id: 421533712753360896}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">delete_channel</span><span class="p" data-group-id="6705770064-1">(</span><span class="mi">421533712753360896</span><span class="p" data-group-id="6705770064-1">)</span><span class="w">
+</span><span class="p" data-group-id="6705770064-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6705770064-3">%</span><span class="nc" data-group-id="6705770064-3">Remedy.Struct.Channel</span><span class="p" data-group-id="6705770064-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">421533712753360896</span><span class="p" data-group-id="6705770064-3">}</span><span class="p" data-group-id="6705770064-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_channel_permissions/3">
@@ -2488,7 +2381,7 @@ for each channel under the category.</p><p>If successful, returns <code class="i
     </a>
     <h1 class="signature">delete_channel_permissions(channel_id, overwrite_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L717" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L694" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2524,7 +2417,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">delete_global_application_command(application_id \\ Cache.bot().id, command_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2500" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2466" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2537,7 +2430,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>delete_global_application_command(Remedy.Schema.User.id(), Snowflake.t()) ::
+          <pre>delete_global_application_command(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(), Snowflake.t()) ::
   {:ok} | <a href="#t:error/0">error</a>()</pre>
 
       </div>
@@ -2559,7 +2452,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">delete_guild(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1137" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1103" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2581,8 +2474,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
   <a href="#delete_guild/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.delete_guild(81384788765712384)
-{:ok}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.delete_guild(81384788765712384)</p>
   </section>
 </section>
 <section class="detail" id="delete_guild_application_command/3">
@@ -2596,7 +2488,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
     </a>
     <h1 class="signature">delete_guild_application_command(application_id \\ Cache.bot().id, guild_id, command_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2569" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2535" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2610,7 +2502,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
       <div class="specs">
 
           <pre>delete_guild_application_command(
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.Guild.id(),
   Snowflake.t()
 ) :: {:ok} | <a href="#t:error/0">error</a>()</pre>
@@ -2631,7 +2523,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
     </a>
     <h1 class="signature">delete_guild_emoji(guild_id, emoji_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1013" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L979" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2665,7 +2557,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
     </a>
     <h1 class="signature">delete_guild_integrations(guild_id, integration_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1820" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1786" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2696,7 +2588,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
     </a>
     <h1 class="signature">delete_guild_role(guild_id, role_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1664" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1630" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2722,7 +2614,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
   <a href="#delete_guild_role/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.delete_guild_role(41771983423143937, 392817238471936)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.delete_guild_role(41771983423143937, 392817238471936)</p>
   </section>
 </section>
 <section class="detail" id="delete_interaction_followup_message/3">
@@ -2736,7 +2628,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
     </a>
     <h1 class="signature">delete_interaction_followup_message(application_id \\ Cache.bot().id, token, message_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2684" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2650" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2750,7 +2642,7 @@ It fires the <code class="inline">t:Remedy.Consumer.guild_delete/0</code> event.
       <div class="specs">
 
           <pre>delete_interaction_followup_message(
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.Interaction.token(),
   Remedy.Schema.Message.id()
 ) :: {:ok} | <a href="#t:error/0">error</a>()</pre>
@@ -2774,7 +2666,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">delete_invite(invite_code)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1895" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1861" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2796,7 +2688,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#delete_invite/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.delete_invite(&quot;zsjUsC&quot;)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.delete_invite(&quot;zsjUsC&quot;)</p>
   </section>
 </section>
 <section class="detail" id="delete_message/1">
@@ -2808,7 +2700,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">delete_message(message)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L262" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L241" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2838,7 +2730,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">delete_message(channel_id, message_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L282" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L261" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2861,7 +2753,7 @@ fires the <code class="inline">MESSAGE_DELETE</code> event.</p><p>If successful,
   <a href="#delete_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.delete_message(43189401384091, 43189401384091)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.delete_message(43189401384091, 43189401384091)</p>
   </section>
 </section>
 <section class="detail" id="delete_own_reaction/3">
@@ -2873,7 +2765,7 @@ fires the <code class="inline">MESSAGE_DELETE</code> event.</p><p>If successful,
     </a>
     <h1 class="signature">delete_own_reaction(channel_id, message_id, emoji)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L334" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L313" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2907,7 +2799,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
     </a>
     <h1 class="signature">delete_pinned_channel_message(channel_id, message_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L880" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L846" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2942,7 +2834,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
     </a>
     <h1 class="signature">delete_reaction(channel_id, message_id, emoji)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L375" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L354" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2972,7 +2864,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
     </a>
     <h1 class="signature">delete_user_reaction(channel_id, message_id, emoji, user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L355" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L334" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2989,7 +2881,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
   Remedy.Schema.Channel.id(),
   Remedy.Schema.Message.id(),
   <a href="#t:emoji/0">emoji</a>(),
-  Remedy.Schema.User.id()
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>()
 ) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
 
       </div>
@@ -3009,7 +2901,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
     </a>
     <h1 class="signature">delete_webhook(webhook_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2252" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2218" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3045,7 +2937,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
     </a>
     <h1 class="signature">edit_channel_permissions(channel_id, overwrite_id, permission_info, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L699" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L676" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3087,7 +2979,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
     </a>
     <h1 class="signature">edit_global_application_command(application_id \\ Cache.bot().id, command_id, command)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2480" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2446" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3100,7 +2992,7 @@ permissions. It fires a <code class="inline">t:Remedy.Consumer.message_reaction_
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>edit_global_application_command(Remedy.Schema.User.id(), Snowflake.t(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
+          <pre>edit_global_application_command(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(), Snowflake.t(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) ::
   {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | <a href="#t:error/0">error</a>()</pre>
 
       </div>
@@ -3129,7 +3021,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">edit_guild_application_command(application_id \\ Cache.bot().id, guild_id, command_id, command)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2554" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2520" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3143,7 +3035,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
       <div class="specs">
 
           <pre>edit_guild_application_command(
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.Guild.id(),
   Snowflake.t(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
@@ -3163,7 +3055,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">edit_message(message, options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L252" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L231" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3194,7 +3086,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
     </a>
     <h1 class="signature">edit_message(channel_id, message_id, options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L219" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L208" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3224,48 +3116,12 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#edit_message/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello world!&quot;)
-
-Remedy.Api.edit_message(43189401384091, 1894013840914098, &quot;hello world!&quot;)
-
-import Remedy.Struct.Embed
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello world!&quot;)</p><p>Remedy.Api.edit_message(43189401384091, 1894013840914098, &quot;hello world!&quot;)</p><p>import Remedy.Struct.Embed
 embed =
   %Remedy.Struct.Embed{}
   |&gt; put_title(&quot;embed&quot;)
   |&gt; put_description(&quot;new desc&quot;)
-Remedy.Api.edit_message(43189401384091, 1894013840914098, embed: embed)
-
-Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello world!&quot;, embed: embed)</code></pre>
-  </section>
-</section>
-<section class="detail" id="edit_message!/3">
-
-  <div class="detail-header">
-    <a href="#edit_message!/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">edit_message!(channel_id, message_id, options)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L241" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>edit_message!(Remedy.Schema.Channel.id(), Remedy.Schema.Message.id(), <a href="#t:options/0">options</a>()) ::
-  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>() | <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()</pre>
-
-      </div>
-
-<p>Same as <a href="#edit_message/3"><code class="inline">edit_message/3</code></a>, but raises <a href="Remedy.ApiError.html"><code class="inline">Remedy.ApiError</code></a> in case of failure.</p>
+Remedy.Api.edit_message(43189401384091, 1894013840914098, embed: embed)</p><p>Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello world!&quot;, embed: embed)</p>
   </section>
 </section>
 <section class="detail" id="execute_git_webhook/3">
@@ -3279,7 +3135,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">execute_git_webhook(webhook_id, webhook_token, wait \\ false)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2361" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2327" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3294,7 +3150,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
 
           <pre>execute_git_webhook(
   Remedy.Schema.Webhook.id(),
-  Remedy.Schema.Webhook.token(),
+  <a href="Remedy.Schema.Webhook.html#t:token/0">Remedy.Schema.Webhook.token</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
 ) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
 
@@ -3318,7 +3174,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">execute_slack_webhook(webhook_id, webhook_token, wait \\ false)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2348" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2314" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3333,7 +3189,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
 
           <pre>execute_slack_webhook(
   Remedy.Schema.Webhook.id(),
-  Remedy.Schema.Webhook.token(),
+  <a href="Remedy.Schema.Webhook.html#t:token/0">Remedy.Schema.Webhook.token</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
 ) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
 
@@ -3357,7 +3213,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">execute_webhook(webhook_id, webhook_token, args, wait \\ false)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2319" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2285" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3371,8 +3227,8 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
       <div class="specs">
 
           <pre>execute_webhook(
-  Remedy.Schema.Webhook.id() | Remedy.Schema.User.id(),
-  Remedy.Schema.Webhook.token() | Remedy.Schema.Interaction.token(),
+  Remedy.Schema.Webhook.id() | <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
+  <a href="Remedy.Schema.Webhook.html#t:token/0">Remedy.Schema.Webhook.token</a>() | Remedy.Schema.Interaction.token(),
   <a href="#t:matrix/0">matrix</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
 ) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
@@ -3391,7 +3247,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">get_application_information()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2390" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2356" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3412,22 +3268,20 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
   <a href="#get_application_information/0-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_application_information</span><span class="w">
-</span><span class="p" data-group-id="3123947009-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="3123947009-2">%{</span><span class="w">
-  </span><span class="ss">bot_public</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-  </span><span class="ss">bot_require_code_grant</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-  </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
-  </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Baba O-Riley&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">owner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3123947009-3">%{</span><span class="w">
-    </span><span class="ss">avatar</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
-    </span><span class="ss">discriminator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0042&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
-    </span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;i own a bot&quot;</span><span class="w">
-  </span><span class="p" data-group-id="3123947009-3">}</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="3123947009-2">}</span><span class="p" data-group-id="3123947009-1">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_application_information
+{:ok,
+%{
+  bot_public: false,
+  bot_require_code_grant: false,
+  description: &quot;Test&quot;,
+  icon: nil,
+  id: &quot;172150183260323840&quot;,
+  name: &quot;Baba O-Riley&quot;,
+  owner: %{</p><pre><code class="makeup elixir"><span class="ss">avatar</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+</span><span class="ss">discriminator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0042&quot;</span><span class="p">,</span><span class="w">
+</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;172150183260323840&quot;</span><span class="p">,</span><span class="w">
+</span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;i own a bot&quot;</span></code></pre><p>  },
+}}</p>
   </section>
 </section>
 <section class="detail" id="get_channel/1">
@@ -3439,7 +3293,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">get_channel(channel_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L436" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L414" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3461,8 +3315,8 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
   <a href="#get_channel/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_channel(381889573426429952)
-{:ok, %Remedy.Struct.Channel{id: 381889573426429952}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_channel</span><span class="p" data-group-id="9572052651-1">(</span><span class="mi">381889573426429952</span><span class="p" data-group-id="9572052651-1">)</span><span class="w">
+</span><span class="p" data-group-id="9572052651-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9572052651-3">%</span><span class="nc" data-group-id="9572052651-3">Remedy.Struct.Channel</span><span class="p" data-group-id="9572052651-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">381889573426429952</span><span class="p" data-group-id="9572052651-3">}</span><span class="p" data-group-id="9572052651-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_channel_invites/1">
@@ -3474,7 +3328,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">get_channel_invites(channel_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L744" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L721" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3497,8 +3351,8 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
   <a href="#get_channel_invites/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_channel_invites(43189401384091)
-{:ok, [%Remedy.Struct.Invite{} | _]}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get<em>channel_invites(43189401384091)
+{:ok, [%Remedy.Struct.Invite{} | </em>]}</p>
   </section>
 </section>
 <section class="detail" id="get_channel_message/2">
@@ -3510,7 +3364,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">get_channel_message(channel_id, message_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L612" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L589" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3532,7 +3386,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
   <a href="#get_channel_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_channel_message(43189401384091, 198238475613443)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_channel_message(43189401384091, 198238475613443)</p>
   </section>
 </section>
 <section class="detail" id="get_channel_messages/3">
@@ -3546,7 +3400,7 @@ Remedy.Api.edit_message(43189401384091, 1894013840914098, content: &quot;hello w
     </a>
     <h1 class="signature">get_channel_messages(channel_id, limit, locator \\ {})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L552" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L529" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3570,7 +3424,8 @@ return no messages.</p><p>If successful, returns <code class="inline">{:ok, mess
   <a href="#get_channel_messages/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_channel_messages(43189401384091, 5, {:before, 130230401384})</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_channel_messages</span><span class="p" data-group-id="3727748834-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3727748834-2">{</span><span class="ss">:before</span><span class="p">,</span><span class="w"> </span><span class="mi">130230401384</span><span class="p" data-group-id="3727748834-2">}</span><span class="p" data-group-id="3727748834-1">)</span><span class="w">
+</span><span class="p" data-group-id="3727748834-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3727748834-4">%</span><span class="nc" data-group-id="3727748834-4">Message</span><span class="p" data-group-id="3727748834-4">{</span><span class="p" data-group-id="3727748834-4">}</span><span class="p" data-group-id="3727748834-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_channel_webhooks/1">
@@ -3582,7 +3437,7 @@ return no messages.</p><p>If successful, returns <code class="inline">{:ok, mess
     </a>
     <h1 class="signature">get_channel_webhooks(channel_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2127" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2093" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3616,7 +3471,7 @@ return no messages.</p><p>If successful, returns <code class="inline">{:ok, mess
     </a>
     <h1 class="signature">get_current_user()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1925" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1891" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3650,7 +3505,7 @@ than pulling from our cache.</p><p>If the request is successful, this function r
     </a>
     <h1 class="signature">get_current_user_guilds(options \\ [])</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1980" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1946" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3678,8 +3533,8 @@ ID</li><li><code class="inline">:limit</code> (integer) - max number of guilds t
   <a href="#get_current_user_guilds/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">iex&gt; Remedy.Api.get_current_user_guilds(limit: 1)
-{:ok, [%Remedy.Struct.Guild{}]}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>iex&gt; Remedy.Api.get_current_user_guilds(limit: 1)
+{:ok, [%Remedy.Struct.Guild{}]}</p>
   </section>
 </section>
 <section class="detail" id="get_global_application_commands/1">
@@ -3693,7 +3548,7 @@ ID</li><li><code class="inline">:limit</code> (integer) - max number of guilds t
     </a>
     <h1 class="signature">get_global_application_commands(application_id \\ Cache.bot().id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2424" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2390" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3706,7 +3561,7 @@ ID</li><li><code class="inline">:limit</code> (integer) - max number of guilds t
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get_global_application_commands(Remedy.Schema.User.id()) ::
+          <pre>get_global_application_commands(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>()) ::
   {:ok, [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]} | <a href="#t:error/0">error</a>()</pre>
 
       </div>
@@ -3725,16 +3580,14 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_global_application_commands/1-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">get_global_application_commands</span><span class="w">
-</span><span class="p" data-group-id="8763206206-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
- </span><span class="p" data-group-id="8763206206-2">[</span><span class="w">
-   </span><span class="p" data-group-id="8763206206-3">%{</span><span class="w">
-     </span><span class="ss">application_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;455589479713865749&quot;</span><span class="p">,</span><span class="w">
-     </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w">
-     </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;789841753196331029&quot;</span><span class="p">,</span><span class="w">
-     </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="w">
-   </span><span class="p" data-group-id="8763206206-3">}</span><span class="w">
- </span><span class="p" data-group-id="8763206206-2">]</span><span class="p" data-group-id="8763206206-1">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>iex&gt; Remedy.Api.get_global_application_commands
+{:ok,
+ [
+   %{</p><pre><code class="makeup elixir"><span class="w"> </span><span class="ss">application_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;455589479713865749&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;789841753196331029&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span></code></pre><p>   }
+ ]}</p>
   </section>
 </section>
 <section class="detail" id="get_guild/1">
@@ -3746,7 +3599,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1054" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1020" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3768,8 +3621,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_guild(81384788765712384)
-{:ok, %Remedy.Struct.Guild{id: 81384788765712384}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_guild(81384788765712384)
+{:ok, %Remedy.Struct.Guild{id: 81384788765712384}}</p>
   </section>
 </section>
 <section class="detail" id="get_guild_application_commands/2">
@@ -3783,7 +3636,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_application_commands(application_id \\ Cache.bot().id, guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2535" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2501" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3797,7 +3650,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
       <div class="specs">
 
           <pre>get_guild_application_commands(
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.Guild.id()
 ) :: {:ok, [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()]} | <a href="#t:error/0">error</a>()</pre>
 
@@ -3817,7 +3670,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_audit_log(guild_id, options \\ [])</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1035" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1001" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3851,7 +3704,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_ban(guild_id, user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1452" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1418" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3883,7 +3736,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_bans(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1464" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1430" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3912,7 +3765,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_channels(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1155" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1121" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3934,8 +3787,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_channels/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_guild_channels(81384788765712384)
-{:ok, [%Remedy.Struct.Channel{guild_id: 81384788765712384} | _]}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get<em>guild_channels(81384788765712384)
+{:ok, [%Remedy.Struct.Channel{guild_id: 81384788765712384} | </em>]}</p>
   </section>
 </section>
 <section class="detail" id="get_guild_embed/1">
@@ -3947,7 +3800,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_embed(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1840" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1806" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -3976,7 +3829,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_emoji(guild_id, emoji_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L908" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L874" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4006,7 +3859,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_integrations(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1770" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1736" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4036,7 +3889,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_invites(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1757" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1723" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4058,8 +3911,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_invites/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_guild_invites(81384788765712384)
-{:ok, [%Remedy.Struct.Invite{} | _]}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get<em>guild_invites(81384788765712384)
+{:ok, [%Remedy.Struct.Invite{} | </em>]}</p>
   </section>
 </section>
 <section class="detail" id="get_guild_member/2">
@@ -4071,7 +3924,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_member(guild_id, user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1239" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1205" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4084,7 +3937,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get_guild_member(Remedy.Schema.Guild.id(), Remedy.Schema.User.id()) ::
+          <pre>get_guild_member(Remedy.Schema.Guild.id(), <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>()) ::
   <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>()}</pre>
 
       </div>
@@ -4093,7 +3946,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_member/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_guild_member(4019283754613, 184937267485)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_guild_member(4019283754613, 184937267485)</p>
   </section>
 </section>
 <section class="detail" id="get_guild_prune_count/2">
@@ -4105,7 +3958,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_prune_count(guild_id, days)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1691" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1657" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4127,8 +3980,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_prune_count/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_guild_prune_count(81384788765712384, 1)
-{:ok, %{pruned: 0}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_guild_prune_count(81384788765712384, 1)
+{:ok, %{pruned: 0}}</p>
   </section>
 </section>
 <section class="detail" id="get_guild_roles/1">
@@ -4140,7 +3993,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_roles(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1518" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1484" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4162,7 +4015,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_roles/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_guild_roles(147362948571673)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_guild_roles(147362948571673)</p>
   </section>
 </section>
 <section class="detail" id="get_guild_webhooks/1">
@@ -4174,7 +4027,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_guild_webhooks(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2140" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2106" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4210,7 +4063,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
     </a>
     <h1 class="signature">get_invite(invite_code, options \\ [])</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1874" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1840" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4236,9 +4089,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_invite/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_invite(&quot;zsjUsC&quot;)
-
-Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_invite(&quot;zsjUsC&quot;)</p><p>Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</p>
   </section>
 </section>
 <section class="detail" id="get_pinned_messages/1">
@@ -4250,7 +4101,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_pinned_messages(channel_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L840" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L806" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4272,7 +4123,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
   <a href="#get_pinned_messages/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_pinned_messages(43189401384091)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get_pinned_messages(43189401384091)</p>
   </section>
 </section>
 <section class="detail" id="get_reactions/3">
@@ -4284,7 +4135,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_reactions(channel_id, message_id, emoji)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L398" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L377" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4314,7 +4165,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_token()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2763" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2729" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4343,7 +4194,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_user(user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1908" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1874" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4356,7 +4207,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get_user(Remedy.Schema.User.id()) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()}</pre>
+          <pre>get_user(<a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>()) :: <a href="#t:error/0">error</a>() | {:ok, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()}</pre>
 
       </div>
 
@@ -4373,7 +4224,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_user_connections()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2073" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2039" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4402,7 +4253,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_user_dms()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2021" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1987" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4423,8 +4274,8 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
   <a href="#get_user_dms/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.get_user_dms()
-{:ok, [%Remedy.Struct.Channel{type: 1} | _]}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.get<em>user_dms()
+{:ok, [%Remedy.Struct.Channel{type: 1} | </em>]}</p>
   </section>
 </section>
 <section class="detail" id="get_voice_region/1">
@@ -4436,7 +4287,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_voice_region(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1736" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1702" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4465,7 +4316,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_webhook(webhook_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2153" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2119" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4499,7 +4350,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
     </a>
     <h1 class="signature">get_webhook_with_token(webhook_id, webhook_token)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2171" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2137" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4514,7 +4365,7 @@ Remedy.Api.get_invite(&quot;zsjUsC&quot;, with_counts: true)</code></pre>
 
           <pre>get_webhook_with_token(
   Remedy.Schema.Webhook.id(),
-  Remedy.Schema.Webhook.token()
+  <a href="Remedy.Schema.Webhook.html#t:token/0">Remedy.Schema.Webhook.token</a>()
 ) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Struct.Webhook.t()}</pre>
 
       </div>
@@ -4536,7 +4387,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
     </a>
     <h1 class="signature">leave_guild(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1997" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1963" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4565,7 +4416,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
     </a>
     <h1 class="signature">list_guild_emojis(guild_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L894" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L860" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4597,7 +4448,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
     </a>
     <h1 class="signature">list_guild_members(guild_id, options \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1262" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1228" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4623,7 +4474,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
   <a href="#list_guild_members/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.list_guild_members(41771983423143937, limit: 1)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.list_guild_members(41771983423143937, limit: 1)</p>
   </section>
 </section>
 <section class="detail" id="list_voice_regions/0">
@@ -4635,7 +4486,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
     </a>
     <h1 class="signature">list_voice_regions()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2083" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2049" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4666,7 +4517,7 @@ authentication.</p><h2 id="get_webhook_with_token/2-parameters" class="section-h
     </a>
     <h1 class="signature">modify_channel(channel_id, options, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L484" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L462" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4705,11 +4556,12 @@ id of the new parent category for a channel</li></ul><h2 id="modify_channel/3-ex
   <a href="#modify_channel/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_channel(41771983423143933, name: &quot;elixir-remedy&quot;, topic: &quot;remedy discussion&quot;)
-{:ok, %Remedy.Struct.Channel{id: 41771983423143933, name: &quot;elixir-remedy&quot;, topic: &quot;remedy discussion&quot;}}
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_channel</span><span class="p" data-group-id="0647935386-1">(</span><span class="mi">41771983423143933</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elixir-remedy&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;remedy discussion&quot;</span><span class="p" data-group-id="0647935386-1">)</span><span class="w">
+</span><span class="p" data-group-id="0647935386-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0647935386-3">%</span><span class="nc" data-group-id="0647935386-3">Remedy.Struct.Channel</span><span class="p" data-group-id="0647935386-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">41771983423143933</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elixir-remedy&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;remedy discussion&quot;</span><span class="p" data-group-id="0647935386-3">}</span><span class="p" data-group-id="0647935386-2">}</span><span class="w">
 
-Remedy.Api.modify_channel(41771983423143933)
-{:ok, %Remedy.Struct.Channel{id: 41771983423143933}}</code></pre>
+
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_channel</span><span class="p" data-group-id="0647935386-4">(</span><span class="mi">41771983423143933</span><span class="p" data-group-id="0647935386-4">)</span><span class="w">
+</span><span class="p" data-group-id="0647935386-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0647935386-6">%</span><span class="nc" data-group-id="0647935386-6">Remedy.Struct.Channel</span><span class="p" data-group-id="0647935386-6">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">41771983423143933</span><span class="p" data-group-id="0647935386-6">}</span><span class="p" data-group-id="0647935386-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_current_user/1">
@@ -4721,7 +4573,7 @@ Remedy.Api.modify_channel(41771983423143933)
     </a>
     <h1 class="signature">modify_current_user(options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1946" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1912" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4746,7 +4598,7 @@ Remedy.Api.modify_channel(41771983423143933)
   <a href="#modify_current_user/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_current_user(avatar: &quot;data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=&quot;)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_current_user(avatar: &quot;data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=&quot;)</p>
   </section>
 </section>
 <section class="detail" id="modify_current_user_nick/2">
@@ -4760,7 +4612,7 @@ Remedy.Api.modify_channel(41771983423143933)
     </a>
     <h1 class="signature">modify_current_user_nick(guild_id, options \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1372" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1338" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4786,8 +4638,8 @@ Remedy.Api.modify_channel(41771983423143933)
   <a href="#modify_current_user_nick/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_current_user_nick(41771983423143937, nick: &quot;Remedy&quot;)
-{:ok, %{nick: &quot;Remedy&quot;}}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_current_user_nick(41771983423143937, nick: &quot;Remedy&quot;)
+{:ok, %{nick: &quot;Remedy&quot;}}</p>
   </section>
 </section>
 <section class="detail" id="modify_guild/3">
@@ -4803,7 +4655,7 @@ Remedy.Api.modify_channel(41771983423143933)
     </a>
     <h1 class="signature">modify_guild(guild_id, options \\ [], reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1101" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1067" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4839,8 +4691,8 @@ where admins and moderators receive notices from Discord in public guilds</li></
   <a href="#modify_guild/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="nc">Remedy.Api</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="3154374004-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="3154374004-1">)</span><span class="w">
-</span><span class="p" data-group-id="3154374004-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3154374004-3">%</span><span class="nc" data-group-id="3154374004-3">Remedy.Struct.Guild</span><span class="p" data-group-id="3154374004-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="3154374004-3">}</span><span class="p" data-group-id="3154374004-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_guild(451824027976073216, name: &quot;Nose Drum&quot;)
+{:ok, %Remedy.Struct.Guild{id: 451824027976073216, name: &quot;Nose Drum&quot;, ...}}</p>
   </section>
 </section>
 <section class="detail" id="modify_guild_channel_positions/2">
@@ -4852,7 +4704,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
     </a>
     <h1 class="signature">modify_guild_channel_positions(guild_id, positions)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1221" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1187" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4876,8 +4728,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
   <a href="#modify_guild_channel_positions/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_guild_channel_positions(279093381723062272, [%{id: 351500354581692420, position: 2}])
-{:ok}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_guild_channel_positions(279093381723062272, [%{id: 351500354581692420, position: 2}])</p>
   </section>
 </section>
 <section class="detail" id="modify_guild_embed/2">
@@ -4889,7 +4740,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
     </a>
     <h1 class="signature">modify_guild_embed(guild_id, options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1849" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1815" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4922,7 +4773,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
     </a>
     <h1 class="signature">modify_guild_emoji(guild_id, emoji_id, options \\ %{}, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L984" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L950" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -4953,7 +4804,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
   <a href="#modify_guild_emoji/4-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_guild_emoji(43189401384091, 4314301984301, name: &quot;elixir&quot;, roles: [])</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_guild_emoji(43189401384091, 4314301984301, name: &quot;elixir&quot;, roles: [])</p>
   </section>
 </section>
 <section class="detail" id="modify_guild_integrations/3">
@@ -4965,7 +4816,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
     </a>
     <h1 class="signature">modify_guild_integrations(guild_id, integration_id, options)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1809" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1775" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5000,7 +4851,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
     </a>
     <h1 class="signature">modify_guild_member(guild_id, user_id, options \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1344" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1310" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5015,7 +4866,7 @@ where admins and moderators receive notices from Discord in public guilds</li></
 
           <pre>modify_guild_member(
   Remedy.Schema.Guild.id(),
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   <a href="#t:options/0">options</a>()
 ) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
 
@@ -5031,8 +4882,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
   <a href="#modify_guild_member/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_guild_member(41771983423143937, 637162356451, nick: &quot;Remedy&quot;)
-{:ok}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_guild_member(41771983423143937, 637162356451, nick: &quot;Remedy&quot;)</p>
   </section>
 </section>
 <section class="detail" id="modify_guild_role/4">
@@ -5046,7 +4896,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
     </a>
     <h1 class="signature">modify_guild_role(guild_id, role_id, options, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1628" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1594" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5077,7 +4927,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
   <a href="#modify_guild_role/4-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: &quot;foo-bar&quot;)</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: &quot;foo-bar&quot;)</p>
   </section>
 </section>
 <section class="detail" id="modify_guild_role_positions/3">
@@ -5091,7 +4941,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
     </a>
     <h1 class="signature">modify_guild_role_positions(guild_id, positions, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1588" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1554" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5117,7 +4967,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
   <a href="#modify_guild_role_positions/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])</p>
   </section>
 </section>
 <section class="detail" id="modify_webhook/3">
@@ -5131,7 +4981,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
     </a>
     <h1 class="signature">modify_webhook(webhook_id, args, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2195" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2161" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5170,7 +5020,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
     </a>
     <h1 class="signature">modify_webhook_with_token(webhook_id, webhook_token, args, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2231" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2197" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5185,7 +5035,7 @@ It situationally requires the <code class="inline">MANAGE_NICKNAMES</code>, <cod
 
           <pre>modify_webhook_with_token(
   Remedy.Schema.Webhook.id(),
-  Remedy.Schema.Webhook.token(),
+  <a href="Remedy.Schema.Webhook.html#t:token/0">Remedy.Schema.Webhook.token</a>(),
   %{name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), avatar: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()},
   Remedy.Schema.AuditLogEntry.reason()
 ) :: <a href="#t:error/0">error</a>() | {:ok, Remedy.Struct.Webhook.t()}</pre>
@@ -5211,7 +5061,7 @@ authentication.</p><h2 id="modify_webhook_with_token/4-parameters" class="sectio
     </a>
     <h1 class="signature">remove_guild_ban(guild_id, user_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1495" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1461" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5244,7 +5094,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
     </a>
     <h1 class="signature">remove_guild_member(guild_id, user_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1435" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1401" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5259,7 +5109,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
 
           <pre>remove_guild_member(
   Remedy.Schema.Guild.id(),
-  Remedy.Schema.User.id(),
+  <a href="Remedy.Schema.User.html#t:id/0">Remedy.Schema.User.id</a>(),
   Remedy.Schema.AuditLogEntry.reason()
 ) :: <a href="#t:error/0">error</a>() | {:ok}</pre>
 
@@ -5270,8 +5120,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
   <a href="#remove_guild_member/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="Elixir">Remedy.Api.remove_guild_member(1453827904102291, 18739485766253)
-{:ok}</code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt;</span></code></pre><p>Remedy.Api.remove_guild_member(1453827904102291, 18739485766253)</p>
   </section>
 </section>
 <section class="detail" id="remove_guild_member_role/4">
@@ -5285,7 +5134,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
     </a>
     <h1 class="signature">remove_guild_member_role(guild_id, user_id, role_id, reason \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1406" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1372" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5321,7 +5170,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">request(request)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2706" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2672" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5347,7 +5196,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">request(method, route, body \\ &quot;&quot;, options \\ [])</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2711" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2677" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5371,7 +5220,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">request_multipart(method, route, body, options \\ [])</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2723" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L2689" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5393,7 +5242,7 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
     </a>
     <h1 class="signature">start_typing(channel_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L821" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L787" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -5423,7 +5272,7 @@ The typing indicator lasts for about 8 seconds and then automatically stops.</p>
     </a>
     <h1 class="signature">sync_guild_integrations(guild_id, integration_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1831" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api.ex#L1797" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

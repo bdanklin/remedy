@@ -27,18 +27,14 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
   def new(params) do
     params
     |> changeset()
-    |> validate()
     |> apply_changes()
   end
 
   def update(model, params) do
     model
     |> changeset(params)
-    |> validate()
     |> apply_changes()
   end
-
-  def validate(changeset), do: changeset
 
   def changeset(params), do: changeset(%__MODULE__{}, params)
   def changeset(nil, params), do: changeset(%__MODULE__{}, params)

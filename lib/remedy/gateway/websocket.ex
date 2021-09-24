@@ -9,7 +9,6 @@ defmodule Remedy.Gateway.Websocket do
           shard: shard,
           gateway: gateway,
           session_id: session_id,
-          shard_pid: shard_pid,
           heartbeat_interval: heartbeat_interval,
           gun_worker: gun_worker,
           gun_conn: gun_conn,

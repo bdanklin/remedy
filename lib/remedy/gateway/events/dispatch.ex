@@ -14,15 +14,15 @@ defmodule Remedy.Gateway.Events.Dispatch do
         application: app,
         user: user,
         guilds: guilds,
-        shard: [_ | shard],
+        shard: [_shard | _out_of],
         user_settings: _user_settings,
         v: v
       }) do
     Cache.initialize_app(app)
     Cache.initialize_bot(user)
     Cache.update_guilds(guilds)
-    Session.ready(shard, v, session_id)
-    socket
+
+    %Websocket{socket | v: v, session_id: session_id}
   end
 
   def digest(%Websocket{payload_dispatch_event: payload_dispatch_event} = socket, payload) do

@@ -20,7 +20,6 @@ defmodule Remedy.Gateway.Payload do
           "op" => op_from_mod(__MODULE__)
         }
         |> flatten()
-        |> IO.inspect(label: "TRYING TO SEND:")
         |> :erlang.term_to_binary()
         |> Remedy.Gun.send(socket)
       end
@@ -90,7 +89,7 @@ defmodule Remedy.Gateway.Payload do
 
   @spec digest(Websocket.t(), any, binary) :: Websocket.t()
   def digest(socket, event, payload) do
-    Logger.warn("PAYLOAD DIGEST: #{inspect(event)}")
+    Logger.warn("#{inspect(event)}")
     module_delegate(event).digest(socket, payload)
   end
 
@@ -100,7 +99,7 @@ defmodule Remedy.Gateway.Payload do
 
   @spec send(Websocket.t(), any, any) :: any
   def send(socket, event, opts \\ []) when is_op_event(event) do
-    Logger.warn("PAYLOAD SEND: #{inspect(event)}")
+    Logger.warn("#{inspect(event)}")
     module_delegate(event).build_payload(socket, opts)
   end
 

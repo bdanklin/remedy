@@ -134,10 +134,11 @@ defmodule Remedy.Schema.Guild do
   def validate(changeset), do: changeset
 
   def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
+  def changeset(nil, params), do: changeset(%__MODULE__{id: params.id}, params)
 
   def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
+    model
+    |> cast(params, castable())
     |> cast_embeds()
   end
 

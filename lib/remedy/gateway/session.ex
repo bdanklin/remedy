@@ -8,26 +8,22 @@ defmodule Remedy.Gateway.Session do
 
   ### External
 
-  def ready(shard, v, session_id) do
-    GenServer.call(:"Shard-#{shard}", {:ready, %{v: v, session_id: session_id}})
-  end
-
   def update_presence(shard, opts \\ []) do
-    GenServer.cast(:"Shard-#{shard}", {:status_update, opts})
+    GenServer.cast(:"Session-#{shard}", {:status_update, opts})
   end
 
   def voice_status_update(shard, opts \\ []) do
-    GenServer.cast(:"Shard-#{shard}", {:update_voice_state, opts})
+    GenServer.cast(:"Session-#{shard}", {:update_voice_state, opts})
   end
 
   def request_guild_members(shard, opts \\ []) do
-    GenServer.cast(:"Shard-#{shard}", {:request_guild_members, opts})
+    GenServer.cast(:"Session-#{shard}", {:request_guild_members, opts})
   end
 
   ### Internal
 
-  def start_link(opts) do
-    GenServer.start_link(__MODULE__, opts)
+  def start_link(%{shard: shard} = opts) do
+    GenServer.start_link(__MODULE__, opts, name: :"Session-#{shard}")
   end
 
   def init(%{gateway: gateway, shard: shard}) do
@@ -41,10 +37,6 @@ defmodule Remedy.Gateway.Session do
      |> Gun.open_await()
      |> Gun.upgrade_ws_await()
      |> Gun.zlib_init()}
-  end
-
-  def handle_cast({:ready, %{v: v, session_id: session_id}}, socket) do
-    {:noreply, %Websocket{socket | v: v, session_id: session_id}}
   end
 
   def handle_cast({:status_update, opts}, socket) do
@@ -69,12 +61,9 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_info(:HEARTBEAT, socket) do
-    Logger.debug("LUB")
-
     {:noreply,
      socket
-     |> Payload.send(:HEARTBEAT)
-     |> Pacemaker.start()}
+     |> Payload.send(:HEARTBEAT)}
   end
 
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
@@ -89,7 +78,6 @@ defmodule Remedy.Gateway.Session do
          payload_sequence: payload[:s],
          payload_dispatch_event: payload[:t]
      }
-     |> IO.inspect(label: "PAYLOAD RECEIVED")
      |> Payload.digest(event_from_op(payload.op), payload[:d])}
   end
 

@@ -1,4 +1,4 @@
-defmodule Remedy.Gateway.Dispatch do
+defmodule Remedy.Gateway.DispatchHandler do
   @moduledoc """
   Gateway Dispatching
   """
@@ -64,8 +64,6 @@ defmodule Remedy.Gateway.Dispatch do
   require Logger
 
   def handle({event, payload, socket} = dispatch) do
-    Logger.debug("#{event}")
-
     if Application.get_env(:remedy, :log_everything, false),
       do: Logger.debug("#{inspect(event)}, #{inspect(payload)}")
 
@@ -136,7 +134,7 @@ defmodule Remedy.Gateway.EventBuffer do
 
   use GenStage
 
-  alias Remedy.Gateway.{Dispatch, EventBroadcaster}
+  alias Remedy.Gateway.{DispatchHandler, EventBroadcaster}
 
   require Logger
 
@@ -156,7 +154,7 @@ defmodule Remedy.Gateway.EventBuffer do
 
   defp dispatch(events) do
     events
-    |> Enum.map(&Dispatch.handle/1)
+    |> Enum.map(&DispatchHandler.handle/1)
     |> List.flatten()
     |> Enum.filter(fn event -> event != :noop end)
   end

@@ -8,6 +8,9 @@ defmodule Remedy.Cache do
   alias Remedy.Cache.{DiscordApp, DiscordBot, Repo}
   alias Remedy.Schema.{App, Channel, Emoji, Guild, Message, Member, Presence, Role, Sticker, User}
 
+  @doc """
+  Set the initial condition of the bot.
+  """
   def initialize_bot(app) do
     User.new(app)
     |> DiscordBot.update()

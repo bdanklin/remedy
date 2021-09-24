@@ -7,6 +7,33 @@ defmodule Remedy.Gateway do
 
   @gateway_bot "/gateway/bot"
 
+  @spec gateway() :: {String.t(), integer}
+  def gateway do
+    case :ets.lookup(:gateway_url, "url") do
+      [] -> get_new_gateway_url()
+      [{"url", url, shards}] -> {url, shards}
+    end
+  end
+
+  defp get_new_gateway_url do
+    case Remedy.Api.request(:get, @gateway_bot, "") do
+      {:error, %{status_code: 401}} ->
+        raise("Authentication rejected, invalid token")
+
+      {:error, %{status_code: code, message: message}} ->
+        raise(Remedy.ApiError, status_code: code, message: message)
+
+      {:ok, body} ->
+        body = Jason.decode!(body)
+
+        "wss://" <> url = body["url"]
+        shards = if body["shards"], do: body["shards"], else: 1
+
+        :ets.insert(:gateway_url, {"url", url, shards})
+        {url, shards}
+    end
+  end
+
   def start_link(_args) do
     {url, gateway_shard_count} = gateway()
 
@@ -40,32 +67,6 @@ defmodule Remedy.Gateway do
   If by chance no gateway connection has been made, will fetch the url to use and store it
   for future use.
   """
-  @spec gateway() :: {String.t(), integer}
-  def gateway do
-    case :ets.lookup(:gateway_url, "url") do
-      [] -> get_new_gateway_url()
-      [{"url", url, shards}] -> {url, shards}
-    end
-  end
-
-  defp get_new_gateway_url do
-    case Remedy.Api.request(:get, @gateway_bot, "") do
-      {:error, %{status_code: 401}} ->
-        raise("Authentication rejected, invalid token")
-
-      {:error, %{status_code: code, message: message}} ->
-        raise(Remedy.ApiError, status_code: code, message: message)
-
-      {:ok, body} ->
-        body = Jason.decode!(body)
-
-        "wss://" <> url = body["url"]
-        shards = if body["shards"], do: body["shards"], else: 1
-
-        :ets.insert(:gateway_url, {"url", url, shards})
-        {url, shards}
-    end
-  end
 end
 
 defmodule Remedy.GatewayATC do

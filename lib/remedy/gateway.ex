@@ -16,7 +16,7 @@ defmodule Remedy.Gateway do
   end
 
   defp get_new_gateway_url do
-    case Remedy.Api.request(:get, @gateway_bot, "") do
+    case Remedy.Api.request(:get, @gateway_bot) do
       {:error, %{status_code: 401}} ->
         raise("Authentication rejected, invalid token")
 
@@ -60,13 +60,6 @@ defmodule Remedy.Gateway do
   def num_shards do
     gateway() |> Tuple.to_list() |> List.last()
   end
-
-  @doc """
-  Returns the gateway url and shard count for current websocket connections.
-
-  If by chance no gateway connection has been made, will fetch the url to use and store it
-  for future use.
-  """
 end
 
 defmodule Remedy.GatewayATC do

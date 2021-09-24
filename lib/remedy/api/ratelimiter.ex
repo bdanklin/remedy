@@ -3,11 +3,48 @@ defmodule Remedy.Api.Ratelimiter do
 
   use GenServer
 
-  alias Remedy.Api.{Base, Bucket}
+  alias Remedy.Api.Base
   alias Remedy.ApiError
   import Remedy.TimeHelpers
-
+  import Remedy.Api.Endpoints
   require Logger
+
+  def request(request) do
+    GenServer.call(__MODULE__, {:queue, request, nil}, :infinity)
+  end
+
+  def request(method, route, body \\ "", options \\ []) do
+    request = %{
+      method: method,
+      route: route,
+      body: body,
+      options: options,
+      headers: [{"content-type", "application/json"}]
+    }
+
+    GenServer.call(__MODULE__, {:queue, request, nil}, :infinity)
+  end
+
+  def request_multipart(method, route, body, options \\ []) do
+    request = %{
+      method: method,
+      route: route,
+      body:
+        {:multipart,
+         [
+           {
+             :file,
+             body.file,
+             {"form-data", [{"filename", body.content}]},
+             [{"tts", body.tts}]
+           }
+         ]},
+      options: options,
+      headers: [{"content-type", "multipart/form-data"}]
+    }
+
+    GenServer.call(__MODULE__, {:queue, request, nil}, :infinity)
+  end
 
   @typedoc """
   Return values of start functions.
@@ -25,12 +62,15 @@ defmodule Remedy.Api.Ratelimiter do
   """
   @spec start_link([]) :: on_start
   def start_link([]) do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+    GenServer.start_link(__MODULE__, [], name: Ratelimiter)
   end
 
   def init([]) do
     :ets.new(:ratelimit_buckets, [:set, :public, :named_table])
-    {:ok, []}
+    domain = to_charlist(domain())
+    {:ok, conn_pid} = :gun.open(domain, 443, %{retry: 1_000_000_000})
+    {:ok, :http2} = :gun.await_up(conn_pid)
+    {:ok, conn_pid}
   end
 
   @doc """
@@ -45,14 +85,14 @@ defmodule Remedy.Api.Ratelimiter do
     retry_time =
       request.route
       |> get_endpoint(request.method)
-      |> Bucket.get_ratelimit_timeout()
+      |> get_ratelimit_timeout()
 
     case retry_time do
       :now ->
-        GenServer.reply(original_from || from, do_request(request))
+        GenServer.reply(original_from || from, do_request(request, state))
 
       time when time < 0 ->
-        GenServer.reply(original_from || from, do_request(request))
+        GenServer.reply(original_from || from, do_request(request, state))
 
       time ->
         Task.start(fn ->
@@ -63,32 +103,34 @@ defmodule Remedy.Api.Ratelimiter do
     {:noreply, state}
   end
 
-  defp do_request(request) do
-    request.method
-    |> Base.request(request.route, request.body, request.headers, request.options)
+  def handle_info({:gun_down, _conn, _proto, _reason, _killed_streams}, state) do
+    {:noreply, state}
+  end
+
+  def handle_info({:gun_up, _conn, _proto}, state) do
+    {:noreply, state}
+  end
+
+  defp do_request(request, conn) do
+    conn
+    |> Base.request(request.method, request.route, request.body, request.headers, request.params)
     |> handle_headers(get_endpoint(request.route, request.method))
     |> format_response
   end
 
   defp handle_headers({:error, reason}, _route), do: {:error, reason}
 
-  defp handle_headers({:ok, %HTTPoison.Response{headers: headers}} = response, route) do
-    headers_to_keep =
-      MapSet.new([
-        "x-ratelimit-global",
-        "x-ratelimit-remaining",
-        "x-ratelimit-reset",
-        "retry-after",
-        "date"
-      ])
+  defp handle_headers({:ok, {_status, headers, _body}} = response, route) do
+    global_limit = headers |> List.keyfind("x-ratelimit-global", 0)
+    remaining = headers |> List.keyfind("x-ratelimit-remaining", 0) |> value_from_rltuple
+    reset = headers |> List.keyfind("x-ratelimit-reset", 0) |> value_from_rltuple
+    retry_after = headers |> List.keyfind("retry-after", 0) |> value_from_rltuple
 
-    kept_headers = filter_headers(headers, headers_to_keep)
-
-    global_limit = Map.get(kept_headers, "x-ratelimit-global")
-    remaining = to_integer(Map.get(kept_headers, "x-ratelimit-remaining"))
-    reset = to_integer(Map.get(kept_headers, "x-ratelimit-reset"))
-    retry_after = to_integer(Map.get(kept_headers, "retry-after"))
-    origin_timestamp = date_string_to_unix(Map.get(kept_headers, "date"))
+    origin_timestamp =
+      headers
+      |> List.keyfind("date", 0)
+      |> value_from_rltuple
+      |> date_string_to_unix
 
     latency = abs(origin_timestamp - now())
 
@@ -98,12 +140,8 @@ defmodule Remedy.Api.Ratelimiter do
     response
   end
 
-  defp update_bucket(route, remaining, reset_time, latency) do
-    Bucket.update_bucket(route, remaining, reset_time * 1000, latency)
-  end
-
   defp update_global_bucket(_route, _remaining, retry_after, latency) do
-    Bucket.update_bucket("GLOBAL", 0, retry_after + now(), latency)
+    update_bucket("GLOBAL", 0, retry_after + now(), latency)
   end
 
   defp wait_for_timeout(request, timeout, from) do
@@ -126,15 +164,14 @@ defmodule Remedy.Api.Ratelimiter do
     (:calendar.datetime_to_gregorian_seconds(datetime) - @gregorian_epoch) * 1000
   end
 
-  defp to_integer(v) when is_binary(v),
-    do: v |> Integer.parse() |> Tuple.to_list() |> List.first()
-
-  defp to_integer(_v), do: nil
+  defp value_from_rltuple(tuple) when is_nil(tuple), do: nil
+  defp value_from_rltuple({"date", v}), do: v
+  defp value_from_rltuple({_k, v}), do: String.to_integer(v)
 
   @doc """
   Retrieves a proper ratelimit endpoint from a given route and url.
   """
-  @spec get_endpoint(String.t(), atom) :: String.t()
+  @spec get_endpoint(String.t(), String.t()) :: String.t()
   def get_endpoint(route, method) do
     endpoint =
       Regex.replace(~r/\/([a-z-]+)\/(?:[0-9]{17,19})/i, route, fn capture, param ->
@@ -159,25 +196,54 @@ defmodule Remedy.Api.Ratelimiter do
       {:error, error} ->
         {:error, error}
 
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      {:ok, {status, _, body}} when status in [200, 201] ->
         {:ok, body}
 
-      {:ok, %HTTPoison.Response{status_code: 201, body: body}} ->
-        {:ok, body}
-
-      {:ok, %HTTPoison.Response{status_code: 204}} ->
+      {:ok, {204, _, _}} ->
         {:ok}
 
-      {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
-        {:error, %ApiError{status_code: code, response: Jason.decode!(body, keys: :atoms)}}
+      {:ok, {status, _, body}} ->
+        {:error, %ApiError{status_code: status, response: Jason.decode!(body, keys: :atoms)}}
     end
   end
 
-  # Will go through headers and keep the ones that are members of the headers_to_keep MapSet (case insensitive!)
-  defp filter_headers(headers, headers_to_keep) do
-    headers
-    |> Stream.map(fn {key, value} -> {String.downcase(key), value} end)
-    |> Stream.filter(fn {key, _v} -> MapSet.member?(headers_to_keep, key) end)
-    |> Enum.into(%{})
+  ### Bucket In
+
+  defp update_bucket(route, remaining, reset_time, latency) do
+    :ets.insert(:ratelimit_buckets, {route, remaining, reset_time * 1000, latency})
+  end
+
+  def lookup_bucket(route) do
+    route_time = :ets.lookup(:ratelimit_buckets, route)
+    global_time = :ets.lookup(:ratelimit_buckets, "GLOBAL")
+
+    Enum.max_by([route_time, global_time], fn info ->
+      case info do
+        [] -> -1
+        [{_route, _remaining, reset_time, _latency}] -> reset_time
+      end
+    end)
+  end
+
+  def update_remaining(route, remaining) do
+    :ets.update_element(:ratelimit_buckets, route, {2, remaining})
+  end
+
+  def delete_bucket(route) do
+    :ets.delete(:ratelimit_buckets, route)
+  end
+
+  def get_ratelimit_timeout(route) do
+    case lookup_bucket(route) do
+      [] ->
+        :now
+
+      [{route, remaining, _reset_time, _latency}] when remaining > 0 ->
+        update_remaining(route, remaining - 1)
+        :now
+
+      [{_route, _remaining, reset_time, latency}] ->
+        reset_time - now() + latency
+    end
   end
 end

@@ -156,15 +156,6 @@ defmodule Remedy.Api do
     |> handle_request_with_decode({:struct, Message})
   end
 
-  defp create_multipart(path) when is_binary(path) do
-    {:file, path}
-  end
-
-  defp create_multipart(%{name: name, body: body}) do
-    {"file", body, {"form-data", [{"name", "file"}, {"filename", name}]},
-     [{"Content-Type", "multipart/form-data"}]}
-  end
-
   defp create_message_with_json(channel_id, options) do
     request(:post, Endpoints.channel_messages(channel_id), options)
     |> handle_request_with_decode({:struct, Message})
@@ -2225,41 +2216,33 @@ defmodule Remedy.Api do
     })
   end
 
-  @typep m1 :: %{
-           required(:content) => String.t(),
-           :username => String.t(),
-           :avatar_url => String.t(),
-           :tts => boolean,
-           optional(:file) => String.t() | nil,
-           optional(:embeds) => nonempty_list(Embed.t()) | nil
-         }
-
-  @typep m2 ::
-           %{
-             optional(:content) => String.t() | nil,
-             :username => String.t(),
-             :avatar_url => String.t(),
-             :tts => boolean,
-             required(:file) => String.t(),
-             optional(:embeds) => nonempty_list(Embed.t()) | nil
-           }
-
-  @typep m3 ::
-           %{
-             optional(:content) => String.t() | nil,
-             :username => String.t(),
-             :avatar_url => String.t(),
-             :tts => boolean,
-             optional(:file) => String.t() | nil,
-             required(:embeds) => nonempty_list(Embed.t())
-           }
-
-  @type matrix :: m1 | m2 | m3
-
   @spec execute_webhook(
           Webhook.id() | User.id(),
           Webhook.token() | Interaction.token(),
-          matrix,
+          %{
+            optional(:content) => String.t() | nil,
+            :username => String.t(),
+            :avatar_url => String.t(),
+            :tts => boolean,
+            required(:file) => String.t(),
+            optional(:embeds) => nonempty_list(Embed.t()) | nil
+          }
+          | %{
+              optional(:content) => String.t() | nil,
+              :username => String.t(),
+              :avatar_url => String.t(),
+              :tts => boolean,
+              optional(:file) => String.t() | nil,
+              required(:embeds) => nonempty_list(Embed.t())
+            }
+          | %{
+              required(:content) => String.t(),
+              :username => String.t(),
+              :avatar_url => String.t(),
+              :tts => boolean,
+              optional(:file) => String.t() | nil,
+              optional(:embeds) => nonempty_list(Embed.t()) | nil
+            },
           boolean
         ) ::
           error | {:ok}
@@ -2670,64 +2653,16 @@ defmodule Remedy.Api do
   end
 
   def request(request) do
-    GenServer.call(Ratelimiter, {:queue, request, nil}, :infinity)
+    Ratelimiter.request(request)
   end
 
-  # HTTPosion defaults to `""` for an empty body, so it's safe to do so here
+  @spec request(atom(), String.t(), any, keyword() | map()) :: {:ok} | error
   def request(method, route, body \\ "", options \\ []) do
-    request = %{
-      method: method,
-      route: route,
-      body: body,
-      options: options,
-      headers: [{"content-type", "application/json"}]
-    }
-
-    GenServer.call(Ratelimiter, {:queue, request, nil}, :infinity)
+    Ratelimiter.request(method, route, body, options)
   end
 
-  def request_multipart(method, route, body, options \\ []) do
-    request = %{
-      method: method,
-      route: route,
-      body:
-        {:multipart,
-         [
-           {
-             :file,
-             body.file,
-             {"form-data", [{"filename", body.content}]},
-             [{"tts", body.tts}]
-           }
-         ]},
-      options: options,
-      headers: [{"content-type", "multipart/form-data"}]
-    }
-
-    GenServer.call(Ratelimiter, {:queue, request, nil}, :infinity)
-  end
-
-  @doc false
-  def bangify(to_bang) do
-    case to_bang do
-      {:error, error} ->
-        raise(error)
-
-      {:ok, body} ->
-        body
-
-      {:ok} ->
-        {:ok}
-    end
-  end
-
-  @doc """
-  Returns the token of the bot.
-  """
-
-  @spec get_token() :: String.t()
-  def get_token do
-    Application.get_env(:remedy, :token)
+  defp request_multipart(method, route, body, options) do
+    Ratelimiter.request_multipart(method, route, body, options)
   end
 
   defp handle_request_with_decode(response)

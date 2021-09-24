@@ -115,7 +115,6 @@ defmodule Remedy.MixProject do
       {:jason, "~> 1.2"},
       {:mime, "~> 2.0"},
       {:progress_bar, "~> 2.0"},
-      {:httpoison, "~> 1.7"},
       {:gun, "~> 2.0", hex: :remedy_gun},
       {:kcl, "~> 1.4"},
       {:porcelain, "~> 2.0"},

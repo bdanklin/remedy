@@ -9,7 +9,6 @@ defmodule Remedy.Application do
   def start(_type, _args) do
     check_token()
     check_executables()
-    setup_ets_tables()
 
     children = [
       Remedy.Api.Ratelimiter,
@@ -24,15 +23,6 @@ defmodule Remedy.Application do
   end
 
   @doc false
-  def setup_ets_tables do
-    :ets.new(:gateway_url, [:set, :public, :named_table])
-    :ets.new(:unavailable_guilds, [:set, :public, :named_table])
-    :ets.new(:users, [:set, :public, :named_table])
-    :ets.new(:channels, [:set, :public, :named_table])
-    :ets.new(:presences, [:set, :public, :named_table])
-    :ets.new(:guild_shard_map, [:set, :public, :named_table])
-    :ets.new(:channel_guild_map, [:set, :public, :named_table])
-  end
 
   defp check_token, do: check_token(Application.get_env(:remedy, :token))
   defp check_token(nil), do: raise("Please supply a token")

@@ -31,7 +31,7 @@ Remedy.Gateway.Dispatch.ThreadCreate.html
 Remedy.Gateway.Dispatch.ThreadDelete.html
 Remedy.Gateway.Dispatch.UserUpdate.html
 Remedy.Gateway.Dispatch.VoiceServerUpdate.html
-Remedy.Gateway.Dispatch.html
+Remedy.Gateway.DispatchHandler.html
 Remedy.Gateway.Websocket.html
 Remedy.Schema.Activity.html
 Remedy.Schema.App.html
@@ -96,8 +96,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-51f6761e7b.js
-dist/sidebar_items-9479266f8a.js
+dist/search_items-da6015a954.js
+dist/sidebar_items-521523f0ea.js
 index.html
 introduction.html
 search.html

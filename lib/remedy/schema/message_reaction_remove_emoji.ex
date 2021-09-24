@@ -1,6 +1,5 @@
 defmodule Remedy.Schema.MessageReactionRemoveEmoji do
   use Remedy.Schema
-  alias Remedy.Cache
 
   @primary_key false
   embedded_schema do

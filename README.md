@@ -12,8 +12,8 @@ Playground fork of Nostrum.
 - [ ] Separate applicable components into their own package.
   - [x] Bit Flag handler - https://hex.pm/packages/battle_standard
   - [x] Timestamp & Snowflake Ecto Types - https://hex.pm/packages/sunbake
-- [ ] Convert structs Schema.
-- [ ] Convert cache to Etso.
+- [x] Convert structs Schema.
+- [x] Convert cache to Etso.
 - [ ] Generalize cache.
   - [ ] Giving a library user the choice of what to cache is actually a huge pain it turns out.
   - [ ] Make it an actual cache, aka invisible and if the resource is not in cache, we should fetch it and return it as required.

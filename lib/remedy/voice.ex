@@ -13,11 +13,11 @@
 #   will be performed in the given guild's voice channel that the bot is connected to.
 
 #   The primary Discord gateway responsible for all text based communication relies on
-#   one websocket connection per shard, where small bots typically only have one shard.
-#   The Discord voice gateways work by establishing a websocket connection per guild/channel.
+#   one WSState connection per shard, where small bots typically only have one shard.
+#   The Discord voice gateways work by establishing a WSState connection per guild/channel.
 #   After some handshaking on this connection, audio data can be sent over UDP/RTP. Behind
-#   the scenes the voice websocket connections are implemented nearly the same way the main
-#   shard websocket connections are, and require no developer intervention.
+#   the scenes the voice WSState connections are implemented nearly the same way the main
+#   shard WSState connections are, and require no developer intervention.
 
 #   ## Voice Without FFmpeg
 #   If you wish to BYOE (Bring Your Own Encoder), there are a few options.
@@ -30,7 +30,7 @@
 #   """
 
 #   alias Porcelain.Process, as: Proc
-#   alias Remedy.Api
+#   alias Remedy.API
 
 #   alias Remedy.Voice.{Audio, Session}
 #   alias Remedy.Voice.Supervisor, as: VoiceSupervisor
@@ -67,21 +67,21 @@
 #   @doc """
 #   Joins or moves the bot to a voice channel.
 
-#   This function is equivalent to `Remedy.Api.update_voice_state/4`.
+#   This function is equivalent to `Remedy.API.update_voice_state/4`.
 #   """
 #   @spec join_channel(Guild.id(), Channel.id(), boolean, boolean) :: no_return | :ok
 #   def join_channel(guild_id, channel_id, self_mute \\ false, self_deaf \\ false) do
-#     Api.update_voice_state(guild_id, channel_id, self_mute, self_deaf)
+#     API.update_voice_state(guild_id, channel_id, self_mute, self_deaf)
 #   end
 
 #   @doc """
 #   Leaves the voice channel of the given guild id.
 
-#   This function is equivalent to calling `Remedy.Api.update_voice_state(guild_id, nil)`.
+#   This function is equivalent to calling `Remedy.API.update_voice_state(guild_id, nil)`.
 #   """
 #   @spec leave_channel(Guild.id()) :: no_return | :ok
 #   def leave_channel(guild_id) do
-#     Api.update_voice_state(guild_id, nil)
+#     API.update_voice_state(guild_id, nil)
 #   end
 
 #   @doc """
@@ -457,7 +457,7 @@
 #   end
 
 #   @doc """
-#   Low-level. Manually connect to voice websockets gateway.
+#   Low-level. Manually connect to voice WSStates gateway.
 
 #   This function should only be called if config option `:voice_auto_connect` is set to `false`.
 #   By default Remedy will automatically create a voice gateway when joining a channel.

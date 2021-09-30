@@ -5,7 +5,7 @@ defmodule Remedy.Gateway.Events.Identify do
   alias Remedy.Gateway
   use Remedy.Gateway.Payload
 
-  def payload(%Websocket{shard: shard} = socket, _opts) do
+  def payload(%WSState{shard: shard} = socket, _opts) do
     {%{
        token: Application.get_env(:remedy, :token),
        properties: %{

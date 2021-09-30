@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.GuildBanAdd do
-  @moduledoc """
-  Dispatched when a new guild ban is created.
-
-  ## Payload:
-
-  - `%Remedy.Schema.Ban{}`
-
-  """
+  @moduledoc false
 
   alias Remedy.Schema.Ban
 

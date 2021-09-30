@@ -4,14 +4,14 @@
 #   alias Remedy.Bot
 #   alias Remedy.Constants
 #   alias Remedy.Voice.Audio
-#   alias Remedy.Voice.Websocket
+#   alias Remedy.Voice.WSState
 # use Remedy.Schema
 
 #   require Logger
 
 #   # All functions in this module that end with a call to `build_payload/1`
 #   # with an all-caps string return JSON payloads which are response messages
-#   # to incoming voice websocket messages.
+#   # to incoming voice WSState messages.
 #   # Other functions which return a map with keys `:t` and `:d` are for
 #   # generating voice-related events to be consumed by a Consumer process.
 
@@ -21,7 +21,7 @@
 #     |> build_payload("HEARTBEAT")
 #   end
 
-#   def identify_payload(%Websocket{} = state) do
+#   def identify_payload(%WSState{} = state) do
 #     %{
 #       server_id: state.guild_id,
 #       user_id: Cache.bot().id,
@@ -31,7 +31,7 @@
 #     |> build_payload("IDENTIFY")
 #   end
 
-#   def resume_payload(%Websocket{} = state) do
+#   def resume_payload(%WSState{} = state) do
 #     %{
 #       server_id: state.guild_id,
 #       token: state.token,

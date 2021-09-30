@@ -2,7 +2,6 @@ defmodule Remedy.Application do
   @moduledoc false
 
   use Application
-
   require Logger
 
   @doc false
@@ -11,12 +10,13 @@ defmodule Remedy.Application do
     check_executables()
 
     children = [
-      Remedy.Api.Ratelimiter,
-      Remedy.GatewayATC,
-      Remedy.Gateway,
+      Remedy.API.Ratelimiter,
+      Remedy.API.Rest,
       Remedy.Cache.Repo,
       Remedy.Cache.DiscordApp,
-      Remedy.Cache.DiscordBot
+      Remedy.Cache.DiscordBot,
+      Remedy.GatewayATC,
+      Remedy.Gateway
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)

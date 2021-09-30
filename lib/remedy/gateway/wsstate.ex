@@ -1,6 +1,8 @@
-defmodule Remedy.Gateway.Websocket do
+defmodule Remedy.Gateway.WSState do
   @moduledoc """
-  Contains all the information required to maintain the gateway websocket connection to Discord.
+  Contains all the information required to maintain the gateway WSState connection to Discord.
+
+  This is provided to allow the user to enact custom logic on the gateway events as they are received from the consumer. It should be noted that the websocket state consumed with an event is a 'snapshot' of the state at the time that event was received, and does not relate to the current state of the websocket.
   """
   use Remedy.Schema
 
@@ -10,7 +12,7 @@ defmodule Remedy.Gateway.Websocket do
           gateway: gateway,
           session_id: session_id,
           heartbeat_interval: heartbeat_interval,
-          gun_worker: gun_worker,
+          conn: conn,
           gun_conn: gun_conn,
           gun_data_stream: gun_data_stream,
           zlib_context: zlib_context,
@@ -30,7 +32,7 @@ defmodule Remedy.Gateway.Websocket do
   @type session_id :: String.t() | nil
   @type shard_pid :: pid()
   @type heartbeat_interval :: integer()
-  @type gun_worker :: pid()
+  @type conn :: pid()
   @type gun_conn :: pid()
   @type gun_data_stream :: Stream.t()
   @type zlib_context :: term()
@@ -60,7 +62,7 @@ defmodule Remedy.Gateway.Websocket do
     field :heartbeat_ack, :boolean
     field :heartbeat_timer, :any, virtual: true
     # Gun INfo
-    field :gun_worker, :any, virtual: true
+    field :conn, :any, virtual: true
     field :gun_conn, :any, virtual: true
     field :gun_data_stream, :any, virtual: true
     field :zlib_context, :any, virtual: true
@@ -72,7 +74,7 @@ defmodule Remedy.Gateway.Websocket do
   end
 
   @doc """
-  Gets the latency of the shard connection from a `Remedy.Struct.Websocket.t()` struct.
+  Gets the latency of the shard connection from a `Remedy.Struct.WSState.t()` struct.
 
   Returns the latency in milliseconds as an integer, returning nil if unknown.
   """

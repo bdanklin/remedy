@@ -73,20 +73,20 @@ defmodule Nostrum.Struct.Channel do
 
   This module contains two functions for assisting with channel structs. `mention/1` to convert the channel into a mention as a string, and `link/1` to convert the channel into a hyperlink as a string. Further details and examples are detailed in the [Functions section of this module.](#functions)
 
-  ## Api Functions
+  ## API Functions
 
-  The Nostrum Api contains numerous functions related to channels. Notable functions relating to channels are shown below.
+  The Nostrum API contains numerous functions related to channels. Notable functions relating to channels are shown below.
 
-  - `Nostrum.Api.create_guild_channel/2`
-  - `Nostrum.Api.get_channel/1`
-  - `Nostrum.Api.modify_channel/3`
-  - `Nostrum.Api.delete_channel/2`
-  - `Nostrum.Api.add_pinned_channel_message/2`
-  - `Nostrum.Api.create_channel_invite/3`
-  - `Nostrum.Api.get_guild_channels/1`
-  - `Nostrum.Api.modify_guild_channel_positions/2`
+  - `Nostrum.API.create_guild_channel/2`
+  - `Nostrum.API.get_channel/1`
+  - `Nostrum.API.modify_channel/3`
+  - `Nostrum.API.delete_channel/2`
+  - `Nostrum.API.add_pinned_channel_message/2`
+  - `Nostrum.API.create_channel_invite/3`
+  - `Nostrum.API.get_guild_channels/1`
+  - `Nostrum.API.modify_guild_channel_positions/2`
 
-  > Note: This is not an exhaustive list, for full details please see the `Nostrum.Api` module documentation.
+  > Note: This is not an exhaustive list, for full details please see the `Nostrum.API` module documentation.
 
   ## Channel Types
   Channels take the shape of various types depending on their use and not all fields are always used. The currently implemented channel types are detailed below. The type of channel is determined by the `:type` field.

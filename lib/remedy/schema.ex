@@ -35,6 +35,7 @@ defmodule Remedy.Schema do
         InteractionData,
         InteractionDataOption,
         InteractionDataResolved,
+        Integration,
         Member,
         Message,
         MessageReactionRemoveEmoji,

@@ -1,4 +1,4 @@
-# defmodule Remedy.Voice.Websocket do
+# defmodule Remedy.Voice.WSState do
 #   @moduledoc """
 #   Struct representing the current Voice WS state.
 #   """
@@ -19,7 +19,7 @@
 #     :heartbeat_timer
 #   ]
 
-#   @typedoc "The guild id that this voice websocket state applies to"
+#   @typedoc "The guild id that this voice WSState state applies to"
 #   @type guild_id :: Remedy.Struct.Guild.id()
 
 #   @typedoc "The session id"
@@ -28,7 +28,7 @@
 #   @typedoc "The session token"
 #   @type token :: String.t()
 
-#   @typedoc "PID of the `:gun` worker connected to the websocket"
+#   @typedoc "PID of the `:gun` worker connected to the WSState"
 #   @type conn :: pid
 
 #   @typedoc "PID of the connection process"
@@ -45,7 +45,7 @@
 
 #   @typedoc """
 #   The time the last heartbeat was sent, if a heartbeat hasn't been sent it
-#   will be the time the websocket process was started
+#   will be the time the WSState process was started
 #   """
 #   @type last_heartbeat_send :: DateTime.t()
 

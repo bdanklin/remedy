@@ -4,7 +4,7 @@
 #   alias Remedy.Cache.{ChannelCache, GuildCache}
 #   alias Remedy.Constants
 #   alias Remedy.Gateway.EventBroadcaster
-#   alias Remedy.Voice.Websocket
+#   alias Remedy.Voice.WSState
 #   alias Remedy.Voice
 #   alias Remedy.Voice.{Event, Payload}
 # use Remedy.Schema
@@ -54,21 +54,21 @@
 #       heartbeat_ack: true
 #     }
 
-#     Logger.debug(fn -> "Voice Websocket connection up on worker #{inspect(worker)}" end)
+#     Logger.debug(fn -> "Voice WSState connection up on worker #{inspect(worker)}" end)
 #     Voice.update_voice(voice.guild_id, session_pid: self())
 #     {:noreply, state}
 #   end
 
 #   defp await_ws_upgrade(worker, stream) do
 #     receive do
-#       {:gun_upgrade, ^worker, ^stream, [<<"websocket">>], _headers} ->
+#       {:gun_upgrade, ^worker, ^stream, [<<"WSState">>], _headers} ->
 #         :ok
 
 #       {:gun_error, ^worker, ^stream, reason} ->
 #         exit({:ws_upgrade_failed, reason})
 #     after
 #       @timeout_ws_upgrade ->
-#         Logger.error("Voice Websocket upgrade failed after #{@timeout_ws_upgrade / 1000} seconds")
+#         Logger.error("Voice WSState upgrade failed after #{@timeout_ws_upgrade / 1000} seconds")
 #         exit(:timeout)
 #     end
 #   end
@@ -111,7 +111,7 @@
 #   end
 
 #   def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, state) do
-#     Logger.info("Voice websocket closed (errno #{errno}, reason #{inspect(reason)})")
+#     Logger.info("Voice WSState closed (errno #{errno}, reason #{inspect(reason)})")
 
 #     # If we received a errno of 4006, session is no longer valid, so we must get a new session.
 #     if errno == 4006 do

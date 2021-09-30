@@ -5,39 +5,21 @@ defmodule Remedy.Gateway do
   alias Remedy.Gateway.{EventBroadcaster, EventBuffer, SessionSupervisor}
   require Logger
 
-  @gateway_bot "/gateway/bot"
+  def info do
+    {:ok, %{shards: shards, url: "wss://" <> url}} = Remedy.API.get_gateway_bot()
 
-  @spec gateway() :: {String.t(), integer}
-  def gateway do
-    case :ets.lookup(:gateway_url, "url") do
-      [] -> get_new_gateway_url()
-      [{"url", url, shards}] -> {url, shards}
-    end
+    %{url: url, shards: shards}
   end
 
-  defp get_new_gateway_url do
-    case Remedy.Api.request(:get, @gateway_bot) do
-      {:error, %{status_code: 401}} ->
-        raise("Authentication rejected, invalid token")
-
-      {:error, %{status_code: code, message: message}} ->
-        raise(Remedy.ApiError, status_code: code, message: message)
-
-      {:ok, body} ->
-        body = Jason.decode!(body)
-
-        "wss://" <> url = body["url"]
-        shards = if body["shards"], do: body["shards"], else: 1
-
-        :ets.insert(:gateway_url, {"url", url, shards})
-        {url, shards}
-    end
+  def num_shards do
+    %{shards: shards} = info()
+    shards
   end
 
   def start_link(_args) do
-    {url, gateway_shard_count} = gateway()
+    %{url: _url, shards: _shards} = state = info()
 
-    Supervisor.start_link(__MODULE__, %{url: url, shards: gateway_shard_count}, name: __MODULE__)
+    Supervisor.start_link(__MODULE__, state, name: __MODULE__)
   end
 
   @doc false
@@ -56,10 +38,6 @@ defmodule Remedy.Gateway do
 
   defp shard_worker(gateway, shard),
     do: Supervisor.child_spec({SessionSupervisor, %{gateway: gateway, shard: shard}}, id: shard)
-
-  def num_shards do
-    gateway() |> Tuple.to_list() |> List.last()
-  end
 end
 
 defmodule Remedy.GatewayATC do
@@ -94,7 +72,7 @@ defmodule Remedy.GatewayATC do
   defp wait(time_diff), do: (@min_redial - time_diff) |> log_and_wait()
 
   defp log_and_wait(wait_time) do
-    Logger.warn("WAITING #{wait_time} BEFORE CONNECTING WEBSOCKET")
+    Logger.warn("WAITING #{wait_time} BEFORE CONNECTING WSState")
 
     format = [
       bar_color: [IO.ANSI.green_background()],

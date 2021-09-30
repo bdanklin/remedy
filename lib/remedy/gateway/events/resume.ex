@@ -9,7 +9,7 @@ defmodule Remedy.Gateway.Events.Resume do
   end
 
   def payload(
-        %Websocket{session_id: session_id, payload_sequence: payload_sequence} = socket,
+        %WSState{session_id: session_id, payload_sequence: payload_sequence} = socket,
         _opts
       ) do
     {%__MODULE__{

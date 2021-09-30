@@ -1,6 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
   @moduledoc """
-  Dispatched when a new guild channel is created, relevant to the current user.
+  Dispatched when a new guild role is created.
 
   ## Payload:
 

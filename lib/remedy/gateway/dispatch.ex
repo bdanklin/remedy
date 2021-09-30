@@ -1,9 +1,9 @@
-defmodule Remedy.Gateway.DispatchHandler do
+defmodule Remedy.Gateway.Dispatch do
   @moduledoc """
   Gateway Dispatching
   """
   @type payload :: any()
-  @type socket :: Websocket.t()
+  @type socket :: WSState.t()
   @type event :: atom()
   @callback handle({event, payload, socket}) :: {event, payload, socket}
 
@@ -134,7 +134,7 @@ defmodule Remedy.Gateway.EventBuffer do
 
   use GenStage
 
-  alias Remedy.Gateway.{DispatchHandler, EventBroadcaster}
+  alias Remedy.Gateway.{Dispatch, EventBroadcaster}
 
   require Logger
 
@@ -154,7 +154,7 @@ defmodule Remedy.Gateway.EventBuffer do
 
   defp dispatch(events) do
     events
-    |> Enum.map(&DispatchHandler.handle/1)
+    |> Enum.map(&Dispatch.handle/1)
     |> List.flatten()
     |> Enum.filter(fn event -> event != :noop end)
   end

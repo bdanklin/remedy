@@ -2,6 +2,10 @@ defmodule Remedy.Cache.DiscordBot do
   @moduledoc false
   use Agent
 
+  def id() do
+    get().id
+  end
+
   def start_link(_opts \\ []) do
     Agent.start_link(fn -> nil end, name: __MODULE__)
   end

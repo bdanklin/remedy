@@ -1,5 +1,7 @@
 defmodule Remedy.Gateway.Dispatch.ChannelPinsUpdate do
-  @moduledoc false
+  @moduledoc """
+
+  """
   use Remedy.Schema
   alias Remedy.Cache
 

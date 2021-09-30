@@ -1,249 +1,166 @@
-defmodule Remedy.Api.Ratelimiter do
-  @moduledoc false
+defmodule Remedy.API.Ratelimiter do
+  @moduledoc """
+  Simple Ratelimiter implementation.
 
+  Due to limitations and the dynamic nature of the Discord ratelimit system, it is not possible to know the ratelimits of given routes beforehand.
+
+  There are several types of rate limits at play:
+  - A global ratelimit of 50 requests per second must be respected.
+  - Route specific ratelimits are dynamic and can change, they can also be shared across routes. These are only known after a request has been sent.
+  - Hidden ratelimits against specific resources. (Will error and not provide an accurate ratelimit. These are known to be applied to Emojis and deleting older messages.)
+
+  This module keeps a state of
+
+  ```elixir
+  %{
+    "route1" => {bucket1, reset1, limit1},
+    "route2" => {bucket2, reset2, limit2},
+    "route3" => {bucket3, reset3, limit3}
+  }```
+
+  - A route will be added to the state whenever the headers are recieved from a successful request.
+  - Global ratelimit will be updated regardless of the success of a request.
+  """
+
+  alias Remedy.API.{RestResponse, RestRequest}
   use GenServer
-
-  alias Remedy.Api.Base
-  alias Remedy.ApiError
-  import Remedy.TimeHelpers
-  import Remedy.Api.Endpoints
+  require ExRated
   require Logger
 
-  def request(request) do
-    GenServer.call(__MODULE__, {:queue, request, nil}, :infinity)
+  def run_check(request) do
+    with {:ok, _delay} <- check_global(),
+         {:ok, _delay} <- check_route(request) do
+      inc_global()
+
+      request
+    end
   end
 
-  def request(method, route, body \\ "", options \\ []) do
-    request = %{
-      method: method,
-      route: route,
-      body: body,
-      options: options,
-      headers: [{"content-type", "application/json"}]
+  @doc false
+
+  def check_global() do
+    ExRated.inspect_bucket("global", 1000, 50) |> analyse_bucket("global")
+  end
+
+  @spec check_route(binary | Remedy.API.RestRequest.t()) :: {:ok, :infinity | non_neg_integer}
+  def check_route(%RestRequest{route: route}), do: route |> route_to_bucket() |> check_route()
+
+  def check_route(route) when is_binary(route) do
+    GenServer.call(__MODULE__, {:check, route}) |> analyse_bucket(route)
+  end
+
+  @spec inc_route(Remedy.API.RestResponse.t(), Remedy.API.RestRequest.t()) ::
+          {:ok, :infinity | non_neg_integer}
+  def inc_route(
+        %RestResponse{headers: headers},
+        %RestRequest{route: route}
+      ) do
+    {bucket, reset_after, limit} = header_tuple = headers_to_bucket_tuple(headers)
+    GenServer.cast(__MODULE__, {:insert, {route, header_tuple}})
+    inc_route(bucket, reset_after, limit)
+
+    check_route(route)
+  end
+
+  def inc_route(bucket, reset_after, limit) do
+    ExRated.check_rate(bucket, reset_after, limit)
+  end
+
+  def inc_global() do
+    ExRated.check_rate("global", 1000, 50)
+  end
+
+  ##################
+  ### Bucket States
+  ##################
+
+  ## Request Can Be Sent
+  def analyse_bucket(nil, _route), do: {:ok, 0}
+  def analyse_bucket({_, x, _, _, _}, _route) when x > 0, do: {:ok, 0}
+
+  def analyse_bucket({_, x, reset_in, _, _}, route) when 10 > x and x > 0 do
+    "APPROACHING RATELIMIT FOR #{route}. REMAINING: #{x}, RESETS IN: #{reset_in}ms"
+    |> Logger.warn()
+
+    {:ok, 0}
+  end
+
+  def analyse_bucket({_, _, _, nil, nil}, _route), do: {:ok, 0}
+
+  def analyse_bucket({_, 0, reset_in, _inserted_at, _updated_at}, route) do
+    "RATELIMIT FOR #{route}. HOLDING REQUEST FOR: #{reset_in}ms"
+    |> Logger.warn()
+
+    Process.sleep(reset_in)
+    {:ok, reset_in}
+  end
+
+  ####################
+  ### Helper Functions
+  ####################
+
+  @standard ~w(oauth2 applications @me channels audit-logs messages crosspost reactions bulk-delete invites permissions typing pins recipients threads thread-members active archived public private emojis guilds members nick roles bans prune regions integrations widget widget.json vanity-url widget.png welcome-screen voice-states templates stage-instances stickers sticker-packs users connections webhooks slack github commands callback @original gateway bot call ring typing embed sync prune)
+
+  @doc false
+  def route_to_bucket(route) do
+    route
+    |> String.split(["/", "?"])
+    |> Enum.filter(&(&1 in @standard))
+    |> Enum.join()
+  end
+
+  @bucket "X-RateLimit-Bucket"
+  @limit "X-RateLimit-Limit"
+  @reset_after "X-RateLimit-Reset-After"
+
+  @doc false
+  def headers_to_bucket_tuple(headers) do
+    bucket = List.keyfind(headers, @bucket, 0)
+    limit = List.keyfind(headers, @limit, 0)
+    reset_after = List.keyfind(headers, @reset_after, 0) * 1000
+
+    {bucket, reset_after, limit}
+  end
+
+  @doc false
+  def child_spec(init_arg) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [init_arg]}
     }
-
-    GenServer.call(__MODULE__, {:queue, request, nil}, :infinity)
   end
 
-  def request_multipart(method, route, body, options \\ []) do
-    request = %{
-      method: method,
-      route: route,
-      body:
-        {:multipart,
-         [
-           {
-             :file,
-             body.file,
-             {"form-data", [{"filename", body.content}]},
-             [{"tts", body.tts}]
-           }
-         ]},
-      options: options,
-      headers: [{"content-type", "multipart/form-data"}]
-    }
-
-    GenServer.call(__MODULE__, {:queue, request, nil}, :infinity)
+  @doc false
+  def start_link(init_args) do
+    GenServer.start_link(__MODULE__, [init_args], name: __MODULE__)
   end
 
-  @typedoc """
-  Return values of start functions.
-  """
-  @type on_start ::
-          {:ok, pid}
-          | :ignore
-          | {:error, {:already_started, pid} | term}
-
-  @major_parameters ["channels", "guilds", "webhooks"]
-  @gregorian_epoch 62_167_219_200
-
-  @doc """
-  Starts the ratelimiter.
-  """
-  @spec start_link([]) :: on_start
-  def start_link([]) do
-    GenServer.start_link(__MODULE__, [], name: Ratelimiter)
+  @doc false
+  def init(_args) do
+    {:ok, %{}}
   end
 
-  def init([]) do
-    :ets.new(:ratelimit_buckets, [:set, :public, :named_table])
-    domain = to_charlist(domain())
-    {:ok, conn_pid} = :gun.open(domain, 443, %{retry: 1_000_000_000})
-    {:ok, :http2} = :gun.await_up(conn_pid)
-    {:ok, conn_pid}
-  end
+  @doc false
+  def handle_call({:check, route}, _from, state) do
+    response =
+      case Map.get(state, route) do
+        {bucket, timeout, max_requests} ->
+          {bucket, timeout, max_requests}
 
-  @doc """
-  Empties all buckets, voiding any saved ratelimit values.
-  """
-  @spec empty_buckets() :: true
-  def empty_buckets do
-    :ets.delete_all_objects(:ratelimit_buckets)
-  end
-
-  def handle_call({:queue, request, original_from}, from, state) do
-    retry_time =
-      request.route
-      |> get_endpoint(request.method)
-      |> get_ratelimit_timeout()
-
-    case retry_time do
-      :now ->
-        GenServer.reply(original_from || from, do_request(request, state))
-
-      time when time < 0 ->
-        GenServer.reply(original_from || from, do_request(request, state))
-
-      time ->
-        Task.start(fn ->
-          wait_for_timeout(request, time, original_from || from)
-        end)
-    end
-
-    {:noreply, state}
-  end
-
-  def handle_info({:gun_down, _conn, _proto, _reason, _killed_streams}, state) do
-    {:noreply, state}
-  end
-
-  def handle_info({:gun_up, _conn, _proto}, state) do
-    {:noreply, state}
-  end
-
-  defp do_request(request, conn) do
-    conn
-    |> Base.request(request.method, request.route, request.body, request.headers, request.params)
-    |> handle_headers(get_endpoint(request.route, request.method))
-    |> format_response
-  end
-
-  defp handle_headers({:error, reason}, _route), do: {:error, reason}
-
-  defp handle_headers({:ok, {_status, headers, _body}} = response, route) do
-    global_limit = headers |> List.keyfind("x-ratelimit-global", 0)
-    remaining = headers |> List.keyfind("x-ratelimit-remaining", 0) |> value_from_rltuple
-    reset = headers |> List.keyfind("x-ratelimit-reset", 0) |> value_from_rltuple
-    retry_after = headers |> List.keyfind("retry-after", 0) |> value_from_rltuple
-
-    origin_timestamp =
-      headers
-      |> List.keyfind("date", 0)
-      |> value_from_rltuple
-      |> date_string_to_unix
-
-    latency = abs(origin_timestamp - now())
-
-    if global_limit, do: update_global_bucket(route, 0, retry_after, latency)
-    if reset, do: update_bucket(route, remaining, reset, latency)
-
-    response
-  end
-
-  defp update_global_bucket(_route, _remaining, retry_after, latency) do
-    update_bucket("GLOBAL", 0, retry_after + now(), latency)
-  end
-
-  defp wait_for_timeout(request, timeout, from) do
-    Logger.info(
-      "RATELIMITER: Waiting #{timeout}ms to process request with route #{request.route}"
-    )
-
-    Process.sleep(timeout)
-    GenServer.call(Ratelimiter, {:queue, request, from}, :infinity)
-  end
-
-  defp date_string_to_unix(header) do
-    header
-    |> String.to_charlist()
-    |> :httpd_util.convert_request_date()
-    |> erl_datetime_to_timestamp
-  end
-
-  defp erl_datetime_to_timestamp(datetime) do
-    (:calendar.datetime_to_gregorian_seconds(datetime) - @gregorian_epoch) * 1000
-  end
-
-  defp value_from_rltuple(tuple) when is_nil(tuple), do: nil
-  defp value_from_rltuple({"date", v}), do: v
-  defp value_from_rltuple({_k, v}), do: String.to_integer(v)
-
-  @doc """
-  Retrieves a proper ratelimit endpoint from a given route and url.
-  """
-  @spec get_endpoint(String.t(), String.t()) :: String.t()
-  def get_endpoint(route, method) do
-    endpoint =
-      Regex.replace(~r/\/([a-z-]+)\/(?:[0-9]{17,19})/i, route, fn capture, param ->
-        case param do
-          param when param in @major_parameters ->
-            capture
-
-          param ->
-            "/#{param}/_id"
-        end
-      end)
-
-    if String.ends_with?(endpoint, "/messages/_id") and method == :delete do
-      "delete:" <> endpoint
-    else
-      endpoint
-    end
-  end
-
-  defp format_response(response) do
-    case response do
-      {:error, error} ->
-        {:error, error}
-
-      {:ok, {status, _, body}} when status in [200, 201] ->
-        {:ok, body}
-
-      {:ok, {204, _, _}} ->
-        {:ok}
-
-      {:ok, {status, _, body}} ->
-        {:error, %ApiError{status_code: status, response: Jason.decode!(body, keys: :atoms)}}
-    end
-  end
-
-  ### Bucket In
-
-  defp update_bucket(route, remaining, reset_time, latency) do
-    :ets.insert(:ratelimit_buckets, {route, remaining, reset_time * 1000, latency})
-  end
-
-  def lookup_bucket(route) do
-    route_time = :ets.lookup(:ratelimit_buckets, route)
-    global_time = :ets.lookup(:ratelimit_buckets, "GLOBAL")
-
-    Enum.max_by([route_time, global_time], fn info ->
-      case info do
-        [] -> -1
-        [{_route, _remaining, reset_time, _latency}] -> reset_time
+        nil ->
+          nil
       end
-    end)
+
+    {:reply, response, state}
   end
 
-  def update_remaining(route, remaining) do
-    :ets.update_element(:ratelimit_buckets, route, {2, remaining})
+  def handle_cast({:cast, {route, {bucket, reset_after, limit}}}, state) do
+    {:noreply, state |> Map.put(route, {bucket, reset_after, limit})}
   end
 
-  def delete_bucket(route) do
-    :ets.delete(:ratelimit_buckets, route)
-  end
+  def handle_info({:clean, {route}}, state) do
+    Map.get(state, route) |> elem(0) |> ExRated.delete_bucket()
 
-  def get_ratelimit_timeout(route) do
-    case lookup_bucket(route) do
-      [] ->
-        :now
-
-      [{route, remaining, _reset_time, _latency}] when remaining > 0 ->
-        update_remaining(route, remaining - 1)
-        :now
-
-      [{_route, _remaining, reset_time, latency}] ->
-        reset_time - now() + latency
-    end
+    {:noreply, state |> Map.delete(route)}
   end
 end

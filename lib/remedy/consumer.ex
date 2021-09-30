@@ -2,69 +2,124 @@ defmodule Remedy.Consumer do
   @moduledoc """
   Consumer process for gateway event handling.
 
-  # Consuming Gateway Events
+  ## Consuming Dispatch Events
   To handle events, Remedy uses a GenStage implementation.
 
   Remedy defines the `producer` and `producer_consumer` in the GenStage design.
-  To consume the events you must create at least one `consumer` process. It is
-  generally recommended that you spawn a consumer per core. To find this number
-  you can use `System.schedulers_online/0`.
+  To consume the events you must create at least one `consumer` process.
 
   Remedy uses a ConsumerSupervisor to dispatch events, meaning your handlers
   will each be ran in their own seperate task.
 
+  The full list of dispatch events and their inner payload is described in the type specs within this module.
+
+  - Regular payloads are delivered after casting to their schema and ratified against the cache.
+  - Irregular payloads are classified as those which do not directly map to a standard discord object. They undergo extensive manipulation prior to updating the cache. They are described under the `DISPATCH` section of the documentation.
+
   ## Example
-  An example consumer can be found
-  [here](https://github.com/bdanklin/remedy/blob/master/examples/event_consumer.ex).
+
+  It is recommended that you supervise your consumers. First we set up a supervisor module for our consumers.
+
+  ```elixir
+  #example_supervisor.ex
+  defmodule MyApp.ExampleSupervisor do
+    use Supervisor
+
+    def start_link(args) do
+      Supervisor.start_link(__MODULE__, args, name: __MODULE__)
+    end
+
+    @impl true
+    def init(_init_arg) do
+      children = [ExampleConsumer]
+
+      Supervisor.init(children, strategy: :one_for_one)
+    end
+  end
+  ```
+
+  You can then set up your consumer module.
+
+  ```elixir
+  #example_consumer.ex
+  defmodule ExampleConsumer do
+    use Remedy.Consumer
+
+    alias Remedy.Api
+
+    def start_link do
+      Consumer.start_link(__MODULE__)
+    end
+
+    def handle_event({:MESSAGE_CREATE, %Remedy.Schema.Message{content: content}, _ws_state}) do
+      case content do
+        "!sleep" ->
+          Api.create_message(msg.channel_id, "Going to sleep...")
+          Process.sleep(3000)
+
+        "!ping" ->
+          Api.create_message(msg.channel_id, "pyongyang!")
+
+        "!raise" ->
+          raise "No problems here!"
+      end
+    end
+
+    def handle_event(_event) do
+      :noop
+    end
+  end
+  ```
   """
 
   use ConsumerSupervisor
 
-  alias Remedy.Shard.Stage.EventBuffer
-  import Remedy.ModelHelpers
+  alias Remedy.Gateway.{EventBuffer, WSState}
+  alias Remedy.Schema.{Channel, Emoji, Guild, Message, Member, Role, User}
 
   @callback handle_event(event) :: any
+  @callback handle_event(any()) :: :noop
 
   @type event ::
-          {:CHANNEL_CREATE, Channel.t(), Websocket.t()}
-          | {:CHANNEL_DELETE, Channel.t(), Websocket.t()}
-          | {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), Websocket.t()}
-          | {:CHANNEL_UPDATE, Channel.t(), Websocket.t()}
-          | {:GUILD_AVAILABLE, Guild.t(), Websocket.t()}
-          | {:GUILD_BAN_ADD, GuildBanAdd.t(), Websocket.t()}
-          | {:GUILD_BAN_REMOVE, GuildBanRemove.t(), Websocket.t()}
-          | {:GUILD_CREATE, Guild.t(), Websocket.t()}
-          | {:GUILD_DELETE, Guild.t(), Websocket.t()}
-          | {:GUILD_EMOJIS_UPDATE, [Emoji.t()], Websocket.t()}
-          | {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), Websocket.t()}
-          | {:GUILD_MEMBER_ADD, Member.t(), Websocket.t()}
-          | {:GUILD_MEMBER_REMOVE, Member.t(), Websocket.t()}
-          | {:GUILD_MEMBER_UPDATE, Member.t(), Member.t(), Websocket.t()}
-          | {:GUILD_MEMBERS_CHUNK, map(), Websocket.t()}
-          | {:GUILD_ROLE_CREATE, Role.t(), Websocket.t()}
-          | {:GUILD_ROLE_DELETE, Role.t(), Websocket.t()}
-          | {:GUILD_ROLE_UPDATE, Role.t(), Websocket.t()}
-          | {:GUILD_UNAVAILABLE, UnavailableGuild.t(), Websocket.t()}
-          | {:GUILD_UPDATE, Guild.t(), Websocket.t()}
-          | {:MESSAGE_ACK, map, Websocket.t()}
-          | {:MESSAGE_CREATE, Message.t(), Websocket.t()}
-          | {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), Websocket.t()}
-          | {:MESSAGE_DELETE, MessageDelete.t(), Websocket.t()}
-          | {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), Websocket.t()}
-          | {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(), Websocket.t()}
-          | {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(), Websocket.t()}
-          | {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), Websocket.t()}
-          | {:MESSAGE_UPDATE, Message.t(), Websocket.t()}
-          | {:PRESENCE_UPDATE, Presence.t(), Websocket.t()}
-          | {:READY, Ready.t(), Websocket.t()}
-          | {:RESUMED, map, Websocket.t()}
-          | {:TYPING_START, TypingStart.t(), Websocket.t()}
-          | {:USER_UPDATE, User.t(), Websocket.t()}
+          {:CHANNEL_CREATE, Channel.t(), WSState.t()}
+          | {:CHANNEL_DELETE, Channel.t(), WSState.t()}
+          | {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), WSState.t()}
+          | {:CHANNEL_UPDATE, Channel.t(), WSState.t()}
+          | {:GUILD_AVAILABLE, Guild.t(), WSState.t()}
+          | {:GUILD_BAN_ADD, GuildBanAdd.t(), WSState.t()}
+          | {:GUILD_BAN_REMOVE, GuildBanRemove.t(), WSState.t()}
+          | {:GUILD_CREATE, Guild.t(), WSState.t()}
+          | {:GUILD_DELETE, Guild.t(), WSState.t()}
+          | {:GUILD_EMOJIS_UPDATE, [Emoji.t()], WSState.t()}
+          | {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), WSState.t()}
+          | {:GUILD_MEMBER_ADD, Member.t(), WSState.t()}
+          | {:GUILD_MEMBER_REMOVE, Member.t(), WSState.t()}
+          | {:GUILD_MEMBER_UPDATE, Member.t(), Member.t(), WSState.t()}
+          | {:GUILD_MEMBERS_CHUNK, map(), WSState.t()}
+          | {:GUILD_ROLE_CREATE, Role.t(), WSState.t()}
+          | {:GUILD_ROLE_DELETE, Role.t(), WSState.t()}
+          | {:GUILD_ROLE_UPDATE, Role.t(), WSState.t()}
+          | {:GUILD_UNAVAILABLE, UnavailableGuild.t(), WSState.t()}
+          | {:GUILD_UPDATE, Guild.t(), WSState.t()}
+          | {:MESSAGE_ACK, map, WSState.t()}
+          | {:MESSAGE_CREATE, Message.t(), WSState.t()}
+          | {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), WSState.t()}
+          | {:MESSAGE_DELETE, MessageDelete.t(), WSState.t()}
+          | {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), WSState.t()}
+          | {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(), WSState.t()}
+          | {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(), WSState.t()}
+          | {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), WSState.t()}
+          | {:MESSAGE_UPDATE, Message.t(), WSState.t()}
+          | {:PRESENCE_UPDATE, Presence.t(), WSState.t()}
+          | {:READY, Ready.t(), WSState.t()}
+          | {:RESUMED, map, WSState.t()}
+          | {:TYPING_START, TypingStart.t(), WSState.t()}
+          | {:USER_UPDATE, User.t(), WSState.t()}
           | {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}
-          | {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), Websocket.t()}
+          | {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), WSState.t()}
           | {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}
-          | {:VOICE_STATE_UPDATE, VoiceState.t(), Websocket.t()}
-          | {:WEBHOOKS_UPDATE, map, Websocket.t()}
+          | {:VOICE_STATE_UPDATE, VoiceState.t(), WSState.t()}
+          | {:WEBHOOKS_UPDATE, map, WSState.t()}
 
   defmacro __using__(opts) do
     quote location: :keep do
@@ -107,6 +162,7 @@ defmodule Remedy.Consumer do
     end
   end
 
+  @doc false
   def start_link(mod, opts \\ []) do
     {mod_and_opts, cs_opts} =
       case Keyword.pop(opts, :name) do

@@ -9,10 +9,10 @@ defmodule Remedy.Gateway.Payload do
 
       import Remedy.OpcodeHelpers
       use Ecto.Schema
-      alias Remedy.Gateway.{Pacemaker, Payload, Session, Websocket}
+      alias Remedy.Gateway.{Pacemaker, Payload, Session, WSState}
 
       def build_payload(socket, opts), do: payload(socket, opts) |> send_out()
-      defp send_out(%Websocket{} = socket), do: socket
+      defp send_out(%WSState{} = socket), do: socket
 
       defp send_out({payload, socket}) do
         %{
@@ -21,7 +21,7 @@ defmodule Remedy.Gateway.Payload do
         }
         |> flatten()
         |> :erlang.term_to_binary()
-        |> Remedy.Gun.send(socket)
+        |> Remedy.Gun.websocket_send(socket)
       end
 
       defp crush(map), do: map |> flatten() |> Morphix.stringmorphiform!()
@@ -45,7 +45,7 @@ defmodule Remedy.Gateway.Payload do
   @typedoc false
   @type payload :: any | nil
   @typedoc false
-  @type socket :: Websocket.t()
+  @type socket :: WSState.t()
   @typedoc false
   @type opts :: list() | nil
 
@@ -60,7 +60,7 @@ defmodule Remedy.Gateway.Payload do
 
   @optional_callbacks payload: 2, digest: 2
 
-  alias Remedy.Gateway.Websocket
+  alias Remedy.Gateway.WSState
 
   alias Remedy.Gateway.Events.{
           Dispatch,
@@ -87,7 +87,7 @@ defmodule Remedy.Gateway.Payload do
 
   # delegates to {Command}.digest
 
-  @spec digest(Websocket.t(), any, binary) :: Websocket.t()
+  @spec digest(WSState.t(), any, binary) :: WSState.t()
   def digest(socket, event, payload) do
     Logger.warn("#{inspect(event)}")
     module_delegate(event).digest(socket, payload)
@@ -97,7 +97,7 @@ defmodule Remedy.Gateway.Payload do
 
   ## Due to some functions requiring additional parameters that cannot be preconfigured, external API functionality is provided through the Gateway module. ( maybe )
 
-  @spec send(Websocket.t(), any, any) :: any
+  @spec send(WSState.t(), any, any) :: any
   def send(socket, event, opts \\ []) when is_op_event(event) do
     Logger.warn("#{inspect(event)}")
     module_delegate(event).build_payload(socket, opts)

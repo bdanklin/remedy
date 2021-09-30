@@ -4,35 +4,66 @@ defmodule Remedy.Schema.Message do
   """
   use Remedy.Schema
 
+  @type id :: Snowflake.t()
+  @type content :: String.t()
+  @type edited_timestamp :: ISO8601.t()
+  @type flags :: integer()
+  @type mention_everyone :: boolean()
+  @type nonce :: integer()
+  @type pinned :: boolean()
+  @type timestamp :: ISO8601.t()
+  @type tts :: boolean()
+  @type type :: integer()
+  @type application :: App.t()
+  @type author :: User.t()
+  @type channel :: Channel.t()
+  @type guild :: Guild.t()
+  @type thread :: Channel.t()
+  @type webhook :: Webhook.t()
+  @type attachments :: [Attachments.t()]
+  @type components :: [Component.t()]
+  @type embeds :: [Embed.t()]
+  @type mention_channels :: [Channel.t()]
+  @type mention_roles :: [Role.t()]
+  @type mentions :: [User.t()]
+  @type reactions :: [Reaction.t()]
+  @type sticker_items :: [Sticker.t()]
+  @type message_reference :: Reference.t()
+  @type referenced_message :: Message.t()
+  @type activity :: Activity.t()
+  @type interaction :: Interaction.t()
+  @type member :: Member.t()
+
   @type t :: %__MODULE__{
-          content: String.t(),
-          edited_timestamp: ISO8601.t(),
-          flags: integer(),
-          mention_everyone: boolean(),
-          nonce: integer(),
-          pinned: boolean(),
-          timestamp: ISO8601.t(),
-          tts: boolean(),
-          type: integer(),
-          application: App.t(),
-          author: User.t(),
-          channel: Channel.t(),
-          guild: Guild.t(),
-          thread: Channel.t(),
-          webhook: Webhook.t(),
-          attachments: [Attachments.t()],
-          components: [Component.t()],
-          embeds: [Embed.t()],
-          mention_channels: [Channel.t()],
-          mention_roles: [Role.t()],
-          mentions: [User.t()],
-          reactions: [Reaction.t()],
-          sticker_items: [Sticker.t()],
-          message_reference: Reference.t(),
-          referenced_message: Message.t(),
-          activity: Activity.t(),
-          interaction: Interaction.t(),
-          member: Member.t()
+          id: id,
+          content: content,
+          edited_timestamp: edited_timestamp,
+          flags: flags,
+          mention_everyone: mention_everyone,
+          nonce: nonce,
+          pinned: pinned,
+          timestamp: timestamp,
+          tts: tts,
+          type: type,
+          application: application,
+          author: author,
+          channel: channel,
+          guild: guild,
+          thread: thread,
+          webhook: webhook,
+          attachments: attachments,
+          components: components,
+          embeds: embeds,
+          mention_channels: mention_channels,
+          mention_roles: mention_roles,
+          mentions: mentions,
+          reactions: reactions,
+          sticker_items: sticker_items,
+          message_reference: message_reference,
+          referenced_message: referenced_message,
+          activity: activity,
+          interaction: interaction,
+          member: member
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}

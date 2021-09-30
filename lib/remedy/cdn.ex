@@ -19,8 +19,7 @@ defmodule Remedy.CDN do
   @cdn "https://cdn.discordapp.com"
 
   def custom_emoji(id, size \\ nil) do
-    "/emojis/#{id}"
-    |> encode(id, size)
+    "/emojis/#{id}" |> encode(id, size)
   end
 
   def guild_icon(id, guild_icon, size \\ nil) do
@@ -83,9 +82,9 @@ defmodule Remedy.CDN do
     |> encode(sticker_pack_banner_asset_id, size)
   end
 
-  ##
+  ############
   #### Private
-  #####
+  ############
 
   defp encode(term, hash, size) do
     (@cdn <> term)

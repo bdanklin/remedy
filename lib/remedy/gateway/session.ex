@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Session do
   @moduledoc false
   alias Remedy.{Gun, GatewayATC}
-  alias Remedy.Gateway.{Pacemaker, Payload, Websocket}
+  alias Remedy.Gateway.{Pacemaker, Payload, WSState}
   import Remedy.OpcodeHelpers
   require Logger
   use GenServer
@@ -27,15 +27,14 @@ defmodule Remedy.Gateway.Session do
   end
 
   def init(%{gateway: gateway, shard: shard}) do
-    {:ok, %Websocket{gateway: gateway, shard: shard}, {:continue, :establish_connection}}
+    {:ok, %WSState{gateway: gateway, shard: shard}, {:continue, :establish_connection}}
   end
 
   def handle_continue(:establish_connection, socket) do
     {:noreply,
      socket
      |> GatewayATC.request_connect()
-     |> Gun.open_await()
-     |> Gun.upgrade_ws_await()
+     |> Gun.open_websocket()
      |> Gun.zlib_init()}
   end
 
@@ -71,7 +70,7 @@ defmodule Remedy.Gateway.Session do
     Logger.debug("#{payload[:t]}")
 
     {:noreply,
-     %Websocket{
+     %WSState{
        socket
        | payload_op_code: payload.op,
          payload_op_event: event_from_op(payload.op),
@@ -82,12 +81,12 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_info({:gun_ws, _conn, _stream, :close}, state) do
-    Logger.debug("WEBSOCKET CLOSED")
+    Logger.debug("WSState CLOSED")
     {:noreply, state}
   end
 
   def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, state) do
-    Logger.debug("WEBSOCKET CLOSED #{errno} #{inspect(reason)}")
+    Logger.debug("WSState CLOSED #{errno} #{inspect(reason)}")
     {:noreply, state}
   end
 

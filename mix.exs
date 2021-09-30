@@ -64,23 +64,17 @@ defmodule Remedy.MixProject do
 
   def groups_for_modules do
     [
-      Dispatch: [
-        ~r/Remedy.Gateway.Dispatch/
-      ],
       Schema: [
         ~r/Remedy.Schema/
       ],
-      Helpers: [
-        Remedy.DispatchHelpers,
-        Remedy.ModelHelpers,
-        Remedy.OpcodeHelpers,
-        Remedy.TimeHelpers
+      Dispatch: [
+        ~r/Remedy.Gateway.Dispatch/
       ],
       Exceptions: [
         Remedy.EnvironmentVariableError,
         Remedy.VoiceError,
         Remedy.CacheError,
-        Remedy.ApiError
+        Remedy.APIError
       ]
     ]
   end
@@ -108,10 +102,11 @@ defmodule Remedy.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:credo, "~> 1.5.6", only: [:dev], runtime: false},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
-      {:unsafe, "~> 1.0", runtime: false},
       {:ex_doc, "~> 0.15", only: [:dev]},
       {:recon, "~> 2.3", only: [:dev]},
       {:mix_unused, "~> 0.1.0", only: [:dev]},
+      {:unsafe, "~> 1.0"},
+      {:ex_rated, "~> 2.0"},
       {:jason, "~> 1.2"},
       {:mime, "~> 2.0"},
       {:progress_bar, "~> 2.0"},

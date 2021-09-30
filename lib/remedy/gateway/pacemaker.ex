@@ -1,10 +1,10 @@
 defmodule Remedy.Gateway.Pacemaker do
   @moduledoc false
 
-  alias Remedy.Gateway.Websocket
+  alias Remedy.Gateway.WSState
 
-  def start(%Websocket{heartbeat_interval: heartbeat_interval} = socket) do
-    %Websocket{
+  def start(%WSState{heartbeat_interval: heartbeat_interval} = socket) do
+    %WSState{
       socket
       | heartbeat_timer: Process.send_after(self(), :HEARTBEAT, heartbeat_interval),
         heartbeat_ack: nil,
@@ -12,7 +12,7 @@ defmodule Remedy.Gateway.Pacemaker do
     }
   end
 
-  def stop(%Websocket{heartbeat_timer: heartbeat_timer} = socket) do
+  def stop(%WSState{heartbeat_timer: heartbeat_timer} = socket) do
     :erlang.cancel_timer(heartbeat_timer)
 
     socket

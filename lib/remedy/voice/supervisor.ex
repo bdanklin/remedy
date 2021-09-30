@@ -4,7 +4,7 @@
 #   use Supervisor
 
 #   alias Remedy.Voice.Session
-#   alias Remedy.Voice.Websocket
+#   alias Remedy.Voice.WSState
 #   import Remedy.ModelHelpers
 #   require Logger
 

@@ -53,12 +53,11 @@ defmodule Remedy.CacheError do
   end
 end
 
-defmodule Remedy.ApiError do
+defmodule Remedy.APIError do
   @moduledoc """
   Represents a failed response from the API.
 
-  This occurs when hackney or HTTPoison fail, or when the API doesn't respond with `200` or `204`.
-  This should only occur when using the banged API methods.
+
 
   Check the Format
   """

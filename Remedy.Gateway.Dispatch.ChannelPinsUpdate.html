@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.1">
+    <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.5.4">
 
-    <title>Remedy.ApiError — Remedy v0.5.4</title>
-    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+    <title>Remedy.Gateway.Dispatch.ChannelPinsUpdate — Remedy v0.5.4</title>
+    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-521523f0ea.js"></script>
+    <script src="dist/sidebar_items-cc11483b40.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
 
 
   </head>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.ApiError <small>exception</small> <small class="app-vsn">(Remedy v0.5.4)</small>
+Remedy.Gateway.Dispatch.ChannelPinsUpdate <small class="app-vsn">(Remedy v0.5.4)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L56" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,8 +95,7 @@ Remedy.ApiError <small>exception</small> <small class="app-vsn">(Remedy v0.5.4)<
 
 
         <section id="moduledoc">
-<p>Represents a failed response from the API.</p><p>This occurs when hackney or HTTPoison fail, or when the API doesn't respond with <code class="inline">200</code> or <code class="inline">204</code>.
-This should only occur when using the banged API methods.</p><p>Check the Format</p>
+
         </section>
 
 
@@ -115,56 +114,56 @@ This should only occur when using the banged API methods.</p><p>Check the Format
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:detailed_error/0">detailed_error()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:discord_status_code/0">discord_status_code()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:error/0">error()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:error_list_map/0">error_list_map()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:errors/0">errors()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:response/0">response()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:status_code/0">status_code()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#t:t/0">t()</a>
+
+  </div>
+
+</div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/1">changeset(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/2">changeset(model, params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#handle/1">handle(arg)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#new/1">new(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update/2">update(model, params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#validate/1">validate(changeset)</a>
 
   </div>
 
@@ -184,215 +183,6 @@ This should only occur when using the banged API methods.</p><p>Check the Format
 Types
           </h1>
           <div class="types-list">
-<section class="detail" id="t:detailed_error/0">
-
-  <div class="detail-header">
-    <a href="#t:detailed_error/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">detailed_error()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L81" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>detailed_error() :: %{
-  code: <a href="#t:discord_status_code/0">discord_status_code</a>(),
-  message: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  errors: <a href="#t:errors/0">errors</a>()
-}</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:discord_status_code/0">
-
-  <div class="detail-header">
-    <a href="#t:discord_status_code/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">discord_status_code()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L77" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>discord_status_code() :: 10001..90001</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:error/0">
-
-  <div class="detail-header">
-    <a href="#t:error/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">error()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L84" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>error() :: %{code: <a href="#t:discord_status_code/0">discord_status_code</a>(), message: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:error_list_map/0">
-
-  <div class="detail-header">
-    <a href="#t:error_list_map/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">error_list_map()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L83" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>error_list_map() :: %{_errors: [<a href="#t:error/0">error</a>()]}</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:errors/0">
-
-  <div class="detail-header">
-    <a href="#t:errors/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">errors()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L82" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>errors() ::
-  %{required(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) =&gt; <a href="#t:errors/0">errors</a>()}
-  | %{required(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) =&gt; <a href="#t:error_list_map/0">error_list_map</a>()}</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:response/0">
-
-  <div class="detail-header">
-    <a href="#t:response/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">response()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L79" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>response() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | <a href="#t:error/0">error</a>() | <a href="#t:detailed_error/0">detailed_error</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:status_code/0">
-
-  <div class="detail-header">
-    <a href="#t:status_code/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">status_code()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L76" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>status_code() :: 100..511</pre>
-
-      </div>
-
-
-  </section>
-</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -402,7 +192,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/exceptions.ex#L71" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L8" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -415,7 +205,11 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>t() :: %{status_code: <a href="#t:status_code/0">status_code</a>(), response: <a href="#t:response/0">response</a>()}</pre>
+          <pre>t() :: %Remedy.Gateway.Dispatch.ChannelPinsUpdate{
+  channel_id: Sunbake.Snowflake.t(),
+  guild_id: Sunbake.Snowflake.t(),
+  last_pin_timestamp: Sunbake.ISO8601.t()
+}</pre>
 
       </div>
 
@@ -426,11 +220,166 @@ Types
           </div>
         </section>
 
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="changeset/1">
+
+  <div class="detail-header">
+    <a href="#changeset/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L48" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="changeset/2">
+
+  <div class="detail-header">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(model, params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L49" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="handle/1">
+
+  <div class="detail-header">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">handle(arg)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L21" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="new/1">
+
+  <div class="detail-header">
+    <a href="#new/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">new(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L32" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="update/2">
+
+  <div class="detail-header">
+    <a href="#update/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update(model, params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L39" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="validate/1">
+
+  <div class="detail-header">
+    <a href="#validate/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">validate(changeset)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_pins_update.ex#L46" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
+
       <footer class="footer">
+
+        <p>
+          Find it on Hex:
+          <a href="https://hex.pm/packages/remedy/0.5.4" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.5.4" class="line">Preview</a>
+
+            <a href="https://preview.hex.pm/preview/remedy/0.5.4/show/lib/remedy/gateway/dispatch/channel_pins_update.ex">(current file)</a>
+
+        </p>
+
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.1) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">

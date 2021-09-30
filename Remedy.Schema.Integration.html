@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.1">
+    <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.5.4">
 
     <title>Remedy.Schema.Integration — Remedy v0.5.4</title>
-    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-521523f0ea.js"></script>
+    <script src="dist/sidebar_items-cc11483b40.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
 
 
   </head>
@@ -128,7 +128,7 @@ Remedy.Schema.Integration <small class="app-vsn">(Remedy v0.5.4)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#changeset/1">changeset(params)</a>
+    <a href="#changeset/1">changeset(params \\ %{})</a>
 
   </div>
 
@@ -149,14 +149,7 @@ Remedy.Schema.Integration <small class="app-vsn">(Remedy v0.5.4)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update/2">update(model, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#validate/1">validate(changeset)</a>
+    <a href="#validate/1">validate(any)</a>
 
   </div>
 
@@ -227,14 +220,16 @@ Functions
           <div class="functions-list">
 <section class="detail" id="changeset/1">
 
+    <span id="changeset/0"></span>
+
   <div class="detail-header">
     <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">changeset(params)</h1>
+    <h1 class="signature">changeset(params \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/integration.ex#L38" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/integration.ex#L31" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -256,7 +251,7 @@ Functions
     </a>
     <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/integration.ex#L39" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/integration.ex#L35" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -291,28 +286,6 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="update/2">
-
-  <div class="detail-header">
-    <a href="#update/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update(model, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/integration.ex#L29" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
 <section class="detail" id="validate/1">
 
   <div class="detail-header">
@@ -320,9 +293,9 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">validate(changeset)</h1>
+    <h1 class="signature">validate(any)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/integration.ex#L36" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/integration.ex#L29" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -340,10 +313,20 @@ Functions
         </section>
 
       <footer class="footer">
+
+        <p>
+          Find it on Hex:
+          <a href="https://hex.pm/packages/remedy/0.5.4" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.5.4" class="line">Preview</a>
+
+            <a href="https://preview.hex.pm/preview/remedy/0.5.4/show/lib/remedy/schema/integration.ex">(current file)</a>
+
+        </p>
+
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.1) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">

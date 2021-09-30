@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.5.4">
 
-    <title>Remedy.Gateway.Dispatch.GuildRoleUpdate — Remedy v0.5.4</title>
+    <title>Remedy.API.Ratelimiter — Remedy v0.5.4</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
     <script src="dist/sidebar_items-cc11483b40.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Gateway.Dispatch.GuildRoleUpdate <small class="app-vsn">(Remedy v0.5.4)</small>
+Remedy.API.Ratelimiter <small class="app-vsn">(Remedy v0.5.4)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_update.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,11 +95,14 @@ Remedy.Gateway.Dispatch.GuildRoleUpdate <small class="app-vsn">(Remedy v0.5.4)</
 
 
         <section id="moduledoc">
-<p>Dispatched when a new guild channel is created, relevant to the current user.</p><h2 id="module-payload" class="section-heading">
-  <a href="#module-payload" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Payload:
-</h2>
-<ul><li>%Remedy.Schema.Guild{}.</li></ul>
+<p>Simple Ratelimiter implementation.</p><p>Due to limitations and the dynamic nature of the Discord ratelimit system, it is not possible to know the ratelimits of given routes beforehand.</p><p>There are several types of rate limits at play:</p><ul><li>A global ratelimit of 50 requests per second must be respected.</li><li>Route specific ratelimits are dynamic and can change, they can also be shared across routes. These are only known after a request has been sent.</li><li>Hidden ratelimits against specific resources. (Will error and not provide an accurate ratelimit. These are known to be applied to Emojis and deleting older messages.)</li></ul><p>This module keeps a state of</p><pre><code class="makeup elixir"><span class="p" data-group-id="9470921854-1">%{</span><span class="w">
+  </span><span class="s">&quot;route1&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9470921854-2">{</span><span class="n">bucket1</span><span class="p">,</span><span class="w"> </span><span class="n">reset1</span><span class="p">,</span><span class="w"> </span><span class="n">limit1</span><span class="p" data-group-id="9470921854-2">}</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;route2&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9470921854-3">{</span><span class="n">bucket2</span><span class="p">,</span><span class="w"> </span><span class="n">reset2</span><span class="p">,</span><span class="w"> </span><span class="n">limit2</span><span class="p" data-group-id="9470921854-3">}</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;route3&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9470921854-4">{</span><span class="n">bucket3</span><span class="p">,</span><span class="w"> </span><span class="n">reset3</span><span class="p">,</span><span class="w"> </span><span class="n">limit3</span><span class="p" data-group-id="9470921854-4">}</span><span class="w">
+</span><span class="p" data-group-id="9470921854-1">}</span><span class="err">`</span><span class="err">`</span><span class="err">`</span><span class="w">
+
+</span><span class="o">-</span><span class="w"> </span><span class="nc">A</span><span class="w"> </span><span class="n">route</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">whenever</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">headers</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">recieved</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">successful</span><span class="w"> </span><span class="n">request</span><span class="o">.</span><span class="w">
+</span><span class="o">-</span><span class="w"> </span><span class="nc">Global</span><span class="w"> </span><span class="n">ratelimit</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">updated</span><span class="w"> </span><span class="n">regardless</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">success</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">request</span><span class="o">.</span></code></pre>
         </section>
 
 
@@ -118,42 +121,42 @@ Remedy.Gateway.Dispatch.GuildRoleUpdate <small class="app-vsn">(Remedy v0.5.4)</
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#changeset/1">changeset(params)</a>
+    <a href="#analyse_bucket/2">analyse_bucket(arg1, route)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#changeset/2">changeset(model, params)</a>
+    <a href="#check_route/1">check_route(route)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle/1">handle(arg)</a>
+    <a href="#inc_global/0">inc_global()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#new/1">new(params)</a>
+    <a href="#inc_route/2">inc_route(rest_response, rest_request)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update/2">update(model, params)</a>
+    <a href="#inc_route/3">inc_route(bucket, reset_after, limit)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#validate/1">validate(changeset)</a>
+    <a href="#run_check/1">run_check(request)</a>
 
   </div>
 
@@ -173,16 +176,16 @@ Remedy.Gateway.Dispatch.GuildRoleUpdate <small class="app-vsn">(Remedy v0.5.4)</
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="changeset/1">
+<section class="detail" id="analyse_bucket/2">
 
   <div class="detail-header">
-    <a href="#changeset/1" class="detail-link" title="Link to this function">
+    <a href="#analyse_bucket/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">changeset(params)</h1>
+    <h1 class="signature">analyse_bucket(arg1, route)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_update.ex#L43" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L78" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -195,16 +198,46 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="changeset/2">
+<section class="detail" id="check_route/1">
 
   <div class="detail-header">
-    <a href="#changeset/2" class="detail-link" title="Link to this function">
+    <a href="#check_route/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">changeset(model, params)</h1>
+    <h1 class="signature">check_route(route)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_update.ex#L44" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L46" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>check_route(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>() | Remedy.API.RestRequest.t()) ::
+  {:ok, :infinity | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="inc_global/0">
+
+  <div class="detail-header">
+    <a href="#inc_global/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">inc_global()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L69" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -217,16 +250,46 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="handle/1">
+<section class="detail" id="inc_route/2">
 
   <div class="detail-header">
-    <a href="#handle/1" class="detail-link" title="Link to this function">
+    <a href="#inc_route/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">handle(arg)</h1>
+    <h1 class="signature">inc_route(rest_response, rest_request)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_update.ex#L18" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L54" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>inc_route(Remedy.API.RestResponse.t(), Remedy.API.RestRequest.t()) ::
+  {:ok, :infinity | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="inc_route/3">
+
+  <div class="detail-header">
+    <a href="#inc_route/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">inc_route(bucket, reset_after, limit)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L65" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -239,60 +302,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="new/1">
+<section class="detail" id="run_check/1">
 
   <div class="detail-header">
-    <a href="#new/1" class="detail-link" title="Link to this function">
+    <a href="#run_check/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">new(params)</h1>
+    <h1 class="signature">run_check(request)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_update.ex#L27" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update/2">
-
-  <div class="detail-header">
-    <a href="#update/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update(model, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_update.ex#L34" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="validate/1">
-
-  <div class="detail-header">
-    <a href="#validate/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">validate(changeset)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_update.ex#L41" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L30" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -316,7 +335,7 @@ Functions
           <a href="https://hex.pm/packages/remedy/0.5.4" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.5.4" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.5.4/show/lib/remedy/gateway/dispatch/guild_role_update.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.5.4/show/lib/remedy/api/ratelimiter.ex">(current file)</a>
 
         </p>
 

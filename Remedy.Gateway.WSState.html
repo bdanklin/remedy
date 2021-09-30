@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.1">
+    <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.5.4">
 
-    <title>Remedy.Gateway.Websocket — Remedy v0.5.4</title>
-    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+    <title>Remedy.Gateway.WSState — Remedy v0.5.4</title>
+    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-521523f0ea.js"></script>
+    <script src="dist/sidebar_items-cc11483b40.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
 
 
   </head>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.4)</small>
+Remedy.Gateway.WSState <small class="app-vsn">(Remedy v0.5.4)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,7 @@ Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.4)</small>
 
 
         <section id="moduledoc">
-<p>Contains all the information required to maintain the gateway websocket connection to Discord.</p>
+<p>Contains all the information required to maintain the gateway WSState connection to Discord.</p><p>This is provided to allow the user to enact custom logic on the gateway events as they are received from the consumer. It should be noted that the websocket state consumed with an event is a 'snapshot' of the state at the time that event was received, and does not relate to the current state of the websocket.</p>
         </section>
 
 
@@ -114,6 +114,13 @@ Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.4)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#t:conn/0">conn()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#t:gateway/0">gateway()</a>
 
   </div>
@@ -129,13 +136,6 @@ Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.4)</small>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:gun_data_stream/0">gun_data_stream()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:gun_worker/0">gun_worker()</a>
 
   </div>
 
@@ -258,7 +258,7 @@ Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.4)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.Websocket.t()</code> struct.</p></div>
+    <div class="summary-synopsis"><p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.WSState.t()</code> struct.</p></div>
 
 </div>
 
@@ -276,6 +276,35 @@ Remedy.Gateway.Websocket <small class="app-vsn">(Remedy v0.5.4)</small>
 Types
           </h1>
           <div class="types-list">
+<section class="detail" id="t:conn/0">
+
+  <div class="detail-header">
+    <a href="#t:conn/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">conn()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L35" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>conn() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:gateway/0">
 
   <div class="detail-header">
@@ -285,7 +314,7 @@ Types
     </a>
     <h1 class="signature">gateway()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L29" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L31" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -314,7 +343,7 @@ Types
     </a>
     <h1 class="signature">gun_conn()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L34" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L36" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -343,7 +372,7 @@ Types
     </a>
     <h1 class="signature">gun_data_stream()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L35" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L37" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -363,35 +392,6 @@ Types
 
   </section>
 </section>
-<section class="detail" id="t:gun_worker/0">
-
-  <div class="detail-header">
-    <a href="#t:gun_worker/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">gun_worker()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L33" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>gun_worker() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
 <section class="detail" id="t:heartbeat_ack/0">
 
   <div class="detail-header">
@@ -401,7 +401,7 @@ Types
     </a>
     <h1 class="signature">heartbeat_ack()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L39" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L41" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -430,7 +430,7 @@ Types
     </a>
     <h1 class="signature">heartbeat_interval()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L32" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L34" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -459,7 +459,7 @@ Types
     </a>
     <h1 class="signature">heartbeat_timer()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L40" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L42" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -488,7 +488,7 @@ Types
     </a>
     <h1 class="signature">last_heartbeat_ack()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L38" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L40" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -517,7 +517,7 @@ Types
     </a>
     <h1 class="signature">last_heartbeat_send()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L37" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L39" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -546,7 +546,7 @@ Types
     </a>
     <h1 class="signature">payload_dispatch_event()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L44" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L46" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -575,7 +575,7 @@ Types
     </a>
     <h1 class="signature">payload_op_code()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L41" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L43" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -604,7 +604,7 @@ Types
     </a>
     <h1 class="signature">payload_op_event()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L42" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L44" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -633,7 +633,7 @@ Types
     </a>
     <h1 class="signature">payload_sequence()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L43" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L45" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -662,7 +662,7 @@ Types
     </a>
     <h1 class="signature">session_id()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L30" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L32" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -691,7 +691,7 @@ Types
     </a>
     <h1 class="signature">shard()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L28" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L30" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -720,7 +720,7 @@ Types
     </a>
     <h1 class="signature">shard_pid()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L31" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L33" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -749,7 +749,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L9" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -762,11 +762,11 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>t() :: %Remedy.Gateway.Websocket{
+          <pre>t() :: %Remedy.Gateway.WSState{
+  conn: <a href="#t:conn/0">conn</a>(),
   gateway: <a href="#t:gateway/0">gateway</a>(),
   gun_conn: <a href="#t:gun_conn/0">gun_conn</a>(),
   gun_data_stream: <a href="#t:gun_data_stream/0">gun_data_stream</a>(),
-  gun_worker: <a href="#t:gun_worker/0">gun_worker</a>(),
   heartbeat_ack: <a href="#t:heartbeat_ack/0">heartbeat_ack</a>(),
   heartbeat_interval: <a href="#t:heartbeat_interval/0">heartbeat_interval</a>(),
   heartbeat_timer: <a href="#t:heartbeat_timer/0">heartbeat_timer</a>(),
@@ -798,7 +798,7 @@ Types
     </a>
     <h1 class="signature">token()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L27" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L29" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -827,7 +827,7 @@ Types
     </a>
     <h1 class="signature">zlib_context()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L36" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L38" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -869,7 +869,7 @@ Functions
     </a>
     <h1 class="signature">get_shard_latency(state)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/websocket.ex#L79" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/wsstate.ex#L81" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -879,7 +879,7 @@ Functions
 
   <section class="docstring">
 
-<p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.Websocket.t()</code> struct.</p><p>Returns the latency in milliseconds as an integer, returning nil if unknown.</p>
+<p>Gets the latency of the shard connection from a <code class="inline">Remedy.Struct.WSState.t()</code> struct.</p><p>Returns the latency in milliseconds as an integer, returning nil if unknown.</p>
   </section>
 </section>
 
@@ -887,10 +887,20 @@ Functions
         </section>
 
       <footer class="footer">
+
+        <p>
+          Find it on Hex:
+          <a href="https://hex.pm/packages/remedy/0.5.4" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.5.4" class="line">Preview</a>
+
+            <a href="https://preview.hex.pm/preview/remedy/0.5.4/show/lib/remedy/gateway/wsstate.ex">(current file)</a>
+
+        </p>
+
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.1) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">

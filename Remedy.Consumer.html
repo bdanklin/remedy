@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.1">
+    <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.5.4">
 
     <title>Remedy.Consumer — Remedy v0.5.4</title>
-    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-521523f0ea.js"></script>
+    <script src="dist/sidebar_items-cc11483b40.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
 
 
   </head>
@@ -95,16 +95,58 @@ Remedy.Consumer <small>behaviour</small> <small class="app-vsn">(Remedy v0.5.4)<
 
 
         <section id="moduledoc">
-<p>Consumer process for gateway event handling.</p><h1>Consuming Gateway Events</h1><p>To handle events, Remedy uses a GenStage implementation.</p><p>Remedy defines the <code class="inline">producer</code> and <code class="inline">producer_consumer</code> in the GenStage design.
-To consume the events you must create at least one <code class="inline">consumer</code> process. It is
-generally recommended that you spawn a consumer per core. To find this number
-you can use <a href="https://hexdocs.pm/elixir/System.html#schedulers_online/0"><code class="inline">System.schedulers_online/0</code></a>.</p><p>Remedy uses a ConsumerSupervisor to dispatch events, meaning your handlers
-will each be ran in their own seperate task.</p><h2 id="module-example" class="section-heading">
+<p>Consumer process for gateway event handling.</p><h2 id="module-consuming-dispatch-events" class="section-heading">
+  <a href="#module-consuming-dispatch-events" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Consuming Dispatch Events
+</h2>
+<p>To handle events, Remedy uses a GenStage implementation.</p><p>Remedy defines the <code class="inline">producer</code> and <code class="inline">producer_consumer</code> in the GenStage design.
+To consume the events you must create at least one <code class="inline">consumer</code> process.</p><p>Remedy uses a ConsumerSupervisor to dispatch events, meaning your handlers
+will each be ran in their own seperate task.</p><p>The full list of dispatch events and their inner payload is described in the type specs within this module.</p><ul><li>Regular payloads are delivered after casting to their schema and ratified against the cache.</li><li>Irregular payloads are classified as those which do not directly map to a standard discord object. They undergo extensive manipulation prior to updating the cache. They are described under the <code class="inline">DISPATCH</code> section of the documentation.</li></ul><h2 id="module-example" class="section-heading">
   <a href="#module-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<p>An example consumer can be found
-<a href="https://github.com/bdanklin/remedy/blob/master/examples/event_consumer.ex">here</a>.</p>
+<p>It is recommended that you supervise your consumers. First we set up a supervisor module for our consumers.</p><pre><code class="makeup elixir"><span class="c1">#example_supervisor.ex</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.ExampleSupervisor</span><span class="w"> </span><span class="k" data-group-id="8093953244-1">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">Supervisor</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="8093953244-2">(</span><span class="n">args</span><span class="p" data-group-id="8093953244-2">)</span><span class="w"> </span><span class="k" data-group-id="8093953244-3">do</span><span class="w">
+    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="8093953244-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p" data-group-id="8093953244-4">)</span><span class="w">
+  </span><span class="k" data-group-id="8093953244-3">end</span><span class="w">
+
+  </span><span class="na">@impl</span><span class="w"> </span><span class="no">true</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="8093953244-5">(</span><span class="c">_init_arg</span><span class="p" data-group-id="8093953244-5">)</span><span class="w"> </span><span class="k" data-group-id="8093953244-6">do</span><span class="w">
+    </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8093953244-7">[</span><span class="nc">ExampleConsumer</span><span class="p" data-group-id="8093953244-7">]</span><span class="w">
+
+    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p" data-group-id="8093953244-8">(</span><span class="n">children</span><span class="p">,</span><span class="w"> </span><span class="ss">strategy</span><span class="p">:</span><span class="w"> </span><span class="ss">:one_for_one</span><span class="p" data-group-id="8093953244-8">)</span><span class="w">
+  </span><span class="k" data-group-id="8093953244-6">end</span><span class="w">
+</span><span class="k" data-group-id="8093953244-1">end</span></code></pre><p>You can then set up your consumer module.</p><pre><code class="makeup elixir"><span class="c1">#example_consumer.ex</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleConsumer</span><span class="w"> </span><span class="k" data-group-id="2719021298-1">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">Remedy.Consumer</span><span class="w">
+
+  </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Api</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="w"> </span><span class="k" data-group-id="2719021298-2">do</span><span class="w">
+    </span><span class="nc">Consumer</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="2719021298-3">(</span><span class="bp">__MODULE__</span><span class="p" data-group-id="2719021298-3">)</span><span class="w">
+  </span><span class="k" data-group-id="2719021298-2">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="2719021298-4">(</span><span class="p" data-group-id="2719021298-5">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2719021298-6">%</span><span class="nc" data-group-id="2719021298-6">Remedy.Schema.Message</span><span class="p" data-group-id="2719021298-6">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="n">content</span><span class="p" data-group-id="2719021298-6">}</span><span class="p">,</span><span class="w"> </span><span class="c">_ws_state</span><span class="p" data-group-id="2719021298-5">}</span><span class="p" data-group-id="2719021298-4">)</span><span class="w"> </span><span class="k" data-group-id="2719021298-7">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k" data-group-id="2719021298-8">do</span><span class="w">
+      </span><span class="s">&quot;!sleep&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="2719021298-9">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Going to sleep...&quot;</span><span class="p" data-group-id="2719021298-9">)</span><span class="w">
+        </span><span class="nc">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p" data-group-id="2719021298-10">(</span><span class="mi">3000</span><span class="p" data-group-id="2719021298-10">)</span><span class="w">
+
+      </span><span class="s">&quot;!ping&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="2719021298-11">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pyongyang!&quot;</span><span class="p" data-group-id="2719021298-11">)</span><span class="w">
+
+      </span><span class="s">&quot;!raise&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
+        </span><span class="k">raise</span><span class="w"> </span><span class="s">&quot;No problems here!&quot;</span><span class="w">
+    </span><span class="k" data-group-id="2719021298-8">end</span><span class="w">
+  </span><span class="k" data-group-id="2719021298-7">end</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="2719021298-12">(</span><span class="c">_event</span><span class="p" data-group-id="2719021298-12">)</span><span class="w"> </span><span class="k" data-group-id="2719021298-13">do</span><span class="w">
+    </span><span class="ss">:noop</span><span class="w">
+  </span><span class="k" data-group-id="2719021298-13">end</span><span class="w">
+</span><span class="k" data-group-id="2719021298-1">end</span></code></pre>
         </section>
 
 
@@ -145,20 +187,6 @@ will each be ran in their own seperate task.</p><h2 id="module-example" class="s
 
   </div>
 
-  <div class="summary-functions summary">
-    <h2>
-      <a href="#functions">Functions</a>
-    </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#start_link/2">start_link(mod, opts \\ [])</a>
-
-  </div>
-
-</div>
-
-  </div>
-
         </section>
 
 
@@ -180,7 +208,7 @@ Types
     </a>
     <h1 class="signature">event()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L28" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L83" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -194,46 +222,51 @@ Types
       <div class="specs">
 
           <pre>event() ::
-  {:CHANNEL_CREATE, Channel.t(), Websocket.t()}
-  | {:CHANNEL_DELETE, Channel.t(), Websocket.t()}
-  | {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), Websocket.t()}
-  | {:CHANNEL_UPDATE, Channel.t(), Websocket.t()}
-  | {:GUILD_AVAILABLE, Guild.t(), Websocket.t()}
-  | {:GUILD_BAN_ADD, GuildBanAdd.t(), Websocket.t()}
-  | {:GUILD_BAN_REMOVE, GuildBanRemove.t(), Websocket.t()}
-  | {:GUILD_CREATE, Guild.t(), Websocket.t()}
-  | {:GUILD_DELETE, Guild.t(), Websocket.t()}
-  | {:GUILD_EMOJIS_UPDATE, [Emoji.t()], Websocket.t()}
-  | {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), Websocket.t()}
-  | {:GUILD_MEMBER_ADD, Member.t(), Websocket.t()}
-  | {:GUILD_MEMBER_REMOVE, Member.t(), Websocket.t()}
-  | {:GUILD_MEMBER_UPDATE, Member.t(), Member.t(), Websocket.t()}
-  | {:GUILD_MEMBERS_CHUNK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Websocket.t()}
-  | {:GUILD_ROLE_CREATE, Role.t(), Websocket.t()}
-  | {:GUILD_ROLE_DELETE, Role.t(), Websocket.t()}
-  | {:GUILD_ROLE_UPDATE, Role.t(), Websocket.t()}
-  | {:GUILD_UNAVAILABLE, UnavailableGuild.t(), Websocket.t()}
-  | {:GUILD_UPDATE, Guild.t(), Websocket.t()}
-  | {:MESSAGE_ACK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Websocket.t()}
-  | {:MESSAGE_CREATE, Message.t(), Websocket.t()}
-  | {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), Websocket.t()}
-  | {:MESSAGE_DELETE, MessageDelete.t(), Websocket.t()}
-  | {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), Websocket.t()}
-  | {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(), Websocket.t()}
+  {:CHANNEL_CREATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:CHANNEL_DELETE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:CHANNEL_UPDATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_AVAILABLE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_BAN_ADD, GuildBanAdd.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_BAN_REMOVE, GuildBanRemove.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_CREATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_DELETE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_EMOJIS_UPDATE, [<a href="Remedy.Schema.Emoji.html#t:t/0">Remedy.Schema.Emoji.t</a>()],
+     <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(),
+     <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_MEMBER_ADD, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_MEMBER_REMOVE, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_MEMBER_UPDATE, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(), <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(),
+     <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_MEMBERS_CHUNK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_ROLE_CREATE, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_ROLE_DELETE, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_ROLE_UPDATE, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_UNAVAILABLE, UnavailableGuild.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:GUILD_UPDATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_ACK, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_CREATE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_DELETE, MessageDelete.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(),
+     <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
   | {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(),
-     Websocket.t()}
-  | {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), Websocket.t()}
-  | {:MESSAGE_UPDATE, Message.t(), Websocket.t()}
-  | {:PRESENCE_UPDATE, Presence.t(), Websocket.t()}
-  | {:READY, Ready.t(), Websocket.t()}
-  | {:RESUMED, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Websocket.t()}
-  | {:TYPING_START, TypingStart.t(), Websocket.t()}
-  | {:USER_UPDATE, User.t(), Websocket.t()}
+     <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(),
+     <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:MESSAGE_UPDATE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:PRESENCE_UPDATE, Presence.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:READY, Ready.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:RESUMED, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:TYPING_START, TypingStart.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:USER_UPDATE, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
   | {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}
-  | {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), Websocket.t()}
+  | {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
   | {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}
-  | {:VOICE_STATE_UPDATE, VoiceState.t(), Websocket.t()}
-  | {:WEBHOOKS_UPDATE, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), Websocket.t()}</pre>
+  | {:VOICE_STATE_UPDATE, VoiceState.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}
+  | {:WEBHOOKS_UPDATE, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -262,7 +295,7 @@ Callbacks
     </a>
     <h1 class="signature">handle_event(event)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L26" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L80" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -277,6 +310,8 @@ Callbacks
 
           <pre>handle_event(<a href="#t:event/0">event</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
 
+          <pre>handle_event(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: :noop</pre>
+
       </div>
 
 
@@ -286,48 +321,21 @@ Callbacks
           </div>
         </section>
 
-        <section id="functions" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#functions">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-Functions
-          </h1>
-          <div class="functions-list">
-<section class="detail" id="start_link/2">
-
-    <span id="start_link/1"></span>
-
-  <div class="detail-header">
-    <a href="#start_link/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">start_link(mod, opts \\ [])</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L110" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-
-          </div>
-        </section>
-
       <footer class="footer">
+
+        <p>
+          Find it on Hex:
+          <a href="https://hex.pm/packages/remedy/0.5.4" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.5.4" class="line">Preview</a>
+
+            <a href="https://preview.hex.pm/preview/remedy/0.5.4/show/lib/remedy/consumer.ex">(current file)</a>
+
+        </p>
+
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.1) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">

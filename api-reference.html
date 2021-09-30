@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.1">
+    <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.5.4">
 
     <title>API Reference — Remedy v0.5.4</title>
-    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-521523f0ea.js"></script>
+    <script src="dist/sidebar_items-cc11483b40.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
 
 
   </head>
@@ -105,16 +105,25 @@ Remedy
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.Api.html">Remedy.Api</a>
+    <a href="Remedy.API.html">Remedy.API</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Hello</p></div>
+    <div class="summary-synopsis"><p>Standard interface for the Discord API.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.ApiError.html">Remedy.ApiError</a>
+    <a href="Remedy.API.Ratelimiter.html">Remedy.API.Ratelimiter</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Simple Ratelimiter implementation.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.APIError.html">Remedy.APIError</a>
 
   </div>
 
@@ -168,47 +177,27 @@ Remedy
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="Remedy.Gateway.Dispatch.html">Remedy.Gateway.Dispatch</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Gateway Dispatching</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="Remedy.Gateway.Dispatch.ChannelCreate.html">Remedy.Gateway.Dispatch.ChannelCreate</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Dispatched when a new guild channel is created, relevant to the current user.</p></div>
-
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.Gateway.Dispatch.GuildBanAdd.html">Remedy.Gateway.Dispatch.GuildBanAdd</a>
+    <a href="Remedy.Gateway.Dispatch.ChannelPinsUpdate.html">Remedy.Gateway.Dispatch.ChannelPinsUpdate</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Dispatched when a new guild ban is created.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Dispatch.GuildBanRemove.html">Remedy.Gateway.Dispatch.GuildBanRemove</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Dispatched when a new guild channel is created, relevant to the current user.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Dispatch.GuildCreate.html">Remedy.Gateway.Dispatch.GuildCreate</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Dispatched when a new guild channel is created, relevant to the current user.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Dispatch.GuildDelete.html">Remedy.Gateway.Dispatch.GuildDelete</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Dispatched when a new guild channel is created, relevant to the current user.</p></div>
+    <div class="summary-synopsis"></div>
 
 </div>
 <div class="summary-row">
@@ -253,7 +242,7 @@ Remedy
 
   </div>
 
-    <div class="summary-synopsis"><p>Dispatched when a new guild channel is created, relevant to the current user.</p></div>
+    <div class="summary-synopsis"><p>Dispatched when a new guild role is created.</p></div>
 
 </div>
 <div class="summary-row">
@@ -393,20 +382,11 @@ Remedy
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.Gateway.DispatchHandler.html">Remedy.Gateway.DispatchHandler</a>
+    <a href="Remedy.Gateway.WSState.html">Remedy.Gateway.WSState</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Gateway Dispatching</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Gateway.Websocket.html">Remedy.Gateway.Websocket</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Contains all the information required to maintain the gateway websocket connection to Discord.</p></div>
+    <div class="summary-synopsis"><p>Contains all the information required to maintain the gateway WSState connection to Discord.</p></div>
 
 </div>
 <div class="summary-row">
@@ -461,15 +441,6 @@ Remedy
   </div>
 
     <div class="summary-synopsis"><p>Discord Audit Log Object</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Remedy.Schema.AuditLogChange.html">Remedy.Schema.AuditLogChange</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Discord Audit Log Change Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -917,10 +888,18 @@ Remedy
 </div>
 
       <footer class="footer">
+
+        <p>
+          Find it on Hex:
+          <a href="https://hex.pm/packages/remedy/0.5.4" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.5.4" class="line">Preview</a>
+
+        </p>
+
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.1) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">

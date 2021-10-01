@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.Interaction do
-  @moduledoc """
-  Dispatched when a new guild channel is created, relevant to the current user.
-
-  ## Payload:
-
-  - %Remedy.Schema.Guild{}.
-
-  """
+  @moduledoc false
 
   alias Remedy.Schema.Interaction
 

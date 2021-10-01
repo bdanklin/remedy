@@ -55,6 +55,7 @@ defmodule Remedy.GatewayATC do
     end
   end
 
+  @doc false
   def handle_call({:request_connect}, _from, state) do
     {:reply, :ok,
      state

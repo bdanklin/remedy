@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.MessageUpdate do
-  @moduledoc """
-  Dispatched when a new message channel is created, relevant to the current user.
-
-  ## Payload:
-
-  - %Remedy.Schema.Message{}.
-
-  """
+  @moduledoc false
   alias Remedy.Cache
   alias Remedy.Schema.Message
 

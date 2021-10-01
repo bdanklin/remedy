@@ -1,5 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.ChannelCreate do
-  @doc false
+  @moduledoc false
   alias Remedy.Cache
   alias Remedy.Schema.Channel
 

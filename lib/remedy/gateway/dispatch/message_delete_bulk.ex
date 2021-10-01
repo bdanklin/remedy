@@ -1,7 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.MessageDeleteBulk do
-  @moduledoc """
-  Struct representing a Message Delete Bulk event
-  """
+  @moduledoc false
 
   use Remedy.Schema
   alias Remedy.Schema.Message

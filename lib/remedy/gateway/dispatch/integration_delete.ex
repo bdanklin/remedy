@@ -1,13 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.IntegrationDelete do
-  @moduledoc """
-  Dispatched when a new guild channel is created, relevant to the current user.
 
-  ## Payload:
-
-  - %Remedy.Schema.Guild{}.
-
-  """
-
+  @moduledoc false
   alias Remedy.Schema.Integration
 
   def handle({event, payload, socket}) do

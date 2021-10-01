@@ -3,7 +3,6 @@ defmodule Remedy.Schema.Embed do
   Discord Embed Object
   """
   use Remedy.Schema
-  alias Embed.{Author, Field, Footer, Provider, Thumbnail, Video}
 
   @type t :: %__MODULE__{
           title: String.t(),
@@ -16,9 +15,9 @@ defmodule Remedy.Schema.Embed do
           author: EmbedAuthor.t(),
           footer: EmbedFooter.t(),
           image: EmbedImage.t(),
-          provider: Provider.t(),
-          thumbnail: Thumbnail.t(),
-          video: Video.t()
+          provider: EmbedProvider.t(),
+          thumbnail: EmbedThumbnail.t(),
+          video: EmbedVideo.t()
         }
 
   @primary_key {:id, :id, autogenerate: false}
@@ -30,13 +29,13 @@ defmodule Remedy.Schema.Embed do
     field :timestamp, ISO8601
     field :color, :integer
 
-    embeds_many :fields, Field
-    embeds_one :author, Author
-    embeds_one :footer, Footer
-    embeds_one :image, Image
-    embeds_one :provider, Provider
-    embeds_one :thumbnail, Thumbnail
-    embeds_one :video, Video
+    embeds_many :fields, EmbedField
+    embeds_one :author, EmbedAuthor
+    embeds_one :footer, EmbedFooter
+    embeds_one :image, EmbedImage
+    embeds_one :provider, EmbedProvider
+    embeds_one :thumbnail, EmbedThumbnail
+    embeds_one :video, EmbedVideo
   end
 
   def new(params) do

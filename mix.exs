@@ -67,9 +67,6 @@ defmodule Remedy.MixProject do
       Schema: [
         ~r/Remedy.Schema/
       ],
-      Dispatch: [
-        ~r/Remedy.Gateway.Dispatch/
-      ],
       Exceptions: [
         Remedy.EnvironmentVariableError,
         Remedy.VoiceError,

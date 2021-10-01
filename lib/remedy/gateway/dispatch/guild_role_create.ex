@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
-  @moduledoc """
-  Dispatched when a new guild role is created.
-
-  ## Payload:
-
-  - %Remedy.Schema.Guild{}.
-
-  """
+  @moduledoc false
   use Remedy.Schema
   alias Remedy.Cache
 

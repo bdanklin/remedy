@@ -26,7 +26,7 @@ defmodule Remedy.Gun do
   end
 
   defp await_http2_up(%Rest{conn: conn} = socket) do
-    case :gun.await_up(conn, 10000) do
+    case :gun.await_up(conn, 10_000) do
       {:ok, :http2} -> socket
     end
   end
@@ -45,7 +45,7 @@ defmodule Remedy.Gun do
   end
 
   defp await_websocket_up(%WSState{conn: conn} = socket) do
-    case :gun.await_up(conn, 10000) do
+    case :gun.await_up(conn, 10_000) do
       {:ok, :http} ->
         socket
         |> upgrade_ws_await()
@@ -57,7 +57,7 @@ defmodule Remedy.Gun do
   end
 
   defp await_ws(%{conn: conn, gun_data_stream: gun_data_stream} = state) do
-    case :gun.await(conn, gun_data_stream, 10000) do
+    case :gun.await(conn, gun_data_stream, 10_000) do
       {:upgrade, ["websocket"], _headers} -> state
     end
   end
@@ -145,7 +145,9 @@ defmodule Remedy.Gun do
   end
 
   defp parse_headers(headers), do: Enum.into(headers, %{})
-  defp parse_body(body), do: Jason.decode!(body) |> Morphix.atomorphiform!()
+  defp parse_body(%{} = body), do: body |> Morphix.atomorphiform!()
+  defp parse_body([_ | _] = body), do: for(b <- body, into: [], do: Morphix.atomorphiform!(b))
+  defp parse_body(body), do: Jason.decode!(body) |> parse_body()
 
   defp prepare_response({:error, reason}), do: {:error, reason}
   defp prepare_response(%RestResponse{} = response), do: {:ok, response}

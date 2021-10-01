@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.GuildRoleDelete do
-  @moduledoc """
-  Dispatched when a new guild channel is created, relevant to the current user.
-
-  ## Payload:
-
-  - %Remedy.Schema.Guild{}.
-
-  """
+  @moduledoc false
   use Remedy.Schema
   alias Remedy.Cache
   alias Remedy.Schema.Role

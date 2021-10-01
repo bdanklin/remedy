@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.GuildMemberAdd do
-  @moduledoc """
-  Dispatched when a new guild channel is created, relevant to the current user.
-
-  ## Payload:
-
-  - %Remedy.Schema.Member{}.
-
-  """
+  @moduledoc false
   alias Remedy.Cache
 
   def handle({event, %{user: user} = payload, socket}) do

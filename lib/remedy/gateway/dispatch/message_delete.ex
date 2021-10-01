@@ -1,7 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.MessageDelete do
-  @moduledoc """
-  Struct representing a Message Delete event
-  """
+  @moduledoc false
 
   alias Remedy.Schema.Message
 

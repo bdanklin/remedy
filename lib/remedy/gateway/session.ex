@@ -51,7 +51,7 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_info(:HEARTBEAT, %{heartbeat_ack: false} = socket) do
-    Logger.debug("NO RESPONSE TO HEARTBEAT")
+    Logger.warn("NO RESPONSE TO HEARTBEAT")
 
     {:noreply,
      socket
@@ -67,7 +67,6 @@ defmodule Remedy.Gateway.Session do
 
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
     {payload, socket} = Gun.unpack_frame(socket, frame)
-    Logger.debug("#{payload[:t]}")
 
     {:noreply,
      %WSState{
@@ -81,22 +80,22 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_info({:gun_ws, _conn, _stream, :close}, state) do
-    Logger.debug("WSState CLOSED")
+    Logger.warn("WSState CLOSED")
     {:noreply, state}
   end
 
   def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, state) do
-    Logger.debug("WSState CLOSED #{errno} #{inspect(reason)}")
+    Logger.warn("WSState CLOSED #{errno} #{inspect(reason)}")
     {:noreply, state}
   end
 
   def handle_info({:gun_down, _conn, _stream, _, _}, socket) do
-    Logger.debug("GUN DOWN")
+    Logger.warn("GUN DOWN")
     {:noreply, socket}
   end
 
   def handle_info({:gun_up, _worker, _proto}, socket) do
-    Logger.debug("RECONNECTED AFTER INTERRUPTION")
+    Logger.info("RECONNECTED AFTER INTERRUPTION")
     {:noreply, socket}
   end
 end

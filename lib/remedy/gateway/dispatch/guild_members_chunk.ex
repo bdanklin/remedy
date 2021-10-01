@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.GuildMemberChunk do
-  @moduledoc """
-  Dispatched when a new guild channel is created, relevant to the current user.
-
-  ## Payload:
-
-  - %Remedy.Schema.Member{}.
-
-  """
+  @moduledoc false
   use Remedy.Schema
 
   embedded_schema do

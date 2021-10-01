@@ -1,12 +1,5 @@
 defmodule Remedy.Gateway.Dispatch.GuildStickersUpdate do
-  @moduledoc """
-  Dispatched when a new guild channel is created, relevant to the current user.
-
-  ## Payload:
-
-  - %Remedy.Schema.Sticker{}.
-
-  """
+  @moduledoc false
   alias Remedy.Cache
 
   def handle({event, %{stickers: stickers, guild_id: guild_id} = _payload, socket}) do

@@ -74,9 +74,7 @@ defmodule Remedy.APIError do
 
   @type status_code :: 100..511
   @type discord_status_code :: 10_001..90_001
-
   @type response :: String.t() | error | detailed_error
-
   @type detailed_error :: %{code: discord_status_code, message: String.t(), errors: errors}
   @type errors :: %{required(String.t()) => errors} | %{required(String.t()) => error_list_map}
   @type error_list_map :: %{_errors: [error]}
@@ -87,9 +85,7 @@ defmodule Remedy.APIError do
         response: %{code: error_code, message: message, errors: errors},
         status_code: code
       }) do
-    "(HTTP #{code}) received Discord status code #{error_code} (#{message}) with errors: #{
-      inspect(errors)
-    }"
+    "(HTTP #{code}) received Discord status code #{error_code} (#{message}) with errors: #{inspect(errors)}"
   end
 
   @impl true

@@ -83,7 +83,7 @@ defmodule Remedy.Schema.Message do
     belongs_to :thread, Channel
     belongs_to :guild, Guild
     embeds_one :webhook, Webhook
-    embeds_many :attachments, Attachments
+    embeds_many :attachments, Attachment
     embeds_many :components, Component
     embeds_many :embeds, Embed
     embeds_many :mention_channels, Channel

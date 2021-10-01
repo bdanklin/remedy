@@ -24,6 +24,12 @@ defmodule Remedy.API do
 
   If a privileged intent is required for a request to be completed, it is also shown under the function.
 
+  ## Missing Functions
+
+  The following functions were not migrated from Nostrum
+
+  - `:get_user_dms`
+
   """
 
   import Remedy.ModelHelpers
@@ -193,7 +199,9 @@ defmodule Remedy.API do
   defp parse_get_channel({:error, _reason} = error), do: error
 
   defp parse_get_channel({:ok, channel}) do
-    {:ok, channel |> Channel.new()}
+    {:ok,
+     channel
+     |> Channel.new()}
   end
 
   @doc """
@@ -220,20 +228,20 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.modify_channel(41771983423143933, name: "elixir-remedy", topic: "remedy discussion")
-      {:ok, %Remedy.Schema.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
+  iex> Remedy.API.modify_channel(41771983423143933, name: "elixir-remedy", topic: "remedy discussion")
+  {:ok, %Remedy.Schema.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
 
 
-      iex> Remedy.API.modify_channel(41771983423143933)
-      {:ok, %Remedy.Schema.Channel{id: 41771983423143933}}
+  iex> Remedy.API.modify_channel(41771983423143933)
+  {:ok, %Remedy.Schema.Channel{id: 41771983423143933}}
 
   """
 
-  def modify_channel(channel_id, reason) do
-    body = %{name: "Desk Enthusiasts Only"}
-
+  ## to add: modify_guild_channel, modify_group_dm, modify_thread
+  @spec modify_channel(snowflake, keyword(), nil | binary) :: {:error, any} | {:ok, Channel.t()}
+  def modify_channel(channel_id, opts, reason \\ nil) do
     {:patch, "/channels/#{channel_id}"}
-    |> request(body, reason)
+    |> request(opts, reason)
     |> parse_modify_channel()
   end
 
@@ -241,7 +249,9 @@ defmodule Remedy.API do
   defp parse_modify_channel({:ok, %{id: nil}}), do: {:error, "Request Failed"}
 
   defp parse_modify_channel({:ok, %{id: _id} = channel}) do
-    {:ok, channel |> Channel.new()}
+    {:ok,
+     channel
+     |> Channel.new()}
   end
 
   @doc """
@@ -268,6 +278,16 @@ defmodule Remedy.API do
 
   def delete_channel(channel_id) do
     {:delete, "/channels/#{channel_id}"}
+    |> request()
+    |> parse_delete_channel()
+  end
+
+  defp parse_delete_channel({:error, _reason} = error), do: error
+
+  defp parse_delete_channel({:ok, channel}) do
+    {:ok,
+     channel
+     |> Channel.new()}
   end
 
   @doc """
@@ -275,24 +295,60 @@ defmodule Remedy.API do
 
   ## Permissions
 
-  - 'VIEW_CHANNEL'
-  - 'READ_MESSAGE_HISTORY'
+  - `VIEW_CHANNEL`
+  - `READ_MESSAGE_HISTORY`
+
+  ## Options
+
+  - `:before`
+  - `:after`
+  - `:around`
+  - `:limit`
+
+  ## Helpers
+
+  - `Remedy.API.get_channel_messages_before/3`
+  - `Remedy.API.get_channel_messages_after/3`
+  - `Remedy.API.get_channel_messages_around/3`
 
   ## Examples
 
-      iex> Remedy.API.get_channel_messages(43189401384091, 5, {:before, 130230401384})
-      {:ok, %Message{}}
+      iex> Remedy.API.get_channel_messages(872417560094732331, [{:before, 882781809908256789}, {:limit, 1}])
+      {:ok, [%Message{id: 882681855315423292}]}
 
   """
 
-  def get_channel_messages(channel_id) do
+  def get_channel_messages(channel_id, opts \\ []) do
+    body = Enum.into(opts, %{})
+
     {:get, "/channels/#{channel_id}/messages"}
+    |> request(body)
+    |> parse_get_channel_messages()
+  end
+
+  defp parse_get_channel_messages({:error, _reason} = error), do: error
+
+  defp parse_get_channel_messages({:ok, messages}) do
+    messages = for m <- messages, into: [], do: Message.new(m)
+    {:ok, messages}
+  end
+
+  def get_channel_messages_before(channel_id, message_id, limit \\ 50) do
+    get_channel_messages(channel_id, [{:before, message_id}, {:limit, limit}])
+  end
+
+  def get_channel_messages_after(channel_id, message_id, limit \\ 50) do
+    get_channel_messages(channel_id, [{:after, message_id}, {:limit, limit}])
+  end
+
+  def get_channel_messages_around(channel_id, message_id, limit \\ 50) do
+    get_channel_messages(channel_id, [{:around, message_id}, {:limit, limit}])
   end
 
   @doc """
   Retrieves a message from a channel.
 
-  ## Intents
+  ## Permissions
 
   - 'VIEW_CHANNEL'
   - 'READ_MESSAGE_HISTORY'
@@ -397,7 +453,7 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.delete_own_reaction(channel_id, message_id, emoji)
+      iex> Remedy.API.delete_own_reaction(123, 123, 123)
       {:ok}
 
   """
@@ -498,13 +554,12 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.edit_message(43189401384091, 1894013840914098, content: "hello world!")
+      iex> Remedy.API.edit_message(889614079830925352, 1894013840914098, content: "hello world!")
+      {:ok}
 
-      iex> Remedy.API.edit_message(43189401384091, 1894013840914098, "hello world!")
+      iex> Remedy.API.edit_message(889614079830925352, 1894013840914098, "hello world!")
+      {:ok}
 
-      iex> Remedy.API.edit_message(43189401384091, 1894013840914098, embed: embed)
-
-      iex> Remedy.API.edit_message(43189401384091, 1894013840914098, content: "hello world!", embed: embed)
 
   """
 
@@ -585,9 +640,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.get_channel_invites(43189401384091)
-  {:ok, [%Remedy.Schema.Invite{} | _]}
+      iex> Remedy.API.get_channel_invites(43189401384091)
+      {:ok, [%Remedy.Schema.Invite{}]}
 
   """
   def get_channel_invites(channel_id) do
@@ -616,12 +670,11 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.create_channel_invite(41771983423143933)
-  {:ok, Remedy.Schema.Invite{}}
+      iex> Remedy.API.create_channel_invite(41771983423143933)
+      {:ok, Remedy.Schema.Invite{}}
 
-  Remedy.API.create_channel_invite(41771983423143933, max_uses: 20)
-  {:ok, %Remedy.Schema.Invite{}}
+      iex> Remedy.API.create_channel_invite(41771983423143933, max_uses: 20)
+      {:ok, %Remedy.Schema.Invite{}}
 
   """
   def create_channel_invite(channel_id) do
@@ -828,10 +881,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  image = "data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8="
-
-  Remedy.API.create_guild_emoji(43189401384091, name: "remedy", image: image, roles: [])
+      iex> image = "data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8="
+      ...> Remedy.API.create_guild_emoji(43189401384091, name: "remedy", image: image, roles: [])
 
   """
 
@@ -856,8 +907,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
+      iex> Remedy.API.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
+      {:ok, %Remedy.Schema.Emoji{}}
 
   """
 
@@ -971,7 +1022,7 @@ defmodule Remedy.API do
   ## Examples
 
       iex> Remedy.API.get_guild_channels(81384788765712384)
-      {:ok, [%Remedy.Schema.Channel{guild_id: 81384788765712384} | _]}
+      {:ok, [%Remedy.Schema.Channel{guild_id: 81384788765712384}]}
 
   """
 
@@ -1101,11 +1152,11 @@ defmodule Remedy.API do
   ## Examples
 
       iex> Remedy.API.add_guild_member(
-        41771983423143937,
-        18374719829378473,
-        access_token: "6qrZcUqja7812RVdnEKjpzOL4CvHBFG",
-        nick: "remedy",
-        roles: [431849301, 913809431])
+      ...> 41771983423143937,
+      ...> 18374719829378473,
+      ...> access_token: "6qrZcUqja7812RVdnEKjpzOL4CvHBFG",
+      ...> nick: "remedy",
+      ...> roles: [431849301, 913809431])
 
   """
 
@@ -1202,9 +1253,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.remove_guild_member(1453827904102291, 18739485766253)
-  {:ok}
+      iex> Remedy.API.remove_guild_member(1453827904102291, 18739485766253)
+      {:ok}
 
   """
   def remove_guild_member(guild_id, user_id) do
@@ -1256,8 +1306,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.get_guild_roles(147362948571673)
+      iex>  Remedy.API.get_guild_roles(147362948571673)
+      {:ok, [%Remedy.Schema.Role{}]}
 
   """
 
@@ -1285,8 +1335,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.create_guild_role(41771983423143937, name: "remedy-club", hoist: true)
+      iex> Remedy.API.create_guild_role(41771983423143937, name: "remedy-club", hoist: true)
+      {:ok, %Remedy.Schema.Role{}}
 
   """
   def create_guild_roles(guild_id) do
@@ -1305,8 +1355,7 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
+      iex> Remedy.API.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
 
   """
   def modify_guild_role_positions(guild_id) do
@@ -1333,8 +1382,7 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
+      iex> Remedy.API.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
 
   """
   def modify_guild_role(guild_id, role_id) do
@@ -1353,8 +1401,7 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.delete_guild_role(41771983423143937, 392817238471936)
+      iex> Remedy.API.delete_guild_role(41771983423143937, 392817238471936)
 
   """
   def delete_guild_role(guild_id, role_id) do
@@ -1370,9 +1417,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.get_guild_prune_count(81384788765712384, 1)
-  {:ok, %{pruned: 0}}
+      iex> Remedy.API.get_guild_prune_count(81384788765712384, 1)
+      {:ok, %{pruned: 0}}
 
   """
 
@@ -1392,9 +1438,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.begin_guild_prune(81384788765712384, 1)
-  {:ok, %{pruned: 0}}
+      iex> Remedy.API.begin_guild_prune(81384788765712384, 1)
+      {:ok, %{pruned: 0}}
 
   """
 
@@ -1421,9 +1466,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.get_guild_invites(81384788765712384)
-  {:ok, [%Remedy.Schema.Invite{} | _]}
+      iex> Remedy.API.get_guild_invites(81384788765712384)
+      {:ok, [%Remedy.Schema.Invite{}]}
 
   """
 
@@ -1521,10 +1565,11 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.get_invite("zsjUsC")
+      iex> Remedy.API.get_invite("zsjUsC")
+      {:ok, %Remedy.Schema.Invite{}}
 
-  Remedy.API.get_invite("zsjUsC", with_counts: true)
+      iex> Remedy.API.get_invite("zsjUsC", with_counts: true)
+      {:ok, %Remedy.Schema.Invite{}}
 
   """
   def get_invite(invite_code) do
@@ -1541,9 +1586,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.delete_invite("zsjUsC")
-
+      iex> Remedy.API.delete_invite("zsjUsC")
+      {:ok, %Remedy.Schema.Invite{}}
   """
   def delete_invite(invite_code) do
     {:delete, "/invites/#{invite_code}"}
@@ -1661,9 +1705,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
-
+      iex> Remedy.API.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
+      {:ok, %Remedy.Schema.User{}}
   """
   def modify_current_user do
     {:patch, "/users/@me"}
@@ -1726,9 +1769,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex>
-  Remedy.API.create_group_dm(["6qrZcUqja7812RVdnEKjpzOL4CvHBFG"], %{41771983423143937 => "My Nickname"})
-  {:ok, %Remedy.Schema.Channel{type: 3}}
+      iex> Remedy.API.create_group_dm(["6qrZcUqja7812RVdnEKjpzOL4CvHBFG"], %{41771983423143937 => "My Nickname"})
+      {:ok, %Remedy.Schema.Channel{type: 3}}
 
   """
   def create_group_dm() do
@@ -1967,17 +2009,8 @@ defmodule Remedy.API do
 
   ## Example
 
-      iex>
-  iex> Remedy.API.get_global_application_commands
-  {:ok,
-   [
-     %{
-       application_id: "455589479713865749",
-       description: "ed, man! man, ed",
-       id: "789841753196331029",
-       name: "edit"
-     }
-   ]}
+      iex> Remedy.API.get_global_application_commands
+      {:ok, [%{application_id: "455589479713865749"}]}
 
   """
 
@@ -2004,10 +2037,8 @@ defmodule Remedy.API do
 
   ## Example
 
-      iex>
-  Remedy.API.create_application_command(
-    %{name: "edit", description: "ed, man! man, ed", options: []}
-  )
+      iex>  Remedy.API.create_application_command(%{name: "edit", description: "ed, man! man, ed", options: []})
+      {:ok, %Remedy.Schema.Command{}}
 
   """
   def create_global_application_command() do
@@ -2143,14 +2174,7 @@ defmodule Remedy.API do
 
   ## Example
 
-      iex>
-  response = %{
-    type: 4,
-    data: %{
-      content: "I copy and pasted this code."
-    }
-  }
-  Remedy.API.create_interaction_response(interaction, response)
+
 
 
   As an alternative to passing the interaction ID and token, the
@@ -2218,16 +2242,6 @@ defmodule Remedy.API do
   #######
   ### Private
   #######
-
-  ###############################
-  ## INCLUDED  FOOL OLD FUNCTIONS
-  ##
-  ## TEST AS WE GO WHILE CLEANING
-  ## OUT OLD FUNCTIONS
-  ##
-  defp handle_request_with_decode(_, _), do: :noop
-  ##
-  ###############################
 
   alias Remedy.API.RestRequest
 
@@ -2363,66 +2377,4 @@ defmodule Remedy.API do
     end)
     |> Enum.find({:ok}, &match?({:error, _}, &1))
   end
-
-  @doc """
-  Gets a list of our user's DM channels.
-
-  If successful, returns `{:ok, dm_channels}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_user_dms()
-  {:ok, [%Remedy.Schema.Channel{type: 1} | _]}
-
-  """
-
-  @spec get_user_dms() :: error | {:ok, [Channel.dm_channel()]}
-  def get_user_dms do
-    request(:get, Endpoints.me_channels())
-    |> handle_request_with_decode({:list, {:schema, Channel}})
-  end
-
-  @spec maybe_add_reason(String.t() | nil) :: list()
-  defp maybe_add_reason(reason) do
-    maybe_add_reason(reason, [{"content-type", "application/json"}])
-  end
-
-  @spec maybe_add_reason(String.t() | nil, list()) :: list()
-  defp maybe_add_reason(nil, headers) do
-    headers
-  end
-
-  defp maybe_add_reason(reason, headers) do
-    [{"x-audit-log-reason", reason} | headers]
-  end
-
-  defp parse_allowed_mentions(:everyone), do: %{parse: [:everyone]}
-
-  # Parse users
-  defp parse_allowed_mentions(:users), do: %{parse: [:users]}
-  defp parse_allowed_mentions({:users, users}) when is_list(users), do: %{users: users}
-
-  # Parse roles
-  defp parse_allowed_mentions(:roles), do: %{parse: [:roles]}
-  defp parse_allowed_mentions({:roles, roles}) when is_list(roles), do: %{roles: roles}
-
-  # Parse many
-  defp parse_allowed_mentions(options) when is_list(options) or is_map(options) do
-    options
-    |> Enum.map(&parse_allowed_mentions/1)
-    |> Enum.reduce(fn a, b ->
-      Map.merge(a, b, fn
-        key, parse_a, parse_b when key in [:parse, :users, :roles] ->
-          Enum.uniq(parse_a ++ parse_b)
-
-        _k, _v1, v2 ->
-          v2
-      end)
-    end)
-    |> Map.put_new(:parse, [])
-  end
-
-  # ignore
-  defp parse_allowed_mentions(options), do: options
 end

@@ -7,7 +7,7 @@ defmodule Remedy.Schema.UnavailableGuild do
           unavailable: true
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "guilds" do
     field :unavailable, :boolean
   end

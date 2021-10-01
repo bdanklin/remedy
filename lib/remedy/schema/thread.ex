@@ -32,7 +32,7 @@ defmodule Remedy.Schema.Thread do
           messages: [Message.t()]
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "channels" do
     field :type, :integer
     field :position, :integer

@@ -30,7 +30,7 @@ defmodule Remedy.Schema.Webhook do
           user: user
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "webhooks" do
     field :avatar, :string
     field :name, :string
@@ -102,7 +102,7 @@ defmodule Remedy.Schema.IncomingWebhook do
           user: user
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "webhooks" do
     field :name, :string
     field :type, :integer
@@ -164,7 +164,7 @@ defmodule Remedy.Schema.ApplicationWebhook do
           application: application
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "webhooks" do
     field :type, :integer
     field :name, :string

@@ -12,7 +12,7 @@ defmodule Remedy.Schema.StickerPack do
           stickers: [Sticker.t()]
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   embedded_schema do
     field :name, :string
     field :description, :string

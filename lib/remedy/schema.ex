@@ -41,6 +41,7 @@ defmodule Remedy.Schema do
         MessageReactionRemoveEmoji,
         Overwrite,
         Presence,
+        PermissionOverwrite,
         Role,
         StageInstance,
         Sticker,

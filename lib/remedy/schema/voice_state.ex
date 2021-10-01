@@ -1,7 +1,7 @@
 defmodule Remedy.Schema.VoiceState do
   @moduledoc false
   use Remedy.Schema
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
 
   embedded_schema do
     field :guild_id

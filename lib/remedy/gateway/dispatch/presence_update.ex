@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Dispatch.PresenceUpdate do
   @moduledoc false
   use Remedy.Schema
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
 
   # either "idle", "dnd", "online", or "offline"
 

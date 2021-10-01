@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Integration do
   Integration Object
   """
   use Remedy.Schema
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
 
   @type t :: %__MODULE__{
           name: String.t(),

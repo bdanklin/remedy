@@ -44,7 +44,7 @@ defmodule Remedy.Schema.App do
           hook: hook
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "applications" do
     field :name, :string
     field :icon, :string

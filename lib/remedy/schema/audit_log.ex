@@ -59,7 +59,7 @@ defmodule Remedy.Schema.AuditLogEntry do
           changes: [AuditLogChange.t()]
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   embedded_schema do
     field :target_id, :string
     field :action_type, :integer

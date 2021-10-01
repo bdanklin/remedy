@@ -66,7 +66,9 @@ defmodule Remedy.Schema.Channel do
     |> apply_changes()
   end
 
-  def validate(any), do: any
+  def validate(changeset) do
+    changeset
+  end
 
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)

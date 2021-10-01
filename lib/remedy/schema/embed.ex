@@ -21,7 +21,7 @@ defmodule Remedy.Schema.Embed do
           video: Video.t()
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   embedded_schema do
     field :title, :string
     field :type, :string

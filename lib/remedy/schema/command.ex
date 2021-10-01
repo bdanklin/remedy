@@ -14,7 +14,7 @@ defmodule Remedy.Schema.Command do
           options: Option.t()
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   embedded_schema do
     field :type, :integer, default: 1
     field :name, :string

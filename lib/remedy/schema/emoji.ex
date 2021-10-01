@@ -16,7 +16,7 @@ defmodule Remedy.Schema.Emoji do
           guild: Guild.t()
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "emojis" do
     field :name, :string
     field :roles, {:array, Snowflake}

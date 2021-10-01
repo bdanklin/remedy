@@ -66,7 +66,7 @@ defmodule Remedy.Schema.Message do
           member: member
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "messages" do
     field :content, :string
     field :edited_timestamp, ISO8601

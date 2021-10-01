@@ -4,7 +4,7 @@ defmodule Remedy.Schema.User do
   """
   use Remedy.Schema
   alias Remedy.CDN
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
 
   @type id :: Snowflake.t()
   @type username :: String.t()

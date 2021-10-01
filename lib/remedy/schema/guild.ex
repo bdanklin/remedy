@@ -58,7 +58,7 @@ defmodule Remedy.Schema.Guild do
           widget_channel: Channel.t()
         }
 
-  @primary_key {:id, Snowflake, autogenerate: false}
+  @primary_key {:id, :id, autogenerate: false}
   schema "guilds" do
     field :afk_timeout, :integer
     field :approximate_member_count, :integer

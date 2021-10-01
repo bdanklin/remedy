@@ -8,12 +8,6 @@ defmodule Remedy.API do
 
   Discord imposes rate limits in various capacities. The functions in this module will respect those rate limits where possible. If required, a request will be held until it is allowed to be completed.
 
-  ## Bang !
-
-  While not documented, all public functions within this module can be used with a bang. It will have the following effects:
-
-  - The value will either return directly, or raise a `Remedy.APIError`
-
 
   """
 
@@ -41,28 +35,73 @@ defmodule Remedy.API do
     Webhook
   }
 
-  use Unsafe.Generator, handler: :unwrap
+  use Unsafe.Generator, handler: :unwrap, docs: true
 
-  @type options :: any
-  @type error :: any
+  @type opts :: keyword()
+  @type error :: any()
   @type limit :: any
   @type locator :: any
+  @type snowflake :: Snowflake.t()
 
-  #######
   ### Discord API Proper
-  #######
+  ###
+  ### Functions are ordered by their occurence within the discord API
+  ### documentation to make it easier to track and insert new functions.
+  ### They are automatically reordered for the documentation
 
-  ## Oauth2
+  #################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░█████╗░░░█████╗░░██╗░░░██╗░████████╗░██╗░░██╗░██████╗░░ ###
+  ### ░██╔══██╗░██╔══██╗░██║░░░██║░╚══██╔══╝░██║░░██║░╚════██╗░ ###
+  ### ░██║░░██║░███████║░██║░░░██║░░░░██║░░░░███████║░░░███╔═╝░ ###
+  ### ░██║░░██║░██╔══██║░██║░░░██║░░░░██║░░░░██╔══██║░██╔══╝░░░ ###
+  ### ░╚█████╔╝░██║░░██║░╚██████╔╝░░░░██║░░░░██║░░██║░███████╗░ ###
+  ### ░░╚════╝░░╚═╝░░╚═╝░░╚═════╝░░░░░╚═╝░░░░╚═╝░░╚═╝░╚══════╝░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  #################################################################
 
+  @doc """
+  Gets the bot's OAuth2 application info.
+
+  ## Examples
+
+      iex> Remedy.API.get_application_information()
+      {:ok, %Remedy.Schema.App{}
+
+  """
+  @unsafe {:get_current_bot_application_information, 0}
+  @spec get_current_bot_application_information :: {:error, any} | {:ok, App.t()}
   def get_current_bot_application_information do
     {:get, "/oauth2/applications/@me"}
+    |> request()
+    |> parse_get_current_bot_application_information()
   end
 
+  defp parse_get_current_bot_application_information({:error, _reason} = error), do: error
+
+  defp parse_get_current_bot_application_information({:ok, bot}) do
+    {:ok, bot |> Remedy.Schema.App.new()}
+  end
+
+  @doc false
+  # Not used in current auth flow.
+  @unsafe {:get_current_authorization_information, 0}
+  @spec get_current_authorization_information :: {:error, any} | {:ok, any}
   def get_current_authorization_information do
-    {:get, "/oath2/@me"}
+    {:get, "/oauth2/@me"}
+    |> request()
   end
 
-  ## Audit Log
+  ####################################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░█████╗░░██╗░░░██╗░██████╗░░██╗░████████╗░░░░░░██╗░░░░░░░█████╗░░░██████╗░░ ###
+  ### ░██╔══██╗░██║░░░██║░██╔══██╗░██║░╚══██╔══╝░░░░░░██║░░░░░░██╔══██╗░██╔════╝░░ ###
+  ### ░███████║░██║░░░██║░██║░░██║░██║░░░░██║░░░░░░░░░██║░░░░░░██║░░██║░██║░░██╗░░ ###
+  ### ░██╔══██║░██║░░░██║░██║░░██║░██║░░░░██║░░░░░░░░░██║░░░░░░██║░░██║░██║░░╚██╗░ ###
+  ### ░██║░░██║░╚██████╔╝░██████╔╝░██║░░░░██║░░░░░░░░░███████╗░╚█████╔╝░╚██████╔╝░ ###
+  ### ░╚═╝░░╚═╝░░╚═════╝░░╚═════╝░░╚═╝░░░░╚═╝░░░░░░░░░╚══════╝░░╚════╝░░░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ####################################################################################
 
   @doc """
   Get an audit log.
@@ -76,10 +115,11 @@ defmodule Remedy.API do
 
   """
   @unsafe {:get_guild_audit_log, 2}
-  def get_guild_audit_log(guild_id, opts \\ [])
+  @spec get_guild_audit_log(snowflake | Guild.t(), opts) ::
+          {:error, any} | {:ok, AuditLog.t()}
 
-  def get_guild_audit_log(%Guild{id: id}, opts),
-    do: get_guild_audit_log(id, opts)
+  def get_guild_audit_log(guild_id, opts \\ [])
+  def get_guild_audit_log(%Guild{id: id}, opts), do: get_guild_audit_log(id, opts)
 
   def get_guild_audit_log(guild_id, opts) when is_snowflake(guild_id) do
     {:get, "/guilds/#{guild_id}/audit-logs"}
@@ -89,17 +129,29 @@ defmodule Remedy.API do
 
   defp parse_guild_audit_log({:error, _reason} = error), do: error
 
-  defp parse_guild_audit_log(
-         {:ok,
-          %{
-            users: users,
-            threads: threads
-          } = audit_log}
-       ) do
-    {:ok, audit_log |> AuditLog.new()}
-  end
+  defp parse_guild_audit_log({:ok, %{users: _users, threads: _threads} = audit_log}),
+    do: {:ok, audit_log |> AuditLog.new()}
 
-  ## Channels
+  ###################################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░█████╗░░██╗░░██╗░░█████╗░░███╗░░██╗░███╗░░██╗░███████╗░██╗░░░░░░░██████╗░ ###
+  ### ░██╔══██╗░██║░░██║░██╔══██╗░████╗░██║░████╗░██║░██╔════╝░██║░░░░░░██╔════╝░ ###
+  ### ░██║░░╚═╝░███████║░███████║░██╔██╗██║░██╔██╗██║░█████╗░░░██║░░░░░░╚█████╗░░ ###
+  ### ░██║░░██╗░██╔══██║░██╔══██║░██║╚████║░██║╚████║░██╔══╝░░░██║░░░░░░░╚═══██╗░ ###
+  ### ░╚█████╔╝░██║░░██║░██║░░██║░██║░╚███║░██║░╚███║░███████╗░███████╗░██████╔╝░ ###
+  ### ░░╚════╝░░╚═╝░░╚═╝░╚═╝░░╚═╝░╚═╝░░╚══╝░╚═╝░░╚══╝░╚══════╝░╚══════╝░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ###################################################################################
+
+  @doc """
+  Get a channel.
+
+  ## Examples
+
+      iex> Remedy.API.get_channel(381889573426429952)
+      {:ok, %Remedy.Struct.Channel{id: 381889573426429952}}
+
+  """
 
   @unsafe {:get_channel, 1}
   def get_channel(channel_id)
@@ -107,22 +159,159 @@ defmodule Remedy.API do
   def get_channel(%Channel{id: channel_id}),
     do: get_channel(channel_id)
 
-  def get_channel(channel_id) do
+  def get_channel(channel_id) when is_integer(channel_id) do
     {:get, "/channels/#{channel_id}"}
+    |> request()
   end
 
-  def edit_channel(channel_id) do
+  @doc """
+  Modifies a channel's settings.
+
+  An optional `reason` can be given for the guild audit log.
+
+  If a `t:Remedy.Struct.Channel.guild_channel/0` is being modified, this
+  endpoint requires the `MANAGE_CHANNEL` permission. It fires a
+  `t:Remedy.Consumer.channel_update/0` event. If a
+  `t:Remedy.Struct.Channel.channel_category/0` is being modified, then this
+  endpoint fires multiple `t:Remedy.Consumer.channel_update/0` events.
+
+  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:name` (string) - 2-100 character channel name
+    * `:position` (integer) - the position of the channel in the left-hand listing
+    * `:topic` (string) (`t:Remedy.Struct.Channel.text_channel/0` only) -
+    0-1024 character channel topic
+    * `:nsfw` (boolean) (`t:Remedy.Struct.Channel.text_channel/0` only) -
+    if the channel is nsfw
+    * `:bitrate` (integer) (`t:Remedy.Struct.Channel.voice_channel/0` only) -
+    the bitrate (in bits) of the voice channel; 8000 to 96000 (128000 for VIP servers)
+    * `:user_limit` (integer) (`t:Remedy.Struct.Channel.voice_channel/0` only) -
+    the user limit of the voice channel; 0 refers to no limit, 1 to 99 refers to a user limit
+    * `:permission_overwrites` (list of `t:Remedy.Struct.Overwrite.t/0` or equivalent map) -
+    channel or category-specific permissions
+    * `:parent_id` (`t:Remedy.Struct.Channel.id/0`) (`t:Remedy.Struct.Channel.guild_channel/0` only) -
+    id of the new parent category for a channel
+
+  ## Examples
+
+      iex> Remedy.API.modify_channel(41771983423143933, name: "elixir-remedy", topic: "remedy discussion")
+      {:ok, %Remedy.Struct.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
+
+
+      iex> Remedy.API.modify_channel(41771983423143933)
+      {:ok, %Remedy.Struct.Channel{id: 41771983423143933}}
+
+  """
+
+  def modify_channel(channel_id) do
     {:patch, "/channels/#{channel_id}"}
   end
+
+  @doc """
+  Deletes a channel.
+
+  An optional `reason` can be provided for the guild audit log.
+
+  If deleting a `t:Remedy.Struct.Channel.guild_channel/0`, this endpoint requires
+  the `MANAGE_CHANNELS` permission. It fires a
+  `t:Remedy.Consumer.channel_delete/0`. If a `t:Remedy.Struct.Channel.channel_category/0`
+  is deleted, then a `t:Remedy.Consumer.channel_update/0` event will fire
+  for each channel under the category.
+
+  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex> Remedy.API.delete_channel(421533712753360896)
+      {:ok, %Remedy.Struct.Channel{id: 421533712753360896}}
+
+  """
+
+  def delete_channel(channel_id) do
+    {:delete, "/channels/#{channel_id}"}
+  end
+
+  @doc """
+  Retrieves a channel's messages around a `locator` up to a `limit`.
+
+  This endpoint requires the 'VIEW_CHANNEL' permission. If the current user
+  is missing the 'READ_MESSAGE_HISTORY' permission, then this function will
+  return no messages.
+
+  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex> Remedy.API.get_channel_messages(43189401384091, 5, {:before, 130230401384})
+      {:ok, %Message{}}
+
+  """
 
   def get_channel_messages(channel_id) do
     {:get, "/channels/#{channel_id}/messages"}
   end
 
+  @doc """
+  Retrieves a message from a channel.
+
+  This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
+
+  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_channel_message(43189401384091, 198238475613443)
+
+  """
   def get_channel_message(channel_id, message_id) do
     {:get, "/channels/#{channel_id}/messages/#{message_id}"}
   end
 
+  @doc """
+  Posts a message to a guild text or DM channel.
+
+  ## Intents
+
+  - `:VIEW_CHANNEL`
+  - `:SEND_MESSAGES`
+  - `:SEND_MESSAGES_TTS` (optional)
+
+  ## Events
+
+  - `t:Remedy.Gateway.Dispatch.message_create/0`.
+
+  ## Options
+
+    - `:content` (string) - the message contents (up to 2000 characters)
+    - `:tts` (boolean) - true if this is a TTS message
+    - `:file` (`t:Path.t/0` | map) - the path of the file being sent, or a map with the following keys if sending a binary from memory
+    - `:name` (string) - the name of the file
+    - `:body` (string) - binary you wish to send
+    - `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
+    - `:allowed_mentions` - See "Allowed mentions" below
+    - `:message_reference` (`map`) - See "Message references" below
+
+   > Note: At least one of the following is required: `:content`, `:file`, `:embed`.
+
+  ### Allowed mentions
+    - `:all` (default) - Ping everything as usual
+    - `:none` - Nobody will be pinged
+    - `:everyone` - Allows to ping @here and @everone
+    - `:users` - Allows to ping users
+    - `:roles` - Allows to ping roles
+    - `{:users, list}` - Allows to ping list of users. Can contain up to 100 ids of users.
+    - `{:roles, list}` - Allows to ping list of roles. Can contain up to 100 ids of roles.
+
+
+  ## Examples
+
+      iex> Remedy.API.create_message(872417560094732331, content: "hello world!")
+      {:ok, %Message{}}
+
+  """
   def create_message(channel_id) do
     {:post, "/channels/#{channel_id}/messages"}
   end
@@ -131,13 +320,70 @@ defmodule Remedy.API do
     {:post, "/channels/#{channel_id}/messages/#{message_id}/crosspost"}
   end
 
+  @doc """
+  Creates a reaction for a message.
+
+  This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
+  permissions. Additionally, if nobody else has reacted to the message with
+  the `emoji`, this endpoint requires the `ADD_REACTIONS` permission. It
+  fires a `t:Remedy.Consumer.message_reaction_add/0` event.
+
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  # Using a Remedy.Struct.Emoji.
+  emoji = %Remedy.Struct.Emoji{id: 43819043108, name: "foxbot"}
+  Remedy.API.create_reaction(123123123123, 321321321321, emoji)
+
+  # Using a base 16 emoji string.
+  Remedy.API.create_reaction(123123123123, 321321321321, "\xF0\x9F\x98\x81")
+
+
+
+  For other emoji string examples, see `t:Remedy.Struct.Emoji.api_name/0`.
+  """
+
   def create_reaction(channel_id, message_id, emoji) do
     {:put, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me"}
   end
 
+  @doc """
+  Deletes a reaction the current user has made for the message.
+
+  ## Permissions
+
+  - `VIEW_CHANNEL`
+  - `READ_MESSAGE_HISTORY`
+
+  ## Events
+
+  - `t:Remedy.Consumer.message_reaction_remove/0`
+
+  ## Examples
+
+      iex>
+
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
+
+  See `create_reaction/3` for similar examples.
+  """
+
   def delete_own_reaction(channel_id, message_id, emoji) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me"}
   end
+
+  @doc """
+  Deletes another user's reaction from a message.
+
+  This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
+  `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove/0` event.
+
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
+
+  See `create_reaction/3` for similar examples.
+  """
 
   def delete_user_reaction(channel_id, message_id, emoji, user_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/#{user_id}"}
@@ -147,17 +393,82 @@ defmodule Remedy.API do
     {:get, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}"}
   end
 
+  @doc """
+  Deletes all reactions from a message.
+
+  This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
+  `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove_all/0` event.
+
+  If successful, returns `{:ok}`. Otherwise, return `t:Remedy.API.error/0`.
+  """
+
   def delete_all_reactions(channel_id, message_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions"}
   end
 
+  @doc """
+  Deletes all reactions of a given emoji from a message.
+
+  This endpoint requires the `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove_emoji/0` event.
+
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
+
+  See `create_reaction/3` for similar examples.
+  """
   def delete_all_reactions_for_emoji(channel_id, message_id, emoji) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}"}
   end
 
+  @doc """
+  Edits a previously sent message in a channel.
+
+  This endpoint requires the `VIEW_CHANNEL` permission. It fires the
+  `t:Remedy.Consumer.message_update/0` event.
+
+  If `options` is a string, `options` will be used as the message's content.
+
+  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:content` (string) - the message contents (up to 2000 characters)
+    * `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
+
+  ## Examples
+
+      iex>
+  Remedy.API.edit_message(43189401384091, 1894013840914098, content: "hello world!")
+
+  Remedy.API.edit_message(43189401384091, 1894013840914098, "hello world!")
+
+  import Remedy.Struct.Embed
+  embed =
+    %Remedy.Struct.Embed{}
+    |> put_title("embed")
+    |> put_description("new desc")
+  Remedy.API.edit_message(43189401384091, 1894013840914098, embed: embed)
+
+  Remedy.API.edit_message(43189401384091, 1894013840914098, content: "hello world!", embed: embed)
+
+  """
   def edit_message(channel_id, message_id) do
     {:patch, "/channels/#{channel_id}/messages/#{message_id}"}
   end
+
+  @doc """
+  Deletes a message.
+
+  This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_MESSAGES' permission. It
+  fires the `MESSAGE_DELETE` event.
+
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.delete_message(43189401384091, 43189401384091)
+
+  """
 
   def delete_message(channel_id, message_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}"}
@@ -167,17 +478,86 @@ defmodule Remedy.API do
     {:post, "/channels/#{channel_id}/messages/bulk-delete"}
   end
 
+  @doc """
+  Edit the permission overwrites for a user or role.
+
+  Role or user to overwrite is specified by `overwrite_id`.
+
+  `permission_info` is a map with the following keys:
+   * `type` - Required; `member` if editing a user, `role` if editing a role.
+   * `allow` - Bitwise value of allowed permissions.
+   * `deny` - Bitwise value of denied permissions.
+   * `type` - `member` if editing a user, `role` if editing a role.
+
+  An optional `reason` can be provided for the audit log.
+
+   `allow` and `deny` are defaulted to `0`, meaning that even if you don't
+   specify them, they will override their respective former values in an
+   existing overwrite.
+  """
   def edit_channel_permissions(channel_id, overwrite_id) do
     {:put, "/channels/#{channel_id}/permissions/#{overwrite_id}"}
   end
 
+  @doc """
+  Gets a list of invites for a channel.
+
+  This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_CHANNELS' permissions.
+
+  If successful, returns `{:ok, invite}`. Otherwise, returns a
+  `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_channel_invites(43189401384091)
+  {:ok, [%Remedy.Struct.Invite{} | _]}
+
+  """
   def get_channel_invites(channel_id) do
     {:get, "/channels/#{channel_id}/invites"}
   end
 
+  @doc """
+  Creates an invite for a guild channel.
+
+  An optional `reason` can be provided for the audit log.
+
+  This endpoint requires the `CREATE_INSTANT_INVITE` permission.
+
+  If successful, returns `{:ok, invite}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:max_age` (integer) - duration of invite in seconds before expiry, or 0 for never.
+      (default: `86400`)
+    * `:max_uses` (integer) - max number of uses or 0 for unlimited.
+      (default: `0`)
+    * `:temporary` (boolean) - Whether the invite should grant temporary
+      membership. (default: `false`)
+    * `:unique` (boolean) - used when creating unique one time use invites.
+      (default: `false`)
+
+  ## Examples
+
+      iex>
+  Remedy.API.create_channel_invite(41771983423143933)
+  {:ok, Remedy.Struct.Invite{}}
+
+  Remedy.API.create_channel_invite(41771983423143933, max_uses: 20)
+  {:ok, %Remedy.Struct.Invite{}}
+
+  """
   def create_channel_invite(channel_id) do
     {:post, "/channels/#{channel_id}/invites"}
   end
+
+  @doc """
+  Delete a channel permission for a user or role.
+
+  Role or user overwrite to delete is specified by `channel_id` and `overwrite_id`.
+  An optional `reason` can be given for the audit log.
+  """
 
   def delete_channel_permission(channel_id, overwrite_id) do
     {:delete, "/channels/#{channel_id}/permissions/#{overwrite_id}"}
@@ -187,18 +567,67 @@ defmodule Remedy.API do
     {:post, "/channels/#{channel_id}/followers"}
   end
 
+  @doc """
+  Triggers the typing indicator.
+
+  Triggers the typing indicator in the channel specified by `channel_id`.
+  The typing indicator lasts for about 8 seconds and then automatically stops.
+
+  Returns `{:ok}` if successful. `error` otherwise.
+  """
+
   def trigger_typing_indicator(channel_id) do
     {:post, "/channels/#{channel_id}/typing"}
   end
+
+  @doc """
+  Retrieves all pinned messages from a channel.
+
+  This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
+
+  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_pinned_messages(43189401384091)
+
+  """
 
   def get_pinned_messages(channel_id) do
     {:get, "/channels/#{channel_id}/pins"}
   end
 
+  @doc """
+  Pins a message in a channel.
+
+  This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
+  'MANAGE_MESSAGES' permissions. It fires the
+  `t:Remedy.Consumer.message_update/0` and
+  `t:Remedy.Consumer.channel_pins_update/0` events.
+
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.add_pinned_channel_message(43189401384091, 18743893102394)
+
+  """
   def pin_message(channel_id, message_id) do
     {:put, "/channels/#{channel_id}/pins/#{message_id}"}
   end
 
+  @doc """
+  Unpins a message in a channel.
+
+  This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
+  'MANAGE_MESSAGES' permissions. It fires the
+  `t:Remedy.Consumer.message_update/0` and
+  `t:Remedy.Consumer.channel_pins_update/0` events.
+
+  Returns `{:ok}` if successful. `error` otherwise.
+  """
   def unpin_message(channel_id, message_id) do
     {:delete, "/channels/#{channel_id}/pins/#{message_id}"}
   end
@@ -239,8 +668,23 @@ defmodule Remedy.API do
     {:get, "/channels/#{channel_id}/thread-members"}
   end
 
-  def list_active_threads(channel_id) do
+  @doc """
+  List active threads.
+
+  > Note: This can be requested on both the `/channels/` and the `/guilds/` routes. To specify which route is used, you should pass a full `%Guild{}` or `%Channel{}` object.
+
+  """
+  @unsafe {:list_active_threads, 1}
+  @spec list_active_threads(Remedy.Schema.Channel.t() | Remedy.Schema.Guild.t()) ::
+          {:error, any} | {:ok, any}
+  def list_active_threads(%Guild{id: guild_id}) do
+    {:get, "/guilds/#{guild_id}/threads/active"}
+    |> request()
+  end
+
+  def list_active_threads(%Channel{id: channel_id}) do
     {:get, "/channels/#{channel_id}/threads/active"}
+    |> request()
   end
 
   def list_public_archived_threads(channel_id) do
@@ -257,64 +701,300 @@ defmodule Remedy.API do
 
   ## Emoji
 
+  @doc """
+  Gets a list of emojis for a given guild.
+
+  This endpoint requires the `MANAGE_EMOJIS` permission.
+
+  If successful, returns `{:ok, emojis}`. Otherwise, returns `t:Remedy.API.error/0`.
+  """
+
   def list_guild_emojis(guild_id) do
     {:get, "/guilds/#{guild_id}/emojis"}
   end
+
+  @doc """
+  Gets an emoji for the given guild and emoji ids.
+
+  This endpoint requires the `MANAGE_EMOJIS` permission.
+
+  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.API.error/0`.
+  """
 
   def get_guild_emoji(guild_id, emoji_id) do
     {:get, "/guilds/#{guild_id}/emojis/#{emoji_id}"}
   end
 
+  @doc """
+  Creates a new emoji for the given guild.
+
+  This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
+  `t:Remedy.Consumer.guild_emojis_update/0` event.
+
+  An optional `reason` can be provided for the audit log.
+
+  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:name` (string) - name of the emoji
+    * `:image` (base64 data URI) - the 128x128 emoji image. Maximum size of 256kb
+    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles for which this emoji will be whitelisted
+    (default: [])
+
+  `:name` and `:image` are always required.
+
+  ## Examples
+
+      iex>
+  image = "data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8="
+
+  Remedy.API.create_guild_emoji(43189401384091, name: "remedy", image: image, roles: [])
+
+  """
+
   def create_guild_emoji(guild_id) do
     {:post, "/guilds/#{guild_id}/emojis"}
   end
+
+  @doc """
+  Modify the given emoji.
+
+  This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
+  `t:Remedy.Consumer.guild_emojis_update/0` event.
+
+  An optional `reason` can be provided for the audit log.
+
+  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:name` (string) - name of the emoji
+    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles to which this emoji will be whitelisted
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
+
+  """
 
   def modify_guild_emoji(guild_id, emoji_id) do
     {:patch, "/guilds/#{guild_id}/emojis/#{emoji_id}"}
   end
 
+  @doc """
+  Deletes the given emoji.
+
+  An optional `reason` can be provided for the audit log.
+
+  This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
+  `t:Remedy.Consumer.guild_emojis_update/0` event.
+
+  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
+  """
   def delete_guild_emoji(guild_id, emoji_id) do
     {:delete, "/guilds/#{guild_id}/emojis/#{emoji_id}"}
   end
 
-  ## Guild
+  ############################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░██████╗░░██╗░░░██╗░██╗░██╗░░░░░░██████╗░░░██████╗░ ###
+  ### ░██╔════╝░░██║░░░██║░██║░██║░░░░░░██╔══██╗░██╔════╝░ ###
+  ### ░██║░░██╗░░██║░░░██║░██║░██║░░░░░░██║░░██║░╚█████╗░░ ###
+  ### ░██║░░╚██╗░██║░░░██║░██║░██║░░░░░░██║░░██║░░╚═══██╗░ ###
+  ### ░╚██████╔╝░╚██████╔╝░██║░███████╗░██████╔╝░██████╔╝░ ###
+  ### ░░╚═════╝░░░╚═════╝░░╚═╝░╚══════╝░╚═════╝░░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ############################################################
 
   def create_guild() do
     {:post, "/guilds"}
   end
 
+  @doc """
+  Gets a guild.
+
+  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_guild(81384788765712384)
+  {:ok, %Remedy.Struct.Guild{id: 81384788765712384}}
+
+  """
+
   def get_guild(guild_id) do
     {:get, "/guilds/#{guild_id}"}
   end
+
+  @doc """
+  Modifies a guild's settings.
+
+  This endpoint requires the `MANAGE_GUILD` permission. It fires the
+  `t:Remedy.Consumer.guild_update/0` event.
+
+  An optional `reason` can be provided for the audit log.
+
+  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:name` (string) - guild name
+    * `:region` (string) - guild voice region id
+    * `:verification_level` (integer) - verification level
+    * `:default_message_notifications` (integer) - default message
+    notification level
+    * `:explicit_content_filter` (integer) - explicit content filter level
+    * `:afk_channel_id` (`t:Sunbake.Snowflake.t/0`) - id for afk channel
+    * `:afk_timeout` (integer) - afk timeout in seconds
+    * `:icon` (base64 data URI) - 128x128 jpeg image for the guild icon
+    * `:owner_id` (`t:Sunbake.Snowflake.t/0`) - user id to transfer
+    guild ownership to (must be owner)
+    * `:splash` (base64 data URI) - 128x128 jpeg image for the guild splash
+    (VIP only)
+    * `:system_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the
+    channel to which system messages are sent
+    * `:rules_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel that
+    is used for rules in public guilds
+    * `:public_updates_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel
+    where admins and moderators receive notices from Discord in public guilds
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_guild(451824027976073216, name: "Nose Drum")
+  {:ok, %Remedy.Struct.Guild{id: 451824027976073216, name: "Nose Drum", ...}}
+
+  """
 
   def modify_guild(guild_id) do
     {:patch, "/guilds/#{guild_id}"}
   end
 
+  @doc """
+  Deletes a guild.
+
+  This endpoint requires that the current user is the owner of the guild.
+  It fires the `t:Remedy.Consumer.guild_delete/0` event.
+
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.delete_guild(81384788765712384)
+  {:ok}
+
+  """
   def delete_guild(guild_id) do
     {:delete, "/guilds/#{guild_id}"}
   end
+
+  @doc """
+  Gets a list of guild channels.
+
+  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_guild_channels(81384788765712384)
+  {:ok, [%Remedy.Struct.Channel{guild_id: 81384788765712384} | _]}
+
+  """
 
   def get_guild_channels(guild_id) do
     {:get, "/guilds/#{guild_id}/channels"}
   end
 
+  @doc """
+  Creates a channel for a guild.
+
+  This endpoint requires the `MANAGE_CHANNELS` permission. It fires a
+  `t:Remedy.Consumer.channel_create/0` event.
+
+  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:name` (string) - channel name (2-100 characters)
+    * `:type` (integer) - the type of channel (See `Remedy.Struct.Channel`)
+    * `:topic` (string) - channel topic (0-1024 characters)
+    * `:bitrate` (integer) - the bitrate (in bits) of the voice channel (voice only)
+    * `:user_limit` (integer) - the user limit of the voice channel (voice only)
+    * `:permission_overwrites` (list of `t:Remedy.Struct.Overwrite.t/0` or equivalent map) -
+    the channel's permission overwrites
+    * `:parent_id` (`t:Remedy.Struct.Channel.id/0`) - id of the parent category for a channel
+    * `:nsfw` (boolean) - if the channel is nsfw
+
+  `:name` is always required.
+
+  ## Examples
+
+      iex>
+  Remedy.API.create_guild_channel(81384788765712384, name: "elixir-remedy", topic: "craig's domain")
+  {:ok, %Remedy.Struct.Channel{guild_id: 81384788765712384}}
+
+  """
+
   def create_guild_channel(guild_id) do
     {:post, "/guilds/#{guild_id}/channels"}
   end
 
+  @doc """
+  Reorders a guild's channels.
+
+  This endpoint requires the `MANAGE_CHANNELS` permission. It fires multiple
+  `t:Remedy.Consumer.channel_update/0` events.
+
+  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  `positions` is a list of maps that each map a channel id with a position.
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_guild_channel_positions(279093381723062272, [%{id: 351500354581692420, position: 2}])
+  {:ok}
+
+  """
   def modify_guild_channel_positions(guild_id) do
     {:patch, "/guilds/#{guild_id}/channels"}
   end
 
-  def list_active_threads(guild_id) do
-    {:get, "/guilds/#{guild_id}/threads/active"}
-  end
+  @doc """
+  Gets a guild member.
 
+  If successful, returns `{:ok, member}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_guild_member(4019283754613, 184937267485)
+
+  """
   def get_guild_member(guild_id, user_id) do
     {:get, "/guilds/#{guild_id}/members/#{user_id}"}
   end
 
+  @doc """
+  Gets a list of a guild's members.
+
+  If successful, returns `{:ok, members}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:limit` (integer) - max number of members to return (1-1000) (default: 1)
+    * `:after` (`t:Remedy.Struct.User.id/0`) - the highest user id in the previous page (default: 0)
+
+  ## Examples
+
+      iex>
+  Remedy.API.list_guild_members(41771983423143937, limit: 1)
+
+  """
   def list_guild_members(guild_id) do
     {:get, "/guilds/#{guild_id}/members"}
   end
@@ -323,86 +1003,372 @@ defmodule Remedy.API do
     {:get, "/guilds/#{guild_id}/members/search"}
   end
 
+  @doc """
+  Puts a user in a guild.
+
+  This endpoint fires the `t:Remedy.Consumer.guild_member_add/0` event.
+  It requires the `CREATE_INSTANT_INVITE` permission. Additionally, it
+  situationally requires the `MANAGE_NICKNAMES`, `MANAGE_ROLES`,
+  `MUTE_MEMBERS`, and `DEAFEN_MEMBERS` permissions.
+
+  If successful, returns `{:ok, member}` or `{:ok}` if the user was already a member of the
+  guild. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:access_token` (string) - the user's oauth2 access token
+    * `:nick` (string) - value to set users nickname to
+    * `:roles` (list of `t:Remedy.Struct.Guild.Role.id/0`) - array of role ids the member is assigned
+    * `:mute` (boolean) - if the user is muted
+    * `:deaf` (boolean) - if the user is deafened
+
+  `:access_token` is always required.
+
+  ## Examples
+
+      iex>
+  Remedy.API.add_guild_member(
+    41771983423143937,
+    18374719829378473,
+    access_token: "6qrZcUqja7812RVdnEKjpzOL4CvHBFG",
+    nick: "remedy",
+    roles: [431849301, 913809431]
+  )
+
+  """
+
   def add_guild_member(guild_id, user_id) do
     {:put, "/guilds/#{guild_id}/members/#{user_id}"}
   end
+
+  @doc """
+  Modifies a guild member's attributes.
+
+  This endpoint fires the `t:Remedy.Consumer.guild_member_update/0` event.
+  It situationally requires the `MANAGE_NICKNAMES`, `MANAGE_ROLES`,
+  `MUTE_MEMBERS`, `DEAFEN_MEMBERS`, and `MOVE_MEMBERS` permissions.
+
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:nick` (string) - value to set users nickname to
+    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - array of role ids the member is assigned
+    * `:mute` (boolean) - if the user is muted
+    * `:deaf` (boolean) - if the user is deafened
+    * `:channel_id` (`t:Sunbake.Snowflake.t/0`) - id of channel to move user to (if they are connected to voice)
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_guild_member(41771983423143937, 637162356451, nick: "Remedy")
+  {:ok}
+
+  """
 
   def modify_guild_member(guild_id, user_id) do
     {:patch, "/guilds/#{guild_id}/members/#{user_id}"}
   end
 
+  @doc """
+  Modifies the nickname of the current user in a guild.
+
+  If successful, returns `{:ok, %{nick: nick}}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:nick` (string) - value to set users nickname to
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_current_user_nick(41771983423143937, nick: "Remedy")
+  {:ok, %{nick: "Remedy"}}
+
+  """
   def modify_current_user_nick(guild_id) do
     {:patch, "/guilds/#{guild_id}/members/@me/nick"}
   end
+
+  @doc """
+  Adds a role to a member.
+
+  Role to add is specified by `role_id`.
+  User to add role to is specified by `guild_id` and `user_id`.
+  An optional `reason` can be given for the audit log.
+  """
 
   def add_guild_member_role(guild_id, user_id, role_id) do
     {:put, "/guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}"}
   end
 
+  @doc """
+  Removes a role from a member.
+
+  Role to remove is specified by `role_id`.
+  User to remove role from is specified by `guild_id` and `user_id`.
+  An optional `reason` can be given for the audit log.
+  """
+
   def remove_guild_member_role(guild_id, user_id, role_id) do
     {:delete, "/guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}"}
   end
 
+  @doc """
+  Removes a member from a guild.
+
+  This event requires the `KICK_MEMBERS` permission. It fires a
+  `t:Remedy.Consumer.guild_member_remove/0` event.
+
+  An optional reason can be provided for the audit log with `reason`.
+
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.remove_guild_member(1453827904102291, 18739485766253)
+  {:ok}
+
+  """
   def remove_guild_member(guild_id, user_id) do
     {:delete, "/guilds/#{guild_id}/members/#{user_id}"}
   end
 
+  @doc """
+  Gets a list of users banned from a guild.
+
+  Guild to get bans for is specified by `guild_id`.
+  """
   def get_guild_bans(guild_id) do
     {:get, "/guilds/#{guild_id}/bans"}
   end
+
+  @doc """
+  Gets a ban object for the given user from a guild.
+  """
 
   def get_guild_ban(guild_id, user_id) do
     {:get, "/guilds/#{guild_id}/bans/#{user_id}"}
   end
 
+  @doc """
+  Bans a user from a guild.
+
+  User to delete is specified by `guild_id` and `user_id`.
+  An optional `reason` can be specified for the audit log.
+  """
+
   def create_guild_ban(guild_id, user_id) do
     {:put, "/guilds/#{guild_id}/bans/#{user_id}"}
   end
 
+  @doc """
+  Removes a ban for a user.
+
+  User to unban is specified by `guild_id` and `user_id`.
+  An optional `reason` can be specified for the audit log.
+  """
   def remove_guild_ban(guild_id, user_id) do
     {:delete, "/guilds/#{guild_id}/bans/#{user_id}"}
   end
+
+  @doc """
+  Gets a guild's roles.
+
+  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_guild_roles(147362948571673)
+
+  """
 
   def get_guild_roles(guild_id) do
     {:get, "/guilds/#{guild_id}/roles"}
   end
 
+  @doc """
+  Creates a guild role.
+
+  An optional reason for the audit log can be provided via `reason`.
+
+  This endpoint requires the `MANAGE_ROLES` permission. It fires a
+  `t:Remedy.Consumer.guild_role_create/0` event.
+
+  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:name` (string) - name of the role (default: "new role")
+    * `:permissions` (integer) - bitwise of the enabled/disabled permissions (default: @everyone perms)
+    * `:color` (integer) - RGB color value (default: 0)
+    * `:hoist` (boolean) - whether the role should be displayed separately in the sidebar (default: false)
+    * `:mentionable` (boolean) - whether the role should be mentionable (default: false)
+
+  ## Examples
+
+      iex>
+  Remedy.API.create_guild_role(41771983423143937, name: "remedy-club", hoist: true)
+
+  """
   def create_guild_roles(guild_id) do
     {:post, "/guilds/#{guild_id}/roles"}
   end
 
+  @doc """
+  Reorders a guild's roles.
+
+  This endpoint requires the `MANAGE_ROLES` permission. It fires multiple
+  `t:Remedy.Consumer.guild_role_update/0` events.
+
+  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  `positions` is a list of maps that each map a role id with a position.
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
+
+  """
   def modify_guild_role_positions(guild_id) do
     {:patch, "/guilds/#{guild_id}/roles"}
   end
 
+  @doc """
+  Modifies a guild role.
+
+  This endpoint requires the `MANAGE_ROLES` permission. It fires a
+  `t:Remedy.Consumer.guild_role_update/0` event.
+
+  An optional `reason` can be specified for the audit log.
+
+  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:name` (string) - name of the role
+    * `:permissions` (integer) - bitwise of the enabled/disabled permissions
+    * `:color` (integer) - RGB color value (default: 0)
+    * `:hoist` (boolean) - whether the role should be displayed separately in the sidebar
+    * `:mentionable` (boolean) - whether the role should be mentionable
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
+
+  """
   def modify_guild_role(guild_id, role_id) do
     {:patch, "/guilds/#{guild_id}/roles/#{role_id}"}
   end
 
+  @doc """
+  Deletes a role from a guild.
+
+  An optional `reason` can be specified for the audit log.
+
+  This endpoint requires the `MANAGE_ROLES` permission. It fires a
+  `t:Remedy.Consumer.guild_role_delete/0` event.
+
+  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.delete_guild_role(41771983423143937, 392817238471936)
+
+  """
   def delete_guild_role(guild_id, role_id) do
     {:delete, "/guilds/#{guild_id}/roles/#{role_id}"}
   end
+
+  @doc """
+  Gets the number of members that would be removed in a prune given `days`.
+
+  This endpoint requires the `KICK_MEMBERS` permission.
+
+  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_guild_prune_count(81384788765712384, 1)
+  {:ok, %{pruned: 0}}
+
+  """
 
   def get_guild_prune_count(guild_id) do
     {:get, "/guilds/#{guild_id}/prune"}
   end
 
+  @doc """
+  Begins a guild prune to prune members within `days`.
+
+  An optional `reason` can be provided for the guild audit log.
+
+  This endpoint requires the `KICK_MEMBERS` permission. It fires multiple
+  `t:Remedy.Consumer.guild_member_remove/0` events.
+
+  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.begin_guild_prune(81384788765712384, 1)
+  {:ok, %{pruned: 0}}
+
+  """
+
   def begin_guild_prune(guild_id) do
     {:post, "/guilds/#{guild_id}/prune"}
   end
+
+  @doc """
+  Gets a list of voice regions for the guild.
+
+  Guild to get voice regions for is specified by `guild_id`.
+  """
 
   def get_guild_voice_regions(guild_id) do
     {:get, "/guilds/#{guild_id}/regions"}
   end
 
+  @doc """
+  Gets a list of invites for a guild.
+
+  This endpoint requires the `MANAGE_GUILD` permission.
+
+  If successful, returns `{:ok, invites}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_guild_invites(81384788765712384)
+  {:ok, [%Remedy.Struct.Invite{} | _]}
+
+  """
+
   def get_guild_invites(guild_id) do
     {:get, "/guilds/#{guild_id}/invites"}
   end
 
+  @doc """
+  Gets a list of guild integerations.
+
+  Guild to get integrations for is specified by `guild_id`.
+  """
   def get_guild_integrations(guild_id) do
     {:get, "/guilds/#{guild_id}/integrations"}
   end
 
+  @doc """
+  Deletes a guild integeration.
+
+  Integration to delete is specified by `guild_id` and `integeration_id`.
+  """
   def delete_guild_integration(guild_id, integration_id) do
     {:get, "/guilds/#{guild_id}/integrations/#{integration_id}"}
   end
@@ -467,15 +1433,56 @@ defmodule Remedy.API do
 
   ## Invite
 
+  @doc """
+  Gets an invite by its `invite_code`.
+
+  If successful, returns `{:ok, invite}`. Otherwise, returns a
+  `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:with_counts` (boolean) - whether to include member count fields
+
+  ## Examples
+
+      iex>
+  Remedy.API.get_invite("zsjUsC")
+
+  Remedy.API.get_invite("zsjUsC", with_counts: true)
+
+  """
   def get_invite(invite_code) do
     {:get, "/invites/#{invite_code}"}
   end
 
+  @doc """
+  Deletes an invite by its `invite_code`.
+
+  This endpoint requires the `MANAGE_CHANNELS` permission.
+
+  If successful, returns `{:ok, invite}`. Otherwise, returns a
+  `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.delete_invite("zsjUsC")
+
+  """
   def delete_invite(invite_code) do
     {:delete, "/invites/#{invite_code}"}
   end
 
-  ## Stage Instance
+  #################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░██████╗░████████╗░░█████╗░░░██████╗░░███████╗░░██████╗░ ###
+  ### ░██╔════╝░╚══██╔══╝░██╔══██╗░██╔════╝░░██╔════╝░██╔════╝░ ###
+  ### ░╚█████╗░░░░░██║░░░░███████║░██║░░██╗░░█████╗░░░╚█████╗░░ ###
+  ### ░░╚═══██╗░░░░██║░░░░██╔══██║░██║░░╚██╗░██╔══╝░░░░╚═══██╗░ ###
+  ### ░██████╔╝░░░░██║░░░░██║░░██║░╚██████╔╝░███████╗░██████╔╝░ ###
+  ### ░╚═════╝░░░░░╚═╝░░░░╚═╝░░╚═╝░░╚═════╝░░╚══════╝░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  #################################################################
 
   def create_stage_instance do
     {:post, "/stage-instances"}
@@ -493,7 +1500,16 @@ defmodule Remedy.API do
     {:delete, "/stage-instances/#{channel_id}"}
   end
 
-  ## Sticker
+  #############################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░██████╗░████████╗░██╗░░█████╗░░██╗░░██╗░███████╗░██████╗░░░██████╗░ ###
+  ### ░██╔════╝░╚══██╔══╝░██║░██╔══██╗░██║░██╔╝░██╔════╝░██╔══██╗░██╔════╝░ ###
+  ### ░╚█████╗░░░░░██║░░░░██║░██║░░╚═╝░█████═╝░░█████╗░░░██████╔╝░╚█████╗░░ ###
+  ### ░░╚═══██╗░░░░██║░░░░██║░██║░░██╗░██╔═██╗░░██╔══╝░░░██╔══██╗░░╚═══██╗░ ###
+  ### ░██████╔╝░░░░██║░░░░██║░╚█████╔╝░██║░╚██╗░███████╗░██║░░██║░██████╔╝░ ###
+  ### ░╚═════╝░░░░░╚═╝░░░░╚═╝░░╚════╝░░╚═╝░░╚═╝░╚══════╝░╚═╝░░╚═╝░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  #############################################################################
 
   def get_sticker(sticker_id) do
     {:get, "/stickers/#{sticker_id}"}
@@ -523,55 +1539,190 @@ defmodule Remedy.API do
     {:delete, "/guilds/#{guild_id}/stickers/#{sticker_id}"}
   end
 
-  ## User
+  #######################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░██╗░░░██╗░░██████╗░███████╗░██████╗░░░██████╗░ ###
+  ### ░██║░░░██║░██╔════╝░██╔════╝░██╔══██╗░██╔════╝░ ###
+  ### ░██║░░░██║░╚█████╗░░█████╗░░░██████╔╝░╚█████╗░░ ###
+  ### ░██║░░░██║░░╚═══██╗░██╔══╝░░░██╔══██╗░░╚═══██╗░ ###
+  ### ░╚██████╔╝░██████╔╝░███████╗░██║░░██║░██████╔╝░ ###
+  ### ░░╚═════╝░░╚═════╝░░╚══════╝░╚═╝░░╚═╝░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  #######################################################
+
+  @doc """
+  Gets info on the current user.
+
+  If remedy's caching is enabled, it is recommended to use `Bot.get/0`
+  instead of this function. This is because sending out an API request is much slower
+  than pulling from our cache.
+
+  If the request is successful, this function returns `{:ok, user}`, where
+  `user` is remedy's `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
+  """
 
   def get_current_user() do
     {:get, "/users/@me"}
   end
 
+  @doc """
+  Gets a user by its `t:Remedy.Struct.User.id/0`.
+
+  If the request is successful, this function returns `{:ok, user}`, where
+  `user` is a `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
+  """
   def get_user(user_id) do
     {:get, "/users/#{user_id}"}
   end
 
+  @doc """
+  Changes the username or avatar of the current user.
+
+  ## Options
+
+    * `:username` (string) - new username
+    * `:avatar` (string) - the user's avatar as [avatar data](https://discord.com/developers/docs/resources/user#avatar-data)
+
+  ## Examples
+
+      iex>
+  Remedy.API.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
+
+  """
   def modify_current_user do
     {:patch, "/users/@me"}
   end
 
+  @doc """
+  Gets a list of guilds the user is currently in.
+
+  This endpoint requires the `guilds` OAuth2 scope.
+
+  If successful, returns `{:ok, guilds}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Options
+
+    * `:before` (`t:Sunbake.Snowflake.t/0`) - get guilds before this
+    guild ID
+    * `:after` (`t:Sunbake.Snowflake.t/0`) - get guilds after this guild
+    ID
+    * `:limit` (integer) - max number of guilds to return (1-100)
+
+  ## Examples
+
+      iex>
+  iex> Remedy.API.get_current_user_guilds(limit: 1)
+  {:ok, [%Remedy.Struct.Guild{}]}
+
+  """
   def get_current_user_guilds() do
     {:get, "/users/@me/guilds"}
   end
 
+  @doc """
+  Leaves a guild.
+
+  Guild to leave is specified by `guild_id`.
+  """
   def leave_guild(guild_id) do
     {:delete, "/users/@me/guilds/#{guild_id}"}
   end
 
+  @doc """
+  Create a new DM channel with a user.
+
+  If successful, returns `{:ok, dm_channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  ## Examples
+
+      iex>
+  Remedy.API.create_dm(150061853001777154)
+  {:ok, %Remedy.Struct.Channel{type: 1}}
+
+  """
   def create_dm() do
     {:post, "/users/@me/channels"}
   end
 
+  @doc """
+  Creates a new group DM channel.
+
+  If successful, returns `{:ok, group_dm_channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
+
+  `access_tokens` are user oauth2 tokens. `nicks` is a map that maps a user id
+  to a nickname.
+
+  ## Examples
+
+      iex>
+  Remedy.API.create_group_dm(["6qrZcUqja7812RVdnEKjpzOL4CvHBFG"], %{41771983423143937 => "My Nickname"})
+  {:ok, %Remedy.Struct.Channel{type: 3}}
+
+  """
   def create_group_dm() do
     {:post, "/users/@me/channels"}
   end
+
+  @doc """
+  Gets a list of user connections.
+  """
 
   def get_user_connections() do
     {:get, "/users/@me/connections"}
   end
 
   ## Voice
+  @doc """
+  Gets a list of voice regions.
+  """
 
   def list_voice_regions() do
     {:get, "/voice/regions"}
   end
 
-  ## Webhook
+  ######################################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░██╗░░░░░░░██╗░███████╗░██████╗░░██╗░░██╗░░█████╗░░░█████╗░░██╗░░██╗░░██████╗░ ###
+  ### ░██║░░██╗░░██║░██╔════╝░██╔══██╗░██║░░██║░██╔══██╗░██╔══██╗░██║░██╔╝░██╔════╝░ ###
+  ### ░╚██╗████╗██╔╝░█████╗░░░██████╦╝░███████║░██║░░██║░██║░░██║░█████═╝░░╚█████╗░░ ###
+  ### ░░████╔═████║░░██╔══╝░░░██╔══██╗░██╔══██║░██║░░██║░██║░░██║░██╔═██╗░░░╚═══██╗░ ###
+  ### ░░╚██╔╝░╚██╔╝░░███████╗░██████╦╝░██║░░██║░╚█████╔╝░╚█████╔╝░██║░╚██╗░██████╔╝░ ###
+  ### ░░░╚═╝░░░╚═╝░░░╚══════╝░╚═════╝░░╚═╝░░╚═╝░░╚════╝░░░╚════╝░░╚═╝░░╚═╝░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ######################################################################################
+
+  @doc """
+  Creates a webhook.
+
+  ## Parameters
+    - `channel_id` - Id of the channel to send the message to.
+    - `args` - Map with the following **required** keys:
+      - `name` - Name of the webhook.
+      - `avatar` - Base64 128x128 jpeg image for the default avatar.
+    - `reason` - An optional reason for the guild audit log.
+  """
 
   def create_webhook(channel_id) do
     {:post, "/channels/#{channel_id}/webhooks"}
   end
 
+  @doc """
+  Gets a list of webook for a channel.
+
+  ## Parameters
+    - `channel_id` - Channel to get webhooks for.
+  """
+
   def get_channel_webhooks(channel_id) do
     {:get, "/channels/#{channel_id}/webhooks"}
   end
+
+  @doc """
+  Gets a list of webooks for a guild.
+
+  ## Parameters
+    - `guild_id` - Guild to get webhooks for.
+  """
 
   def get_guild_webhooks(guild_id) do
     {:get, "/guilds/#{guild_id}/webhooks"}
@@ -581,22 +1732,72 @@ defmodule Remedy.API do
     {:get, "/#{guild_id}/webhooks"}
   end
 
+  @doc """
+  Gets a webhook by id.
+
+  ## Parameters
+    - `webhook_id` - Id of the webhook to get.
+  """
+
   def get_webhook(webhook_id) do
     {:get, "/webhooks/#{webhook_id}"}
   end
+
+  @doc """
+  Gets a webhook by id and token.
+
+  This method is exactly like `get_webhook/1` but does not require
+  authentication.
+
+  ## Parameters
+    - `webhook_id` - Id of the webhook to get.
+    - `webhook_token` - Token of the webhook to get.
+  """
 
   def get_webhooks_with_token(webhook_id, webhook_token) do
     {:get, "/webhooks/#{webhook_id}/#{webhook_token}"}
   end
 
+  @doc """
+  Modifies a webhook.
+
+  ## Parameters
+    - `webhook_id` - Id of the webhook to modify.
+    - `args` - Map with the following *optional* keys:
+      - `name` - Name of the webhook.
+      - `avatar` - Base64 128x128 jpeg image for the default avatar.
+    - `reason` - An optional reason for the guild audit log.
+  """
+
   def modify_webhook(webhook_id) do
     {:patch, "/webhooks/#{webhook_id}"}
   end
 
+  @doc """
+  Modifies a webhook with a token.
+
+  This method is exactly like `modify_webhook/1` but does not require
+  authentication.
+
+  ## Parameters
+    - `webhook_id` - Id of the webhook to modify.
+    - `webhook_token` - Token of the webhook to get.
+    - `args` - Map with the following *optional* keys:
+      - `name` - Name of the webhook.
+      - `avatar` - Base64 128x128 jpeg image for the default avatar.
+    - `reason` - An optional reason for the guild audit log.
+  """
   def modify_webhooks_with_token(webhook_id, webhook_token) do
     {:modify, "/webhooks/#{webhook_id}/#{webhook_token}"}
   end
 
+  @doc """
+  Deletes a webhook.
+
+  ## Parameters
+    - `webhook_id` - Id of webhook to delete.
+    - `reason` - An optional reason for the guild audit log.
+  """
   def delete_webhook(webhook_id) do
     {:delete, "/webhooks/#{webhook_id}"}
   end
@@ -605,14 +1806,47 @@ defmodule Remedy.API do
     {:delete, "/webhooks/#{webhook_id}/#{webhook_token}"}
   end
 
+  @doc """
+   Executes a webhook.
+
+   ## Parameters
+   - `webhook_id` - Id of the webhook to execute.
+   - `webhook_token` - Token of the webhook to execute.
+   - `args` - Map with the following required keys:
+     - `content` - Message content.
+     - `file` - File to send.
+     - `embeds` - List of embeds to send.
+     - `username` - Overrides the default name of the webhook.
+     - `avatar_url` - Overrides the default avatar of the webhook.
+     - `tts` - Whether the message should be read over text to speech.
+   - `wait` - Whether to return an error or not. Defaults to `false`.
+
+   Only one of `content`, `file` or `embeds` should be supplied in the `args` parameter.
+  """
+
   def execute_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}"}
   end
+
+  @doc """
+  Executes a slack webhook.
+
+  ## Parameters
+    - `webhook_id` - Id of the webhook to execute.
+    - `webhook_token` - Token of the webhook to execute.
+  """
 
   def execute_slack_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}/slack"}
   end
 
+  @doc """
+  Executes a github webhook.
+
+  ## Parameters
+    - `webhook_id` - Id of the webhook to execute.
+    - `webhook_token` - Token of the webhook to execute.
+  """
   def execute_github_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}/github"}
   end
@@ -629,14 +1863,81 @@ defmodule Remedy.API do
     {:delete, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}"}
   end
 
-  ## Application Commands
-
+  ####################################################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░█████╗░░██████╗░░██████╗░░██╗░░░░░░██╗░░█████╗░░░█████╗░░████████╗░██╗░░█████╗░░███╗░░██╗░ ###
+  ### ░██╔══██╗░██╔══██╗░██╔══██╗░██║░░░░░░██║░██╔══██╗░██╔══██╗░╚══██╔══╝░██║░██╔══██╗░████╗░██║░ ###
+  ### ░███████║░██████╔╝░██████╔╝░██║░░░░░░██║░██║░░╚═╝░███████║░░░░██║░░░░██║░██║░░██║░██╔██╗██║░ ###
+  ### ░██╔══██║░██╔═══╝░░██╔═══╝░░██║░░░░░░██║░██║░░██╗░██╔══██║░░░░██║░░░░██║░██║░░██║░██║╚████║░ ###
+  ### ░██║░░██║░██║░░░░░░██║░░░░░░███████╗░██║░╚█████╔╝░██║░░██║░░░░██║░░░░██║░╚█████╔╝░██║░╚███║░ ###
+  ### ░╚═╝░░╚═╝░╚═╝░░░░░░╚═╝░░░░░░╚══════╝░╚═╝░░╚════╝░░╚═╝░░╚═╝░░░░╚═╝░░░░╚═╝░░╚════╝░░╚═╝░░╚══╝░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░█████╗░░░█████╗░░███╗░░░███╗░███╗░░░███╗░░█████╗░░███╗░░██╗░██████╗░░░██████╗░ ###############
+  ### ░██╔══██╗░██╔══██╗░████╗░████║░████╗░████║░██╔══██╗░████╗░██║░██╔══██╗░██╔════╝░ ###
+  ### ░██║░░╚═╝░██║░░██║░██╔████╔██║░██╔████╔██║░███████║░██╔██╗██║░██║░░██║░╚█████╗░░ ###
+  ### ░██║░░██╗░██║░░██║░██║╚██╔╝██║░██║╚██╔╝██║░██╔══██║░██║╚████║░██║░░██║░░╚═══██╗░ ###
+  ### ░╚█████╔╝░╚█████╔╝░██║░╚═╝░██║░██║░╚═╝░██║░██║░░██║░██║░╚███║░██████╔╝░██████╔╝░ ###
+  ### ░░╚════╝░░░╚════╝░░╚═╝░░░░░╚═╝░╚═╝░░░░░╚═╝░╚═╝░░╚═╝░╚═╝░░╚══╝░╚═════╝░░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ########################################################################################
   alias Remedy.Cache.DiscordBot
+
+  @doc """
+  Fetch all global commands.
+
+  ## Parameters
+  - `application_id`: Application ID for which to search commands.
+    If not given, this will be fetched from `Me`.
+
+  ## Return value
+  A list of ``ApplicationCommand``s on success. See the official reference:
+  https://discord.com/developers/docs/interactions/slash-commands#applicationcommand
+
+  ## Example
+
+      iex>
+  iex> Remedy.API.get_global_application_commands
+  {:ok,
+   [
+     %{
+       application_id: "455589479713865749",
+       description: "ed, man! man, ed",
+       id: "789841753196331029",
+       name: "edit"
+     }
+   ]}
+
+  """
 
   def get_global_application_commands() do
     {:get, "/applications/#{DiscordBot.id()}/commands"}
   end
 
+  @doc """
+  Create a new global application command.
+
+  The new command will be available on all guilds in around an hour.
+  If you want to test commands, use `create_guild_application_command/2` instead,
+  as commands will become available instantly there.
+  If an existing command with the same name exists, it will be overwritten.
+
+  ## Parameters
+  - `application_id`: Application ID for which to create the command.
+    If not given, this will be fetched from `Me`.
+  - `command`: Command configuration, see the linked API documentation for reference.
+
+  ## Return value
+  The created command. See the official reference:
+  https://discord.com/developers/docs/interactions/slash-commands#create-global-application-command
+
+  ## Example
+
+      iex>
+  Remedy.API.create_application_command(
+    %{name: "edit", description: "ed, man! man, ed", options: []}
+  )
+
+  """
   def create_global_application_command() do
     {:post, "/applications/#{DiscordBot.id()}/commands"}
   end
@@ -645,14 +1946,57 @@ defmodule Remedy.API do
     {:get, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
   end
 
+  @doc """
+  Update an existing global application command.
+
+  The updated command will be available on all guilds in around an hour.
+
+  ## Parameters
+  - `application_id`: Application ID for which to edit the command.
+    If not given, this will be fetched from `Me`.
+  - `command_id`: The current snowflake of the command.
+  - `command`: Command configuration, see the linked API documentation for reference.
+
+  ## Return value
+  The updated command. See the official reference:
+  https://discord.com/developers/docs/interactions/slash-commands#edit-global-application-command
+  """
   def edit_global_application_command(command_id) do
     {:patch, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
   end
 
+  @doc """
+  Delete an existing global application command.
+
+  ## Parameters
+  - `application_id`: Application ID for which to create the command.
+    If not given, this will be fetched from `Me`.
+  - `command_id`: The current snowflake of the command.
+  """
   def delete_global_application_command(command_id) do
     {:delete, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
   end
 
+  @doc """
+  Overwrite the existing global application commands.
+
+  This action will:
+  - Create any command that was provided and did not already exist
+  - Update any command that was provided and already existed if its configuration changed
+  - Delete any command that was not provided but existed on Discord's end
+
+  Updates will be available in all guilds after 1 hour.
+  Commands that do not already exist will count toward daily application command create limits.
+
+  ## Parameters
+  - `application_id`: Application ID for which to overwrite the commands.
+    If not given, this will be fetched from `Me`.
+  - `commands`: List of command configurations, see the linked API documentation for reference.
+
+  ## Return value
+  Updated list of global application commands. See the official reference:
+  https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-global-application-commands
+  """
   def bulk_overwrite_global_application_commands() do
     {:put, "/applications/#{DiscordBot.id()}/commands"}
   end
@@ -677,6 +2021,24 @@ defmodule Remedy.API do
     {:delete, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
   end
 
+  @doc """
+  Overwrite the existing guild application commands on the specified guild.
+
+  This action will:
+  - Create any command that was provided and did not already exist
+  - Update any command that was provided and already existed if its configuration changed
+  - Delete any command that was not provided but existed on Discord's end
+
+  ## Parameters
+  - `application_id`: Application ID for which to overwrite the commands.
+    If not given, this will be fetched from `Me`.
+  - `guild_id`: Guild on which to overwrite the commands.
+  - `commands`: List of command configurations, see the linked API documentation for reference.
+
+  ## Return value
+  Updated list of guild application commands. See the official reference:
+  https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-guild-application-commands
+  """
   def bulk_overwrite_guild_application_commands(guild_id) do
     {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands"}
   end
@@ -700,7 +2062,31 @@ defmodule Remedy.API do
   end
 
   ## Interactions
+  @doc """
+  Create a response to an interaction received from the gateway.
 
+  ## Parameters
+  - `id`: The interaction ID to which the response should be created.
+  - `token`: The interaction token.
+  - `response`: An [`InteractionResponse`](https://discord.com/developers/docs/interactions/slash-commands#interaction-interaction-response)
+    object. See the linked documentation.
+
+  ## Example
+
+      iex>
+  response = %{
+    type: 4,
+    data: %{
+      content: "I copy and pasted this code."
+    }
+  }
+  Remedy.API.create_interaction_response(interaction, response)
+
+
+  As an alternative to passing the interaction ID and token, the
+  original `t:Remedy.Struct.Interaction.t/0` can also be passed
+  directly. See `create_interaction_response/1`.
+  """
   def create_interaction_response(interaction_id, interaction_token) do
     {:post, "/interactions/#{interaction_id}/#{interaction_token}/callback"}
   end
@@ -717,6 +2103,12 @@ defmodule Remedy.API do
     {:delete, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
   end
 
+  @doc """
+  Create a followup message for an interaction.
+
+  Delegates to ``execute_webhook/3``, see the function for more details.
+  """
+
   def create_followup_message(interaction_token) do
     {:post, "/webhooks/#{DiscordBot.id()}/#{interaction_token}"}
   end
@@ -729,6 +2121,15 @@ defmodule Remedy.API do
     {:patch, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
   end
 
+  @doc """
+  Delete a followup message for an interaction.
+
+  ## Parameters
+  - `application_id`: Application ID for which to create the command.
+    If not given, this will be fetched from `Me`.
+  - `token`: Interaction token.
+  - `message_id`: Followup message ID.
+  """
   def delete_followup_message(interaction_token, message_id) do
     {:delete, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
   end
@@ -761,6 +2162,8 @@ defmodule Remedy.API do
   ##
   defp request(_, _), do: :noop
   defp request(_, _, _), do: :noop
+  defp handle_request_with_decode(_, _), do: :noop
+  defp handle_request_with_decode(_), do: :noop
   ###############################
 
   defp request(rest_request, body, params, reason_header) do
@@ -817,292 +2220,16 @@ defmodule Remedy.API do
   defp unwrap({:ok, body}), do: body
   defp unwrap({:error, _}), do: raise(Remedy.APIError)
 
-  #######
-  ### Custom
-  #######
-
-  @doc """
-  Posts a message to a guild text or DM channel.
-
-  ## Intents
-
-  - `:VIEW_CHANNEL`
-  - `:SEND_MESSAGES`
-  - `:SEND_MESSAGES_TTS` (optional)
-
-  ## Events
-
-  - `t:Remedy.Gateway.Dispatch.message_create/0`.
-
-  ## Options
-
-    - `:content` (string) - the message contents (up to 2000 characters)
-    - `:tts` (boolean) - true if this is a TTS message
-    - `:file` (`t:Path.t/0` | map) - the path of the file being sent, or a map with the following keys if sending a binary from memory
-    - `:name` (string) - the name of the file
-    - `:body` (string) - binary you wish to send
-    - `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
-    - `:allowed_mentions` - See "Allowed mentions" below
-    - `:message_reference` (`map`) - See "Message references" below
-
-   > Note: At least one of the following is required: `:content`, `:file`, `:embed`.
-
-  ### Allowed mentions
-    - `:all` (default) - Ping everything as usual
-    - `:none` - Nobody will be pinged
-    - `:everyone` - Allows to ping @here and @everone
-    - `:users` - Allows to ping users
-    - `:roles` - Allows to ping roles
-    - `{:users, list}` - Allows to ping list of users. Can contain up to 100 ids of users.
-    - `{:roles, list}` - Allows to ping list of roles. Can contain up to 100 ids of roles.
-
-
-  ## Examples
-
-      iex> Remedy.API.create_message(872417560094732331, content: "hello world!")
-      {:ok, %Message{}}
-
-  """
-
-  @spec create_message(Channel.id() | Message.t(), options | String.t()) ::
-          error | {:ok, Message.t()}
-  def create_message(channel_id, options)
-
-  def create_message(%Message{} = message, options),
-    do: create_message(message.channel_id, options)
-
-  def create_message(channel_id, options) when is_list(options),
-    do: create_message(channel_id, Map.new(options))
-
-  # def create_message(channel_id, %{} = options) when is_snowflake(channel_id) do
-  #   options = prepare_allowed_mentions(options)
-
-  #   case options do
-  #     %{file: _} ->
-  #       create_message_with_multipart(channel_id, options)
-  #         _ -> create_message_with_json(channel_id, options)
-  #   end
-  # end
-
-  # def create_message(channel_id, content) when is_snowflake(channel_id) and is_binary(content) do create_message_with_json(channel_id, %{content: content})
-  # end
-
-  # defp create_multipart(file, json, boundary) do
-  #   {:multipart, create_multipart_body(file, json, boundary)}
-  # end
-
-  # def create_message_with_multipart(channel_id, %{file: file} = options) do
-  #   payload_json =
-  #     options
-  #     |> Map.delete(:file)
-  #     |> Jason.encode!()
-
-  #   request = %{
-  #     method: :post,
-  #     route: channel_messages(channel_id),
-  #     body: create_multipart(file, payload_json, boundary),
-  #     params: [],
-  #     headers: [
-  #       {"content-type", "multipart/form-data; boundary=#{boundary()}"}
-  #     ]
-  #   }
-
-  #   GenServer.call(__MODULE__, {:queue, request, nil}, :infinity)
-  #   |> handle_request_with_decode({:struct, Message})
-  # end
-
-  @doc """
-  Edits a previously sent message in a channel.
-
-  This endpoint requires the `VIEW_CHANNEL` permission. It fires the
-  `t:Remedy.Consumer.message_update/0` event.
-
-  If `options` is a string, `options` will be used as the message's content.
-
-  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:content` (string) - the message contents (up to 2000 characters)
-    * `:embed` (`t:Remedy.Struct.Embed.t/0`) - embedded rich content
-
-  ## Examples
-
-      iex>
-  Remedy.API.edit_message(43189401384091, 1894013840914098, content: "hello world!")
-
-  Remedy.API.edit_message(43189401384091, 1894013840914098, "hello world!")
-
-  import Remedy.Struct.Embed
-  embed =
-    %Remedy.Struct.Embed{}
-    |> put_title("embed")
-    |> put_description("new desc")
-  Remedy.API.edit_message(43189401384091, 1894013840914098, embed: embed)
-
-  Remedy.API.edit_message(43189401384091, 1894013840914098, content: "hello world!", embed: embed)
-
-  """
-
-  @spec edit_message(Snowflake.t(), Snowlfake.t(), options | String.t()) ::
-          error | {:ok, Message.t()}
-  def edit_message(channel_id, message_id, options)
-
-  def edit_message(channel_id, message_id, options) when is_list(options),
-    do: edit_message(channel_id, message_id, Map.new(options))
-
-  def edit_message(channel_id, message_id, %{} = options)
-      when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:patch, Endpoints.channel_message(channel_id, message_id), options)
-    |> handle_request_with_decode({:struct, Message})
-  end
-
-  def edit_message(channel_id, message_id, content)
-      when is_snowflake(channel_id) and is_snowflake(message_id) and is_binary(content) do
-    request(:patch, Endpoints.channel_message(channel_id, message_id), %{content: content})
-    |> handle_request_with_decode({:struct, Message})
-  end
-
-  @doc """
-  Same as `edit_message/3`, but takes a `Remedy.Struct.Message` instead of a
-  `channel_id` and `message_id`.
-  """
-
-  @spec edit_message(Message.t(), options) :: error | {:ok, Message.t()}
-  def edit_message(%Message{id: id, channel_id: c_id}, options) do
-    edit_message(c_id, id, options)
-  end
-
-  @doc """
-  Same as `delete_message/2`, but takes a `Remedy.Struct.Message` instead of a
-  `channel_id` and `message_id`.
-  """
-
-  @spec delete_message(Message.t()) :: error | {:ok}
-  def delete_message(%Message{id: id, channel_id: c_id}) do
-    delete_message(c_id, id)
-  end
-
-  @doc """
-  Deletes a message.
-
-  This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_MESSAGES' permission. It
-  fires the `MESSAGE_DELETE` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.delete_message(43189401384091, 43189401384091)
-
-  """
-
-  @spec delete_message(Channel.id(), Message.id()) :: error | {:ok}
-  def delete_message(channel_id, message_id)
-      when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:delete, Endpoints.channel_message(channel_id, message_id))
-  end
-
-  @doc """
-  Creates a reaction for a message.
-
-  This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
-  permissions. Additionally, if nobody else has reacted to the message with
-  the `emoji`, this endpoint requires the `ADD_REACTIONS` permission. It
-  fires a `t:Remedy.Consumer.message_reaction_add/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  # Using a Remedy.Struct.Emoji.
-  emoji = %Remedy.Struct.Emoji{id: 43819043108, name: "foxbot"}
-  Remedy.API.create_reaction(123123123123, 321321321321, emoji)
-
-  # Using a base 16 emoji string.
-  Remedy.API.create_reaction(123123123123, 321321321321, "\xF0\x9F\x98\x81")
-
-
-
-  For other emoji string examples, see `t:Remedy.Struct.Emoji.api_name/0`.
-  """
-
-  @spec create_reaction(Channel.id(), Message.id(), Emoji.t()) :: error | {:ok}
-  def create_reaction(channel_id, message_id, emoji)
-
-  def create_reaction(channel_id, message_id, %Emoji{} = emoji),
-    do: create_reaction(channel_id, message_id, Emoji.api_name(emoji))
-
-  def create_reaction(channel_id, message_id, emoji_api_name) do
-    request(:put, Endpoints.channel_reaction_me(channel_id, message_id, emoji_api_name))
-  end
-
-  @doc """
-  Deletes a reaction the current user has made for the message.
-
-  This endpoint requires the `VIEW_CHANNEL` and `READ_MESSAGE_HISTORY`
-  permissions. It fires a `t:Remedy.Consumer.message_reaction_remove/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
-
-  See `create_reaction/3` for similar examples.
-  """
-
-  @spec delete_own_reaction(Channel.id(), Message.id(), Emoji.t()) :: error | {:ok}
-  def delete_own_reaction(channel_id, message_id, emoji)
-
-  def delete_own_reaction(channel_id, message_id, %Emoji{} = emoji),
-    do: delete_own_reaction(channel_id, message_id, Emoji.api_name(emoji))
-
-  def delete_own_reaction(channel_id, message_id, emoji_api_name) do
-    request(:delete, Endpoints.channel_reaction_me(channel_id, message_id, emoji_api_name))
-  end
-
-  @doc """
-  Deletes another user's reaction from a message.
-
-  This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
-  `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
-
-  See `create_reaction/3` for similar examples.
-  """
-
-  @spec delete_user_reaction(Channel.id(), Message.id(), Emoji.t(), User.id()) :: error | {:ok}
-  def delete_user_reaction(channel_id, message_id, emoji, user_id)
-
-  def delete_user_reaction(channel_id, message_id, %Emoji{} = emoji, user_id),
-    do: delete_user_reaction(channel_id, message_id, Emoji.api_name(emoji), user_id)
-
-  def delete_user_reaction(channel_id, message_id, emoji_api_name, user_id) do
-    request(:delete, Endpoints.channel_reaction(channel_id, message_id, emoji_api_name, user_id))
-  end
-
-  @doc """
-  Deletes all reactions of a given emoji from a message.
-
-  This endpoint requires the `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove_emoji/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
-
-  See `create_reaction/3` for similar examples.
-  """
-
-  @spec delete_reaction(Channel.id(), Message.id(), Emoji.t()) :: error | {:ok}
-  def delete_reaction(channel_id, message_id, emoji)
-
-  def delete_reaction(channel_id, message_id, %Emoji{} = emoji),
-    do: delete_reaction(channel_id, message_id, Emoji.api_name(emoji))
-
-  def delete_reaction(channel_id, message_id, emoji_api_name) do
-    request(
-      :delete,
-      Endpoints.channel_reactions_delete_emoji(channel_id, message_id, emoji_api_name)
-    )
-  end
+  ####################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░░█████╗░░██╗░░░██╗░░██████╗░████████╗░░█████╗░░███╗░░░███╗░ ###
+  ### ░██╔══██╗░██║░░░██║░██╔════╝░╚══██╔══╝░██╔══██╗░████╗░████║░ ###
+  ### ░██║░░╚═╝░██║░░░██║░╚█████╗░░░░░██║░░░░██║░░██║░██╔████╔██║░ ###
+  ### ░██║░░██╗░██║░░░██║░░╚═══██╗░░░░██║░░░░██║░░██║░██║╚██╔╝██║░ ###
+  ### ░╚█████╔╝░╚██████╔╝░██████╔╝░░░░██║░░░░╚█████╔╝░██║░╚═╝░██║░ ###
+  ### ░░╚════╝░░░╚═════╝░░╚═════╝░░░░░╚═╝░░░░░╚════╝░░╚═╝░░░░░╚═╝░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ####################################################################
 
   @doc """
   Gets all users who reacted with an emoji.
@@ -1112,158 +2239,6 @@ defmodule Remedy.API do
   If successful, returns `{:ok, users}`. Otherwise, returns `t:Remedy.API.error/0`.
 
   See `create_reaction/3` for similar examples.
-  """
-
-  @spec get_reactions(Channel.id(), Message.id(), Emoji.t()) :: error | {:ok, [User.t()]}
-  def get_reactions(channel_id, message_id, emoji)
-
-  def get_reactions(channel_id, message_id, %Emoji{} = emoji),
-    do: get_reactions(channel_id, message_id, Emoji.api_name(emoji))
-
-  def get_reactions(channel_id, message_id, emoji_api_name) do
-    request(:get, Endpoints.channel_reactions_get(channel_id, message_id, emoji_api_name))
-    |> handle_request_with_decode({:list, {:struct, User}})
-  end
-
-  @doc """
-  Deletes all reactions from a message.
-
-  This endpoint requires the `VIEW_CHANNEL`, `READ_MESSAGE_HISTORY`, and
-  `MANAGE_MESSAGES` permissions. It fires a `t:Remedy.Consumer.message_reaction_remove_all/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, return `t:Remedy.API.error/0`.
-  """
-
-  @spec delete_all_reactions(Channel.id(), Message.id()) :: error | {:ok}
-  def delete_all_reactions(channel_id, message_id) do
-    request(:delete, Endpoints.channel_reactions_delete(channel_id, message_id))
-  end
-
-  @doc """
-  Gets a channel.
-
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex> Remedy.API.get_channel(381889573426429952)
-      {:ok, %Remedy.Struct.Channel{id: 381889573426429952}}
-
-  """
-
-  @spec get_channel(Channel.id()) :: error | {:ok, Channel.t()}
-  def get_channel(channel_id) when is_snowflake(channel_id) do
-    request(:get, Endpoints.channel(channel_id))
-    |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc """
-  Modifies a channel's settings.
-
-  An optional `reason` can be given for the guild audit log.
-
-  If a `t:Remedy.Struct.Channel.guild_channel/0` is being modified, this
-  endpoint requires the `MANAGE_CHANNEL` permission. It fires a
-  `t:Remedy.Consumer.channel_update/0` event. If a
-  `t:Remedy.Struct.Channel.channel_category/0` is being modified, then this
-  endpoint fires multiple `t:Remedy.Consumer.channel_update/0` events.
-
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:name` (string) - 2-100 character channel name
-    * `:position` (integer) - the position of the channel in the left-hand listing
-    * `:topic` (string) (`t:Remedy.Struct.Channel.text_channel/0` only) -
-    0-1024 character channel topic
-    * `:nsfw` (boolean) (`t:Remedy.Struct.Channel.text_channel/0` only) -
-    if the channel is nsfw
-    * `:bitrate` (integer) (`t:Remedy.Struct.Channel.voice_channel/0` only) -
-    the bitrate (in bits) of the voice channel; 8000 to 96000 (128000 for VIP servers)
-    * `:user_limit` (integer) (`t:Remedy.Struct.Channel.voice_channel/0` only) -
-    the user limit of the voice channel; 0 refers to no limit, 1 to 99 refers to a user limit
-    * `:permission_overwrites` (list of `t:Remedy.Struct.Overwrite.t/0` or equivalent map) -
-    channel or category-specific permissions
-    * `:parent_id` (`t:Remedy.Struct.Channel.id/0`) (`t:Remedy.Struct.Channel.guild_channel/0` only) -
-    id of the new parent category for a channel
-
-  ## Examples
-
-      iex> Remedy.API.modify_channel(41771983423143933, name: "elixir-remedy", topic: "remedy discussion")
-      {:ok, %Remedy.Struct.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
-
-
-      iex> Remedy.API.modify_channel(41771983423143933)
-      {:ok, %Remedy.Struct.Channel{id: 41771983423143933}}
-
-  """
-
-  @spec modify_channel(Channel.id(), options, AuditLogEntry.reason()) ::
-          error | {:ok, Channel.t()}
-  def modify_channel(channel_id, options, reason \\ nil)
-
-  def modify_channel(channel_id, options, reason) when is_list(options),
-    do: modify_channel(channel_id, Map.new(options), reason)
-
-  def modify_channel(channel_id, %{} = options, reason) when is_snowflake(channel_id) do
-    %{
-      method: :patch,
-      route: Endpoints.channel(channel_id),
-      body: options,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request
-    |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc """
-  Deletes a channel.
-
-  An optional `reason` can be provided for the guild audit log.
-
-  If deleting a `t:Remedy.Struct.Channel.guild_channel/0`, this endpoint requires
-  the `MANAGE_CHANNELS` permission. It fires a
-  `t:Remedy.Consumer.channel_delete/0`. If a `t:Remedy.Struct.Channel.channel_category/0`
-  is deleted, then a `t:Remedy.Consumer.channel_update/0` event will fire
-  for each channel under the category.
-
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex> Remedy.API.delete_channel(421533712753360896)
-      {:ok, %Remedy.Struct.Channel{id: 421533712753360896}}
-
-  """
-
-  @spec delete_channel(Channel.id(), AuditLogEntry.reason()) :: error | {:ok, Channel.t()}
-  def delete_channel(channel_id, reason \\ nil) when is_snowflake(channel_id) do
-    %{
-      method: :delete,
-      route: Endpoints.channel(channel_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc """
-  Retrieves a channel's messages around a `locator` up to a `limit`.
-
-  This endpoint requires the 'VIEW_CHANNEL' permission. If the current user
-  is missing the 'READ_MESSAGE_HISTORY' permission, then this function will
-  return no messages.
-
-  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex> Remedy.API.get_channel_messages(43189401384091, 5, {:before, 130230401384})
-      {:ok, %Message{}}
-
   """
 
   @spec get_channel_messages(Channel.id(), limit, locator) :: error | {:ok, [Message.t()]}
@@ -1310,27 +2285,6 @@ defmodule Remedy.API do
 
     request(:get, Endpoints.channel_messages(channel_id), "", params: qs_params)
     |> handle_request_with_decode({:list, {:struct, Message}})
-  end
-
-  @doc """
-  Retrieves a message from a channel.
-
-  This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
-
-  If successful, returns `{:ok, message}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_channel_message(43189401384091, 198238475613443)
-
-  """
-
-  @spec get_channel_message(Channel.id(), Message.id()) :: error | {:ok, Message.t()}
-  def get_channel_message(channel_id, message_id)
-      when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:get, Endpoints.channel_message(channel_id, message_id))
-    |> handle_request_with_decode({:struct, Message})
   end
 
   @doc """
@@ -1387,1082 +2341,6 @@ defmodule Remedy.API do
   end
 
   @doc """
-  Edit the permission overwrites for a user or role.
-
-  Role or user to overwrite is specified by `overwrite_id`.
-
-  `permission_info` is a map with the following keys:
-   * `type` - Required; `member` if editing a user, `role` if editing a role.
-   * `allow` - Bitwise value of allowed permissions.
-   * `deny` - Bitwise value of denied permissions.
-   * `type` - `member` if editing a user, `role` if editing a role.
-
-  An optional `reason` can be provided for the audit log.
-
-   `allow` and `deny` are defaulted to `0`, meaning that even if you don't
-   specify them, they will override their respective former values in an
-   existing overwrite.
-  """
-
-  @spec edit_channel_permissions(
-          integer,
-          integer,
-          %{
-            required(:type) => String.t(),
-            optional(:allow) => integer,
-            optional(:deny) => integer
-          },
-          AuditLogEntry.reason()
-        ) :: error | {:ok}
-  def edit_channel_permissions(channel_id, overwrite_id, permission_info, reason \\ nil) do
-    request(%{
-      method: :put,
-      route: Endpoints.channel_permission(channel_id, overwrite_id),
-      body: permission_info,
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Delete a channel permission for a user or role.
-
-  Role or user overwrite to delete is specified by `channel_id` and `overwrite_id`.
-  An optional `reason` can be given for the audit log.
-  """
-
-  @spec delete_channel_permissions(integer, integer, AuditLogEntry.reason()) :: error | {:ok}
-  def delete_channel_permissions(channel_id, overwrite_id, reason \\ nil) do
-    request(%{
-      method: :delete,
-      route: Endpoints.channel_permission(channel_id, overwrite_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Gets a list of invites for a channel.
-
-  This endpoint requires the 'VIEW_CHANNEL' and 'MANAGE_CHANNELS' permissions.
-
-  If successful, returns `{:ok, invite}`. Otherwise, returns a
-  `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_channel_invites(43189401384091)
-  {:ok, [%Remedy.Struct.Invite{} | _]}
-
-  """
-
-  @spec get_channel_invites(Channel.id()) :: error | {:ok, [Invite.detailed_invite()]}
-  def get_channel_invites(channel_id) when is_snowflake(channel_id) do
-    request(:get, Endpoints.channel_invites(channel_id))
-    |> handle_request_with_decode({:list, {:struct, Invite}})
-  end
-
-  @doc """
-  Creates an invite for a guild channel.
-
-  An optional `reason` can be provided for the audit log.
-
-  This endpoint requires the `CREATE_INSTANT_INVITE` permission.
-
-  If successful, returns `{:ok, invite}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:max_age` (integer) - duration of invite in seconds before expiry, or 0 for never.
-      (default: `86400`)
-    * `:max_uses` (integer) - max number of uses or 0 for unlimited.
-      (default: `0`)
-    * `:temporary` (boolean) - Whether the invite should grant temporary
-      membership. (default: `false`)
-    * `:unique` (boolean) - used when creating unique one time use invites.
-      (default: `false`)
-
-  ## Examples
-
-      iex>
-  Remedy.API.create_channel_invite(41771983423143933)
-  {:ok, Remedy.Struct.Invite{}}
-
-  Remedy.API.create_channel_invite(41771983423143933, max_uses: 20)
-  {:ok, %Remedy.Struct.Invite{}}
-
-  """
-
-  @spec create_channel_invite(Channel.id(), options, AuditLogEntry.reason()) ::
-          error | {:ok, Invite.detailed_invite()}
-  def create_channel_invite(channel_id, options \\ [], reason \\ nil)
-
-  def create_channel_invite(channel_id, options, reason) when is_list(options),
-    do: create_channel_invite(channel_id, Map.new(options), reason)
-
-  def create_channel_invite(channel_id, options, reason)
-      when is_snowflake(channel_id) and is_map(options) do
-    %{
-      method: :post,
-      route: Endpoints.channel_invites(channel_id),
-      body: options,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:struct, Invite})
-  end
-
-  @doc """
-  Triggers the typing indicator.
-
-  Triggers the typing indicator in the channel specified by `channel_id`.
-  The typing indicator lasts for about 8 seconds and then automatically stops.
-
-  Returns `{:ok}` if successful. `error` otherwise.
-  """
-
-  @spec start_typing(integer) :: error | {:ok}
-  def start_typing(channel_id) do
-    request(:post, Endpoints.channel_typing(channel_id))
-  end
-
-  @doc """
-  Retrieves all pinned messages from a channel.
-
-  This endpoint requires the 'VIEW_CHANNEL' and 'READ_MESSAGE_HISTORY' permissions.
-
-  If successful, returns `{:ok, messages}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_pinned_messages(43189401384091)
-
-  """
-
-  @spec get_pinned_messages(Channel.id()) :: error | {:ok, [Message.t()]}
-  def get_pinned_messages(channel_id) when is_snowflake(channel_id) do
-    request(:get, Endpoints.channel_pins(channel_id))
-    |> handle_request_with_decode({:list, {:struct, Message}})
-  end
-
-  @doc """
-  Pins a message in a channel.
-
-  This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
-  'MANAGE_MESSAGES' permissions. It fires the
-  `t:Remedy.Consumer.message_update/0` and
-  `t:Remedy.Consumer.channel_pins_update/0` events.
-
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.add_pinned_channel_message(43189401384091, 18743893102394)
-
-  """
-
-  @spec add_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
-  def add_pinned_channel_message(channel_id, message_id)
-      when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:put, Endpoints.channel_pin(channel_id, message_id))
-  end
-
-  @doc """
-  Unpins a message in a channel.
-
-  This endpoint requires the 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY', and
-  'MANAGE_MESSAGES' permissions. It fires the
-  `t:Remedy.Consumer.message_update/0` and
-  `t:Remedy.Consumer.channel_pins_update/0` events.
-
-  Returns `{:ok}` if successful. `error` otherwise.
-  """
-
-  @spec delete_pinned_channel_message(Channel.id(), Message.id()) :: error | {:ok}
-  def delete_pinned_channel_message(channel_id, message_id)
-      when is_snowflake(channel_id) and is_snowflake(message_id) do
-    request(:delete, Endpoints.channel_pin(channel_id, message_id))
-  end
-
-  @doc """
-  Gets a list of emojis for a given guild.
-
-  This endpoint requires the `MANAGE_EMOJIS` permission.
-
-  If successful, returns `{:ok, emojis}`. Otherwise, returns `t:Remedy.API.error/0`.
-  """
-
-  @spec list_guild_emojis(Guild.id()) :: error | {:ok, [Emoji.t()]}
-  def list_guild_emojis(guild_id) do
-    request(:get, Endpoints.guild_emojis(guild_id))
-    |> handle_request_with_decode({:list, {:struct, Emoji}})
-  end
-
-  @doc """
-  Gets an emoji for the given guild and emoji ids.
-
-  This endpoint requires the `MANAGE_EMOJIS` permission.
-
-  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.API.error/0`.
-  """
-
-  @spec get_guild_emoji(Guild.id(), Emoji.id()) :: error | {:ok, Emoji.t()}
-  def get_guild_emoji(guild_id, emoji_id) do
-    request(:get, Endpoints.guild_emoji(guild_id, emoji_id))
-    |> handle_request_with_decode({:struct, Emoji})
-  end
-
-  @doc """
-  Creates a new emoji for the given guild.
-
-  This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
-  `t:Remedy.Consumer.guild_emojis_update/0` event.
-
-  An optional `reason` can be provided for the audit log.
-
-  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:name` (string) - name of the emoji
-    * `:image` (base64 data URI) - the 128x128 emoji image. Maximum size of 256kb
-    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles for which this emoji will be whitelisted
-    (default: [])
-
-  `:name` and `:image` are always required.
-
-  ## Examples
-
-      iex>
-  image = "data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8="
-
-  Remedy.API.create_guild_emoji(43189401384091, name: "remedy", image: image, roles: [])
-
-  """
-
-  @spec create_guild_emoji(Guild.id(), options, AuditLogEntry.reason()) ::
-          error | {:ok, Emoji.t()}
-  def create_guild_emoji(guild_id, options, reason \\ nil)
-
-  def create_guild_emoji(guild_id, options, reason) when is_list(options),
-    do: create_guild_emoji(guild_id, Map.new(options), reason)
-
-  def create_guild_emoji(guild_id, %{} = options, reason) do
-    %{
-      method: :post,
-      route: Endpoints.guild_emojis(guild_id),
-      body: options,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:struct, Emoji})
-  end
-
-  @doc """
-  Modify the given emoji.
-
-  This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
-  `t:Remedy.Consumer.guild_emojis_update/0` event.
-
-  An optional `reason` can be provided for the audit log.
-
-  If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:name` (string) - name of the emoji
-    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles to which this emoji will be whitelisted
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_guild_emoji(43189401384091, 4314301984301, name: "elixir", roles: [])
-
-  """
-
-  @spec modify_guild_emoji(Guild.id(), Emoji.id(), options, AuditLogEntry.reason()) ::
-          error | {:ok, Emoji.t()}
-  def modify_guild_emoji(guild_id, emoji_id, options \\ %{}, reason \\ nil)
-
-  def modify_guild_emoji(guild_id, emoji_id, options, reason) when is_list(options),
-    do: modify_guild_emoji(guild_id, emoji_id, Map.new(options), reason)
-
-  def modify_guild_emoji(guild_id, emoji_id, %{} = options, reason) do
-    %{
-      method: :patch,
-      route: Endpoints.guild_emoji(guild_id, emoji_id),
-      body: options,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:struct, Emoji})
-  end
-
-  @doc """
-  Deletes the given emoji.
-
-  An optional `reason` can be provided for the audit log.
-
-  This endpoint requires the `MANAGE_EMOJIS` permission. It fires a
-  `t:Remedy.Consumer.guild_emojis_update/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns `t:Remedy.API.error/0`.
-  """
-
-  @spec delete_guild_emoji(Guild.id(), Emoji.id(), AuditLogEntry.reason()) :: error | {:ok}
-  def delete_guild_emoji(guild_id, emoji_id, reason \\ nil),
-    do:
-      request(%{
-        method: :delete,
-        route: Endpoints.guild_emoji(guild_id, emoji_id),
-        body: "",
-        options: [],
-        headers: maybe_add_reason(reason)
-      })
-
-  @doc """
-  Gets a guild.
-
-  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_guild(81384788765712384)
-  {:ok, %Remedy.Struct.Guild{id: 81384788765712384}}
-
-  """
-
-  @spec get_guild(Guild.id()) :: error | {:ok, Guild.rest_guild()}
-  def get_guild(guild_id) when is_snowflake(guild_id) do
-    request(:get, Endpoints.guild(guild_id))
-    |> handle_request_with_decode({:struct, Guild})
-  end
-
-  @doc """
-  Modifies a guild's settings.
-
-  This endpoint requires the `MANAGE_GUILD` permission. It fires the
-  `t:Remedy.Consumer.guild_update/0` event.
-
-  An optional `reason` can be provided for the audit log.
-
-  If successful, returns `{:ok, guild}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:name` (string) - guild name
-    * `:region` (string) - guild voice region id
-    * `:verification_level` (integer) - verification level
-    * `:default_message_notifications` (integer) - default message
-    notification level
-    * `:explicit_content_filter` (integer) - explicit content filter level
-    * `:afk_channel_id` (`t:Sunbake.Snowflake.t/0`) - id for afk channel
-    * `:afk_timeout` (integer) - afk timeout in seconds
-    * `:icon` (base64 data URI) - 128x128 jpeg image for the guild icon
-    * `:owner_id` (`t:Sunbake.Snowflake.t/0`) - user id to transfer
-    guild ownership to (must be owner)
-    * `:splash` (base64 data URI) - 128x128 jpeg image for the guild splash
-    (VIP only)
-    * `:system_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the
-    channel to which system messages are sent
-    * `:rules_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel that
-    is used for rules in public guilds
-    * `:public_updates_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel
-    where admins and moderators receive notices from Discord in public guilds
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_guild(451824027976073216, name: "Nose Drum")
-  {:ok, %Remedy.Struct.Guild{id: 451824027976073216, name: "Nose Drum", ...}}
-
-  """
-
-  @spec modify_guild(Guild.id(), options, AuditLogEntry.reason()) ::
-          error | {:ok, Guild.rest_guild()}
-  def modify_guild(guild_id, options \\ [], reason \\ nil)
-
-  def modify_guild(guild_id, options, reason) when is_list(options),
-    do: modify_guild(guild_id, Map.new(options), reason)
-
-  def modify_guild(guild_id, options, reason) when is_snowflake(guild_id) and is_map(options) do
-    options = Map.new(options)
-
-    %{
-      method: :patch,
-      route: Endpoints.guild(guild_id),
-      body: options,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:struct, Guild})
-  end
-
-  @doc """
-  Deletes a guild.
-
-  This endpoint requires that the current user is the owner of the guild.
-  It fires the `t:Remedy.Consumer.guild_delete/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.delete_guild(81384788765712384)
-  {:ok}
-
-  """
-
-  @spec delete_guild(Guild.id()) :: error | {:ok}
-  def delete_guild(guild_id) when is_snowflake(guild_id) do
-    request(:delete, Endpoints.guild(guild_id))
-  end
-
-  @doc """
-  Gets a list of guild channels.
-
-  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_guild_channels(81384788765712384)
-  {:ok, [%Remedy.Struct.Channel{guild_id: 81384788765712384} | _]}
-
-  """
-
-  @spec get_guild_channels(Guild.id()) :: error | {:ok, [Channel.guild_channel()]}
-  def get_guild_channels(guild_id) when is_snowflake(guild_id) do
-    request(:get, Endpoints.guild_channels(guild_id))
-    |> handle_request_with_decode({:list, {:struct, Channel}})
-  end
-
-  @doc """
-  Creates a channel for a guild.
-
-  This endpoint requires the `MANAGE_CHANNELS` permission. It fires a
-  `t:Remedy.Consumer.channel_create/0` event.
-
-  If successful, returns `{:ok, channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:name` (string) - channel name (2-100 characters)
-    * `:type` (integer) - the type of channel (See `Remedy.Struct.Channel`)
-    * `:topic` (string) - channel topic (0-1024 characters)
-    * `:bitrate` (integer) - the bitrate (in bits) of the voice channel (voice only)
-    * `:user_limit` (integer) - the user limit of the voice channel (voice only)
-    * `:permission_overwrites` (list of `t:Remedy.Struct.Overwrite.t/0` or equivalent map) -
-    the channel's permission overwrites
-    * `:parent_id` (`t:Remedy.Struct.Channel.id/0`) - id of the parent category for a channel
-    * `:nsfw` (boolean) - if the channel is nsfw
-
-  `:name` is always required.
-
-  ## Examples
-
-      iex>
-  Remedy.API.create_guild_channel(81384788765712384, name: "elixir-remedy", topic: "craig's domain")
-  {:ok, %Remedy.Struct.Channel{guild_id: 81384788765712384}}
-
-  """
-
-  @spec create_guild_channel(Guild.id(), options) :: error | {:ok, Channel.guild_channel()}
-  def create_guild_channel(guild_id, options)
-
-  def create_guild_channel(guild_id, options) when is_list(options),
-    do: create_guild_channel(guild_id, Map.new(options))
-
-  def create_guild_channel(guild_id, %{} = options) when is_snowflake(guild_id) do
-    request(:post, Endpoints.guild_channels(guild_id), options)
-    |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc """
-  Reorders a guild's channels.
-
-  This endpoint requires the `MANAGE_CHANNELS` permission. It fires multiple
-  `t:Remedy.Consumer.channel_update/0` events.
-
-  If successful, returns `{:ok, channels}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  `positions` is a list of maps that each map a channel id with a position.
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_guild_channel_positions(279093381723062272, [%{id: 351500354581692420, position: 2}])
-  {:ok}
-
-  """
-
-  @spec modify_guild_channel_positions(Guild.id(), [%{id: integer, position: integer}]) ::
-          error | {:ok}
-  def modify_guild_channel_positions(guild_id, positions)
-      when is_snowflake(guild_id) and is_list(positions) do
-    request(:patch, Endpoints.guild_channels(guild_id), positions)
-  end
-
-  @doc """
-  Gets a guild member.
-
-  If successful, returns `{:ok, member}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_guild_member(4019283754613, 184937267485)
-
-  """
-
-  @spec get_guild_member(Guild.id(), User.id()) :: error | {:ok, Member.t()}
-  def get_guild_member(guild_id, user_id) when is_snowflake(guild_id) and is_snowflake(user_id) do
-    request(:get, Endpoints.guild_member(guild_id, user_id))
-    |> handle_request_with_decode({:struct, Member})
-  end
-
-  @doc """
-  Gets a list of a guild's members.
-
-  If successful, returns `{:ok, members}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:limit` (integer) - max number of members to return (1-1000) (default: 1)
-    * `:after` (`t:Remedy.Struct.User.id/0`) - the highest user id in the previous page (default: 0)
-
-  ## Examples
-
-      iex>
-  Remedy.API.list_guild_members(41771983423143937, limit: 1)
-
-  """
-
-  @spec list_guild_members(Guild.id(), options) :: error | {:ok, [Member.t()]}
-  def list_guild_members(guild_id, options \\ %{})
-
-  def list_guild_members(guild_id, options) when is_list(options),
-    do: list_guild_members(guild_id, Map.new(options))
-
-  def list_guild_members(guild_id, %{} = options) when is_snowflake(guild_id) do
-    request(:get, Endpoints.guild_members(guild_id), "", params: options)
-    |> handle_request_with_decode({:list, {:struct, Member}})
-  end
-
-  @doc """
-  Puts a user in a guild.
-
-  This endpoint fires the `t:Remedy.Consumer.guild_member_add/0` event.
-  It requires the `CREATE_INSTANT_INVITE` permission. Additionally, it
-  situationally requires the `MANAGE_NICKNAMES`, `MANAGE_ROLES`,
-  `MUTE_MEMBERS`, and `DEAFEN_MEMBERS` permissions.
-
-  If successful, returns `{:ok, member}` or `{:ok}` if the user was already a member of the
-  guild. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:access_token` (string) - the user's oauth2 access token
-    * `:nick` (string) - value to set users nickname to
-    * `:roles` (list of `t:Remedy.Struct.Guild.Role.id/0`) - array of role ids the member is assigned
-    * `:mute` (boolean) - if the user is muted
-    * `:deaf` (boolean) - if the user is deafened
-
-  `:access_token` is always required.
-
-  ## Examples
-
-      iex>
-  Remedy.API.add_guild_member(
-    41771983423143937,
-    18374719829378473,
-    access_token: "6qrZcUqja7812RVdnEKjpzOL4CvHBFG",
-    nick: "remedy",
-    roles: [431849301, 913809431]
-  )
-
-  """
-
-  @spec add_guild_member(Guild.id(), User.id(), options) :: error | {:ok, Member.t()} | {:ok}
-  def add_guild_member(guild_id, user_id, options)
-
-  def add_guild_member(guild_id, user_id, options) when is_list(options),
-    do: add_guild_member(guild_id, user_id, Map.new(options))
-
-  def add_guild_member(guild_id, user_id, %{} = options)
-      when is_snowflake(guild_id) and is_snowflake(user_id) do
-    request(:put, Endpoints.guild_member(guild_id, user_id), options)
-    |> handle_request_with_decode({:struct, Member})
-  end
-
-  @doc """
-  Modifies a guild member's attributes.
-
-  This endpoint fires the `t:Remedy.Consumer.guild_member_update/0` event.
-  It situationally requires the `MANAGE_NICKNAMES`, `MANAGE_ROLES`,
-  `MUTE_MEMBERS`, `DEAFEN_MEMBERS`, and `MOVE_MEMBERS` permissions.
-
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:nick` (string) - value to set users nickname to
-    * `:roles` (list of `t:Sunbake.Snowflake.t/0`) - array of role ids the member is assigned
-    * `:mute` (boolean) - if the user is muted
-    * `:deaf` (boolean) - if the user is deafened
-    * `:channel_id` (`t:Sunbake.Snowflake.t/0`) - id of channel to move user to (if they are connected to voice)
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_guild_member(41771983423143937, 637162356451, nick: "Remedy")
-  {:ok}
-
-  """
-
-  @spec modify_guild_member(Guild.id(), User.id(), options) :: error | {:ok}
-  def modify_guild_member(guild_id, user_id, options \\ %{})
-
-  def modify_guild_member(guild_id, user_id, options) when is_list(options),
-    do: modify_guild_member(guild_id, user_id, Map.new(options))
-
-  def modify_guild_member(guild_id, user_id, %{} = options)
-      when is_snowflake(guild_id) and is_snowflake(user_id) do
-    request(:patch, Endpoints.guild_member(guild_id, user_id), options)
-  end
-
-  @doc """
-  Modifies the nickname of the current user in a guild.
-
-  If successful, returns `{:ok, %{nick: nick}}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:nick` (string) - value to set users nickname to
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_current_user_nick(41771983423143937, nick: "Remedy")
-  {:ok, %{nick: "Remedy"}}
-
-  """
-
-  @spec modify_current_user_nick(Guild.id(), options) :: error | {:ok, %{nick: String.t()}}
-  def modify_current_user_nick(guild_id, options \\ %{}) do
-    request(:patch, Endpoints.guild_me_nick(guild_id), options)
-    |> handle_request_with_decode()
-  end
-
-  @doc """
-  Adds a role to a member.
-
-  Role to add is specified by `role_id`.
-  User to add role to is specified by `guild_id` and `user_id`.
-  An optional `reason` can be given for the audit log.
-  """
-
-  @spec add_guild_member_role(integer, integer, integer, AuditLogEntry.reason()) :: error | {:ok}
-  def add_guild_member_role(guild_id, user_id, role_id, reason \\ nil) do
-    request(%{
-      method: :put,
-      route: Endpoints.guild_member_role(guild_id, user_id, role_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Removes a role from a member.
-
-  Role to remove is specified by `role_id`.
-  User to remove role from is specified by `guild_id` and `user_id`.
-  An optional `reason` can be given for the audit log.
-  """
-
-  @spec remove_guild_member_role(integer, integer, integer, AuditLogEntry.reason()) ::
-          error | {:ok}
-  def remove_guild_member_role(guild_id, user_id, role_id, reason \\ nil) do
-    request(%{
-      method: :delete,
-      route: Endpoints.guild_member_role(guild_id, user_id, role_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Removes a member from a guild.
-
-  This event requires the `KICK_MEMBERS` permission. It fires a
-  `t:Remedy.Consumer.guild_member_remove/0` event.
-
-  An optional reason can be provided for the audit log with `reason`.
-
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.remove_guild_member(1453827904102291, 18739485766253)
-  {:ok}
-
-  """
-
-  @spec remove_guild_member(Guild.id(), User.id(), AuditLogEntry.reason()) :: error | {:ok}
-  def remove_guild_member(guild_id, user_id, reason \\ nil)
-      when is_snowflake(guild_id) and is_snowflake(user_id) do
-    request(%{
-      method: :delete,
-      route: Endpoints.guild_member(guild_id, user_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Gets a ban object for the given user from a guild.
-  """
-
-  @doc since: "0.5.0"
-  @spec get_guild_ban(integer, integer) :: error | {:ok, Guild.Ban.t()}
-  def get_guild_ban(guild_id, user_id) do
-    request(:get, Endpoints.guild_ban(guild_id, user_id))
-    |> handle_request_with_decode({:struct, Guild.Ban})
-  end
-
-  @doc """
-  Gets a list of users banned from a guild.
-
-  Guild to get bans for is specified by `guild_id`.
-  """
-
-  @spec get_guild_bans(integer) :: error | {:ok, [Remedy.Struct.User.t()]}
-  def get_guild_bans(guild_id) do
-    request(:get, Endpoints.guild_bans(guild_id))
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Bans a user from a guild.
-
-  User to delete is specified by `guild_id` and `user_id`.
-  An optional `reason` can be specified for the audit log.
-  """
-
-  @spec create_guild_ban(integer, integer, integer, AuditLogEntry.reason()) :: error | {:ok}
-  def create_guild_ban(guild_id, user_id, days_to_delete, reason \\ nil) do
-    request(%{
-      method: :put,
-      route: Endpoints.guild_ban(guild_id, user_id),
-      body: %{"delete-message-days": days_to_delete},
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Removes a ban for a user.
-
-  User to unban is specified by `guild_id` and `user_id`.
-  An optional `reason` can be specified for the audit log.
-  """
-
-  @spec remove_guild_ban(integer, integer, AuditLogEntry.reason()) :: error | {:ok}
-  def remove_guild_ban(guild_id, user_id, reason \\ nil) do
-    request(%{
-      method: :delete,
-      route: Endpoints.guild_ban(guild_id, user_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Gets a guild's roles.
-
-  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_guild_roles(147362948571673)
-
-  """
-
-  @spec get_guild_roles(Guild.id()) :: error | {:ok, [Role.t()]}
-  def get_guild_roles(guild_id) when is_snowflake(guild_id) do
-    request(:get, Endpoints.guild_roles(guild_id))
-    |> handle_request_with_decode({:list, {:struct, Role}})
-  end
-
-  @doc """
-  Creates a guild role.
-
-  An optional reason for the audit log can be provided via `reason`.
-
-  This endpoint requires the `MANAGE_ROLES` permission. It fires a
-  `t:Remedy.Consumer.guild_role_create/0` event.
-
-  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:name` (string) - name of the role (default: "new role")
-    * `:permissions` (integer) - bitwise of the enabled/disabled permissions (default: @everyone perms)
-    * `:color` (integer) - RGB color value (default: 0)
-    * `:hoist` (boolean) - whether the role should be displayed separately in the sidebar (default: false)
-    * `:mentionable` (boolean) - whether the role should be mentionable (default: false)
-
-  ## Examples
-
-      iex>
-  Remedy.API.create_guild_role(41771983423143937, name: "remedy-club", hoist: true)
-
-  """
-
-  @spec create_guild_role(Guild.id(), options, AuditLogEntry.reason()) :: error | {:ok, Role.t()}
-  def create_guild_role(guild_id, options, reason \\ nil)
-
-  def create_guild_role(guild_id, options, reason) when is_list(options),
-    do: create_guild_role(guild_id, Map.new(options), reason)
-
-  def create_guild_role(guild_id, %{} = options, reason) when is_snowflake(guild_id) do
-    %{
-      method: :post,
-      route: Endpoints.guild_roles(guild_id),
-      body: options,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:struct, Role})
-  end
-
-  @doc """
-  Reorders a guild's roles.
-
-  This endpoint requires the `MANAGE_ROLES` permission. It fires multiple
-  `t:Remedy.Consumer.guild_role_update/0` events.
-
-  If successful, returns `{:ok, roles}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  `positions` is a list of maps that each map a role id with a position.
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_guild_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
-
-  """
-
-  @spec modify_guild_role_positions(
-          Guild.id(),
-          [%{id: Role.id(), position: integer}],
-          AuditLogEntry.reason()
-        ) :: error | {:ok, [Role.t()]}
-  def modify_guild_role_positions(guild_id, positions, reason \\ nil)
-      when is_snowflake(guild_id) and is_list(positions) do
-    %{
-      method: :patch,
-      route: Endpoints.guild_roles(guild_id),
-      body: positions,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:list, {:struct, Role}})
-  end
-
-  @doc """
-  Modifies a guild role.
-
-  This endpoint requires the `MANAGE_ROLES` permission. It fires a
-  `t:Remedy.Consumer.guild_role_update/0` event.
-
-  An optional `reason` can be specified for the audit log.
-
-  If successful, returns `{:ok, role}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:name` (string) - name of the role
-    * `:permissions` (integer) - bitwise of the enabled/disabled permissions
-    * `:color` (integer) - RGB color value (default: 0)
-    * `:hoist` (boolean) - whether the role should be displayed separately in the sidebar
-    * `:mentionable` (boolean) - whether the role should be mentionable
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_guild_role(41771983423143937, 392817238471936, hoist: false, name: "foo-bar")
-
-  """
-
-  @spec modify_guild_role(Guild.id(), Role.id(), options, AuditLogEntry.reason()) ::
-          error | {:ok, Role.t()}
-  def modify_guild_role(guild_id, role_id, options, reason \\ nil)
-
-  def modify_guild_role(guild_id, role_id, options, reason) when is_list(options),
-    do: modify_guild_role(guild_id, role_id, Map.new(options), reason)
-
-  def modify_guild_role(guild_id, role_id, %{} = options, reason)
-      when is_snowflake(guild_id) and is_snowflake(role_id) do
-    %{
-      method: :patch,
-      route: Endpoints.guild_role(guild_id, role_id),
-      body: options,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode({:struct, Role})
-  end
-
-  @doc """
-  Deletes a role from a guild.
-
-  An optional `reason` can be specified for the audit log.
-
-  This endpoint requires the `MANAGE_ROLES` permission. It fires a
-  `t:Remedy.Consumer.guild_role_delete/0` event.
-
-  If successful, returns `{:ok}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.delete_guild_role(41771983423143937, 392817238471936)
-
-  """
-
-  @spec delete_guild_role(Guild.id(), Role.id(), AuditLogEntry.reason()) :: error | {:ok}
-  def delete_guild_role(guild_id, role_id, reason \\ nil)
-      when is_snowflake(guild_id) and is_snowflake(role_id) do
-    request(%{
-      method: :delete,
-      route: Endpoints.guild_role(guild_id, role_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @doc """
-  Gets the number of members that would be removed in a prune given `days`.
-
-  This endpoint requires the `KICK_MEMBERS` permission.
-
-  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_guild_prune_count(81384788765712384, 1)
-  {:ok, %{pruned: 0}}
-
-  """
-
-  @spec get_guild_prune_count(Guild.id(), 1..30) :: error | {:ok, %{pruned: integer}}
-  def get_guild_prune_count(guild_id, days) when is_snowflake(guild_id) and days in 1..30 do
-    request(:get, Endpoints.guild_prune(guild_id), "", params: [days: days])
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Begins a guild prune to prune members within `days`.
-
-  An optional `reason` can be provided for the guild audit log.
-
-  This endpoint requires the `KICK_MEMBERS` permission. It fires multiple
-  `t:Remedy.Consumer.guild_member_remove/0` events.
-
-  If successful, returns `{:ok, %{pruned: pruned}}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.begin_guild_prune(81384788765712384, 1)
-  {:ok, %{pruned: 0}}
-
-  """
-
-  @spec begin_guild_prune(Guild.id(), 1..30, AuditLogEntry.reason()) ::
-          error | {:ok, %{pruned: integer}}
-  def begin_guild_prune(guild_id, days, reason \\ nil)
-      when is_snowflake(guild_id) and days in 1..30 do
-    %{
-      method: :post,
-      route: Endpoints.guild_prune(guild_id),
-      body: "",
-      options: [params: [days: days]],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets a list of voice regions for the guild.
-
-  Guild to get voice regions for is specified by `guild_id`.
-  """
-
-  @spec get_voice_region(integer) :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
-  def get_voice_region(guild_id) do
-    request(:get, Endpoints.guild_voice_regions(guild_id))
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets a list of invites for a guild.
-
-  This endpoint requires the `MANAGE_GUILD` permission.
-
-  If successful, returns `{:ok, invites}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_guild_invites(81384788765712384)
-  {:ok, [%Remedy.Struct.Invite{} | _]}
-
-  """
-
-  @spec get_guild_invites(Guild.id()) :: error | {:ok, [Invite.detailed_invite()]}
-  def get_guild_invites(guild_id) when is_snowflake(guild_id) do
-    request(:get, Endpoints.guild_invites(guild_id))
-    |> handle_request_with_decode({:list, {:struct, Invite}})
-  end
-
-  @doc """
-  Gets a list of guild integerations.
-
-  Guild to get integrations for is specified by `guild_id`.
-  """
-
-  @spec get_guild_integrations(Guild.id()) ::
-          error | {:ok, [Remedy.Struct.Guild.Integration.t()]}
-  def get_guild_integrations(guild_id) do
-    request(:get, Endpoints.guild_integrations(guild_id))
-    |> handle_request_with_decode
-  end
-
-  @doc """
   Creates a new guild integeration.
 
   Guild to create integration with is specified by `guild_id`.
@@ -2501,200 +2379,6 @@ defmodule Remedy.API do
   end
 
   @doc """
-  Deletes a guild integeration.
-
-  Integration to delete is specified by `guild_id` and `integeration_id`.
-  """
-
-  @spec delete_guild_integrations(integer, integer) :: error | {:ok}
-  def delete_guild_integrations(guild_id, integration_id) do
-    request(:delete, Endpoints.guild_integration(guild_id, integration_id))
-  end
-
-  @doc """
-  Syncs a guild integration.
-
-  Integration to sync is specified by `guild_id` and `integeration_id`.
-  """
-
-  @spec sync_guild_integrations(integer, integer) :: error | {:ok}
-  def sync_guild_integrations(guild_id, integration_id) do
-    request(:post, Endpoints.guild_integration_sync(guild_id, integration_id))
-  end
-
-  @doc """
-  Gets a guild embed.
-  """
-
-  @spec get_guild_embed(integer) :: error | {:ok, map}
-  def get_guild_embed(guild_id) do
-    request(:get, Endpoints.guild_embed(guild_id))
-  end
-
-  @doc """
-  Modifies a guild embed.
-  """
-
-  @spec modify_guild_embed(integer, map) :: error | {:ok, map}
-  def modify_guild_embed(guild_id, options) do
-    request(:patch, Endpoints.guild_embed(guild_id), options)
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets an invite by its `invite_code`.
-
-  If successful, returns `{:ok, invite}`. Otherwise, returns a
-  `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:with_counts` (boolean) - whether to include member count fields
-
-  ## Examples
-
-      iex>
-  Remedy.API.get_invite("zsjUsC")
-
-  Remedy.API.get_invite("zsjUsC", with_counts: true)
-
-  """
-
-  @spec get_invite(Invite.code(), options) :: error | {:ok, Invite.simple_invite()}
-  def get_invite(invite_code, options \\ []) when is_binary(invite_code) do
-    request(:get, Endpoints.invite(invite_code), "", params: options)
-    |> handle_request_with_decode({:struct, Invite})
-  end
-
-  @doc """
-  Deletes an invite by its `invite_code`.
-
-  This endpoint requires the `MANAGE_CHANNELS` permission.
-
-  If successful, returns `{:ok, invite}`. Otherwise, returns a
-  `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.delete_invite("zsjUsC")
-
-  """
-
-  @spec delete_invite(Invite.code()) :: error | {:ok, Invite.simple_invite()}
-  def delete_invite(invite_code) when is_binary(invite_code) do
-    request(:delete, Endpoints.invite(invite_code))
-    |> handle_request_with_decode({:struct, Invite})
-  end
-
-  @doc """
-  Gets a user by its `t:Remedy.Struct.User.id/0`.
-
-  If the request is successful, this function returns `{:ok, user}`, where
-  `user` is a `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
-  """
-
-  @spec get_user(User.id()) :: error | {:ok, User.t()}
-  def get_user(user_id) do
-    request(:get, Endpoints.user(user_id))
-    |> handle_request_with_decode({:struct, User})
-  end
-
-  @doc """
-  Gets info on the current user.
-
-  If remedy's caching is enabled, it is recommended to use `Bot.get/0`
-  instead of this function. This is because sending out an API request is much slower
-  than pulling from our cache.
-
-  If the request is successful, this function returns `{:ok, user}`, where
-  `user` is remedy's `Remedy.Struct.User`. Otherwise, returns `{:error, reason}`.
-  """
-
-  @spec get_current_user() :: error | {:ok, User.t()}
-  def get_current_user do
-    request(:get, Endpoints.me())
-    |> handle_request_with_decode({:struct, User})
-  end
-
-  @doc """
-  Changes the username or avatar of the current user.
-
-  ## Options
-
-    * `:username` (string) - new username
-    * `:avatar` (string) - the user's avatar as [avatar data](https://discord.com/developers/docs/resources/user#avatar-data)
-
-  ## Examples
-
-      iex>
-  Remedy.API.modify_current_user(avatar: "data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=")
-
-  """
-
-  @spec modify_current_user(options) :: error | {:ok, User.t()}
-  def modify_current_user(options)
-
-  def modify_current_user(options) when is_list(options),
-    do: modify_current_user(Map.new(options))
-
-  def modify_current_user(%{} = options) do
-    request(:patch, Endpoints.me(), options)
-    |> handle_request_with_decode({:struct, User})
-  end
-
-  @doc """
-  Gets a list of guilds the user is currently in.
-
-  This endpoint requires the `guilds` OAuth2 scope.
-
-  If successful, returns `{:ok, guilds}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Options
-
-    * `:before` (`t:Sunbake.Snowflake.t/0`) - get guilds before this
-    guild ID
-    * `:after` (`t:Sunbake.Snowflake.t/0`) - get guilds after this guild
-    ID
-    * `:limit` (integer) - max number of guilds to return (1-100)
-
-  ## Examples
-
-      iex>
-  iex> Remedy.API.get_current_user_guilds(limit: 1)
-  {:ok, [%Remedy.Struct.Guild{}]}
-
-  """
-
-  @spec get_current_user_guilds(options) :: error | {:ok, [Guild.user_guild()]}
-  def get_current_user_guilds(options \\ [])
-
-  def get_current_user_guilds(options) when is_list(options),
-    do: get_current_user_guilds(Map.new(options))
-
-  def get_current_user_guilds(options) when is_map(options) do
-    request(:get, Endpoints.me_guilds(), "", params: options)
-    |> handle_request_with_decode({:list, {:struct, Guild}})
-  end
-
-  @doc """
-  Leaves a guild.
-
-  Guild to leave is specified by `guild_id`.
-  """
-
-  @spec leave_guild(integer) :: error | {:ok}
-  def leave_guild(guild_id) do
-    request(%{
-      method: :delete,
-      route: Endpoints.me_guild(guild_id),
-      body: "",
-      options: [],
-      headers: []
-    })
-  end
-
-  @doc """
   Gets a list of our user's DM channels.
 
   If successful, returns `{:ok, dm_channels}`. Otherwise, returns a `t:Remedy.API.error/0`.
@@ -2713,685 +2397,6 @@ defmodule Remedy.API do
     |> handle_request_with_decode({:list, {:struct, Channel}})
   end
 
-  @doc """
-  Create a new DM channel with a user.
-
-  If successful, returns `{:ok, dm_channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  ## Examples
-
-      iex>
-  Remedy.API.create_dm(150061853001777154)
-  {:ok, %Remedy.Struct.Channel{type: 1}}
-
-  """
-
-  @spec create_dm(User.id()) :: error | {:ok, Channel.dm_channel()}
-  def create_dm(user_id) when is_snowflake(user_id) do
-    request(:post, Endpoints.me_channels(), %{recipient_id: user_id})
-    |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc """
-  Creates a new group DM channel.
-
-  If successful, returns `{:ok, group_dm_channel}`. Otherwise, returns a `t:Remedy.API.error/0`.
-
-  `access_tokens` are user oauth2 tokens. `nicks` is a map that maps a user id
-  to a nickname.
-
-  ## Examples
-
-      iex>
-  Remedy.API.create_group_dm(["6qrZcUqja7812RVdnEKjpzOL4CvHBFG"], %{41771983423143937 => "My Nickname"})
-  {:ok, %Remedy.Struct.Channel{type: 3}}
-
-  """
-
-  @spec create_group_dm([String.t()], %{optional(User.id()) => String.t()}) ::
-          error | {:ok, Channel.group_dm_channel()}
-  def create_group_dm(access_tokens, nicks) when is_list(access_tokens) and is_map(nicks) do
-    request(:post, Endpoints.me_channels(), %{access_tokens: access_tokens, nicks: nicks})
-    |> handle_request_with_decode({:struct, Channel})
-  end
-
-  @doc """
-  Gets a list of user connections.
-  """
-
-  @spec get_user_connections() :: error | {:ok, list()}
-  def get_user_connections do
-    request(:get, Endpoints.me_connections())
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets a list of voice regions.
-  """
-
-  @spec list_voice_regions() :: error | {:ok, [Remedy.Struct.VoiceRegion.t()]}
-  def list_voice_regions do
-    request(:get, Endpoints.regions())
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Creates a webhook.
-
-  ## Parameters
-    - `channel_id` - Id of the channel to send the message to.
-    - `args` - Map with the following **required** keys:
-      - `name` - Name of the webhook.
-      - `avatar` - Base64 128x128 jpeg image for the default avatar.
-    - `reason` - An optional reason for the guild audit log.
-  """
-
-  @spec create_webhook(
-          Channel.id(),
-          %{
-            name: String.t(),
-            avatar: String.t()
-          },
-          AuditLogEntry.reason()
-        ) :: error | {:ok, Remedy.Struct.Webhook.t()}
-  def create_webhook(channel_id, args, reason \\ nil) do
-    %{
-      method: :post,
-      route: Endpoints.webhooks_channel(channel_id),
-      body: args,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets a list of webook for a channel.
-
-  ## Parameters
-    - `channel_id` - Channel to get webhooks for.
-  """
-
-  @spec get_channel_webhooks(Channel.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
-  def get_channel_webhooks(channel_id) do
-    request(:get, Endpoints.webhooks_channel(channel_id))
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets a list of webooks for a guild.
-
-  ## Parameters
-    - `guild_id` - Guild to get webhooks for.
-  """
-
-  @spec get_guild_webhooks(Guild.id()) :: error | {:ok, [Remedy.Struct.Webhook.t()]}
-  def get_guild_webhooks(guild_id) do
-    request(:get, Endpoints.webhooks_guild(guild_id))
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets a webhook by id.
-
-  ## Parameters
-    - `webhook_id` - Id of the webhook to get.
-  """
-
-  @spec get_webhook(Webhook.id()) :: error | {:ok, Remedy.Struct.Webhook.t()}
-  def get_webhook(webhook_id) do
-    request(:get, Endpoints.webhook(webhook_id))
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Gets a webhook by id and token.
-
-  This method is exactly like `get_webhook/1` but does not require
-  authentication.
-
-  ## Parameters
-    - `webhook_id` - Id of the webhook to get.
-    - `webhook_token` - Token of the webhook to get.
-  """
-
-  @spec get_webhook_with_token(Webhook.id(), Webhook.token()) ::
-          error | {:ok, Remedy.Struct.Webhook.t()}
-  def get_webhook_with_token(webhook_id, webhook_token) do
-    request(:get, Endpoints.webhook_token(webhook_id, webhook_token))
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Modifies a webhook.
-
-  ## Parameters
-    - `webhook_id` - Id of the webhook to modify.
-    - `args` - Map with the following *optional* keys:
-      - `name` - Name of the webhook.
-      - `avatar` - Base64 128x128 jpeg image for the default avatar.
-    - `reason` - An optional reason for the guild audit log.
-  """
-
-  @spec modify_webhook(
-          Webhook.id(),
-          %{
-            name: String.t(),
-            avatar: String.t()
-          },
-          AuditLogEntry.reason()
-        ) :: error | {:ok, Remedy.Struct.Webhook.t()}
-  def modify_webhook(webhook_id, args, reason \\ nil) do
-    %{
-      method: :patch,
-      route: Endpoints.webhook(webhook_id),
-      body: args,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Modifies a webhook with a token.
-
-  This method is exactly like `modify_webhook/1` but does not require
-  authentication.
-
-  ## Parameters
-    - `webhook_id` - Id of the webhook to modify.
-    - `webhook_token` - Token of the webhook to get.
-    - `args` - Map with the following *optional* keys:
-      - `name` - Name of the webhook.
-      - `avatar` - Base64 128x128 jpeg image for the default avatar.
-    - `reason` - An optional reason for the guild audit log.
-  """
-
-  @spec modify_webhook_with_token(
-          Webhook.id(),
-          Webhook.token(),
-          %{
-            name: String.t(),
-            avatar: String.t()
-          },
-          AuditLogEntry.reason()
-        ) :: error | {:ok, Remedy.Struct.Webhook.t()}
-  def modify_webhook_with_token(webhook_id, webhook_token, args, reason \\ nil) do
-    %{
-      method: :patch,
-      route: Endpoints.webhook_token(webhook_id, webhook_token),
-      body: args,
-      options: [],
-      headers: maybe_add_reason(reason)
-    }
-    |> request()
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Deletes a webhook.
-
-  ## Parameters
-    - `webhook_id` - Id of webhook to delete.
-    - `reason` - An optional reason for the guild audit log.
-  """
-
-  @spec delete_webhook(Webhook.id(), AuditLogEntry.reason()) :: error | {:ok}
-  def delete_webhook(webhook_id, reason \\ nil) do
-    request(%{
-      method: :delete,
-      route: Endpoints.webhook(webhook_id),
-      body: "",
-      options: [],
-      headers: maybe_add_reason(reason)
-    })
-  end
-
-  @spec execute_webhook(
-          Webhook.id() | User.id(),
-          Webhook.token() | Interaction.token(),
-          %{
-            optional(:content) => String.t() | nil,
-            :username => String.t(),
-            :avatar_url => String.t(),
-            :tts => boolean,
-            required(:file) => String.t(),
-            optional(:embeds) => nonempty_list(Embed.t()) | nil
-          }
-          | %{
-              optional(:content) => String.t() | nil,
-              :username => String.t(),
-              :avatar_url => String.t(),
-              :tts => boolean,
-              optional(:file) => String.t() | nil,
-              required(:embeds) => nonempty_list(Embed.t())
-            }
-          | %{
-              required(:content) => String.t(),
-              :username => String.t(),
-              :avatar_url => String.t(),
-              :tts => boolean,
-              optional(:file) => String.t() | nil,
-              optional(:embeds) => nonempty_list(Embed.t()) | nil
-            },
-          boolean
-        ) ::
-          error | {:ok}
-
-  @doc """
-   Executes a webhook.
-
-   ## Parameters
-   - `webhook_id` - Id of the webhook to execute.
-   - `webhook_token` - Token of the webhook to execute.
-   - `args` - Map with the following required keys:
-     - `content` - Message content.
-     - `file` - File to send.
-     - `embeds` - List of embeds to send.
-     - `username` - Overrides the default name of the webhook.
-     - `avatar_url` - Overrides the default avatar of the webhook.
-     - `tts` - Whether the message should be read over text to speech.
-   - `wait` - Whether to return an error or not. Defaults to `false`.
-
-   Only one of `content`, `file` or `embeds` should be supplied in the `args` parameter.
-  """
-
-  def execute_webhook(webhook_id, webhook_token, args, wait \\ false)
-
-  def execute_webhook(webhook_id, webhook_token, %{file: _} = args, wait) do
-    request_multipart(
-      :post,
-      Endpoints.webhook_token(webhook_id, webhook_token),
-      args,
-      params: [wait: wait]
-    )
-  end
-
-  def execute_webhook(webhook_id, webhook_token, %{content: _} = args, wait) do
-    request(
-      :post,
-      Endpoints.webhook_token(webhook_id, webhook_token),
-      args,
-      params: [wait: wait]
-    )
-  end
-
-  @doc """
-  Executes a slack webhook.
-
-  ## Parameters
-    - `webhook_id` - Id of the webhook to execute.
-    - `webhook_token` - Token of the webhook to execute.
-  """
-
-  @spec execute_slack_webhook(Webhook.id(), Webhook.token(), boolean) :: error | {:ok}
-  def execute_slack_webhook(webhook_id, webhook_token, wait \\ false) do
-    request(:post, Endpoints.webhook_slack(webhook_id, webhook_token), params: [wait: wait])
-  end
-
-  @doc """
-  Executes a git webhook.
-
-  ## Parameters
-    - `webhook_id` - Id of the webhook to execute.
-    - `webhook_token` - Token of the webhook to execute.
-  """
-
-  @spec execute_git_webhook(Webhook.id(), Webhook.token(), boolean) :: error | {:ok}
-  def execute_git_webhook(webhook_id, webhook_token, wait \\ false) do
-    request(:post, Endpoints.webhook_git(webhook_id, webhook_token), params: [wait: wait])
-  end
-
-  @doc """
-  Gets the bot's OAuth2 application info.
-
-  ## Example
-      iex>
-  Remedy.API.get_application_information
-  {:ok,
-  %{
-    bot_public: false,
-    bot_require_code_grant: false,
-    description: "Test",
-    icon: nil,
-    id: "172150183260323840",
-    name: "Baba O-Riley",
-    owner: %{
-      avatar: nil,
-      discriminator: "0042",
-      id: "172150183260323840",
-      username: "i own a bot"
-    },
-  }}
-
-  """
-
-  @spec get_application_information() :: error | {:ok, map()}
-  def get_application_information do
-    request(:get, Endpoints.application_information())
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Fetch all global commands.
-
-  ## Parameters
-  - `application_id`: Application ID for which to search commands.
-    If not given, this will be fetched from `Me`.
-
-  ## Return value
-  A list of ``ApplicationCommand``s on success. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#applicationcommand
-
-  ## Example
-
-      iex>
-  iex> Remedy.API.get_global_application_commands
-  {:ok,
-   [
-     %{
-       application_id: "455589479713865749",
-       description: "ed, man! man, ed",
-       id: "789841753196331029",
-       name: "edit"
-     }
-   ]}
-
-  """
-
-  @spec get_global_application_commands() :: {:ok, [map()]} | error
-  @spec get_global_application_commands(User.id()) :: {:ok, [map()]} | error
-  def get_global_application_commands(application_id \\ Cache.bot().id) do
-    request(:get, Endpoints.global_application_commands(application_id))
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Create a new global application command.
-
-  The new command will be available on all guilds in around an hour.
-  If you want to test commands, use `create_guild_application_command/2` instead,
-  as commands will become available instantly there.
-  If an existing command with the same name exists, it will be overwritten.
-
-  ## Parameters
-  - `application_id`: Application ID for which to create the command.
-    If not given, this will be fetched from `Me`.
-  - `command`: Command configuration, see the linked API documentation for reference.
-
-  ## Return value
-  The created command. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#create-global-application-command
-
-  ## Example
-
-      iex>
-  Remedy.API.create_application_command(
-    %{name: "edit", description: "ed, man! man, ed", options: []}
-  )
-
-  """
-
-  @spec create_global_application_command(map()) :: {:ok, map()} | error
-  @spec create_global_application_command(User.id(), map()) :: {:ok, map()} | error
-  def create_global_application_command(application_id \\ Cache.bot().id, command) do
-    request(:post, Endpoints.global_application_commands(application_id), command)
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Update an existing global application command.
-
-  The updated command will be available on all guilds in around an hour.
-
-  ## Parameters
-  - `application_id`: Application ID for which to edit the command.
-    If not given, this will be fetched from `Me`.
-  - `command_id`: The current snowflake of the command.
-  - `command`: Command configuration, see the linked API documentation for reference.
-
-  ## Return value
-  The updated command. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#edit-global-application-command
-  """
-
-  @spec edit_global_application_command(Snowflake.t(), map()) :: {:ok, map()} | error
-  @spec edit_global_application_command(User.id(), Snowflake.t(), map()) :: {:ok, map()} | error
-  def edit_global_application_command(
-        application_id \\ Cache.bot().id,
-        command_id,
-        command
-      ) do
-    request(:patch, Endpoints.global_application_command(application_id, command_id), command)
-    |> handle_request_with_decode
-  end
-
-  @doc """
-  Delete an existing global application command.
-
-  ## Parameters
-  - `application_id`: Application ID for which to create the command.
-    If not given, this will be fetched from `Me`.
-  - `command_id`: The current snowflake of the command.
-  """
-
-  @spec delete_global_application_command(Snowflake.t()) :: {:ok} | error
-  @spec delete_global_application_command(User.id(), Snowflake.t()) :: {:ok} | error
-  def delete_global_application_command(application_id \\ Cache.bot().id, command_id) do
-    request(:delete, Endpoints.global_application_command(application_id, command_id))
-  end
-
-  @doc """
-  Overwrite the existing global application commands.
-
-  This action will:
-  - Create any command that was provided and did not already exist
-  - Update any command that was provided and already existed if its configuration changed
-  - Delete any command that was not provided but existed on Discord's end
-
-  Updates will be available in all guilds after 1 hour.
-  Commands that do not already exist will count toward daily application command create limits.
-
-  ## Parameters
-  - `application_id`: Application ID for which to overwrite the commands.
-    If not given, this will be fetched from `Me`.
-  - `commands`: List of command configurations, see the linked API documentation for reference.
-
-  ## Return value
-  Updated list of global application commands. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-global-application-commands
-  """
-
-  @doc since: "0.5.0"
-  @spec bulk_overwrite_global_application_commands([map()]) :: {:ok, [map()]} | error
-  @spec bulk_overwrite_global_application_commands(User.id(), [map()]) :: {:ok, [map()]} | error
-  def bulk_overwrite_global_application_commands(application_id \\ Cache.bot().id, commands) do
-    request(:put, Endpoints.global_application_commands(application_id), commands)
-    |> handle_request_with_decode
-  end
-
-  @spec get_guild_application_commands(Guild.id()) :: {:ok, [map()]} | error
-  @spec get_guild_application_commands(User.id(), Guild.id()) :: {:ok, [map()]} | error
-  def get_guild_application_commands(application_id \\ Cache.bot().id, guild_id) do
-    request(:get, Endpoints.guild_application_commands(application_id, guild_id))
-    |> handle_request_with_decode
-  end
-
-  @spec create_guild_application_command(Guild.id(), map()) :: {:ok, map()} | error
-  @spec create_guild_application_command(User.id(), Guild.id(), map()) :: {:ok, map()} | error
-  def create_guild_application_command(
-        application_id \\ Cache.bot().id,
-        guild_id,
-        command
-      ) do
-    request(:post, Endpoints.guild_application_commands(application_id, guild_id), command)
-    |> handle_request_with_decode
-  end
-
-  @spec edit_guild_application_command(Guild.id(), Snowflake.t(), map()) :: {:ok, map()} | error
-  @spec edit_guild_application_command(User.id(), Guild.id(), Snowflake.t(), map()) ::
-          {:ok, map()} | error
-  def edit_guild_application_command(
-        application_id \\ Cache.bot().id,
-        guild_id,
-        command_id,
-        command
-      ) do
-    request(
-      :patch,
-      Endpoints.guild_application_command(application_id, guild_id, command_id),
-      command
-    )
-    |> handle_request_with_decode
-  end
-
-  @spec delete_guild_application_command(User.id(), Guild.id(), Snowflake.t()) :: {:ok} | error
-  def delete_guild_application_command(
-        application_id \\ Cache.bot().id,
-        guild_id,
-        command_id
-      ) do
-    request(:delete, Endpoints.guild_application_command(application_id, guild_id, command_id))
-  end
-
-  @doc """
-  Overwrite the existing guild application commands on the specified guild.
-
-  This action will:
-  - Create any command that was provided and did not already exist
-  - Update any command that was provided and already existed if its configuration changed
-  - Delete any command that was not provided but existed on Discord's end
-
-  ## Parameters
-  - `application_id`: Application ID for which to overwrite the commands.
-    If not given, this will be fetched from `Me`.
-  - `guild_id`: Guild on which to overwrite the commands.
-  - `commands`: List of command configurations, see the linked API documentation for reference.
-
-  ## Return value
-  Updated list of guild application commands. See the official reference:
-  https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-guild-application-commands
-  """
-
-  @doc since: "0.5.0"
-  @spec bulk_overwrite_guild_application_commands(Guild.id(), [map()]) :: {:ok, [map()]} | error
-  @spec bulk_overwrite_guild_application_commands(User.id(), Guild.id(), [map()]) ::
-          {:ok, [map()]} | error
-  def bulk_overwrite_guild_application_commands(
-        application_id \\ Cache.bot().id,
-        guild_id,
-        commands
-      ) do
-    request(:put, Endpoints.guild_application_commands(application_id, guild_id), commands)
-    |> handle_request_with_decode
-  end
-
-  # Why the two separate functions here?
-  # For the standard use case of "responding to an interaction retrieved
-  # from the gateway", `create_interaction_response/2` is perfectly
-  # sufficient. However, when one, for instance, uses Remedy in a web
-  # service, or wants to respond to interactions at a later point in time,
-  # we do not want the user to manually have to reconstruct interactions.
-  @doc """
-  Same as `create_interaction_response/3`, but directly takes the
-  `t:Remedy.Struct.Interaction.t/0` received from the gateway.
-  """
-
-  @spec create_interaction_response(Interaction.t(), map()) :: {:ok} | error
-  def create_interaction_response(interaction, response) do
-    create_interaction_response(interaction.id, interaction.token, response)
-  end
-
-  @doc """
-  Create a response to an interaction received from the gateway.
-
-  ## Parameters
-  - `id`: The interaction ID to which the response should be created.
-  - `token`: The interaction token.
-  - `response`: An [`InteractionResponse`](https://discord.com/developers/docs/interactions/slash-commands#interaction-interaction-response)
-    object. See the linked documentation.
-
-  ## Example
-
-      iex>
-  response = %{
-    type: 4,
-    data: %{
-      content: "I copy and pasted this code."
-    }
-  }
-  Remedy.API.create_interaction_response(interaction, response)
-
-
-  As an alternative to passing the interaction ID and token, the
-  original `t:Remedy.Struct.Interaction.t/0` can also be passed
-  directly. See `create_interaction_response/1`.
-  """
-
-  @spec create_interaction_response(Interaction.id(), Interaction.token(), map()) :: {:ok} | error
-  def create_interaction_response(id, token, response) do
-    request(:post, Endpoints.interaction_callback(id, token), response)
-  end
-
-  # edit original interaction response is purposefully not implemented
-  # at the moment, waiting for "edit webhook message" first
-
-  @doc """
-  Create a followup message for an interaction.
-
-  Delegates to ``execute_webhook/3``, see the function for more details.
-  """
-
-  @spec create_followup_message(Interaction.token(), map()) :: {:ok} | error
-  @spec create_followup_message(User.id(), Interaction.token(), map()) :: {:ok} | error
-  def create_followup_message(application_id \\ Cache.bot().id, token, webhook_payload) do
-    execute_webhook(application_id, token, webhook_payload)
-  end
-
-  @doc """
-  Delete a followup message for an interaction.
-
-  ## Parameters
-  - `application_id`: Application ID for which to create the command.
-    If not given, this will be fetched from `Me`.
-  - `token`: Interaction token.
-  - `message_id`: Followup message ID.
-  """
-
-  @spec delete_interaction_followup_message(Interaction.token(), Message.id()) :: {:ok} | error
-  @spec delete_interaction_followup_message(User.id(), Interaction.token(), Message.id()) ::
-          {:ok} | error
-  def delete_interaction_followup_message(
-        application_id \\ Cache.bot().id,
-        token,
-        message_id
-      ) do
-    request(:delete, Endpoints.interaction_followup_message(application_id, token, message_id))
-  end
-
-  @doc false
-  def get_gateway_bot do
-    case request(:get, Endpoints.gateway_bot()) do
-      {:error, %{status_code: 401}} ->
-        raise("Authentication rejected, invalid token")
-
-      {:ok, body} ->
-        body = Jason.decode!(body)
-
-        "wss://" <> url = body["url"]
-        shards = if body["shards"], do: body["shards"], else: 1
-
-        opts = [
-          {:url, url},
-          {:shards, shards}
-        ]
-
-        Remedy.Cache.DiscordGateway.update(opts)
-    end
-  end
-
   @spec maybe_add_reason(String.t() | nil) :: list()
   defp maybe_add_reason(reason) do
     maybe_add_reason(reason, [{"content-type", "application/json"}])
@@ -3408,22 +2413,6 @@ defmodule Remedy.API do
 
   defp request_multipart(method, route, body, options) do
     Rest.request_multipart(method, route, body, options)
-  end
-
-  defp handle_request_with_decode(response)
-  defp handle_request_with_decode({:ok, body}), do: {:ok, Jason.decode!(body)}
-  defp handle_request_with_decode({:error, _} = error), do: error
-
-  defp handle_request_with_decode(response, type)
-  defp handle_request_with_decode({:ok}, _type), do: {:ok}
-  defp handle_request_with_decode({:error, _} = error, _type), do: error
-
-  defp handle_request_with_decode({:ok, body}, _type) do
-    convert =
-      body
-      |> Jason.decode!(keys: :atoms)
-
-    {:ok, convert}
   end
 
   defp prepare_allowed_mentions(options) do

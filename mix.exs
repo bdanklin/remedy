@@ -104,7 +104,7 @@ defmodule Remedy.MixProject do
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.15", only: [:dev]},
       {:recon, "~> 2.3", only: [:dev]},
-      {:mix_unused, "~> 0.1.0", only: [:dev]},
+      {:mix_unused, "~> 0.2.0", only: [:dev]},
       {:unsafe, "~> 1.0"},
       {:ex_rated, "~> 2.0"},
       {:jason, "~> 1.2"},

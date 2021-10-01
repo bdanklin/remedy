@@ -4,31 +4,51 @@ defmodule Remedy.Schema.App do
   """
   use Remedy.Schema
 
+  @type name :: String.t()
+  @type icon :: String.t()
+  @type description :: String.t()
+  @type rpc_origins :: [String.t()]
+  @type bot_public :: boolean()
+  @type bot_require_code_grant :: boolean()
+  @type terms_of_service_url :: String.t()
+  @type privacy_policy_url :: String.t()
+  @type cover_image :: String.t()
+  @type flags :: integer()
+  @type summary :: String.t()
+  @type verify_key :: String.t()
+  @type owner :: User.t()
+  @type team :: Team.t()
+  @type guild_id :: Guild.t()
+  @type primary_sku_id :: Snowflake.t()
+  @type slug :: String.t()
+  @type hook :: boolean()
+
   @type t :: %__MODULE__{
-          name: String.t(),
-          icon: String.t(),
-          description: String.t(),
-          rpc_origins: [String.t()],
-          bot_public: boolean(),
-          bot_require_code_grant: boolean(),
-          terms_of_service_url: String.t(),
-          privacy_policy_url: String.t(),
-          cover_image: String.t(),
-          flags: integer(),
-          summary: String.t(),
-          verify_key: String.t(),
-          owner: User.t(),
-          team: Team.t(),
-          guild_id: Guild.t(),
-          primary_sku_id: Snowflake.t(),
-          slug: String.t()
+          name: name,
+          icon: icon,
+          description: description,
+          rpc_origins: rpc_origins,
+          bot_public: bot_public,
+          bot_require_code_grant: bot_require_code_grant,
+          terms_of_service_url: terms_of_service_url,
+          privacy_policy_url: privacy_policy_url,
+          owner: owner,
+          summary: summary,
+          verify_key: verify_key,
+          team: team,
+          guild_id: guild_id,
+          primary_sku_id: primary_sku_id,
+          slug: slug,
+          cover_image: cover_image,
+          flags: flags,
+          hook: hook
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "applications" do
     field :name, :string
     field :icon, :string
-    field :description, :string
+    field :description, :string, optional: true
     field :rpc_origins, {:array, :string}
     field :bot_public, :boolean
     field :bot_require_code_grant, :boolean
@@ -38,9 +58,10 @@ defmodule Remedy.Schema.App do
     field :flags, :integer
     field :summary, :string
     field :verify_key, :string
+    field :hook, :boolean
 
-    belongs_to :owner, User
-    belongs_to :team, Team
+    embeds_one :owner, User
+    embeds_one :team, Team
     belongs_to :guild, Guild
     field :primary_sku_id, Snowflake
     field :slug, :string
@@ -49,32 +70,20 @@ defmodule Remedy.Schema.App do
   def new(params) do
     params
     |> changeset()
-    |> validate()
     |> apply_changes()
   end
 
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
-  def validate(changeset), do: changeset
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
-  end
-
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
-
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end

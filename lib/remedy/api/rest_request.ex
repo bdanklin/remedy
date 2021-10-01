@@ -21,9 +21,8 @@ defmodule Remedy.API.RestRequest do
     :body,
     opts: %{},
     headers: [
-      {"authorization", "Bot #{Application.get_env(:remedy, :token)}"},
-      {"user-agent",
-       "DiscordBot (https://github.com/bdanklin/remedy, #{Application.spec(:remedy)[:vsn]})"}
+      {"Authorization", "Bot #{Application.get_env(:remedy, :token)}"},
+      {"User-Agent", "DiscordBot (https://github.com/bdanklin/remedy, 0.6.0)"}
     ]
   ]
 end

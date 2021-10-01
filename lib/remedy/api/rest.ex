@@ -54,6 +54,14 @@ defmodule Remedy.API.Rest do
   alias Remedy.API.{RestRequest, RestResponse, Ratelimiter}
   alias Remedy.Gun
 
+  def handle_info({:gun_error, _conn, _stream, {what, why, reason}}, state) do
+    what = what |> to_string() |> String.upcase()
+    why = why |> to_string() |> String.upcase()
+
+    Logger.warn("GUN ERROR: #{what}, #{why} #{reason}")
+    {:noreply, state}
+  end
+
   def handle_info({:gun_down, _conn, _proto, _reason, _killed_streams}, state) do
     {:noreply, state}
   end
@@ -81,11 +89,12 @@ defmodule Remedy.API.Rest do
 
   ## Poorly formed request
   defp process_response(
-         {:ok, %RestResponse{body: %{code: code, message: message}, status: 403}},
+         {:ok, %RestResponse{body: %{code: code, message: message}, status: status}},
          %RestRequest{}
-       ) do
+       )
+       when status in [401, 403, 429] do
     Logger.info("REQUEST REJECTED: #{message}")
-    {:error, {code, message}}
+    {:error, {status, code, message}}
   end
 
   ## A-OK

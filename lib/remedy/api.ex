@@ -32,7 +32,7 @@ defmodule Remedy.API do
     only: [is_snowflake: 1],
     warn: false
 
-  alias Remedy.API.{Rest, Endpoints}
+  alias Remedy.API.Rest
 
   alias Remedy.Schema.{
     AuditLog,
@@ -147,12 +147,12 @@ defmodule Remedy.API do
   def get_guild_audit_log(guild_id, opts) when is_snowflake(guild_id) do
     {:get, "/guilds/#{guild_id}/audit-logs"}
     |> request(%{}, opts, nil)
-    |> parse_guild_audit_log()
+    |> parse_get_guild_audit_log()
   end
 
-  defp parse_guild_audit_log({:error, _reason} = error), do: error
+  defp parse_get_guild_audit_log({:error, _reason} = error), do: error
 
-  defp parse_guild_audit_log({:ok, %{users: _users, threads: _threads} = audit_log}),
+  defp parse_get_guild_audit_log({:ok, %{users: _users, threads: _threads} = audit_log}),
     do: {:ok, audit_log |> AuditLog.new()}
 
   ###################################################################################
@@ -230,8 +230,18 @@ defmodule Remedy.API do
   """
 
   def modify_channel(channel_id, reason) do
+    body = %{name: "Desk Enthusiasts Only"}
+
     {:patch, "/channels/#{channel_id}"}
     |> request(body, reason)
+    |> parse_modify_channel()
+  end
+
+  defp parse_modify_channel({:error, _reason} = error), do: error
+  defp parse_modify_channel({:ok, %{id: nil}}), do: {:error, "Request Failed"}
+
+  defp parse_modify_channel({:ok, %{id: _id} = channel}) do
+    {:ok, channel |> Channel.new()}
   end
 
   @doc """
@@ -2225,15 +2235,27 @@ defmodule Remedy.API do
     request(rest_request, %{}, nil, nil)
   end
 
-  def request({_, _} = rest_request, body) do
-    request(rest_request, %{}, nil, nil)
+  def request({_, _} = rest_request, params) when is_list(params) do
+    request(rest_request, %{}, params, nil)
+  end
+
+  def request({_, _} = rest_request, body) when is_map(body) do
+    request(rest_request, body, nil, nil)
+  end
+
+  def request({_, _} = rest_request, body, nil) do
+    request(rest_request, body)
+  end
+
+  def request({_, _} = rest_request, body, reason) do
+    request(rest_request, body, nil, reason)
   end
 
   defp request(rest_request, body, params, reason_header) do
     rest_request
     |> base_request()
     |> add_request_query_params(params)
-    |> add_request_headers(reason_header)
+    |> add_request_audit_log_headers(reason_header)
     |> add_request_body(body)
     |> handle_request()
   end
@@ -2250,10 +2272,10 @@ defmodule Remedy.API do
     %RestRequest{request | route: "/api/v9" <> route <> "?" <> URI.encode_query(params)}
   end
 
-  defp add_request_headers(%RestRequest{} = request, nil), do: request
+  defp add_request_audit_log_headers(%RestRequest{} = request, nil), do: request
 
-  defp add_request_headers(%RestRequest{} = request, headers) do
-    %RestRequest{request | headers: headers}
+  defp add_request_audit_log_headers(%RestRequest{} = request, reason) do
+    %RestRequest{request | headers: [{"X-Audit-Log-Reason", reason |> URI.encode()}]}
   end
 
   ## MULTIPART
@@ -2268,13 +2290,13 @@ defmodule Remedy.API do
             [{"tts", body[:tts]}]
           }
         ],
-        headers: headers ++ [{"content-type", "multipart/form-data"}]
+        headers: [{"content-type", "multipart/form-data"}] ++ headers
     }
   end
 
   ## JSON
   defp add_request_body(%RestRequest{headers: headers} = request, body) do
-    %RestRequest{request | body: body, headers: headers ++ [{"content-type", "application/json"}]}
+    %RestRequest{request | body: Jason.encode!(body), headers: [{"content-type", "application/json"}] ++ headers}
   end
 
   defp handle_request(request), do: request |> IO.inspect() |> Rest.request()

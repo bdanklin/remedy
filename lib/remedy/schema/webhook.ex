@@ -52,29 +52,22 @@ defmodule Remedy.Schema.Webhook do
     |> apply_changes()
   end
 
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
+  def validate(changeset) do
+    changeset
   end
 
-  def validate(changeset), do: changeset
-
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end
 
@@ -120,29 +113,22 @@ defmodule Remedy.Schema.IncomingWebhook do
     |> apply_changes()
   end
 
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
+  def validate(changeset) do
+    changeset
   end
 
-  def validate(changeset), do: changeset
-
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end
 
@@ -179,28 +165,21 @@ defmodule Remedy.Schema.ApplicationWebhook do
     |> apply_changes()
   end
 
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
+  def validate(changeset) do
+    changeset
   end
 
-  def validate(changeset), do: changeset
-
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end

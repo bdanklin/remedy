@@ -1,8 +1,17 @@
 defmodule Remedy.Schema.WelcomeScreen do
+  use Remedy.Schema
+
   @moduledoc """
   Guild Welcome Screen
   """
-  use Remedy.Schema
+
+  @type description :: String.t()
+  @type welcome_channels :: [WelcomeScreenChannel.t()]
+
+  @type t :: %__MODULE__{
+          description: description,
+          welcome_channels: welcome_channels
+        }
 
   @primary_key false
   embedded_schema do
@@ -17,38 +26,43 @@ defmodule Remedy.Schema.WelcomeScreen do
     |> apply_changes()
   end
 
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
+  def validate(changeset) do
+    changeset
   end
 
-  def validate(changeset), do: changeset
-
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end
 
 defmodule Remedy.Schema.WelcomeScreenChannel do
+  use Remedy.Schema
+
   @moduledoc """
   Guild Welcome Screen
   """
-  use Remedy.Schema
 
+  @type channel_id :: Snowflake.t()
+  @type description :: String.t()
+  @type emoji_id :: Snowflake.t()
+  @type emoji_name :: String.t()
+
+  @type t :: %__MODULE__{
+          channel_id: channel_id,
+          description: description,
+          emoji_id: emoji_id,
+          emoji_name: emoji_name
+        }
   @primary_key false
   embedded_schema do
     field :channel_id, Snowflake
@@ -64,28 +78,21 @@ defmodule Remedy.Schema.WelcomeScreenChannel do
     |> apply_changes()
   end
 
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
+  def validate(changeset) do
+    changeset
   end
 
-  def validate(changeset), do: changeset
-
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end

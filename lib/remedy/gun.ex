@@ -14,6 +14,10 @@ defmodule Remedy.Gun do
   def open_http2(%Rest{} = rest_state) do
     case :gun.open(:binary.bin_to_list("discord.com"), 443, %{
            protocols: [:http2],
+           transport: :tls,
+           http2_opts: %{
+             keepalive: 5000
+           },
            retry: 1_000_000_000
          }) do
       {:ok, conn} ->
@@ -125,6 +129,8 @@ defmodule Remedy.Gun do
   end
 
   defp await({stream, conn}) do
+    IO.inspect(stream)
+
     case :gun.await(conn, stream) do
       {:response, :fin, status, headers} ->
         %RestResponse{status: status, headers: headers, body: ""}
@@ -163,8 +169,7 @@ defmodule Remedy.Gun do
   end
 
   def unpack_frame(%WSState{zlib_context: zlib_context} = socket, frame) do
-    payload =
-      :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()
+    payload = :zlib.inflate(zlib_context, frame) |> :erlang.iolist_to_binary() |> :erlang.binary_to_term()
 
     {payload, socket}
   end

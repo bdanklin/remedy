@@ -1,22 +1,59 @@
 defmodule Remedy.Schema.UserFlags do
-  @moduledoc false
   use Remedy.Schema
+  use BattleStandard
+
+  @flag_bits [
+    {:DISCORD_EMPLOYEE, 1 <<< 0},
+    {:PARTNERED_SERVER_OWNER, 1 <<< 1},
+    {:HYPESQUAD_EVENTS, 1 <<< 2},
+    {:BUG_HUNTER_LEVEL_1, 1 <<< 3},
+    {:HYPESQUAD_BRAVERY, 1 <<< 6},
+    {:HYPESQUAD_BRILLIANCE, 1 <<< 7},
+    {:HYPESQUAD_BALANCE, 1 <<< 8},
+    {:EARLY_SUPPORTER, 1 <<< 9},
+    {:TEAM_USER, 1 <<< 10},
+    {:SYSTEM, 1 <<< 12},
+    {:BUG_HUNTER_LEVEL_2, 1 <<< 14},
+    {:VERIFIED_BOT, 1 <<< 16},
+    {:VERIFIED_DEVELOPER, 1 <<< 17},
+    {:DISCORD_CERTIFIED_MODERATOR, 1 <<< 18}
+  ]
+
+  @moduledoc """
+  User Flags
+
+  """
+
+  @type discord_employee :: boolean()
+  @type partnered_server_owner :: boolean()
+  @type hypesquad_events :: boolean()
+  @type bug_hunter_level_1 :: boolean()
+  @type hypesquad_bravery :: boolean()
+  @type hypesquad_brilliance :: boolean()
+  @type hypesquad_balance :: boolean()
+  @type early_supporter :: boolean()
+  @type team_user :: boolean()
+  @type system :: boolean()
+  @type bug_hunter_level_2 :: boolean()
+  @type verified_bot :: boolean()
+  @type verified_developer :: boolean()
+  @type discord_certified_moderator :: boolean()
 
   @type t :: %__MODULE__{
-          DISCORD_EMPLOYEE: boolean(),
-          PARTNERED_SERVER_OWNER: boolean(),
-          HYPESQUAD_EVENTS: boolean(),
-          BUG_HUNTER_LEVEL_1: boolean(),
-          HYPESQUAD_BRAVERY: boolean(),
-          HYPESQUAD_BRILLIANCE: boolean(),
-          HYPESQUAD_BALANCE: boolean(),
-          EARLY_SUPPORTER: boolean(),
-          TEAM_USER: boolean(),
-          SYSTEM: boolean(),
-          BUG_HUNTER_LEVEL_2: boolean(),
-          VERIFIED_BOT: boolean(),
-          VERIFIED_DEVELOPER: boolean(),
-          DISCORD_CERTIFIED_MODERATOR: boolean()
+          DISCORD_EMPLOYEE: discord_employee,
+          PARTNERED_SERVER_OWNER: partnered_server_owner,
+          HYPESQUAD_EVENTS: hypesquad_events,
+          BUG_HUNTER_LEVEL_1: bug_hunter_level_1,
+          HYPESQUAD_BRAVERY: hypesquad_bravery,
+          HYPESQUAD_BRILLIANCE: hypesquad_brilliance,
+          HYPESQUAD_BALANCE: hypesquad_balance,
+          EARLY_SUPPORTER: early_supporter,
+          TEAM_USER: team_user,
+          SYSTEM: system,
+          BUG_HUNTER_LEVEL_2: bug_hunter_level_2,
+          VERIFIED_BOT: verified_bot,
+          VERIFIED_DEVELOPER: verified_developer,
+          DISCORD_CERTIFIED_MODERATOR: discord_certified_moderator
         }
 
   embedded_schema do
@@ -43,47 +80,21 @@ defmodule Remedy.Schema.UserFlags do
     |> apply_changes()
   end
 
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
+  def validate(changeset) do
+    changeset
   end
 
-  def validate(changeset), do: changeset
-
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
+
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
-
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
-  end
-
-  use BattleStandard
-
-  @flag_bits [
-    {:DISCORD_EMPLOYEE, 1 <<< 0},
-    {:PARTNERED_SERVER_OWNER, 1 <<< 1},
-    {:HYPESQUAD_EVENTS, 1 <<< 2},
-    {:BUG_HUNTER_LEVEL_1, 1 <<< 3},
-    {:HYPESQUAD_BRAVERY, 1 <<< 6},
-    {:HYPESQUAD_BRILLIANCE, 1 <<< 7},
-    {:HYPESQUAD_BALANCE, 1 <<< 8},
-    {:EARLY_SUPPORTER, 1 <<< 9},
-    {:TEAM_USER, 1 <<< 10},
-    {:SYSTEM, 1 <<< 12},
-    {:BUG_HUNTER_LEVEL_2, 1 <<< 14},
-    {:VERIFIED_BOT, 1 <<< 16},
-    {:VERIFIED_DEVELOPER, 1 <<< 17},
-    {:DISCORD_CERTIFIED_MODERATOR, 1 <<< 18}
-  ]
 end

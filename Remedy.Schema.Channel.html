@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Channel — Remedy v0.6.0</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-1f017d32bf.js"></script>
+    <script src="dist/sidebar_items-eda8a63608.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -149,7 +149,7 @@ Remedy.Schema.Channel <small class="app-vsn">(Remedy v0.6.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#validate/1">validate(any)</a>
+    <a href="#validate/1">validate(changeset)</a>
 
   </div>
 
@@ -211,7 +211,7 @@ Types
   owner_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   parent: <a href="#t:t/0">t</a>(),
   parent_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  permission_overwrites: [PermissionOverwrite.t()],
+  permission_overwrites: [Remedy.Schema.PermissionOverwrite.t()],
   permissions: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   position: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   rate_limit_per_user: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
@@ -251,7 +251,7 @@ Functions
     </a>
     <h1 class="signature">changeset(params \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel.ex#L71" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel.ex#L73" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -273,7 +273,7 @@ Functions
     </a>
     <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel.ex#L75" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel.ex#L77" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -315,7 +315,7 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">validate(any)</h1>
+    <h1 class="signature">validate(changeset)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel.ex#L69" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>

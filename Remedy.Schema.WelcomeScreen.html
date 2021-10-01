@@ -10,7 +10,7 @@
     <title>Remedy.Schema.WelcomeScreen — Remedy v0.6.0</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-1f017d32bf.js"></script>
+    <script src="dist/sidebar_items-eda8a63608.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -108,13 +108,41 @@ Remedy.Schema.WelcomeScreen <small class="app-vsn">(Remedy v0.6.0)</small>
             Summary
           </h1>
 
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:description/0">description()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:welcome_channels/0">welcome_channels()</a>
+
+  </div>
+
+</div>
+
+  </div>
+
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#changeset/1">changeset(params)</a>
+    <a href="#changeset/1">changeset(params \\ %{})</a>
 
   </div>
 
@@ -135,13 +163,6 @@ Remedy.Schema.WelcomeScreen <small class="app-vsn">(Remedy v0.6.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update/2">update(model, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#validate/1">validate(changeset)</a>
 
   </div>
@@ -152,6 +173,109 @@ Remedy.Schema.WelcomeScreen <small class="app-vsn">(Remedy v0.6.0)</small>
 
         </section>
 
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:description/0">
+
+  <div class="detail-header">
+    <a href="#t:description/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">description()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L8" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>description() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">t()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L11" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>t() :: %Remedy.Schema.WelcomeScreen{
+  description: <a href="#t:description/0">description</a>(),
+  welcome_channels: <a href="#t:welcome_channels/0">welcome_channels</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:welcome_channels/0">
+
+  <div class="detail-header">
+    <a href="#t:welcome_channels/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">welcome_channels()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L9" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>welcome_channels() :: [<a href="Remedy.Schema.WelcomeScreenChannel.html#t:t/0">Remedy.Schema.WelcomeScreenChannel.t</a>()]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
 
         <section id="functions" class="details-list">
           <h1 class="section-heading">
@@ -164,14 +288,16 @@ Functions
           <div class="functions-list">
 <section class="detail" id="changeset/1">
 
+    <span id="changeset/0"></span>
+
   <div class="detail-header">
     <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">changeset(params)</h1>
+    <h1 class="signature">changeset(params \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L29" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L33" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -193,7 +319,7 @@ Functions
     </a>
     <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L30" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L37" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -215,29 +341,7 @@ Functions
     </a>
     <h1 class="signature">new(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L13" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update/2">
-
-  <div class="detail-header">
-    <a href="#update/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update(model, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L20" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L22" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -259,7 +363,7 @@ Functions
     </a>
     <h1 class="signature">validate(changeset)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L27" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/welcome_screen.ex#L29" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

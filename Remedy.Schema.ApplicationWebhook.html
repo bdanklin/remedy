@@ -10,7 +10,7 @@
     <title>Remedy.Schema.ApplicationWebhook — Remedy v0.6.0</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-1f017d32bf.js"></script>
+    <script src="dist/sidebar_items-eda8a63608.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -86,7 +86,7 @@ Remedy
       <h1>
 Remedy.Schema.ApplicationWebhook <small class="app-vsn">(Remedy v0.6.0)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L149" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L135" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -156,7 +156,7 @@ Remedy.Schema.ApplicationWebhook <small class="app-vsn">(Remedy v0.6.0)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#changeset/1">changeset(params)</a>
+    <a href="#changeset/1">changeset(params \\ %{})</a>
 
   </div>
 
@@ -171,13 +171,6 @@ Remedy.Schema.ApplicationWebhook <small class="app-vsn">(Remedy v0.6.0)</small>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#new/1">new(params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update/2">update(model, params)</a>
 
   </div>
 
@@ -213,7 +206,7 @@ Types
     </a>
     <h1 class="signature">application()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L158" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L144" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -242,7 +235,7 @@ Types
     </a>
     <h1 class="signature">avatar()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L155" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L141" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -271,7 +264,7 @@ Types
     </a>
     <h1 class="signature">name()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L156" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L142" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -300,7 +293,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L160" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L146" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -337,7 +330,7 @@ Types
     </a>
     <h1 class="signature">type()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L157" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L143" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -372,14 +365,16 @@ Functions
           <div class="functions-list">
 <section class="detail" id="changeset/1">
 
+    <span id="changeset/0"></span>
+
   <div class="detail-header">
     <a href="#changeset/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">changeset(params)</h1>
+    <h1 class="signature">changeset(params \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L191" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L172" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -401,7 +396,7 @@ Functions
     </a>
     <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L192" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L176" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -423,29 +418,7 @@ Functions
     </a>
     <h1 class="signature">new(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L175" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update/2">
-
-  <div class="detail-header">
-    <a href="#update/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update(model, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L182" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L161" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -467,7 +440,7 @@ Functions
     </a>
     <h1 class="signature">validate(changeset)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L189" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L168" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.6.0">
 
-    <title>Remedy.Schema.User — Remedy v0.6.0</title>
+    <title>Remedy.Schema.UserFlags — Remedy v0.6.0</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
     <script src="dist/sidebar_items-eda8a63608.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.User <small class="app-vsn">(Remedy v0.6.0)</small>
+Remedy.Schema.UserFlags <small class="app-vsn">(Remedy v0.6.0)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,7 @@ Remedy.Schema.User <small class="app-vsn">(Remedy v0.6.0)</small>
 
 
         <section id="moduledoc">
-<p>User Schema</p>
+<p>User Flags</p>
         </section>
 
 
@@ -114,84 +114,70 @@ Remedy.Schema.User <small class="app-vsn">(Remedy v0.6.0)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:accent_color/0">accent_color()</a>
+    <a href="#t:bug_hunter_level_1/0">bug_hunter_level_1()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:avatar/0">avatar()</a>
+    <a href="#t:bug_hunter_level_2/0">bug_hunter_level_2()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:banner/0">banner()</a>
+    <a href="#t:discord_certified_moderator/0">discord_certified_moderator()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:bot/0">bot()</a>
+    <a href="#t:discord_employee/0">discord_employee()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:discriminator/0">discriminator()</a>
+    <a href="#t:early_supporter/0">early_supporter()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:email/0">email()</a>
+    <a href="#t:hypesquad_balance/0">hypesquad_balance()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:flags/0">flags()</a>
+    <a href="#t:hypesquad_bravery/0">hypesquad_bravery()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:id/0">id()</a>
+    <a href="#t:hypesquad_brilliance/0">hypesquad_brilliance()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:locale/0">locale()</a>
+    <a href="#t:hypesquad_events/0">hypesquad_events()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:mfa_enabled/0">mfa_enabled()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:premium_type/0">premium_type()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:public_flags/0">public_flags()</a>
+    <a href="#t:partnered_server_owner/0">partnered_server_owner()</a>
 
   </div>
 
@@ -212,14 +198,21 @@ Remedy.Schema.User <small class="app-vsn">(Remedy v0.6.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:username/0">username()</a>
+    <a href="#t:team_user/0">team_user()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:verified/0">verified()</a>
+    <a href="#t:verified_bot/0">verified_bot()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:verified_developer/0">verified_developer()</a>
 
   </div>
 
@@ -231,13 +224,6 @@ Remedy.Schema.User <small class="app-vsn">(Remedy v0.6.0)</small>
     <h2>
       <a href="#functions">Functions</a>
     </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#avatar/1">avatar(user)</a>
-
-  </div>
-
-</div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#changeset/1">changeset(params \\ %{})</a>
@@ -254,16 +240,21 @@ Remedy.Schema.User <small class="app-vsn">(Remedy v0.6.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#mention/1">mention(user)</a>
+    <a href="#from_integer/1">from_integer(flag_value)</a>
 
   </div>
-
-    <div class="summary-synopsis"><p>Converts a User to its <em>mention</em> format.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#new/1">new(params)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#to_integer/1">to_integer(flag_struct)</a>
 
   </div>
 
@@ -290,16 +281,16 @@ Remedy.Schema.User <small class="app-vsn">(Remedy v0.6.0)</small>
 Types
           </h1>
           <div class="types-list">
-<section class="detail" id="t:accent_color/0">
+<section class="detail" id="t:bug_hunter_level_1/0">
 
   <div class="detail-header">
-    <a href="#t:accent_color/0" class="detail-link" title="Link to this type">
+    <a href="#t:bug_hunter_level_1/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">accent_color()</h1>
+    <h1 class="signature">bug_hunter_level_1()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L17" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L30" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -312,23 +303,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>accent_color() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+          <pre>bug_hunter_level_1() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:avatar/0">
+<section class="detail" id="t:bug_hunter_level_2/0">
 
   <div class="detail-header">
-    <a href="#t:avatar/0" class="detail-link" title="Link to this type">
+    <a href="#t:bug_hunter_level_2/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">avatar()</h1>
+    <h1 class="signature">bug_hunter_level_2()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L12" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L37" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -341,23 +332,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>avatar() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>bug_hunter_level_2() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:banner/0">
+<section class="detail" id="t:discord_certified_moderator/0">
 
   <div class="detail-header">
-    <a href="#t:banner/0" class="detail-link" title="Link to this type">
+    <a href="#t:discord_certified_moderator/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">banner()</h1>
+    <h1 class="signature">discord_certified_moderator()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L40" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -370,23 +361,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>banner() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>discord_certified_moderator() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:bot/0">
+<section class="detail" id="t:discord_employee/0">
 
   <div class="detail-header">
-    <a href="#t:bot/0" class="detail-link" title="Link to this type">
+    <a href="#t:discord_employee/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">bot()</h1>
+    <h1 class="signature">discord_employee()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L27" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -399,23 +390,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>bot() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+          <pre>discord_employee() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:discriminator/0">
+<section class="detail" id="t:early_supporter/0">
 
   <div class="detail-header">
-    <a href="#t:discriminator/0" class="detail-link" title="Link to this type">
+    <a href="#t:early_supporter/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">discriminator()</h1>
+    <h1 class="signature">early_supporter()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L11" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L34" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -428,23 +419,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>discriminator() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+          <pre>early_supporter() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:email/0">
+<section class="detail" id="t:hypesquad_balance/0">
 
   <div class="detail-header">
-    <a href="#t:email/0" class="detail-link" title="Link to this type">
+    <a href="#t:hypesquad_balance/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">email()</h1>
+    <h1 class="signature">hypesquad_balance()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L20" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L33" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -457,23 +448,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>email() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>hypesquad_balance() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:flags/0">
+<section class="detail" id="t:hypesquad_bravery/0">
 
   <div class="detail-header">
-    <a href="#t:flags/0" class="detail-link" title="Link to this type">
+    <a href="#t:hypesquad_bravery/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">flags()</h1>
+    <h1 class="signature">hypesquad_bravery()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L21" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L31" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -486,23 +477,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>flags() :: UserFlags</pre>
+          <pre>hypesquad_bravery() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:id/0">
+<section class="detail" id="t:hypesquad_brilliance/0">
 
   <div class="detail-header">
-    <a href="#t:id/0" class="detail-link" title="Link to this type">
+    <a href="#t:hypesquad_brilliance/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">id()</h1>
+    <h1 class="signature">hypesquad_brilliance()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L9" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L32" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -515,23 +506,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>id() :: Sunbake.Snowflake.t()</pre>
+          <pre>hypesquad_brilliance() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:locale/0">
+<section class="detail" id="t:hypesquad_events/0">
 
   <div class="detail-header">
-    <a href="#t:locale/0" class="detail-link" title="Link to this type">
+    <a href="#t:hypesquad_events/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">locale()</h1>
+    <h1 class="signature">hypesquad_events()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L18" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L29" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -544,23 +535,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>locale() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>hypesquad_events() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:mfa_enabled/0">
+<section class="detail" id="t:partnered_server_owner/0">
 
   <div class="detail-header">
-    <a href="#t:mfa_enabled/0" class="detail-link" title="Link to this type">
+    <a href="#t:partnered_server_owner/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">mfa_enabled()</h1>
+    <h1 class="signature">partnered_server_owner()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L15" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L28" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -573,65 +564,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>mfa_enabled() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:premium_type/0">
-
-  <div class="detail-header">
-    <a href="#t:premium_type/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">premium_type()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L22" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>premium_type() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:public_flags/0">
-
-  <div class="detail-header">
-    <a href="#t:public_flags/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">public_flags()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L23" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>public_flags() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+          <pre>partnered_server_owner() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
@@ -647,7 +580,7 @@ Types
     </a>
     <h1 class="signature">system()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L14" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L36" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -676,7 +609,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L25" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L42" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -689,25 +622,22 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>t() :: %Remedy.Schema.User{
-  __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  accent_color: <a href="#t:accent_color/0">accent_color</a>(),
-  avatar: <a href="#t:avatar/0">avatar</a>(),
-  banner: <a href="#t:banner/0">banner</a>(),
-  bot: <a href="#t:bot/0">bot</a>(),
-  discriminator: <a href="#t:discriminator/0">discriminator</a>(),
-  email: <a href="#t:email/0">email</a>(),
-  flags: <a href="#t:flags/0">flags</a>(),
-  guilds: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  id: <a href="#t:id/0">id</a>(),
-  locale: <a href="#t:locale/0">locale</a>(),
-  messages: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  mfa_enabled: <a href="#t:mfa_enabled/0">mfa_enabled</a>(),
-  premium_type: <a href="#t:premium_type/0">premium_type</a>(),
-  public_flags: <a href="#t:public_flags/0">public_flags</a>(),
-  system: <a href="#t:system/0">system</a>(),
-  username: <a href="#t:username/0">username</a>(),
-  verified: <a href="#t:verified/0">verified</a>()
+          <pre>t() :: %Remedy.Schema.UserFlags{
+  BUG_HUNTER_LEVEL_1: <a href="#t:bug_hunter_level_1/0">bug_hunter_level_1</a>(),
+  BUG_HUNTER_LEVEL_2: <a href="#t:bug_hunter_level_2/0">bug_hunter_level_2</a>(),
+  DISCORD_CERTIFIED_MODERATOR: <a href="#t:discord_certified_moderator/0">discord_certified_moderator</a>(),
+  DISCORD_EMPLOYEE: <a href="#t:discord_employee/0">discord_employee</a>(),
+  EARLY_SUPPORTER: <a href="#t:early_supporter/0">early_supporter</a>(),
+  HYPESQUAD_BALANCE: <a href="#t:hypesquad_balance/0">hypesquad_balance</a>(),
+  HYPESQUAD_BRAVERY: <a href="#t:hypesquad_bravery/0">hypesquad_bravery</a>(),
+  HYPESQUAD_BRILLIANCE: <a href="#t:hypesquad_brilliance/0">hypesquad_brilliance</a>(),
+  HYPESQUAD_EVENTS: <a href="#t:hypesquad_events/0">hypesquad_events</a>(),
+  PARTNERED_SERVER_OWNER: <a href="#t:partnered_server_owner/0">partnered_server_owner</a>(),
+  SYSTEM: <a href="#t:system/0">system</a>(),
+  TEAM_USER: <a href="#t:team_user/0">team_user</a>(),
+  VERIFIED_BOT: <a href="#t:verified_bot/0">verified_bot</a>(),
+  VERIFIED_DEVELOPER: <a href="#t:verified_developer/0">verified_developer</a>(),
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
 }</pre>
 
       </div>
@@ -715,16 +645,16 @@ Types
 
   </section>
 </section>
-<section class="detail" id="t:username/0">
+<section class="detail" id="t:team_user/0">
 
   <div class="detail-header">
-    <a href="#t:username/0" class="detail-link" title="Link to this type">
+    <a href="#t:team_user/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">username()</h1>
+    <h1 class="signature">team_user()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L10" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L35" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -737,23 +667,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>username() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>team_user() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:verified/0">
+<section class="detail" id="t:verified_bot/0">
 
   <div class="detail-header">
-    <a href="#t:verified/0" class="detail-link" title="Link to this type">
+    <a href="#t:verified_bot/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">verified()</h1>
+    <h1 class="signature">verified_bot()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L19" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L38" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -766,7 +696,36 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>verified() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+          <pre>verified_bot() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:verified_developer/0">
+
+  <div class="detail-header">
+    <a href="#t:verified_developer/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">verified_developer()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L39" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>verified_developer() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
 
@@ -786,28 +745,6 @@ Types
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="avatar/1">
-
-  <div class="detail-header">
-    <a href="#avatar/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">avatar(user)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L95" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
 <section class="detail" id="changeset/1">
 
     <span id="changeset/0"></span>
@@ -819,7 +756,7 @@ Functions
     </a>
     <h1 class="signature">changeset(params \\ %{})</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L74" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L87" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -841,7 +778,7 @@ Functions
     </a>
     <h1 class="signature">changeset(model, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L78" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L91" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -854,16 +791,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="mention/1">
+<section class="detail" id="from_integer/1">
 
   <div class="detail-header">
-    <a href="#mention/1" class="detail-link" title="Link to this function">
+    <a href="#from_integer/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">mention(user)</h1>
+    <h1 class="signature">from_integer(flag_value)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L92" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -873,14 +810,7 @@ Functions
 
   <section class="docstring">
 
-      <h2>Specs</h2>
-      <div class="specs">
 
-          <pre>mention(<a href="#t:t/0">t</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-<p>Converts a User to its <em>mention</em> format.</p>
   </section>
 </section>
 <section class="detail" id="new/1">
@@ -892,7 +822,29 @@ Functions
     </a>
     <h1 class="signature">new(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L63" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L76" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="to_integer/1">
+
+  <div class="detail-header">
+    <a href="#to_integer/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">to_integer(flag_struct)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -914,7 +866,7 @@ Functions
     </a>
     <h1 class="signature">validate(changeset)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user.ex#L70" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L83" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -938,7 +890,7 @@ Functions
           <a href="https://hex.pm/packages/remedy/0.6.0" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.0" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.0/show/lib/remedy/schema/user.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.0/show/lib/remedy/schema/user_flags.ex">(current file)</a>
 
         </p>
 

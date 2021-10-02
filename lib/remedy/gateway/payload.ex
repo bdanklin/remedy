@@ -9,9 +9,7 @@ defmodule Remedy.Gateway.Payload do
 
       import Remedy.OpcodeHelpers
       use Ecto.Schema
-      alias Remedy.Gun
       alias Remedy.Gateway.{Pacemaker, Payload, Session, WSState}
-      @dialyzer {:no_missing_calls, :"Elixir.Gun", websocket_send: 2}
 
       def build_payload(socket, opts), do: payload(socket, opts) |> send_out()
       defp send_out(%WSState{} = socket), do: socket
@@ -23,7 +21,7 @@ defmodule Remedy.Gateway.Payload do
         }
         |> flatten()
         |> :erlang.term_to_binary()
-        |> Gun.websocket_send(socket)
+        |> Remedy.Gun.websocket_send(socket)
       end
 
       defp crush(map), do: map |> flatten() |> Morphix.stringmorphiform!()

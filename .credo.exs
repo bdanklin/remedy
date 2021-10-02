@@ -14,7 +14,6 @@
         {Credo.Check.Consistency.SpaceAroundOperators},
         {Credo.Check.Consistency.SpaceInParentheses},
         {Credo.Check.Consistency.TabsOrSpaces},
-        {Credo.Check.Design.AliasUsage, priority: :low},
         {Credo.Check.Design.DuplicatedCode, excluded_macros: [], mass_threshold: 50},
         {Credo.Check.Design.TagTODO, exit_status: 0},
         {Credo.Check.Design.TagFIXME},

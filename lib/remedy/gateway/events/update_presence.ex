@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Events.UpdatePresence do
   @moduledoc false
   use Remedy.Gateway.Payload
-
+  @dialyzer {:no_missing_calls}
   embedded_schema do
     field :since, :integer, default: 91_879_201
     field :status, :string, default: "online"

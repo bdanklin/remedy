@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Events.Resume do
   @moduledoc false
   use Remedy.Gateway.Payload
-
+  @dialyzer {:no_missing_calls}
   embedded_schema do
     field :token_id, :string
     field :session_id, :string

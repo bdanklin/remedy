@@ -23,18 +23,13 @@ defmodule Remedy.API.Rest do
   require Logger
 
   @doc false
-  def start_link(args) do
-    GenServer.start_link(__MODULE__, args, name: __MODULE__)
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, %__MODULE__{}, name: __MODULE__)
   end
 
   @doc false
-  def init(_args) do
-    {:ok, %__MODULE__{}, {:continue, :start_ratelimiter}}
-  end
-
-  @doc false
-  def handle_continue(:start_ratelimiter, state) do
-    {:noreply, state |> Gun.open_http2()}
+  def init(state) do
+    {:ok, state |> Gun.open_http2()}
   end
 
   @doc """
@@ -77,14 +72,12 @@ defmodule Remedy.API.Rest do
 
   defp process_response(response, request)
 
-  ## Error Sending Request
   defp process_response({:error, reason}, _request) do
     Logger.warn("ERROR #{reason}")
 
     {:error, reason}
   end
 
-  ## Poorly formed request
   defp process_response(
          {:ok, %RestResponse{body: %{code: code, message: message}, status: status}},
          %RestRequest{}
@@ -94,9 +87,7 @@ defmodule Remedy.API.Rest do
     {:error, {status, code, message}}
   end
 
-  ## A-OK
   defp process_response({:ok, %RestResponse{body: body} = _response}, %RestRequest{} = _request) do
-    ## Inc Ratelimiter
     {:ok, body}
   end
 end

@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Events.VoiceStatusUpdate do
   @moduledoc false
   use Remedy.Gateway.Payload
-  @dialyzer {:no_missing_calls}
+
   embedded_schema do
     field :guild_id, :integer
     field :channel_id, :integer

@@ -11,6 +11,7 @@ defmodule Remedy.Gateway.Payload do
       use Ecto.Schema
       alias Remedy.Gun
       alias Remedy.Gateway.{Pacemaker, Payload, Session, WSState}
+      @dialyzer {:no_missing_calls, websocket_send: 2}
 
       def build_payload(socket, opts), do: payload(socket, opts) |> send_out()
       defp send_out(%WSState{} = socket), do: socket

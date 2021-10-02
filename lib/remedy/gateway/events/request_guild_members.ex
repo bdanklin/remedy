@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Events.RequestGuildMembers do
   @moduledoc false
   use Remedy.Gateway.Payload
-  @dialyzer {:no_missing_calls}
+
   embedded_schema do
     field :guild_id, :integer
     field :query, :integer

@@ -22,7 +22,9 @@ defmodule Remedy.API do
 
   ## Edit vs Modify?
 
-  This one is anyones guess
+  The functions have been normalized to `:modify`.
+
+  > Note: This one is anyones guess, just saying if I can pick or the other with a $2 mcmuffin in my hand. Discord can figure it out with 400 mil in the bank. I made them all `:modify` because its cuter.
 
   ## Permissions
 
@@ -249,6 +251,7 @@ defmodule Remedy.API do
   ## to add: modify_guild_channel, modify_group_dm, modify_thread
   @unsafe {:modify_channel, [:channel_id, :opts, :reason]}
   @spec modify_channel(snowflake, keyword(), nil | binary) :: {:error, any} | {:ok, Channel.t()}
+  @doc since: "0.6.0"
   def modify_channel(channel_id, opts, reason \\ nil) do
     {:patch, "/channels/#{channel_id}"}
     |> request(opts, reason)
@@ -611,16 +614,16 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.edit_message(889614079830925352, 1894013840914098, content: "hello world!")
+      iex> Remedy.API.modify_message(889614079830925352, 1894013840914098, content: "hello world!")
       {:ok}
 
-      iex> Remedy.API.edit_message(889614079830925352, 1894013840914098, "hello world!")
+      iex> Remedy.API.modify_message(889614079830925352, 1894013840914098, "hello world!")
       {:ok}
 
 
   """
-
-  def edit_message(channel_id, message_id) do
+  @doc since: "0.6.0"
+  def modify_message(channel_id, message_id) do
     {:patch, "/channels/#{channel_id}/messages/#{message_id}"}
     |> request()
   end
@@ -686,7 +689,7 @@ defmodule Remedy.API do
    existing overwrite.
 
   """
-  def edit_channel_permissions(channel_id, overwrite_id) do
+  def modify_channel_permissions(channel_id, overwrite_id) do
     {:put, "/channels/#{channel_id}/permissions/#{overwrite_id}"}
     |> request()
   end
@@ -942,7 +945,7 @@ defmodule Remedy.API do
 
   If successful, returns `{:ok, emojis}`. Otherwise, returns `t:Remedy.API.error/0`.
   """
-
+  @unsafe {:list_guild_emojis, 1}
   def list_guild_emojis(guild_id) do
     {:get, "/guilds/#{guild_id}/emojis"}
     |> request()
@@ -956,6 +959,7 @@ defmodule Remedy.API do
   If successful, returns `{:ok, emoji}`. Otherwise, returns `t:Remedy.API.error/0`.
   """
 
+  @unsafe {:get_guild_emoji, 2}
   def get_guild_emoji(guild_id, emoji_id) do
     {:get, "/guilds/#{guild_id}/emojis/#{emoji_id}"}
     |> request()
@@ -1061,6 +1065,7 @@ defmodule Remedy.API do
 
   """
 
+  @unsafe {:get_guild, 1}
   def get_guild(guild_id) do
     {:get, "/guilds/#{guild_id}"}
     |> request()
@@ -1099,7 +1104,7 @@ defmodule Remedy.API do
       {:ok, %Remedy.Schema.Guild{id: 451824027976073216, name: "Nose Drum", ...}}
 
   """
-
+  @unsafe {:modify_guild, 1}
   def modify_guild(guild_id) do
     {:patch, "/guilds/#{guild_id}"}
     |> request()
@@ -1120,6 +1125,8 @@ defmodule Remedy.API do
       {:ok}
 
   """
+
+  @unsafe {:delete_guild, 1}
   def delete_guild(guild_id) do
     {:delete, "/guilds/#{guild_id}"}
     |> request()
@@ -2177,7 +2184,7 @@ defmodule Remedy.API do
   end
 
   @doc since: "0.6.0"
-  def edit_webhook_message(webhook_id, webhook_token, message_id) do
+  def modify_webhook_message(webhook_id, webhook_token, message_id) do
     {:patch, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}"}
     |> request()
   end
@@ -2279,7 +2286,7 @@ defmodule Remedy.API do
   The updated command. See the official reference:
   https://discord.com/developers/docs/interactions/slash-commands#edit-global-application-command
   """
-  def edit_global_application_command(command_id) do
+  def modify_global_application_command(command_id) do
     {:patch, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
     |> request()
   end
@@ -2341,7 +2348,7 @@ defmodule Remedy.API do
   end
 
   @doc since: "0.6.0"
-  def edit_guild_application_command(guild_id, command_id) do
+  def modify_guild_application_command(guild_id, command_id) do
     {:patch, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
     |> request()
   end
@@ -2388,13 +2395,13 @@ defmodule Remedy.API do
   end
 
   @doc since: "0.6.0"
-  def edit_application_command_permissions(guild_id, command_id) do
+  def modify_application_command_permissions(guild_id, command_id) do
     {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}/permissions"}
     |> request()
   end
 
   @doc since: "0.6.0"
-  def batch_edit_application_command_permissions(guild_id) do
+  def batch_modify_application_command_permissions(guild_id) do
     {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/permissions"}
     |> request()
   end
@@ -2430,7 +2437,7 @@ defmodule Remedy.API do
   end
 
   @doc since: "0.6.0"
-  def edit_original_interaction_response(interaction_token) do
+  def modify_original_interaction_response(interaction_token) do
     {:patch, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
     |> request()
   end
@@ -2459,7 +2466,7 @@ defmodule Remedy.API do
   end
 
   @doc since: "0.6.0"
-  def edit_followup_message(interaction_token, message_id) do
+  def modify_followup_message(interaction_token, message_id) do
     {:patch, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
     |> request()
   end

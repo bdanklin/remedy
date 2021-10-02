@@ -38,6 +38,24 @@ defmodule Remedy.CDN do
     "/emojis/#{id}" |> encode(id, size)
   end
 
+  @doc """
+  Returns the url for the guilds icon.
+
+  ## Examples
+
+      iex> Remedy.API.get_guild!(872417560094732328) |> Remedy.CDN.guild_icon()
+      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.jpg?size=128"
+
+
+      iex> Remedy.API.get_guild!(872417560094732328) |> Remedy.CDN.guild_icon(100)
+      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.jpg?size=128"
+
+
+      iex> Remedy.CDN.guild_icon(872417560094732328, "f817c5adaf96672c94a17de8e944f427", "cheese")
+      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.jpg"
+
+
+  """
   @spec guild_icon(Guild.t(), size) :: binary
   def guild_icon(guild, size \\ nil)
   def guild_icon(%Guild{id: id, icon: icon}, size), do: guild_icon(id, icon, size)
@@ -189,22 +207,21 @@ defmodule Remedy.CDN do
   end
 
   defp put_size(term, nil), do: term
+  defp put_size(term, size) when not is_integer(size), do: put_size(term, nil)
 
-  defp put_size(term, size)
-       when is_integer(size)
-       when size in [16, 32, 64, 128, 256, 512, 1024, 2048, 4096] do
+  defp put_size(term, size) when size in [16, 32, 64, 128, 256, 512, 1024, 2048, 4096] do
     term <> "?size=#{to_string(size)}"
   end
 
-  defp put_size(term, size) when is_integer(size) when size < 16, do: put_size(term, 16)
-  defp put_size(term, size) when is_integer(size) when size < 32, do: put_size(term, 32)
-  defp put_size(term, size) when is_integer(size) when size < 64, do: put_size(term, 64)
-  defp put_size(term, size) when is_integer(size) when size < 128, do: put_size(term, 128)
-  defp put_size(term, size) when is_integer(size) when size < 256, do: put_size(term, 256)
-  defp put_size(term, size) when is_integer(size) when size < 512, do: put_size(term, 512)
-  defp put_size(term, size) when is_integer(size) when size < 1024, do: put_size(term, 1024)
-  defp put_size(term, size) when is_integer(size) when size < 2048, do: put_size(term, 2048)
-  defp put_size(term, size) when is_integer(size) when size > 4096, do: put_size(term, 4096)
+  defp put_size(term, size) when is_integer(size) and size < 16, do: put_size(term, 16)
+  defp put_size(term, size) when is_integer(size) and size < 32, do: put_size(term, 32)
+  defp put_size(term, size) when is_integer(size) and size < 64, do: put_size(term, 64)
+  defp put_size(term, size) when is_integer(size) and size < 128, do: put_size(term, 128)
+  defp put_size(term, size) when is_integer(size) and size < 256, do: put_size(term, 256)
+  defp put_size(term, size) when is_integer(size) and size < 512, do: put_size(term, 512)
+  defp put_size(term, size) when is_integer(size) and size < 1024, do: put_size(term, 1024)
+  defp put_size(term, size) when is_integer(size) and size < 2048, do: put_size(term, 2048)
+  defp put_size(term, size) when is_integer(size) and size > 4096, do: put_size(term, 4096)
 
   defp put_extension(term, hash)
   defp put_extension(term, "a_" <> _hash), do: term <> ".gif"

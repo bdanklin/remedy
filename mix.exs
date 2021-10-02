@@ -1,9 +1,10 @@
 defmodule Remedy.MixProject do
+  @moduledoc false
   use Mix.Project
 
   @app :remedy
   @name "Remedy"
-  @version "0.6.1"
+  @version "0.6.2"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
   @description "Discord Library in Elixir."

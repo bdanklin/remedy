@@ -22,7 +22,7 @@ defmodule Remedy.API.Ratelimiter do
   - Global ratelimit will be updated regardless of the success of a request.
   """
 
-  alias Remedy.API.{RestResponse, RestRequest}
+  alias Remedy.API.{RestRequest, RestResponse}
   use GenServer
   require ExRated
   require Logger
@@ -38,7 +38,7 @@ defmodule Remedy.API.Ratelimiter do
 
   @doc false
 
-  def check_global() do
+  def check_global do
     ExRated.inspect_bucket("global", 1000, 50) |> analyse_bucket("global")
   end
 
@@ -66,7 +66,7 @@ defmodule Remedy.API.Ratelimiter do
     ExRated.check_rate(bucket, reset_after, limit)
   end
 
-  def inc_global() do
+  def inc_global do
     ExRated.check_rate("global", 1000, 50)
   end
 

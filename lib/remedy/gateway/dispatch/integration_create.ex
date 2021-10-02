@@ -1,5 +1,4 @@
 defmodule Remedy.Gateway.Dispatch.IntegrationCreate do
-
   @moduledoc false
   alias Remedy.Schema.Integration
 

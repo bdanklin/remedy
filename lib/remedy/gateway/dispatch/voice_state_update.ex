@@ -3,13 +3,13 @@ defmodule Remedy.Gateway.Dispatch.VoiceStateUpdate do
   use Remedy.Schema
 
   @typedoc "Guild ID this voice state is for, if applicable"
-  @type guild_id :: Guild.id() | nil
+  @type guild_id :: Snowflake.t()
 
   @typedoc "Channel ID this voice state is for"
-  @type channel_id :: Channel.id()
+  @type channel_id :: Snowflake.t()
 
   @typedoc "User this voice state is for"
-  @type user_id :: User.id()
+  @type user_id :: Snowflake.t()
 
   @typedoc "Guild member this voice state is for, if applicable"
   @type member :: Member.t() | nil

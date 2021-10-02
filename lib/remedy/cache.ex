@@ -6,7 +6,7 @@ defmodule Remedy.Cache do
   import Remedy.ModelHelpers
 
   alias Remedy.Cache.{DiscordApp, DiscordBot, Repo}
-  alias Remedy.Schema.{App, Channel, Emoji, Guild, Message, Member, Presence, Role, Sticker, User}
+  alias Remedy.Schema.{App, Channel, Emoji, Guild, Member, Message, Presence, Role, Sticker, User}
 
   @doc """
   Set the initial condition of the bot.
@@ -34,7 +34,7 @@ defmodule Remedy.Cache do
     end
   end
 
-  def bot() do
+  def bot do
     DiscordBot.get()
   end
 
@@ -59,7 +59,7 @@ defmodule Remedy.Cache do
     end
   end
 
-  def app() do
+  def app do
     DiscordApp.get()
   end
 

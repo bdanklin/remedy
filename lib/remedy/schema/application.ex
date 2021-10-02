@@ -61,7 +61,7 @@ defmodule Remedy.Schema.App do
     field :hook, :boolean
 
     embeds_one :owner, User
-    embeds_one :team, Team
+    belongs_to :team, Team
     belongs_to :guild, Guild
     field :primary_sku_id, Snowflake
     field :slug, :string
@@ -70,6 +70,12 @@ defmodule Remedy.Schema.App do
   def new(params) do
     params
     |> changeset()
+    |> apply_changes()
+  end
+
+  def update(model, params) do
+    model
+    |> changeset(params)
     |> apply_changes()
   end
 

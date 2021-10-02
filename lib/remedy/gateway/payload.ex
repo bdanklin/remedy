@@ -9,6 +9,7 @@ defmodule Remedy.Gateway.Payload do
 
       import Remedy.OpcodeHelpers
       use Ecto.Schema
+      alias Remedy.Gun
       alias Remedy.Gateway.{Pacemaker, Payload, Session, WSState}
 
       def build_payload(socket, opts), do: payload(socket, opts) |> send_out()
@@ -21,7 +22,7 @@ defmodule Remedy.Gateway.Payload do
         }
         |> flatten()
         |> :erlang.term_to_binary()
-        |> Remedy.Gun.websocket_send(socket)
+        |> Gun.websocket_send(socket)
       end
 
       defp crush(map), do: map |> flatten() |> Morphix.stringmorphiform!()
@@ -49,9 +50,6 @@ defmodule Remedy.Gateway.Payload do
   @typedoc false
   @type opts :: list() | nil
 
-  ##   Describes how to take the current socket state and construct the payload data for this modules event type.
-  ##   For example: `Heartbeat.send/2` will take the socket, and a keyword list of options, and construct the payload data for the event of type `:HEARTBEAT`. It is the responsibility of the developer to ensure that all events required to be sent implement this function.
-  ##   If the behaviour is not described. Passing this function will just pass the socket back to session to continue doing ## what it do.
   @doc false
   @callback payload(socket, opts) :: {payload, socket}
 
@@ -60,7 +58,7 @@ defmodule Remedy.Gateway.Payload do
 
   @optional_callbacks payload: 2, digest: 2
 
-  alias Remedy.Gateway.WSState
+  alias Remedy.Gateway.{Events, WSState}
 
   alias Remedy.Gateway.Events.{
           Dispatch,
@@ -85,17 +83,11 @@ defmodule Remedy.Gateway.Payload do
 
   require Logger
 
-  # delegates to {Command}.digest
-
   @spec digest(WSState.t(), any, binary) :: WSState.t()
   def digest(socket, event, payload) do
     Logger.debug("#{inspect(event)}")
     module_delegate(event).digest(socket, payload)
   end
-
-  ## delegates to command.send. eg calling `Payload.send(:READY)` will send a properly constructed ready command to discord.
-
-  ## Due to some functions requiring additional parameters that cannot be preconfigured, external API functionality is provided through the Gateway module. ( maybe )
 
   @spec send(WSState.t(), any, any) :: any
   def send(socket, event, opts \\ []) when is_op_event(event) do
@@ -104,6 +96,6 @@ defmodule Remedy.Gateway.Payload do
   end
 
   defp module_delegate(event) do
-    [Remedy.Gateway.Events, mod_from_event(event)] |> Module.concat()
+    [Events, mod_from_event(event)] |> Module.concat()
   end
 end

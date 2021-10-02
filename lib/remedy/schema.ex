@@ -19,6 +19,7 @@ defmodule Remedy.Schema do
       alias unquote(parent)
 
       alias Remedy.Schema.{
+        Activity,
         App,
         Attachment,
         AuditLog,
@@ -51,6 +52,7 @@ defmodule Remedy.Schema do
         PermissionOverwrite,
         Presence,
         Provider,
+        Reaction,
         Reference,
         Role,
         StageInstance,

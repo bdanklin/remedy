@@ -2,9 +2,7 @@ defmodule Remedy.Gateway.EventBuffer do
   @moduledoc false
 
   use GenStage
-
   alias Remedy.Gateway.{Dispatch, EventBroadcaster}
-
   require Logger
 
   def start_link(_opts) do

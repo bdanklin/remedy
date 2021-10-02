@@ -20,7 +20,7 @@ defmodule Remedy.Schema.Message do
   @type guild :: Guild.t()
   @type thread :: Channel.t()
   @type webhook :: Webhook.t()
-  @type attachments :: [Attachments.t()]
+  @type attachments :: [Attachment.t()]
   @type components :: [Component.t()]
   @type embeds :: [Embed.t()]
   @type mention_channels :: [Channel.t()]

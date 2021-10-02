@@ -117,7 +117,7 @@ defmodule Remedy.OpcodeHelpers do
       999
 
   """
-  def op_from_mod() do
+  def op_from_mod do
     event_from_mod() |> op_from_event()
   end
 

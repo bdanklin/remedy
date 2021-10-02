@@ -75,7 +75,7 @@ defmodule Remedy.Consumer do
   use ConsumerSupervisor
 
   alias Remedy.Gateway.{EventBuffer, WSState}
-  alias Remedy.Schema.{Channel, Emoji, Guild, Message, Member, Role, User}
+  alias Remedy.Schema.{Channel, Emoji, Guild, Member, Message, Role, User}
 
   @callback handle_event(event) :: any
   @callback handle_event(any()) :: :noop

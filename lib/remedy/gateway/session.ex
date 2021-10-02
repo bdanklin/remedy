@@ -1,6 +1,6 @@
 defmodule Remedy.Gateway.Session do
   @moduledoc false
-  alias Remedy.{Gun, GatewayATC}
+  alias Remedy.{GatewayATC, Gun}
   alias Remedy.Gateway.{Pacemaker, Payload, WSState}
   import Remedy.OpcodeHelpers
   require Logger

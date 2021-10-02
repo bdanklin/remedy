@@ -37,7 +37,7 @@ defmodule Remedy.Gun do
            retry: 1_000_000_000
          }) do
       {:ok, conn} ->
-        {:ok, conn} |> IO.inspect()
+        {:ok, conn}
 
         %{socket | conn: conn}
         |> await_websocket_up()
@@ -129,8 +129,6 @@ defmodule Remedy.Gun do
   end
 
   defp await({stream, conn}) do
-    IO.inspect(stream)
-
     case :gun.await(conn, stream) do
       {:response, :fin, status, headers} ->
         %RestResponse{status: status, headers: headers, body: ""}

@@ -1,4 +1,5 @@
 defmodule Remedy.Schema.MessageReactionRemoveEmoji do
+  @moduledoc false
   use Remedy.Schema
 
   @primary_key false

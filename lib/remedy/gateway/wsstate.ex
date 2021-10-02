@@ -1,6 +1,6 @@
 defmodule Remedy.Gateway.WSState do
   @moduledoc """
-  Contains all the information required to maintain the gateway WSState connection to Discord.
+  Contains all the information required to maintain the gateway websocket connection to Discord.
 
   This is provided to allow the user to enact custom logic on the gateway events as they are received from the consumer. It should be noted that the websocket state consumed with an event is a 'snapshot' of the state at the time that event was received, and does not relate to the current state of the websocket.
   """

@@ -19,7 +19,7 @@ defmodule Remedy.API.Rest do
 
   use GenServer
   alias Remedy.Gun
-  alias Remedy.API.{RestResponse, RestRequest}
+  alias Remedy.API.{Ratelimiter, RestRequest, RestResponse}
   require Logger
 
   @doc false
@@ -50,9 +50,6 @@ defmodule Remedy.API.Rest do
   ############
   ## Callbacks
   ############
-
-  alias Remedy.API.{RestRequest, RestResponse, Ratelimiter}
-  alias Remedy.Gun
 
   def handle_info({:gun_error, _conn, _stream, {what, why, reason}}, state) do
     what = what |> to_string() |> String.upcase()

@@ -67,6 +67,12 @@ defmodule Remedy.Schema.User do
     |> apply_changes()
   end
 
+  def update(model, params) do
+    model
+    |> changeset(params)
+    |> apply_changes()
+  end
+
   def validate(changeset) do
     changeset
   end

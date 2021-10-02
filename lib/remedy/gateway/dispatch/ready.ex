@@ -26,6 +26,6 @@ defmodule Remedy.Gateway.Dispatch.Ready do
     #   Cache.put_bot(user)
     #   Cache.put_app(application)
 
-    {event, payload |> IO.inspect(label: "HELLO R WE HERE YET"), socket}
+    {event, payload, socket}
   end
 end

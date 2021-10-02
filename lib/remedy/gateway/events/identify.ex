@@ -1,8 +1,8 @@
 defmodule Remedy.Gateway.Events.Identify do
   @moduledoc false
 
-  alias Remedy.Gateway.Intents
   alias Remedy.Gateway
+  alias Remedy.Gateway.Intents
   use Remedy.Gateway.Payload
 
   def payload(%WSState{shard: shard} = socket, _opts) do

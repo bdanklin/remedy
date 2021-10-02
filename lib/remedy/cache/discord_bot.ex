@@ -2,7 +2,7 @@ defmodule Remedy.Cache.DiscordBot do
   @moduledoc false
   use Agent
 
-  def id() do
+  def id do
     get().id
   end
 

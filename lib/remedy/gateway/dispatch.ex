@@ -1,7 +1,5 @@
 defmodule Remedy.Gateway.Dispatch do
-  @moduledoc """
-  Gateway Dispatching
-  """
+  @moduledoc false
   @type payload :: any()
   @type socket :: WSState.t()
   @type event :: atom()

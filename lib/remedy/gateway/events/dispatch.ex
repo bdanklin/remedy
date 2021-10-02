@@ -2,8 +2,8 @@ defmodule Remedy.Gateway.Events.Dispatch do
   @moduledoc false
 
   use Remedy.Gateway.Payload
-  alias Remedy.Gateway.EventBroadcaster
   alias Remedy.Cache
+  alias Remedy.Gateway.EventBroadcaster
 
   def digest(%WSState{payload_dispatch_event: :READY} = socket, %{
         geo_ordered_rtc_regions: _geo_ordered_rtc_regions,

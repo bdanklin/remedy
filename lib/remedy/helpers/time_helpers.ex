@@ -36,7 +36,7 @@ defmodule Remedy.TimeHelpers do
     |> DateTime.to_iso8601()
   end
 
-  @discord_epoch 1_420_070_400_000
+  def discord_epoch, do: 1_420_070_400_000
 
   @doc """
     Returns the creation time of the snowflake.
@@ -51,7 +51,7 @@ defmodule Remedy.TimeHelpers do
   def creation_time(snowflake) do
     use Bitwise
 
-    time_elapsed_ms = (snowflake >>> 22) + Constants.discord_epoch()
+    time_elapsed_ms = (snowflake >>> 22) + discord_epoch()
 
     {:ok, datetime} = DateTime.from_unix(time_elapsed_ms, :millisecond)
     datetime

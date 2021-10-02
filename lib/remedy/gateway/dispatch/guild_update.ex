@@ -1,5 +1,4 @@
 defmodule Remedy.Gateway.Dispatch.GuildUpdate do
-
   @moduledoc false
   alias Remedy.Cache
   alias Remedy.Schema.Guild

@@ -16,6 +16,14 @@ defmodule Remedy.API do
 
   Items returned from the API are parsed to ensure the values of in the correct format and types.
 
+  ## List vs Get?
+
+  Functions in the discord API that return lists are randomly called either Get or List for some arbitrary reason. This is rectified so that all functions returning lists will start with the verb list.
+
+  ## Edit vs Modify?
+
+  This one is anyones guess
+
   ## Permissions
 
   Any permissions a bot requires on a server to send a request is shown under the function.
@@ -41,6 +49,7 @@ defmodule Remedy.API do
   alias Remedy.API.Rest
 
   alias Remedy.Schema.{
+    App,
     AuditLog,
     Channel,
     Emoji,
@@ -57,7 +66,7 @@ defmodule Remedy.API do
 
   @type opts :: keyword()
   @type error :: any()
-  @type limit :: any
+  @type limit :: integer()
   @type locator :: any
   @type snowflake :: Snowflake.t()
 
@@ -100,7 +109,7 @@ defmodule Remedy.API do
   defp parse_get_current_bot_application_information({:error, _reason} = error), do: error
 
   defp parse_get_current_bot_application_information({:ok, bot}) do
-    {:ok, bot |> Remedy.Schema.App.new()}
+    {:ok, bot |> App.new()}
   end
 
   @doc false
@@ -177,12 +186,12 @@ defmodule Remedy.API do
 
   ## Examples
 
-  iex> Remedy.API.get_channel(381889573426429952)
-  {:ok, %Remedy.Schema.Channel{id: 381889573426429952}}
+      iex> Remedy.API.get_channel(381889573426429952)
+      {:ok, %Remedy.Schema.Channel{id: 381889573426429952}}
 
   """
 
-  @unsafe {:get_channel, 1}
+  @unsafe {:get_channel, [:channel_id]}
   @spec get_channel(snowflake | Channel.t()) ::
           {:error, any} | {:ok, Channel.t()}
   def get_channel(channel_id)
@@ -238,6 +247,7 @@ defmodule Remedy.API do
   """
 
   ## to add: modify_guild_channel, modify_group_dm, modify_thread
+  @unsafe {:modify_channel, [:channel_id, :opts, :reason]}
   @spec modify_channel(snowflake, keyword(), nil | binary) :: {:error, any} | {:ok, Channel.t()}
   def modify_channel(channel_id, opts, reason \\ nil) do
     {:patch, "/channels/#{channel_id}"}
@@ -269,13 +279,14 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.delete_channel(421533712753360896)
-      {:ok, %Remedy.Schema.Channel{id: 421533712753360896}}
+  iex> Remedy.API.delete_channel(421533712753360896)
+  {:ok, %Remedy.Schema.Channel{id: 421533712753360896}}
 
-      iex> Remedy.API.delete_channel(123)
+  iex> Remedy.API.delete_channel(123)
 
   """
-
+  @unsafe {:delete_channel, [:channel_id]}
+  @spec delete_channel(snowflake) :: {:error, any} | {:ok, map}
   def delete_channel(channel_id) do
     {:delete, "/channels/#{channel_id}"}
     |> request()
@@ -307,42 +318,50 @@ defmodule Remedy.API do
 
   ## Helpers
 
-  - `Remedy.API.get_channel_messages_before/3`
-  - `Remedy.API.get_channel_messages_after/3`
-  - `Remedy.API.get_channel_messages_around/3`
+  - `Remedy.API.list_channel_messages_before/3`
+  - `Remedy.API.list_channel_messages_after/3`
+  - `Remedy.API.list_channel_messages_around/3`
 
   ## Examples
 
-      iex> Remedy.API.get_channel_messages(872417560094732331, [{:before, 882781809908256789}, {:limit, 1}])
+      iex> Remedy.API.list_channel_messages(872417560094732331, [{:before, 882781809908256789}, {:limit, 1}])
       {:ok, [%Message{id: 882681855315423292}]}
 
   """
-
-  def get_channel_messages(channel_id, opts \\ []) do
+  @doc since: "0.6"
+  @unsafe {:list_channel_messages, [:channel_id, :opts]}
+  @spec list_channel_messages(snowflake, keyword()) :: {:error, any} | {:ok, list}
+  def list_channel_messages(channel_id, opts \\ []) do
     body = Enum.into(opts, %{})
 
     {:get, "/channels/#{channel_id}/messages"}
     |> request(body)
-    |> parse_get_channel_messages()
+    |> parse_list_channel_messages()
   end
 
-  defp parse_get_channel_messages({:error, _reason} = error), do: error
+  defp parse_list_channel_messages({:error, _reason} = error), do: error
 
-  defp parse_get_channel_messages({:ok, messages}) do
+  defp parse_list_channel_messages({:ok, messages}) do
     messages = for m <- messages, into: [], do: Message.new(m)
     {:ok, messages}
   end
 
-  def get_channel_messages_before(channel_id, message_id, limit \\ 50) do
-    get_channel_messages(channel_id, [{:before, message_id}, {:limit, limit}])
+  @unsafe {:list_channel_messages_before, [:channel_id, :message_id, :limit]}
+  @spec list_channel_messages_before(snowflake, snowflake, limit) :: {:error, any} | {:ok, list}
+  def list_channel_messages_before(channel_id, message_id, limit \\ 50) do
+    list_channel_messages(channel_id, [{:before, message_id}, {:limit, limit}])
   end
 
-  def get_channel_messages_after(channel_id, message_id, limit \\ 50) do
-    get_channel_messages(channel_id, [{:after, message_id}, {:limit, limit}])
+  @unsafe {:list_channel_messages_after, [:channel_id, :message_id, :limit]}
+  @spec list_channel_messages_after(snowflake, snowflake, limit) :: {:error, any} | {:ok, list}
+  def list_channel_messages_after(channel_id, message_id, limit \\ 50) do
+    list_channel_messages(channel_id, [{:after, message_id}, {:limit, limit}])
   end
 
-  def get_channel_messages_around(channel_id, message_id, limit \\ 50) do
-    get_channel_messages(channel_id, [{:around, message_id}, {:limit, limit}])
+  @unsafe {:list_channel_messages_around, [:channel_id, :message_id, :limit]}
+  @spec list_channel_messages_around(snowflake, snowflake, limit) :: {:error, any} | {:ok, list}
+  def list_channel_messages_around(channel_id, message_id, limit \\ 50) do
+    list_channel_messages(channel_id, [{:around, message_id}, {:limit, limit}])
   end
 
   @doc """
@@ -355,12 +374,24 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.get_channel_message(43189401384091, 198238475613443)
-      {:ok, %Remedy.Schema.Message{}}
+  iex> Remedy.API.get_channel_message(872417560094732331, 884355195277025321)
+  {:ok, %Remedy.Schema.Message{}}
 
   """
+  @unsafe {:get_channel_message, [:channel_id, :message_id]}
+  @spec get_channel_message(snowflake, snowflake) :: {:error, any} | {:ok, Channel.t()}
   def get_channel_message(channel_id, message_id) do
     {:get, "/channels/#{channel_id}/messages/#{message_id}"}
+    |> request()
+    |> parse_get_channel_message()
+  end
+
+  defp parse_get_channel_message({:error, _reason} = error), do: error
+
+  defp parse_get_channel_message({:ok, channel}) do
+    {:ok,
+     channel
+     |> Message.new()}
   end
 
   @doc """
@@ -405,12 +436,32 @@ defmodule Remedy.API do
       {:ok, %Message{}}
 
   """
-  def create_message(channel_id) do
+  def create_message(channel_id, opts \\ []) do
+    opts = Enum.into(opts, %{})
+
     {:post, "/channels/#{channel_id}/messages"}
+    |> request(opts)
   end
 
-  def crosspost_message(channel_id, message_id) do
+  @doc """
+  Publish a message in a news channel
+  """
+  @doc since: "0.6.0"
+  @spec publish_message(Remedy.Schema.Message.t()) :: {:error, any} | {:ok, any}
+
+  def publish_message(%Message{channel_id: channel_id, id: id}), do: publish_message(channel_id, id)
+
+  def publish_message(channel_id, message_id) do
     {:post, "/channels/#{channel_id}/messages/#{message_id}/crosspost"}
+    |> request()
+  end
+
+  def parse_publish_message({:error, _reason} = error), do: error
+
+  def parse_publish_message({:ok, message}) do
+    {:ok,
+     message
+     |> Message.new()}
   end
 
   @doc """
@@ -437,6 +488,7 @@ defmodule Remedy.API do
 
   def create_reaction(channel_id, message_id, emoji) do
     {:put, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me"}
+    |> request()
   end
 
   @doc """
@@ -460,6 +512,7 @@ defmodule Remedy.API do
 
   def delete_own_reaction(channel_id, message_id, emoji) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me"}
+    |> request()
   end
 
   @doc """
@@ -479,6 +532,7 @@ defmodule Remedy.API do
 
   def delete_user_reaction(channel_id, message_id, emoji, user_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -493,6 +547,7 @@ defmodule Remedy.API do
 
   def get_reactions(channel_id, message_id, emoji) do
     {:get, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}"}
+    |> request()
   end
 
   @doc """
@@ -515,6 +570,7 @@ defmodule Remedy.API do
 
   def delete_all_reactions(channel_id, message_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions"}
+    |> request()
   end
 
   @doc """
@@ -534,6 +590,7 @@ defmodule Remedy.API do
   """
   def delete_all_reactions_for_emoji(channel_id, message_id, emoji) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}"}
+    |> request()
   end
 
   @doc """
@@ -565,6 +622,7 @@ defmodule Remedy.API do
 
   def edit_message(channel_id, message_id) do
     {:patch, "/channels/#{channel_id}/messages/#{message_id}"}
+    |> request()
   end
 
   @doc """
@@ -587,6 +645,7 @@ defmodule Remedy.API do
 
   def delete_message(channel_id, message_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}"}
+    |> request()
   end
 
   @doc """
@@ -606,6 +665,7 @@ defmodule Remedy.API do
 
   def bulk_delete_messages(channel_id) do
     {:post, "/channels/#{channel_id}/messages/bulk-delete"}
+    |> request()
   end
 
   @doc """
@@ -628,6 +688,7 @@ defmodule Remedy.API do
   """
   def edit_channel_permissions(channel_id, overwrite_id) do
     {:put, "/channels/#{channel_id}/permissions/#{overwrite_id}"}
+    |> request()
   end
 
   @doc """
@@ -646,6 +707,7 @@ defmodule Remedy.API do
   """
   def get_channel_invites(channel_id) do
     {:get, "/channels/#{channel_id}/invites"}
+    |> request()
   end
 
   @doc """
@@ -679,6 +741,7 @@ defmodule Remedy.API do
   """
   def create_channel_invite(channel_id) do
     {:post, "/channels/#{channel_id}/invites"}
+    |> request()
   end
 
   @doc """
@@ -690,18 +753,22 @@ defmodule Remedy.API do
 
   def delete_channel_permission(channel_id, overwrite_id) do
     {:delete, "/channels/#{channel_id}/permissions/#{overwrite_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def follow_news_channel(channel_id) do
     {:post, "/channels/#{channel_id}/followers"}
+    |> request()
   end
 
   @doc """
   Triggers the typing indicator.
   """
 
-  def trigger_typing_indicator(channel_id) do
+  def start_typing(channel_id) do
     {:post, "/channels/#{channel_id}/typing"}
+    |> request()
   end
 
   @doc """
@@ -717,9 +784,10 @@ defmodule Remedy.API do
       iex> Remedy.API.get_pinned_messages(43189401384091)
 
   """
-
-  def get_pinned_messages(channel_id) do
+  @doc since: "0.6.0"
+  def list_pinned_messages(channel_id) do
     {:get, "/channels/#{channel_id}/pins"}
+    |> request()
   end
 
   @doc """
@@ -741,6 +809,7 @@ defmodule Remedy.API do
   """
   def pin_message(channel_id, message_id) do
     {:put, "/channels/#{channel_id}/pins/#{message_id}"}
+    |> request()
   end
 
   @doc """
@@ -765,42 +834,64 @@ defmodule Remedy.API do
   """
   def unpin_message(channel_id, message_id) do
     {:delete, "/channels/#{channel_id}/pins/#{message_id}"}
+    |> request()
   end
 
+  @doc """
+  add recipient to a group DM
+  """
+  @doc since: "0.6.0"
   def group_dm_add_recipient(channel_id, user_id) do
     {:put, "/channels/#{channel_id}/recipients/#{user_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def group_dm_remove_recipient(channel_id, user_id) do
     {:delete, "/channels/#{channel_id}/recipients/#{user_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def start_thread_with_message(channel_id, message_id) do
     {:post, "/channels/#{channel_id}/messages/#{message_id}/threads"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def start_thread_without_message(channel_id) do
     {:post, "/channels/#{channel_id}/threads"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def join_thread(channel_id) do
     {:put, "/channels/#{channel_id}/thread-members/@me"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def add_thread_member(channel_id, user_id) do
     {:put, "/channels/#{channel_id}/thread-members/#{user_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def leave_thread(channel_id) do
     {:delete, "/channels/#{channel_id}/thread-members/@me"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def remove_thread_member(channel_id, user_id) do
     {:delete, "/channels/#{channel_id}/thread-members/#{user_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def list_thread_members(channel_id) do
     {:get, "/channels/#{channel_id}/thread-members"}
+    |> request()
   end
 
   @doc """
@@ -809,6 +900,7 @@ defmodule Remedy.API do
   > Note: This can be requested on both the `/channels/` and the `/guilds/` routes. To specify which route is used, you should pass a full `%Guild{}` or `%Channel{}` object.
 
   """
+  @doc since: "0.6.0"
   @unsafe {:list_active_threads, 1}
   @spec list_active_threads(Remedy.Schema.Channel.t() | Remedy.Schema.Guild.t()) ::
           {:error, any} | {:ok, any}
@@ -817,21 +909,28 @@ defmodule Remedy.API do
     |> request()
   end
 
+  @doc since: "0.6.0"
   def list_active_threads(%Channel{id: channel_id}) do
     {:get, "/channels/#{channel_id}/threads/active"}
     |> request()
   end
 
+  @doc since: "0.6.0"
   def list_public_archived_threads(channel_id) do
     {:get, "/channels/#{channel_id}/threads/archived/public"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def list_private_archived_threads(channel_id) do
     {:get, "/channels/#{channel_id}/threads/archived/private"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def list_joined_private_archived_threads(channel_id) do
     {:get, "/channels/#{channel_id}/users/@me/threads/archived/private"}
+    |> request()
   end
 
   ## Emoji
@@ -846,6 +945,7 @@ defmodule Remedy.API do
 
   def list_guild_emojis(guild_id) do
     {:get, "/guilds/#{guild_id}/emojis"}
+    |> request()
   end
 
   @doc """
@@ -858,6 +958,7 @@ defmodule Remedy.API do
 
   def get_guild_emoji(guild_id, emoji_id) do
     {:get, "/guilds/#{guild_id}/emojis/#{emoji_id}"}
+    |> request()
   end
 
   @doc """
@@ -888,6 +989,7 @@ defmodule Remedy.API do
 
   def create_guild_emoji(guild_id) do
     {:post, "/guilds/#{guild_id}/emojis"}
+    |> request()
   end
 
   @doc """
@@ -914,6 +1016,7 @@ defmodule Remedy.API do
 
   def modify_guild_emoji(guild_id, emoji_id) do
     {:patch, "/guilds/#{guild_id}/emojis/#{emoji_id}"}
+    |> request()
   end
 
   @doc """
@@ -928,6 +1031,7 @@ defmodule Remedy.API do
   """
   def delete_guild_emoji(guild_id, emoji_id) do
     {:delete, "/guilds/#{guild_id}/emojis/#{emoji_id}"}
+    |> request()
   end
 
   ############################################################
@@ -941,8 +1045,10 @@ defmodule Remedy.API do
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
   ############################################################
 
-  def create_guild() do
+  @doc since: "0.6.0"
+  def create_guild do
     {:post, "/guilds"}
+    |> request()
   end
 
   @doc """
@@ -957,6 +1063,7 @@ defmodule Remedy.API do
 
   def get_guild(guild_id) do
     {:get, "/guilds/#{guild_id}"}
+    |> request()
   end
 
   @doc """
@@ -995,6 +1102,7 @@ defmodule Remedy.API do
 
   def modify_guild(guild_id) do
     {:patch, "/guilds/#{guild_id}"}
+    |> request()
   end
 
   @doc """
@@ -1014,6 +1122,7 @@ defmodule Remedy.API do
   """
   def delete_guild(guild_id) do
     {:delete, "/guilds/#{guild_id}"}
+    |> request()
   end
 
   @doc """
@@ -1028,6 +1137,7 @@ defmodule Remedy.API do
 
   def get_guild_channels(guild_id) do
     {:get, "/guilds/#{guild_id}/channels"}
+    |> request()
   end
 
   @doc """
@@ -1061,6 +1171,7 @@ defmodule Remedy.API do
 
   def create_guild_channel(guild_id) do
     {:post, "/guilds/#{guild_id}/channels"}
+    |> request()
   end
 
   @doc """
@@ -1089,6 +1200,7 @@ defmodule Remedy.API do
   """
   def modify_guild_channel_positions(guild_id) do
     {:patch, "/guilds/#{guild_id}/channels"}
+    |> request()
   end
 
   @doc """
@@ -1101,6 +1213,7 @@ defmodule Remedy.API do
   """
   def get_guild_member(guild_id, user_id) do
     {:get, "/guilds/#{guild_id}/members/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -1118,10 +1231,13 @@ defmodule Remedy.API do
   """
   def list_guild_members(guild_id) do
     {:get, "/guilds/#{guild_id}/members"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def search_guild_members(guild_id) do
     {:get, "/guilds/#{guild_id}/members/search"}
+    |> request()
   end
 
   @doc """
@@ -1162,6 +1278,7 @@ defmodule Remedy.API do
 
   def add_guild_member(guild_id, user_id) do
     {:put, "/guilds/#{guild_id}/members/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -1196,6 +1313,7 @@ defmodule Remedy.API do
 
   def modify_guild_member(guild_id, user_id) do
     {:patch, "/guilds/#{guild_id}/members/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -1215,6 +1333,7 @@ defmodule Remedy.API do
   """
   def modify_current_user_nick(guild_id) do
     {:patch, "/guilds/#{guild_id}/members/@me/nick"}
+    |> request()
   end
 
   @doc """
@@ -1227,6 +1346,7 @@ defmodule Remedy.API do
 
   def add_guild_member_role(guild_id, user_id, role_id) do
     {:put, "/guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}"}
+    |> request()
   end
 
   @doc """
@@ -1239,6 +1359,7 @@ defmodule Remedy.API do
 
   def remove_guild_member_role(guild_id, user_id, role_id) do
     {:delete, "/guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}"}
+    |> request()
   end
 
   @doc """
@@ -1259,15 +1380,19 @@ defmodule Remedy.API do
   """
   def remove_guild_member(guild_id, user_id) do
     {:delete, "/guilds/#{guild_id}/members/#{user_id}"}
+    |> request()
   end
 
   @doc """
   Gets a list of users banned from a guild.
 
   Guild to get bans for is specified by `guild_id`.
+
   """
-  def get_guild_bans(guild_id) do
+  @doc since: "0.6"
+  def list_guild_bans(guild_id) do
     {:get, "/guilds/#{guild_id}/bans"}
+    |> request()
   end
 
   @doc """
@@ -1276,6 +1401,7 @@ defmodule Remedy.API do
 
   def get_guild_ban(guild_id, user_id) do
     {:get, "/guilds/#{guild_id}/bans/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -1287,6 +1413,7 @@ defmodule Remedy.API do
 
   def create_guild_ban(guild_id, user_id) do
     {:put, "/guilds/#{guild_id}/bans/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -1297,6 +1424,7 @@ defmodule Remedy.API do
   """
   def remove_guild_ban(guild_id, user_id) do
     {:delete, "/guilds/#{guild_id}/bans/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -1310,9 +1438,10 @@ defmodule Remedy.API do
       {:ok, [%Remedy.Schema.Role{}]}
 
   """
-
-  def get_guild_roles(guild_id) do
+  @doc since: "0.6"
+  def list_guild_roles(guild_id) do
     {:get, "/guilds/#{guild_id}/roles"}
+    |> request()
   end
 
   @doc """
@@ -1453,7 +1582,7 @@ defmodule Remedy.API do
   Guild to get voice regions for is specified by `guild_id`.
   """
 
-  def get_guild_voice_regions(guild_id) do
+  def list_guild_voice_regions(guild_id) do
     {:get, "/guilds/#{guild_id}/regions"}
   end
 
@@ -1470,8 +1599,8 @@ defmodule Remedy.API do
       {:ok, [%Remedy.Schema.Invite{}]}
 
   """
-
-  def get_guild_invites(guild_id) do
+  @doc since: "0.6"
+  def list_guild_invites(guild_id) do
     {:get, "/guilds/#{guild_id}/invites"}
   end
 
@@ -1493,62 +1622,90 @@ defmodule Remedy.API do
     {:get, "/guilds/#{guild_id}/integrations/#{integration_id}"}
   end
 
+  @doc since: "0.6.0"
   def get_guild_widget_settings(guild_id) do
     {:get, "/guilds/#{guild_id}/widget"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_widget(guild_id) do
     {:get, "/guilds/#{guild_id}/widget.json"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_vanity_url(guild_id) do
     {:get, "/guilds/#{guild_id}/vanity-url"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_widget_image(guild_id) do
     {:get, "/guilds/#{guild_id}/widget.png"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_welcome_screen(guild_id) do
     {:get, "/guilds/#{guild_id}/welcome-screen"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def modify_guild_welcome_screen(guild_id) do
     {:patch, "/guilds/#{guild_id}/welcome-screen"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def modify_current_user_voice_state(guild_id) do
     {:patch, "/guilds/#{guild_id}/voice-states/@me"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def modify_user_voice_state(guild_id, user_id) do
     {:patch, "/guilds/#{guild_id}/voice-states/#{user_id}"}
+    |> request()
   end
 
   ## Guild Template
 
+  @doc since: "0.6.0"
   def get_guild_template(template_code) do
     {:get, "/guilds/templates/#{template_code}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def create_guild_from_template(template_code) do
     {:post, "/guilds/templates/#{template_code}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def create_guild_template(guild_id) do
     {:post, "/guilds/#{guild_id}/templates"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def sync_guild_from_template(guild_id, template_code) do
     {:put, "/guilds/#{guild_id}/templates/#{template_code}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def modify_guild_template(guild_id, template_code) do
     {:patch, "/guilds/#{guild_id}/templates/#{template_code}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def delete_guild_template(guild_id, template_code) do
     {:delete, "/guilds/#{guild_id}/templates/#{template_code}"}
+    |> request()
   end
 
   ## Invite
@@ -1574,6 +1731,7 @@ defmodule Remedy.API do
   """
   def get_invite(invite_code) do
     {:get, "/invites/#{invite_code}"}
+    |> request()
   end
 
   @doc """
@@ -1591,6 +1749,7 @@ defmodule Remedy.API do
   """
   def delete_invite(invite_code) do
     {:delete, "/invites/#{invite_code}"}
+    |> request()
   end
 
   #################################################################
@@ -1604,20 +1763,28 @@ defmodule Remedy.API do
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
   #################################################################
 
+  @doc since: "0.6.0"
   def create_stage_instance do
     {:post, "/stage-instances"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_stage_instance(channel_id) do
     {:get, "/stage-instances/#{channel_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def modify_stage_instance(channel_id) do
     {:patch, "/stage-instances/#{channel_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def delete_stage_instance(channel_id) do
     {:delete, "/stage-instances/#{channel_id}"}
+    |> request()
   end
 
   #############################################################################
@@ -1631,32 +1798,46 @@ defmodule Remedy.API do
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
   #############################################################################
 
+  @doc since: "0.6.0"
   def get_sticker(sticker_id) do
     {:get, "/stickers/#{sticker_id}"}
+    |> request()
   end
 
-  def list_nitro_sticker_packs() do
+  @doc since: "0.6.0"
+  def list_nitro_sticker_packs do
     {:get, "/sticker-packs"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def list_guild_stickers(guild_id) do
     {:get, "/guilds/#{guild_id}/stickers"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_sticker(guild_id, sticker_id) do
     {:get, "/guilds/#{guild_id}/stickers/#{sticker_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def create_guild_sticker(guild_id, sticker_id) do
     {:post, "/guilds/#{guild_id}/stickers/#{sticker_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def modify_guild_sticker(guild_id, sticker_id) do
     {:patch, "/guilds/#{guild_id}/stickers/#{sticker_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def delete_guild_sticker(guild_id, sticker_id) do
     {:delete, "/guilds/#{guild_id}/stickers/#{sticker_id}"}
+    |> request()
   end
 
   #######################################################
@@ -1681,8 +1862,9 @@ defmodule Remedy.API do
   `user` is remedy's `Remedy.Schema.User`. Otherwise, returns `{:error, reason}`.
   """
 
-  def get_current_user() do
+  def get_current_user do
     {:get, "/users/@me"}
+    |> request()
   end
 
   @doc """
@@ -1693,6 +1875,7 @@ defmodule Remedy.API do
   """
   def get_user(user_id) do
     {:get, "/users/#{user_id}"}
+    |> request()
   end
 
   @doc """
@@ -1710,6 +1893,7 @@ defmodule Remedy.API do
   """
   def modify_current_user do
     {:patch, "/users/@me"}
+    |> request()
   end
 
   @doc """
@@ -1731,8 +1915,9 @@ defmodule Remedy.API do
       {:ok, [%Remedy.Schema.Guild{}]}
 
   """
-  def get_current_user_guilds() do
+  def get_current_user_guilds do
     {:get, "/users/@me/guilds"}
+    |> request()
   end
 
   @doc """
@@ -1742,6 +1927,7 @@ defmodule Remedy.API do
   """
   def leave_guild(guild_id) do
     {:delete, "/users/@me/guilds/#{guild_id}"}
+    |> request()
   end
 
   @doc """
@@ -1755,8 +1941,9 @@ defmodule Remedy.API do
       {:ok, %Remedy.Schema.Channel{type: 1}}
 
   """
-  def create_dm() do
+  def create_dm do
     {:post, "/users/@me/channels"}
+    |> request()
   end
 
   @doc """
@@ -1773,16 +1960,18 @@ defmodule Remedy.API do
       {:ok, %Remedy.Schema.Channel{type: 3}}
 
   """
-  def create_group_dm() do
+  def create_group_dm do
     {:post, "/users/@me/channels"}
+    |> request()
   end
 
   @doc """
   Gets a list of user connections.
   """
 
-  def get_user_connections() do
+  def get_user_connections do
     {:get, "/users/@me/connections"}
+    |> request()
   end
 
   ## Voice
@@ -1790,8 +1979,9 @@ defmodule Remedy.API do
   Gets a list of voice regions.
   """
 
-  def list_voice_regions() do
+  def list_voice_regions do
     {:get, "/voice/regions"}
+    |> request()
   end
 
   ######################################################################################
@@ -1818,6 +2008,7 @@ defmodule Remedy.API do
 
   def create_webhook(channel_id) do
     {:post, "/channels/#{channel_id}/webhooks"}
+    |> request()
   end
 
   @doc """
@@ -1827,8 +2018,9 @@ defmodule Remedy.API do
     - `channel_id` - Channel to get webhooks for.
   """
 
-  def get_channel_webhooks(channel_id) do
+  def list_channel_webhooks(channel_id) do
     {:get, "/channels/#{channel_id}/webhooks"}
+    |> request()
   end
 
   @doc """
@@ -1838,12 +2030,15 @@ defmodule Remedy.API do
     - `guild_id` - Guild to get webhooks for.
   """
 
-  def get_guild_webhooks(guild_id) do
+  def list_guild_webhooks(guild_id) do
     {:get, "/guilds/#{guild_id}/webhooks"}
+    |> request()
   end
 
-  def get_webhooks(guild_id) do
+  @doc since: "0.6.0"
+  def list_webhooks(guild_id) do
     {:get, "/#{guild_id}/webhooks"}
+    |> request()
   end
 
   @doc """
@@ -1855,6 +2050,7 @@ defmodule Remedy.API do
 
   def get_webhook(webhook_id) do
     {:get, "/webhooks/#{webhook_id}"}
+    |> request()
   end
 
   @doc """
@@ -1870,6 +2066,7 @@ defmodule Remedy.API do
 
   def get_webhooks_with_token(webhook_id, webhook_token) do
     {:get, "/webhooks/#{webhook_id}/#{webhook_token}"}
+    |> request()
   end
 
   @doc """
@@ -1885,6 +2082,7 @@ defmodule Remedy.API do
 
   def modify_webhook(webhook_id) do
     {:patch, "/webhooks/#{webhook_id}"}
+    |> request()
   end
 
   @doc """
@@ -1903,6 +2101,7 @@ defmodule Remedy.API do
   """
   def modify_webhooks_with_token(webhook_id, webhook_token) do
     {:modify, "/webhooks/#{webhook_id}/#{webhook_token}"}
+    |> request()
   end
 
   @doc """
@@ -1914,10 +2113,13 @@ defmodule Remedy.API do
   """
   def delete_webhook(webhook_id) do
     {:delete, "/webhooks/#{webhook_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def delete_webhooks_with_token(webhook_id, webhook_token) do
     {:delete, "/webhooks/#{webhook_id}/#{webhook_token}"}
+    |> request()
   end
 
   @doc """
@@ -1940,6 +2142,7 @@ defmodule Remedy.API do
 
   def execute_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}"}
+    |> request()
   end
 
   @doc """
@@ -1952,6 +2155,7 @@ defmodule Remedy.API do
 
   def execute_slack_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}/slack"}
+    |> request()
   end
 
   @doc """
@@ -1963,18 +2167,25 @@ defmodule Remedy.API do
   """
   def execute_github_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}/github"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_webhook_message(webhook_id, webhook_token, message_id) do
     {:get, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def edit_webhook_message(webhook_id, webhook_token, message_id) do
     {:patch, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def delete_webhook_message(webhook_id, webhook_token, message_id) do
     {:delete, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}"}
+    |> request()
   end
 
   ####################################################################################################
@@ -2014,8 +2225,9 @@ defmodule Remedy.API do
 
   """
 
-  def get_global_application_commands() do
+  def get_global_application_commands do
     {:get, "/applications/#{DiscordBot.id()}/commands"}
+    |> request()
   end
 
   @doc """
@@ -2041,12 +2253,15 @@ defmodule Remedy.API do
       {:ok, %Remedy.Schema.Command{}}
 
   """
-  def create_global_application_command() do
+  def create_global_application_command do
     {:post, "/applications/#{DiscordBot.id()}/commands"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_global_application_command(command_id) do
     {:get, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
+    |> request()
   end
 
   @doc """
@@ -2066,6 +2281,7 @@ defmodule Remedy.API do
   """
   def edit_global_application_command(command_id) do
     {:patch, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
+    |> request()
   end
 
   @doc """
@@ -2078,6 +2294,7 @@ defmodule Remedy.API do
   """
   def delete_global_application_command(command_id) do
     {:delete, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
+    |> request()
   end
 
   @doc """
@@ -2100,28 +2317,39 @@ defmodule Remedy.API do
   Updated list of global application commands. See the official reference:
   https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-global-application-commands
   """
-  def bulk_overwrite_global_application_commands() do
+  def bulk_overwrite_global_application_commands do
     {:put, "/applications/#{DiscordBot.id()}/commands"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_application_commands(guild_id) do
     {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def create_guild_application_command(guild_id, command_id) do
     {:create, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_application_command(guild_id, command_id) do
     {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def edit_guild_application_command(guild_id, command_id) do
     {:patch, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def delete_guild_application_command(guild_id, command_id) do
     {:delete, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    |> request()
   end
 
   @doc """
@@ -2144,22 +2372,31 @@ defmodule Remedy.API do
   """
   def bulk_overwrite_guild_application_commands(guild_id) do
     {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_guild_application_command_permissions(guild_id) do
     {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/permissions"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_application_command_permissions(guild_id, command_id) do
     {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}/permissions"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def edit_application_command_permissions(guild_id, command_id) do
     {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}/permissions"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def batch_edit_application_command_permissions(guild_id) do
     {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/permissions"}
+    |> request()
   end
 
   ## Interactions
@@ -2183,18 +2420,25 @@ defmodule Remedy.API do
   """
   def create_interaction_response(interaction_id, interaction_token) do
     {:post, "/interactions/#{interaction_id}/#{interaction_token}/callback"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_original_interaction_response(interaction_token) do
     {:get, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def edit_original_interaction_response(interaction_token) do
     {:patch, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def delete_original_interaction_response(interaction_token) do
     {:delete, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
+    |> request()
   end
 
   @doc """
@@ -2205,14 +2449,19 @@ defmodule Remedy.API do
 
   def create_followup_message(interaction_token) do
     {:post, "/webhooks/#{DiscordBot.id()}/#{interaction_token}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_followup_message(interaction_token, message_id) do
     {:get, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def edit_followup_message(interaction_token, message_id) do
     {:patch, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
+    |> request()
   end
 
   @doc """
@@ -2226,44 +2475,54 @@ defmodule Remedy.API do
   """
   def delete_followup_message(interaction_token, message_id) do
     {:delete, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
+    |> request()
   end
 
   ## Gateway
-
+  @doc since: "0.6.0"
   def get_gateway do
     {:get, "/gateway"}
+    |> request()
   end
 
+  @doc since: "0.6.0"
   def get_gateway_bot do
     {:get, "/gateway/bot"}
     |> request()
   end
 
-  #######
-  ### Private
-  #######
-
-  alias Remedy.API.RestRequest
+  #####################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░██████╗░░██████╗░░██╗░██╗░░░██╗░░█████╗░░████████╗░███████╗░ ###
+  ### ░██╔══██╗░██╔══██╗░██║░██║░░░██║░██╔══██╗░╚══██╔══╝░██╔════╝░ ###
+  ### ░██████╔╝░██████╔╝░██║░╚██╗░██╔╝░███████║░░░░██║░░░░█████╗░░░ ###
+  ### ░██╔═══╝░░██╔══██╗░██║░░╚████╔╝░░██╔══██║░░░░██║░░░░██╔══╝░░░ ###
+  ### ░██║░░░░░░██║░░██║░██║░░░╚██╔╝░░░██║░░██║░░░░██║░░░░███████╗░ ###
+  ### ░╚═╝░░░░░░╚═╝░░╚═╝░╚═╝░░░░╚═╝░░░░╚═╝░░╚═╝░░░░╚═╝░░░░╚══════╝░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  #####################################################################
 
   defp request({_, _} = rest_request) do
     request(rest_request, %{}, nil, nil)
   end
 
-  def request({_, _} = rest_request, params) when is_list(params) do
+  defp request({_, _} = rest_request, params) when is_list(params) do
     request(rest_request, %{}, params, nil)
   end
 
-  def request({_, _} = rest_request, body) when is_map(body) do
+  defp request({_, _} = rest_request, body) when is_map(body) do
     request(rest_request, body, nil, nil)
   end
 
-  def request({_, _} = rest_request, body, nil) do
+  defp request({_, _} = rest_request, body, nil) do
     request(rest_request, body)
   end
 
-  def request({_, _} = rest_request, body, reason) do
+  defp request({_, _} = rest_request, body, reason) do
     request(rest_request, body, nil, reason)
   end
+
+  import Remedy.API.RestRequest
 
   defp request(rest_request, body, params, reason_header) do
     rest_request
@@ -2274,107 +2533,8 @@ defmodule Remedy.API do
     |> handle_request()
   end
 
-  defp base_request({method, route}) do
-    %RestRequest{method: method, route: route}
-  end
-
-  defp add_request_query_params(%RestRequest{route: route} = request, nil) do
-    %RestRequest{request | route: "/api/v9" <> route}
-  end
-
-  defp add_request_query_params(%RestRequest{route: route} = request, params) do
-    %RestRequest{request | route: "/api/v9" <> route <> "?" <> URI.encode_query(params)}
-  end
-
-  defp add_request_audit_log_headers(%RestRequest{} = request, nil), do: request
-
-  defp add_request_audit_log_headers(%RestRequest{} = request, reason) do
-    %RestRequest{request | headers: [{"X-Audit-Log-Reason", reason |> URI.encode()}]}
-  end
-
-  ## MULTIPART
-  defp add_request_body(%RestRequest{headers: headers} = request, %{file: file} = body) do
-    %RestRequest{
-      request
-      | body: [
-          {
-            :file,
-            file,
-            {"form-data", [{"filename", body[:content]}]},
-            [{"tts", body[:tts]}]
-          }
-        ],
-        headers: [{"content-type", "multipart/form-data"}] ++ headers
-    }
-  end
-
-  ## JSON
-  defp add_request_body(%RestRequest{headers: headers} = request, body) do
-    %RestRequest{request | body: Jason.encode!(body), headers: [{"content-type", "application/json"}] ++ headers}
-  end
-
-  defp handle_request(request), do: request |> IO.inspect() |> Rest.request()
+  defp handle_request(request), do: request |> Rest.request()
 
   defp unwrap({:ok, body}), do: body
   defp unwrap({:error, _}), do: raise(Remedy.APIError)
-
-  ####################################################################
-  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
-  ### ░░█████╗░░██╗░░░██╗░░██████╗░████████╗░░█████╗░░███╗░░░███╗░ ###
-  ### ░██╔══██╗░██║░░░██║░██╔════╝░╚══██╔══╝░██╔══██╗░████╗░████║░ ###
-  ### ░██║░░╚═╝░██║░░░██║░╚█████╗░░░░░██║░░░░██║░░██║░██╔████╔██║░ ###
-  ### ░██║░░██╗░██║░░░██║░░╚═══██╗░░░░██║░░░░██║░░██║░██║╚██╔╝██║░ ###
-  ### ░╚█████╔╝░╚██████╔╝░██████╔╝░░░░██║░░░░╚█████╔╝░██║░╚═╝░██║░ ###
-  ### ░░╚════╝░░░╚═════╝░░╚═════╝░░░░░╚═╝░░░░░╚════╝░░╚═╝░░░░░╚═╝░ ###
-  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
-  ####################################################################
-
-  @doc """
-  Deletes multiple messages from a channel.
-
-  `messages` is a list of `Remedy.Schema.Message.id` that you wish to delete.
-  When given more than 100 messages, this function will chunk the given message
-  list into blocks of 100 and send them off to the API. It will stop deleting
-  on the first error that occurs. Keep in mind that deleting thousands of
-  messages will take a pretty long time and it may be proper to just delete
-  the channel you want to bulk delete in and recreate it.
-
-  This method can only delete messages sent within the last two weeks.
-  `Filter` is an optional parameter that specifies whether messages sent over
-  two weeks ago should be filtered out; defaults to `true`.
-  """
-
-  @spec bulk_delete_messages(integer, [Remedy.Schema.Message.id()], boolean) :: error | {:ok}
-  def bulk_delete_messages(channel_id, messages, filter \\ true)
-
-  def bulk_delete_messages(channel_id, messages, false),
-    do: send_chunked_delete(messages, channel_id)
-
-  def bulk_delete_messages(channel_id, messages, true) do
-    alias Sunbake.Snowflake
-
-    snowflake_two_weeks_ago =
-      DateTime.utc_now()
-      |> DateTime.to_unix()
-      |> Kernel.-(60 * 60 * 24 * 14)
-      |> DateTime.from_unix!()
-      |> Snowflake.from_datetime!()
-
-    messages
-    |> Stream.filter(&(&1 > snowflake_two_weeks_ago))
-    |> send_chunked_delete(channel_id)
-  end
-
-  defp send_chunked_delete(messages, channel_id) do
-    messages
-    |> Stream.chunk_every(100)
-    |> Stream.map(fn message_chunk ->
-      request(
-        :post,
-        Endpoints.channel_bulk_delete(channel_id),
-        %{messages: message_chunk}
-      )
-    end)
-    |> Enum.find({:ok}, &match?({:error, _}, &1))
-  end
 end

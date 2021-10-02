@@ -1,5 +1,7 @@
 defmodule Remedy.Gateway do
-  @moduledoc false
+  @moduledoc """
+  Exposes functions for gateway interraction.
+  """
 
   use Supervisor
   alias Remedy.API

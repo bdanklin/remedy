@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.1">
+    <meta name="project" content="Remedy v0.6.2">
 
-    <title>Remedy.API.Ratelimiter — Remedy v0.6.1</title>
+    <title>Remedy.API.Ratelimiter — Remedy v0.6.2</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-f5f4223611.js"></script>
+    <script src="dist/sidebar_items-06bb646f9d.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.1
+        v0.6.2
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.API.Ratelimiter <small class="app-vsn">(Remedy v0.6.1)</small>
+Remedy.API.Ratelimiter <small class="app-vsn">(Remedy v0.6.2)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/api/ratelimiter.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -95,11 +95,11 @@ Remedy.API.Ratelimiter <small class="app-vsn">(Remedy v0.6.1)</small>
 
 
         <section id="moduledoc">
-<p>Simple Ratelimiter implementation.</p><p>Due to limitations and the dynamic nature of the Discord ratelimit system, it is not possible to know the ratelimits of given routes beforehand.</p><p>There are several types of rate limits at play:</p><ul><li>A global ratelimit of 50 requests per second must be respected.</li><li>Route specific ratelimits are dynamic and can change, they can also be shared across routes. These are only known after a request has been sent.</li><li>Hidden ratelimits against specific resources. (Will error and not provide an accurate ratelimit. These are known to be applied to Emojis and deleting older messages.)</li></ul><p>This module keeps a state of</p><pre><code class="makeup elixir"><span class="p" data-group-id="6690881890-1">%{</span><span class="w">
-  </span><span class="s">&quot;route1&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6690881890-2">{</span><span class="n">bucket1</span><span class="p">,</span><span class="w"> </span><span class="n">reset1</span><span class="p">,</span><span class="w"> </span><span class="n">limit1</span><span class="p" data-group-id="6690881890-2">}</span><span class="p">,</span><span class="w">
-  </span><span class="s">&quot;route2&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6690881890-3">{</span><span class="n">bucket2</span><span class="p">,</span><span class="w"> </span><span class="n">reset2</span><span class="p">,</span><span class="w"> </span><span class="n">limit2</span><span class="p" data-group-id="6690881890-3">}</span><span class="p">,</span><span class="w">
-  </span><span class="s">&quot;route3&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6690881890-4">{</span><span class="n">bucket3</span><span class="p">,</span><span class="w"> </span><span class="n">reset3</span><span class="p">,</span><span class="w"> </span><span class="n">limit3</span><span class="p" data-group-id="6690881890-4">}</span><span class="w">
-</span><span class="p" data-group-id="6690881890-1">}</span><span class="err">`</span><span class="err">`</span><span class="err">`</span><span class="w">
+<p>Simple Ratelimiter implementation.</p><p>Due to limitations and the dynamic nature of the Discord ratelimit system, it is not possible to know the ratelimits of given routes beforehand.</p><p>There are several types of rate limits at play:</p><ul><li>A global ratelimit of 50 requests per second must be respected.</li><li>Route specific ratelimits are dynamic and can change, they can also be shared across routes. These are only known after a request has been sent.</li><li>Hidden ratelimits against specific resources. (Will error and not provide an accurate ratelimit. These are known to be applied to Emojis and deleting older messages.)</li></ul><p>This module keeps a state of</p><pre><code class="makeup elixir"><span class="p" data-group-id="6062417966-1">%{</span><span class="w">
+  </span><span class="s">&quot;route1&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6062417966-2">{</span><span class="n">bucket1</span><span class="p">,</span><span class="w"> </span><span class="n">reset1</span><span class="p">,</span><span class="w"> </span><span class="n">limit1</span><span class="p" data-group-id="6062417966-2">}</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;route2&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6062417966-3">{</span><span class="n">bucket2</span><span class="p">,</span><span class="w"> </span><span class="n">reset2</span><span class="p">,</span><span class="w"> </span><span class="n">limit2</span><span class="p" data-group-id="6062417966-3">}</span><span class="p">,</span><span class="w">
+  </span><span class="s">&quot;route3&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6062417966-4">{</span><span class="n">bucket3</span><span class="p">,</span><span class="w"> </span><span class="n">reset3</span><span class="p">,</span><span class="w"> </span><span class="n">limit3</span><span class="p" data-group-id="6062417966-4">}</span><span class="w">
+</span><span class="p" data-group-id="6062417966-1">}</span><span class="err">`</span><span class="err">`</span><span class="err">`</span><span class="w">
 
 </span><span class="o">-</span><span class="w"> </span><span class="nc">A</span><span class="w"> </span><span class="n">route</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">added</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">whenever</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">headers</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">recieved</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">successful</span><span class="w"> </span><span class="n">request</span><span class="o">.</span><span class="w">
 </span><span class="o">-</span><span class="w"> </span><span class="nc">Global</span><span class="w"> </span><span class="n">ratelimit</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">updated</span><span class="w"> </span><span class="n">regardless</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">success</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">request</span><span class="o">.</span></code></pre>
@@ -332,10 +332,10 @@ Functions
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.1" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.1" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.2" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.2" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.1/show/lib/remedy/api/ratelimiter.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.2/show/lib/remedy/api/ratelimiter.ex">(current file)</a>
 
         </p>
 

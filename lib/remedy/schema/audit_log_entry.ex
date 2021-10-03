@@ -1,26 +1,26 @@
-defmodule Remedy.Schema.AuditLog do
+defmodule Remedy.Schema.AuditLogEntry do
   @moduledoc """
-  Discord Audit Log Object
+  Discord Audit Log Entry Object
   """
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          guild: Guild.t(),
-          webhooks: [Webhook.t()],
-          users: [User.t()],
-          audit_log_entries: [AuditLogEntry.t()],
-          integrations: [Integration.t()],
-          threads: [Thread.t()]
+          target_id: String.t(),
+          action_type: integer(),
+          reason: String.t(),
+          user: User.t(),
+          options: [AuditLogOption.t()],
+          changes: [AuditLogChange.t()]
         }
 
-  @primary_key false
+  @primary_key {:id, :id, autogenerate: false}
   embedded_schema do
-    belongs_to :guild, Guild
-    embeds_many :webhooks, Webhook
-    embeds_many :users, User
-    embeds_many :audit_log_entries, AuditLogEntry
-    embeds_many :integrations, Integration
-    embeds_many :threads, Channel
+    field :target_id, :string
+    field :action_type, :integer
+    field :reason, :string
+    field :changes, {:array, :map}
+    belongs_to :user, User
+    embeds_many :options, AuditLogOption
   end
 
   def new(params) do

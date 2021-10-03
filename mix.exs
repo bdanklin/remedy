@@ -109,6 +109,7 @@ defmodule Remedy.MixProject do
       {:jason, "~> 1.2"},
       {:mime, "~> 2.0"},
       {:progress_bar, "~> 2.0"},
+      {:cowlib, "~> 2.11.1", hex: :remedy_cowlib, override: true},
       {:gun, "~> 2.0", hex: :remedy_gun},
       {:kcl, "~> 1.4"},
       {:porcelain, "~> 2.0"},

@@ -10,7 +10,7 @@
     <title>Remedy.Schema — Remedy v0.6.3</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-71228f5fe8.js"></script>
+    <script src="dist/sidebar_items-4dbb05295c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -95,7 +95,15 @@ Remedy.Schema <small>behaviour</small> <small class="app-vsn">(Remedy v0.6.3)</s
 
 
         <section id="moduledoc">
-<p>Remedy Schema Behaviour</p><p>Provides some basic schema helpers and alias automatically for the internal schema.</p><blockquote><p>Note: It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly. eg <code class="inline">alias Remedy.Schema.Guild</code></p></blockquote>
+<p>Schema sets out all of the objects and types used within the Discord API.</p><blockquote><p>The unfortunate reason that this is required is because Discord is unreliable at delivering particular types. For example, <code class="inline">:id</code> can be returned as either an integer or a string. This is no use to man nor beast.</p></blockquote><p>It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly, or the whole schema module, for example:</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema.Member</span></code></pre><p>Which would make an individual resource available as <a href="`t:Remedy.Schema.Member/0`"><code class="inline">%Member{}</code></a>.</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Discord</span></code></pre><p>Which would make all of the schema available as <a href="`t:Remedy.Schema.Guild/0`"><code class="inline">%Discord.Guild{}</code></a>.</p><h2 id="module-helper-functions" class="section-heading">
+  <a href="#module-helper-functions" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Helper Functions
+</h2>
+<p>Should you be looking for help manipulating any of the individual Schema, helper functions exist within the particular modules</p><h2 id="module-callbacks" class="section-heading">
+  <a href="#module-callbacks" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Callbacks
+</h2>
+<p>While the callbacks within this module primarily exist for internal use only. They can be invoked to manually validate certain structs before sending them to Discord through the <a href="Remedy.API.html"><code class="inline">Remedy.API</code></a> module.</p>
         </section>
 
 
@@ -157,7 +165,7 @@ Callbacks
     </a>
     <h1 class="signature">new(params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L11" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L31" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -186,7 +194,7 @@ Callbacks
     </a>
     <h1 class="signature">update(struct, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L12" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L32" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -215,7 +223,7 @@ Callbacks
     </a>
     <h1 class="signature">validate(changeset)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L33" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

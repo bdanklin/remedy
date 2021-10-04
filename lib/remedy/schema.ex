@@ -26,6 +26,7 @@ defmodule Remedy.Schema do
 
   While the callbacks within this module primarily exist for internal use only. They can be invoked to manually validate certain structs before sending them to Discord through the `Remedy.API` module.
 
+
   """
 
   @callback new(params :: map()) :: struct :: map()

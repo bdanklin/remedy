@@ -1,10 +1,30 @@
 defmodule Remedy.Schema do
   @moduledoc """
-  Remedy Schema Behaviour
+  Schema sets out all of the objects and types used within the Discord API.
 
-  Provides some basic schema helpers and alias automatically for the internal schema.
+  > The unfortunate reason that this is required is because Discord is unreliable at delivering particular types. For example, `:id` can be returned as either an integer or a string. This is no use to man nor beast.
 
-  > Note: It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly. eg `alias Remedy.Schema.Guild`
+  It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly, or the whole schema module, for example:
+
+    ```elixir
+  alias Remedy.Schema.Member
+  ```
+
+  Which would make an individual resource available as [`%Member{}`](`t:Remedy.Schema.Member/0`).
+
+  ```elixir
+  alias Remedy.Schema, as: Discord
+  ```
+
+  Which would make all of the schema available as [`%Discord.Guild{}`](`t:Remedy.Schema.Guild/0`).
+
+  ## Helper Functions
+
+  Should you be looking for help manipulating any of the individual Schema, helper functions exist within the particular modules
+
+  ## Callbacks
+
+  While the callbacks within this module primarily exist for internal use only. They can be invoked to manually validate certain structs before sending them to Discord through the `Remedy.API` module.
 
   """
 

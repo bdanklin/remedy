@@ -1,4 +1,4 @@
-defmodule Remedy.CDN do
+defmodule Remedy.CDNTest do
   use ExUnit.Case, async: true
 
   alias Remedy.Schema.{App, Guild, StickerPack, User}

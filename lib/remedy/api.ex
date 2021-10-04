@@ -60,6 +60,7 @@ defmodule Remedy.API do
     Member,
     Message,
     Role,
+    Sticker,
     User,
     Webhook
   }
@@ -445,7 +446,7 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.create_message(872417560094732331, content: "hello world!")
+      iex> Remedy.API.create_message(872417560094732331, content: "**Doctest Message** ✅")
       {:ok, %Message{}}
 
   """
@@ -1171,8 +1172,11 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.delete_guild(81384788765712384)
-      {:ok}
+      iex> Remedy.API.delete_guild(618432108653707274)
+      {:error, {403, 50001, "Missing Access"}}
+
+      iex> Remedy.API.delete_guild(618432108653707274)
+      {:error, {403, 50001, "Missing Access"}}
 
   """
 
@@ -1855,11 +1859,29 @@ defmodule Remedy.API do
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
   #############################################################################
 
+  @doc """
+  Returns a sticker object.
+
+  ## Examples
+
+      iex> Remedy.API.get_sticker(818599312882794506)
+      {:ok, %Remedy.Schema.Sticker{}}
+
+      iex> Remedy.API.get_sticker(123)
+      {:error, {404, 10060, "Unknown sticker"}}
+
+  """
   @doc since: "0.6.0"
+  @unsafe {:get_sticker, [:sticker_id]}
+  @spec get_sticker(snowflake) :: {:error, any} | {:ok, %Sticker{}}
   def get_sticker(sticker_id) do
     {:get, "/stickers/#{sticker_id}"}
     |> request()
+    |> parse_get_sticker()
   end
+
+  defp parse_get_sticker({:error, _reason} = error), do: error
+  defp parse_get_sticker({:ok, sticker}), do: {:ok, Sticker.new(sticker)}
 
   @doc since: "0.6.0"
   def list_nitro_sticker_packs do
@@ -1918,11 +1940,15 @@ defmodule Remedy.API do
   If the request is successful, this function returns `{:ok, user}`, where
   `user` is remedy's `Remedy.Schema.User`. Otherwise, returns `{:error, reason}`.
   """
-
+  @unsafe {:get_current_user, []}
   def get_current_user do
     {:get, "/users/@me"}
     |> request()
+    |> parse_get_current_user()
   end
+
+  defp parse_get_current_user({:error, _reason} = error), do: error
+  defp parse_get_current_user({:ok, user}), do: {:ok, User.new(user)}
 
   @doc """
   Gets a user by its `t:Remedy.Schema.User.id/0`.
@@ -1930,9 +1956,19 @@ defmodule Remedy.API do
   If the request is successful, this function returns `{:ok, user}`, where
   `user` is a `Remedy.Schema.User`. Otherwise, returns `{:error, reason}`.
   """
+  @unsafe {:get_user, [:user_id]}
   def get_user(user_id) do
     {:get, "/users/#{user_id}"}
     |> request()
+    |> parse_get_user()
+  end
+
+  defp parse_get_user({:error, _reason} = error), do: error
+
+  defp parse_get_user({:ok, user}) do
+    {:ok,
+     user
+     |> User.new()}
   end
 
   @doc """

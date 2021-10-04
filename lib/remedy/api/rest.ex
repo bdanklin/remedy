@@ -81,13 +81,13 @@ defmodule Remedy.API.Rest do
   defp process_response(
          {:ok, %RestResponse{body: %{code: code, message: message}, status: status}},
          %RestRequest{}
-       )
-       when status in [401, 403, 429] do
+       ) do
     Logger.info("REQUEST REJECTED: #{message}")
     {:error, {status, code, message}}
   end
 
-  defp process_response({:ok, %RestResponse{body: body} = _response}, %RestRequest{} = _request) do
+  defp process_response({:ok, %RestResponse{body: body} = response}, %RestRequest{} = _request) do
+    Logger.debug("#{inspect(response, pretty: true)}")
     {:ok, body}
   end
 end

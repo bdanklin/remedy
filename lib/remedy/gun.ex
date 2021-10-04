@@ -26,6 +26,8 @@ defmodule Remedy.Gun do
   end
 
   defp await_http2_up(%Rest{conn: conn} = socket) do
+    Logger.debug(inspect(socket))
+
     case :gun.await_up(conn, 10_000) do
       {:ok, :http2} -> socket
     end

@@ -1,7 +1,4 @@
-use Mix.Config
-
-config :porcelain,
-  driver: Porcelain.Driver.Basic
+import Config
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

@@ -7,6 +7,7 @@ defmodule Remedy.Schema.Sticker do
 
   @type t :: %__MODULE__{
           name: String.t(),
+          asset: String.t(),
           description: String.t(),
           tags: String.t(),
           type: integer(),
@@ -20,6 +21,7 @@ defmodule Remedy.Schema.Sticker do
 
   embedded_schema do
     field :name, :string
+    field :asset, :string
     field :description, :string
     field :tags, :string
     field :type, :integer

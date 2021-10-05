@@ -33,55 +33,13 @@ defmodule Remedy.Gun do
     end
   end
 
-  def open_websocket(%WSState{gateway: gateway} = socket) do
-    case :gun.open(:binary.bin_to_list(gateway), 443, %{
-           protocols: [:http],
-           retry: 1_000_000_000
-         }) do
-      {:ok, conn} ->
-        {:ok, conn}
-
-        %{socket | conn: conn}
-        |> await_websocket_up()
-    end
-  end
-
-  defp await_websocket_up(%WSState{conn: conn} = socket) do
-    case :gun.await_up(conn, 10_000) do
-      {:ok, :http} ->
-        socket
-        |> upgrade_ws_await()
-    end
-  end
-
-  defp upgrade_ws_await(%WSState{conn: conn} = socket) do
-    %{socket | gun_data_stream: :gun.ws_upgrade(conn, @gateway_qs)} |> await_ws()
-  end
-
-  defp await_ws(%{conn: conn, gun_data_stream: gun_data_stream} = state) do
-    case :gun.await(conn, gun_data_stream, 10_000) do
-      {:upgrade, ["websocket"], _headers} -> state
-    end
-  end
-
-  @doc """
-  Send the payload over the Websocket.
-  """
-  def websocket_send(payload, %WSState{conn: conn, gun_data_stream: gun_data_stream} = socket) do
-    case :gun.ws_send(conn, gun_data_stream, {:binary, payload}) do
-      :ok -> socket
-    end
-  end
-
-  @spec request(Remedy.API.RestRequest.t(), Remedy.API.Rest.t()) ::
-          {:error, binary} | {:ok, Remedy.API.RestResponse.t()}
-  @doc """
-  Send the request over HTTP2.
-  """
   @type status :: integer()
   @type headers :: keyword()
   @type body :: term
   @type reason :: term
+
+  @spec request(Remedy.API.RestRequest.t(), Remedy.API.Rest.t()) ::
+          {:error, binary} | {:ok, Remedy.API.RestResponse.t()}
 
   def request(%RestRequest{method: :get} = request, state),
     do: request |> get(state) |> await() |> prepare_response()
@@ -152,9 +110,42 @@ defmodule Remedy.Gun do
   defp prepare_response({:error, reason}), do: {:error, reason}
   defp prepare_response(%RestResponse{} = response), do: {:ok, response}
 
-  @doc """
-  Zlib Init
-  """
+  def open_websocket(%WSState{gateway: gateway} = socket) do
+    case :gun.open(:binary.bin_to_list(gateway), 443, %{
+           protocols: [:http],
+           retry: 1_000_000_000
+         }) do
+      {:ok, conn} ->
+        {:ok, conn}
+
+        %{socket | conn: conn}
+        |> await_websocket_up()
+    end
+  end
+
+  defp await_websocket_up(%WSState{conn: conn} = socket) do
+    case :gun.await_up(conn, 10_000) do
+      {:ok, :http} ->
+        socket
+        |> upgrade_ws_await()
+    end
+  end
+
+  defp upgrade_ws_await(%WSState{conn: conn} = socket) do
+    %{socket | gun_data_stream: :gun.ws_upgrade(conn, @gateway_qs)} |> await_ws()
+  end
+
+  defp await_ws(%{conn: conn, gun_data_stream: gun_data_stream} = state) do
+    case :gun.await(conn, gun_data_stream, 10_000) do
+      {:upgrade, ["websocket"], _headers} -> state
+    end
+  end
+
+  def websocket_send(payload, %WSState{conn: conn, gun_data_stream: gun_data_stream} = socket) do
+    case :gun.ws_send(conn, gun_data_stream, {:binary, payload}) do
+      :ok -> socket
+    end
+  end
 
   def zlib_init(socket) do
     zlib_context = :zlib.open()

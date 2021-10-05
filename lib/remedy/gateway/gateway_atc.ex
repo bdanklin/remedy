@@ -7,19 +7,14 @@ defmodule Remedy.GatewayATC do
 
   @min_redial 5500
 
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, 0, name: __MODULE__)
+  end
+
   def request_connect(state) do
     case GenServer.call(__MODULE__, {:request_connect}, :infinity) do
       :ok -> state
     end
-  end
-
-  @doc false
-  def handle_call({:request_connect}, _from, state) do
-    {:reply, :ok,
-     state
-     |> dial()
-     |> wait()
-     |> connect()}
   end
 
   defp dial(state) when state in [nil, 0], do: state
@@ -54,11 +49,16 @@ defmodule Remedy.GatewayATC do
   ### GenServer
   ############
 
-  def start_link(_args) do
-    GenServer.start_link(__MODULE__, 0, name: __MODULE__)
-  end
-
   def init(state) do
     {:ok, state}
+  end
+
+  @doc false
+  def handle_call({:request_connect}, _from, state) do
+    {:reply, :ok,
+     state
+     |> dial()
+     |> wait()
+     |> connect()}
   end
 end

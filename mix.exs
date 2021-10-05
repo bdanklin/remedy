@@ -4,7 +4,7 @@ defmodule Remedy.MixProject do
 
   @app :remedy
   @name "Remedy"
-  @version "0.6.3"
+  @version "0.6.4"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
   @description "Discord Library in Elixir."
@@ -22,7 +22,6 @@ defmodule Remedy.MixProject do
       source_url: @scm_url,
       homepage_url: @doc_url,
       description: @description,
-      aliases: aliases(),
       deps: deps(),
       dialyzer: dialyzer(),
       docs: docs(),
@@ -74,12 +73,6 @@ defmodule Remedy.MixProject do
         Remedy.CacheError,
         Remedy.APIError
       ]
-    ]
-  end
-
-  def aliases do
-    [
-      lint: ["format --check-formatted", "credo --strict"]
     ]
   end
 

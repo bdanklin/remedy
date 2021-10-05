@@ -150,11 +150,31 @@ defmodule Remedy.Schema.Guild do
     __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
   end
 
-  def splash(guild)
-  def splash(%__MODULE__{splash: nil}), do: nil
-  def splash(%__MODULE__{id: id, splash: splash}), do: CDN.guild_splash(id, splash)
+  @spec icon(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
+  def icon(guild, size \\ nil)
+  def icon(%__MODULE__{icon: nil}, _size), do: nil
 
-  def icon(guild)
-  def icon(%__MODULE__{icon: nil}), do: nil
-  def icon(%__MODULE__{id: id, icon: icon}), do: CDN.guild_icon(id, icon)
+  def icon(%__MODULE__{id: id, icon: icon}, size),
+    do: CDN.guild_icon(id, icon, size)
+
+  @spec splash(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
+  def splash(guild, size \\ nil)
+  def splash(%__MODULE__{splash: nil}, _size), do: nil
+
+  def splash(%__MODULE__{id: id, splash: splash}, size),
+    do: CDN.guild_splash(id, splash, size)
+
+  @spec discovery_splash(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
+  def discovery_splash(guild, size \\ nil)
+  def discovery_splash(%__MODULE__{discovery_splash: nil}, _size), do: nil
+
+  def discovery_splash(%__MODULE__{id: id, discovery_splash: discovery_splash}, size),
+    do: CDN.guild_discovery_splash(id, discovery_splash, size)
+
+  @spec banner(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
+  def banner(guild, size \\ nil)
+  def banner(%__MODULE__{banner: nil}, _size), do: nil
+
+  def banner(%__MODULE__{id: id, banner: banner}, size),
+    do: CDN.guild_banner(id, banner, size)
 end

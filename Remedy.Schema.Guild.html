@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.3">
+    <meta name="project" content="Remedy v0.6.4">
 
-    <title>Remedy.Schema.Guild — Remedy v0.6.3</title>
+    <title>Remedy.Schema.Guild — Remedy v0.6.4</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-4dbb05295c.js"></script>
+    <script src="dist/sidebar_items-b4f7b58f34.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.3
+        v0.6.4
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.Guild <small class="app-vsn">(Remedy v0.6.3)</small>
+Remedy.Schema.Guild <small class="app-vsn">(Remedy v0.6.4)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -128,6 +128,13 @@ Remedy.Schema.Guild <small class="app-vsn">(Remedy v0.6.3)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#banner/2">banner(guild, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#changeset/1">changeset(params)</a>
 
   </div>
@@ -142,7 +149,14 @@ Remedy.Schema.Guild <small class="app-vsn">(Remedy v0.6.3)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#icon/1">icon(guild)</a>
+    <a href="#discovery_splash/2">discovery_splash(guild, size \\ nil)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#icon/2">icon(guild, size \\ nil)</a>
 
   </div>
 
@@ -156,7 +170,7 @@ Remedy.Schema.Guild <small class="app-vsn">(Remedy v0.6.3)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#splash/1">splash(guild)</a>
+    <a href="#splash/2">splash(guild, size \\ nil)</a>
 
   </div>
 
@@ -286,6 +300,37 @@ Types
 Functions
           </h1>
           <div class="functions-list">
+<section class="detail" id="banner/2">
+
+    <span id="banner/1"></span>
+
+  <div class="detail-header">
+    <a href="#banner/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">banner(guild, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L175" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>banner(<a href="#t:t/0">t</a>(), <a href="Remedy.CDN.html#t:size/0">Remedy.CDN.size</a>()) :: nil | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="changeset/1">
 
   <div class="detail-header">
@@ -330,16 +375,18 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="icon/1">
+<section class="detail" id="discovery_splash/2">
+
+    <span id="discovery_splash/1"></span>
 
   <div class="detail-header">
-    <a href="#icon/1" class="detail-link" title="Link to this function">
+    <a href="#discovery_splash/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">icon(guild)</h1>
+    <h1 class="signature">discovery_splash(guild, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L157" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L168" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -348,6 +395,44 @@ Functions
   </div>
 
   <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>discovery_splash(<a href="#t:t/0">t</a>(), <a href="Remedy.CDN.html#t:size/0">Remedy.CDN.size</a>()) :: nil | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="icon/2">
+
+    <span id="icon/1"></span>
+
+  <div class="detail-header">
+    <a href="#icon/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">icon(guild, size \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L154" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>icon(<a href="#t:t/0">t</a>(), <a href="Remedy.CDN.html#t:size/0">Remedy.CDN.size</a>()) :: nil | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
 
 
   </section>
@@ -374,16 +459,18 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="splash/1">
+<section class="detail" id="splash/2">
+
+    <span id="splash/1"></span>
 
   <div class="detail-header">
-    <a href="#splash/1" class="detail-link" title="Link to this function">
+    <a href="#splash/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">splash(guild)</h1>
+    <h1 class="signature">splash(guild, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L153" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L161" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -392,6 +479,13 @@ Functions
   </div>
 
   <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>splash(<a href="#t:t/0">t</a>(), <a href="Remedy.CDN.html#t:size/0">Remedy.CDN.size</a>()) :: nil | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
 
 
   </section>
@@ -448,10 +542,10 @@ Functions
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.3" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.3" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.4" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.4" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.3/show/lib/remedy/schema/guild.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.4/show/lib/remedy/schema/guild.ex">(current file)</a>
 
         </p>
 

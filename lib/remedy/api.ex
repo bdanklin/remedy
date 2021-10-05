@@ -61,6 +61,7 @@ defmodule Remedy.API do
     Message,
     Role,
     Sticker,
+    Thread,
     User,
     Webhook
   }
@@ -72,6 +73,7 @@ defmodule Remedy.API do
   @type limit :: integer()
   @type locator :: any
   @type snowflake :: Snowflake.t()
+  @type reason :: String.t() | nil
 
   ### Discord API Proper
   ###
@@ -99,9 +101,7 @@ defmodule Remedy.API do
       {:ok, %Remedy.Schema.App{}
 
   """
-  @spec get_current_bot_application_information ::
-          {:error, any} | {:ok, App.t()}
-
+  @spec get_current_bot_application_information :: {:error, any} | {:ok, App.t()}
   @unsafe {:get_current_bot_application_information, []}
   def get_current_bot_application_information do
     {:get, "/oauth2/applications/@me"}
@@ -110,19 +110,23 @@ defmodule Remedy.API do
   end
 
   defp parse_get_current_bot_application_information({:error, _reason} = error), do: error
+  defp parse_get_current_bot_application_information({:ok, bot}), do: {:ok, App.new(bot)}
 
-  defp parse_get_current_bot_application_information({:ok, bot}) do
-    {:ok, bot |> App.new()}
-  end
+  @doc """
+  Gets the authorization information for the Bot.
 
-  @doc false
-  @spec get_current_authorization_information ::
-          {:error, any} | {:ok, any}
+  > This is currently unused by any of the connections employed by Remedy and is included for completeness only.
 
+  ## Examples
+
+      iex> Remedy.API.get_current_authorization_information()
+      {:error, {401, 50001, "Missing Access"}}
+
+  """
+  @spec get_current_authorization_information() :: {:error, any} | {:ok, any}
   @unsafe {:get_current_authorization_information, []}
   def get_current_authorization_information do
-    {:get, "/oauth2/@me"}
-    |> request()
+    {:get, "/oauth2/@me"} |> request()
   end
 
   ####################################################################################
@@ -155,23 +159,23 @@ defmodule Remedy.API do
       {:error, {403, 10004, "Unknown Guild"}}
 
   """
-  @spec get_guild_audit_log(snowflake | Guild.t(), opts) ::
-          {:error, any} | {:ok, AuditLog.t()}
-
+  @spec get_guild_audit_log(snowflake | Guild.t(), opts) :: {:error, any} | {:ok, AuditLog.t()}
   @unsafe {:get_guild_audit_log, [1, 2]}
   def get_guild_audit_log(guild_id, opts \\ [])
   def get_guild_audit_log(%Guild{id: id}, opts), do: get_guild_audit_log(id, opts)
 
   def get_guild_audit_log(guild_id, opts) when is_snowflake(guild_id) do
-    {:get, "/guilds/#{guild_id}/audit-logs"}
-    |> request(%{}, opts, nil)
-    |> parse_get_guild_audit_log()
+    {:get, "/guilds/#{guild_id}/audit-logs"} |> request(%{}, opts, nil) |> parse_get_guild_audit_log(guild_id)
   end
 
-  defp parse_get_guild_audit_log({:error, _reason} = error), do: error
+  defp parse_get_guild_audit_log({:error, _reason} = error, _guild_id), do: error
 
-  defp parse_get_guild_audit_log({:ok, %{users: _users, threads: _threads} = audit_log}),
-    do: {:ok, audit_log |> AuditLog.new()}
+  defp parse_get_guild_audit_log({:ok, audit_log}, guild_id) do
+    {:ok,
+     audit_log
+     |> AuditLog.new()
+     |> AuditLog.update(%{guild_id: guild_id})}
+  end
 
   ###################################################################################
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
@@ -189,18 +193,16 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.get_channel(381889573426429952)
-      {:ok, %Remedy.Schema.Channel{id: 381889573426429952}}
+      iex> {:ok, channel} = Remedy.API.get_channel(872417560094732331)
+      ...> channel.id
+      872417560094732331
 
   """
 
   @spec get_channel(snowflake | Channel.t()) :: {:error, any} | {:ok, Channel.t()}
-
   @unsafe {:get_channel, [:channel_id]}
   def get_channel(channel_id)
-
-  def get_channel(%Channel{id: channel_id}),
-    do: get_channel(channel_id)
+  def get_channel(%Channel{id: channel_id}), do: get_channel(channel_id)
 
   def get_channel(channel_id) when is_integer(channel_id) do
     {:get, "/channels/#{channel_id}"}
@@ -209,17 +211,12 @@ defmodule Remedy.API do
   end
 
   defp parse_get_channel({:error, _reason} = error), do: error
-
-  defp parse_get_channel({:ok, channel}) do
-    {:ok,
-     channel
-     |> Channel.new()}
-  end
+  defp parse_get_channel({:ok, channel}), do: {:ok, Channel.new(channel)}
 
   @doc """
   Modifies a channel's settings.
 
-  ## Permission
+  ## Permissions
 
   - `MANAGE_CHANNEL`
 
@@ -244,14 +241,11 @@ defmodule Remedy.API do
   {:ok, %Remedy.Schema.Channel{id: 41771983423143933, name: "elixir-remedy", topic: "remedy discussion"}}
 
 
-  iex> Remedy.API.modify_channel(41771983423143933)
-  {:ok, %Remedy.Schema.Channel{id: 41771983423143933}}
-
   """
 
   ## to add: modify_guild_channel, modify_group_dm, modify_thread
 
-  @spec modify_channel(snowflake, keyword(), nil | binary) :: {:error, any} | {:ok, Channel.t()}
+  @spec modify_channel(snowflake, map(), reason) :: {:error, any} | {:ok, Channel.t()}
 
   @doc since: "0.6.0"
   @unsafe {:modify_channel, [:channel_id, :opts, :reason]}
@@ -265,11 +259,201 @@ defmodule Remedy.API do
 
   defp parse_modify_channel({:error, _reason} = error), do: error
   defp parse_modify_channel({:ok, %{id: nil}}), do: {:error, "Request Failed"}
+  defp parse_modify_channel({:ok, %{id: _id} = channel}), do: {:ok, Channel.new(channel)}
 
-  defp parse_modify_channel({:ok, %{id: _id} = channel}) do
-    {:ok,
-     channel
-     |> Channel.new()}
+  @doc """
+  Modify a group DM.
+
+  This function validates the options before passing them to `Remedy.API.modify_channel/3`
+
+  ## Events:
+
+  - `:CHANNEL_UPDATE`
+
+  ## Examples
+
+      iex> Remedy.API.modify_group_dm(872417560094732331, [{:name, "hello"}], "felt like it")
+      {:ok, %Channel{}}
+
+  """
+
+  @modify_group_dm_params %{name: nil, icon: nil}
+  @spec modify_group_dm(Channel.t() | snowflake, keyword(), nil | binary) :: {:error, any} | {:ok, Channel.t()}
+
+  @unsafe {:modify_group_dm, [:channel_id, :opts, :reason]}
+  def modify_group_dm(channel_id, opts, reason \\ nil)
+  def modify_group_dm(%Channel{id: channel_id}, opts, reason), do: modify_group_dm(channel_id, opts, reason)
+  def modify_group_dm(%{channel_id: channel_id}, opts, reason), do: modify_group_dm(channel_id, opts, reason)
+
+  def modify_group_dm(channel_id, opts, reason) do
+    modify_channel(channel_id, clean_map(@modify_group_dm_params, opts), reason)
+  end
+
+  @doc """
+  Modify a Text Channel.
+
+  This function validates the options before passing them to `Remedy.API.modify_channel/3`
+
+  ## Permissions
+
+  - `MANAGE_CHANNELS`
+  - `MANAGE_ROLES` (If modifying permission overwrites)
+
+  ## Events:
+
+  - `:CHANNEL_UPDATE`
+
+  ## Examples
+
+  iex> Remedy.API.modify_group_dm(872417560094732331, [{:name, "hello"}], "felt like it")
+  {:ok, %Channel{}}
+
+  """
+
+  @modify_text_channel_params %{
+    name: nil,
+    type: nil,
+    position: nil,
+    topic: nil,
+    nsfw: nil,
+    rate_limit_per_user: nil,
+    permission_overwrites: nil,
+    parent_id: nil,
+    default_auto_archive_duration: nil
+  }
+
+  @unsafe {:modify_text_channel, [:channel_id, :opts, :reason]}
+  @spec modify_text_channel(Channel.t() | snowflake, opts, reason) :: {:error, any} | {:ok, Remedy.Schema.Channel.t()}
+  def modify_text_channel(channel_id, opts, reason \\ nil)
+  def modify_text_channel(%Channel{id: channel_id}, opts, reason), do: modify_text_channel(channel_id, opts, reason)
+  def modify_text_channel(%{channel_id: channel_id}, opts, reason), do: modify_text_channel(channel_id, opts, reason)
+
+  def modify_text_channel(channel_id, opts, reason) do
+    modify_channel(channel_id, clean_map(@modify_text_channel_params, opts), reason)
+  end
+
+  @doc """
+  Modify a Voice Channel.
+
+  This function validates the options before passing them to `Remedy.API.modify_channel/3`
+
+  ## Permissions
+
+  - `MANAGE_CHANNELS`
+  - `MANAGE_ROLES` (If modifying permission overwrites)
+
+  ## Events:
+
+  - `:CHANNEL_UPDATE`
+
+  ## Examples
+
+      iex> Remedy.API.voice_channel(872417560094732331, [{:name, "hello"}], "felt like it")
+      {:ok, %Channel{}}
+
+  """
+
+  @modify_voice_channel_params %{
+    name: nil,
+    position: nil,
+    bitrate: nil,
+    user_limit: nil,
+    permission_overwrites: nil,
+    parent_id: nil,
+    rtc_region: nil,
+    video_quality_mode: nil,
+    default_auto_archive_duration: nil
+  }
+
+  @unsafe {:modify_voice_channel, [:channel_id, :opts, :reason]}
+  def modify_voice_channel(channel_id, opts, reason \\ nil)
+  def modify_voice_channel(%Channel{id: channel_id}, opts, reason), do: modify_voice_channel(channel_id, opts, reason)
+  def modify_voice_channel(%{channel_id: channel_id}, opts, reason), do: modify_voice_channel(channel_id, opts, reason)
+
+  def modify_voice_channel(channel_id, opts, reason) do
+    modify_channel(channel_id, clean_map(@modify_voice_channel_params, opts), reason)
+  end
+
+  @doc """
+  Modify a News Channel.
+
+  This function validates the options before passing them to `Remedy.API.modify_channel/3`
+
+  ## Permissions
+
+  - `MANAGE_CHANNELS`
+  - `MANAGE_ROLES` (If modifying permission overwrites)
+
+  ## Events:
+
+  - `:CHANNEL_UPDATE`
+
+  ## Examples
+
+      iex> Remedy.API.modify_news_channel(872417560094732331, [{:name, "hello"}], "felt like it")
+      {:ok, %Channel{}}
+
+  """
+
+  @modify_news_channel_params %{
+    name: nil,
+    type: nil,
+    position: nil,
+    topic: nil,
+    nsfw: nil,
+    permission_overwrites: nil,
+    parent_id: nil,
+    default_auto_archive_duration: nil
+  }
+
+  @unsafe {:modify_news_channel, [:channel_id, :opts, :reason]}
+  def modify_news_channel(channel_id, opts, reason \\ nil)
+  def modify_news_channel(%Channel{id: channel_id}, opts, reason), do: modify_news_channel(channel_id, opts, reason)
+  def modify_news_channel(%{channel_id: channel_id}, opts, reason), do: modify_news_channel(channel_id, opts, reason)
+
+  def modify_news_channel(channel_id, opts, reason) do
+    modify_channel(channel_id, clean_map(@modify_news_channel_params, opts), reason)
+  end
+
+  @doc """
+  Modify thread.
+
+  This function validates the options before passing them to `Remedy.API.modify_channel/3`
+
+  ## Permissions
+
+  - `MANAGE_THREADS`
+  - `SEND_MESSAGES` (If modifying permission overwrites)
+
+  ## Events:
+
+  - `:THREAD_UPDATE`
+
+  ## Examples
+
+      iex> Remedy.API.modify_group_dm(872417560094732331, [{:name, "hello"}], "felt like it")
+      {:ok, %Channel{}}
+
+
+  """
+
+  @modify_thread_params %{name: nil, archived: nil, auto_archive_duration: nil}
+
+  @unsafe {:modify_thread, [:channel_id, :opts, :reason]}
+  def modify_thread(channel_id, opts, reason \\ nil)
+  def modify_thread(%Thread{id: channel_id}, opts, reason), do: modify_thread(channel_id, opts, reason)
+  def modify_thread(%{channel_id: channel_id}, opts, reason), do: modify_thread(channel_id, opts, reason)
+
+  def modify_thread(channel_id, opts, reason) do
+    modify_channel(channel_id, clean_map(@modify_thread_params, opts), reason)
+  end
+
+  def modify_thread_test(opts) do
+    clean_map(@modify_thread_params, opts)
+  end
+
+  def modify_thread_test() do
+    @modify_thread_params |> flatten()
   end
 
   @doc """
@@ -360,18 +544,27 @@ defmodule Remedy.API do
     {:ok, messages}
   end
 
+  @doc """
+  List messages before a given message.
+  """
   @unsafe {:list_messages_before, [:channel_id, :message_id, :limit]}
   @spec list_messages_before(snowflake, snowflake, limit) :: {:error, any} | {:ok, list}
   def list_messages_before(channel_id, message_id, limit \\ 50) do
     list_messages(channel_id, [{:before, message_id}, {:limit, limit}])
   end
 
+  @doc """
+  List messages after a given message.
+  """
   @unsafe {:list_messages_after, [:channel_id, :message_id, :limit]}
   @spec list_messages_after(snowflake, snowflake, limit) :: {:error, any} | {:ok, list}
   def list_messages_after(channel_id, message_id, limit \\ 50) do
     list_messages(channel_id, [{:after, message_id}, {:limit, limit}])
   end
 
+  @doc """
+  List messages around a given message.
+  """
   @unsafe {:list_messages_around, [:channel_id, :message_id, :limit]}
   @spec list_messages_around(snowflake, snowflake, limit) :: {:error, any} | {:ok, list}
   def list_messages_around(channel_id, message_id, limit \\ 50) do
@@ -446,8 +639,9 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.create_message(872417560094732331, content: "**Doctest Message** ✅")
-      {:ok, %Message{}}
+      iex> {:ok, message} = Remedy.API.create_message(872417560094732331, content: "**Doctest Message** ✅")
+      ...> message.content
+      "**Doctest Message** ✅"
 
   """
   def create_message(channel_id, opts \\ []) do
@@ -458,26 +652,25 @@ defmodule Remedy.API do
   end
 
   @doc """
-  Publish a message in a news channel
+  Publish a message in a news channel.
+
+  This will propagate a message out to all followers of the channel.
+
+  > This is known as "Crosspost Message" in the Discord API.
   """
   @doc since: "0.6.0"
   @spec publish_message(Remedy.Schema.Message.t()) :: {:error, any} | {:ok, any}
-
   @unsafe {:publish_message, 1}
   def publish_message(%Message{channel_id: channel_id, id: id}), do: publish_message(channel_id, id)
 
   def publish_message(channel_id, message_id) do
     {:post, "/channels/#{channel_id}/messages/#{message_id}/crosspost"}
     |> request()
+    |> parse_publish_message()
   end
 
-  def parse_publish_message({:error, _reason} = error), do: error
-
-  def parse_publish_message({:ok, message}) do
-    {:ok,
-     message
-     |> Message.new()}
-  end
+  defp parse_publish_message({:error, _reason} = error), do: error
+  defp parse_publish_message({:ok, message}), do: {:ok, Message.new(message)}
 
   @doc """
   Creates a reaction for a message.
@@ -1386,15 +1579,15 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.modify_current_user_nick(41771983423143937, nick: "Remedy")
+      iex> Remedy.API.modify_nickname(41771983423143937, nick: "Remedy")
       {:ok, %{nick: "Remedy"}}
 
       iex>
 
   """
-  def modify_current_user_nick(guild_id) do
-    {:patch, "/guilds/#{guild_id}/members/@me/nick"}
-    |> request()
+  def modify_nickname(guild_id, nickname) do
+    {:patch, "/guilds/#{guild_id}/members/@me"}
+    |> request(%{nick: nickname})
   end
 
   @doc """
@@ -2650,4 +2843,20 @@ defmodule Remedy.API do
 
   defp unwrap({:ok, body}), do: body
   defp unwrap({:error, _}), do: raise(Remedy.APIError)
+
+  defp clean_map(defaults, opts) do
+    opts
+    |> Enum.reject(fn {_, v} -> v == nil end)
+    |> Enum.into(flatten(defaults))
+    |> Enum.filter(fn {k, _} -> k in Map.keys(defaults) end)
+    |> Enum.into(%{})
+    |> flatten()
+  end
+
+  ## Destroy all structs and ensure nested map
+  defp flatten(map), do: :maps.map(&do_flatten/2, map) |> Map.from_struct()
+  defp do_flatten(_key, value), do: enm(value)
+  defp enm(list) when is_list(list), do: Enum.map(list, &enm/1)
+  defp enm(%{__struct__: _} = strct), do: :maps.map(&do_flatten/2, Map.from_struct(strct))
+  defp enm(data), do: data
 end

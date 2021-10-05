@@ -1,5 +1,4 @@
 defmodule Remedy.CDN do
-  alias Remedy.Schema.{App, Guild, StickerPack, User}
   @cdn "https://cdn.discordapp.com"
 
   @moduledoc """
@@ -58,35 +57,12 @@ defmodule Remedy.CDN do
   end
 
   @doc """
-  Returns the url for the guilds icon.
-
-  ## Examples
-
-      iex> Remedy.API.get_guild!(872417560094732328) |> Remedy.CDN.guild_icon()
-      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.jpg"
-
-
-      iex> Remedy.API.get_guild!(872417560094732328) |> Remedy.CDN.guild_icon(100)
-      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.jpg?size=128"
-
-
-      iex> Remedy.CDN.guild_icon(872417560094732328, "f817c5adaf96672c94a17de8e944f427", "cheese")
-      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.jpg"
-
-
-  """
-  @spec guild_icon(Guild.t(), size) :: binary
-  def guild_icon(guild, size \\ nil)
-  def guild_icon(%Guild{id: id, icon: icon}, size), do: guild_icon(id, icon, size)
-  def guild_icon(%{id: id, icon: icon}, size), do: guild_icon(id, icon, size)
-
-  @doc """
   Returns the url for a guilds icon.
 
   ## Examples
 
       iex> Remedy.CDN.guild_icon(872417560094732328, "f817c5adaf96672c94a17de8e944f427", "cheese")
-      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.jpg"
+      "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.png"
 
 
   """
@@ -99,21 +75,10 @@ defmodule Remedy.CDN do
   @doc """
   Returns the url for a guilds splash.
 
-
-  """
-
-  @spec guild_splash(Guild.t(), size) :: binary
-  def guild_splash(guild, size \\ nil)
-  def guild_splash(%Guild{id: _id, splash: nil}, _size), do: ""
-  def guild_splash(%{id: id, splash: splash}, size), do: guild_splash(id, splash, size)
-
-  @doc """
-  Returns the url for a guilds splash.
-
   ## Examples
 
       iex> Remedy.CDN.guild_splash(848619361782726696, "7ed6ea26b7a5e64f78ca5df202cf4d13")
-      https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png
+      "https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png"
 
   """
 
@@ -122,18 +87,6 @@ defmodule Remedy.CDN do
     "/splashes/#{id}/#{splash}"
     |> encode(splash, size)
   end
-
-  @doc """
-  Returns the url for a guilds discovery splash.
-
-
-  """
-
-  @spec guild_discovery_splash(Guild.t(), size) :: binary
-  def guild_discovery_splash(guild, size \\ nil)
-
-  def guild_discovery_splash(%Guild{id: id, discovery_splash: discovery_splash}, size),
-    do: guild_discovery_splash(id, discovery_splash, size)
 
   @doc """
   Returns the url for a guilds discovery splash.
@@ -149,20 +102,6 @@ defmodule Remedy.CDN do
   @doc """
   Returns the url for a guilds banner.
 
-  ## Examples
-
-      iex> Remedy.API.get_guild!(848619361782726696) |> Remedy.CDN.guild_banner()
-      "https://cdn.discordapp.com/banners/848619361782726696/5d61ce8aaec5bdbef8e1164aaf15f54e.png"
-
-  """
-  @spec guild_banner(Guild.t(), size) :: binary
-  def guild_banner(guild, size \\ nil)
-  def guild_banner(%Guild{id: id, banner: banner}, size), do: guild_banner(id, banner, size)
-  def guild_banner(%{id: id, banner: banner}, size), do: guild_banner(id, banner, size)
-
-  @doc """
-  Returns the url for a guilds banner.
-
 
   """
 
@@ -171,21 +110,6 @@ defmodule Remedy.CDN do
     "/banners/#{guild_id}/#{guild_banner}"
     |> encode(guild_banner, size)
   end
-
-  @doc """
-  Returns the url for a users banner.
-
-  ## Examples
-
-      iex> Remedy.API.get_user!(179255727561375744) |> Remedy.CDN.user_banner()
-      "https://cdn.discordapp.com/banners/179255727561375744/e625e858e48602248a69bcfdfa886ab4.png"
-
-  """
-  @spec user_banner(User.t(), size) :: binary
-  def user_banner(user, size \\ nil)
-
-  def user_banner(%User{id: id, banner: banner}, size),
-    do: user_banner(id, banner, size)
 
   @doc """
   Returns the url for a users banner.
@@ -220,37 +144,11 @@ defmodule Remedy.CDN do
 
   """
 
-  @spec default_user_avatar(User.t(), size) :: binary
-  def default_user_avatar(user, size \\ nil)
-
-  def default_user_avatar(%User{discriminator: discriminator}, size),
-    do: default_user_avatar(discriminator, size)
-
   @spec default_user_avatar(discriminator, size) :: binary
   def default_user_avatar(discriminator, size) do
     "/embed/avatars/#{rem(discriminator, 5)}"
     |> encode(discriminator, size)
   end
-
-  @doc """
-  Returns the url for the users avatar.
-
-  ## Examples
-
-      iex> Remedy.API.get_user!(707047919332884520) |>  Remedy.CDN.user_avatar()
-      "https://cdn.discordapp.com/avatars/707047919332884520/1df05ae0f21a24c377e9a1051c2b6035.png"
-
-
-  """
-
-  @spec user_avatar(User.t(), size) :: binary
-  def user_avatar(user, size \\ nil)
-
-  def user_avatar(%User{avatar: nil, discriminator: discriminator}, size),
-    do: default_user_avatar(discriminator, size)
-
-  def user_avatar(%User{id: id, avatar: user_avatar}, size),
-    do: user_avatar(id, user_avatar, size)
 
   @doc """
   Returns the url for the users avatar.
@@ -274,29 +172,11 @@ defmodule Remedy.CDN do
 
   """
 
-  @spec application_icon(App.t(), size) :: binary
-  def application_icon(application, size \\ nil)
-  def application_icon(%App{id: id, icon: icon}, size), do: application_icon(id, icon, size)
-
-  @doc """
-  Returns the url for the applications icon.
-
-
-  """
   @spec application_icon(snowflake, hash, size) :: binary
   def application_icon(application_id, icon, size) do
     "/app-icons/#{application_id}/#{icon}"
     |> encode(icon, size)
   end
-
-  @doc """
-  Returns an application cover url.
-  """
-  @spec application_cover(App.t(), size) :: binary
-  def application_cover(application, size \\ nil)
-
-  def application_cover(%App{id: application_id, cover_image: cover_image}, size),
-    do: application_cover(application_id, cover_image, size)
 
   @doc """
   Returns an application cover url.
@@ -333,17 +213,8 @@ defmodule Remedy.CDN do
   end
 
   @doc """
-  Returns a sticker pack banner url.
-
-
+  Returns a sticker banner url.
   """
-  @spec sticker_pack_banner(Sticker.t(), size) :: binary
-  def sticker_pack_banner(sticker_pack, size \\ nil)
-
-  def sticker_pack_banner(%StickerPack{banner_asset_id: banner_asset_id}, size),
-    do: sticker_pack_banner(banner_asset_id, size)
-
-  @doc false
   def sticker_pack_banner(banner_asset_id, size) do
     "/app-assets/710982414301790216/store/#{banner_asset_id}"
     |> encode(banner_asset_id, size)

@@ -1,8 +1,11 @@
 defmodule Remedy.OpcodeHelpers do
   @moduledoc false
+
+  @doc false
   defguard is_op_code(code)
            when code in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 999]
 
+  @doc false
   defguard is_op_event(event)
            when event in [
                   :DISPATCH,
@@ -88,11 +91,6 @@ defmodule Remedy.OpcodeHelpers do
     |> Recase.to_pascal()
     |> List.wrap()
     |> Module.concat()
-
-    # |> String.downcase()
-    # |> Recase.to_sentence()
-    # |> List.wrap()
-    # |> Module.concat()
   end
 
   @doc """
@@ -108,41 +106,17 @@ defmodule Remedy.OpcodeHelpers do
     Map.get(@opcodes, event)
   end
 
-  @doc """
-  Convert the current Module to its Opcode form
-
-  ## Examples
-
-      iex> Remedy.OpcodeHelpers.op_from_mod()
-      999
-
-  """
+  @doc false
   def op_from_mod do
     event_from_mod() |> op_from_event()
   end
 
-  @doc """
-  Convert the given Module to its Opcode form
-
-  ## Examples
-
-      iex> Remedy.OpcodeHelpers.op_from_mod(Dispatch)
-      0
-
-  """
+  @doc false
   def op_from_mod(module) do
     event_from_mod(module) |> op_from_event()
   end
 
-  @doc """
-  Convert the given Module to its Event form
-
-  ## Examples
-
-      iex> Remedy.OpcodeHelpers.event_from_mod(Dispatch)
-      :DISPATCH
-
-  """
+  @doc false
   def event_from_mod(module) do
     module
     |> Module.split()
@@ -152,15 +126,7 @@ defmodule Remedy.OpcodeHelpers do
     |> String.to_atom()
   end
 
-  @doc """
-  Convert the Module to its Event form
-
-  ## Examples
-
-      iex> Remedy.OpcodeHelpers.event_from_mod()
-      :OPCODE_HELPERS
-
-  """
+  @doc false
   def event_from_mod do
     __MODULE__
     |> Module.split()
@@ -170,15 +136,7 @@ defmodule Remedy.OpcodeHelpers do
     |> String.to_atom()
   end
 
-  @doc """
-  Convert the Opcode to its event form
-
-  ## Examples
-
-      iex> Remedy.OpcodeHelpers.event_from_op(0)
-      :DISPATCH
-
-  """
+  @doc false
   def event_from_op(opcode) do
     for {k, v} <- @opcodes, into: [] do
       if v == opcode do
@@ -189,9 +147,10 @@ defmodule Remedy.OpcodeHelpers do
     |> List.first()
   end
 
+  @doc false
   def discord_epoch, do: 1_420_070_400_000
 
-  # Voice Gateway has a separate set of opcodes
+  @doc false
   def voice_opcodes do
     %{
       "IDENTIFY" => 0,
@@ -212,10 +171,12 @@ defmodule Remedy.OpcodeHelpers do
     }
   end
 
+  @doc false
   def voice_opcode_from_name(event) do
     voice_opcodes()[event]
   end
 
+  @doc false
   def atom_from_voice_opcode(opcode) do
     {k, _} = Enum.find(voice_opcodes(), fn {_, v} -> v == opcode end)
     k |> String.downcase() |> String.to_atom()

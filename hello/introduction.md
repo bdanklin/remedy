@@ -1,35 +1,34 @@
+
 # Remedy
 
-[![Publish Docs](https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg?branch=master)](https://github.com/bdanklin/remedy/actions/workflows/docs.yml) [![Test & Lint](https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml/badge.svg?branch=master)](https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml)
+[![Publish Docs](https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg)](https://github.com/bdanklin/remedy/actions/workflows/docs.yml) [![Codacy Security Scan](https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml) [![Credo, ExDoc, Doctor, Dialyzer](https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml/badge.svg)](https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml)
 
-Playground fork of Nostrum discord library.
+Remedy is an elixir library for interracting with the [Discord API](https://discord.com/developers/docs/intro). The project began as a fork of the [Nostrum library](https://github.com/kraigie/nostrum)
 
-I am still using [Nostrum](https://github.com/Kraigie/nostrum) for my bots and I recommend you do the same. This is just a playground.
+## To Do
 
+- [ ] Complete doc coverage
+  - [ ] make doctests work
+- [ ] Complete test coverage
+- [x] new github actions
+- [x] Convert structs to schema
+- [x] Convert Cache to Ecto + Etso
+- [x] use Gun as the only HTTP client
+- [ ] Re implement voice
+- [x] rewrite gateway modules
+- [x] Code clean up to respect contexts
+- [ ] smash morphix apart and just take the 1 function i use
+- [ ] Remove config.exs
 
-## Goals
+## Installation
 
-- Gun 2.0
-- Separate applicable components into their own packages.
-- Organise types - Timestamp / Snowflake
-- Convert structs to schema to...
-  - Make the casting easier.
-  - Make storing them in a db easier.
-  - Prevent the end user re modelling these things for their own db.
-- Convert cache to Etso.
-  - integrate nicely with new schema.
-- Generalize cache.
-  - Choose what to cache. eg i only want to cache user presence and message embeds...
-  - Make it an actual cache, aka invisible and if the resource is not in cache, we should fetch it and return it as required.
-- Testing
-  - Supply a bot secret thru workflow to enable actual testing on a real server. without exposing secrets (prob too hard)
-- Bang functions?!?
-  - Remove all the bloaty manual stuff. Include a generic unsafe.
+```elixir
+defp deps() do
+  [
+    {:remedy, "~> 0.6.4"}
+  ]
+end
+```
 
-
-## Packages
-
-I have extracted various components from the codebase which in my opinion are cluttering the code with static helpers at various layers of abstraction. You are welcome to use them and submit any improvements you find.
-
-- [Sunbake](https://hex.pm/packages/sunbake) For easy types. Timestamp and Snowflake currently included.
-- [Battle Standard](https://hex.pm/packages/battle_standard) Clean up all those manual flag helpers. just `use BattleStandard`
+## License
+[MIT](https://opensource.org/licenses/MIT)

@@ -75,7 +75,31 @@ defmodule Remedy.Consumer do
   use ConsumerSupervisor
 
   alias Remedy.Gateway.{EventBuffer, WSState}
-  alias Remedy.Schema.{Channel, Emoji, Guild, Member, Message, Role, User}
+
+  alias Remedy.Schema.{
+    Ban,
+    Channel,
+    ChannelPinsUpdate,
+    Emoji,
+    Guild,
+    GuildIntegrationsUpdate,
+    Integration,
+    Member,
+    Message,
+    MessageDeleteBulk,
+    MessageReactionAdd,
+    MessageReactionRemove,
+    MessageReactionRemoveAll,
+    MessageReactionRemoveEmoji,
+    Overwrite,
+    PresenceUpdate,
+    Ready,
+    Role,
+    TypingStart,
+    User
+  }
+
+  alias Remedy.Gateway.Dispatch.{}
 
   @callback handle_event(event) :: any
   @callback handle_event(any()) :: :noop
@@ -134,6 +158,14 @@ defmodule Remedy.Consumer do
           {:CHANNEL_CREATE, Channel.t(), WSState.t()}
 
   @typedoc """
+  Sent when a channel is updated.
+
+  This is not sent when the field `:last_message_id` is altered. To keep track of the `:last_message_id` changes, you must listen for `t:message_create/0` events.
+  """
+  @type channel_update ::
+          {:CHANNEL_UPDATE, Channel.t(), WSState.t()}
+
+  @typedoc """
   Sent when a channel relevant to the current user is deleted.
   """
   @type channel_delete ::
@@ -147,19 +179,12 @@ defmodule Remedy.Consumer do
   @type channel_pins_update ::
           {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), WSState.t()}
 
-  @typedoc """
-  Sent when a channel is updated.
-
-  This is not sent when the field `:last_message_id` is altered. To keep track of the `:last_message_id` changes, you must listen for `t:message_create/0` events.
-  """
-  @type channel_update ::
-          {:CHANNEL_UPDATE, Channel.t(), WSState.t()}
   @type guild_available ::
           {:GUILD_AVAILABLE, Guild.t(), WSState.t()}
   @type guild_ban_add ::
-          {:GUILD_BAN_ADD, GuildBanAdd.t(), WSState.t()}
+          {:GUILD_BAN_ADD, Ban.t(), WSState.t()}
   @type guild_ban_remove ::
-          {:GUILD_BAN_REMOVE, GuildBanRemove.t(), WSState.t()}
+          {:GUILD_BAN_REMOVE, Ban.t(), WSState.t()}
   @type guild_create ::
           {:GUILD_CREATE, Guild.t(), WSState.t()}
   @type guild_delete ::
@@ -167,7 +192,7 @@ defmodule Remedy.Consumer do
   @type guild_emojis_update ::
           {:GUILD_EMOJIS_UPDATE, [Emoji.t()], WSState.t()}
   @type guild_integrations_update ::
-          {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), WSState.t()}
+          {:GUILD_INTEGRATIONS_UPDATE, Integration.t(), WSState.t()}
   @type guild_member_add ::
           {:GUILD_MEMBER_ADD, Member.t(), WSState.t()}
   @type guild_member_remove ::
@@ -193,7 +218,7 @@ defmodule Remedy.Consumer do
   @type message_delete_bulk ::
           {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), WSState.t()}
   @type message_delete ::
-          {:MESSAGE_DELETE, MessageDelete.t(), WSState.t()}
+          {:MESSAGE_DELETE, Message.t(), WSState.t()}
   @type message_reaction_add ::
           {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), WSState.t()}
   @type message_reaction_remove_all ::
@@ -205,7 +230,7 @@ defmodule Remedy.Consumer do
   @type message_update ::
           {:MESSAGE_UPDATE, Message.t(), WSState.t()}
   @type presence_update ::
-          {:PRESENCE_UPDATE, Presence.t(), WSState.t()}
+          {:PRESENCE_UPDATE, PresenceUpdate.t(), WSState.t()}
   @type ready ::
           {:READY, Ready.t(), WSState.t()}
   @type resumed ::
@@ -247,7 +272,7 @@ defmodule Remedy.Consumer do
   If the current user does not have the `GUILD_MEMBERS` Gateway Intent, then this event will only be sent if the current user was added to or removed from the thread.
   """
   @type thread_members_update ::
-          {:THREAD_MEMBERs_UPDATE, Channel.t(), WSState.t()}
+          {:THREAD_MEMBERS_UPDATE, Channel.t(), WSState.t()}
 
   @typedoc """
   Sent when a thread is updated.

@@ -1,32 +1,29 @@
-defmodule Remedy.Schema.AuditLogEntry do
-  @moduledoc """
-  Discord Audit Log Entry Object
-  """
+defmodule Remedy.Schema.ChannelPinsUpdate do
+  @moduledoc false
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          target_id: String.t(),
-          action_type: integer(),
-          reason: String.t(),
-          user: User.t(),
-          options: [AuditLogOption.t()],
-          changes: [map()]
+          guild_id: Snowflake.t(),
+          channel_id: Snowflake.t(),
+          last_pin_timestamp: ISO8601.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key false
   embedded_schema do
-    field :target_id, :string
-    field :action_type, :integer
-    field :reason, :string
-    field :changes, {:array, :map}
-    belongs_to :user, User
-    embeds_many :options, AuditLogOption
+    field :guild_id, Snowflake
+    field :channel_id, Snowflake
+    field :last_pin_timestamp, ISO8601
   end
 
   def new(params) do
     params
     |> changeset()
+    |> validate()
     |> apply_changes()
+  end
+
+  def validate(changeset) do
+    changeset
   end
 
   def changeset(params \\ %{}) do

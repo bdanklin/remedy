@@ -1,4 +1,5 @@
 defmodule Remedy.Gateway.Dispatch do
+  alias Remedy.Gateway.WSState
   @moduledoc false
   @type payload :: any()
   @type socket :: WSState.t()

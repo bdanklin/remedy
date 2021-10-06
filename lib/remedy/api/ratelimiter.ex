@@ -6,6 +6,7 @@ defmodule Remedy.API.Ratelimiter do
   require ExRated
   require Logger
 
+  @doc false
   def run_check(request) do
     with {:ok, _delay} <- check_global(),
          {:ok, _delay} <- check_route(request) do
@@ -16,11 +17,11 @@ defmodule Remedy.API.Ratelimiter do
   end
 
   @doc false
-
   def check_global do
     ExRated.inspect_bucket("global", 1000, 50) |> analyse_bucket("global")
   end
 
+  @doc false
   @spec check_route(binary | Remedy.API.RestRequest.t()) :: {:ok, :infinity | non_neg_integer}
   def check_route(%RestRequest{route: route}), do: route |> route_to_bucket() |> check_route()
 
@@ -28,6 +29,7 @@ defmodule Remedy.API.Ratelimiter do
     GenServer.call(__MODULE__, {:check, route}) |> analyse_bucket(route)
   end
 
+  @doc false
   @spec inc_route(Remedy.API.RestResponse.t(), Remedy.API.RestRequest.t()) ::
           {:ok, :infinity | non_neg_integer}
   def inc_route(
@@ -41,10 +43,12 @@ defmodule Remedy.API.Ratelimiter do
     check_route(route)
   end
 
+  @doc false
   def inc_route(bucket, reset_after, limit) do
     ExRated.check_rate(bucket, reset_after, limit)
   end
 
+  @doc false
   def inc_global do
     ExRated.check_rate("global", 1000, 50)
   end
@@ -54,6 +58,7 @@ defmodule Remedy.API.Ratelimiter do
   ##################
 
   ## Request Can Be Sent
+  @doc false
   def analyse_bucket(nil, _route), do: {:ok, 0}
   def analyse_bucket({_, x, _, _, _}, _route) when x > 0, do: {:ok, 0}
 
@@ -64,8 +69,10 @@ defmodule Remedy.API.Ratelimiter do
     {:ok, 0}
   end
 
+  @doc false
   def analyse_bucket({_, _, _, nil, nil}, _route), do: {:ok, 0}
 
+  @doc false
   def analyse_bucket({_, 0, reset_in, _inserted_at, _updated_at}, route) do
     "RATELIMIT FOR #{route}. HOLDING REQUEST FOR: #{reset_in}ms"
     |> Logger.warn()
@@ -133,10 +140,12 @@ defmodule Remedy.API.Ratelimiter do
     {:reply, response, state}
   end
 
+  @doc false
   def handle_cast({:cast, {route, {bucket, reset_after, limit}}}, state) do
     {:noreply, state |> Map.put(route, {bucket, reset_after, limit})}
   end
 
+  @doc false
   def handle_info({:clean, {route}}, state) do
     Map.get(state, route) |> elem(0) |> ExRated.delete_bucket()
 

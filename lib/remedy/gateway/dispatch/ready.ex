@@ -1,15 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.Ready do
   @moduledoc false
-  use Remedy.Schema
-
-  embedded_schema do
-    field :v, :integer
-    embeds_one :user, User
-    embeds_many :guilds, UnavailableGuild
-    field :session_id, :string
-    field :shard, {:array, :integer}
-    embeds_one :application, App
-  end
+  alias Remedy.Schema.Ready
 
   def handle(
         {event,
@@ -26,6 +17,6 @@ defmodule Remedy.Gateway.Dispatch.Ready do
     #   Cache.put_bot(user)
     #   Cache.put_app(application)
 
-    {event, payload, socket}
+    {event, Ready.new(payload), socket}
   end
 end

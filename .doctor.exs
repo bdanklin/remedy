@@ -22,7 +22,10 @@
     Remedy.Gateway.Session,
     Remedy.Gateway.Intents,
     Remedy.Gateway.SessionSupervisor,
-    Remedy.GatewayATC
+    Remedy.GatewayATC,
+    Remedy.OpcodeHelpers,
+    Remedy.TimeHelpers,
+    Remedy.ModelHelpers
   ],
   ignore_paths: [],
   min_module_doc_coverage: 80,

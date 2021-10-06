@@ -54,16 +54,11 @@ defmodule Remedy.API do
     App,
     AuditLog,
     Channel,
-    Emoji,
     Guild,
-    Interaction,
-    Member,
     Message,
-    Role,
     Sticker,
     Thread,
-    User,
-    Webhook
+    User
   }
 
   use Unsafe.Generator, handler: :unwrap, docs: false
@@ -230,10 +225,10 @@ defmodule Remedy.API do
   - `:position` (integer) - the position of the channel in the left-hand listing
   - `:topic` (string) (`t:Remedy.Schema.Channel.text_channel/0` only) - 0-1024 character channel topic
   - `:nsfw` (boolean) (`t:Remedy.Schema.Channel.text_channel/0` only) - if the channel is nsfw
-  - `:bitrate` (integer) (`t:Remedy.Schema.Channel.voice_channel/0` only) - the bitrate (in bits) of the voice channel; 8000 to 96000 (128000 for VIP servers)
-  - `:user_limit` (integer) (`t:Remedy.Schema.Channel.voice_channel/0` only) - the user limit of the voice channel; 0 refers to no limit, 1 to 99 refers to a user limit
+  - `:bitrate` (integer) - the bitrate (in bits) of the voice channel; 8000 to 96000 (128000 for VIP servers)
+  - `:user_limit` (integer)  - the user limit of the voice channel; 0 refers to no limit, 1 to 99 refers to a user limit
   - `:permission_overwrites` (list of `t:Remedy.Schema.Overwrite.t/0` or equivalent map) - channel or category-specific permissions
-  - `:parent_id` (`t:Remedy.Schema.Channel.id/0`) (`t:Remedy.Schema.Channel.guild_channel/0` only) - id of the new parent category for a channel
+  - `:parent_id` - id of the new parent category for a channel
 
   ## Examples
 
@@ -1220,7 +1215,7 @@ defmodule Remedy.API do
 
     - `:name` (string) - name of the emoji
     - `:image` (base64 data URI) - the 128x128 emoji image. Maximum size of 256kb
-    - `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles for which this emoji will be whitelisted
+    - `:roles` list of  - roles for which this emoji will be whitelisted
     (default: [])
 
   `:name` and `:image` are always required.
@@ -1251,7 +1246,7 @@ defmodule Remedy.API do
   ## Options
 
     - `:name` (string) - name of the emoji
-    - `:roles` (list of `t:Sunbake.Snowflake.t/0`) - roles to which this emoji will be whitelisted
+    - `:roles` - roles to which this emoji will be whitelisted
 
   ## Examples
 
@@ -1333,14 +1328,14 @@ defmodule Remedy.API do
     - `:verification_level` (integer) - verification level
     - `:default_message_notifications` (integer) - default message    notification level
     - `:explicit_content_filter` (integer) - explicit content filter level
-    - `:afk_channel_id` (`t:Sunbake.Snowflake.t/0`) - id for afk channel
+    - `:afk_channel_id`  - id for afk channel
     - `:afk_timeout` (integer) - afk timeout in seconds
     - `:icon` (base64 data URI) - 128x128 jpeg image for the guild icon
-    - `:owner_id` (`t:Sunbake.Snowflake.t/0`) - user id to transfer guild ownership to (must be owner)
+    - `:owner_id`  - user id to transfer guild ownership to (must be owner)
     - `:splash` (base64 data URI) - 128x128 jpeg image for the guild splash (VIP only)
-    - `:system_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel to which system messages are sent
-    - `:rules_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel that is used for rules in public guilds
-    - `:public_updates_channel_id` (`t:Sunbake.Snowflake.t/0`) - the id of the channel where admins and moderators receive notices from Discord in public guilds
+    - `:system_channel_id` - the id of the channel to which system messages are sent
+    - `:rules_channel_id`  - the id of the channel that is used for rules in public guilds
+    - `:public_updates_channel_id`  - the id of the channel where admins and moderators receive notices from Discord in public guilds
 
   ## Examples
 
@@ -1413,7 +1408,7 @@ defmodule Remedy.API do
     - `:bitrate` (integer) - the bitrate (in bits) of the voice channel (voice only)
     - `:user_limit` (integer) - the user limit of the voice channel (voice only)
     - `:permission_overwrites` (list of `t:Remedy.Schema.Overwrite.t/0` or equivalent map) - the channel's permission overwrites
-    - `:parent_id` (`t:Remedy.Schema.Channel.id/0`) - id of the parent category for a channel
+    - `:parent_id`  - id of the parent category for a channel
     - `:nsfw` (boolean) - if the channel is nsfw
 
   ## Examples
@@ -1553,10 +1548,10 @@ defmodule Remedy.API do
   ## Options
 
   - `:nick` (string) - value to set users nickname to
-  - `:roles` (list of `t:Sunbake.Snowflake.t/0`) - array of role ids the member is assigned
+  - `:roles`  - array of role ids the member is assigned
   - `:mute` (boolean) - if the user is muted
   - `:deaf` (boolean) - if the user is deafened
-  - `:channel_id` (`t:Sunbake.Snowflake.t/0`) - id of channel to move user to (if they are connected to voice)
+  - `:channel_id` - id of channel to move user to (if they are connected to voice)
 
   ## Examples
 
@@ -2191,8 +2186,8 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:before` (`t:Sunbake.Snowflake.t/0`) - get guilds before this guild ID
-    - `:after` (`t:Sunbake.Snowflake.t/0`) - get guilds after this guild ID
+    - `:before` - get guilds before this guild ID
+    - `:after`  - get guilds after this guild ID
     - `:limit` (integer) - max number of guilds to return (1-100)
 
   ## Examples

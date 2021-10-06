@@ -8,17 +8,20 @@ defmodule Remedy.Gateway do
   alias Remedy.Gateway.{EventBroadcaster, EventBuffer, SessionSupervisor}
   require Logger
 
+  @doc false
   def info do
     {:ok, %{shards: shards, url: "wss://" <> url}} = API.get_gateway_bot()
 
     %{url: url, shards: shards}
   end
 
+  @doc false
   def num_shards do
     %{shards: shards} = info()
     shards
   end
 
+  @doc false
   def start_link(_args) do
     %{url: _url, shards: _shards} = state = info()
 

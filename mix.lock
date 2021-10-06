@@ -28,7 +28,7 @@
   "progress_bar": {:hex, :progress_bar, "2.0.1", "7b40200112ae533d5adceb80ff75fbe66dc753bca5f6c55c073bfc122d71896d", [:mix], [{:decimal, "~> 2.0", [hex: :decimal, repo: "hexpm", optional: false]}], "hexpm", "2519eb58a2f149a3a094e729378256d8cb6d96a259ec94841bd69fdc71f18f87"},
   "recase": {:hex, :recase, "0.7.0", "3f2f719f0886c7a3b7fe469058ec539cb7bbe0023604ae3bce920e186305e5ae", [:mix], [], "hexpm", "36f5756a9f552f4a94b54a695870e32f4e72d5fad9c25e61bc4a3151c08a4e0c"},
   "recon": {:hex, :recon, "2.5.2", "cba53fa8db83ad968c9a652e09c3ed7ddcc4da434f27c3eaa9ca47ffb2b1ff03", [:mix, :rebar3], [], "hexpm", "2c7523c8dee91dff41f6b3d63cba2bd49eb6d2fe5bf1eec0df7f87eb5e230e1c"},
-  "sunbake": {:hex, :sunbake, "0.2.1", "13884f1ca8a45eadbfd6d2d9d9fa288bfe0a003e5ee5b9209ac55574fa553727", [:mix], [{:ecto, "~> 3.7", [hex: :ecto, repo: "hexpm", optional: false]}], "hexpm", "ff071406138a2539bd3d9a8a10f5876de00cb839cade6e5d66a8bb6af87ecd26"},
+  "sunbake": {:hex, :sunbake, "0.2.3", "2cb16e49ffdd3311ce5ad13078affaf881129da2d287e61f32bc65c91b41de87", [:mix], [{:ecto, "~> 3.7", [hex: :ecto, repo: "hexpm", optional: false]}], "hexpm", "fc9cded18309fe414b8f7a1692cda824e51c14d94b3010449102dc36e0e559bd"},
   "telemetry": {:hex, :telemetry, "1.0.0", "0f453a102cdf13d506b7c0ab158324c337c41f1cc7548f0bc0e130bbf0ae9452", [:rebar3], [], "hexpm", "73bc09fa59b4a0284efb4624335583c528e07ec9ae76aca96ea0673850aec57a"},
   "unsafe": {:hex, :unsafe, "1.0.1", "a27e1874f72ee49312e0a9ec2e0b27924214a05e3ddac90e91727bc76f8613d8", [:mix], [], "hexpm", "6c7729a2d214806450d29766abc2afaa7a2cbecf415be64f36a6691afebb50e5"},
 }

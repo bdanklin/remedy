@@ -4,10 +4,11 @@ defmodule Remedy.ModelHelpers do
     only: [is_snowflake: 1],
     warn: false
 
+  alias Remedy.Snowflake, warn: false
+
   alias Remedy.Schema.{
           App,
           AuditLog,
-          AuditLogChange,
           AuditLogEntry,
           AuditLogOption,
           Ban,

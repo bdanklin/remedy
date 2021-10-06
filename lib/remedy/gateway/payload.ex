@@ -7,7 +7,7 @@ defmodule Remedy.Gateway.Payload do
     quote do
       alias unquote(parent)
 
-      import Remedy.OpcodeHelpers
+      import Remedy.OpcodeHelpers, only: [op_from_mod: 1]
       use Ecto.Schema
       alias Remedy.Gateway.{Pacemaker, Payload, Session, WSState}
 
@@ -78,7 +78,8 @@ defmodule Remedy.Gateway.Payload do
         },
         warn: false
 
-  import Remedy.{ModelHelpers, OpcodeHelpers}
+  import Remedy.ModelHelpers
+  import Remedy.OpcodeHelpers, only: [is_op_event: 1, mod_from_event: 1]
 
   require Logger
 

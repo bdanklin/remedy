@@ -106,7 +106,7 @@ defmodule Remedy.MixProject do
       {:gen_stage, "~> 1.0"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
-      {:sunbake, "~> 0.2.0"},
+      {:sunbake, "~> 0.2.3"},
       {:battle_standard, "~> 0.1.0"},
       {:morphix, "~> 0.8.1"},
       {:recase, "~> 0.7.0"}

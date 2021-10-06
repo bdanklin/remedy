@@ -6,6 +6,21 @@
 
 Remedy is an elixir library for interracting with the [Discord API](https://discord.com/developers/docs/intro). The project began as a fork of the [Nostrum library](https://github.com/kraigie/nostrum)
 
+## To Do
+
+- [ ] Complete doc coverage
+  - [ ] make doctests work
+- [ ] Complete test coverage
+- [x] new github actions
+- [x] Convert structs to schema
+- [x] Convert Cache to Ecto + Etso
+- [x] use Gun as the only HTTP client
+- [ ] Re implement voice
+- [x] rewrite gateway modules
+- [x] Code clean up to respect contexts
+- [ ] smash morphix apart and just take the 1 function i use
+- [ ] Remove config.exs
+
 ## Installation
 
 ```elixir

@@ -4,15 +4,7 @@ defmodule Remedy.APITest do
 
   alias Remedy.Schema.{
     AuditLog,
-    Channel,
-    Emoji,
-    Guild,
-    Interaction,
-    Member,
-    Message,
-    Role,
-    User,
-    Webhook
+    Channel
   }
 
   @skip_doctests [
@@ -24,7 +16,7 @@ defmodule Remedy.APITest do
 
   @test_category 872_417_560_094_732_329
   @test_guild 872_417_560_094_732_328
-  @test_text_channel 872_417_560_094_732_331
+  @test_text_channel 895_068_866_395_385_916
   @test_news_channel 895_069_182_616_547_358
   @test_stage_channel 895_069_308_785_393_704
   @test_voice_channel 895_068_896_309_161_984
@@ -34,7 +26,19 @@ defmodule Remedy.APITest do
     assert get_current_bot_application_information!().id == @application_id
   end
 
+  test "get_current_authorization_information" do
+    assert get_current_authorization_information() == {:error, {401, 50001, "Missing Access"}}
+  end
+
   test "get channel" do
-    assert get_channel!(@test_text_channel).id == @test_text_channel
+    {:ok, %Channel{id: id}} = get_channel(@test_text_channel)
+
+    assert id == @test_text_channel
+  end
+
+  test "get guild audit log" do
+    {:ok, %AuditLog{guild_id: guild_id}} = get_guild_audit_log(@test_guild)
+
+    assert guild_id == @test_guild
   end
 end

@@ -1,4 +1,5 @@
 defmodule Remedy.CDN do
+  alias Sunbake.Snowflake
   @cdn "https://cdn.discordapp.com"
 
   @moduledoc """
@@ -61,14 +62,14 @@ defmodule Remedy.CDN do
 
   ## Examples
 
-      iex> Remedy.CDN.guild_icon(872417560094732328, "f817c5adaf96672c94a17de8e944f427", "cheese")
+      iex> Remedy.CDN.guild_icon(872417560094732328, "f817c5adaf96672c94a17de8e944f427")
       "https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.png"
 
 
   """
 
   @spec guild_icon(snowflake, hash, size) :: binary
-  def guild_icon(id, guild_icon, size) do
+  def guild_icon(id, guild_icon, size \\ nil) do
     "/icons/#{id}/#{guild_icon}" |> encode(guild_icon, size)
   end
 
@@ -80,10 +81,11 @@ defmodule Remedy.CDN do
       iex> Remedy.CDN.guild_splash(848619361782726696, "7ed6ea26b7a5e64f78ca5df202cf4d13")
       "https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png"
 
+
   """
 
   @spec guild_splash(snowflake, hash, size) :: binary
-  def guild_splash(id, splash, size) do
+  def guild_splash(id, splash, size \\ nil) do
     "/splashes/#{id}/#{splash}"
     |> encode(splash, size)
   end
@@ -94,7 +96,7 @@ defmodule Remedy.CDN do
 
   """
   @spec guild_discovery_splash(snowflake, hash, size) :: binary
-  def guild_discovery_splash(guild_id, guild_discovery_splash, size) do
+  def guild_discovery_splash(guild_id, guild_discovery_splash, size \\ nil) do
     "/discovery-splashes/#{guild_id}/#{guild_discovery_splash}"
     |> encode(guild_discovery_splash, size)
   end
@@ -119,11 +121,10 @@ defmodule Remedy.CDN do
       iex> Remedy.CDN.user_banner(179255727561375744, "e625e858e48602248a69bcfdfa886ab4")
       "https://cdn.discordapp.com/banners/179255727561375744/e625e858e48602248a69bcfdfa886ab4.png"
 
-
   """
 
   @spec user_banner(snowflake, hash, size) :: binary
-  def user_banner(user_id, user_banner, size) do
+  def user_banner(user_id, user_banner, size \\ nil) do
     "/banners/#{user_id}/#{user_banner}"
     |> encode(user_banner, size)
   end
@@ -136,16 +137,13 @@ defmodule Remedy.CDN do
 
   ## Examples
 
-      iex> Remedy.API.get_current_user!() |> Remedy.CDN.default_user_avatar()
-      "https://cdn.discordapp.com/embed/avatars/4.png"
-
       iex> Remedy.CDN.default_user_avatar(3)
       "https://cdn.discordapp.com/embed/avatars/3.png"
 
   """
 
   @spec default_user_avatar(discriminator, size) :: binary
-  def default_user_avatar(discriminator, size) do
+  def default_user_avatar(discriminator, size \\ nil) do
     "/embed/avatars/#{rem(discriminator, 5)}"
     |> encode(discriminator, size)
   end
@@ -161,7 +159,7 @@ defmodule Remedy.CDN do
 
   """
   @spec user_avatar(snowflake, hash, size) :: binary
-  def user_avatar(id, user_avatar, size) do
+  def user_avatar(id, user_avatar, size \\ nil) do
     "/avatars/#{id}/#{user_avatar}"
     |> encode(user_avatar, size)
   end
@@ -173,7 +171,7 @@ defmodule Remedy.CDN do
   """
 
   @spec application_icon(snowflake, hash, size) :: binary
-  def application_icon(application_id, icon, size) do
+  def application_icon(application_id, icon, size \\ nil) do
     "/app-icons/#{application_id}/#{icon}"
     |> encode(icon, size)
   end
@@ -184,7 +182,7 @@ defmodule Remedy.CDN do
 
   """
   @spec application_cover(snowflake, hash, size) :: binary
-  def application_cover(application_id, cover_image, size) do
+  def application_cover(application_id, cover_image, size \\ nil) do
     "/app-icons/#{application_id}/#{cover_image}"
     |> encode(cover_image, size)
   end
@@ -215,6 +213,7 @@ defmodule Remedy.CDN do
   @doc """
   Returns a sticker banner url.
   """
+  @spec sticker_pack_banner(snowflake, size) :: binary
   def sticker_pack_banner(banner_asset_id, size) do
     "/app-assets/710982414301790216/store/#{banner_asset_id}"
     |> encode(banner_asset_id, size)

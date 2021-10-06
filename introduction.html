@@ -10,7 +10,7 @@
     <title>Remedy — Remedy v0.6.5</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-580e535073.js"></script>
+    <script src="dist/sidebar_items-b8ce7f4771.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -83,15 +83,23 @@ Remedy
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-<h1>Remedy</h1><p><a href="https://github.com/bdanklin/remedy/actions/workflows/docs.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg?branch=master" alt="Publish Docs"/></a> <a href="https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/test_and_lint.yml/badge.svg?branch=master" alt="Test &amp; Lint"/></a></p><p>Playground fork of Nostrum discord library.</p><p>I am still using <a href="https://github.com/Kraigie/nostrum">Nostrum</a> for my bots and I recommend you do the same. This is just a playground.</p><h2 id="goals" class="section-heading">
-  <a href="#goals" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Goals
+<h1>Remedy</h1><p><a href="https://github.com/bdanklin/remedy/actions/workflows/docs.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg" alt="Publish Docs"/></a> <a href="https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml/badge.svg" alt="Codacy Security Scan"/></a> <a href="https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml/badge.svg" alt="Credo, ExDoc, Doctor, Dialyzer"/></a></p><p>Remedy is an elixir library for interracting with the <a href="https://discord.com/developers/docs/intro">Discord API</a>. The project began as a fork of the <a href="https://github.com/kraigie/nostrum">Nostrum library</a></p><h2 id="to-do" class="section-heading">
+  <a href="#to-do" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  To Do
 </h2>
-<ul><li>Gun 2.0</li><li>Separate applicable components into their own packages.</li><li>Organise types - Timestamp / Snowflake</li><li>Convert structs to schema to...<ul><li>Make the casting easier.</li><li>Make storing them in a db easier.</li><li>Prevent the end user re modelling these things for their own db.</li></ul></li><li>Convert cache to Etso.<ul><li>integrate nicely with new schema.</li></ul></li><li>Generalize cache.<ul><li>Choose what to cache. eg i only want to cache user presence and message embeds...</li><li>Make it an actual cache, aka invisible and if the resource is not in cache, we should fetch it and return it as required.</li></ul></li><li>Testing<ul><li>Supply a bot secret thru workflow to enable actual testing on a real server. without exposing secrets (prob too hard)</li></ul></li><li>Bang functions?!?<ul><li>Remove all the bloaty manual stuff. Include a generic unsafe.</li></ul></li></ul><h2 id="packages" class="section-heading">
-  <a href="#packages" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Packages
+<ul><li>[ ] Complete doc coverage<ul><li>[ ] make doctests work</li></ul></li><li>[ ] Complete test coverage</li><li>[x] new github actions</li><li>[x] Convert structs to schema</li><li>[x] Convert Cache to Ecto + Etso</li><li>[x] use Gun as the only HTTP client</li><li>[ ] Re implement voice</li><li>[x] rewrite gateway modules</li><li>[x] Code clean up to respect contexts</li><li>[ ] smash morphix apart and just take the 1 function i use</li><li>[ ] Remove config.exs</li></ul><h2 id="installation" class="section-heading">
+  <a href="#installation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Installation
 </h2>
-<p>I have extracted various components from the codebase which in my opinion are cluttering the code with static helpers at various layers of abstraction. You are welcome to use them and submit any improvements you find.</p><ul><li><a href="https://hex.pm/packages/sunbake">Sunbake</a> For easy types. Timestamp and Snowflake currently included.</li><li><a href="https://hex.pm/packages/battle_standard">Battle Standard</a> Clean up all those manual flag helpers. just <code class="inline">use BattleStandard</code></li></ul>
+<pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="p" data-group-id="1777208368-1">(</span><span class="p" data-group-id="1777208368-1">)</span><span class="w"> </span><span class="k" data-group-id="1777208368-2">do</span><span class="w">
+  </span><span class="p" data-group-id="1777208368-3">[</span><span class="w">
+    </span><span class="p" data-group-id="1777208368-4">{</span><span class="ss">:remedy</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.6.4&quot;</span><span class="p" data-group-id="1777208368-4">}</span><span class="w">
+  </span><span class="p" data-group-id="1777208368-3">]</span><span class="w">
+</span><span class="k" data-group-id="1777208368-2">end</span></code></pre><h2 id="license" class="section-heading">
+  <a href="#license" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  License
+</h2>
+<p><a href="https://opensource.org/licenses/MIT">MIT</a></p>
 <div class="bottom-actions">
   <div class="bottom-actions-item">
 

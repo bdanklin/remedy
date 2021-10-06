@@ -10,7 +10,7 @@
     <title>Remedy.Consumer — Remedy v0.6.5</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-580e535073.js"></script>
+    <script src="dist/sidebar_items-b8ce7f4771.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -106,47 +106,47 @@ will each be ran in their own seperate task.</p><p>The full list of dispatch eve
   Example
 </h2>
 <p>It is recommended that you supervise your consumers. First we set up a supervisor module for our consumers.</p><pre><code class="makeup elixir"><span class="c1">#example_supervisor.ex</span><span class="w">
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.ExampleSupervisor</span><span class="w"> </span><span class="k" data-group-id="9389244565-1">do</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.ExampleSupervisor</span><span class="w"> </span><span class="k" data-group-id="4641291785-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Supervisor</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="9389244565-2">(</span><span class="n">args</span><span class="p" data-group-id="9389244565-2">)</span><span class="w"> </span><span class="k" data-group-id="9389244565-3">do</span><span class="w">
-    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="9389244565-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p" data-group-id="9389244565-4">)</span><span class="w">
-  </span><span class="k" data-group-id="9389244565-3">end</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="4641291785-2">(</span><span class="n">args</span><span class="p" data-group-id="4641291785-2">)</span><span class="w"> </span><span class="k" data-group-id="4641291785-3">do</span><span class="w">
+    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="4641291785-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p" data-group-id="4641291785-4">)</span><span class="w">
+  </span><span class="k" data-group-id="4641291785-3">end</span><span class="w">
 
   </span><span class="na">@impl</span><span class="w"> </span><span class="no">true</span><span class="w">
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="9389244565-5">(</span><span class="c">_init_arg</span><span class="p" data-group-id="9389244565-5">)</span><span class="w"> </span><span class="k" data-group-id="9389244565-6">do</span><span class="w">
-    </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9389244565-7">[</span><span class="nc">ExampleConsumer</span><span class="p" data-group-id="9389244565-7">]</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="4641291785-5">(</span><span class="c">_init_arg</span><span class="p" data-group-id="4641291785-5">)</span><span class="w"> </span><span class="k" data-group-id="4641291785-6">do</span><span class="w">
+    </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4641291785-7">[</span><span class="nc">ExampleConsumer</span><span class="p" data-group-id="4641291785-7">]</span><span class="w">
 
-    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p" data-group-id="9389244565-8">(</span><span class="n">children</span><span class="p">,</span><span class="w"> </span><span class="ss">strategy</span><span class="p">:</span><span class="w"> </span><span class="ss">:one_for_one</span><span class="p" data-group-id="9389244565-8">)</span><span class="w">
-  </span><span class="k" data-group-id="9389244565-6">end</span><span class="w">
-</span><span class="k" data-group-id="9389244565-1">end</span></code></pre><p>You can then set up your consumer module.</p><pre><code class="makeup elixir"><span class="c1">#example_consumer.ex</span><span class="w">
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleConsumer</span><span class="w"> </span><span class="k" data-group-id="7559889214-1">do</span><span class="w">
+    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p" data-group-id="4641291785-8">(</span><span class="n">children</span><span class="p">,</span><span class="w"> </span><span class="ss">strategy</span><span class="p">:</span><span class="w"> </span><span class="ss">:one_for_one</span><span class="p" data-group-id="4641291785-8">)</span><span class="w">
+  </span><span class="k" data-group-id="4641291785-6">end</span><span class="w">
+</span><span class="k" data-group-id="4641291785-1">end</span></code></pre><p>You can then set up your consumer module.</p><pre><code class="makeup elixir"><span class="c1">#example_consumer.ex</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleConsumer</span><span class="w"> </span><span class="k" data-group-id="8730472843-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Remedy.Consumer</span><span class="w">
 
   </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Api</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="w"> </span><span class="k" data-group-id="7559889214-2">do</span><span class="w">
-    </span><span class="nc">Consumer</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="7559889214-3">(</span><span class="bp">__MODULE__</span><span class="p" data-group-id="7559889214-3">)</span><span class="w">
-  </span><span class="k" data-group-id="7559889214-2">end</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="w"> </span><span class="k" data-group-id="8730472843-2">do</span><span class="w">
+    </span><span class="nc">Consumer</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="8730472843-3">(</span><span class="bp">__MODULE__</span><span class="p" data-group-id="8730472843-3">)</span><span class="w">
+  </span><span class="k" data-group-id="8730472843-2">end</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="7559889214-4">(</span><span class="p" data-group-id="7559889214-5">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7559889214-6">%</span><span class="nc" data-group-id="7559889214-6">Remedy.Schema.Message</span><span class="p" data-group-id="7559889214-6">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="n">content</span><span class="p" data-group-id="7559889214-6">}</span><span class="p">,</span><span class="w"> </span><span class="c">_ws_state</span><span class="p" data-group-id="7559889214-5">}</span><span class="p" data-group-id="7559889214-4">)</span><span class="w"> </span><span class="k" data-group-id="7559889214-7">do</span><span class="w">
-    </span><span class="k">case</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k" data-group-id="7559889214-8">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="8730472843-4">(</span><span class="p" data-group-id="8730472843-5">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8730472843-6">%</span><span class="nc" data-group-id="8730472843-6">Remedy.Schema.Message</span><span class="p" data-group-id="8730472843-6">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="n">content</span><span class="p" data-group-id="8730472843-6">}</span><span class="p">,</span><span class="w"> </span><span class="c">_ws_state</span><span class="p" data-group-id="8730472843-5">}</span><span class="p" data-group-id="8730472843-4">)</span><span class="w"> </span><span class="k" data-group-id="8730472843-7">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k" data-group-id="8730472843-8">do</span><span class="w">
       </span><span class="s">&quot;!sleep&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
-        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="7559889214-9">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Going to sleep...&quot;</span><span class="p" data-group-id="7559889214-9">)</span><span class="w">
-        </span><span class="nc">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p" data-group-id="7559889214-10">(</span><span class="mi">3000</span><span class="p" data-group-id="7559889214-10">)</span><span class="w">
+        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="8730472843-9">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Going to sleep...&quot;</span><span class="p" data-group-id="8730472843-9">)</span><span class="w">
+        </span><span class="nc">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p" data-group-id="8730472843-10">(</span><span class="mi">3000</span><span class="p" data-group-id="8730472843-10">)</span><span class="w">
 
       </span><span class="s">&quot;!ping&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
-        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="7559889214-11">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pyongyang!&quot;</span><span class="p" data-group-id="7559889214-11">)</span><span class="w">
+        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="8730472843-11">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pyongyang!&quot;</span><span class="p" data-group-id="8730472843-11">)</span><span class="w">
 
       </span><span class="s">&quot;!raise&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
         </span><span class="k">raise</span><span class="w"> </span><span class="s">&quot;No problems here!&quot;</span><span class="w">
-    </span><span class="k" data-group-id="7559889214-8">end</span><span class="w">
-  </span><span class="k" data-group-id="7559889214-7">end</span><span class="w">
+    </span><span class="k" data-group-id="8730472843-8">end</span><span class="w">
+  </span><span class="k" data-group-id="8730472843-7">end</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="7559889214-12">(</span><span class="c">_event</span><span class="p" data-group-id="7559889214-12">)</span><span class="w"> </span><span class="k" data-group-id="7559889214-13">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="8730472843-12">(</span><span class="c">_event</span><span class="p" data-group-id="8730472843-12">)</span><span class="w"> </span><span class="k" data-group-id="8730472843-13">do</span><span class="w">
     </span><span class="ss">:noop</span><span class="w">
-  </span><span class="k" data-group-id="7559889214-13">end</span><span class="w">
-</span><span class="k" data-group-id="7559889214-1">end</span></code></pre>
+  </span><span class="k" data-group-id="8730472843-13">end</span><span class="w">
+</span><span class="k" data-group-id="8730472843-1">end</span></code></pre>
         </section>
 
 
@@ -543,7 +543,7 @@ Types
     </a>
     <h1 class="signature">channel_create()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L133" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L157" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -573,7 +573,7 @@ Types
     </a>
     <h1 class="signature">channel_delete()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L139" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L171" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -603,7 +603,7 @@ Types
     </a>
     <h1 class="signature">channel_pins_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L147" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L179" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -617,7 +617,8 @@ Types
       <div class="specs">
 
           <pre>channel_pins_update() ::
-  {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+  {:CHANNEL_PINS_UPDATE, Remedy.Schema.ChannelPinsUpdate.t(),
+   <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -633,7 +634,7 @@ Types
     </a>
     <h1 class="signature">channel_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L155" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L165" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -663,7 +664,7 @@ Types
     </a>
     <h1 class="signature">event()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L83" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L107" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -737,7 +738,7 @@ Types
     </a>
     <h1 class="signature">guild_available()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L157" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L182" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -767,7 +768,7 @@ Types
     </a>
     <h1 class="signature">guild_ban_add()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L159" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L184" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -780,7 +781,8 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>guild_ban_add() :: {:GUILD_BAN_ADD, GuildBanAdd.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+          <pre>guild_ban_add() ::
+  {:GUILD_BAN_ADD, <a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -796,7 +798,7 @@ Types
     </a>
     <h1 class="signature">guild_ban_remove()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L161" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L186" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -810,7 +812,7 @@ Types
       <div class="specs">
 
           <pre>guild_ban_remove() ::
-  {:GUILD_BAN_REMOVE, GuildBanRemove.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+  {:GUILD_BAN_REMOVE, <a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -826,7 +828,7 @@ Types
     </a>
     <h1 class="signature">guild_create()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L163" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L188" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -856,7 +858,7 @@ Types
     </a>
     <h1 class="signature">guild_delete()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L165" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L190" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -886,7 +888,7 @@ Types
     </a>
     <h1 class="signature">guild_emojis_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L167" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L192" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -916,7 +918,7 @@ Types
     </a>
     <h1 class="signature">guild_integrations_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L169" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L194" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -930,7 +932,7 @@ Types
       <div class="specs">
 
           <pre>guild_integrations_update() ::
-  {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(),
+  {:GUILD_INTEGRATIONS_UPDATE, <a href="Remedy.Schema.Integration.html#t:t/0">Remedy.Schema.Integration.t</a>(),
    <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
@@ -947,7 +949,7 @@ Types
     </a>
     <h1 class="signature">guild_member_add()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L171" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L196" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -977,7 +979,7 @@ Types
     </a>
     <h1 class="signature">guild_member_remove()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L173" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L198" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1007,7 +1009,7 @@ Types
     </a>
     <h1 class="signature">guild_member_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L175" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L200" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1038,7 +1040,7 @@ Types
     </a>
     <h1 class="signature">guild_members_chunk()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L177" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L202" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1068,7 +1070,7 @@ Types
     </a>
     <h1 class="signature">guild_role_create()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L179" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L204" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1098,7 +1100,7 @@ Types
     </a>
     <h1 class="signature">guild_role_delete()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L181" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L206" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1128,7 +1130,7 @@ Types
     </a>
     <h1 class="signature">guild_role_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L183" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L208" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1158,7 +1160,7 @@ Types
     </a>
     <h1 class="signature">guild_unavailable()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L185" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L210" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1188,7 +1190,7 @@ Types
     </a>
     <h1 class="signature">guild_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L187" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L212" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1218,7 +1220,7 @@ Types
     </a>
     <h1 class="signature">message_ack()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L189" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L214" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1247,7 +1249,7 @@ Types
     </a>
     <h1 class="signature">message_create()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L191" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L216" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1277,7 +1279,7 @@ Types
     </a>
     <h1 class="signature">message_delete()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L195" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L220" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1291,7 +1293,7 @@ Types
       <div class="specs">
 
           <pre>message_delete() ::
-  {:MESSAGE_DELETE, MessageDelete.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+  {:MESSAGE_DELETE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -1307,7 +1309,7 @@ Types
     </a>
     <h1 class="signature">message_delete_bulk()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L193" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L218" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1321,7 +1323,8 @@ Types
       <div class="specs">
 
           <pre>message_delete_bulk() ::
-  {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+  {:MESSAGE_DELETE_BULK, Remedy.Schema.MessageDeleteBulk.t(),
+   <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -1337,7 +1340,7 @@ Types
     </a>
     <h1 class="signature">message_reaction_add()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L197" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L222" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1351,7 +1354,8 @@ Types
       <div class="specs">
 
           <pre>message_reaction_add() ::
-  {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+  {:MESSAGE_REACTION_ADD, Remedy.Schema.MessageReactionAdd.t(),
+   <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -1367,7 +1371,7 @@ Types
     </a>
     <h1 class="signature">message_reaction_remove()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L203" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L228" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1381,7 +1385,7 @@ Types
       <div class="specs">
 
           <pre>message_reaction_remove() ::
-  {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(),
+  {:MESSAGE_REACTION_REMOVE, Remedy.Schema.MessageReactionRemove.t(),
    <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
@@ -1398,7 +1402,7 @@ Types
     </a>
     <h1 class="signature">message_reaction_remove_all()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L199" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L224" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1412,7 +1416,7 @@ Types
       <div class="specs">
 
           <pre>message_reaction_remove_all() ::
-  {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(),
+  {:MESSAGE_REACTION_REMOVE_ALL, Remedy.Schema.MessageReactionRemoveAll.t(),
    <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
@@ -1429,7 +1433,7 @@ Types
     </a>
     <h1 class="signature">message_reaction_remove_emoji()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L201" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L226" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1443,7 +1447,7 @@ Types
       <div class="specs">
 
           <pre>message_reaction_remove_emoji() ::
-  {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(),
+  {:MESSAGE_REACTION_REMOVE_EMOJI, Remedy.Schema.MessageReactionRemoveEmoji.t(),
    <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
@@ -1460,7 +1464,7 @@ Types
     </a>
     <h1 class="signature">message_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L205" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L230" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1490,7 +1494,7 @@ Types
     </a>
     <h1 class="signature">presence_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L207" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L232" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1504,7 +1508,8 @@ Types
       <div class="specs">
 
           <pre>presence_update() ::
-  {:PRESENCE_UPDATE, Presence.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+  {:PRESENCE_UPDATE, Remedy.Schema.PresenceUpdate.t(),
+   <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -1520,7 +1525,7 @@ Types
     </a>
     <h1 class="signature">ready()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L209" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L234" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1533,7 +1538,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>ready() :: {:READY, Ready.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+          <pre>ready() :: {:READY, Remedy.Schema.Ready.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -1549,7 +1554,7 @@ Types
     </a>
     <h1 class="signature">resumed()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L211" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L236" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1578,7 +1583,7 @@ Types
     </a>
     <h1 class="signature">thread_create()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L219" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L244" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1608,7 +1613,7 @@ Types
     </a>
     <h1 class="signature">thread_delete()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L227" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L252" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1638,7 +1643,7 @@ Types
     </a>
     <h1 class="signature">thread_list_sync()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L233" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L258" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1668,7 +1673,7 @@ Types
     </a>
     <h1 class="signature">thread_member_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L241" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L266" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1698,7 +1703,7 @@ Types
     </a>
     <h1 class="signature">thread_members_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L249" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L274" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1712,7 +1717,7 @@ Types
       <div class="specs">
 
           <pre>thread_members_update() ::
-  {:THREAD_MEMBERs_UPDATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
+  {:THREAD_MEMBERS_UPDATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
    <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
@@ -1729,7 +1734,7 @@ Types
     </a>
     <h1 class="signature">thread_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L258" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L283" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1759,7 +1764,7 @@ Types
     </a>
     <h1 class="signature">typing_start()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L261" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L286" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1772,7 +1777,8 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>typing_start() :: {:TYPING_START, TypingStart.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
+          <pre>typing_start() ::
+  {:TYPING_START, Remedy.Schema.TypingStart.t(), <a href="Remedy.Gateway.WSState.html#t:t/0">Remedy.Gateway.WSState.t</a>()}</pre>
 
       </div>
 
@@ -1788,7 +1794,7 @@ Types
     </a>
     <h1 class="signature">user_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L263" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L288" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1818,7 +1824,7 @@ Types
     </a>
     <h1 class="signature">voice_ready()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L265" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L290" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1847,7 +1853,7 @@ Types
     </a>
     <h1 class="signature">voice_server_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L267" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L292" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1877,7 +1883,7 @@ Types
     </a>
     <h1 class="signature">voice_speaking_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L269" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L294" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1907,7 +1913,7 @@ Types
     </a>
     <h1 class="signature">voice_state_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L271" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L296" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1937,7 +1943,7 @@ Types
     </a>
     <h1 class="signature">webhooks_update()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L273" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L298" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1979,7 +1985,7 @@ Callbacks
     </a>
     <h1 class="signature">handle_event(event)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L80" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L104" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

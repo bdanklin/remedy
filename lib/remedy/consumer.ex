@@ -276,14 +276,9 @@ defmodule Remedy.Consumer do
   defmacro __using__(opts) do
     quote location: :keep do
       @behaviour Remedy.Consumer
-      @before_compile
       alias Remedy.Consumer
 
-      def start_link(event) do
-        Task.start_link(fn ->
-          __MODULE__.handle_event(event)
-        end)
-      end
+      def start_link(event), do: Task.start_link(fn -> __MODULE__.handle_event(event) end)
 
       def child_spec(_arg) do
         spec = %{
@@ -294,23 +289,11 @@ defmodule Remedy.Consumer do
         Supervisor.child_spec(spec, unquote(Macro.escape(opts)))
       end
 
-      defoverridable handle_event: 1, child_spec: 1
-    end
-  end
-
-  defmacro __before_compile__(_env) do
-    quote do
-      def start_link do
-        Consumer.start_link(__MODULE__)
-      end
-
       def handle_event(_event) do
         :ok
       end
 
-      def handle_event(_event) do
-        :noop
-      end
+      defoverridable handle_event: 1, child_spec: 1
     end
   end
 

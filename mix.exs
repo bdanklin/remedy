@@ -4,7 +4,7 @@ defmodule Remedy.MixProject do
 
   @app :remedy
   @name "Remedy"
-  @version "0.6.4"
+  @version "0.6.5"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
   @description "Discord Library in Elixir."
@@ -102,8 +102,7 @@ defmodule Remedy.MixProject do
       {:jason, "~> 1.2"},
       {:mime, "~> 2.0"},
       {:progress_bar, "~> 2.0"},
-      {:cowlib, "~> 2.11.1", hex: :remedy_cowlib, override: true},
-      {:gun, "~> 2.0", hex: :remedy_gun},
+      {:gun, "2.0.1", hex: :remedy_gun},
       {:gen_stage, "~> 1.0"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},

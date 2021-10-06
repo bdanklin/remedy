@@ -98,14 +98,13 @@ defmodule Remedy.Schema.User do
   def mention(user)
   def mention(%__MODULE__{id: id}), do: "<@#{to_string(id)}>"
 
-  def avatar(user)
+  def avatar(user, size \\ nil)
 
-  def avatar(%__MODULE__{avatar: nil, discriminator: discriminator}) do
-    discriminator
-    |> CDN.default_user_avatar()
+  def avatar(%__MODULE__{avatar: nil, discriminator: discriminator}, size) do
+    CDN.default_user_avatar(discriminator, size)
   end
 
-  def avatar(%__MODULE__{id: id, avatar: avatar}) do
-    CDN.user_avatar(id, avatar)
+  def avatar(%__MODULE__{id: id, avatar: avatar}, size) do
+    CDN.user_avatar(id, avatar, size)
   end
 end

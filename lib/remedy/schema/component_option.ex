@@ -5,9 +5,9 @@ defmodule Remedy.Schema.ComponentOption do
   use Remedy.Schema
   @type label :: Component.label()
   @type value :: String.t()
-  @type description :: Component.description()
+  @type description :: String.t()
   @type emoji :: Component.emoji()
-  @type default :: Component.default()
+  @type default :: boolean
 
   @type t :: %__MODULE__{
           default: default,
@@ -16,6 +16,7 @@ defmodule Remedy.Schema.ComponentOption do
           label: label,
           value: value
         }
+
   embedded_schema do
     field :label, :string
     field :value, :string
@@ -24,6 +25,7 @@ defmodule Remedy.Schema.ComponentOption do
     embeds_one :emoji, Emoji
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -31,14 +33,17 @@ defmodule Remedy.Schema.ComponentOption do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

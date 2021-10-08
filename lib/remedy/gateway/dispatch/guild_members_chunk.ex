@@ -2,7 +2,7 @@ defmodule Remedy.Gateway.Dispatch.GuildMemberChunk do
   @moduledoc false
 
   alias Remedy.Cache
-  alias Remedy.Schema.{GuildMemberChunk, Member, Presence, User}
+  alias Remedy.Schema.{GuildMembersChunk, Member, Presence, User}
 
   def handle({event, %{members: members, presences: presences} = payload, socket}) do
     for member <- members do
@@ -15,6 +15,6 @@ defmodule Remedy.Gateway.Dispatch.GuildMemberChunk do
       User.new(presence.user) |> Cache.create_user()
     end
 
-    {event, GuildMemberChunk.new(payload), socket}
+    {event, GuildMembersChunk.new(payload), socket}
   end
 end

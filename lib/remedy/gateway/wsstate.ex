@@ -6,6 +6,25 @@ defmodule Remedy.Gateway.WSState do
   """
   use Remedy.Schema
 
+  @type token :: String.t()
+  @type shard :: integer()
+  @type gateway :: String.t()
+  @type session_id :: String.t() | nil
+  @type shard_pid :: pid()
+  @type heartbeat_interval :: integer()
+  @type conn :: pid()
+  @type gun_conn :: pid()
+  @type gun_data_stream :: reference()
+  @type zlib_context :: term()
+  @type last_heartbeat_send :: DateTime.t() | nil
+  @type last_heartbeat_ack :: DateTime.t() | nil
+  @type heartbeat_ack :: boolean()
+  @type heartbeat_timer :: integer()
+  @type payload_op_code :: integer()
+  @type payload_op_event :: atom()
+  @type payload_sequence :: integer()
+  @type payload_dispatch_event :: atom()
+
   @type t :: %__MODULE__{
           token: token,
           shard: shard,
@@ -25,25 +44,6 @@ defmodule Remedy.Gateway.WSState do
           payload_sequence: payload_sequence,
           payload_dispatch_event: payload_dispatch_event
         }
-
-  @type token :: String.t()
-  @type shard :: integer()
-  @type gateway :: String.t()
-  @type session_id :: String.t() | nil
-  @type shard_pid :: pid()
-  @type heartbeat_interval :: integer()
-  @type conn :: pid()
-  @type gun_conn :: pid()
-  @type gun_data_stream :: Stream.t()
-  @type zlib_context :: term()
-  @type last_heartbeat_send :: DateTime.t() | nil
-  @type last_heartbeat_ack :: DateTime.t() | nil
-  @type heartbeat_ack :: boolean()
-  @type heartbeat_timer :: integer()
-  @type payload_op_code :: integer()
-  @type payload_op_event :: atom()
-  @type payload_sequence :: integer()
-  @type payload_dispatch_event :: atom()
 
   @primary_key false
   embedded_schema do

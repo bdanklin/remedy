@@ -3,6 +3,49 @@ defmodule Remedy.Schema.VoiceState do
   use Remedy.Schema
   @primary_key {:id, :id, autogenerate: false}
 
+  @type guild_id :: term()
+  @type channel_id :: term()
+  @type self_mute :: term()
+  @type self_deaf :: term()
+  @type gateway :: term()
+  @type session :: term()
+  @type token :: term()
+  @type secret_key :: term()
+  @type session_pid :: term()
+  @type ssrc :: term()
+  @type speaking :: term()
+  @type ip :: term()
+  @type udp_socket :: term()
+  @type rtp_sequenceuence :: term()
+  @type rtp_timestamp :: term()
+  @type ffmpeg_proc :: term()
+  @type raw_audio :: term()
+  @type raw_stateful :: term()
+  @type player_pid :: term()
+
+  @type t :: %__MODULE__{
+          guild_id: guild_id,
+          channel_id: channel_id,
+          self_mute: self_mute,
+          self_deaf: self_deaf,
+          gateway: gateway,
+          session: session,
+          token: token,
+          secret_key: secret_key,
+          session_pid: session_pid,
+          ssrc: ssrc,
+          speaking: speaking,
+          ip: ip,
+          port: term,
+          udp_socket: udp_socket,
+          rtp_sequenceuence: rtp_sequenceuence,
+          rtp_timestamp: rtp_timestamp,
+          ffmpeg_proc: ffmpeg_proc,
+          raw_audio: raw_audio,
+          raw_stateful: raw_stateful,
+          player_pid: player_pid
+        }
+
   embedded_schema do
     field :guild_id
     field :channel_id
@@ -26,6 +69,7 @@ defmodule Remedy.Schema.VoiceState do
     field :player_pid
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -33,14 +77,17 @@ defmodule Remedy.Schema.VoiceState do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Channel do
   Discord Channel Object
   """
   use Remedy.Schema
-
+  @type overwrite :: PermissionOverwrite.t()
   @type t :: %__MODULE__{
           type: integer(),
           position: integer(),
@@ -26,7 +26,7 @@ defmodule Remedy.Schema.Channel do
           parent: Channel.t(),
           owner: User.t(),
           guild: Guild.t(),
-          permission_overwrites: [PermissionOverwrite.t()],
+          permission_overwrites: [overwrite],
           messages: [Message.t()]
         }
 
@@ -59,6 +59,7 @@ defmodule Remedy.Schema.Channel do
     has_many :messages, Message
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -66,14 +67,17 @@ defmodule Remedy.Schema.Channel do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

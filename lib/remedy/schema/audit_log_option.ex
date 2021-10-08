@@ -3,6 +3,7 @@ defmodule Remedy.Schema.AuditLogOption do
   Discord Audit Log Option Object
   """
   use Remedy.Schema
+  @type overwrite :: PermissionOverwrite.t()
 
   @type t :: %__MODULE__{
           delete_member_days: String.t(),
@@ -11,7 +12,7 @@ defmodule Remedy.Schema.AuditLogOption do
           message_id: Snowflake.t(),
           count: String.t(),
           id: Snowflake,
-          overwrite: PermissionOverwrite.t(),
+          overwrite: overwrite,
           type: String.t(),
           role_name: String.t()
         }
@@ -29,16 +30,19 @@ defmodule Remedy.Schema.AuditLogOption do
     embeds_one :overwrite, PermissionOverwrite
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
     |> apply_changes()
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

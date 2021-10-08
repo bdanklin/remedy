@@ -45,6 +45,7 @@ defmodule Remedy.Schema.Webhook do
     belongs_to :user, User
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -52,14 +53,17 @@ defmodule Remedy.Schema.Webhook do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
@@ -106,6 +110,7 @@ defmodule Remedy.Schema.IncomingWebhook do
     belongs_to :user, User
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -113,14 +118,17 @@ defmodule Remedy.Schema.IncomingWebhook do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
@@ -158,6 +166,7 @@ defmodule Remedy.Schema.ApplicationWebhook do
     belongs_to :application, App
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -165,14 +174,17 @@ defmodule Remedy.Schema.ApplicationWebhook do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

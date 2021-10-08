@@ -11,7 +11,7 @@ defmodule Remedy.Schema.Command do
           default_permission: boolean(),
           application: App.t(),
           guild: Guild.t(),
-          options: Option.t()
+          options: CommandOption.t()
         }
 
   @primary_key {:id, :id, autogenerate: false}
@@ -25,6 +25,7 @@ defmodule Remedy.Schema.Command do
     embeds_many :options, Option
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -32,10 +33,12 @@ defmodule Remedy.Schema.Command do
     |> apply_changes()
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
@@ -46,6 +49,7 @@ defmodule Remedy.Schema.Command do
     end)
   end
 
+  @doc false
   def validate(changeset) do
     changeset
     |> validate_required([:name])

@@ -42,19 +42,24 @@ defmodule Remedy.Gun do
           {:error, binary} | {:ok, Remedy.API.RestResponse.t()}
 
   def request(%RestRequest{method: :get} = request, state),
-    do: request |> get(state) |> await() |> prepare_response()
+    do: request |> log() |> get(state) |> await() |> prepare_response()
 
   def request(%RestRequest{method: :put} = request, state),
-    do: request |> put(state) |> await() |> prepare_response()
+    do: request |> log() |> put(state) |> await() |> prepare_response()
 
   def request(%RestRequest{method: :post} = request, state),
-    do: request |> post(state) |> await() |> prepare_response()
+    do: request |> log() |> post(state) |> await() |> prepare_response()
 
   def request(%RestRequest{method: :patch} = request, state),
-    do: request |> patch(state) |> await() |> prepare_response()
+    do: request |> log() |> patch(state) |> await() |> prepare_response()
 
   def request(%RestRequest{method: :delete} = request, state),
-    do: request |> delete(state) |> await() |> prepare_response()
+    do: request |> log() |> delete(state) |> await() |> prepare_response()
+
+  defp log(request) do
+    Logger.warn("#{inspect(request)}")
+    request
+  end
 
   defp get(%RestRequest{route: route, headers: headers}, %Rest{conn: conn}) do
     {:gun.get(conn, route, headers), conn}

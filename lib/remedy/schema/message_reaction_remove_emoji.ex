@@ -2,6 +2,12 @@ defmodule Remedy.Schema.MessageReactionRemoveEmoji do
   @moduledoc false
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          message_id: Snowflake.t(),
+          channel_id: Snowflake.t(),
+          last_pin_timestamp: ISO8601.t()
+        }
+
   @primary_key false
   embedded_schema do
     field :message_id, Snowflake
@@ -9,6 +15,7 @@ defmodule Remedy.Schema.MessageReactionRemoveEmoji do
     field :last_pin_timestamp, ISO8601
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -16,14 +23,17 @@ defmodule Remedy.Schema.MessageReactionRemoveEmoji do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

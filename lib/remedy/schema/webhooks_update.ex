@@ -2,6 +2,11 @@ defmodule Remedy.Schema.WebhooksUpdate do
   @moduledoc false
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          guild_id: Snowflake.t(),
+          channel_id: Snowflake.t()
+        }
+
   @primary_key false
   embedded_schema do
     field :guild_id, Snowflake

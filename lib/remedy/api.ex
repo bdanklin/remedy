@@ -67,7 +67,7 @@ defmodule Remedy.API do
   @type error :: any()
   @type limit :: integer()
   @type locator :: any
-  @type snowflake :: Snowflake.t()
+  @type snowflake :: Sunbake.Snowflake.t()
   @type reason :: String.t() | nil
 
   ### Discord API Proper
@@ -223,8 +223,8 @@ defmodule Remedy.API do
 
   - `:name` (string) - 2-100 character channel name
   - `:position` (integer) - the position of the channel in the left-hand listing
-  - `:topic` (string) (`t:Remedy.Schema.Channel.text_channel/0` only) - 0-1024 character channel topic
-  - `:nsfw` (boolean) (`t:Remedy.Schema.Channel.text_channel/0` only) - if the channel is nsfw
+  - `:topic` (string) - 0-1024 character channel topic
+  - `:nsfw` (boolean) - if the channel is nsfw
   - `:bitrate` (integer) - the bitrate (in bits) of the voice channel; 8000 to 96000 (128000 for VIP servers)
   - `:user_limit` (integer)  - the user limit of the voice channel; 0 refers to no limit, 1 to 99 refers to a user limit
   - `:permission_overwrites` (list of `t:Remedy.Schema.Overwrite.t/0` or equivalent map) - channel or category-specific permissions
@@ -685,7 +685,7 @@ defmodule Remedy.API do
 
       iex> Remedy.API.create_reaction(123123123123, 321321321321, "\xF0\x9F\x98\x81")
 
-  > Note: For other emoji string examples, see `t:Remedy.Schema.Emoji.api_name/0`.
+
 
   """
   @unsafe {:create_reaction, 3}
@@ -1543,7 +1543,7 @@ defmodule Remedy.API do
 
   ## Events
 
-  - `:GUILD_MEMBER_UPDATE'
+  - `:GUILD_MEMBER_UPDATE`
 
   ## Options
 

@@ -3,20 +3,22 @@ defmodule Remedy.Schema.Integration do
   Integration Object
   """
   use Remedy.Schema
-  @primary_key {:id, :id, autogenerate: false}
 
   @type t :: %__MODULE__{
           name: String.t(),
           type: String.t(),
           enabled: boolean(),
-          app: App.t()
+          app: App.t(),
+          guild_id: Snowflake.t()
         }
 
+  @primary_key {:id, :id, autogenerate: false}
   embedded_schema do
     field :name, :string
     field :type, :string
     field :enabled, :boolean
     belongs_to :app, App
+    field :guild_id, Snowflake
   end
 
   @doc false

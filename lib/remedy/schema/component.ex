@@ -129,7 +129,7 @@ defmodule Remedy.Schema.Component do
   """
   @callback update(t(), opts :: [keyword()]) :: t()
 
-  alias Remedy.Schema.Component.{ActionRow, Button, SelectMenu}
+  alias Remedy.Schema.Component.{ActionRow, Button, SelectMenu, ComponentOption}
   use Remedy.Schema
 
   embedded_schema do
@@ -143,7 +143,7 @@ defmodule Remedy.Schema.Component do
     field :min_values, :integer
     field :max_values, :integer
     embeds_one :emoji, Emoji
-    embeds_many :options, ComponentOptions
+    embeds_many :options, ComponentOption
     embeds_many :components, Component
   end
 
@@ -192,7 +192,7 @@ defmodule Remedy.Schema.Component do
   A partial emoji to display on the object.
   Valid for [Buttons](#module-buttons)
   """
-  @type emoji :: Emoji.partial_button_emoji() | nil
+  @type emoji :: Emoji.t() | nil
 
   @typedoc """
   A url for link buttons.
@@ -204,7 +204,7 @@ defmodule Remedy.Schema.Component do
   A list of options for select menus, max 25.
   Valid for [Select Menus](#module-select-menu).
   """
-  @type options :: [Option.t()] | nil
+  @type options :: [ComponentOption.t()] | nil
 
   @typedoc """
   Placeholder text if nothing is selected, max 100 characters
@@ -231,7 +231,7 @@ defmodule Remedy.Schema.Component do
   """
 
   @type components :: [SelectMenu.t() | Button.t() | nil]
-
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -239,14 +239,17 @@ defmodule Remedy.Schema.Component do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

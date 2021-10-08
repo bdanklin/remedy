@@ -1,5 +1,6 @@
 defmodule Remedy.Gateway.Payload do
   @moduledoc false
+  alias Remedy.Gateway.WSState
 
   defmacro __using__(_) do
     parent = __MODULE__

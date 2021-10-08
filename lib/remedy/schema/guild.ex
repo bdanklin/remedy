@@ -40,9 +40,9 @@ defmodule Remedy.Schema.Guild do
           application: App.t(),
           owner: User.t(),
           #     welcome_screen: WelcomeScreen.t(),
-          channels: [Channel.t()],
-          emojis: [Emoji.t()],
-          members: [Member.t()],
+          channels: [Remedy.Schema.Channel.t()],
+          emojis: [Remedy.Schema.Emoji.t()],
+          members: [Remedy.Schema.Member.t()],
           presences: [Presence.t()],
           roles: [Role.t()],
           stage_instances: [StageInstance.t()],
@@ -117,6 +117,7 @@ defmodule Remedy.Schema.Guild do
     field :shard, :integer
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -124,6 +125,7 @@ defmodule Remedy.Schema.Guild do
     |> apply_changes()
   end
 
+  @doc false
   def update(model, params) do
     model
     |> changeset(params)
@@ -131,8 +133,9 @@ defmodule Remedy.Schema.Guild do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset), do: changeset
-
+  @doc false
   def changeset(params), do: changeset(%__MODULE__{}, params)
   def changeset(nil, params), do: changeset(%__MODULE__{id: params.id}, params)
 
@@ -142,14 +145,19 @@ defmodule Remedy.Schema.Guild do
     |> cast_embeds()
   end
 
+  @doc false
   defp cast_embeds(cast_model) do
     Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
   end
 
+  @doc false
   defp castable do
     __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
   end
 
+  @doc """
+  Returns the URL for a guilds icon.
+  """
   @spec icon(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
   def icon(guild, size \\ nil)
   def icon(%__MODULE__{icon: nil}, _size), do: nil
@@ -157,6 +165,9 @@ defmodule Remedy.Schema.Guild do
   def icon(%__MODULE__{id: id, icon: icon}, size),
     do: CDN.guild_icon(id, icon, size)
 
+  @doc """
+  Returns the URL for a guilds splash.
+  """
   @spec splash(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
   def splash(guild, size \\ nil)
   def splash(%__MODULE__{splash: nil}, _size), do: nil
@@ -164,6 +175,9 @@ defmodule Remedy.Schema.Guild do
   def splash(%__MODULE__{id: id, splash: splash}, size),
     do: CDN.guild_splash(id, splash, size)
 
+  @doc """
+  Returns the URL for a guilds discovery splash.
+  """
   @spec discovery_splash(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
   def discovery_splash(guild, size \\ nil)
   def discovery_splash(%__MODULE__{discovery_splash: nil}, _size), do: nil
@@ -171,6 +185,9 @@ defmodule Remedy.Schema.Guild do
   def discovery_splash(%__MODULE__{id: id, discovery_splash: discovery_splash}, size),
     do: CDN.guild_discovery_splash(id, discovery_splash, size)
 
+  @doc """
+  Returns the URL for a guilds banner.
+  """
   @spec banner(Remedy.Schema.Guild.t(), CDN.size()) :: nil | binary
   def banner(guild, size \\ nil)
   def banner(%__MODULE__{banner: nil}, _size), do: nil

@@ -44,6 +44,7 @@ defmodule Remedy.Schema.SpeakingUpdate do
     |> apply_changes()
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -51,14 +52,17 @@ defmodule Remedy.Schema.SpeakingUpdate do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

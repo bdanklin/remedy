@@ -10,13 +10,13 @@ defmodule Remedy.Schema do
   alias Remedy.Schema.Member
   ```
 
-  Which would make an individual resource available as [`%Member{}`](`t:Remedy.Schema.Member/0`).
+  Which would make an individual resource available as [`%Member{}`](`t:Remedy.Schema.Member.t/0`).
 
   ```elixir
   alias Remedy.Schema, as: Discord
   ```
 
-  Which would make all of the schema available as [`%Discord.Guild{}`](`t:Remedy.Schema.Guild/0`).
+  Which would make all of the schema available as [`%Discord.Guild{}`](`t:Remedy.Schema.Guild.t/0`).
 
   ## Helper Functions
 
@@ -48,9 +48,13 @@ defmodule Remedy.Schema do
         AuditLogOption,
         Ban,
         Channel,
+        ChannelPinsUpdate,
         ClientStatus,
         Command,
+        CommandOption,
+        CommandOptionChoice,
         Component,
+        ComponentOption,
         Embed,
         EmbedAuthor,
         EmbedField,
@@ -61,6 +65,15 @@ defmodule Remedy.Schema do
         EmbedVideo,
         Emoji,
         Guild,
+        GuildBanAdd,
+        GuildBanRemove,
+        GuildEmojisUpdate,
+        GuildIntegrationsUpdate,
+        GuildMemberRemove,
+        GuildMembersChunk,
+        GuildMemberUpdate,
+        GuildRoleCreate,
+        GuildRoleUpdate,
         Integration,
         Interaction,
         InteractionData,
@@ -72,6 +85,7 @@ defmodule Remedy.Schema do
         Overwrite,
         PermissionOverwrite,
         Presence,
+        PresenceUpdate,
         Provider,
         Reaction,
         Reference,
@@ -82,6 +96,8 @@ defmodule Remedy.Schema do
         Team,
         TeamMember,
         Thread,
+        ThreadMember,
+        ThreadMetadata,
         UnavailableGuild,
         User,
         Voice,

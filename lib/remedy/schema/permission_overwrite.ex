@@ -4,6 +4,15 @@ defmodule Remedy.Schema.PermissionOverwrite do
   use Remedy.Schema
   @primary_key false
 
+  @type t :: %__MODULE__{
+          id: Snowflake.t(),
+          role: Role.t(),
+          user: User.t(),
+          type: integer(),
+          allow: String.t(),
+          deny: String.t()
+        }
+
   embedded_schema do
     field :id, Snowflake, virtual: true
     embeds_one :role, Role

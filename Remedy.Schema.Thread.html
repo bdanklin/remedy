@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Thread — Remedy v0.6.5</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-b8ce7f4771.js"></script>
+    <script src="dist/sidebar_items-16494de43c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,42 +114,14 @@ Remedy.Schema.Thread <small class="app-vsn">(Remedy v0.6.5)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#t:overwrite/0">overwrite()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#t:t/0">t()</a>
-
-  </div>
-
-</div>
-
-  </div>
-
-  <div class="summary-functions summary">
-    <h2>
-      <a href="#functions">Functions</a>
-    </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#changeset/1">changeset(params \\ %{})</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#changeset/2">changeset(model, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#new/1">new(params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#validate/1">validate(changeset)</a>
 
   </div>
 
@@ -169,6 +141,35 @@ Remedy.Schema.Thread <small class="app-vsn">(Remedy v0.6.5)</small>
 Types
           </h1>
           <div class="types-list">
+<section class="detail" id="t:overwrite/0">
+
+  <div class="detail-header">
+    <a href="#t:overwrite/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">overwrite()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread.ex#L6" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>overwrite() :: Remedy.Schema.PermissionOverwrite.t()</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -202,7 +203,7 @@ Types
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   last_message_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   last_pin_timestamp: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  member: ThreadMember.t(),
+  member: <a href="Remedy.Schema.ThreadMember.html#t:t/0">Remedy.Schema.ThreadMember.t</a>(),
   member_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   message_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   messages: [<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()],
@@ -212,12 +213,12 @@ Types
   owner_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   parent: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
   parent_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  permission_overwrites: [Remedy.Schema.PermissionOverwrite.t()],
+  permission_overwrites: [<a href="#t:overwrite/0">overwrite</a>()],
   permissions: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   position: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   rate_limit_per_user: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   rtc_region: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  thread_metadata: ThreadMetadata.t(),
+  thread_metadata: <a href="Remedy.Schema.ThreadMetadata.html#t:t/0">Remedy.Schema.ThreadMetadata.t</a>(),
   topic: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   type: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   user_limit: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
@@ -225,109 +226,6 @@ Types
 }</pre>
 
       </div>
-
-
-  </section>
-</section>
-
-          </div>
-        </section>
-
-        <section id="functions" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#functions">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-Functions
-          </h1>
-          <div class="functions-list">
-<section class="detail" id="changeset/1">
-
-    <span id="changeset/0"></span>
-
-  <div class="detail-header">
-    <a href="#changeset/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">changeset(params \\ %{})</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread.ex#L77" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="changeset/2">
-
-  <div class="detail-header">
-    <a href="#changeset/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">changeset(model, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread.ex#L81" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="new/1">
-
-  <div class="detail-header">
-    <a href="#new/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">new(params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread.ex#L66" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="validate/1">
-
-  <div class="detail-header">
-    <a href="#validate/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">validate(changeset)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread.ex#L73" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
 
 
   </section>

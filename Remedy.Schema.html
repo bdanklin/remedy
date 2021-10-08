@@ -10,7 +10,7 @@
     <title>Remedy.Schema — Remedy v0.6.5</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-b8ce7f4771.js"></script>
+    <script src="dist/sidebar_items-16494de43c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -95,7 +95,7 @@ Remedy.Schema <small>behaviour</small> <small class="app-vsn">(Remedy v0.6.5)</s
 
 
         <section id="moduledoc">
-<p>Schema sets out all of the objects and types used within the Discord API.</p><blockquote><p>The unfortunate reason that this is required is because Discord is unreliable at delivering particular types. For example, <code class="inline">:id</code> can be returned as either an integer or a string. This is no use to man nor beast.</p></blockquote><p>It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly, or the whole schema module, for example:</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema.Member</span></code></pre><p>Which would make an individual resource available as <a href="`t:Remedy.Schema.Member/0`"><code class="inline">%Member{}</code></a>.</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Discord</span></code></pre><p>Which would make all of the schema available as <a href="`t:Remedy.Schema.Guild/0`"><code class="inline">%Discord.Guild{}</code></a>.</p><h2 id="module-helper-functions" class="section-heading">
+<p>Schema sets out all of the objects and types used within the Discord API.</p><blockquote><p>The unfortunate reason that this is required is because Discord is unreliable at delivering particular types. For example, <code class="inline">:id</code> can be returned as either an integer or a string. This is no use to man nor beast.</p></blockquote><p>It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly, or the whole schema module, for example:</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema.Member</span></code></pre><p>Which would make an individual resource available as <a href="Remedy.Schema.Member.html#t:t/0"><code class="inline">%Member{}</code></a>.</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Discord</span></code></pre><p>Which would make all of the schema available as <a href="Remedy.Schema.Guild.html#t:t/0"><code class="inline">%Discord.Guild{}</code></a>.</p><h2 id="module-helper-functions" class="section-heading">
   <a href="#module-helper-functions" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Helper Functions
 </h2>

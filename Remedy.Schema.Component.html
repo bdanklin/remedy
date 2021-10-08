@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Component — Remedy v0.6.5</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-b8ce7f4771.js"></script>
+    <script src="dist/sidebar_items-16494de43c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -303,41 +303,6 @@ Valid for: <a href="#module-buttons">Buttons</a></p></div>
 
   </div>
 
-  <div class="summary-functions summary">
-    <h2>
-      <a href="#functions">Functions</a>
-    </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#changeset/1">changeset(params \\ %{})</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#changeset/2">changeset(model, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#new/1">new(params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#validate/1">validate(changeset)</a>
-
-  </div>
-
-</div>
-
-  </div>
-
         </section>
 
 
@@ -467,7 +432,7 @@ Valid for <a href="#module-buttons">Buttons</a> &amp; <a href="#module-select-me
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>emoji() :: Remedy.Schema.Emoji.partial_button_emoji() | nil</pre>
+          <pre>emoji() :: <a href="Remedy.Schema.Emoji.html#t:t/0">Remedy.Schema.Emoji.t</a>() | nil</pre>
 
       </div>
 
@@ -587,7 +552,7 @@ Valid for <a href="#module-select-menu">Select Menus</a>.</p>
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>options() :: [Option.t()] | nil</pre>
+          <pre>options() :: [<a href="Remedy.Schema.ComponentOption.html#t:t/0">Remedy.Schema.ComponentOption.t</a>()] | nil</pre>
 
       </div>
 
@@ -822,109 +787,6 @@ Callbacks
       </div>
 
 <p>Updates a component with the parameters provided.</p><blockquote><p>Note: While using this function directly, you are not guaranteed to produce a valid component and it is the responsibility of the user to ensure they are passing a valid combination of component attributes. eg. if you pass a button component both a <code class="inline">custom_id</code>, and a <code class="inline">url</code>, the component is invalid as only one of these fields is allowed.</p></blockquote>
-  </section>
-</section>
-
-          </div>
-        </section>
-
-        <section id="functions" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#functions">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-Functions
-          </h1>
-          <div class="functions-list">
-<section class="detail" id="changeset/1">
-
-    <span id="changeset/0"></span>
-
-  <div class="detail-header">
-    <a href="#changeset/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">changeset(params \\ %{})</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L246" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="changeset/2">
-
-  <div class="detail-header">
-    <a href="#changeset/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">changeset(model, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L250" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="new/1">
-
-  <div class="detail-header">
-    <a href="#new/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">new(params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L235" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="validate/1">
-
-  <div class="detail-header">
-    <a href="#validate/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">validate(changeset)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L242" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
   </section>
 </section>
 

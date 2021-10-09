@@ -13,6 +13,7 @@ defmodule Remedy.Schema.WebhooksUpdate do
     field :channel_id, Snowflake
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -20,6 +21,7 @@ defmodule Remedy.Schema.WebhooksUpdate do
     |> apply_changes()
   end
 
+  @doc false
   def update(model, params) do
     model
     |> changeset(params)
@@ -27,8 +29,9 @@ defmodule Remedy.Schema.WebhooksUpdate do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset), do: changeset
-
+  @doc false
   def changeset(params), do: changeset(%__MODULE__{}, params)
   def changeset(nil, params), do: changeset(%__MODULE__{}, params)
 

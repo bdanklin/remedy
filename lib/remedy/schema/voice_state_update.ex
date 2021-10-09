@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.VoiceStateUpdate do
-  @moduledoc false
+  @moduledoc """
+  Voice State Update Event
+  """
   use Remedy.Schema
 
   @typedoc "Guild ID this voice state is for, if applicable"
@@ -74,6 +76,7 @@ defmodule Remedy.Schema.VoiceStateUpdate do
     field :request_to_speak_timestamp, :string
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -81,6 +84,7 @@ defmodule Remedy.Schema.VoiceStateUpdate do
     |> apply_changes()
   end
 
+  @doc false
   def update(model, params) do
     model
     |> changeset(params)
@@ -88,8 +92,9 @@ defmodule Remedy.Schema.VoiceStateUpdate do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset), do: changeset
-
+  @doc false
   def changeset(params), do: changeset(%__MODULE__{}, params)
   def changeset(nil, params), do: changeset(%__MODULE__{}, params)
 

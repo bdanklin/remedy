@@ -60,6 +60,7 @@ defmodule Remedy.Schema.User do
     has_many :guilds, Guild, foreign_key: :owner_id
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -67,16 +68,19 @@ defmodule Remedy.Schema.User do
     |> apply_changes()
   end
 
+  @doc false
   def update(model, params) do
     model
     |> changeset(params)
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset) do
     changeset
   end
 
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
@@ -92,12 +96,15 @@ defmodule Remedy.Schema.User do
   end
 
   @doc """
-  Converts a User to its _mention_ format.
+  Mention a user.
   """
   @spec mention(Remedy.Schema.User.t()) :: String.t()
   def mention(user)
   def mention(%__MODULE__{id: id}), do: "<@#{to_string(id)}>"
 
+  @doc """
+  Retreive a URL of a User.
+  """
   def avatar(user, size \\ nil)
 
   def avatar(%__MODULE__{avatar: nil, discriminator: discriminator}, size) do

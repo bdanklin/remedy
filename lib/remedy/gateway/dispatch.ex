@@ -77,10 +77,6 @@ defmodule Remedy.Gateway.Dispatch do
   end
 
   defp mod_from_dispatch(k) do
-    to_string(k)
-    |> String.downcase()
-    |> Recase.to_pascal()
-    |> List.wrap()
-    |> Module.concat()
+    to_string(k) |> String.downcase() |> Recase.to_pascal() |> List.wrap() |> Module.concat()
   end
 end

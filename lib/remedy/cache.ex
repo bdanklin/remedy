@@ -2,84 +2,77 @@ defmodule Remedy.Cache do
   @moduledoc """
   Functions for interracting with the cache.
   """
+  import Sunbake.Snowflake
   import Ecto.Query, warn: false
-  import Remedy.ModelHelpers
+  alias Remedy.Cache.{Repo, DiscordBot, DiscordApp}
+  alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Member, Message, Presence, Role, Sticker, User}
+  use Unsafe.Generator, handler: :unwrap, docs: true
 
-  alias Remedy.Cache.{DiscordApp, DiscordBot, Repo}
-  alias Remedy.Schema.{App, Channel, Emoji, Guild, Member, Message, Presence, Role, Sticker, User}
+  @type snowflake :: Snowflake.t()
+  @type reason :: String.t()
+  ## Channels
 
   @doc """
-  Set the initial condition of the bot.
+  Fetch a channel from the cache.
   """
-  def initialize_bot(app) do
-    User.new(app)
-    |> DiscordBot.update()
+  @unsafe {:fetch_channel, [:id]}
+  def fetch_channel(id) when is_snowflake(id) do
+    Channel
+    |> Repo.get(id)
   end
 
-  def update_bot(updated_state) do
-    updated_state = Map.from_struct(updated_state)
-
-    case bot() do
-      nil ->
-        User.new(updated_state)
-        |> DiscordBot.update()
-
-        bot()
-
-      %User{} = old_bot_state ->
-        User.update(old_bot_state, updated_state)
-        |> DiscordBot.update()
-
-        bot()
-    end
-  end
-
-  def bot do
-    DiscordBot.get()
-  end
-
-  def initialize_app(app) do
-    App.new(app)
-    |> DiscordApp.update()
-  end
-
-  def update_app(updated_app) do
-    case app() do
-      nil ->
-        App.new(updated_app)
-        |> DiscordApp.update()
-
-        bot()
-
-      %App{} = old_app_state ->
-        App.update(old_app_state, updated_app)
-        |> DiscordApp.update()
-
-        bot()
-    end
-  end
-
-  def app do
-    DiscordApp.get()
-  end
-
-  def create_channel(channel) do
+  @doc false
+  def create_channel(%Channel{} = channel) do
     channel
-    |> Channel.changeset()
     |> Repo.insert!()
   end
 
-  def update_channel(%{id: id} = channel) do
+  @doc false
+  def update_channel(id, channel) do
     Channel
     |> Repo.get(id)
     |> Channel.changeset(channel)
     |> Repo.update!()
   end
 
+  @doc false
   def delete_channel(id) do
     Channel
     |> Repo.get(id)
     |> Repo.delete!()
+  end
+
+  ## Bans
+
+  @doc """
+  Fetch a ban from the Cache by user_id & guild_id
+
+  Returns {:ok, `%Remedy.Schema.Ban{}`} or {:error, reason}
+  """
+
+  @spec fetch_ban(snowflake, snowflake) :: {:error, reason} | {:ok, Ban.t()}
+  @unsafe {:fetch_ban, [:user_id, :guild_id]}
+  def fetch_ban(user_id, guild_id) do
+    case get_ban(user_id, guild_id) do
+      nil -> {:error, "Not Found"}
+      ban -> {:ok, ban}
+    end
+  end
+
+  @doc false
+  def create_ban(%Ban{} = ban) do
+    Repo.insert!(ban)
+  end
+
+  @doc false
+  def delete_ban(user_id, guild_id) do
+    get_ban(user_id, guild_id)
+    |> Repo.delete()
+  end
+
+  @doc false
+  def get_ban(user_id, guild_id) do
+    Repo.get_by(Ban, %{guild_id: guild_id, user_id: user_id})
   end
 
   def create_guild(guild) do
@@ -254,6 +247,64 @@ defmodule Remedy.Cache do
     |> Repo.get(id)
     |> Repo.delete!()
   end
+
+  @doc """
+  Set the initial condition of the bot.
+  """
+  def initialize_bot(app) do
+    User.new(app)
+    |> DiscordBot.update()
+  end
+
+  def update_bot(updated_state) do
+    updated_state = Map.from_struct(updated_state)
+
+    case bot() do
+      nil ->
+        User.new(updated_state)
+        |> DiscordBot.update()
+
+        bot()
+
+      %User{} = old_bot_state ->
+        User.update(old_bot_state, updated_state)
+        |> DiscordBot.update()
+
+        bot()
+    end
+  end
+
+  def bot do
+    DiscordBot.get()
+  end
+
+  def initialize_app(app) do
+    App.new(app)
+    |> DiscordApp.update()
+  end
+
+  def update_app(updated_app) do
+    case app() do
+      nil ->
+        App.new(updated_app)
+        |> DiscordApp.update()
+
+        bot()
+
+      %App{} = old_app_state ->
+        App.update(old_app_state, updated_app)
+        |> DiscordApp.update()
+
+        bot()
+    end
+  end
+
+  def app do
+    DiscordApp.get()
+  end
+
+  defp unwrap({:ok, body}), do: body
+  defp unwrap({:error, _}), do: raise(Remedy.APIError)
 end
 
 ###############

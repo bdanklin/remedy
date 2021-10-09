@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.CommandOption do
+  @moduledoc """
+  Command Option Object
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

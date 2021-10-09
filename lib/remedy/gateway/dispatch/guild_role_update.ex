@@ -1,5 +1,7 @@
 defmodule Remedy.Gateway.Dispatch.GuildRoleUpdate do
-  @moduledoc false
+  @moduledoc """
+  Guild Role Update Event
+  """
 
   alias Remedy.Cache
   alias Remedy.Schema.{GuildRoleUpdate, Role}
@@ -10,6 +12,6 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleUpdate do
     |> Role.changeset(role)
     |> Cache.delete_role()
 
-    {event, payload, socket}
+    {event, GuildRoleUpdate.new(payload), socket}
   end
 end

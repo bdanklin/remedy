@@ -1,5 +1,7 @@
 defmodule Remedy.Schema.TypingStart do
-  @moduledoc false
+  @moduledoc """
+  Typing Start Event
+  """
   use Remedy.Schema
 
   @type channel_id :: Snowflake.t()
@@ -24,6 +26,7 @@ defmodule Remedy.Schema.TypingStart do
     embeds_one :member, Member
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -31,6 +34,7 @@ defmodule Remedy.Schema.TypingStart do
     |> apply_changes()
   end
 
+  @doc false
   def update(model, params) do
     model
     |> changeset(params)
@@ -38,8 +42,9 @@ defmodule Remedy.Schema.TypingStart do
     |> apply_changes()
   end
 
+  @doc false
   def validate(changeset), do: changeset
-
+  @doc false
   def changeset(params), do: changeset(%__MODULE__{}, params)
   def changeset(nil, params), do: changeset(%__MODULE__{}, params)
 
@@ -48,6 +53,7 @@ defmodule Remedy.Schema.TypingStart do
     |> cast_embeds()
   end
 
+  @doc false
   defp cast_embeds(cast_model) do
     Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
   end

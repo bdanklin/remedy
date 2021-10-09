@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.MessageReactionAdd do
+  @moduledoc """
+  Message Reaction Add Event
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{
@@ -19,6 +22,7 @@ defmodule Remedy.Schema.MessageReactionAdd do
     embeds_one :emoji, Emoji
   end
 
+  @doc false
   def new(params) do
     params
     |> changeset()
@@ -26,12 +30,14 @@ defmodule Remedy.Schema.MessageReactionAdd do
     |> apply_changes()
   end
 
+  @doc false
   def validate(any), do: any
-
+  @doc false
   def changeset(params \\ %{}) do
     changeset(%__MODULE__{}, params)
   end
 
+  @doc false
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

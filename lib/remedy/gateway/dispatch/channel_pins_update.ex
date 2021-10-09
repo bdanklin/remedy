@@ -3,14 +3,19 @@ defmodule Remedy.Gateway.Dispatch.ChannelPinsUpdate do
   alias Remedy.Schema.ChannelPinsUpdate
   alias Remedy.Cache
 
-  def handle({event, payload, socket}) do
-    %{
-      id: payload.channel_id,
-      guild_id: payload.guild_id,
-      last_pin_timestamp: payload.last_pin_timestamp
-    }
-    |> Cache.update_channel()
+  def handle(
+        {event,
+         %{
+           channel_id: id,
+           guild_id: guild_id,
+           last_pin_timestamp: last_pin_timestamp
+         } = payload, socket}
+      ) do
+    attrs = %{guild_id: guild_id, last_pin_timestamp: last_pin_timestamp}
+    Cache.update_channel(id, attrs)
 
-    {event, ChannelPinsUpdate.new(payload), socket}
+    {event,
+     payload
+     |> ChannelPinsUpdate.new(), socket}
   end
 end

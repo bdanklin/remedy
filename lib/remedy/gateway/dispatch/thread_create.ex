@@ -4,8 +4,9 @@ defmodule Remedy.Gateway.Dispatch.ThreadCreate do
   alias Remedy.Schema.Channel
 
   def handle({event, payload, socket}) do
-    Cache.create_channel(payload)
-
-    {event, Channel.new(payload), socket}
+    {event,
+     payload
+     |> Channel.new()
+     |> Cache.create_channel(), socket}
   end
 end

@@ -160,7 +160,9 @@ defmodule Remedy.API do
   def get_guild_audit_log(%Guild{id: id}, opts), do: get_guild_audit_log(id, opts)
 
   def get_guild_audit_log(guild_id, opts) when is_snowflake(guild_id) do
-    {:get, "/guilds/#{guild_id}/audit-logs"} |> request(%{}, opts, nil) |> parse_get_guild_audit_log(guild_id)
+    {:get, "/guilds/#{guild_id}/audit-logs"}
+    |> request(%{}, opts, nil)
+    |> parse_get_guild_audit_log(guild_id)
   end
 
   defp parse_get_guild_audit_log({:error, _reason} = error, _guild_id), do: error

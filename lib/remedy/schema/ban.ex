@@ -11,23 +11,20 @@ defmodule Remedy.Schema.Ban do
           reason: String.t()
         }
 
-  embedded_schema do
+  schema "bans" do
     belongs_to :user, User
     belongs_to :guild, Guild
     field :reason, :string
+
+    field :invalid_since, :utc_datetime
+    timestamps()
   end
 
   @doc false
   def new(params) do
     params
     |> changeset()
-    |> validate()
     |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
   end
 
   @doc false

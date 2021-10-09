@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.ThreadListSync do
+  @moduledoc """
+  Thread List Sync Event
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

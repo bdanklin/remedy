@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.ThreadMember do
+  @moduledoc """
+  Thread Member Object
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

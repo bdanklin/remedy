@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.ThreadMetadata do
+  @moduledoc """
+  Thread Metadata Object
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

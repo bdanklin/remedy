@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.GuildBanRemove do
+  @moduledoc """
+  Guild Ban Remove Event
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

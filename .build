@@ -6,6 +6,7 @@ Remedy.Cache.html
 Remedy.CacheError.html
 Remedy.Consumer.html
 Remedy.EnvironmentVariableError.html
+Remedy.Gateway.Dispatch.GuildRoleUpdate.html
 Remedy.Gateway.WSState.html
 Remedy.Gateway.html
 Remedy.Schema.Activity.html
@@ -70,9 +71,11 @@ Remedy.Schema.ThreadListSync.html
 Remedy.Schema.ThreadMember.html
 Remedy.Schema.ThreadMembersUpdate.html
 Remedy.Schema.ThreadMetadata.html
+Remedy.Schema.TypingStart.html
 Remedy.Schema.User.html
 Remedy.Schema.UserFlags.html
 Remedy.Schema.VoiceRegion.html
+Remedy.Schema.VoiceStateUpdate.html
 Remedy.Schema.Webhook.html
 Remedy.Schema.WelcomeScreen.html
 Remedy.Schema.WelcomeScreenChannel.html
@@ -87,8 +90,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-9ca2b97a17.js
-dist/sidebar_items-16494de43c.js
+dist/search_items-3c6b529f54.js
+dist/sidebar_items-71ac037151.js
 index.html
 introduction.html
 search.html

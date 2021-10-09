@@ -10,7 +10,7 @@
     <title>Remedy.Schema.ThreadMember — Remedy v0.6.5</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-16494de43c.js"></script>
+    <script src="dist/sidebar_items-71ac037151.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -94,6 +94,10 @@ Remedy.Schema.ThreadMember <small class="app-vsn">(Remedy v0.6.5)</small>
       </h1>
 
 
+        <section id="moduledoc">
+<p>Thread Member Object</p>
+        </section>
+
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -139,7 +143,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread_member.ex#L4" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread_member.ex#L7" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -155,8 +159,8 @@ Types
           <pre>t() :: %Remedy.Schema.ThreadMember{
   flags: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  join_timestamp: Sunbake.ISO8601.t(),
-  user_id: <a href="https://hexdocs.pm/sunbake/0.2.3/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>()
+  join_timestamp: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.ISO8601.html#t:t/0">Sunbake.ISO8601.t</a>(),
+  user_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>()
 }</pre>
 
       </div>

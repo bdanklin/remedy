@@ -62,13 +62,15 @@ defmodule Remedy.Gateway.Dispatch do
 
   require Logger
 
-  def handle({event, payload, socket} = dispatch) do
-    if Application.get_env(:remedy, :log_everything, false),
+  def handle({event, payload, socket}) do
+    payload = payload |> Morphix.atomorphiform!()
+
+    if Application.get_env(:remedy, :log_everything, true),
       do: Logger.debug("#{inspect(event)}, #{inspect(payload)}")
 
     case event in @dispatch_events do
       true ->
-        mod_from_dispatch(event).handle(dispatch)
+        mod_from_dispatch(event).handle({event, payload, socket})
 
       false ->
         Logger.warn("UNHANDLED GATEWAY DISPATCH EVENT TYPE: #{event}, #{inspect(payload)}")
@@ -76,7 +78,11 @@ defmodule Remedy.Gateway.Dispatch do
     end
   end
 
-  defp mod_from_dispatch(k) do
-    to_string(k) |> String.downcase() |> Recase.to_pascal() |> List.wrap() |> Module.concat()
+  @doc false
+  @spec mod_from_dispatch(atom) :: atom
+  def mod_from_dispatch(k) when k in @dispatch_events do
+    mod = to_string(k) |> String.downcase() |> Recase.to_pascal() |> List.wrap() |> Module.concat()
+
+    Module.concat([Remedy.Gateway.Dispatch, mod])
   end
 end

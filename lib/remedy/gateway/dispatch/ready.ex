@@ -17,6 +17,6 @@ defmodule Remedy.Gateway.Dispatch.Ready do
     #   Cache.put_bot(user)
     #   Cache.put_app(application)
 
-    {event, Ready.new(payload), socket}
+    {event, payload, socket}
   end
 end

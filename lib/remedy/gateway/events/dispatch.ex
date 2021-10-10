@@ -13,14 +13,13 @@ defmodule Remedy.Gateway.Events.Dispatch do
         session_id: session_id,
         application: app,
         user: user,
-        guilds: guilds,
+        guilds: _guilds,
         shard: [_shard | _out_of],
         user_settings: _user_settings,
         v: v
       }) do
     Cache.initialize_app(app)
     Cache.initialize_bot(user)
-    Cache.update_guilds(guilds)
 
     %WSState{socket | v: v, session_id: session_id}
   end

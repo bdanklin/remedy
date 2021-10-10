@@ -5,20 +5,20 @@ defmodule Remedy.Schema.Presence do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          user: User.t(),
           guild_id: Snowflake.t(),
           status: String.t(),
           activities: [Activity.t()],
-          client_status: ClientStatus.t()
+          client_status: ClientStatus.t(),
+          code: String.t()
         }
 
-  @primary_key {:code, :string, autogenerate: false}
-  schema "presences" do
-    belongs_to :user, User
+  @primary_key false
+  embedded_schema do
+    field :code, :string
     field :guild_id, Snowflake
     field :status, :string
-    embeds_many :activities, Activity
-    embeds_one :client_status, ClientStatus
+    embeds_many :activities, Activity, on_replace: :delete
+    embeds_one :client_status, ClientStatus, on_replace: :delete
   end
 
   @doc false

@@ -20,6 +20,7 @@ defmodule Remedy.Schema.Member do
 
   @primary_key false
   schema "members" do
+    field :id, :string, primary_key: true
     field :nick, :string
     field :joined_at, ISO8601
     field :premium_since, ISO8601
@@ -27,23 +28,18 @@ defmodule Remedy.Schema.Member do
     field :mute, :boolean
     field :pending, :boolean, default: false
     field :permissions, :string
-    embeds_many :roles, Role
+    field :roles, {:array, :integer}
     embeds_many :member_roles, Role
     belongs_to :user, User
     belongs_to :guild, Guild
-  end
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
+    timestamps()
   end
 
   @doc false
   def validate(changeset) do
     changeset
+    |> unique_constraint(:id, name: :PRIMARY)
   end
 
   @doc false
@@ -60,6 +56,11 @@ defmodule Remedy.Schema.Member do
     Enum.reduce(embeds, cast_model, fn embed, cast_model ->
       cast_embed(cast_model, embed)
     end)
+  end
+
+  def put_pkey(%{guild_id: guild_id, user: %{id: user_id}} = params) do
+    params
+    |> Map.put_new(:id, "#{guild_id}#{user_id}")
   end
 
   # def mention(%__MODULE__{user: user}), do: User.mention(user)

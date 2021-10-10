@@ -4,26 +4,18 @@ defmodule Remedy.Gateway.Dispatch.GuildCreate do
   #  @large_threshold 250
 
   alias Remedy.Cache
-  alias Remedy.Schema.{Channel, Guild, Member, User}
 
-  def handle({event, %{id: guild_id, channels: channels, members: members} = payload, socket}) do
-    guild =
-      payload
-      |> Map.put(:shard, socket.shard)
-      |> Guild.new()
-      |> Cache.create_guild()
-
-    for member <- members do
-      Member.new(member) |> Cache.create_member()
-      User.new(member.user) |> Cache.create_user()
-    end
+  def handle({event, %{id: guild_id, channels: channels} = payload, socket}) do
+    payload
+    |> Map.put(:shard, socket.shard)
+    |> Cache.create_guild()
 
     for channel <- channels do
-      %{channel | guild_id: guild_id}
-      |> Channel.new()
+      channel
+      |> Map.put_new(:guild_id, guild_id)
       |> Cache.create_channel()
     end
 
-    {event, guild, socket}
+    {event, payload, socket}
   end
 end

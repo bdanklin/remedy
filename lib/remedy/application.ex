@@ -16,7 +16,8 @@ defmodule Remedy.Application do
       Remedy.Cache.DiscordApp,
       Remedy.Cache.DiscordBot,
       Remedy.GatewayATC,
-      Remedy.Gateway
+      Remedy.Gateway,
+      Remedy.DummyConsumerSupervisor
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)

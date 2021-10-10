@@ -11,6 +11,7 @@ defmodule Remedy.Schema.ClientStatus do
           web: String.t()
         }
 
+  @primary_key false
   embedded_schema do
     field :desktop, :string
     field :mobile, :string

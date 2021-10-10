@@ -4,7 +4,7 @@ defmodule Remedy.Gateway.Dispatch.MessageUpdate do
   alias Remedy.Schema.Message
 
   def handle({event, payload, socket}) do
-    Cache.update_message(payload)
+    Cache.upsert_message(payload)
     {event, Message.new(payload), socket}
   end
 end

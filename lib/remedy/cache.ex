@@ -8,26 +8,36 @@ defmodule Remedy.Cache do
   alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Member, Message, Presence, Role, Sticker, User}
   use Unsafe.Generator, handler: :unwrap, docs: true
 
+  ############
+  ### External
+  ############
+
   @type snowflake :: Snowflake.t()
   @type reason :: String.t()
-  ## Channels
-
+  @type attrs :: map()
   @doc """
   Fetch a channel from the cache.
+
+  Returns {:ok, %Channel{}} or {:error, reason}
   """
   @unsafe {:fetch_channel, [:id]}
   def fetch_channel(id) when is_snowflake(id) do
-    Channel
-    |> Repo.get(id)
+    case Repo.get(Channel, id) do
+      nil -> {:error, "Not Found"}
+      %Ban{} = ban -> {:ok, ban}
+    end
   end
 
   @doc false
-  def create_channel(%Channel{} = channel) do
-    channel
+  @spec create_channel(attrs) :: Channel.t()
+  def create_channel(channel) do
+    %Channel{}
+    |> Channel.changeset(channel)
     |> Repo.insert!()
   end
 
   @doc false
+  @spec update_channel(snowflake, attrs) :: Channel.t()
   def update_channel(id, channel) do
     Channel
     |> Repo.get(id)
@@ -36,13 +46,12 @@ defmodule Remedy.Cache do
   end
 
   @doc false
+  @spec delete_channel(snowflake) :: Channel.t()
   def delete_channel(id) do
     Channel
     |> Repo.get(id)
     |> Repo.delete!()
   end
-
-  ## Bans
 
   @doc """
   Fetch a ban from the Cache by user_id & guild_id
@@ -55,9 +64,45 @@ defmodule Remedy.Cache do
   def fetch_ban(user_id, guild_id) do
     case get_ban(user_id, guild_id) do
       nil -> {:error, "Not Found"}
-      ban -> {:ok, ban}
+      %Ban{} = ban -> {:ok, ban}
     end
   end
+
+  @doc """
+  Fetch a use from the cache.
+
+  Returns {:ok, %User{}} or {:error, reason}
+  """
+  @unsafe {:fetch_user, [:id]}
+  def fetch_user(user_id) do
+    User
+    |> Repo.get(user_id)
+  end
+
+  @doc """
+  Fetch a users presence information.
+
+  Returns {:ok, %Presence{}, or {:error, reason}}
+  """
+  def fetch_presence(user_id) do
+    case Repo.get(User, user_id).presence do
+      nil -> {:error, "Not Found"}
+      presence -> {:ok, presence}
+    end
+  end
+
+  @doc false
+  def update_presence(%{user: user} = presence) do
+    upsert_user(user)
+    |> User.changeset(%{presence: presence})
+    |> Repo.update!()
+  end
+
+  ###########
+  ### Opaque?
+  ###########
+
+  ## Bans
 
   @doc false
   def create_ban(%Ban{} = ban) do
@@ -77,6 +122,7 @@ defmodule Remedy.Cache do
 
   def create_guild(guild) do
     guild
+    |> IO.inspect(pretty: true)
     |> Guild.changeset()
     |> Repo.insert!()
   end
@@ -99,6 +145,27 @@ defmodule Remedy.Cache do
     Guild
     |> Repo.get(id)
     |> Repo.delete!()
+  end
+
+  def upsert_user(%{id: id} = attrs) do
+    case Repo.get(User, id) do
+      nil -> create_user(attrs)
+      %User{} -> update_user(attrs)
+    end
+  end
+
+  def upsert_message(%{id: id} = attrs) do
+    case Repo.get(Message, id) do
+      nil -> create_message(attrs)
+      %User{} -> update_message(id, attrs)
+    end
+  end
+
+  def update_message(id, attrs) do
+    Message
+    |> Repo.get(id)
+    |> Message.changeset(attrs)
+    |> Repo.update!()
   end
 
   def create_user(user) do
@@ -145,20 +212,6 @@ defmodule Remedy.Cache do
     |> Repo.insert!()
   end
 
-  def update_message(%{id: id} = message) do
-    Message
-    |> Repo.get(id)
-    |> Message.changeset(message)
-    |> Repo.update!()
-  end
-
-  def update_message(id, updated_message) do
-    Message
-    |> Repo.get(id)
-    |> Message.changeset(updated_message)
-    |> Repo.update!()
-  end
-
   def delete_message(%{id: id} = _message) do
     Message
     |> Repo.get(id)
@@ -172,80 +225,12 @@ defmodule Remedy.Cache do
     |> Repo.update!()
   end
 
-  def create_emoji(emoji) do
-    emoji
-    |> Emoji.changeset()
-    |> Repo.insert!()
-  end
-
-  def update_emoji(%{id: id} = emoji) do
-    Emoji
-    |> Repo.get(id)
-    |> Emoji.changeset(emoji)
-    |> Repo.update!()
-  end
-
-  def delete_emoji(%{id: id} = _emoji) do
-    Emoji
-    |> Repo.get(id)
-    |> Repo.delete!()
-  end
-
-  def create_presence(presence) do
-    presence
-    |> Presence.changeset()
-    |> Repo.insert!()
-  end
-
-  def update_presence(%{id: id} = presence) do
-    Presence
-    |> Repo.get(id)
-    |> Presence.changeset(presence)
-    |> Repo.update!()
-  end
-
-  def delete_presence(%{id: id} = _presence) do
-    Presence
-    |> Repo.get(id)
-    |> Repo.delete!()
-  end
-
-  def create_role(role) do
-    role
-    |> Role.changeset()
-    |> Repo.insert!()
-  end
-
-  def update_role(%{id: id} = role) do
-    Role
-    |> Repo.get(id)
+  @doc false
+  def create_role(guild_id, role) do
+    %Guild{id: guild_id}
+    |> Ecto.build_assoc(:role)
     |> Role.changeset(role)
-    |> Repo.update!()
-  end
-
-  def delete_role(%{id: id} = _role) do
-    Role
-    |> Repo.get(id)
-    |> Repo.delete!()
-  end
-
-  def create_sticker(sticker) do
-    sticker
-    |> Sticker.changeset()
     |> Repo.insert!()
-  end
-
-  def update_sticker(%{id: id} = sticker) do
-    Sticker
-    |> Repo.get(id)
-    |> Sticker.changeset(sticker)
-    |> Repo.update!()
-  end
-
-  def delete_sticker(%{id: id} = _sticker) do
-    Sticker
-    |> Repo.get(id)
-    |> Repo.delete!()
   end
 
   @doc """

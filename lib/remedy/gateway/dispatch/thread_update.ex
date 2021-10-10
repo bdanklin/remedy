@@ -4,6 +4,6 @@ defmodule Remedy.Gateway.Dispatch.ThreadUpdate do
   alias Remedy.Schema.Channel
 
   def handle({event, payload, socket}) do
-    {event, Channel.new(payload), socket}
+    {event, payload, socket}
   end
 end

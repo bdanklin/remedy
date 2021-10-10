@@ -3,6 +3,6 @@ defmodule Remedy.Gateway.Dispatch.WebhooksUpdate do
   alias Remedy.Schema.WebhooksUpdate
 
   def handle({event, payload, socket}) do
-    {event, payload |> WebhooksUpdate.new(), socket}
+    {event, payload, socket}
   end
 end

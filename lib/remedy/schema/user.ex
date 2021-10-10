@@ -4,8 +4,7 @@ defmodule Remedy.Schema.User do
   """
   use Remedy.Schema
   alias Remedy.CDN
-  @primary_key {:id, :id, autogenerate: false}
-
+  alias Remedy.Schema.UserGuildBans
   @type id :: Snowflake.t()
   @type username :: String.t()
   @type discriminator :: integer()
@@ -40,6 +39,7 @@ defmodule Remedy.Schema.User do
           public_flags: public_flags
         }
 
+  @primary_key {:id, :id, autogenerate: false}
   schema "users" do
     field :username, :string
     field :discriminator, :integer
@@ -56,8 +56,14 @@ defmodule Remedy.Schema.User do
     field :premium_type, :integer
     field :public_flags, :integer
     has_many :messages, Message, foreign_key: :author_id
-    #   has_many :channels, Channel
     has_many :guilds, Guild, foreign_key: :owner_id
+    embeds_one :presence, Presence, on_replace: :update
+
+    ## Custom
+    has_many :bans, UserGuildBans
+    has_many :banned_from, through: [:bans, :guild]
+
+    timestamps()
   end
 
   @doc false
@@ -88,11 +94,10 @@ defmodule Remedy.Schema.User do
   def changeset(model, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
 
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, fields -- embeds)
+    |> cast_embed(:presence)
   end
 
   @doc """

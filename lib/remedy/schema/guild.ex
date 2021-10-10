@@ -4,6 +4,7 @@ defmodule Remedy.Schema.Guild do
   """
   use Remedy.Schema
   alias Remedy.CDN
+  alias Remedy.Schema.UserGuildBans
 
   @type t :: %__MODULE__{
           afk_timeout: integer(),
@@ -44,7 +45,7 @@ defmodule Remedy.Schema.Guild do
           emojis: [Remedy.Schema.Emoji.t()],
           members: [Remedy.Schema.Member.t()],
           presences: [Presence.t()],
-          roles: [Role.t()],
+          #    roles: [Role.t()],
           stage_instances: [StageInstance.t()],
           stickers: [Sticker.t()],
           threads: [Thread.t()],
@@ -58,7 +59,7 @@ defmodule Remedy.Schema.Guild do
           widget_channel: Channel.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, :integer, [autogenerate: false]}
   schema "guilds" do
     field :afk_timeout, :integer
     field :approximate_member_count, :integer
@@ -86,6 +87,7 @@ defmodule Remedy.Schema.Guild do
     field :premium_tier, :integer
     field :region, :string
     field :splash, :string
+    field :unavailable, :boolean
     field :system_channel_flags, :integer
     field :vanity_url_code, :string
     field :verification_level, :integer
@@ -100,13 +102,11 @@ defmodule Remedy.Schema.Guild do
     has_many :emojis, Emoji
     has_many :members, Member
     has_many :presences, Presence
-    has_many :roles, Role
+    # has_many :roles, Role
     has_many :stage_instances, StageInstance
     has_many :stickers, Sticker
     has_many :threads, Thread
     has_many :voice_states, VoiceState
-    has_many :bans, Ban
-    has_many :banned_users, through: [:bans, :users]
 
     has_one :afk_channel, Channel
     has_one :public_updates_channel, Channel
@@ -114,45 +114,28 @@ defmodule Remedy.Schema.Guild do
     has_one :system_channel, Channel
     has_one :widget_channel, Channel
 
+    ## Custom
     field :shard, :integer
+    has_many :bans, UserGuildBans
+    has_many :banned_users, through: [:bans, :users]
+
+    timestamps()
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
+  def changeset(params \\ %{}) do
+    changeset(%__MODULE__{}, params)
   end
 
   @doc false
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
-  end
+  def changeset(model, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  @doc false
-  def validate(changeset), do: changeset
-  @doc false
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{id: params.id}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    model
-    |> cast(params, castable())
-    |> cast_embeds()
-  end
-
-  @doc false
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
-
-  @doc false
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 
   @doc """

@@ -19,20 +19,9 @@ defmodule Remedy.Schema.Activity do
 
   @doc false
   def new(params) do
-    params
-    |> changeset()
-    |> validate()
+    %__MODULE__{}
+    |> changeset(params)
     |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
   end
 
   @doc false

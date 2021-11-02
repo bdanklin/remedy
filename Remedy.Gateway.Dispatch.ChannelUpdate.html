@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.6.7">
 
-    <title>Remedy.Schema.UserFlags — Remedy v0.6.7</title>
+    <title>Remedy.Gateway.Dispatch.ChannelUpdate — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
     <script src="dist/sidebar_items-e81b8b2a87.js"></script>
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.UserFlags <small class="app-vsn">(Remedy v0.6.7)</small>
+Remedy.Gateway.Dispatch.ChannelUpdate <small class="app-vsn">(Remedy v0.6.7)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_update.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,11 @@ Remedy.Schema.UserFlags <small class="app-vsn">(Remedy v0.6.7)</small>
 
 
         <section id="moduledoc">
-<p>User Flags</p>
+<p>Channel Update Event.</p><h2 id="module-payload" class="section-heading">
+  <a href="#module-payload" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Payload
+</h2>
+<ul><li><code class="inline">%Remedy.Schema.Channel{}</code></li></ul>
         </section>
 
 
@@ -108,41 +112,13 @@ Remedy.Schema.UserFlags <small class="app-vsn">(Remedy v0.6.7)</small>
             Summary
           </h1>
 
-  <div class="summary-types summary">
-    <h2>
-      <a href="#types">Types</a>
-    </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
-
-  </div>
-
-</div>
-
-  </div>
-
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#changeset/2">changeset(model \\ %__MODULE__{}, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#from_integer/1">from_integer(flag_value)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#to_integer/1">to_integer(flag_struct)</a>
+    <a href="#handle/1">handle(arg)</a>
 
   </div>
 
@@ -152,64 +128,6 @@ Remedy.Schema.UserFlags <small class="app-vsn">(Remedy v0.6.7)</small>
 
         </section>
 
-
-        <section id="types" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#types">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-Types
-          </h1>
-          <div class="types-list">
-<section class="detail" id="t:t/0">
-
-  <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">t()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L26" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>t() :: %Remedy.Schema.UserFlags{
-  BUG_HUNTER_LEVEL_1: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  BUG_HUNTER_LEVEL_2: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  DISCORD_CERTIFIED_MODERATOR: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  DISCORD_EMPLOYEE: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  EARLY_SUPPORTER: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  HYPESQUAD_BALANCE: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  HYPESQUAD_BRAVERY: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  HYPESQUAD_BRILLIANCE: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  HYPESQUAD_EVENTS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  PARTNERED_SERVER_OWNER: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  SYSTEM: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  TEAM_USER: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  VERIFIED_BOT: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  VERIFIED_DEVELOPER: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-}</pre>
-
-      </div>
-
-
-  </section>
-</section>
-
-          </div>
-        </section>
 
         <section id="functions" class="details-list">
           <h1 class="section-heading">
@@ -220,62 +138,16 @@ Types
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="changeset/2">
-
-    <span id="changeset/1"></span>
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#changeset/2" class="detail-link" title="Link to this function">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">changeset(model \\ %__MODULE__{}, params)</h1>
+    <h1 class="signature">handle(arg)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L60" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="from_integer/1">
-
-  <div class="detail-header">
-    <a href="#from_integer/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">from_integer(flag_value)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="to_integer/1">
-
-  <div class="detail-header">
-    <a href="#to_integer/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">to_integer(flag_struct)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/channel_update.ex#L12" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -299,7 +171,7 @@ Functions
           <a href="https://hex.pm/packages/remedy/0.6.7" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.7" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/schema/user_flags.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/gateway/dispatch/channel_update.ex">(current file)</a>
 
         </p>
 

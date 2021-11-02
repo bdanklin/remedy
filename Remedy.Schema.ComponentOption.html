@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.6">
+    <meta name="project" content="Remedy v0.6.7">
 
-    <title>Remedy.Schema.ComponentOption — Remedy v0.6.6</title>
+    <title>Remedy.Schema.ComponentOption — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-71ac037151.js"></script>
+    <script src="dist/sidebar_items-e81b8b2a87.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.6
+        v0.6.7
       </strong>
     </div>
 
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.ComponentOption <small class="app-vsn">(Remedy v0.6.6)</small>
+Remedy.Schema.ComponentOption <small class="app-vsn">(Remedy v0.6.7)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component_option.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L245" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -157,6 +157,20 @@ Remedy.Schema.ComponentOption <small class="app-vsn">(Remedy v0.6.6)</small>
 
   </div>
 
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#changeset/2">changeset(model \\ %__MODULE__{}, params)</a>
+
+  </div>
+
+</div>
+
+  </div>
+
         </section>
 
 
@@ -178,7 +192,7 @@ Types
     </a>
     <h1 class="signature">default()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component_option.ex#L10" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L254" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -207,7 +221,7 @@ Types
     </a>
     <h1 class="signature">description()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component_option.ex#L8" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L252" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -236,7 +250,7 @@ Types
     </a>
     <h1 class="signature">emoji()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component_option.ex#L9" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L253" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -265,7 +279,7 @@ Types
     </a>
     <h1 class="signature">label()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component_option.ex#L6" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L250" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -294,7 +308,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component_option.ex#L12" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L256" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -330,7 +344,7 @@ Types
     </a>
     <h1 class="signature">value()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component_option.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L251" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -354,14 +368,51 @@ Types
           </div>
         </section>
 
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="changeset/2">
+
+    <span id="changeset/1"></span>
+
+  <div class="detail-header">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">changeset(model \\ %__MODULE__{}, params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/component.ex#L272" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
+
       <footer class="footer">
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.6" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.6" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.7" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.7" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.6/show/lib/remedy/schema/component_option.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/schema/component.ex">(current file)</a>
 
         </p>
 

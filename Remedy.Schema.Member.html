@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.6">
+    <meta name="project" content="Remedy v0.6.7">
 
-    <title>Remedy.Schema.Member — Remedy v0.6.6</title>
+    <title>Remedy.Schema.Member — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-71ac037151.js"></script>
+    <script src="dist/sidebar_items-e81b8b2a87.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.6
+        v0.6.7
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.Member <small class="app-vsn">(Remedy v0.6.6)</small>
+Remedy.Schema.Member <small class="app-vsn">(Remedy v0.6.7)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/member.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -122,6 +122,20 @@ Remedy.Schema.Member <small class="app-vsn">(Remedy v0.6.6)</small>
 
   </div>
 
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#put_pkey/1">put_pkey(params)</a>
+
+  </div>
+
+</div>
+
+  </div>
+
         </section>
 
 
@@ -143,7 +157,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/member.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/member.ex#L8" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -161,14 +175,16 @@ Types
   deaf: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   guild: <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(),
   guild_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  id: :id,
+  inserted_at: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   joined_at: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.ISO8601.html#t:t/0">Sunbake.ISO8601.t</a>(),
-  member_roles: Remedy.Schema.Role,
   mute: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   nick: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   pending: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   permissions: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   premium_since: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.ISO8601.html#t:t/0">Sunbake.ISO8601.t</a>(),
   roles: [<a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()],
+  updated_at: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   user: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(),
   user_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
 }</pre>
@@ -182,14 +198,49 @@ Types
           </div>
         </section>
 
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="put_pkey/1">
+
+  <div class="detail-header">
+    <a href="#put_pkey/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">put_pkey(params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/member.ex#L49" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
+
       <footer class="footer">
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.6" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.6" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.7" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.7" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.6/show/lib/remedy/schema/member.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/schema/member.ex">(current file)</a>
 
         </p>
 

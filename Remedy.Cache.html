@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.6">
+    <meta name="project" content="Remedy v0.6.7">
 
-    <title>Remedy.Cache — Remedy v0.6.6</title>
+    <title>Remedy.Cache — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-71ac037151.js"></script>
+    <script src="dist/sidebar_items-e81b8b2a87.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.6
+        v0.6.7
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
+Remedy.Cache <small class="app-vsn">(Remedy v0.6.7)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -95,7 +95,7 @@ Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
 
 
         <section id="moduledoc">
-<p>Functions for interracting with the cache.</p>
+<p>Functions for interracting with the cache.</p><p>The cache is populated only by events received from the gateway, it is not updated from interractions with the REST api.</p>
         </section>
 
 
@@ -112,6 +112,20 @@ Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
     <h2>
       <a href="#types">Types</a>
     </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:attrs/0">attrs()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:changeset/0">changeset()</a>
+
+  </div>
+
+</div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:reason/0">reason()</a>
@@ -149,119 +163,21 @@ Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create_emoji/1">create_emoji(emoji)</a>
+    <a href="#create_interaction/1">create_interaction(attrs)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create_guild/1">create_guild(guild)</a>
+    <a href="#delete_user/1">delete_user(id)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#create_member/1">create_member(member)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_message/1">create_message(message)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_presence/1">create_presence(presence)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_role/1">create_role(role)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_sticker/1">create_sticker(sticker)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#create_user/1">create_user(user)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_emoji/1">delete_emoji(emoji)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_guild/1">delete_guild(guild)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_member/1">delete_member(member)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_message/1">delete_message(message)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_presence/1">delete_presence(presence)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_role/1">delete_role(role)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_sticker/1">delete_sticker(sticker)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete_user/1">delete_user(user)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#fetch_ban/2">fetch_ban(user_id, guild_id)</a>
+    <a href="#fetch_ban/2">fetch_ban(guild_id, user_id)</a>
 
   </div>
 
@@ -270,7 +186,7 @@ Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#fetch_ban!/2">fetch_ban!(user_id, guild_id)</a>
+    <a href="#fetch_ban!/2">fetch_ban!(guild_id, user_id)</a>
 
   </div>
 
@@ -297,25 +213,167 @@ Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get_guild/1">get_guild(id)</a>
+    <a href="#fetch_guild/1">fetch_guild(id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Fetch a guild from the cache</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fetch_guild!/1">fetch_guild!(id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <a href="#fetch_guild/1"><code class="inline">fetch_guild/1</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fetch_integration/1">fetch_integration(integration_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Fetch an integration by ID.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fetch_role/1">fetch_role(role_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Fetch a role from the cache.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fetch_role!/1">fetch_role!(role_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <a href="#fetch_role/1"><code class="inline">fetch_role/1</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fetch_user/1">fetch_user(user_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Fetch a user from the cache.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fetch_user!/1">fetch_user!(id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <a href="#fetch_user/1"><code class="inline">fetch_user/1</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_ban/2">get_ban(guild_id, user_id)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#initialize_app/1">initialize_app(app)</a>
+    <a href="#get_member/2">get_member(guild_id, user_id)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#initialize_bot/1">initialize_bot(app)</a>
+    <a href="#list_bans/0">list_bans()</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Set the initial condition of the bot.</p></div>
+    <div class="summary-synopsis"><p>List all bans</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_bans!/0">list_bans!()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <a href="#list_bans/0"><code class="inline">list_bans/0</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_channels/1">list_channels(guild_id \\ nil)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>List channels from the cache.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_channels!/1">list_channels!(guild_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <a href="#list_channels/1"><code class="inline">list_channels/1</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_guild_bans/1">list_guild_bans(guild_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>List all bans associated with a guild.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_guild_bans!/1">list_guild_bans!(guild_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <a href="#list_guild_bans/1"><code class="inline">list_guild_bans/1</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_guilds/0">list_guilds()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_members/0">list_members()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>List Members</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_user_bans/1">list_user_bans(user_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>List all bans associated with a user.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list_user_bans!/1">list_user_bans!(user_id)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <a href="#list_user_bans/1"><code class="inline">list_user_bans/1</code></a>.</p></div>
 
 </div>
 <div class="summary-row">
@@ -327,86 +385,48 @@ Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update_app/1">update_app(updated_app)</a>
+    <a href="#update_guild_emojis/2">update_guild_emojis(guild_id, params)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update_bot/1">update_bot(updated_state)</a>
+    <a href="#update_guild_stickers/2">update_guild_stickers(guild_id, params)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update_emoji/1">update_emoji(emoji)</a>
+    <a href="#update_member/1">update_member(attrs)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update_guild/1">update_guild(guild)</a>
+    <a href="#update_role!/2">update_role!(id, attrs)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Unsafe proxy definition for <code class="inline">update_role/2</code>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update_user/1">update_user(attrs)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#update_guilds/1">update_guilds(guilds)</a>
+    <a href="#user_banned?/2">user_banned?(guild_id, user_id)</a>
 
   </div>
 
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update_member/1">update_member(member)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update_message/1">update_message(message)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update_message/2">update_message(id, updated_message)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update_presence/1">update_presence(presence)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update_role/1">update_role(role)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update_sticker/1">update_sticker(sticker)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#update_user/1">update_user(user)</a>
-
-  </div>
+    <div class="summary-synopsis"><p>Returns True/False to the user being banned from a guild.</p></div>
 
 </div>
 
@@ -424,6 +444,64 @@ Remedy.Cache <small class="app-vsn">(Remedy v0.6.6)</small>
 Types
           </h1>
           <div class="types-list">
+<section class="detail" id="t:attrs/0">
+
+  <div class="detail-header">
+    <a href="#t:attrs/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">attrs()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L20" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>attrs() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:changeset/0">
+
+  <div class="detail-header">
+    <a href="#t:changeset/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">changeset()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L21" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>changeset() :: <a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:reason/0">
 
   <div class="detail-header">
@@ -433,7 +511,7 @@ Types
     </a>
     <h1 class="signature">reason()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L12" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L19" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -462,7 +540,7 @@ Types
     </a>
     <h1 class="signature">snowflake()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L11" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L18" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -504,7 +582,7 @@ Functions
     </a>
     <h1 class="signature">app()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L302" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L363" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -526,7 +604,7 @@ Functions
     </a>
     <h1 class="signature">bot()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L277" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L358" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -539,324 +617,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="create_emoji/1">
+<section class="detail" id="create_interaction/1">
 
   <div class="detail-header">
-    <a href="#create_emoji/1" class="detail-link" title="Link to this function">
+    <a href="#create_interaction/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">create_emoji(emoji)</h1>
+    <h1 class="signature">create_interaction(attrs)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L175" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_guild/1">
-
-  <div class="detail-header">
-    <a href="#create_guild/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_guild(guild)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L78" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_member/1">
-
-  <div class="detail-header">
-    <a href="#create_member/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_member(member)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L123" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_message/1">
-
-  <div class="detail-header">
-    <a href="#create_message/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_message(message)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L142" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_presence/1">
-
-  <div class="detail-header">
-    <a href="#create_presence/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_presence(presence)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L194" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_role/1">
-
-  <div class="detail-header">
-    <a href="#create_role/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_role(role)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L213" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_sticker/1">
-
-  <div class="detail-header">
-    <a href="#create_sticker/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_sticker(sticker)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L232" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="create_user/1">
-
-  <div class="detail-header">
-    <a href="#create_user/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">create_user(user)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L104" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="delete_emoji/1">
-
-  <div class="detail-header">
-    <a href="#delete_emoji/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete_emoji(emoji)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L188" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="delete_guild/1">
-
-  <div class="detail-header">
-    <a href="#delete_guild/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete_guild(guild)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L98" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="delete_member/1">
-
-  <div class="detail-header">
-    <a href="#delete_member/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete_member(member)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L136" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="delete_message/1">
-
-  <div class="detail-header">
-    <a href="#delete_message/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete_message(message)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L162" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="delete_presence/1">
-
-  <div class="detail-header">
-    <a href="#delete_presence/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete_presence(presence)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L207" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="delete_role/1">
-
-  <div class="detail-header">
-    <a href="#delete_role/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete_role(role)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L226" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="delete_sticker/1">
-
-  <div class="detail-header">
-    <a href="#delete_sticker/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete_sticker(sticker)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L245" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L272" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -876,9 +646,9 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">delete_user(user)</h1>
+    <h1 class="signature">delete_user(id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L117" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L170" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -898,9 +668,9 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">fetch_ban(user_id, guild_id)</h1>
+    <h1 class="signature">fetch_ban(guild_id, user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L55" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L79" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -918,7 +688,7 @@ Functions
 
       </div>
 
-<p>Fetch a ban from the Cache by user_id &amp; guild_id</p><p>Returns {:ok, <code class="inline">%Remedy.Schema.Ban{}</code>} or {:error, reason}</p>
+<p>Fetch a ban from the Cache by user_id &amp; guild_id</p>
   </section>
 </section>
 <section class="detail" id="fetch_ban!/2">
@@ -928,7 +698,7 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">fetch_ban!(user_id, guild_id)</h1>
+    <h1 class="signature">fetch_ban!(guild_id, user_id)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -952,7 +722,7 @@ Functions
     </a>
     <h1 class="signature">fetch_channel(id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L19" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L35" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -961,6 +731,14 @@ Functions
   </div>
 
   <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>fetch_channel(<a href="#t:snowflake/0">snowflake</a>()) ::
+  {:error, <a href="#t:reason/0">reason</a>()} | {:ok, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()}</pre>
+
+      </div>
 
 <p>Fetch a channel from the cache.</p>
   </section>
@@ -987,16 +765,206 @@ Functions
 <p>Unsafe proxy definition for <a href="#fetch_channel/1"><code class="inline">fetch_channel/1</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="get_guild/1">
+<section class="detail" id="fetch_guild/1">
 
   <div class="detail-header">
-    <a href="#get_guild/1" class="detail-link" title="Link to this function">
+    <a href="#fetch_guild/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">get_guild(id)</h1>
+    <h1 class="signature">fetch_guild(id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L84" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L199" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Fetch a guild from the cache</p>
+  </section>
+</section>
+<section class="detail" id="fetch_guild!/1">
+
+  <div class="detail-header">
+    <a href="#fetch_guild!/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fetch_guild!(id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Unsafe proxy definition for <a href="#fetch_guild/1"><code class="inline">fetch_guild/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="fetch_integration/1">
+
+  <div class="detail-header">
+    <a href="#fetch_integration/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fetch_integration(integration_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L245" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Fetch an integration by ID.</p>
+  </section>
+</section>
+<section class="detail" id="fetch_role/1">
+
+  <div class="detail-header">
+    <a href="#fetch_role/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fetch_role(role_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L331" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>fetch_role(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: {:error, :not_found} | {:ok, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()}</pre>
+
+      </div>
+
+<p>Fetch a role from the cache.</p><p>Returns {:ok, %Role{}} or {:error, reason}</p>
+  </section>
+</section>
+<section class="detail" id="fetch_role!/1">
+
+  <div class="detail-header">
+    <a href="#fetch_role!/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fetch_role!(role_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Unsafe proxy definition for <a href="#fetch_role/1"><code class="inline">fetch_role/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="fetch_user/1">
+
+  <div class="detail-header">
+    <a href="#fetch_user/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fetch_user(user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L148" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Fetch a user from the cache.</p><p>Returns {:ok, %User{}} or {:error, reason}</p>
+  </section>
+</section>
+<section class="detail" id="fetch_user!/1">
+
+  <div class="detail-header">
+    <a href="#fetch_user!/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fetch_user!(id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Unsafe proxy definition for <a href="#fetch_user/1"><code class="inline">fetch_user/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="get_ban/2">
+
+  <div class="detail-header">
+    <a href="#get_ban/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_ban(guild_id, user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L129" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_ban(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:snowflake/0">snowflake</a>()) :: nil | <a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="get_member/2">
+
+  <div class="detail-header">
+    <a href="#get_member/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_member(guild_id, user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L185" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1009,16 +977,173 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="initialize_app/1">
+<section class="detail" id="list_bans/0">
 
   <div class="detail-header">
-    <a href="#initialize_app/1" class="detail-link" title="Link to this function">
+    <a href="#list_bans/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">initialize_app(app)</h1>
+    <h1 class="signature">list_bans()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L281" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L108" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>list_bans() :: {:error, <a href="#t:reason/0">reason</a>()} | {:ok, [<a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>()]}</pre>
+
+      </div>
+
+<p>List all bans</p>
+  </section>
+</section>
+<section class="detail" id="list_bans!/0">
+
+  <div class="detail-header">
+    <a href="#list_bans!/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list_bans!()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Unsafe proxy definition for <a href="#list_bans/0"><code class="inline">list_bans/0</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="list_channels/1">
+
+    <span id="list_channels/0"></span>
+
+  <div class="detail-header">
+    <a href="#list_channels/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list_channels(guild_id \\ nil)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L48" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>list_channels(<a href="#t:snowflake/0">snowflake</a>()) ::
+  {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()} | {:ok, [<a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()]}</pre>
+
+      </div>
+
+<p>List channels from the cache.</p>
+  </section>
+</section>
+<section class="detail" id="list_channels!/1">
+
+  <div class="detail-header">
+    <a href="#list_channels!/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list_channels!(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Unsafe proxy definition for <a href="#list_channels/1"><code class="inline">list_channels/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="list_guild_bans/1">
+
+  <div class="detail-header">
+    <a href="#list_guild_bans/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list_guild_bans(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L115" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>list_guild_bans(<a href="#t:snowflake/0">snowflake</a>()) ::
+  {:error, <a href="#t:reason/0">reason</a>()} | {:ok, [<a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>()]}</pre>
+
+      </div>
+
+<p>List all bans associated with a guild.</p>
+  </section>
+</section>
+<section class="detail" id="list_guild_bans!/1">
+
+  <div class="detail-header">
+    <a href="#list_guild_bans!/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list_guild_bans!(guild_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Unsafe proxy definition for <a href="#list_guild_bans/1"><code class="inline">list_guild_bans/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="list_guilds/0">
+
+  <div class="detail-header">
+    <a href="#list_guilds/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list_guilds()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L206" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1031,102 +1156,14 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="initialize_bot/1">
+<section class="detail" id="list_members/0">
 
   <div class="detail-header">
-    <a href="#initialize_bot/1" class="detail-link" title="Link to this function">
+    <a href="#list_members/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">initialize_bot(app)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L254" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>Set the initial condition of the bot.</p>
-  </section>
-</section>
-<section class="detail" id="remove_message_reactions/1">
-
-  <div class="detail-header">
-    <a href="#remove_message_reactions/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">remove_message_reactions(message_id)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L168" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update_app/1">
-
-  <div class="detail-header">
-    <a href="#update_app/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update_app(updated_app)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L286" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update_bot/1">
-
-  <div class="detail-header">
-    <a href="#update_bot/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update_bot(updated_state)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L259" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update_emoji/1">
-
-  <div class="detail-header">
-    <a href="#update_emoji/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update_emoji(emoji)</h1>
+    <h1 class="signature">list_members()</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L181" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -1138,19 +1175,101 @@ Functions
 
   <section class="docstring">
 
-
+<p>List Members</p>
   </section>
 </section>
-<section class="detail" id="update_guild/1">
+<section class="detail" id="list_user_bans/1">
 
   <div class="detail-header">
-    <a href="#update_guild/1" class="detail-link" title="Link to this function">
+    <a href="#list_user_bans/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">update_guild(guild)</h1>
+    <h1 class="signature">list_user_bans(user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L91" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L124" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>list_user_bans(<a href="#t:snowflake/0">snowflake</a>()) ::
+  {:error, <a href="#t:reason/0">reason</a>()} | {:ok, [<a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>()]}</pre>
+
+      </div>
+
+<p>List all bans associated with a user.</p>
+  </section>
+</section>
+<section class="detail" id="list_user_bans!/1">
+
+  <div class="detail-header">
+    <a href="#list_user_bans!/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list_user_bans!(user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Unsafe proxy definition for <a href="#list_user_bans/1"><code class="inline">list_user_bans/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="remove_message_reactions/1">
+
+  <div class="detail-header">
+    <a href="#remove_message_reactions/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">remove_message_reactions(message_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L316" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>remove_message_reactions(<a href="#t:snowflake/0">snowflake</a>()) ::
+  {:ok, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()} | {:error, <a href="#t:reason/0">reason</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="update_guild_emojis/2">
+
+  <div class="detail-header">
+    <a href="#update_guild_emojis/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update_guild_emojis(guild_id, params)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L210" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1163,16 +1282,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="update_guilds/1">
+<section class="detail" id="update_guild_stickers/2">
 
   <div class="detail-header">
-    <a href="#update_guilds/1" class="detail-link" title="Link to this function">
+    <a href="#update_guild_stickers/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">update_guilds(guilds)</h1>
+    <h1 class="signature">update_guild_stickers(guild_id, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L89" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L217" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1192,9 +1311,9 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">update_member(member)</h1>
+    <h1 class="signature">update_member(attrs)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L129" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L187" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1207,16 +1326,16 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="update_message/1">
+<section class="detail" id="update_role!/2">
 
   <div class="detail-header">
-    <a href="#update_message/1" class="detail-link" title="Link to this function">
+    <a href="#update_role!/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">update_message(message)</h1>
+    <h1 class="signature">update_role!(id, attrs)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L148" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1226,95 +1345,7 @@ Functions
 
   <section class="docstring">
 
-
-  </section>
-</section>
-<section class="detail" id="update_message/2">
-
-  <div class="detail-header">
-    <a href="#update_message/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update_message(id, updated_message)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L155" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update_presence/1">
-
-  <div class="detail-header">
-    <a href="#update_presence/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update_presence(presence)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L200" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update_role/1">
-
-  <div class="detail-header">
-    <a href="#update_role/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update_role(role)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L219" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="update_sticker/1">
-
-  <div class="detail-header">
-    <a href="#update_sticker/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">update_sticker(sticker)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L238" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
+<p>Unsafe proxy definition for <code class="inline">update_role/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="update_user/1">
@@ -1324,9 +1355,9 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">update_user(user)</h1>
+    <h1 class="signature">update_user(attrs)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L110" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L154" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1337,6 +1368,35 @@ Functions
   <section class="docstring">
 
 
+  </section>
+</section>
+<section class="detail" id="user_banned?/2">
+
+  <div class="detail-header">
+    <a href="#user_banned?/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">user_banned?(guild_id, user_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L96" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>user_banned?(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: true | false</pre>
+
+      </div>
+
+<p>Returns True/False to the user being banned from a guild.</p>
   </section>
 </section>
 
@@ -1347,10 +1407,10 @@ Functions
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.6" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.6" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.7" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.7" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.6/show/lib/remedy/cache.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/cache.ex">(current file)</a>
 
         </p>
 

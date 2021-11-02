@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.6">
+    <meta name="project" content="Remedy v0.6.7">
 
-    <title>Remedy.Schema.GuildBanAdd — Remedy v0.6.6</title>
+    <title>Remedy.Gateway.Dispatch.GuildRoleDelete — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-71ac037151.js"></script>
+    <script src="dist/sidebar_items-e81b8b2a87.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.6
+        v0.6.7
       </strong>
     </div>
 
@@ -84,9 +84,9 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.GuildBanAdd <small class="app-vsn">(Remedy v0.6.6)</small>
+Remedy.Gateway.Dispatch.GuildRoleDelete <small class="app-vsn">(Remedy v0.6.7)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_ban_add.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_delete.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
@@ -95,7 +95,11 @@ Remedy.Schema.GuildBanAdd <small class="app-vsn">(Remedy v0.6.6)</small>
 
 
         <section id="moduledoc">
-<p>Guild Ban Add Event</p>
+<p>Guild Role Delete Event</p><h2 id="module-payload" class="section-heading">
+  <a href="#module-payload" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Payload
+</h2>
+<ul><li><code class="inline">%Remedy.Schema.Role{}</code></li></ul>
         </section>
 
 
@@ -108,13 +112,13 @@ Remedy.Schema.GuildBanAdd <small class="app-vsn">(Remedy v0.6.6)</small>
             Summary
           </h1>
 
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#handle/1">handle(arg)</a>
 
   </div>
 
@@ -125,25 +129,25 @@ Remedy.Schema.GuildBanAdd <small class="app-vsn">(Remedy v0.6.6)</small>
         </section>
 
 
-        <section id="types" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#types">
+            <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types
+Functions
           </h1>
-          <div class="types-list">
-<section class="detail" id="t:t/0">
+          <div class="functions-list">
+<section class="detail" id="handle/1">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#handle/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">t()</h1>
+    <h1 class="signature">handle(arg)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_ban_add.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/dispatch/guild_role_delete.ex#L12" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -152,16 +156,6 @@ Types
   </div>
 
   <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>t() :: %Remedy.Schema.GuildBanAdd{
-  guild_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
-  user: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()
-}</pre>
-
-      </div>
 
 
   </section>
@@ -174,10 +168,10 @@ Types
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.6" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.6" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.7" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.7" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.6/show/lib/remedy/schema/guild_ban_add.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/gateway/dispatch/guild_role_delete.ex">(current file)</a>
 
         </p>
 

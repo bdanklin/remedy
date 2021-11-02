@@ -22,26 +22,12 @@ defmodule Remedy.Schema.StageInstance do
     # field :tags,  :	role tags object	the tags this role has
   end
 
+  def form(params), do: params |> changeset() |> apply_changes()
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
+  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
   @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

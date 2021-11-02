@@ -46,11 +46,11 @@ defmodule Remedy.Schema.VoiceState do
           player_pid: player_pid
         }
 
-  embedded_schema do
-    field :guild_id
-    field :channel_id
-    field :self_mute
-    field :self_deaf
+  schema "voice_states" do
+    field :guild_id, Snowflake
+    field :channel_id, Snowflake
+    field :self_mute, :boolean
+    field :self_deaf, :boolean
     field :gateway
     field :session
     field :token
@@ -69,26 +69,7 @@ defmodule Remedy.Schema.VoiceState do
     field :player_pid
   end
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

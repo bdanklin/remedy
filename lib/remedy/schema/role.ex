@@ -21,33 +21,14 @@ defmodule Remedy.Schema.Role do
     field :color, :integer
     field :hoist, :boolean
     field :position, :integer
-    field :permissions, :string
+    field :permissions, :integer
     field :managed, :boolean
     field :mentionable, :boolean
     belongs_to :guild, Guild
     # field :tags,  :	role tags object	the tags this role has
   end
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

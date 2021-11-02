@@ -1,49 +1,24 @@
 defmodule Remedy.Gateway.Dispatch.GuildRoleDelete do
-  @moduledoc false
-  use Remedy.Schema
-  alias Remedy.Cache
-  alias Remedy.Schema.Role
+  @moduledoc """
+  Guild Role Delete Event
 
-  embedded_schema do
-    field :guild_id, Snowflake
-    embeds_one :role, Role
-  end
+  ## Payload
 
-  def handle({event, %{role: role} = payload, socket}) do
-    role
-    |> Cache.delete_role()
+  - `%Remedy.Schema.Role{}`
 
-    {event,
-     payload
-     |> new(), socket}
-  end
+  """
+  alias Remedy.{Cache, Util}
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
+  def handle({event, %{guild_id: guild_id, role: role}, socket}) do
+    params = Map.put_new(role, :guild_id, guild_id)
 
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
+    case Cache.delete_role(params) do
+      {:ok, role} ->
+        {event, role, socket}
 
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+      {:error, _reason} ->
+        Util.log_malformed(event)
+        :noop
+    end
   end
 end

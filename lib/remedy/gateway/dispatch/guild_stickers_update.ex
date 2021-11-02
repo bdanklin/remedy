@@ -1,12 +1,33 @@
 defmodule Remedy.Gateway.Dispatch.GuildStickersUpdate do
-  @moduledoc false
-  alias Remedy.Cache
+  @moduledoc """
+  Guild Stickers Update Event
 
-  def handle({event, %{stickers: stickers, guild_id: guild_id} = _payload, socket}) do
-    for sticker <- stickers do
-      {event,
-       %{sticker | guild_id: guild_id}
-       |> Cache.update_sticker(), socket}
+  ## Payload
+
+  `%Remedy.Schema.Guild{}`
+
+  """
+  require Logger
+  alias Remedy.{Cache, Util}
+  alias Ecto.Changeset
+
+  def handle({event, payload, socket}) do
+    with {:ok, %{id: guild_id, stickers: stickers}} <- validate_payload(payload),
+         {:ok, guild} <- Cache.update_guild_stickers(guild_id, %{stickers: stickers}) do
+      {event, guild, socket}
+    else
+      {:error, _changeset} ->
+        Util.log_malformed(event)
+        :noop
+    end
+  end
+
+  defp validate_payload(%{stickers: stickers, guild_id: guild_id}) do
+    {%{}, %{id: :id, stickers: {:array, Emoji}}}
+    |> Changeset.cast(%{id: guild_id, stickers: stickers}, [:stickers, :id])
+    |> case do
+      %Ecto.Changeset{valid?: true} = changeset -> {:ok, changeset |> Changeset.apply_changes()}
+      %Ecto.Changeset{valid?: false} = changeset -> {:error, changeset}
     end
   end
 end

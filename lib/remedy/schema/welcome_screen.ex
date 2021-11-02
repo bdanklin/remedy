@@ -5,12 +5,9 @@ defmodule Remedy.Schema.WelcomeScreen do
   Guild Welcome Screen
   """
 
-  @type description :: String.t()
-  @type welcome_channels :: [WelcomeScreenChannel.t()]
-
   @type t :: %__MODULE__{
-          description: description,
-          welcome_channels: welcome_channels
+          description: String.t(),
+          welcome_channels: [WelcomeScreenChannel.t()]
         }
 
   @primary_key false
@@ -20,32 +17,10 @@ defmodule Remedy.Schema.WelcomeScreen do
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+  def changeset(model \\ %__MODULE__{}, params) do
+    model
+    |> cast(params, [:description])
+    |> cast_embed(:welcome_channels)
   end
 end
 
@@ -53,7 +28,7 @@ defmodule Remedy.Schema.WelcomeScreenChannel do
   use Remedy.Schema
 
   @moduledoc """
-  Guild Welcome Screen
+  Guild Welcome Screen Channel
   """
 
   @type channel_id :: Snowflake.t()
@@ -76,31 +51,8 @@ defmodule Remedy.Schema.WelcomeScreenChannel do
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+  def changeset(model \\ %__MODULE__{}, params) do
+    model
+    |> cast(params, [:channel_id, :description, :emoji_id, :emoji_name])
   end
 end

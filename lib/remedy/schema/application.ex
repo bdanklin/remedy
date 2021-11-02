@@ -4,44 +4,26 @@ defmodule Remedy.Schema.App do
   """
   use Remedy.Schema
 
-  @type name :: String.t()
-  @type icon :: String.t()
-  @type description :: String.t()
-  @type rpc_origins :: [String.t()]
-  @type bot_public :: boolean()
-  @type bot_require_code_grant :: boolean()
-  @type terms_of_service_url :: String.t()
-  @type privacy_policy_url :: String.t()
-  @type cover_image :: String.t()
-  @type flags :: integer()
-  @type summary :: String.t()
-  @type verify_key :: String.t()
-  @type owner :: User.t()
-  @type team :: Team.t()
-  @type guild_id :: Guild.t()
-  @type primary_sku_id :: Snowflake.t()
-  @type slug :: String.t()
-  @type hook :: boolean()
-
   @type t :: %__MODULE__{
-          name: name,
-          icon: icon,
-          description: description,
-          rpc_origins: rpc_origins,
-          bot_public: bot_public,
-          bot_require_code_grant: bot_require_code_grant,
-          terms_of_service_url: terms_of_service_url,
-          privacy_policy_url: privacy_policy_url,
-          owner: owner,
-          summary: summary,
-          verify_key: verify_key,
-          team: team,
-          guild_id: guild_id,
-          primary_sku_id: primary_sku_id,
-          slug: slug,
-          cover_image: cover_image,
-          flags: flags,
-          hook: hook
+          id: Snowflake.t(),
+          name: String.t(),
+          icon: String.t(),
+          description: String.t(),
+          rpc_origins: [String.t()],
+          bot_public: boolean(),
+          bot_require_code_grant: boolean(),
+          terms_of_service_url: String.t(),
+          privacy_policy_url: String.t(),
+          owner: User.t(),
+          summary: String.t(),
+          verify_key: String.t(),
+          team: Team.t(),
+          guild_id: Guild.t(),
+          primary_sku_id: Snowflake.t(),
+          slug: String.t(),
+          cover_image: String.t(),
+          flags: integer(),
+          hook: boolean()
         }
 
   @primary_key {:id, :id, autogenerate: false}
@@ -65,29 +47,17 @@ defmodule Remedy.Schema.App do
     belongs_to :guild, Guild
     field :primary_sku_id, Snowflake
     field :slug, :string
+
+    field :remedy_system, :boolean, default: false, redact: true
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> apply_changes()
-  end
+  def form(params), do: params |> changeset() |> apply_changes()
+  @doc false
+  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
   @doc false
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> apply_changes()
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)
@@ -95,5 +65,11 @@ defmodule Remedy.Schema.App do
     Enum.reduce(embeds, cast_model, fn embed, cast_model ->
       cast_embed(cast_model, embed)
     end)
+  end
+
+  def system_changeset(model \\ %__MODULE__{}, params) do
+    model
+    |> changeset(params)
+    |> put_change(:remedy_system, true)
   end
 end

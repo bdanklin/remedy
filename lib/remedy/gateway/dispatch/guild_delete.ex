@@ -1,12 +1,23 @@
 defmodule Remedy.Gateway.Dispatch.GuildDelete do
-  @moduledoc false
-  alias Remedy.Cache
+  @moduledoc """
 
-  def handle({event, payload, socket}) do
-    guild =
-      payload
-      |> Cache.delete_guild()
+  Guild Create Event
 
-    {event, guild, socket}
+  ## Payload
+
+  - `%Remedy.Schema.Guild{}`
+
+  """
+  alias Remedy.{Cache, Util}
+
+  def handle({event, %{id: guild_id}, socket}) do
+    case Cache.delete_guild(guild_id) do
+      {:ok, guild} ->
+        {event, guild, socket}
+
+      {:error, _changeset} ->
+        Util.log_malformed(event)
+        :noop
+    end
   end
 end

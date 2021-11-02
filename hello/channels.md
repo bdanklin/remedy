@@ -13,7 +13,7 @@ defmodule Nostrum.Struct.Channel do
   A typical channel would appear as:
 
   ```elixir
-  %Nostrum.Struct.Channel{
+  %Remedy.Schema.Channel{
     guild_id: 766435015768539156,
     id: 827333533688397865,
     name: "announcements",

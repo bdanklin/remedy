@@ -19,7 +19,7 @@ defmodule Remedy.Schema.Emoji do
   @primary_key {:id, :id, autogenerate: false}
   schema "emojis" do
     field :name, :string
-    #  field :roles, {:array, Snowflake}
+
     field :require_colons, :boolean
     field :managed, :boolean
     field :animated, :boolean
@@ -28,26 +28,7 @@ defmodule Remedy.Schema.Emoji do
     belongs_to :guild, Guild
   end
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

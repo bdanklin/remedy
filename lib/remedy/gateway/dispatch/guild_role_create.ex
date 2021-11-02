@@ -2,31 +2,19 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
   @moduledoc """
   Guild Role Create Event.
   """
-  use Remedy.Schema
-  alias Remedy.Cache
 
-  @type t :: %__MODULE__{
-          guild_id: Snowflake.t(),
-          role: Role.t()
-        }
+  alias Remedy.{Cache, Util}
 
-  @primary_key false
-  embedded_schema do
-    field :guild_id, Snowflake
-    embeds_one :role, Role
-  end
+  def handle({event, %{guild_id: guild_id, role: role}, socket}) do
+    params = Map.put_new(role, :guild_id, guild_id)
 
-  def handle({event, %{guild_id: guild_id, role: role} = payload, socket}) do
-    Cache.create_role(guild_id, role)
+    case Cache.create_role(params) do
+      {:ok, role} ->
+        {event, role, socket}
 
-    {event, new(payload), socket}
-  end
-
-  @doc false
-  def new(params) do
-    %__MODULE__{}
-    |> cast(params, [:guild_id])
-    |> cast_embed(:role)
-    |> apply_changes()
+      {:error, _reason} ->
+        Util.log_malformed(event)
+        :noop
+    end
   end
 end

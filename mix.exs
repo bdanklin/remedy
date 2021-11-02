@@ -4,7 +4,7 @@ defmodule Remedy.MixProject do
 
   @app :remedy
   @name "Remedy"
-  @version "0.6.6"
+  @version "0.6.7"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
   @description "Discord Library in Elixir."
@@ -15,7 +15,7 @@ defmodule Remedy.MixProject do
     [
       app: @app,
       version: @version,
-      elixir: "~> 1.9",
+      elixir: "~> 1.12",
       name: @name,
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,

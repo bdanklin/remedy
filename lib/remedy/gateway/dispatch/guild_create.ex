@@ -1,21 +1,32 @@
 defmodule Remedy.Gateway.Dispatch.GuildCreate do
-  @moduledoc false
+  @moduledoc """
 
-  #  @large_threshold 250
+  Guild Create Event
 
-  alias Remedy.Cache
+  ## Payload
 
-  def handle({event, %{id: guild_id, channels: channels} = payload, socket}) do
-    payload
-    |> Map.put(:shard, socket.shard)
-    |> Cache.create_guild()
+  - `%Remedy.Schema.Guild{}`
 
-    for channel <- channels do
-      channel
-      |> Map.put_new(:guild_id, guild_id)
-      |> Cache.create_channel()
+  """
+  alias Remedy.{Cache, Util}
+
+  def handle({event, payload, socket}) do
+    for p <- payload[:presences], do: Cache.update_presence(p)
+
+    attrs = Map.put_new(payload, :shard, socket.shard)
+
+    case Cache.update_guild(attrs) do
+      {:ok, guild} ->
+        {event, guild, socket}
+
+      {:error, _reason} ->
+        Util.log_malformed(event)
+        :noop
+
+      _ ->
+        {:error, :unknown_error}
+        Util.log_malformed(event)
+        :noop
     end
-
-    {event, payload, socket}
   end
 end

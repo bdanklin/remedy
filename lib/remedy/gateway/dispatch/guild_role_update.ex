@@ -4,14 +4,21 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleUpdate do
   """
 
   alias Remedy.Cache
-  alias Remedy.Schema.{GuildRoleUpdate, Role}
 
-  def handle({event, %{guild_id: guild_id, role: role} = payload, socket}) do
-    Cache.get_guild(guild_id)
-    |> Ecto.build_assoc(:role)
-    |> Role.changeset(role)
-    |> Cache.delete_role()
+  use Remedy.Schema
 
-    {event, GuildRoleUpdate.new(payload), socket}
+  alias Remedy.{Cache, Util}
+
+  def handle({event, %{id: role_id, guild_id: guild_id, role: role}, socket}) do
+    params = Map.put_new(role, :guild_id, guild_id)
+
+    with {:ok, role} <- Cache.fetch_role(role_id),
+         {:ok, role} <- Cache.update_role(role, params) do
+      {event, role, socket}
+    else
+      {:error, _reason} ->
+        Util.log_malformed(event)
+        :noop
+    end
   end
 end

@@ -15,7 +15,8 @@ defmodule Remedy.Schema.Reaction do
           emoji: Emoji.t()
         }
 
-  @primary_key false
+  # Primary key :message_id ++ :user_id ++ :emoji_id
+  @primary_key {:id, :id, autogenerate: false}
   embedded_schema do
     embeds_one :user, User
     embeds_one :channel, Channel
@@ -27,26 +28,7 @@ defmodule Remedy.Schema.Reaction do
     embeds_one :emoji, Emoji
   end
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)
@@ -55,4 +37,6 @@ defmodule Remedy.Schema.Reaction do
       cast_embed(cast_model, embed)
     end)
   end
+
+  def new(params), do: changeset(params) |> apply_changes()
 end

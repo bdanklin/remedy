@@ -65,31 +65,19 @@ defmodule Remedy.Gun do
     {:gun.get(conn, route, headers), conn}
   end
 
-  defp put(
-         %RestRequest{route: route, headers: headers, body: body},
-         %Rest{conn: conn}
-       ) do
+  defp put(%RestRequest{route: route, headers: headers, body: body}, %Rest{conn: conn}) do
     {:gun.put(conn, route, headers, body), conn}
   end
 
-  defp post(
-         %RestRequest{route: route, headers: headers, body: body},
-         %Rest{conn: conn}
-       ) do
+  defp post(%RestRequest{route: route, headers: headers, body: body}, %Rest{conn: conn}) do
     {:gun.post(conn, route, headers, body), conn}
   end
 
-  defp patch(
-         %RestRequest{route: route, headers: headers, body: body},
-         %Rest{conn: conn}
-       ) do
+  defp patch(%RestRequest{route: route, headers: headers, body: body}, %Rest{conn: conn}) do
     {:gun.patch(conn, route, headers, body), conn}
   end
 
-  defp delete(
-         %RestRequest{route: route, headers: headers},
-         %Rest{conn: conn}
-       ) do
+  defp delete(%RestRequest{route: route, headers: headers}, %Rest{conn: conn}) do
     {:gun.delete(conn, route, headers), conn}
   end
 

@@ -79,7 +79,6 @@ defmodule Remedy.Gateway.Payload do
         },
         warn: false
 
-  import Remedy.ModelHelpers
   import Remedy.OpcodeHelpers, only: [is_op_event: 1, mod_from_event: 1]
 
   require Logger

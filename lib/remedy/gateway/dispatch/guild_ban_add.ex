@@ -1,54 +1,25 @@
 defmodule Remedy.Gateway.Dispatch.GuildBanAdd do
-  @moduledoc false
-
-  alias Remedy.Schema.Ban
-
-  def handle({event, payload, socket}) do
-    {event, Ban.new(payload), socket}
-  end
-
   @moduledoc """
   Guild Ban Add Event
+
+  ## Payload
+
+  - `%Remedy.Schema.Ban{}`
+
   """
-  use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          guild_id: Snowflake.t(),
-          user: User.t()
-        }
+  alias Remedy.{Cache, Util}
 
-  @primary_key false
-  embedded_schema do
-    field :guild_id, Snowflake
-    embeds_one :user, User
-  end
+  def handle({event, %{guild_id: guild_id, ban: %{user: %{id: user_id} = user, reason: reason}}, socket}) do
+    params = %{user_id: user_id, guild_id: guild_id, reason: reason}
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    with {:ok, _user} <- Cache.update_user(user),
+         {:ok, ban} <- Cache.update_ban(params) do
+      {event, ban, socket}
+    else
+      {:error, _reason} ->
+        Util.log_malformed(event)
+        :noop
+    end
   end
 end

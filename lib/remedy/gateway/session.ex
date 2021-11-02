@@ -9,21 +9,22 @@ defmodule Remedy.Gateway.Session do
   ### External
 
   def update_presence(shard, opts \\ []) do
-    GenServer.cast(:"Session-#{shard}", {:status_update, opts})
+    GenServer.cast(:"session_#{shard}", {:status_update, opts})
   end
 
   def voice_status_update(shard, opts \\ []) do
-    GenServer.cast(:"Session-#{shard}", {:update_voice_state, opts})
+    GenServer.cast(:"session_#{shard}", {:update_voice_state, opts})
   end
 
   def request_guild_members(shard, opts \\ []) do
-    GenServer.cast(:"Session-#{shard}", {:request_guild_members, opts})
+    GenServer.cast(:"session_#{shard}", {:request_guild_members, opts})
   end
 
   ### Internal
 
+  @doc false
   def start_link(%{shard: shard} = opts) do
-    GenServer.start_link(__MODULE__, opts, name: :"Session-#{shard}")
+    GenServer.start_link(__MODULE__, opts, name: :"session_#{shard}")
   end
 
   def init(%{gateway: gateway, shard: shard}) do
@@ -95,7 +96,7 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_info({:gun_up, _worker, _proto}, socket) do
-    Logger.info("RECONNECTED AFTER INTERRUPTION")
-    {:noreply, socket}
+    Logger.warn("RECONNECTED AFTER INTERRUPTION")
+    {:noreply, socket |> Payload.send(:HEARTBEAT)}
   end
 end

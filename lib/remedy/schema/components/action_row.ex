@@ -2,7 +2,7 @@ defmodule Remedy.Schema.Component.ActionRow do
   @moduledoc """
   Action Rows.
   """
-  import Remedy.ModelHelpers
+
   use Remedy.Schema.Component
 
   @defaults %{

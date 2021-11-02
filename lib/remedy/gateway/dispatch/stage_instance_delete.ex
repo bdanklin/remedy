@@ -3,6 +3,6 @@ defmodule Remedy.Gateway.Dispatch.StageInstanceDelete do
   alias Remedy.Schema.StageInstance
 
   def handle({event, payload, socket}) do
-    {event, StageInstance.new(payload), socket}
+    {event, StageInstance.form(payload), socket}
   end
 end

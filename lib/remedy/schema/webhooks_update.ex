@@ -14,37 +14,13 @@ defmodule Remedy.Schema.WebhooksUpdate do
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
+  def changeset(model \\ %__MODULE__{}, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
 
-  @doc false
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset), do: changeset
-  @doc false
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
-  end
-
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
-
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end

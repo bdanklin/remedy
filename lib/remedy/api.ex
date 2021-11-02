@@ -42,13 +42,12 @@ defmodule Remedy.API do
 
   """
 
-  import Remedy.ModelHelpers
-
   import Sunbake.Snowflake,
     only: [is_snowflake: 1],
     warn: false
 
   alias Remedy.API.Rest
+  alias Remedy.Cache
 
   alias Remedy.Schema.{
     App,
@@ -105,7 +104,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_current_bot_application_information({:error, _reason} = error), do: error
-  defp parse_get_current_bot_application_information({:ok, bot}), do: {:ok, App.new(bot)}
+  defp parse_get_current_bot_application_information({:ok, bot}), do: {:ok, App.form(bot)}
 
   @doc """
   Gets the authorization information for the Bot.
@@ -170,8 +169,8 @@ defmodule Remedy.API do
   defp parse_get_guild_audit_log({:ok, audit_log}, guild_id) do
     {:ok,
      audit_log
-     |> AuditLog.new()
-     |> AuditLog.update(%{guild_id: guild_id})}
+     |> AuditLog.form()
+     |> AuditLog.shape(%{guild_id: guild_id})}
   end
 
   ###################################################################################
@@ -196,8 +195,8 @@ defmodule Remedy.API do
 
   """
 
-  @spec get_channel(snowflake | Channel.t()) :: {:error, any} | {:ok, Channel.t()}
   @unsafe {:get_channel, [:channel_id]}
+  @spec get_channel(snowflake | Channel.t()) :: {:error, any} | {:ok, Channel.t()}
   def get_channel(channel_id)
   def get_channel(%Channel{id: channel_id}), do: get_channel(channel_id)
 
@@ -208,7 +207,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_channel({:error, _reason} = error), do: error
-  defp parse_get_channel({:ok, channel}), do: {:ok, Channel.new(channel)}
+  defp parse_get_channel({:ok, channel}), do: {:ok, Channel.form(channel)}
 
   @doc """
   Modifies a channel's settings.
@@ -256,7 +255,7 @@ defmodule Remedy.API do
 
   defp parse_modify_channel({:error, _reason} = error), do: error
   defp parse_modify_channel({:ok, %{id: nil}}), do: {:error, "Request Failed"}
-  defp parse_modify_channel({:ok, %{id: _id} = channel}), do: {:ok, Channel.new(channel)}
+  defp parse_modify_channel({:ok, %{id: _id} = channel}), do: {:ok, Channel.form(channel)}
 
   @doc """
   Modify a group DM.
@@ -490,7 +489,7 @@ defmodule Remedy.API do
   defp parse_delete_channel({:ok, channel}) do
     {:ok,
      channel
-     |> Channel.new()}
+     |> Channel.form()}
   end
 
   @doc """
@@ -537,7 +536,7 @@ defmodule Remedy.API do
   defp parse_list_messages({:error, _reason} = error), do: error
 
   defp parse_list_messages({:ok, messages}) do
-    messages = for m <- messages, into: [], do: Message.new(m)
+    messages = for m <- messages, into: [], do: Message.form(m)
     {:ok, messages}
   end
 
@@ -583,7 +582,7 @@ defmodule Remedy.API do
 
   """
   @unsafe {:get_channel_message, [:channel_id, :message_id]}
-  @spec get_channel_message(snowflake, snowflake) :: {:error, any} | {:ok, Channel.t()}
+  @spec get_channel_message(snowflake, snowflake) :: {:error, any} | {:ok, Message.t()}
   def get_channel_message(channel_id, message_id) do
     {:get, "/channels/#{channel_id}/messages/#{message_id}"}
     |> request()
@@ -591,12 +590,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_channel_message({:error, _reason} = error), do: error
-
-  defp parse_get_channel_message({:ok, channel}) do
-    {:ok,
-     channel
-     |> Message.new()}
-  end
+  defp parse_get_channel_message({:ok, channel}), do: {:ok, Message.form(channel)}
 
   @doc """
   Posts a message to a guild text or DM channel.
@@ -667,7 +661,7 @@ defmodule Remedy.API do
   end
 
   defp parse_publish_message({:error, _reason} = error), do: error
-  defp parse_publish_message({:ok, message}), do: {:ok, Message.new(message)}
+  defp parse_publish_message({:ok, message}), do: {:ok, Message.form(message)}
 
   @doc """
   Creates a reaction for a message.
@@ -2138,7 +2132,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_current_user({:error, _reason} = error), do: error
-  defp parse_get_current_user({:ok, user}), do: {:ok, User.new(user)}
+  defp parse_get_current_user({:ok, user}), do: {:ok, User.form(user)}
 
   @doc """
   Gets a user by its `t:Remedy.Schema.User.id/0`.
@@ -2158,7 +2152,7 @@ defmodule Remedy.API do
   defp parse_get_user({:ok, user}) do
     {:ok,
      user
-     |> User.new()}
+     |> User.form()}
   end
 
   @doc """
@@ -2488,7 +2482,6 @@ defmodule Remedy.API do
   ### ░░╚════╝░░░╚════╝░░╚═╝░░░░░╚═╝░╚═╝░░░░░╚═╝░╚═╝░░╚═╝░╚═╝░░╚══╝░╚═════╝░░╚═════╝░░ ###
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
   ########################################################################################
-  alias Remedy.Cache.DiscordBot
 
   @doc """
   Fetch all global commands.
@@ -2509,7 +2502,7 @@ defmodule Remedy.API do
   """
 
   def get_global_application_commands do
-    {:get, "/applications/#{DiscordBot.id()}/commands"}
+    {:get, "/applications/#{bot_id()}/commands"}
     |> request()
   end
 
@@ -2537,13 +2530,13 @@ defmodule Remedy.API do
 
   """
   def create_global_application_command do
-    {:post, "/applications/#{DiscordBot.id()}/commands"}
+    {:post, "/applications/#{bot_id()}/commands"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def get_global_application_command(command_id) do
-    {:get, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
+    {:get, "/applications/#{bot_id()}/commands/#{command_id}"}
     |> request()
   end
 
@@ -2563,7 +2556,7 @@ defmodule Remedy.API do
   https://discord.com/developers/docs/interactions/slash-commands#edit-global-application-command
   """
   def modify_global_application_command(command_id) do
-    {:patch, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
+    {:patch, "/applications/#{bot_id()}/commands/#{command_id}"}
     |> request()
   end
 
@@ -2576,7 +2569,7 @@ defmodule Remedy.API do
   - `command_id`: The current snowflake of the command.
   """
   def delete_global_application_command(command_id) do
-    {:delete, "/applications/#{DiscordBot.id()}/commands/#{command_id}"}
+    {:delete, "/applications/#{bot_id()}/commands/#{command_id}"}
     |> request()
   end
 
@@ -2601,37 +2594,37 @@ defmodule Remedy.API do
   https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-global-application-commands
   """
   def bulk_overwrite_global_application_commands do
-    {:put, "/applications/#{DiscordBot.id()}/commands"}
+    {:put, "/applications/#{bot_id()}/commands"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def get_guild_application_commands(guild_id) do
-    {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands"}
+    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def create_guild_application_command(guild_id, command_id) do
-    {:create, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    {:create, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def get_guild_application_command(guild_id, command_id) do
-    {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def modify_guild_application_command(guild_id, command_id) do
-    {:patch, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    {:patch, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def delete_guild_application_command(guild_id, command_id) do
-    {:delete, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}"}
+    {:delete, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}"}
     |> request()
   end
 
@@ -2654,31 +2647,31 @@ defmodule Remedy.API do
   https://discord.com/developers/docs/interactions/slash-commands#bulk-overwrite-guild-application-commands
   """
   def bulk_overwrite_guild_application_commands(guild_id) do
-    {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands"}
+    {:put, "/applications/#{bot_id()}/guilds/#{guild_id}/commands"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def get_guild_application_command_permissions(guild_id) do
-    {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/permissions"}
+    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/permissions"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def get_application_command_permissions(guild_id, command_id) do
-    {:get, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}/permissions"}
+    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}/permissions"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def modify_application_command_permissions(guild_id, command_id) do
-    {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/#{command_id}/permissions"}
+    {:put, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}/permissions"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def batch_modify_application_command_permissions(guild_id) do
-    {:put, "/applications/#{DiscordBot.id()}/guilds/#{guild_id}/commands/permissions"}
+    {:put, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/permissions"}
     |> request()
   end
 
@@ -2708,19 +2701,19 @@ defmodule Remedy.API do
 
   @doc since: "0.6.0"
   def get_original_interaction_response(interaction_token) do
-    {:get, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
+    {:get, "/webhooks/#{bot_id()}/#{interaction_token}/messages/@original"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def modify_original_interaction_response(interaction_token) do
-    {:patch, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
+    {:patch, "/webhooks/#{bot_id()}/#{interaction_token}/messages/@original"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def delete_original_interaction_response(interaction_token) do
-    {:delete, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messages/@original"}
+    {:delete, "/webhooks/#{bot_id()}/#{interaction_token}/messages/@original"}
     |> request()
   end
 
@@ -2731,19 +2724,19 @@ defmodule Remedy.API do
   """
 
   def create_followup_message(interaction_token) do
-    {:post, "/webhooks/#{DiscordBot.id()}/#{interaction_token}"}
+    {:post, "/webhooks/#{bot_id()}/#{interaction_token}"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def get_followup_message(interaction_token, message_id) do
-    {:get, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
+    {:get, "/webhooks/#{bot_id()}/#{interaction_token}/messsages/#{message_id}"}
     |> request()
   end
 
   @doc since: "0.6.0"
   def modify_followup_message(interaction_token, message_id) do
-    {:patch, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
+    {:patch, "/webhooks/#{bot_id()}/#{interaction_token}/messsages/#{message_id}"}
     |> request()
   end
 
@@ -2757,7 +2750,7 @@ defmodule Remedy.API do
   - `message_id`: Followup message ID.
   """
   def delete_followup_message(interaction_token, message_id) do
-    {:delete, "/webhooks/#{DiscordBot.id()}/#{interaction_token}/messsages/#{message_id}"}
+    {:delete, "/webhooks/#{bot_id()}/#{interaction_token}/messsages/#{message_id}"}
     |> request()
   end
 
@@ -2787,9 +2780,7 @@ defmodule Remedy.API do
   @doc since: "0.6.0"
   @unsafe {:get_gateway, []}
   def get_gateway do
-    {:get, "/gateway"}
-    |> request()
-    |> parse_get_gateway()
+    {:get, "/gateway"} |> request() |> parse_get_gateway()
   end
 
   defp parse_get_gateway({:error, _reason} = error), do: error
@@ -2802,13 +2793,13 @@ defmodule Remedy.API do
   @doc since: "0.6.0"
   @unsafe {:get_gateway_bot, []}
   def get_gateway_bot do
-    {:get, "/gateway/bot"}
-    |> request()
-    |> parse_get_gateway_bot()
+    {:get, "/gateway/bot"} |> request() |> parse_get_gateway_bot()
   end
 
   defp parse_get_gateway_bot({:error, _reason} = error), do: error
   defp parse_get_gateway_bot({:ok, gateway}), do: {:ok, gateway}
+
+  defp bot_id, do: Cache.bot().id()
 
   defp request({_, _} = rest_request),
     do: request(rest_request, %{}, nil, nil)

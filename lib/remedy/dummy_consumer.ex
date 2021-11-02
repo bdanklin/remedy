@@ -1,4 +1,5 @@
 defmodule Remedy.DummyConsumerSupervisor do
+  @moduledoc false
   use Supervisor
   alias Remedy.DummyConsumer
 
@@ -17,6 +18,7 @@ defmodule Remedy.DummyConsumerSupervisor do
 end
 
 defmodule Remedy.DummyConsumer do
+  @moduledoc false
   require Logger
   use Remedy.Consumer
 
@@ -24,7 +26,8 @@ defmodule Remedy.DummyConsumer do
     Consumer.start_link(__MODULE__)
   end
 
-  def handle_event({event, _payload, _socket}) do
+  def handle_event({event, payload, _socket}) do
     Logger.warn("#{inspect(event)}")
+    Logger.warn(inspect(payload, pretty: true))
   end
 end

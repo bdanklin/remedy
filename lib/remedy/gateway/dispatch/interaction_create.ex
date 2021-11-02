@@ -1,11 +1,14 @@
-defmodule Remedy.Gateway.Dispatch.Interaction do
+defmodule Remedy.Gateway.Dispatch.InteractionCreate do
   @moduledoc false
-
   alias Remedy.Schema.Interaction
 
   def handle({event, payload, socket}) do
-    {event,
-     payload
-     |> Interaction.new(), socket}
+    with {:ok, integration} <- Cache.create_integration(payload) do
+      {event, integration, socket}
+    else
+      {:error, _reason} ->
+        Util.log_malformed(event)
+        :noop
+    end
   end
 end

@@ -19,7 +19,7 @@ defmodule Remedy.Schema.Sticker do
           user: User.t()
         }
 
-  embedded_schema do
+  schema "stickers" do
     field :name, :string
     field :asset, :string
     field :description, :string
@@ -33,26 +33,49 @@ defmodule Remedy.Schema.Sticker do
     belongs_to :user, User
   end
 
-  @doc false
   def new(params) do
-    params
-    |> changeset()
-    |> validate()
+    %__MODULE__{}
+    |> changeset(params)
     |> apply_changes()
   end
 
-  @doc false
-  def validate(changeset) do
-    changeset
+  def changeset(model \\ %__MODULE__{}, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
+
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
+  end
+end
+
+defmodule Remedy.Schema.StickerPack do
+  @moduledoc """
+  Sticker Pack
+  """
+  use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          name: String.t(),
+          description: String.t(),
+          banner_asset_id: Snowflake.t(),
+          cover_sticker: Sticker.t(),
+          stickers: [Sticker.t()]
+        }
+
+  @primary_key {:id, :id, autogenerate: false}
+  schema "sticker_packs" do
+    field :name, :string
+    field :description, :string
+    field :banner_asset_id, Snowflake, virtual: true
+    # field :sku_id	snowflake	id of the pack's SKU
+
+    has_one :cover_sticker, Sticker
+    has_many :stickers, Sticker
   end
 
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

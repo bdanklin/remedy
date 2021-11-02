@@ -1,9 +1,8 @@
 defmodule Remedy.Gateway.Dispatch.MessageDelete do
   @moduledoc false
 
-  alias Remedy.Schema.Message
-
+  @doc false
   def handle({event, payload, socket}) do
-    {event, payload |> Message.new(), socket}
+    {event, payload, socket}
   end
 end

@@ -8,38 +8,37 @@ defmodule Remedy.Schema.Ban do
   @type t :: %__MODULE__{
           user: User.t(),
           guild: Guild.t(),
-          reason: String.t()
+          reason: String.t(),
+          invalid_since: DateTime.t()
         }
 
+  # Primary key :guild_id ++ :user_id
+  @primary_key {:id, :id, autogenerate: false}
   schema "bans" do
     belongs_to :user, User
     belongs_to :guild, Guild
     field :reason, :string
-
-    field :invalid_since, :utc_datetime
-    timestamps()
+    field :invalid_since, :utc_datetime, default: nil
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> apply_changes()
+  def changeset(model \\ %__MODULE__{}, params) do
+    params = params |> put_pkey()
+
+    model
+    |> cast(params, [:user_id, :guild_id, :reason])
+    |> validate_required([:user_id, :guild_id])
   end
 
   @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
+  def make_invalid_changeset(model, _params \\ %{}) do
+    model
+    |> cast(%{invalid_since: DateTime.now!("Etc/UTC")}, [:invalid_since])
   end
 
-  @doc false
-  def changeset(model, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
+  def put_pkey(%{user_id: user_id, guild_id: guild_id} = params) do
+    id = "#{guild_id}#{user_id}" |> Integer.parse() |> elem(0)
 
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    Map.put_new(params, :id, id)
   end
 end

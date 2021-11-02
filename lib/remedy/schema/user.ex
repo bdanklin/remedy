@@ -4,7 +4,7 @@ defmodule Remedy.Schema.User do
   """
   use Remedy.Schema
   alias Remedy.CDN
-  alias Remedy.Schema.UserGuildBans
+
   @type id :: Snowflake.t()
   @type username :: String.t()
   @type discriminator :: integer()
@@ -59,45 +59,29 @@ defmodule Remedy.Schema.User do
     has_many :guilds, Guild, foreign_key: :owner_id
     embeds_one :presence, Presence, on_replace: :update
 
-    ## Custom
-    has_many :bans, UserGuildBans
-    has_many :banned_from, through: [:bans, :guild]
+    field :remedy_system, :boolean, default: false, redact: true
 
     timestamps()
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
+  def form(params), do: params |> changeset() |> apply_changes()
   @doc false
-  def update(model, params) do
-    model
-    |> changeset(params)
-    |> apply_changes()
-  end
+  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
 
     model
     |> cast(params, fields -- embeds)
     |> cast_embed(:presence)
+  end
+
+  def system_changeset(model \\ %__MODULE__{}, params) do
+    model
+    |> changeset(params)
+    |> put_change(:remedy_system, true)
   end
 
   @doc """
@@ -110,13 +94,8 @@ defmodule Remedy.Schema.User do
   @doc """
   Retreive a URL of a User.
   """
+  @spec avatar(%{:avatar => nil | binary, optional(any) => any}, nil | integer) :: binary
   def avatar(user, size \\ nil)
-
-  def avatar(%__MODULE__{avatar: nil, discriminator: discriminator}, size) do
-    CDN.default_user_avatar(discriminator, size)
-  end
-
-  def avatar(%__MODULE__{id: id, avatar: avatar}, size) do
-    CDN.user_avatar(id, avatar, size)
-  end
+  def avatar(%{avatar: nil, discriminator: discriminator}, size), do: CDN.default_user_avatar(discriminator, size)
+  def avatar(%{id: id, avatar: avatar}, size), do: CDN.user_avatar(id, avatar, size)
 end

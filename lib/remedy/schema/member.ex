@@ -2,9 +2,11 @@ defmodule Remedy.Schema.Member do
   @moduledoc """
   Guild Member Object
   """
+
   use Remedy.Schema
 
   @type t :: %__MODULE__{
+          id: :id,
           nick: String.t(),
           joined_at: ISO8601.t(),
           premium_since: ISO8601.t(),
@@ -13,14 +15,13 @@ defmodule Remedy.Schema.Member do
           pending: boolean(),
           permissions: String.t(),
           roles: [Role.t()],
-          member_roles: Role,
           user: User.t(),
           guild: Guild.t()
         }
 
-  @primary_key false
+  # Primary key :guild_id ++ :user_id
+  @primary_key {:id, :id, autogenerate: false}
   schema "members" do
-    field :id, :string, primary_key: true
     field :nick, :string
     field :joined_at, ISO8601
     field :premium_since, ISO8601
@@ -29,43 +30,32 @@ defmodule Remedy.Schema.Member do
     field :pending, :boolean, default: false
     field :permissions, :string
     field :roles, {:array, :integer}
-    embeds_many :member_roles, Role
     belongs_to :user, User
     belongs_to :guild, Guild
 
     timestamps()
   end
 
+  @to_cast ~w(id nick joined_at premium_since deaf mute pending permissions roles user_id guild_id)a
   @doc false
-  def validate(changeset) do
-    changeset
-    |> unique_constraint(:id, name: :PRIMARY)
+  def changeset(model \\ %__MODULE__{}, params) do
+    params = put_pkey(params)
+
+    model
+    |> cast(params, @to_cast)
+    |> validate_required([:guild_id, :user_id])
   end
 
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
+  def put_pkey(%{user_id: user_id, guild_id: guild_id} = params) do
+    id = "#{guild_id}#{user_id}" |> Integer.parse() |> elem(0)
 
-  @doc false
-  def changeset(model, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
-  end
-
-  def put_pkey(%{guild_id: guild_id, user: %{id: user_id}} = params) do
     params
-    |> Map.put_new(:id, "#{guild_id}#{user_id}")
+    |> Map.put_new(:id, id)
   end
 
   # def mention(%__MODULE__{user: user}), do: User.mention(user)
-
-  # # @spec guild_channel_permissions(t, Guild.t(), Channel.id()) :: [Permission.t()]
+  #
+  # @spec guild_channel_permissions(t, Guild.t(), Channel.id()) :: [Permission.t()]
   # def guild_channel_permissions(%__MODULE__{} = member, guild, channel_id) do
   #   use Bitwise
 

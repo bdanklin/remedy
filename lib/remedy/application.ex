@@ -13,8 +13,6 @@ defmodule Remedy.Application do
       Remedy.API.Ratelimiter,
       Remedy.API.Rest,
       Remedy.Cache.Repo,
-      Remedy.Cache.DiscordApp,
-      Remedy.Cache.DiscordBot,
       Remedy.GatewayATC,
       Remedy.Gateway,
       Remedy.DummyConsumerSupervisor

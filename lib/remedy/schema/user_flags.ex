@@ -1,4 +1,8 @@
 defmodule Remedy.Schema.UserFlags do
+  @moduledoc """
+  User Flags
+
+  """
   use Remedy.Schema
   use BattleStandard
 
@@ -19,41 +23,21 @@ defmodule Remedy.Schema.UserFlags do
     {:DISCORD_CERTIFIED_MODERATOR, 1 <<< 18}
   ]
 
-  @moduledoc """
-  User Flags
-
-  """
-
-  @type discord_employee :: boolean()
-  @type partnered_server_owner :: boolean()
-  @type hypesquad_events :: boolean()
-  @type bug_hunter_level_1 :: boolean()
-  @type hypesquad_bravery :: boolean()
-  @type hypesquad_brilliance :: boolean()
-  @type hypesquad_balance :: boolean()
-  @type early_supporter :: boolean()
-  @type team_user :: boolean()
-  @type system :: boolean()
-  @type bug_hunter_level_2 :: boolean()
-  @type verified_bot :: boolean()
-  @type verified_developer :: boolean()
-  @type discord_certified_moderator :: boolean()
-
   @type t :: %__MODULE__{
-          DISCORD_EMPLOYEE: discord_employee,
-          PARTNERED_SERVER_OWNER: partnered_server_owner,
-          HYPESQUAD_EVENTS: hypesquad_events,
-          BUG_HUNTER_LEVEL_1: bug_hunter_level_1,
-          HYPESQUAD_BRAVERY: hypesquad_bravery,
-          HYPESQUAD_BRILLIANCE: hypesquad_brilliance,
-          HYPESQUAD_BALANCE: hypesquad_balance,
-          EARLY_SUPPORTER: early_supporter,
-          TEAM_USER: team_user,
-          SYSTEM: system,
-          BUG_HUNTER_LEVEL_2: bug_hunter_level_2,
-          VERIFIED_BOT: verified_bot,
-          VERIFIED_DEVELOPER: verified_developer,
-          DISCORD_CERTIFIED_MODERATOR: discord_certified_moderator
+          DISCORD_EMPLOYEE: boolean(),
+          PARTNERED_SERVER_OWNER: boolean(),
+          HYPESQUAD_EVENTS: boolean(),
+          BUG_HUNTER_LEVEL_1: boolean(),
+          HYPESQUAD_BRAVERY: boolean(),
+          HYPESQUAD_BRILLIANCE: boolean(),
+          HYPESQUAD_BALANCE: boolean(),
+          EARLY_SUPPORTER: boolean(),
+          TEAM_USER: boolean(),
+          SYSTEM: boolean(),
+          BUG_HUNTER_LEVEL_2: boolean(),
+          VERIFIED_BOT: boolean(),
+          VERIFIED_DEVELOPER: boolean(),
+          DISCORD_CERTIFIED_MODERATOR: boolean()
         }
 
   embedded_schema do
@@ -73,26 +57,7 @@ defmodule Remedy.Schema.UserFlags do
     field :DISCORD_CERTIFIED_MODERATOR, :boolean, default: false
   end
 
-  @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
-  end
-
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

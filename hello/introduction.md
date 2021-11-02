@@ -30,5 +30,25 @@ defp deps() do
 end
 ```
 
+
+## Using Remedy with Phoenix
+
+Directly (Phoenix), or indirectly (Remedy, via Gun), both of these libraries require Cowlib, which unfortunately suffers from being optimistic about peoples behaviour on the internet. Discord is notorious for misbehaving in regards to RFC7230 3.3.2. and conversely, Cowlib is notorious for strictly adhering to this proposed standard, even at its own peril.
+
+Remedy uses patched versions of both of these libraries. Gun is the same as the 2.0rc at the time of publishing, and Cowlib is patched to remove the strict adherance to RFC7230. It is completely backwards compatible with the regular Cowlib 2.11 published on hex. Except it is more forgiving in regards to the the proposed standard.
+
+### TL;DR.
+
+If you are using Phoenix or any other library that requires Cowlib 2.11. also add the following to your deps
+
+```elixir
+defp deps do
+  [
+    {:cowlib, "~> 2.11", hex: :remedy_cowlib, override: true}
+  ]
+end
+```
+
+
 ## License
 [MIT](https://opensource.org/licenses/MIT)

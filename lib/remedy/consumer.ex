@@ -78,36 +78,19 @@ defmodule Remedy.Consumer do
 
   alias Remedy.Schema.{
     Channel,
-    ChannelPinsUpdate,
-    Emoji,
     Guild,
-    GuildBanAdd,
-    GuildBanRemove,
-    GuildIntegrationsUpdate,
-    GuildMemberRemove,
-    GuildMemberUpdate,
-    GuildMembersChunk,
-    GuildRoleCreate,
-    GuildRoleDelete,
-    GuildRoleUpdate,
     Integration,
-    IntegrationDelete,
     Interaction,
     Member,
     Message,
     MessageDeleteBulk,
-    MessageReactionAdd,
-    MessageReactionRemove,
     MessageReactionRemoveAll,
     MessageReactionRemoveEmoji,
-    PresenceUpdate,
     Ready,
     ThreadListSync,
     ThreadMember,
-    ThreadMembersUpdate,
     TypingStart,
     User,
-    UnavailableGuild,
     VoiceServerUpdate,
     VoiceState,
     WebhooksUpdate
@@ -199,7 +182,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#channel-pins-update)
   """
   @type channel_pins_update ::
-          {:CHANNEL_PINS_UPDATE, ChannelPinsUpdate.t(), WSState.t()}
+          {:CHANNEL_UPDATE, Channel.t(), WSState.t()}
 
   ## Is this real?
   @typep guild_available ::
@@ -211,7 +194,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-ban-add)
   """
   @type guild_ban_add ::
-          {:GUILD_BAN_ADD, GuildBanAdd.t(), WSState.t()}
+          {:GUILD_BAN_ADD, Ban.t(), WSState.t()}
 
   @typedoc """
   Sent when a user is unbanned from a guild.
@@ -219,7 +202,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-ban-remove)
   """
   @type guild_ban_remove ::
-          {:GUILD_BAN_REMOVE, GuildBanRemove.t(), WSState.t()}
+          {:GUILD_BAN_REMOVE, Ban.t(), WSState.t()}
 
   @typedoc """
   This event can be sent in three different scenarios:
@@ -249,7 +232,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-delete)
   """
   @type guild_delete ::
-          {:GUILD_DELETE, UnavailableGuild.t(), WSState.t()}
+          {:GUILD_DELETE, Guild.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild's emojis have been updated.
@@ -257,7 +240,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-emojis-update)
   """
   @type guild_emojis_update ::
-          {:GUILD_EMOJIS_UPDATE, [Emoji.t()], WSState.t()}
+          {:GUILD_EMOJIS_UPDATE, Guild.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild integration is updated.
@@ -266,7 +249,7 @@ defmodule Remedy.Consumer do
 
   """
   @type guild_integrations_update ::
-          {:GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate.t(), WSState.t()}
+          {:GUILD_INTEGRATIONS_UPDATE, Guild.t(), WSState.t()}
 
   @typedoc """
   Sent when a new user joins a guild.
@@ -292,7 +275,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-member-remove)
   """
   @type guild_member_remove ::
-          {:GUILD_MEMBER_REMOVE, GuildMemberRemove.t(), WSState.t()}
+          {:GUILD_MEMBER_REMOVE, Member.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild member is updated.
@@ -306,7 +289,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-member-update)
   """
   @type guild_member_update ::
-          {:GUILD_MEMBER_UPDATE, GuildMemberUpdate.t(), Member.t(), WSState.t()}
+          {:GUILD_MEMBER_UPDATE, Member.t(), Member.t(), WSState.t()}
 
   @typedoc """
   Sent in response to Guild Request Members.
@@ -324,7 +307,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-role-create)
   """
   @type guild_role_create ::
-          {:GUILD_ROLE_CREATE, GuildRoleCreate.t(), WSState.t()}
+          {:GUILD_ROLE_CREATE, Role.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild role is deleted.
@@ -332,7 +315,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-role-delete)
   """
   @type guild_role_delete ::
-          {:GUILD_ROLE_DELETE, GuildRoleUpdate.t(), WSState.t()}
+          {:GUILD_ROLE_DELETE, Role.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild role is updated.
@@ -340,11 +323,11 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-role-update)
   """
   @type guild_role_update ::
-          {:GUILD_ROLE_UPDATE, GuildRoleDelete.t(), WSState.t()}
+          {:GUILD_ROLE_UPDATE, Role.t(), WSState.t()}
 
   ## does this exist?
   @typep guild_unavailable ::
-           {:GUILD_UNAVAILABLE, UnavailableGuild.t(), WSState.t()}
+           {:GUILD_UNAVAILABLE, Guild.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild is updated.
@@ -379,7 +362,7 @@ defmodule Remedy.Consumer do
 
   """
   @type integration_delete ::
-          {:INTEGRATION_DELETE, IntegrationDelete.t(), WSState.t()}
+          {:INTEGRATION_DELETE, Integration.t(), WSState.t()}
 
   @typedoc """
   Sent when a user triggers an `Application Command`
@@ -423,7 +406,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-reaction-add)
   """
   @type message_reaction_add ::
-          {:MESSAGE_REACTION_ADD, MessageReactionAdd.t(), WSState.t()}
+          {:MESSAGE_REACTION_ADD, Reaction.t(), WSState.t()}
 
   @typedoc """
   Sent when a user removes a reaction from a message.
@@ -468,10 +451,8 @@ defmodule Remedy.Consumer do
 
   > Note: The user object within this event can be partial, the only field which must be sent is the id field, everything else is optional. Along with this limitation, no fields are required, and the types of the fields are not validated. Your client should expect any combination of fields and types within this event.
   """
-  @type presence_update ::
-          {:PRESENCE_UPDATE, PresenceUpdate.t(), WSState.t()}
-  @type ready ::
-          {:READY, Ready.t(), WSState.t()}
+  @type presence_update :: {:PRESENCE_UPDATE, User.t(), WSState.t()}
+  @type ready :: {:READY, Ready.t(), WSState.t()}
 
   @typedoc """
   Sent when a thread is created or when the user is added to a thread.
@@ -480,8 +461,7 @@ defmodule Remedy.Consumer do
 
   [Read More](https://discord.com/developers/docs/topics/gateway#channel-delete)
   """
-  @type thread_create ::
-          {:THREAD_CREATE, Channel.t(), WSState.t()}
+  @type thread_create :: {:THREAD_CREATE, Thread.t(), WSState.t()}
 
   @typedoc """
   Sent when a thread relevant to the current user is deleted.
@@ -491,7 +471,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#thread-delete)
   """
   @type thread_delete ::
-          {:THREAD_DELETE, Channel.t(), WSState.t()}
+          {:THREAD_DELETE, Thread.t(), WSState.t()}
 
   @typedoc """
   Sent when the current user gains access to a channel.
@@ -515,7 +495,7 @@ defmodule Remedy.Consumer do
   If the current user does not have the `GUILD_MEMBERS` Gateway Intent, then this event will only be sent if the current user was added to or removed from the thread.
   """
   @type thread_members_update ::
-          {:THREAD_MEMBERS_UPDATE, ThreadMembersUpdate.t(), WSState.t()}
+          {:THREAD_MEMBERS_UPDATE, ThreadMember.t(), WSState.t()}
 
   @typedoc """
   Sent when a thread is updated.
@@ -524,7 +504,7 @@ defmodule Remedy.Consumer do
   """
 
   @type thread_update ::
-          {:THREAD_UPDATE, Channel.t(), WSState.t()}
+          {:THREAD_UPDATE, Thread.t(), WSState.t()}
 
   @type typing_start ::
           {:TYPING_START, TypingStart.t(), WSState.t()}

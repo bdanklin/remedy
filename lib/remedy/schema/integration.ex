@@ -13,31 +13,22 @@ defmodule Remedy.Schema.Integration do
         }
 
   @primary_key {:id, :id, autogenerate: false}
-  embedded_schema do
+  schema "integrations" do
     field :name, :string
     field :type, :string
     field :enabled, :boolean
     belongs_to :app, App
-    field :guild_id, Snowflake
+    belongs_to :guild, Guild
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
+
+  def form(params), do: params |> changeset() |> apply_changes()
+  @doc false
+  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
   @doc false
-  def validate(any), do: any
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

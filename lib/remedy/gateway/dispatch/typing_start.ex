@@ -1,36 +1,24 @@
 defmodule Remedy.Gateway.Dispatch.TypingStart do
   @moduledoc """
-  Typing Start Event Dispatch
+
   """
-  def handle({event, payload, socket}) do
-    payload = %{payload | payload: DateTime.from_unix!(payload.timestamp)}
+  alias Remedy.Schema.TypingStart
+  alias Remedy.Cache
 
-    {event,
-     payload
-     |> new(), socket}
-  end
+  def handle({event, %{member: %{user: %{id: user_id}} = member, guild_id: guild_id} = payload, socket}) do
+    member =
+      member
+      |> Map.put_new(:guild_id, guild_id)
+      |> Map.put_new(:user_id, user_id)
 
-  use Remedy.Schema
+    Cache.update_member(guild_id, user_id, member)
 
-  @type t :: %__MODULE__{
-          channel_id: Snowflake.t(),
-          guild_id: Snowflake.t(),
-          user_id: Snowflake.t(),
-          timestamp: ISO8601.t(),
-          member: Member.t()
-        }
+    typing_start =
+      %{payload | member: member}
+      |> Map.put(:timestamp, DateTime.from_unix!(payload.timestamp))
+      |> TypingStart.form()
+      |> IO.inspect()
 
-  embedded_schema do
-    field :channel_id, Snowflake
-    field :guild_id, Snowflake
-    field :user_id, Snowflake
-    field :timestamp, ISO8601
-    embeds_one :member, Member
-  end
-
-  def new(params) do
-    %__MODULE__{}
-    |> cast(params, [:channel_id, :guild_id, :user_id, :timestamp])
-    |> apply_changes()
+    {event, typing_start, socket}
   end
 end

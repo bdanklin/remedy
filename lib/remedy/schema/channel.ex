@@ -30,14 +30,14 @@ defmodule Remedy.Schema.Channel do
           messages: [Message.t()]
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "channels" do
     field :type, :integer
     field :position, :integer
     field :name, :string
     field :topic, :string
     field :nsfw, :boolean
-    field :last_message_id, :integer
+    field :last_message_id, Snowflake
     field :bitrate, :integer
     field :user_limit, :integer
     field :rate_limit_per_user, :integer
@@ -57,28 +57,16 @@ defmodule Remedy.Schema.Channel do
     embeds_many :permission_overwrites, PermissionOverwrite
 
     has_many :messages, Message
+
+    timestamps()
   end
 
   @doc false
-  def new(params) do
-    params
-    |> changeset()
-    |> validate()
-    |> apply_changes()
-  end
-
+  def form(params), do: params |> changeset() |> apply_changes()
   @doc false
-  def validate(changeset) do
-    changeset
-  end
+  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
-  @doc false
-  def changeset(params \\ %{}) do
-    changeset(%__MODULE__{}, params)
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

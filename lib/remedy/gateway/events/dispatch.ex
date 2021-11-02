@@ -18,9 +18,11 @@ defmodule Remedy.Gateway.Events.Dispatch do
         user_settings: _user_settings,
         v: v
       }) do
-    Cache.initialize_app(app)
-    Cache.initialize_bot(user)
-
+    Cache.init_app(app)
+    Cache.init_bot(user)
+    # Tell the shard this is your session & version
+    # Cache the User ( Bot )
+    # Cache the Application
     %WSState{socket | v: v, session_id: session_id}
   end
 

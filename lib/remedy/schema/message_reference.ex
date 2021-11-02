@@ -1,31 +1,23 @@
-defmodule Remedy.Schema.Activity do
+defmodule Remedy.Schema.MessageReference do
   @moduledoc """
-  Discord Activity Object
+  Reference Object
   """
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          name: String.t(),
-          type: integer(),
-          party_id: String.t()
+          message_id: Snowflake.t(),
+          channel_id: Snowflake.t(),
+          guild_id: Snowflake.t()
         }
 
   @primary_key false
   embedded_schema do
-    field :name, :string
-    field :type, :integer
-    field :party_id, :string
+    field :message_id, Snowflake
+    field :channel_id, Snowflake
+    field :guild_id, Snowflake
   end
 
-  @doc false
-  def new(params) do
-    %__MODULE__{}
-    |> changeset(params)
-    |> apply_changes()
-  end
-
-  @doc false
-  def changeset(model, params) do
+  def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
     cast_model = cast(model, params, fields -- embeds)

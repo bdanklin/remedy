@@ -7,7 +7,6 @@ defmodule Remedy.Gateway.Dispatch.InteractionCreate do
       {event, integration, socket}
     else
       {:error, _reason} ->
-        Util.log_malformed(event)
         :noop
     end
   end

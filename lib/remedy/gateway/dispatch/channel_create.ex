@@ -1,27 +1,16 @@
 defmodule Remedy.Gateway.Dispatch.ChannelCreate do
-  @moduledoc """
-  Channel Create Event.
-
-  ## Payload
-
-  - `%Remedy.Schema.Channel{}`
-
-  [Read More](https://discord.com/developers/docs/topics/gateway#channel-create)
-
-  """
+  @moduledoc false
   require Logger
-  alias Remedy.{Cache, Util}
-  alias Remedy.Gateway.WSState
+  alias Remedy.Cache
 
-  @type socket :: WSState.t()
-  @spec handle({any, map, socket}) :: :noop | {any, Remedy.Schema.Channel.t(), any}
   def handle({event, payload, socket}) do
-    case Cache.create_channel(payload) do
+    payload
+    |> Cache.update_channel()
+    |> case do
       {:ok, channel} ->
         {event, channel, socket}
 
-      {:error, %Ecto.Changeset{}} ->
-        Util.log_malformed(event)
+      {:error, _changeset} ->
         :noop
     end
   end

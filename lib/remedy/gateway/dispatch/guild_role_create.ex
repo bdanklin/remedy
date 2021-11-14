@@ -1,9 +1,7 @@
 defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
-  @moduledoc """
-  Guild Role Create Event.
-  """
+  @moduledoc false
 
-  alias Remedy.{Cache, Util}
+  alias Remedy.Cache
 
   def handle({event, %{guild_id: guild_id, role: role}, socket}) do
     params = Map.put_new(role, :guild_id, guild_id)
@@ -13,7 +11,6 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleCreate do
         {event, role, socket}
 
       {:error, _reason} ->
-        Util.log_malformed(event)
         :noop
     end
   end

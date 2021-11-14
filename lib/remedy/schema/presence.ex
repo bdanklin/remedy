@@ -2,7 +2,6 @@ defmodule Remedy.Schema.Presence do
   @moduledoc """
   Presence object.
 
-  While presence is updated on a per guild basis. It is always the same between guilds. If your bot shares a number of servers with the same users then it will receive updates from each guild. The only time this has a potential to be different is for Bot users - which are able to set their status on a per shard basis. For this reason the guild_id is not cached or stored on the presence object within Remedy.
   """
   use Remedy.Schema
 
@@ -71,9 +70,23 @@ defmodule Remedy.Schema.Activity do
     field :timestamps, {:map, ISO8601}
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
-    |> cast(params, [:name, :type, :party_id])
+    |> cast(params, [
+      :id,
+      :name,
+      :type,
+      :party_id,
+      :created_at,
+      :details,
+      :assets,
+      :party,
+      :session_id,
+      :state,
+      :sync_id,
+      :timestamps
+    ])
   end
 end
 

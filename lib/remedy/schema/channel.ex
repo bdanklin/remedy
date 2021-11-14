@@ -15,7 +15,7 @@ defmodule Remedy.Schema.Channel do
           user_limit: integer(),
           rate_limit_per_user: integer(),
           icon: String.t(),
-          application_id: integer(),
+          #       application_id: integer(),
           last_pin_timestamp: String.t(),
           rtc_region: String.t(),
           video_quality_mode: integer(),
@@ -24,10 +24,10 @@ defmodule Remedy.Schema.Channel do
           default_auto_archive_duration: integer(),
           permissions: String.t(),
           parent: Channel.t(),
-          owner: User.t(),
+          #     owner: User.t(),
           guild: Guild.t(),
-          permission_overwrites: [overwrite],
-          messages: [Message.t()]
+          permission_overwrites: [overwrite]
+          #    messages: [Message.t()]
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -42,7 +42,7 @@ defmodule Remedy.Schema.Channel do
     field :user_limit, :integer
     field :rate_limit_per_user, :integer
     field :icon, :string
-    field :application_id, :integer
+    #   field :application_id, :integer
     field :last_pin_timestamp, :string
     field :rtc_region, :string
     field :video_quality_mode, :integer
@@ -52,11 +52,11 @@ defmodule Remedy.Schema.Channel do
     field :permissions, :string
 
     belongs_to :parent, Channel
-    belongs_to :owner, User
+    #  belongs_to :owner, User
     belongs_to :guild, Guild
     embeds_many :permission_overwrites, PermissionOverwrite
 
-    has_many :messages, Message
+    #  has_many :messages, Message
 
     timestamps()
   end

@@ -1,12 +1,14 @@
 defmodule Remedy.Gateway.Dispatch.ThreadCreate do
   @moduledoc false
   alias Remedy.Cache
-  alias Remedy.Schema.Channel
 
   def handle({event, payload, socket}) do
-    {event,
-     payload
-     |> Channel.new()
-     |> Cache.create_channel(), socket}
+    case Cache.update_channel(payload) do
+      {:ok, channel} ->
+        {event, channel, socket}
+
+      {:error, _changeset} ->
+        :noop
+    end
   end
 end

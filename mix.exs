@@ -32,7 +32,7 @@ defmodule Remedy.MixProject do
   def application do
     [
       extra_applications: [:logger, :inets],
-      mod: {Remedy.Application, []}
+      mod: {Remedy, []}
     ]
   end
 
@@ -97,6 +97,7 @@ defmodule Remedy.MixProject do
       {:ex_doc, "~> 0.15", only: [:dev]},
       {:recon, "~> 2.3", only: [:dev]},
       {:doctor, "~> 0.18.0", only: [:dev]},
+      {:json_diff_ex, "~> 0.5.0"},
       {:unsafe, "~> 1.0"},
       {:ex_rated, "~> 2.0"},
       {:jason, "~> 1.2"},

@@ -5,38 +5,22 @@ defmodule Remedy.Schema.User do
   use Remedy.Schema
   alias Remedy.CDN
 
-  @type id :: Snowflake.t()
-  @type username :: String.t()
-  @type discriminator :: integer()
-  @type avatar :: String.t()
-  @type bot :: boolean()
-  @type system :: boolean()
-  @type mfa_enabled :: boolean()
-  @type banner :: String.t()
-  @type accent_color :: integer()
-  @type locale :: String.t()
-  @type verified :: boolean()
-  @type email :: String.t()
-  @type flags :: UserFlags
-  @type premium_type :: integer()
-  @type public_flags :: integer()
-
   @type t :: %__MODULE__{
-          id: id,
-          username: username,
-          discriminator: discriminator,
-          avatar: avatar,
-          bot: bot,
-          system: system,
-          mfa_enabled: mfa_enabled,
-          banner: banner,
-          accent_color: accent_color,
-          locale: locale,
-          verified: verified,
-          email: email,
-          flags: flags,
-          premium_type: premium_type,
-          public_flags: public_flags
+          id: Snowflake.t(),
+          username: String.t(),
+          discriminator: integer(),
+          avatar: String.t(),
+          bot: boolean(),
+          system: boolean(),
+          mfa_enabled: boolean(),
+          banner: String.t(),
+          accent_color: integer(),
+          locale: String.t(),
+          verified: boolean(),
+          email: String.t(),
+          flags: UserFlags.t(),
+          premium_type: integer(),
+          public_flags: integer()
         }
 
   @primary_key {:id, :id, autogenerate: false}
@@ -44,22 +28,22 @@ defmodule Remedy.Schema.User do
     field :username, :string
     field :discriminator, :integer
     field :avatar, :string
-    field :bot, :boolean
-    field :system, :boolean
+    field :bot, :boolean, default: false
+    field :system, :boolean, default: false
     field :mfa_enabled, :boolean
     field :banner, :string
-    field :accent_color, :any, virtual: true
+    field :accent_color, :integer
     field :locale, :string
     field :verified, :boolean
     field :email, :string
     field :flags, :integer
     field :premium_type, :integer
     field :public_flags, :integer
-    has_many :messages, Message, foreign_key: :author_id
-    has_many :guilds, Guild, foreign_key: :owner_id
+    #    has_many :messages, Message, foreign_key: :author_id
+    #    has_many :guilds, Guild, foreign_key: :owner_id
     embeds_one :presence, Presence, on_replace: :update
 
-    field :remedy_system, :boolean, default: false, redact: true
+    field :remedy_system, :boolean, default: false
 
     timestamps()
   end

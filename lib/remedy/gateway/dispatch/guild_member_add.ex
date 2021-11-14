@@ -6,7 +6,7 @@ defmodule Remedy.Gateway.Dispatch.GuildMemberAdd do
     Cache.update_user(user)
 
     with params <- add_fields(payload),
-         {:ok, member} <- Cache.create_member(params) do
+         {:ok, member} <- Cache.update_member(params) do
       {event, member, socket}
     end
   end

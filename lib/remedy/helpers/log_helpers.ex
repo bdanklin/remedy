@@ -1,7 +1,5 @@
-defmodule Remedy.Util do
-  @moduledoc """
-  Rando Functos
-  """
+defmodule Remedy.LogHelpers do
+  @moduledoc false
   require Logger
 
   def log_malformed(event) do

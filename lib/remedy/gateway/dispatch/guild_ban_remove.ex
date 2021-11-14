@@ -1,23 +1,13 @@
 defmodule Remedy.Gateway.Dispatch.GuildBanRemove do
-  @moduledoc """
-  Guild Ban Remove Event
-
-  ## Payload
-
-  - `%Remedy.Schema.Ban{}`
-
-  """
-  alias Remedy.{Cache, Util}
+  @moduledoc false
+  alias Remedy.Cache
 
   def handle({event, %{guild_id: guild_id, ban: %{user: %{id: user_id} = user}}, socket}) do
-    Cache.update_user(user)
-
-    case Cache.delete_ban(user_id, guild_id) do
-      {:ok, ban} ->
-        {event, ban, socket}
-
+    with {:ok, _user} <- Cache.update_user(user),
+         {:ok, ban} <- Cache.delete_ban(user_id, guild_id) do
+      {event, ban, socket}
+    else
       _ ->
-        Util.log_malformed(event)
         :noop
     end
   end

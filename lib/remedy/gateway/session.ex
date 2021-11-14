@@ -69,25 +69,31 @@ defmodule Remedy.Gateway.Session do
   def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
     {payload, socket} = Gun.unpack_frame(socket, frame)
 
+    op = payload.op
+    event = event_from_op(op)
+    sequence = payload[:s]
+    dispatch_event = payload[:t]
+    data = payload[:d]
+
     {:noreply,
      %WSState{
        socket
-       | payload_op_code: payload.op,
-         payload_op_event: event_from_op(payload.op),
-         payload_sequence: payload[:s],
-         payload_dispatch_event: payload[:t]
+       | payload_op_code: op,
+         payload_op_event: event,
+         payload_sequence: sequence,
+         payload_dispatch_event: dispatch_event
      }
-     |> Payload.digest(event_from_op(payload.op), payload[:d])}
+     |> Payload.digest(event, data)}
   end
 
-  def handle_info({:gun_ws, _conn, _stream, :close}, state) do
-    Logger.warn("WSState CLOSED")
-    {:noreply, state}
+  def handle_info({:gun_ws, _conn, _stream, :close}, socket) do
+    Logger.warn("WEBSOCKET CLOSED")
+    {:noreply, socket}
   end
 
-  def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, state) do
-    Logger.warn("WSState CLOSED #{errno} #{inspect(reason)}")
-    {:noreply, state}
+  def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, socket) do
+    Logger.warn("WEBSOCKET CLOSED #{errno} #{inspect(reason)}")
+    {:noreply, socket}
   end
 
   def handle_info({:gun_down, _conn, _stream, _, _}, socket) do
@@ -96,7 +102,7 @@ defmodule Remedy.Gateway.Session do
   end
 
   def handle_info({:gun_up, _worker, _proto}, socket) do
-    Logger.warn("RECONNECTED AFTER INTERRUPTION")
-    {:noreply, socket |> Payload.send(:HEARTBEAT)}
+    Logger.warn("GUN UP")
+    {:noreply, socket |> Payload.send(:IDENTIFY)}
   end
 end

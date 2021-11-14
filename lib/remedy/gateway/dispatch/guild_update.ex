@@ -1,23 +1,14 @@
 defmodule Remedy.Gateway.Dispatch.GuildUpdate do
-  @moduledoc """
-  Guild Ban Add Event
+  @moduledoc false
+  alias Remedy.Cache
 
-  ## Payload
-
-  - `%Remedy.Schema.Guild{}`
-
-  """
-
-  alias Remedy.{Cache, Util}
-
-  def handle({event, %{id: guild_id} = payload, socket}) do
+  def handle({event, payload, socket}) do
     attrs = Map.put_new(payload, :shard, socket.shard)
 
-    with {:ok, guild} <- Cache.update_guild(guild_id, attrs) do
+    with {:ok, guild} <- Cache.update_guild(attrs) do
       {event, guild, socket}
     else
       {:error, _changeset} ->
-        Util.log_malformed(event)
         :noop
     end
   end

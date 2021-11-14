@@ -1,16 +1,12 @@
 defmodule Remedy.Cache do
-  @moduledoc """
-  Functions for interracting with the cache.
+  @moduledoc false
+  ### The cache is populated only by events received from the gateway, it is not updated from interracting with the api.
 
-  The cache is populated only by events received from the gateway, it is not updated from interractions with the REST api.
-
-
-  """
   import Sunbake.Snowflake
   import Ecto.Query, warn: false
 
   alias Remedy.Cache.Repo
-  alias Remedy.Schema.{App, Ban, Channel, Guild, Integration, Interaction, Invite, Member, Message, Role, User}
+  alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Integration, Interaction, Invite, Member, Message, Role, User}
   alias Ecto.Changeset
 
   use Unsafe.Generator, handler: :unwrap, docs: true
@@ -47,16 +43,23 @@ defmodule Remedy.Cache do
   @spec list_channels(snowflake) :: {:error, term} | {:ok, [Remedy.Schema.Channel.t()]}
   def list_channels(guild_id \\ nil)
   def list_channels(nil), do: Repo.all(Channel) |> wrap_list()
-  def list_channels(guild_id), do: Repo.all(where(Channel, guild_id: ^guild_id)) |> wrap_list()
+
+  def list_channels(guild_id) do
+    Repo.all(where(Channel, guild_id: ^guild_id)) |> wrap_list()
+  end
 
   ### Internal
   @doc false
   @spec get_channel(snowflake) :: nil | Channel.t()
   def get_channel(id), do: Repo.get(Channel, id)
+
   @doc false
   @spec delete_channel(snowflake) :: {:ok, Channel.t()} | {:error, Changeset.t()}
   def delete_channel(id), do: get_channel(id) |> Repo.delete()
 
+  @doc false
+  @spec update_channel(attrs) :: {:ok, Channel.t()} | {:error, Changeset.t()}
+  def update_channel(%{id: id} = attrs), do: update_channel(id, attrs)
   @doc false
   @spec update_channel(snowflake, attrs) :: {:ok, Channel.t()} | {:error, Changeset.t()}
   def update_channel(id, attrs) do
@@ -133,8 +136,9 @@ defmodule Remedy.Cache do
   def delete_ban(guild_id, user_id), do: get_ban(guild_id, user_id) |> Repo.delete()
 
   @doc false
-  @spec update_ban(snowflake, snowflake, attrs) :: {:ok, Ban.t()} | {:error, Changeset.t()}
-  def update_ban(guild_id, user_id, attrs), do: get_ban(guild_id, user_id) |> Ban.changeset(attrs) |> Repo.update()
+  @spec update_ban(attrs) :: {:ok, Ban.t()} | {:error, Changeset.t()}
+  def update_ban(%{guild_id: guild_id, user_id: user_id} = attrs),
+    do: get_ban(guild_id, user_id) |> Ban.changeset(attrs) |> Repo.update()
 
   ###########
   ### User
@@ -182,12 +186,14 @@ defmodule Remedy.Cache do
     Member |> Repo.all()
   end
 
-  def get_member(guild_id, user_id), do: Repo.get_by(Member, %{guild_id: guild_id, user_id: user_id}) |> wrap()
+  def get_member(guild_id, user_id), do: Repo.get_by(Member, %{guild_id: guild_id, user_id: user_id})
 
-  def update_member(%{guild_id: g, user_id: u} = attrs), do: get_member(g, u) |> do_update_member(attrs)
-
-  defp do_update_member({:error, :not_found}, attrs), do: Member.changeset(attrs) |> Repo.insert()
-  defp do_update_member({:ok, member}, attrs), do: Member.changeset(member, attrs) |> Repo.update()
+  def update_member(%{guild_id: guild_id, user_id: user_id} = attrs) do
+    case get_member(guild_id, user_id) do
+      nil -> Member.changeset(attrs) |> Repo.insert()
+      %Member{} = member -> member |> Member.changeset(attrs) |> Repo.update()
+    end
+  end
 
   @doc false
   def update_presence(%{user: user} = presence), do: Map.put_new(user, :presence, presence) |> update_user()
@@ -199,26 +205,12 @@ defmodule Remedy.Cache do
   def fetch_guild(id) do
     case get_guild(id) do
       nil -> {:error, @not_found}
-      %Guild{} = guild -> {:ok, guild |> Repo.preload([:members])}
+      %Guild{} = guild -> {:ok, guild |> Repo.preload([:members, :channels])}
     end
   end
 
   def list_guilds do
     Repo.all(Guild)
-  end
-
-  def update_guild_emojis(guild_id, params) do
-    get_guild(guild_id)
-    |> Repo.preload(:emojis)
-    |> Guild.update_emojis_changeset(params)
-    |> Repo.update()
-  end
-
-  def update_guild_stickers(guild_id, params) do
-    get_guild(guild_id)
-    |> Repo.preload(:stickers)
-    |> Guild.update_stickers_changeset(params)
-    |> Repo.update()
   end
 
   @doc false
@@ -257,8 +249,8 @@ defmodule Remedy.Cache do
   def delete_integration(integration_id), do: get_integration(integration_id) |> Repo.delete()
 
   @doc false
-  @spec update_integration(snowflake, attrs) :: {:ok, Integration.t()} | {:error, Changeset.t()}
-  def update_integration(integration_id, attrs) do
+  @spec update_integration(attrs) :: {:ok, Integration.t()} | {:error, Changeset.t()}
+  def update_integration(%{id: integration_id} = attrs) do
     case get_integration(integration_id) do
       nil -> Integration.changeset(attrs) |> Repo.insert()
       %Integration{} = integration -> Integration.changeset(integration, attrs) |> Repo.update()
@@ -287,6 +279,14 @@ defmodule Remedy.Cache do
   @spec delete_invite(snowflake) :: {:ok, Invite.t()} | {:error, Changeset.t()}
   def delete_invite(invite_id), do: get_invite(invite_id) |> Repo.delete()
 
+  @doc false
+  def update_invite(%{id: id} = attrs) do
+    case Repo.get(Invite, id) do
+      nil -> Invite.changeset(attrs) |> Repo.insert()
+      %Invite{} = invite -> Invite.changeset(invite, attrs) |> Repo.update()
+    end
+  end
+
   #############
   #### Message
   #############
@@ -305,16 +305,39 @@ defmodule Remedy.Cache do
 
   @doc false
   @spec delete_message(snowflake) :: {:ok, Message.t()} | {:error, Changeset.t()}
-  def delete_message(message_id), do: get_message(message_id) |> Repo.delete()
+  def delete_message(message_id) do
+    get_message(message_id) |> Repo.delete()
+  end
 
   @doc false
   @spec update_message(snowflake, attrs) :: {:ok, Message.t()} | {:error, Changeset.t()}
-  def update_message(message_id, attrs),
-    do: get_message(message_id) |> Message.changeset(attrs) |> Repo.update()
+  def update_message(message_id, attrs) do
+    get_message(message_id) |> Message.changeset(attrs) |> Repo.update()
+  end
 
   @spec remove_message_reactions(snowflake) :: {:ok, Message.t()} | {:error, reason}
   def remove_message_reactions(message_id) do
     get_message(message_id) |> Message.changeset(%{reactions: []}) |> Repo.update()
+  end
+
+  #########
+  ### Emoji
+  #########
+
+  @doc false
+  @spec get_emoji(snowflake) :: nil | Emoji.t()
+  def get_emoji(emoji_id), do: Repo.get(Emoji, emoji_id)
+
+  @doc false
+  @spec delete_emoji(snowflake) :: {:ok, Emoji.t()} | {:error, Changeset.t()}
+  def delete_emoji(emoji_id), do: get_emoji(emoji_id) |> Repo.delete()
+
+  @doc false
+  def update_emoji(%{id: id} = attrs) do
+    case Repo.get(Emoji, id) do
+      nil -> Emoji.changeset(attrs) |> Repo.insert()
+      %Emoji{} = emoji -> Emoji.changeset(emoji, attrs) |> Repo.update()
+    end
   end
 
   #########
@@ -339,28 +362,58 @@ defmodule Remedy.Cache do
   def get_role(id), do: Repo.get(Role, id)
 
   @doc false
-  @spec delete_role(snowflake) :: {:ok, Role.t()} | {:error, Changeset.t()}
-  def delete_role(id), do: get_role(id) |> Repo.delete()
-
-  @doc false
   @unsafe {:update_role, [:id, :attrs]}
-  @spec update_role(snowflake, attrs) :: {:ok, Role.t()} | {:error, Changeset.t()}
-  def update_role(id, attrs) do
-    case get_role(id) do
+  @spec update_role(attrs) :: {:ok, Role.t()} | {:error, Changeset.t()}
+  def update_role(%{id: role_id} = attrs) do
+    case get_role(role_id) do
       nil -> Role.changeset(attrs) |> Repo.insert()
       %Role{} = role -> Role.changeset(role, attrs) |> Repo.update()
     end
   end
 
   @doc false
-  def init_bot(bot), do: User.system_changeset(bot) |> Repo.insert()
+  @spec delete_role(snowflake) :: {:ok, Role.t()} | {:error, Changeset.t()}
+  def delete_role(id), do: get_role(id) |> Repo.delete()
+
+  ### Threads
+  ### Threads
+  ### Threads
+
+  # def update_thread_members
+
+  @doc false
+  def init_bot(bot) do
+    clear_bot_cache()
+
+    User.system_changeset(bot)
+    |> Repo.insert()
+  end
 
   def bot, do: Repo.get_by(User, %{remedy_system: true})
 
+  defp clear_bot_cache() do
+    case bot() do
+      %User{} = user -> Repo.delete(user)
+      nil -> :noop
+    end
+  end
+
   @doc false
-  def init_app(app), do: App.system_changeset(app) |> Repo.insert()
+  def init_app(app) do
+    clear_app_cache()
+
+    App.system_changeset(app)
+    |> Repo.insert()
+  end
 
   def app, do: Repo.get_by(App, %{remedy_system: true})
+
+  defp clear_app_cache do
+    case app() do
+      %App{} = app -> Repo.delete(app)
+      nil -> :noop
+    end
+  end
 
   defp wrap_list({:error, _reason} = error), do: error
   defp wrap_list([]), do: {:ok, []}

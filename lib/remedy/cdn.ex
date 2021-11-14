@@ -20,12 +20,6 @@ defmodule Remedy.CDN do
 
   Unless specified, discord will deliver the smallest size available. ( Potato )
 
-  ## Missing Endpoints:
-
-  - sticker
-  - team icon
-  - role icon
-  - guild member icon
 
   """
 

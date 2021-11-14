@@ -17,7 +17,7 @@ defmodule Remedy.Gateway.Payload do
 
       defp send_out({payload, socket}) do
         %{
-          "d" => crush(payload),
+          "d" => payload,
           "op" => op_from_mod(__MODULE__)
         }
         |> flatten()
@@ -25,8 +25,9 @@ defmodule Remedy.Gateway.Payload do
         |> Remedy.Gun.websocket_send(socket)
       end
 
-      defp crush(map), do: map |> flatten() |> Morphix.stringmorphiform!()
-      defp flatten(map), do: :maps.map(&dfl/2, map)
+      ### Prepare payload for transmission.
+
+      defp flatten(map), do: :maps.map(&dfl/2, map) |> Morphix.stringmorphiform!()
       defp dfl(_key, value), do: enm(value)
       defp enm(list) when is_list(list), do: Enum.map(list, &enm/1)
       defp enm(%{__struct__: _} = strct), do: :maps.map(&dfl/2, Map.from_struct(strct))
@@ -85,17 +86,15 @@ defmodule Remedy.Gateway.Payload do
 
   @spec digest(WSState.t(), any, binary) :: WSState.t()
   def digest(socket, event, payload) do
-    Logger.debug("#{inspect(event)}")
     module_delegate(event).digest(socket, payload)
   end
 
   @spec send(WSState.t(), any, any) :: any
-  def send(socket, event, opts \\ []) when is_op_event(event) do
-    Logger.debug("#{inspect(event)}")
+  def send(socket, event, opts \\ []) do
     module_delegate(event).build_payload(socket, opts)
   end
 
-  defp module_delegate(event) do
+  defp module_delegate(event) when is_op_event(event) do
     [Events, mod_from_event(event)] |> Module.concat()
   end
 end

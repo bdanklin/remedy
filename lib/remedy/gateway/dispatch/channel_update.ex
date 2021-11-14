@@ -1,21 +1,15 @@
 defmodule Remedy.Gateway.Dispatch.ChannelUpdate do
-  @moduledoc """
-  Channel Update Event.
+  @moduledoc false
+  alias Remedy.Cache
 
-  ## Payload
-
-  - `%Remedy.Schema.Channel{}`
-
-  """
-  alias Remedy.{Cache, Util}
-
-  def handle({event, %{id: id} = payload, socket}) do
-    case Cache.update_channel(id, payload) do
+  def handle({event, payload, socket}) do
+    payload
+    |> Cache.update_channel()
+    |> case do
       {:ok, channel} ->
         {event, channel, socket}
 
       {:error, _changeset} ->
-        Util.log_malformed(event)
         :noop
     end
   end

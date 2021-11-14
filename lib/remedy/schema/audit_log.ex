@@ -5,7 +5,7 @@ defmodule Remedy.Schema.AuditLog do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          guild: Guild.t(),
+          guild_id: Snowflake.t(),
           webhooks: [Webhook.t()],
           users: [User.t()],
           audit_log_entries: [AuditLogEntry.t()],
@@ -15,7 +15,7 @@ defmodule Remedy.Schema.AuditLog do
 
   @primary_key false
   embedded_schema do
-    belongs_to :guild, Guild
+    field :guild_id, Snowflake
     embeds_many :webhooks, Webhook
     embeds_many :users, User
     embeds_many :audit_log_entries, AuditLogEntry

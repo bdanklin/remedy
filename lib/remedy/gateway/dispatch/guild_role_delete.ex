@@ -1,13 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.GuildRoleDelete do
-  @moduledoc """
-  Guild Role Delete Event
-
-  ## Payload
-
-  - `%Remedy.Schema.Role{}`
-
-  """
-  alias Remedy.{Cache, Util}
+  @moduledoc false
+  alias Remedy.Cache
 
   def handle({event, %{guild_id: guild_id, role: role}, socket}) do
     params = Map.put_new(role, :guild_id, guild_id)
@@ -17,7 +10,6 @@ defmodule Remedy.Gateway.Dispatch.GuildRoleDelete do
         {event, role, socket}
 
       {:error, _reason} ->
-        Util.log_malformed(event)
         :noop
     end
   end

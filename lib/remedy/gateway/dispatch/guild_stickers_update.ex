@@ -1,14 +1,7 @@
 defmodule Remedy.Gateway.Dispatch.GuildStickersUpdate do
-  @moduledoc """
-  Guild Stickers Update Event
-
-  ## Payload
-
-  `%Remedy.Schema.Guild{}`
-
-  """
+  @moduledoc false
   require Logger
-  alias Remedy.{Cache, Util}
+  alias Remedy.Cache
   alias Ecto.Changeset
 
   def handle({event, payload, socket}) do
@@ -17,7 +10,6 @@ defmodule Remedy.Gateway.Dispatch.GuildStickersUpdate do
       {event, guild, socket}
     else
       {:error, _changeset} ->
-        Util.log_malformed(event)
         :noop
     end
   end

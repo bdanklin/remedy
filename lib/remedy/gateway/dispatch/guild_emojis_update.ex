@@ -1,33 +1,19 @@
 defmodule Remedy.Gateway.Dispatch.GuildEmojisUpdate do
-  @moduledoc """
-  Guild Emojis Update Event
-
-  ## Payload
-
-  `%Remedy.Schema.Guild{}`
-
-  """
-
+  @moduledoc false
   require Logger
-  alias Remedy.{Cache, Util}
-  alias Ecto.Changeset
+  alias Remedy.Cache
 
-  def handle({event, %{guild_id: guild_id, emojis: emojis} = payload, socket}) do
-    with {:ok, _changeset} <- validate_payload(payload),
-         {:ok, guild} <- Cache.update_guild_emojis(guild_id, %{emojis: emojis}) do
-      {event, guild, socket}
-    else
-      {:error, _changeset} ->
-        Util.log_malformed(event)
+  def handle({event, %{guild_id: guild_id, emojis: emojis} = _payload, socket}) do
+    for emoji <- emojis do
+      emoji
+      |> Map.put_new(:guild_id, guild_id)
+      |> Cache.update_emoji()
     end
-  end
 
-  defp validate_payload(%{emojis: emojis, guild_id: guild_id}) do
-    {%{}, %{id: :id, emojis: {:array, Emoji}}}
-    |> Changeset.cast(%{id: guild_id, emojis: emojis}, [:emojis, :id])
+    Cache.get_guild(guild_id)
     |> case do
-      %Ecto.Changeset{valid?: true} = changeset -> {:ok, changeset}
-      %Ecto.Changeset{valid?: false} = changeset -> {:error, changeset}
+      {:ok, guild} -> {event, guild, socket}
+      {:error, _reason} -> :noop
     end
   end
 end

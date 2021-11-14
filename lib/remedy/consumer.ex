@@ -91,7 +91,6 @@ defmodule Remedy.Consumer do
     ThreadMember,
     TypingStart,
     User,
-    VoiceServerUpdate,
     VoiceState,
     WebhooksUpdate
   }

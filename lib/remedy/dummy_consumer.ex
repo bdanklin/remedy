@@ -26,8 +26,7 @@ defmodule Remedy.DummyConsumer do
     Consumer.start_link(__MODULE__)
   end
 
-  def handle_event({event, payload, _socket}) do
-    Logger.warn("#{inspect(event)}")
-    Logger.warn(inspect(payload, pretty: true))
+  def handle_event({_event, _payload, _socket}) do
+    :noop
   end
 end

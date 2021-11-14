@@ -9,8 +9,8 @@ defmodule Remedy.Schema.Command do
           name: String.t(),
           description: String.t(),
           default_permission: boolean(),
-          application: App.t(),
-          guild: Guild.t(),
+          application_id: Snowflake.t(),
+          guild_id: Snowflake.t(),
           options: CommandOption.t()
         }
 
@@ -20,8 +20,8 @@ defmodule Remedy.Schema.Command do
     field :name, :string
     field :description, :string
     field :default_permission, :boolean, default: true
-    belongs_to :application, App
-    belongs_to :guild, Guild
+    field :application_id, Snowflake
+    field :guild_id, Snowflake
     embeds_many :options, Option
   end
 
@@ -74,6 +74,7 @@ defmodule Remedy.Schema.CommandOption do
     field :channel_types, {:array, :integer}
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
@@ -91,6 +92,7 @@ defmodule Remedy.Schema.CommandOptionChoice do
   """
   use Remedy.Schema
 
+  @primary_key false
   @type t :: %__MODULE__{
           name: String.t(),
           value: any()
@@ -99,5 +101,16 @@ defmodule Remedy.Schema.CommandOptionChoice do
   embedded_schema do
     field :name, :string
     field :value, :any, virtual: true
+  end
+
+  @doc false
+  def changeset(model \\ %__MODULE__{}, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
+
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
   end
 end

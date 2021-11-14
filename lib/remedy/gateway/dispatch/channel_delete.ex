@@ -1,20 +1,14 @@
 defmodule Remedy.Gateway.Dispatch.ChannelDelete do
-  @moduledoc """
-  Channel Delete Event.
+  @moduledoc false
+  alias Remedy.Cache
 
-    ## Payload
-
-  - `%Remedy.Schema.Channel{}`
-  """
-  alias Remedy.{Cache, Util}
-
+  @spec handle({any, %{:id => any, optional(any) => any}, any}) :: :noop | {any, Remedy.Schema.Channel.t(), any}
   def handle({event, %{id: id}, socket}) do
     case Cache.delete_channel(id) do
       {:ok, channel} ->
         {event, channel, socket}
 
-      {:error, %Ecto.Changeset{}} ->
-        Util.log_malformed(event)
+      {:error, _changeset} ->
         :noop
     end
   end

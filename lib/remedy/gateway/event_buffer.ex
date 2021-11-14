@@ -3,7 +3,12 @@ defmodule Remedy.Gateway.EventBuffer do
 
   use GenStage
   alias Remedy.Gateway.{Dispatch, EventBroadcaster}
-  require Logger
+    
+  
+  
+  ############
+  ### Internal
+  ############
 
   def start_link(_opts) do
     GenStage.start_link(__MODULE__, [], name: __MODULE__)

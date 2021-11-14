@@ -1,14 +1,6 @@
 defmodule Remedy.Gateway.Dispatch.GuildBanAdd do
-  @moduledoc """
-  Guild Ban Add Event
-
-  ## Payload
-
-  - `%Remedy.Schema.Ban{}`
-
-  """
-
-  alias Remedy.{Cache, Util}
+  @moduledoc false
+  alias Remedy.Cache
 
   def handle({event, %{guild_id: guild_id, ban: %{user: %{id: user_id} = user, reason: reason}}, socket}) do
     params = %{user_id: user_id, guild_id: guild_id, reason: reason}
@@ -18,7 +10,6 @@ defmodule Remedy.Gateway.Dispatch.GuildBanAdd do
       {event, ban, socket}
     else
       {:error, _reason} ->
-        Util.log_malformed(event)
         :noop
     end
   end

@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Thread — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-e81b8b2a87.js"></script>
+    <script src="dist/sidebar_items-35d440e7f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,13 +114,6 @@ Remedy.Schema.Thread <small class="app-vsn">(Remedy v0.6.7)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:overwrite/0">overwrite()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#t:t/0">t()</a>
 
   </div>
@@ -141,35 +134,6 @@ Remedy.Schema.Thread <small class="app-vsn">(Remedy v0.6.7)</small>
 Types
           </h1>
           <div class="types-list">
-<section class="detail" id="t:overwrite/0">
-
-  <div class="detail-header">
-    <a href="#t:overwrite/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">overwrite()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread.ex#L6" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>overwrite() :: Remedy.Schema.PermissionOverwrite.t()</pre>
-
-      </div>
-
-
-  </section>
-</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -194,35 +158,18 @@ Types
 
           <pre>t() :: %Remedy.Schema.Thread{
   __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  application_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  bitrate: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  default_auto_archive_duration: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  guild: <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(),
-  guild_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  icon: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  guild_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  last_message_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  last_pin_timestamp: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  member: <a href="Remedy.Schema.ThreadMember.html#t:t/0">Remedy.Schema.ThreadMember.t</a>(),
+  last_message_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   member_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   message_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  messages: [<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()],
   name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  nsfw: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  owner: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(),
-  owner_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  parent: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
-  parent_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  permission_overwrites: [<a href="#t:overwrite/0">overwrite</a>()],
-  permissions: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  position: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  owner_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
+  parent_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
+  permission_overwrites: [Remedy.Schema.PermissionOverwrite.t()],
   rate_limit_per_user: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  rtc_region: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   thread_metadata: <a href="Remedy.Schema.ThreadMetadata.html#t:t/0">Remedy.Schema.ThreadMetadata.t</a>(),
-  topic: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  type: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  user_limit: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  video_quality_mode: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+  type: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
 }</pre>
 
       </div>

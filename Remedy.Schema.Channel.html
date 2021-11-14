@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Channel — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-e81b8b2a87.js"></script>
+    <script src="dist/sidebar_items-35d440e7f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -208,7 +208,6 @@ Types
 
           <pre>t() :: %Remedy.Schema.Channel{
   __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  application_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   bitrate: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   default_auto_archive_duration: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   guild: <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(),
@@ -220,11 +219,8 @@ Types
   last_pin_timestamp: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   member_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   message_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  messages: [<a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()],
   name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   nsfw: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  owner: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(),
-  owner_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   parent: <a href="#t:t/0">t</a>(),
   parent_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   permission_overwrites: [<a href="#t:overwrite/0">overwrite</a>()],

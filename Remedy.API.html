@@ -10,7 +10,7 @@
     <title>Remedy.API — Remedy v0.6.7</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-e81b8b2a87.js"></script>
+    <script src="dist/sidebar_items-35d440e7f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -938,7 +938,7 @@ Remedy.API <small class="app-vsn">(Remedy v0.6.7)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Gets a user by its <a href="Remedy.Schema.User.html#t:id/0"><code class="inline">Remedy.Schema.User.id/0</code></a>.</p></div>
+    <div class="summary-synopsis"><p>Gets a user by its <code class="inline">t:Remedy.Schema.User.id/0</code>.</p></div>
 
 </div>
 <div class="summary-row">
@@ -1804,12 +1804,12 @@ Functions
   <a href="#add_guild_member/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">add_guild_member</span><span class="p" data-group-id="9974419406-1">(</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">add_guild_member</span><span class="p" data-group-id="6909503287-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="mi">18374719829378473</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="ss">access_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;6qrZcUqja7812RVdnEKjpzOL4CvHBFG&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="ss">nick</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;remedy&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="ss">roles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9974419406-2">[</span><span class="mi">431849301</span><span class="p">,</span><span class="w"> </span><span class="mi">913809431</span><span class="p" data-group-id="9974419406-2">]</span><span class="p" data-group-id="9974419406-1">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="ss">roles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6909503287-2">[</span><span class="mi">431849301</span><span class="p">,</span><span class="w"> </span><span class="mi">913809431</span><span class="p" data-group-id="6909503287-2">]</span><span class="p" data-group-id="6909503287-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="add_guild_member_role/3">
@@ -1908,8 +1908,8 @@ An optional <code class="inline">reason</code> can be given for the audit log.</
   <a href="#begin_guild_prune/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">begin_guild_prune</span><span class="p" data-group-id="8648747041-1">(</span><span class="mi">81384788765712384</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="8648747041-1">)</span><span class="w">
-</span><span class="p" data-group-id="8648747041-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8648747041-3">%{</span><span class="ss">pruned</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="8648747041-3">}</span><span class="p" data-group-id="8648747041-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">begin_guild_prune</span><span class="p" data-group-id="1162362586-1">(</span><span class="mi">81384788765712384</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="1162362586-1">)</span><span class="w">
+</span><span class="p" data-group-id="1162362586-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1162362586-3">%{</span><span class="ss">pruned</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="1162362586-3">}</span><span class="p" data-group-id="1162362586-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="bulk_delete_messages/1">
@@ -2037,11 +2037,11 @@ membership. (default: <code class="inline">false</code>)</li><li><code class="in
   <a href="#create_channel_invite/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_channel_invite</span><span class="p" data-group-id="4443650200-1">(</span><span class="mi">41771983423143933</span><span class="p" data-group-id="4443650200-1">)</span><span class="w">
-</span><span class="p" data-group-id="4443650200-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="nc">Remedy.Schema.Invite</span><span class="p" data-group-id="4443650200-3">{</span><span class="p" data-group-id="4443650200-3">}</span><span class="p" data-group-id="4443650200-2">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_channel_invite</span><span class="p" data-group-id="1976923934-1">(</span><span class="mi">41771983423143933</span><span class="p" data-group-id="1976923934-1">)</span><span class="w">
+</span><span class="p" data-group-id="1976923934-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="nc">Remedy.Schema.Invite</span><span class="p" data-group-id="1976923934-3">{</span><span class="p" data-group-id="1976923934-3">}</span><span class="p" data-group-id="1976923934-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_channel_invite</span><span class="p" data-group-id="4443650200-4">(</span><span class="mi">41771983423143933</span><span class="p">,</span><span class="w"> </span><span class="ss">max_uses</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p" data-group-id="4443650200-4">)</span><span class="w">
-</span><span class="p" data-group-id="4443650200-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4443650200-6">%</span><span class="nc" data-group-id="4443650200-6">Remedy.Schema.Invite</span><span class="p" data-group-id="4443650200-6">{</span><span class="p" data-group-id="4443650200-6">}</span><span class="p" data-group-id="4443650200-5">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_channel_invite</span><span class="p" data-group-id="1976923934-4">(</span><span class="mi">41771983423143933</span><span class="p">,</span><span class="w"> </span><span class="ss">max_uses</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p" data-group-id="1976923934-4">)</span><span class="w">
+</span><span class="p" data-group-id="1976923934-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1976923934-6">%</span><span class="nc" data-group-id="1976923934-6">Remedy.Schema.Invite</span><span class="p" data-group-id="1976923934-6">{</span><span class="p" data-group-id="1976923934-6">}</span><span class="p" data-group-id="1976923934-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_dm/0">
@@ -2067,8 +2067,8 @@ membership. (default: <code class="inline">false</code>)</li><li><code class="in
   <a href="#create_dm/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_dm</span><span class="p" data-group-id="8994198380-1">(</span><span class="mi">150061853001777154</span><span class="p" data-group-id="8994198380-1">)</span><span class="w">
-</span><span class="p" data-group-id="8994198380-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8994198380-3">%</span><span class="nc" data-group-id="8994198380-3">Remedy.Schema.Channel</span><span class="p" data-group-id="8994198380-3">{</span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="8994198380-3">}</span><span class="p" data-group-id="8994198380-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_dm</span><span class="p" data-group-id="8781400082-1">(</span><span class="mi">150061853001777154</span><span class="p" data-group-id="8781400082-1">)</span><span class="w">
+</span><span class="p" data-group-id="8781400082-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8781400082-3">%</span><span class="nc" data-group-id="8781400082-3">Remedy.Schema.Channel</span><span class="p" data-group-id="8781400082-3">{</span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="8781400082-3">}</span><span class="p" data-group-id="8781400082-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_followup_message/1">
@@ -2129,8 +2129,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#create_global_application_command/0-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Example
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="0173997628-1">(</span><span class="p" data-group-id="0173997628-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0173997628-3">[</span><span class="p" data-group-id="0173997628-3">]</span><span class="p" data-group-id="0173997628-2">}</span><span class="p" data-group-id="0173997628-1">)</span><span class="w">
-</span><span class="p" data-group-id="0173997628-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0173997628-5">%</span><span class="nc" data-group-id="0173997628-5">Remedy.Schema.Command</span><span class="p" data-group-id="0173997628-5">{</span><span class="p" data-group-id="0173997628-5">}</span><span class="p" data-group-id="0173997628-4">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_application_command</span><span class="p" data-group-id="5368743096-1">(</span><span class="p" data-group-id="5368743096-2">%{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ed, man! man, ed&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">options</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5368743096-3">[</span><span class="p" data-group-id="5368743096-3">]</span><span class="p" data-group-id="5368743096-2">}</span><span class="p" data-group-id="5368743096-1">)</span><span class="w">
+</span><span class="p" data-group-id="5368743096-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5368743096-5">%</span><span class="nc" data-group-id="5368743096-5">Remedy.Schema.Command</span><span class="p" data-group-id="5368743096-5">{</span><span class="p" data-group-id="5368743096-5">}</span><span class="p" data-group-id="5368743096-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_group_dm/0">
@@ -2157,8 +2157,8 @@ to a nickname.</p><h2 id="create_group_dm/0-examples" class="section-heading">
   <a href="#create_group_dm/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_group_dm</span><span class="p" data-group-id="1237880031-1">(</span><span class="p" data-group-id="1237880031-2">[</span><span class="s">&quot;6qrZcUqja7812RVdnEKjpzOL4CvHBFG&quot;</span><span class="p" data-group-id="1237880031-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1237880031-3">%{</span><span class="mi">41771983423143937</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;My Nickname&quot;</span><span class="p" data-group-id="1237880031-3">}</span><span class="p" data-group-id="1237880031-1">)</span><span class="w">
-</span><span class="p" data-group-id="1237880031-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1237880031-5">%</span><span class="nc" data-group-id="1237880031-5">Remedy.Schema.Channel</span><span class="p" data-group-id="1237880031-5">{</span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="1237880031-5">}</span><span class="p" data-group-id="1237880031-4">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_group_dm</span><span class="p" data-group-id="7194155329-1">(</span><span class="p" data-group-id="7194155329-2">[</span><span class="s">&quot;6qrZcUqja7812RVdnEKjpzOL4CvHBFG&quot;</span><span class="p" data-group-id="7194155329-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7194155329-3">%{</span><span class="mi">41771983423143937</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;My Nickname&quot;</span><span class="p" data-group-id="7194155329-3">}</span><span class="p" data-group-id="7194155329-1">)</span><span class="w">
+</span><span class="p" data-group-id="7194155329-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7194155329-5">%</span><span class="nc" data-group-id="7194155329-5">Remedy.Schema.Channel</span><span class="p" data-group-id="7194155329-5">{</span><span class="ss">type</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="7194155329-5">}</span><span class="p" data-group-id="7194155329-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_guild/0">
@@ -2267,8 +2267,8 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
   <a href="#create_guild_channel/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_guild_channel</span><span class="p" data-group-id="5840182838-1">(</span><span class="mi">81384788765712384</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elixir-remedy&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;craig&#39;s domain&quot;</span><span class="p" data-group-id="5840182838-1">)</span><span class="w">
-</span><span class="p" data-group-id="5840182838-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5840182838-3">%</span><span class="nc" data-group-id="5840182838-3">Remedy.Schema.Channel</span><span class="p" data-group-id="5840182838-3">{</span><span class="ss">guild_id</span><span class="p">:</span><span class="w"> </span><span class="mi">81384788765712384</span><span class="p" data-group-id="5840182838-3">}</span><span class="p" data-group-id="5840182838-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_guild_channel</span><span class="p" data-group-id="8786987548-1">(</span><span class="mi">81384788765712384</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elixir-remedy&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;craig&#39;s domain&quot;</span><span class="p" data-group-id="8786987548-1">)</span><span class="w">
+</span><span class="p" data-group-id="8786987548-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8786987548-3">%</span><span class="nc" data-group-id="8786987548-3">Remedy.Schema.Channel</span><span class="p" data-group-id="8786987548-3">{</span><span class="ss">guild_id</span><span class="p">:</span><span class="w"> </span><span class="mi">81384788765712384</span><span class="p" data-group-id="8786987548-3">}</span><span class="p" data-group-id="8786987548-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_guild_emoji/1">
@@ -2301,7 +2301,7 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
   Examples
 </h2>
 <pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;data:image/png;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_guild_emoji</span><span class="p" data-group-id="4247639470-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;remedy&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">image</span><span class="p">:</span><span class="w"> </span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="ss">roles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4247639470-2">[</span><span class="p" data-group-id="4247639470-2">]</span><span class="p" data-group-id="4247639470-1">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_guild_emoji</span><span class="p" data-group-id="0785999279-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;remedy&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">image</span><span class="p">:</span><span class="w"> </span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="ss">roles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0785999279-2">[</span><span class="p" data-group-id="0785999279-2">]</span><span class="p" data-group-id="0785999279-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_guild_from_template/1">
@@ -2356,8 +2356,8 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
   <a href="#create_guild_roles/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_guild_role</span><span class="p" data-group-id="3046869266-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;remedy-club&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">hoist</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="3046869266-1">)</span><span class="w">
-</span><span class="p" data-group-id="3046869266-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3046869266-3">%</span><span class="nc" data-group-id="3046869266-3">Remedy.Schema.Role</span><span class="p" data-group-id="3046869266-3">{</span><span class="p" data-group-id="3046869266-3">}</span><span class="p" data-group-id="3046869266-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_guild_role</span><span class="p" data-group-id="5182591694-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;remedy-club&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">hoist</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="5182591694-1">)</span><span class="w">
+</span><span class="p" data-group-id="5182591694-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5182591694-3">%</span><span class="nc" data-group-id="5182591694-3">Remedy.Schema.Role</span><span class="p" data-group-id="5182591694-3">{</span><span class="p" data-group-id="5182591694-3">}</span><span class="p" data-group-id="5182591694-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_guild_sticker/2">
@@ -2482,7 +2482,7 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
   <a href="#create_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4763704411-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p" data-group-id="4763704411-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="4763704411-2">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;**Doctest Message** ✅&quot;</span><span class="p" data-group-id="4763704411-2">)</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7394087106-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p" data-group-id="7394087106-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="7394087106-2">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;**Doctest Message** ✅&quot;</span><span class="p" data-group-id="7394087106-2">)</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="w">
 </span><span class="s">&quot;**Doctest Message** ✅&quot;</span></code></pre>
   </section>
@@ -2514,12 +2514,12 @@ directly. See <code class="inline">create_interaction_response/1</code>.</p>
   <a href="#create_reaction/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_reaction</span><span class="p" data-group-id="6212677804-1">(</span><span class="mi">123123123123</span><span class="p">,</span><span class="w"> </span><span class="mi">321321321321</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6212677804-2">%</span><span class="nc" data-group-id="6212677804-2">Remedy.Schema.Emoji</span><span class="p" data-group-id="6212677804-2">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">43819043108</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;foxbot&quot;</span><span class="p" data-group-id="6212677804-2">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6212677804-1">)</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_reaction</span><span class="p" data-group-id="7527419905-1">(</span><span class="mi">123123123123</span><span class="p">,</span><span class="w"> </span><span class="mi">321321321321</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7527419905-2">%</span><span class="nc" data-group-id="7527419905-2">Remedy.Schema.Emoji</span><span class="p" data-group-id="7527419905-2">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">43819043108</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;foxbot&quot;</span><span class="p" data-group-id="7527419905-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7527419905-1">)</span><span class="w">
 </span><span class="ss">:ok</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_reaction</span><span class="p" data-group-id="6212677804-3">(</span><span class="mi">123123123123</span><span class="p">,</span><span class="w"> </span><span class="mi">321321321321</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;😁&quot;</span><span class="p" data-group-id="6212677804-3">)</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">create_reaction</span><span class="p" data-group-id="7527419905-3">(</span><span class="mi">123123123123</span><span class="p">,</span><span class="w"> </span><span class="mi">321321321321</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;😁&quot;</span><span class="p" data-group-id="7527419905-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_stage/0">
@@ -2782,11 +2782,11 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#delete_guild/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_guild</span><span class="p" data-group-id="1907532313-1">(</span><span class="mi">618432108653707274</span><span class="p" data-group-id="1907532313-1">)</span><span class="w">
-</span><span class="p" data-group-id="1907532313-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1907532313-3">{</span><span class="mi">403</span><span class="p">,</span><span class="w"> </span><span class="mi">50001</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Missing Access&quot;</span><span class="p" data-group-id="1907532313-3">}</span><span class="p" data-group-id="1907532313-2">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_guild</span><span class="p" data-group-id="5145864634-1">(</span><span class="mi">618432108653707274</span><span class="p" data-group-id="5145864634-1">)</span><span class="w">
+</span><span class="p" data-group-id="5145864634-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5145864634-3">{</span><span class="mi">403</span><span class="p">,</span><span class="w"> </span><span class="mi">50001</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Missing Access&quot;</span><span class="p" data-group-id="5145864634-3">}</span><span class="p" data-group-id="5145864634-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_guild</span><span class="p" data-group-id="1907532313-4">(</span><span class="mi">618432108653707274</span><span class="p" data-group-id="1907532313-4">)</span><span class="w">
-</span><span class="p" data-group-id="1907532313-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1907532313-6">{</span><span class="mi">403</span><span class="p">,</span><span class="w"> </span><span class="mi">50001</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Missing Access&quot;</span><span class="p" data-group-id="1907532313-6">}</span><span class="p" data-group-id="1907532313-5">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_guild</span><span class="p" data-group-id="5145864634-4">(</span><span class="mi">618432108653707274</span><span class="p" data-group-id="5145864634-4">)</span><span class="w">
+</span><span class="p" data-group-id="5145864634-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5145864634-6">{</span><span class="mi">403</span><span class="p">,</span><span class="w"> </span><span class="mi">50001</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Missing Access&quot;</span><span class="p" data-group-id="5145864634-6">}</span><span class="p" data-group-id="5145864634-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_guild_application_command/2">
@@ -2882,7 +2882,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#delete_guild_role/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_guild_role</span><span class="p" data-group-id="1987763368-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="mi">392817238471936</span><span class="p" data-group-id="1987763368-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_guild_role</span><span class="p" data-group-id="8577197179-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="mi">392817238471936</span><span class="p" data-group-id="8577197179-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_guild_sticker/2">
@@ -2957,8 +2957,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#delete_invite/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_invite</span><span class="p" data-group-id="6649189047-1">(</span><span class="s">&quot;zsjUsC&quot;</span><span class="p" data-group-id="6649189047-1">)</span><span class="w">
-</span><span class="p" data-group-id="6649189047-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6649189047-3">%</span><span class="nc" data-group-id="6649189047-3">Remedy.Schema.Invite</span><span class="p" data-group-id="6649189047-3">{</span><span class="p" data-group-id="6649189047-3">}</span><span class="p" data-group-id="6649189047-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_invite</span><span class="p" data-group-id="6146559216-1">(</span><span class="s">&quot;zsjUsC&quot;</span><span class="p" data-group-id="6146559216-1">)</span><span class="w">
+</span><span class="p" data-group-id="6146559216-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6146559216-3">%</span><span class="nc" data-group-id="6146559216-3">Remedy.Schema.Invite</span><span class="p" data-group-id="6146559216-3">{</span><span class="p" data-group-id="6146559216-3">}</span><span class="p" data-group-id="6146559216-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_message/2">
@@ -2992,7 +2992,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#delete_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_message</span><span class="p" data-group-id="8839834478-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="mi">43189401384091</span><span class="p" data-group-id="8839834478-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_message</span><span class="p" data-group-id="9501792138-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="mi">43189401384091</span><span class="p" data-group-id="9501792138-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_original_interaction_response/1">
@@ -3050,8 +3050,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#delete_own_reaction/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_own_reaction</span><span class="p" data-group-id="4093332226-1">(</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p" data-group-id="4093332226-1">)</span><span class="w">
-</span><span class="p" data-group-id="4093332226-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="4093332226-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">delete_own_reaction</span><span class="p" data-group-id="0173987888-1">(</span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p" data-group-id="0173987888-1">)</span><span class="w">
+</span><span class="p" data-group-id="0173987888-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="0173987888-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_stage/1">
@@ -3335,7 +3335,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#get_channel/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0089530070-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">channel</span><span class="p" data-group-id="0089530070-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_channel</span><span class="p" data-group-id="0089530070-2">(</span><span class="mi">872417560094732331</span><span class="p" data-group-id="0089530070-2">)</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2299946081-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">channel</span><span class="p" data-group-id="2299946081-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_channel</span><span class="p" data-group-id="2299946081-2">(</span><span class="mi">872417560094732331</span><span class="p" data-group-id="2299946081-2">)</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="n">channel</span><span class="o">.</span><span class="n">id</span><span class="w">
 </span><span class="mi">872417560094732331</span></code></pre>
   </section>
@@ -3364,8 +3364,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#get_channel_invites/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_channel_invites</span><span class="p" data-group-id="5026629543-1">(</span><span class="mi">43189401384091</span><span class="p" data-group-id="5026629543-1">)</span><span class="w">
-</span><span class="p" data-group-id="5026629543-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5026629543-3">[</span><span class="p" data-group-id="5026629543-4">%</span><span class="nc" data-group-id="5026629543-4">Remedy.Schema.Invite</span><span class="p" data-group-id="5026629543-4">{</span><span class="p" data-group-id="5026629543-4">}</span><span class="p" data-group-id="5026629543-3">]</span><span class="p" data-group-id="5026629543-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_channel_invites</span><span class="p" data-group-id="1975627496-1">(</span><span class="mi">43189401384091</span><span class="p" data-group-id="1975627496-1">)</span><span class="w">
+</span><span class="p" data-group-id="1975627496-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1975627496-3">[</span><span class="p" data-group-id="1975627496-4">%</span><span class="nc" data-group-id="1975627496-4">Remedy.Schema.Invite</span><span class="p" data-group-id="1975627496-4">{</span><span class="p" data-group-id="1975627496-4">}</span><span class="p" data-group-id="1975627496-3">]</span><span class="p" data-group-id="1975627496-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_channel_message/2">
@@ -3437,8 +3437,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#get_current_authorization_information/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_current_authorization_information</span><span class="p" data-group-id="1946111623-1">(</span><span class="p" data-group-id="1946111623-1">)</span><span class="w">
-</span><span class="p" data-group-id="1946111623-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1946111623-3">{</span><span class="mi">401</span><span class="p">,</span><span class="w"> </span><span class="mi">50001</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Missing Access&quot;</span><span class="p" data-group-id="1946111623-3">}</span><span class="p" data-group-id="1946111623-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_current_authorization_information</span><span class="p" data-group-id="3772739845-1">(</span><span class="p" data-group-id="3772739845-1">)</span><span class="w">
+</span><span class="p" data-group-id="3772739845-2">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3772739845-3">{</span><span class="mi">401</span><span class="p">,</span><span class="w"> </span><span class="mi">50001</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Missing Access&quot;</span><span class="p" data-group-id="3772739845-3">}</span><span class="p" data-group-id="3772739845-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_current_bot_application_information/0">
@@ -3472,8 +3472,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#get_current_bot_application_information/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_application_information</span><span class="p" data-group-id="6432769760-1">(</span><span class="p" data-group-id="6432769760-1">)</span><span class="w">
-</span><span class="err">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6432769760-2">%</span><span class="nc" data-group-id="6432769760-2">Remedy.Schema.App</span><span class="p" data-group-id="6432769760-2">{</span><span class="p" data-group-id="6432769760-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_application_information</span><span class="p" data-group-id="6549670253-1">(</span><span class="p" data-group-id="6549670253-1">)</span><span class="w">
+</span><span class="err">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6549670253-2">%</span><span class="nc" data-group-id="6549670253-2">Remedy.Schema.App</span><span class="p" data-group-id="6549670253-2">{</span><span class="p" data-group-id="6549670253-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_current_user/0">
@@ -3528,8 +3528,8 @@ than pulling from our cache.</p><p>If the request is successful, this function r
   <a href="#get_current_user_guilds/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_current_user_guilds</span><span class="p" data-group-id="9586895592-1">(</span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9586895592-1">)</span><span class="w">
-</span><span class="p" data-group-id="9586895592-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9586895592-3">[</span><span class="p" data-group-id="9586895592-4">%</span><span class="nc" data-group-id="9586895592-4">Remedy.Schema.Guild</span><span class="p" data-group-id="9586895592-4">{</span><span class="p" data-group-id="9586895592-4">}</span><span class="p" data-group-id="9586895592-3">]</span><span class="p" data-group-id="9586895592-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_current_user_guilds</span><span class="p" data-group-id="7346864475-1">(</span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7346864475-1">)</span><span class="w">
+</span><span class="p" data-group-id="7346864475-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7346864475-3">[</span><span class="p" data-group-id="7346864475-4">%</span><span class="nc" data-group-id="7346864475-4">Remedy.Schema.Guild</span><span class="p" data-group-id="7346864475-4">{</span><span class="p" data-group-id="7346864475-4">}</span><span class="p" data-group-id="7346864475-3">]</span><span class="p" data-group-id="7346864475-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_followup_message/2">
@@ -3588,8 +3588,8 @@ than pulling from our cache.</p><p>If the request is successful, this function r
   <a href="#get_gateway/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="w">  </span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_gateway</span><span class="p" data-group-id="1297769932-1">(</span><span class="p" data-group-id="1297769932-1">)</span><span class="w">
-  </span><span class="p" data-group-id="1297769932-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;wss://gateway.discord.gg&quot;</span><span class="p" data-group-id="1297769932-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="w">  </span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_gateway</span><span class="p" data-group-id="1030918495-1">(</span><span class="p" data-group-id="1030918495-1">)</span><span class="w">
+  </span><span class="p" data-group-id="1030918495-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;wss://gateway.discord.gg&quot;</span><span class="p" data-group-id="1030918495-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_gateway_bot/0">
@@ -3674,7 +3674,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   Example
 </h2>
 <pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_global_application_commands</span><span class="w">
-</span><span class="p" data-group-id="7610012926-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7610012926-2">[</span><span class="p" data-group-id="7610012926-3">%{</span><span class="ss">application_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;455589479713865749&quot;</span><span class="p" data-group-id="7610012926-3">}</span><span class="p" data-group-id="7610012926-2">]</span><span class="p" data-group-id="7610012926-1">}</span></code></pre>
+</span><span class="p" data-group-id="1486054493-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1486054493-2">[</span><span class="p" data-group-id="1486054493-3">%{</span><span class="ss">application_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;455589479713865749&quot;</span><span class="p" data-group-id="1486054493-3">}</span><span class="p" data-group-id="1486054493-2">]</span><span class="p" data-group-id="1486054493-1">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild/1">
@@ -3700,8 +3700,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild</span><span class="p" data-group-id="8004831923-1">(</span><span class="mi">81384788765712384</span><span class="p" data-group-id="8004831923-1">)</span><span class="w">
-</span><span class="p" data-group-id="8004831923-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8004831923-3">%</span><span class="nc" data-group-id="8004831923-3">Remedy.Schema.Guild</span><span class="p" data-group-id="8004831923-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">81384788765712384</span><span class="p" data-group-id="8004831923-3">}</span><span class="p" data-group-id="8004831923-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild</span><span class="p" data-group-id="3873461378-1">(</span><span class="mi">81384788765712384</span><span class="p" data-group-id="3873461378-1">)</span><span class="w">
+</span><span class="p" data-group-id="3873461378-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3873461378-3">%</span><span class="nc" data-group-id="3873461378-3">Remedy.Schema.Guild</span><span class="p" data-group-id="3873461378-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">81384788765712384</span><span class="p" data-group-id="3873461378-3">}</span><span class="p" data-group-id="3873461378-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild_application_command/2">
@@ -3813,11 +3813,11 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_audit_log/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_audit_log</span><span class="p" data-group-id="4659662946-1">(</span><span class="mi">872417560094732328</span><span class="p" data-group-id="4659662946-1">)</span><span class="w">
-</span><span class="p" data-group-id="4659662946-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4659662946-3">%</span><span class="nc" data-group-id="4659662946-3">Remedy.Schema.AuditLog</span><span class="p" data-group-id="4659662946-3">{</span><span class="p" data-group-id="4659662946-3">}</span><span class="p" data-group-id="4659662946-2">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_audit_log</span><span class="p" data-group-id="3965506893-1">(</span><span class="mi">872417560094732328</span><span class="p" data-group-id="3965506893-1">)</span><span class="w">
+</span><span class="p" data-group-id="3965506893-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3965506893-3">%</span><span class="nc" data-group-id="3965506893-3">Remedy.Schema.AuditLog</span><span class="p" data-group-id="3965506893-3">{</span><span class="p" data-group-id="3965506893-3">}</span><span class="p" data-group-id="3965506893-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_audit_log</span><span class="p" data-group-id="4659662946-4">(</span><span class="mi">123</span><span class="p" data-group-id="4659662946-4">)</span><span class="w">
-</span><span class="p" data-group-id="4659662946-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4659662946-6">{</span><span class="mi">403</span><span class="p">,</span><span class="w"> </span><span class="mi">10004</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Unknown Guild&quot;</span><span class="p" data-group-id="4659662946-6">}</span><span class="p" data-group-id="4659662946-5">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_audit_log</span><span class="p" data-group-id="3965506893-4">(</span><span class="mi">123</span><span class="p" data-group-id="3965506893-4">)</span><span class="w">
+</span><span class="p" data-group-id="3965506893-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3965506893-6">{</span><span class="mi">403</span><span class="p">,</span><span class="w"> </span><span class="mi">10004</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Unknown Guild&quot;</span><span class="p" data-group-id="3965506893-6">}</span><span class="p" data-group-id="3965506893-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild_ban/2">
@@ -3865,8 +3865,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_channels/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_channels</span><span class="p" data-group-id="5368568955-1">(</span><span class="mi">81384788765712384</span><span class="p" data-group-id="5368568955-1">)</span><span class="w">
-</span><span class="p" data-group-id="5368568955-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5368568955-3">[</span><span class="p" data-group-id="5368568955-4">%</span><span class="nc" data-group-id="5368568955-4">Remedy.Schema.Channel</span><span class="p" data-group-id="5368568955-4">{</span><span class="ss">guild_id</span><span class="p">:</span><span class="w"> </span><span class="mi">81384788765712384</span><span class="p" data-group-id="5368568955-4">}</span><span class="p" data-group-id="5368568955-3">]</span><span class="p" data-group-id="5368568955-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_channels</span><span class="p" data-group-id="8809350110-1">(</span><span class="mi">81384788765712384</span><span class="p" data-group-id="8809350110-1">)</span><span class="w">
+</span><span class="p" data-group-id="8809350110-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8809350110-3">[</span><span class="p" data-group-id="8809350110-4">%</span><span class="nc" data-group-id="8809350110-4">Remedy.Schema.Channel</span><span class="p" data-group-id="8809350110-4">{</span><span class="ss">guild_id</span><span class="p">:</span><span class="w"> </span><span class="mi">81384788765712384</span><span class="p" data-group-id="8809350110-4">}</span><span class="p" data-group-id="8809350110-3">]</span><span class="p" data-group-id="8809350110-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild_emoji/2">
@@ -3936,7 +3936,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_member/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_member</span><span class="p" data-group-id="8530636703-1">(</span><span class="mi">4019283754613</span><span class="p">,</span><span class="w"> </span><span class="mi">184937267485</span><span class="p" data-group-id="8530636703-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_member</span><span class="p" data-group-id="2653043359-1">(</span><span class="mi">4019283754613</span><span class="p">,</span><span class="w"> </span><span class="mi">184937267485</span><span class="p" data-group-id="2653043359-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild_prune_count/1">
@@ -3962,8 +3962,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_guild_prune_count/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_prune_count</span><span class="p" data-group-id="3345722802-1">(</span><span class="mi">81384788765712384</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="3345722802-1">)</span><span class="w">
-</span><span class="p" data-group-id="3345722802-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3345722802-3">%{</span><span class="ss">pruned</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="3345722802-3">}</span><span class="p" data-group-id="3345722802-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_prune_count</span><span class="p" data-group-id="2679981725-1">(</span><span class="mi">81384788765712384</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="2679981725-1">)</span><span class="w">
+</span><span class="p" data-group-id="2679981725-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2679981725-3">%{</span><span class="ss">pruned</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="2679981725-3">}</span><span class="p" data-group-id="2679981725-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_guild_sticker/2">
@@ -4162,11 +4162,11 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_invite/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_invite</span><span class="p" data-group-id="6417207794-1">(</span><span class="s">&quot;zsjUsC&quot;</span><span class="p" data-group-id="6417207794-1">)</span><span class="w">
-</span><span class="p" data-group-id="6417207794-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6417207794-3">%</span><span class="nc" data-group-id="6417207794-3">Remedy.Schema.Invite</span><span class="p" data-group-id="6417207794-3">{</span><span class="p" data-group-id="6417207794-3">}</span><span class="p" data-group-id="6417207794-2">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_invite</span><span class="p" data-group-id="7757864682-1">(</span><span class="s">&quot;zsjUsC&quot;</span><span class="p" data-group-id="7757864682-1">)</span><span class="w">
+</span><span class="p" data-group-id="7757864682-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7757864682-3">%</span><span class="nc" data-group-id="7757864682-3">Remedy.Schema.Invite</span><span class="p" data-group-id="7757864682-3">{</span><span class="p" data-group-id="7757864682-3">}</span><span class="p" data-group-id="7757864682-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_invite</span><span class="p" data-group-id="6417207794-4">(</span><span class="s">&quot;zsjUsC&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">with_counts</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="6417207794-4">)</span><span class="w">
-</span><span class="p" data-group-id="6417207794-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6417207794-6">%</span><span class="nc" data-group-id="6417207794-6">Remedy.Schema.Invite</span><span class="p" data-group-id="6417207794-6">{</span><span class="p" data-group-id="6417207794-6">}</span><span class="p" data-group-id="6417207794-5">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_invite</span><span class="p" data-group-id="7757864682-4">(</span><span class="s">&quot;zsjUsC&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">with_counts</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="7757864682-4">)</span><span class="w">
+</span><span class="p" data-group-id="7757864682-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7757864682-6">%</span><span class="nc" data-group-id="7757864682-6">Remedy.Schema.Invite</span><span class="p" data-group-id="7757864682-6">{</span><span class="p" data-group-id="7757864682-6">}</span><span class="p" data-group-id="7757864682-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_original_interaction_response/1">
@@ -4291,11 +4291,11 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
   <a href="#get_sticker/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_sticker</span><span class="p" data-group-id="1363603094-1">(</span><span class="mi">818599312882794506</span><span class="p" data-group-id="1363603094-1">)</span><span class="w">
-</span><span class="p" data-group-id="1363603094-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1363603094-3">%</span><span class="nc" data-group-id="1363603094-3">Remedy.Schema.Sticker</span><span class="p" data-group-id="1363603094-3">{</span><span class="p" data-group-id="1363603094-3">}</span><span class="p" data-group-id="1363603094-2">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_sticker</span><span class="p" data-group-id="8461124957-1">(</span><span class="mi">818599312882794506</span><span class="p" data-group-id="8461124957-1">)</span><span class="w">
+</span><span class="p" data-group-id="8461124957-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8461124957-3">%</span><span class="nc" data-group-id="8461124957-3">Remedy.Schema.Sticker</span><span class="p" data-group-id="8461124957-3">{</span><span class="p" data-group-id="8461124957-3">}</span><span class="p" data-group-id="8461124957-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_sticker</span><span class="p" data-group-id="1363603094-4">(</span><span class="mi">123</span><span class="p" data-group-id="1363603094-4">)</span><span class="w">
-</span><span class="p" data-group-id="1363603094-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1363603094-6">{</span><span class="mi">404</span><span class="p">,</span><span class="w"> </span><span class="mi">10060</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Unknown sticker&quot;</span><span class="p" data-group-id="1363603094-6">}</span><span class="p" data-group-id="1363603094-5">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_sticker</span><span class="p" data-group-id="8461124957-4">(</span><span class="mi">123</span><span class="p" data-group-id="8461124957-4">)</span><span class="w">
+</span><span class="p" data-group-id="8461124957-5">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8461124957-6">{</span><span class="mi">404</span><span class="p">,</span><span class="w"> </span><span class="mi">10060</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Unknown sticker&quot;</span><span class="p" data-group-id="8461124957-6">}</span><span class="p" data-group-id="8461124957-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_user/1">
@@ -4317,7 +4317,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li></ul
 
   <section class="docstring">
 
-<p>Gets a user by its <a href="Remedy.Schema.User.html#t:id/0"><code class="inline">Remedy.Schema.User.id/0</code></a>.</p><p>If the request is successful, this function returns <code class="inline">{:ok, user}</code>, where
+<p>Gets a user by its <code class="inline">t:Remedy.Schema.User.id/0</code>.</p><p>If the request is successful, this function returns <code class="inline">{:ok, user}</code>, where
 <code class="inline">user</code> is a <a href="Remedy.Schema.User.html"><code class="inline">Remedy.Schema.User</code></a>. Otherwise, returns <code class="inline">{:error, reason}</code>.</p>
   </section>
 </section>
@@ -4667,8 +4667,8 @@ authentication.</p><h2 id="get_webhooks_with_token/2-parameters" class="section-
   <a href="#list_guild_invites/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_invites</span><span class="p" data-group-id="4113543440-1">(</span><span class="mi">81384788765712384</span><span class="p" data-group-id="4113543440-1">)</span><span class="w">
-</span><span class="p" data-group-id="4113543440-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4113543440-3">[</span><span class="p" data-group-id="4113543440-4">%</span><span class="nc" data-group-id="4113543440-4">Remedy.Schema.Invite</span><span class="p" data-group-id="4113543440-4">{</span><span class="p" data-group-id="4113543440-4">}</span><span class="p" data-group-id="4113543440-3">]</span><span class="p" data-group-id="4113543440-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_invites</span><span class="p" data-group-id="9955193562-1">(</span><span class="mi">81384788765712384</span><span class="p" data-group-id="9955193562-1">)</span><span class="w">
+</span><span class="p" data-group-id="9955193562-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9955193562-3">[</span><span class="p" data-group-id="9955193562-4">%</span><span class="nc" data-group-id="9955193562-4">Remedy.Schema.Invite</span><span class="p" data-group-id="9955193562-4">{</span><span class="p" data-group-id="9955193562-4">}</span><span class="p" data-group-id="9955193562-3">]</span><span class="p" data-group-id="9955193562-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_guild_members/1">
@@ -4694,11 +4694,11 @@ authentication.</p><h2 id="get_webhooks_with_token/2-parameters" class="section-
   <a href="#list_guild_members/1-options" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Options
 </h2>
-<ul><li><code class="inline">:limit</code> (integer) - max number of members to return (1-1000) (default: 1)</li><li><code class="inline">:after</code> (<a href="Remedy.Schema.User.html#t:id/0"><code class="inline">Remedy.Schema.User.id/0</code></a>) - the highest user id in the previous page (default: 0)</li></ul><h2 id="list_guild_members/1-examples" class="section-heading">
+<ul><li><code class="inline">:limit</code> (integer) - max number of members to return (1-1000) (default: 1)</li><li><code class="inline">:after</code> (<code class="inline">t:Remedy.Schema.User.id/0</code>) - the highest user id in the previous page (default: 0)</li></ul><h2 id="list_guild_members/1-examples" class="section-heading">
   <a href="#list_guild_members/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">list_guild_members</span><span class="p" data-group-id="6311268743-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6311268743-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">list_guild_members</span><span class="p" data-group-id="3719839311-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="ss">limit</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="3719839311-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_guild_roles/1">
@@ -4726,8 +4726,8 @@ authentication.</p><h2 id="get_webhooks_with_token/2-parameters" class="section-
   <a href="#list_guild_roles/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_roles</span><span class="p" data-group-id="2226376165-1">(</span><span class="mi">147362948571673</span><span class="p" data-group-id="2226376165-1">)</span><span class="w">
-</span><span class="p" data-group-id="2226376165-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2226376165-3">[</span><span class="p" data-group-id="2226376165-4">%</span><span class="nc" data-group-id="2226376165-4">Remedy.Schema.Role</span><span class="p" data-group-id="2226376165-4">{</span><span class="p" data-group-id="2226376165-4">}</span><span class="p" data-group-id="2226376165-3">]</span><span class="p" data-group-id="2226376165-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_guild_roles</span><span class="p" data-group-id="9376400914-1">(</span><span class="mi">147362948571673</span><span class="p" data-group-id="9376400914-1">)</span><span class="w">
+</span><span class="p" data-group-id="9376400914-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9376400914-3">[</span><span class="p" data-group-id="9376400914-4">%</span><span class="nc" data-group-id="9376400914-4">Remedy.Schema.Role</span><span class="p" data-group-id="9376400914-4">{</span><span class="p" data-group-id="9376400914-4">}</span><span class="p" data-group-id="9376400914-3">]</span><span class="p" data-group-id="9376400914-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_guild_stickers/1">
@@ -4872,8 +4872,8 @@ authentication.</p><h2 id="get_webhooks_with_token/2-parameters" class="section-
   <a href="#list_messages/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">list_messages</span><span class="p" data-group-id="9391855252-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9391855252-2">[</span><span class="p" data-group-id="9391855252-3">{</span><span class="ss">:before</span><span class="p">,</span><span class="w"> </span><span class="mi">882781809908256789</span><span class="p" data-group-id="9391855252-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9391855252-4">{</span><span class="ss">:limit</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9391855252-4">}</span><span class="p" data-group-id="9391855252-2">]</span><span class="p" data-group-id="9391855252-1">)</span><span class="w">
-</span><span class="p" data-group-id="9391855252-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9391855252-6">[</span><span class="p" data-group-id="9391855252-7">%</span><span class="nc" data-group-id="9391855252-7">Message</span><span class="p" data-group-id="9391855252-7">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">882681855315423292</span><span class="p" data-group-id="9391855252-7">}</span><span class="p" data-group-id="9391855252-6">]</span><span class="p" data-group-id="9391855252-5">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">list_messages</span><span class="p" data-group-id="3524420269-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3524420269-2">[</span><span class="p" data-group-id="3524420269-3">{</span><span class="ss">:before</span><span class="p">,</span><span class="w"> </span><span class="mi">882781809908256789</span><span class="p" data-group-id="3524420269-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3524420269-4">{</span><span class="ss">:limit</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="3524420269-4">}</span><span class="p" data-group-id="3524420269-2">]</span><span class="p" data-group-id="3524420269-1">)</span><span class="w">
+</span><span class="p" data-group-id="3524420269-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3524420269-6">[</span><span class="p" data-group-id="3524420269-7">%</span><span class="nc" data-group-id="3524420269-7">Message</span><span class="p" data-group-id="3524420269-7">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">882681855315423292</span><span class="p" data-group-id="3524420269-7">}</span><span class="p" data-group-id="3524420269-6">]</span><span class="p" data-group-id="3524420269-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_messages_after/3">
@@ -5025,7 +5025,7 @@ authentication.</p><h2 id="get_webhooks_with_token/2-parameters" class="section-
   <a href="#list_pinned_messages/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_pinned_messages</span><span class="p" data-group-id="7379614520-1">(</span><span class="mi">43189401384091</span><span class="p" data-group-id="7379614520-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">get_pinned_messages</span><span class="p" data-group-id="1937384004-1">(</span><span class="mi">43189401384091</span><span class="p" data-group-id="1937384004-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_private_archived_threads/1">
@@ -5272,8 +5272,8 @@ authentication.</p><h2 id="get_webhooks_with_token/2-parameters" class="section-
   <a href="#modify_current_user/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_current_user</span><span class="p" data-group-id="7011213389-1">(</span><span class="ss">avatar</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=&quot;</span><span class="p" data-group-id="7011213389-1">)</span><span class="w">
-</span><span class="p" data-group-id="7011213389-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7011213389-3">%</span><span class="nc" data-group-id="7011213389-3">Remedy.Schema.User</span><span class="p" data-group-id="7011213389-3">{</span><span class="p" data-group-id="7011213389-3">}</span><span class="p" data-group-id="7011213389-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_current_user</span><span class="p" data-group-id="1188275732-1">(</span><span class="ss">avatar</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data:image/jpeg;base64,YXl5IGJieSB1IGx1a2luIDQgc3VtIGZ1az8=&quot;</span><span class="p" data-group-id="1188275732-1">)</span><span class="w">
+</span><span class="p" data-group-id="1188275732-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1188275732-3">%</span><span class="nc" data-group-id="1188275732-3">Remedy.Schema.User</span><span class="p" data-group-id="1188275732-3">{</span><span class="p" data-group-id="1188275732-3">}</span><span class="p" data-group-id="1188275732-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_current_user_voice_state/1">
@@ -5396,8 +5396,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_group_dm/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_group_dm</span><span class="p" data-group-id="9397760215-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9397760215-2">[</span><span class="p" data-group-id="9397760215-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="9397760215-3">}</span><span class="p" data-group-id="9397760215-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="9397760215-1">)</span><span class="w">
-</span><span class="p" data-group-id="9397760215-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9397760215-5">%</span><span class="nc" data-group-id="9397760215-5">Channel</span><span class="p" data-group-id="9397760215-5">{</span><span class="p" data-group-id="9397760215-5">}</span><span class="p" data-group-id="9397760215-4">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_group_dm</span><span class="p" data-group-id="8151032091-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8151032091-2">[</span><span class="p" data-group-id="8151032091-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="8151032091-3">}</span><span class="p" data-group-id="8151032091-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="8151032091-1">)</span><span class="w">
+</span><span class="p" data-group-id="8151032091-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8151032091-5">%</span><span class="nc" data-group-id="8151032091-5">Channel</span><span class="p" data-group-id="8151032091-5">{</span><span class="p" data-group-id="8151032091-5">}</span><span class="p" data-group-id="8151032091-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild/1">
@@ -5435,8 +5435,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_guild/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="9897285544-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="9897285544-1">)</span><span class="w">
-</span><span class="p" data-group-id="9897285544-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9897285544-3">%</span><span class="nc" data-group-id="9897285544-3">Remedy.Schema.Guild</span><span class="p" data-group-id="9897285544-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="9897285544-3">}</span><span class="p" data-group-id="9897285544-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild</span><span class="p" data-group-id="4452004638-1">(</span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p" data-group-id="4452004638-1">)</span><span class="w">
+</span><span class="p" data-group-id="4452004638-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4452004638-3">%</span><span class="nc" data-group-id="4452004638-3">Remedy.Schema.Guild</span><span class="p" data-group-id="4452004638-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">451824027976073216</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nose Drum&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p" data-group-id="4452004638-3">}</span><span class="p" data-group-id="4452004638-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_application_command/2">
@@ -5498,11 +5498,11 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_guild_channel_positions/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_channel_positions</span><span class="p" data-group-id="6053370334-1">(</span><span class="mi">279093381723062272</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6053370334-2">[</span><span class="p" data-group-id="6053370334-3">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">351500354581692420</span><span class="p">,</span><span class="w"> </span><span class="ss">position</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6053370334-3">}</span><span class="p" data-group-id="6053370334-2">]</span><span class="p" data-group-id="6053370334-1">)</span><span class="w">
-</span><span class="p" data-group-id="6053370334-4">{</span><span class="ss">:ok</span><span class="p" data-group-id="6053370334-4">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_channel_positions</span><span class="p" data-group-id="7224308277-1">(</span><span class="mi">279093381723062272</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7224308277-2">[</span><span class="p" data-group-id="7224308277-3">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">351500354581692420</span><span class="p">,</span><span class="w"> </span><span class="ss">position</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7224308277-3">}</span><span class="p" data-group-id="7224308277-2">]</span><span class="p" data-group-id="7224308277-1">)</span><span class="w">
+</span><span class="p" data-group-id="7224308277-4">{</span><span class="ss">:ok</span><span class="p" data-group-id="7224308277-4">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_channel_positions</span><span class="p" data-group-id="6053370334-5">(</span><span class="mi">279093381723062272</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6053370334-6">[</span><span class="p" data-group-id="6053370334-7">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">351500354581692420</span><span class="p">,</span><span class="w"> </span><span class="ss">position</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6053370334-7">}</span><span class="p" data-group-id="6053370334-6">]</span><span class="p" data-group-id="6053370334-5">)</span><span class="w">
-</span><span class="p" data-group-id="6053370334-8">{</span><span class="ss">:ok</span><span class="p" data-group-id="6053370334-8">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_channel_positions</span><span class="p" data-group-id="7224308277-5">(</span><span class="mi">279093381723062272</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7224308277-6">[</span><span class="p" data-group-id="7224308277-7">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">351500354581692420</span><span class="p">,</span><span class="w"> </span><span class="ss">position</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7224308277-7">}</span><span class="p" data-group-id="7224308277-6">]</span><span class="p" data-group-id="7224308277-5">)</span><span class="w">
+</span><span class="p" data-group-id="7224308277-8">{</span><span class="ss">:ok</span><span class="p" data-group-id="7224308277-8">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_emoji/2">
@@ -5533,8 +5533,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_guild_emoji/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_emoji</span><span class="p" data-group-id="3745230659-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="mi">4314301984301</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elixir&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">roles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3745230659-2">[</span><span class="p" data-group-id="3745230659-2">]</span><span class="p" data-group-id="3745230659-1">)</span><span class="w">
-</span><span class="p" data-group-id="3745230659-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3745230659-4">%</span><span class="nc" data-group-id="3745230659-4">Remedy.Schema.Emoji</span><span class="p" data-group-id="3745230659-4">{</span><span class="p" data-group-id="3745230659-4">}</span><span class="p" data-group-id="3745230659-3">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_emoji</span><span class="p" data-group-id="3929988355-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="mi">4314301984301</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;elixir&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">roles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3929988355-2">[</span><span class="p" data-group-id="3929988355-2">]</span><span class="p" data-group-id="3929988355-1">)</span><span class="w">
+</span><span class="p" data-group-id="3929988355-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3929988355-4">%</span><span class="nc" data-group-id="3929988355-4">Remedy.Schema.Emoji</span><span class="p" data-group-id="3929988355-4">{</span><span class="p" data-group-id="3929988355-4">}</span><span class="p" data-group-id="3929988355-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_member/2">
@@ -5572,8 +5572,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_guild_member/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_member</span><span class="p" data-group-id="3612028248-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="mi">637162356451</span><span class="p">,</span><span class="w"> </span><span class="ss">nick</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Remedy&quot;</span><span class="p" data-group-id="3612028248-1">)</span><span class="w">
-</span><span class="p" data-group-id="3612028248-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="3612028248-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_member</span><span class="p" data-group-id="2039510964-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="mi">637162356451</span><span class="p">,</span><span class="w"> </span><span class="ss">nick</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Remedy&quot;</span><span class="p" data-group-id="2039510964-1">)</span><span class="w">
+</span><span class="p" data-group-id="2039510964-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="2039510964-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_role/2">
@@ -5604,7 +5604,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_guild_role/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_role</span><span class="p" data-group-id="0095154403-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="mi">392817238471936</span><span class="p">,</span><span class="w"> </span><span class="ss">hoist</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;foo-bar&quot;</span><span class="p" data-group-id="0095154403-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_role</span><span class="p" data-group-id="0070616127-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="mi">392817238471936</span><span class="p">,</span><span class="w"> </span><span class="ss">hoist</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;foo-bar&quot;</span><span class="p" data-group-id="0070616127-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_role_positions/1">
@@ -5631,7 +5631,7 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_guild_role_positions/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_role_positions</span><span class="p" data-group-id="8267887006-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8267887006-2">[</span><span class="p" data-group-id="8267887006-3">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">41771983423143936</span><span class="p">,</span><span class="w"> </span><span class="ss">position</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8267887006-3">}</span><span class="p" data-group-id="8267887006-2">]</span><span class="p" data-group-id="8267887006-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_guild_role_positions</span><span class="p" data-group-id="6345381887-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6345381887-2">[</span><span class="p" data-group-id="6345381887-3">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">41771983423143936</span><span class="p">,</span><span class="w"> </span><span class="ss">position</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6345381887-3">}</span><span class="p" data-group-id="6345381887-2">]</span><span class="p" data-group-id="6345381887-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_guild_sticker/2">
@@ -5743,11 +5743,11 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_message</span><span class="p" data-group-id="9549611867-1">(</span><span class="mi">889614079830925352</span><span class="p">,</span><span class="w"> </span><span class="mi">1894013840914098</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="9549611867-1">)</span><span class="w">
-</span><span class="p" data-group-id="9549611867-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="9549611867-2">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_message</span><span class="p" data-group-id="0350376089-1">(</span><span class="mi">889614079830925352</span><span class="p">,</span><span class="w"> </span><span class="mi">1894013840914098</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="0350376089-1">)</span><span class="w">
+</span><span class="p" data-group-id="0350376089-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="0350376089-2">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_message</span><span class="p" data-group-id="9549611867-3">(</span><span class="mi">889614079830925352</span><span class="p">,</span><span class="w"> </span><span class="mi">1894013840914098</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="9549611867-3">)</span><span class="w">
-</span><span class="p" data-group-id="9549611867-4">{</span><span class="ss">:ok</span><span class="p" data-group-id="9549611867-4">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_message</span><span class="p" data-group-id="0350376089-3">(</span><span class="mi">889614079830925352</span><span class="p">,</span><span class="w"> </span><span class="mi">1894013840914098</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello world!&quot;</span><span class="p" data-group-id="0350376089-3">)</span><span class="w">
+</span><span class="p" data-group-id="0350376089-4">{</span><span class="ss">:ok</span><span class="p" data-group-id="0350376089-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_news_channel/3">
@@ -5783,8 +5783,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_news_channel/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_news_channel</span><span class="p" data-group-id="6651130316-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6651130316-2">[</span><span class="p" data-group-id="6651130316-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="6651130316-3">}</span><span class="p" data-group-id="6651130316-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="6651130316-1">)</span><span class="w">
-</span><span class="p" data-group-id="6651130316-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6651130316-5">%</span><span class="nc" data-group-id="6651130316-5">Channel</span><span class="p" data-group-id="6651130316-5">{</span><span class="p" data-group-id="6651130316-5">}</span><span class="p" data-group-id="6651130316-4">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_news_channel</span><span class="p" data-group-id="6434541117-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6434541117-2">[</span><span class="p" data-group-id="6434541117-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="6434541117-3">}</span><span class="p" data-group-id="6434541117-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="6434541117-1">)</span><span class="w">
+</span><span class="p" data-group-id="6434541117-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6434541117-5">%</span><span class="nc" data-group-id="6434541117-5">Channel</span><span class="p" data-group-id="6434541117-5">{</span><span class="p" data-group-id="6434541117-5">}</span><span class="p" data-group-id="6434541117-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_nickname/2">
@@ -5814,8 +5814,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_nickname/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_nickname</span><span class="p" data-group-id="0645813274-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="ss">nick</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Remedy&quot;</span><span class="p" data-group-id="0645813274-1">)</span><span class="w">
-</span><span class="p" data-group-id="0645813274-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0645813274-3">%{</span><span class="ss">nick</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Remedy&quot;</span><span class="p" data-group-id="0645813274-3">}</span><span class="p" data-group-id="0645813274-2">}</span><span class="w">
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_nickname</span><span class="p" data-group-id="2174571823-1">(</span><span class="mi">41771983423143937</span><span class="p">,</span><span class="w"> </span><span class="ss">nick</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Remedy&quot;</span><span class="p" data-group-id="2174571823-1">)</span><span class="w">
+</span><span class="p" data-group-id="2174571823-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2174571823-3">%{</span><span class="ss">nick</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Remedy&quot;</span><span class="p" data-group-id="2174571823-3">}</span><span class="p" data-group-id="2174571823-2">}</span><span class="w">
 
 </span><span class="gp unselectable">iex&gt;</span></code></pre>
   </section>
@@ -5946,8 +5946,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_thread/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_group_dm</span><span class="p" data-group-id="6949010932-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6949010932-2">[</span><span class="p" data-group-id="6949010932-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="6949010932-3">}</span><span class="p" data-group-id="6949010932-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="6949010932-1">)</span><span class="w">
-</span><span class="p" data-group-id="6949010932-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6949010932-5">%</span><span class="nc" data-group-id="6949010932-5">Channel</span><span class="p" data-group-id="6949010932-5">{</span><span class="p" data-group-id="6949010932-5">}</span><span class="p" data-group-id="6949010932-4">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">modify_group_dm</span><span class="p" data-group-id="0680717992-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0680717992-2">[</span><span class="p" data-group-id="0680717992-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="0680717992-3">}</span><span class="p" data-group-id="0680717992-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="0680717992-1">)</span><span class="w">
+</span><span class="p" data-group-id="0680717992-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0680717992-5">%</span><span class="nc" data-group-id="0680717992-5">Channel</span><span class="p" data-group-id="0680717992-5">{</span><span class="p" data-group-id="0680717992-5">}</span><span class="p" data-group-id="0680717992-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_thread_test/0">
@@ -6051,8 +6051,8 @@ If not given, this will be fetched from <code class="inline">Me</code>.</li><li>
   <a href="#modify_voice_channel/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">voice_channel</span><span class="p" data-group-id="0154638842-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0154638842-2">[</span><span class="p" data-group-id="0154638842-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="0154638842-3">}</span><span class="p" data-group-id="0154638842-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="0154638842-1">)</span><span class="w">
-</span><span class="p" data-group-id="0154638842-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0154638842-5">%</span><span class="nc" data-group-id="0154638842-5">Channel</span><span class="p" data-group-id="0154638842-5">{</span><span class="p" data-group-id="0154638842-5">}</span><span class="p" data-group-id="0154638842-4">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">voice_channel</span><span class="p" data-group-id="7732801287-1">(</span><span class="mi">872417560094732331</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7732801287-2">[</span><span class="p" data-group-id="7732801287-3">{</span><span class="ss">:name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p" data-group-id="7732801287-3">}</span><span class="p" data-group-id="7732801287-2">]</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;felt like it&quot;</span><span class="p" data-group-id="7732801287-1">)</span><span class="w">
+</span><span class="p" data-group-id="7732801287-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7732801287-5">%</span><span class="nc" data-group-id="7732801287-5">Channel</span><span class="p" data-group-id="7732801287-5">{</span><span class="p" data-group-id="7732801287-5">}</span><span class="p" data-group-id="7732801287-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="modify_webhook/1">
@@ -6159,7 +6159,7 @@ authentication.</p><h2 id="modify_webhooks_with_token/2-parameters" class="secti
   <a href="#pin_message/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">add_pinned_channel_message</span><span class="p" data-group-id="5947212366-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="mi">18743893102394</span><span class="p" data-group-id="5947212366-1">)</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">add_pinned_channel_message</span><span class="p" data-group-id="9117628407-1">(</span><span class="mi">43189401384091</span><span class="p">,</span><span class="w"> </span><span class="mi">18743893102394</span><span class="p" data-group-id="9117628407-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="publish_message/1">
@@ -6262,8 +6262,8 @@ An optional <code class="inline">reason</code> can be specified for the audit lo
   <a href="#remove_guild_member/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">remove_guild_member</span><span class="p" data-group-id="2750166854-1">(</span><span class="mi">1453827904102291</span><span class="p">,</span><span class="w"> </span><span class="mi">18739485766253</span><span class="p" data-group-id="2750166854-1">)</span><span class="w">
-</span><span class="p" data-group-id="2750166854-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="2750166854-2">}</span></code></pre>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.API</span><span class="o">.</span><span class="n">remove_guild_member</span><span class="p" data-group-id="4998223104-1">(</span><span class="mi">1453827904102291</span><span class="p">,</span><span class="w"> </span><span class="mi">18739485766253</span><span class="p" data-group-id="4998223104-1">)</span><span class="w">
+</span><span class="p" data-group-id="4998223104-2">{</span><span class="ss">:ok</span><span class="p" data-group-id="4998223104-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="remove_guild_member_role/3">

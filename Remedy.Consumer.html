@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.7">
+    <meta name="project" content="Remedy v0.6.8">
 
-    <title>Remedy.Consumer — Remedy v0.6.7</title>
+    <title>Remedy.Consumer — Remedy v0.6.8</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-35d440e7f1.js"></script>
+    <script src="dist/sidebar_items-b40ccdb28c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.7
+        v0.6.8
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Consumer <small>behaviour</small> <small class="app-vsn">(Remedy v0.6.7)</small>
+Remedy.Consumer <small>behaviour</small> <small class="app-vsn">(Remedy v0.6.8)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -106,47 +106,47 @@ will each be ran in their own seperate task.</p><p>The full list of dispatch eve
   Example
 </h2>
 <p>It is recommended that you supervise your consumers. First we set up a supervisor module for our consumers.</p><pre><code class="makeup elixir"><span class="c1">#example_supervisor.ex</span><span class="w">
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.ExampleSupervisor</span><span class="w"> </span><span class="k" data-group-id="9431407228-1">do</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.ExampleSupervisor</span><span class="w"> </span><span class="k" data-group-id="1084981067-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Supervisor</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="9431407228-2">(</span><span class="n">args</span><span class="p" data-group-id="9431407228-2">)</span><span class="w"> </span><span class="k" data-group-id="9431407228-3">do</span><span class="w">
-    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="9431407228-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p" data-group-id="9431407228-4">)</span><span class="w">
-  </span><span class="k" data-group-id="9431407228-3">end</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="1084981067-2">(</span><span class="n">args</span><span class="p" data-group-id="1084981067-2">)</span><span class="w"> </span><span class="k" data-group-id="1084981067-3">do</span><span class="w">
+    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="1084981067-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p" data-group-id="1084981067-4">)</span><span class="w">
+  </span><span class="k" data-group-id="1084981067-3">end</span><span class="w">
 
   </span><span class="na">@impl</span><span class="w"> </span><span class="no">true</span><span class="w">
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="9431407228-5">(</span><span class="c">_init_arg</span><span class="p" data-group-id="9431407228-5">)</span><span class="w"> </span><span class="k" data-group-id="9431407228-6">do</span><span class="w">
-    </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9431407228-7">[</span><span class="nc">ExampleConsumer</span><span class="p" data-group-id="9431407228-7">]</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="1084981067-5">(</span><span class="c">_init_arg</span><span class="p" data-group-id="1084981067-5">)</span><span class="w"> </span><span class="k" data-group-id="1084981067-6">do</span><span class="w">
+    </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1084981067-7">[</span><span class="nc">ExampleConsumer</span><span class="p" data-group-id="1084981067-7">]</span><span class="w">
 
-    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p" data-group-id="9431407228-8">(</span><span class="n">children</span><span class="p">,</span><span class="w"> </span><span class="ss">strategy</span><span class="p">:</span><span class="w"> </span><span class="ss">:one_for_one</span><span class="p" data-group-id="9431407228-8">)</span><span class="w">
-  </span><span class="k" data-group-id="9431407228-6">end</span><span class="w">
-</span><span class="k" data-group-id="9431407228-1">end</span></code></pre><p>You can then set up your consumer module.</p><pre><code class="makeup elixir"><span class="c1">#example_consumer.ex</span><span class="w">
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleConsumer</span><span class="w"> </span><span class="k" data-group-id="1276278993-1">do</span><span class="w">
+    </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p" data-group-id="1084981067-8">(</span><span class="n">children</span><span class="p">,</span><span class="w"> </span><span class="ss">strategy</span><span class="p">:</span><span class="w"> </span><span class="ss">:one_for_one</span><span class="p" data-group-id="1084981067-8">)</span><span class="w">
+  </span><span class="k" data-group-id="1084981067-6">end</span><span class="w">
+</span><span class="k" data-group-id="1084981067-1">end</span></code></pre><p>You can then set up your consumer module.</p><pre><code class="makeup elixir"><span class="c1">#example_consumer.ex</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleConsumer</span><span class="w"> </span><span class="k" data-group-id="6662621664-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Remedy.Consumer</span><span class="w">
 
   </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Api</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="w"> </span><span class="k" data-group-id="1276278993-2">do</span><span class="w">
-    </span><span class="nc">Consumer</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="1276278993-3">(</span><span class="bp">__MODULE__</span><span class="p" data-group-id="1276278993-3">)</span><span class="w">
-  </span><span class="k" data-group-id="1276278993-2">end</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="w"> </span><span class="k" data-group-id="6662621664-2">do</span><span class="w">
+    </span><span class="nc">Consumer</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="6662621664-3">(</span><span class="bp">__MODULE__</span><span class="p" data-group-id="6662621664-3">)</span><span class="w">
+  </span><span class="k" data-group-id="6662621664-2">end</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="1276278993-4">(</span><span class="p" data-group-id="1276278993-5">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1276278993-6">%</span><span class="nc" data-group-id="1276278993-6">Message</span><span class="p" data-group-id="1276278993-6">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="n">content</span><span class="p" data-group-id="1276278993-6">}</span><span class="p">,</span><span class="w"> </span><span class="c">_ws_state</span><span class="p" data-group-id="1276278993-5">}</span><span class="p" data-group-id="1276278993-4">)</span><span class="w"> </span><span class="k" data-group-id="1276278993-7">do</span><span class="w">
-    </span><span class="k">case</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k" data-group-id="1276278993-8">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="6662621664-4">(</span><span class="p" data-group-id="6662621664-5">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6662621664-6">%</span><span class="nc" data-group-id="6662621664-6">Message</span><span class="p" data-group-id="6662621664-6">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="n">content</span><span class="p" data-group-id="6662621664-6">}</span><span class="p">,</span><span class="w"> </span><span class="c">_ws_state</span><span class="p" data-group-id="6662621664-5">}</span><span class="p" data-group-id="6662621664-4">)</span><span class="w"> </span><span class="k" data-group-id="6662621664-7">do</span><span class="w">
+    </span><span class="k">case</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k" data-group-id="6662621664-8">do</span><span class="w">
       </span><span class="s">&quot;!sleep&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
-        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="1276278993-9">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Going to sleep...&quot;</span><span class="p" data-group-id="1276278993-9">)</span><span class="w">
-        </span><span class="nc">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p" data-group-id="1276278993-10">(</span><span class="mi">3000</span><span class="p" data-group-id="1276278993-10">)</span><span class="w">
+        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="6662621664-9">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Going to sleep...&quot;</span><span class="p" data-group-id="6662621664-9">)</span><span class="w">
+        </span><span class="nc">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p" data-group-id="6662621664-10">(</span><span class="mi">3000</span><span class="p" data-group-id="6662621664-10">)</span><span class="w">
 
       </span><span class="s">&quot;!ping&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
-        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="1276278993-11">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pyongyang!&quot;</span><span class="p" data-group-id="1276278993-11">)</span><span class="w">
+        </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="6662621664-11">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pyongyang!&quot;</span><span class="p" data-group-id="6662621664-11">)</span><span class="w">
 
       </span><span class="s">&quot;!raise&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
         </span><span class="k">raise</span><span class="w"> </span><span class="s">&quot;No problems here!&quot;</span><span class="w">
-    </span><span class="k" data-group-id="1276278993-8">end</span><span class="w">
-  </span><span class="k" data-group-id="1276278993-7">end</span><span class="w">
+    </span><span class="k" data-group-id="6662621664-8">end</span><span class="w">
+  </span><span class="k" data-group-id="6662621664-7">end</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="1276278993-12">(</span><span class="c">_event</span><span class="p" data-group-id="1276278993-12">)</span><span class="w"> </span><span class="k" data-group-id="1276278993-13">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="6662621664-12">(</span><span class="c">_event</span><span class="p" data-group-id="6662621664-12">)</span><span class="w"> </span><span class="k" data-group-id="6662621664-13">do</span><span class="w">
     </span><span class="ss">:noop</span><span class="w">
-  </span><span class="k" data-group-id="1276278993-13">end</span><span class="w">
-</span><span class="k" data-group-id="1276278993-1">end</span></code></pre>
+  </span><span class="k" data-group-id="6662621664-13">end</span><span class="w">
+</span><span class="k" data-group-id="6662621664-1">end</span></code></pre>
         </section>
 
 
@@ -1887,7 +1887,7 @@ Types
       <div class="specs">
 
           <pre>voice_state_update() ::
-  {:VOICE_STATE_UPDATE, Remedy.Schema.VoiceState.t(),
+  {:VOICE_STATE_UPDATE, <a href="Remedy.Schema.VoiceState.html#t:t/0">Remedy.Schema.VoiceState.t</a>(),
    Remedy.Gateway.WSState.t()}</pre>
 
       </div>
@@ -1978,10 +1978,10 @@ Callbacks
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.7" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.7" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.8" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.8" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/consumer.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.8/show/lib/remedy/consumer.ex">(current file)</a>
 
         </p>
 

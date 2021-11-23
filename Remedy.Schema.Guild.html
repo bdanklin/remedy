@@ -5,12 +5,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.7">
+    <meta name="project" content="Remedy v0.6.8">
 
-    <title>Remedy.Schema.Guild — Remedy v0.6.7</title>
+    <title>Remedy.Schema.Guild — Remedy v0.6.8</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-35d440e7f1.js"></script>
+    <script src="dist/sidebar_items-b40ccdb28c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -58,7 +58,7 @@
 Remedy
       </a>
       <strong class="sidebar-projectVersion">
-        v0.6.7
+        v0.6.8
       </strong>
     </div>
 
@@ -84,7 +84,7 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.Guild <small class="app-vsn">(Remedy v0.6.7)</small>
+Remedy.Schema.Guild <small class="app-vsn">(Remedy v0.6.8)</small>
 
           <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
@@ -201,13 +201,11 @@ Types
 
           <pre>t() :: %Remedy.Schema.Guild{
   __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  afk_channel: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
+  afk_channel_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   afk_timeout: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  application: <a href="Remedy.Schema.App.html#t:t/0">Remedy.Schema.App.t</a>(),
-  application_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  application_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   approximate_member_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   approximate_presence_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  banned_users: [<a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()],
   banner: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   bans: [<a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>()],
   channels: [<a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()],
@@ -221,7 +219,6 @@ Types
   icon_hash: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   inserted_at: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  integrations: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   joined_at: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.ISO8601.html#t:t/0">Sunbake.ISO8601.t</a>(),
   large: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   max_members: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
@@ -232,31 +229,28 @@ Types
   mfa_level: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   nsfw_level: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  owner: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(),
-  owner_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  permissions: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  owner_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   preferred_locale: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   premium_subscription_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   premium_tier: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   presences: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  public_updates_channel: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
-  region: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  public_updates_channel_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   roles: [<a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()],
-  rules_channel: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
+  rules_channel_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   shard: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   splash: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   stage_instances: [<a href="Remedy.Schema.StageInstance.html#t:t/0">Remedy.Schema.StageInstance.t</a>()],
   stickers: [<a href="Remedy.Schema.Sticker.html#t:t/0">Remedy.Schema.Sticker.t</a>()],
-  system_channel: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
   system_channel_flags: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  system_channel_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   threads: [<a href="Remedy.Schema.Thread.html#t:t/0">Remedy.Schema.Thread.t</a>()],
   unavailable: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   updated_at: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   vanity_url_code: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   verification_level: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  voice_states: [Remedy.Schema.VoiceState.t()],
+  voice_states: [<a href="Remedy.Schema.VoiceState.html#t:t/0">Remedy.Schema.VoiceState.t</a>()],
   welcome_screen: <a href="Remedy.Schema.WelcomeScreen.html#t:t/0">Remedy.Schema.WelcomeScreen.t</a>(),
-  widget_channel: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
+  widget_channel_id: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>(),
   widget_enabled: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
 }</pre>
 
@@ -289,7 +283,7 @@ Functions
     </a>
     <h1 class="signature">banner(guild, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L203" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L182" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -320,7 +314,7 @@ Functions
     </a>
     <h1 class="signature">discovery_splash(guild, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L193" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L172" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -351,7 +345,7 @@ Functions
     </a>
     <h1 class="signature">icon(guild, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L173" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L152" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -382,7 +376,7 @@ Functions
     </a>
     <h1 class="signature">splash(guild, size \\ nil)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L183" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L162" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -410,10 +404,10 @@ Functions
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.7" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.7" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.8" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.8" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.7/show/lib/remedy/schema/guild.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.8/show/lib/remedy/schema/guild.ex">(current file)</a>
 
         </p>
 

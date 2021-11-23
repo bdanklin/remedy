@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.25.3">
     <meta name="project" content="Remedy v0.6.8">
 
-    <title>Remedy.Schema.Webhook — Remedy v0.6.8</title>
+    <title>Remedy.Gateway.EventCache — Remedy v0.6.8</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
     <script src="dist/sidebar_items-b40ccdb28c.js"></script>
@@ -84,19 +84,15 @@ Remedy
     <div id="content" class="content-inner">
 
       <h1>
-Remedy.Schema.Webhook <small class="app-vsn">(Remedy v0.6.8)</small>
+Remedy.Gateway.EventCache <small class="app-vsn">(Remedy v0.6.8)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L1" title="View Source" class="view-source" rel="help">
             <span class="icon-code" aria-hidden="true"></span>
             <span class="sr-only">View Source</span>
           </a>
 
       </h1>
 
-
-        <section id="moduledoc">
-<p>Webhook</p>
-        </section>
 
 
         <section id="summary" class="details-list">
@@ -114,84 +110,105 @@ Remedy.Schema.Webhook <small class="app-vsn">(Remedy v0.6.8)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:application/0">application()</a>
+    <a href="#t:attrs/0">attrs()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:avatar/0">avatar()</a>
+    <a href="#t:changeset/0">changeset()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:channel/0">channel()</a>
+    <a href="#t:reason/0">reason()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:guild/0">guild()</a>
+    <a href="#t:snowflake/0">snowflake()</a>
+
+  </div>
+
+</div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#app/0">app()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:name/0">name()</a>
+    <a href="#bot/0">bot()</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:source_channel/0">source_channel()</a>
+    <a href="#create_interaction/1">create_interaction(attrs)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:source_guild/0">source_guild()</a>
+    <a href="#delete_user/1">delete_user(id)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
+    <a href="#drop_metadata/1">drop_metadata(map)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:token/0">token()</a>
+    <a href="#drop_unloaded_assoc/1">drop_unloaded_assoc(map)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:type/0">type()</a>
+    <a href="#get_member/2">get_member(guild_id, user_id)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:url/0">url()</a>
+    <a href="#remove_message_reactions/1">remove_message_reactions(message_id)</a>
 
   </div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:user/0">user()</a>
+    <a href="#update_member/1">update_member(attrs)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update_user/1">update_user(attrs)</a>
 
   </div>
 
@@ -211,16 +228,16 @@ Remedy.Schema.Webhook <small class="app-vsn">(Remedy v0.6.8)</small>
 Types
           </h1>
           <div class="types-list">
-<section class="detail" id="t:application/0">
+<section class="detail" id="t:attrs/0">
 
   <div class="detail-header">
-    <a href="#t:application/0" class="detail-link" title="Link to this type">
+    <a href="#t:attrs/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">application()</h1>
+    <h1 class="signature">attrs()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L12" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L26" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -233,23 +250,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>application() :: <a href="Remedy.Schema.App.html#t:t/0">Remedy.Schema.App.t</a>()</pre>
+          <pre>attrs() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:avatar/0">
+<section class="detail" id="t:changeset/0">
 
   <div class="detail-header">
-    <a href="#t:avatar/0" class="detail-link" title="Link to this type">
+    <a href="#t:changeset/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">avatar()</h1>
+    <h1 class="signature">changeset()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L27" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -262,23 +279,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>avatar() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>changeset() :: <a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:channel/0">
+<section class="detail" id="t:reason/0">
 
   <div class="detail-header">
-    <a href="#t:channel/0" class="detail-link" title="Link to this type">
+    <a href="#t:reason/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">channel()</h1>
+    <h1 class="signature">reason()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L25" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -291,23 +308,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>channel() :: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()</pre>
+          <pre>reason() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:guild/0">
+<section class="detail" id="t:snowflake/0">
 
   <div class="detail-header">
-    <a href="#t:guild/0" class="detail-link" title="Link to this type">
+    <a href="#t:snowflake/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">guild()</h1>
+    <h1 class="signature">snowflake()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L14" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L24" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -320,23 +337,124 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>guild() :: <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>()</pre>
+          <pre>snowflake() :: <a href="https://hexdocs.pm/sunbake/0.2.4/Sunbake.Snowflake.html#t:t/0">Sunbake.Snowflake.t</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:name/0">
+
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="app/0">
 
   <div class="detail-header">
-    <a href="#t:name/0" class="detail-link" title="Link to this type">
+    <a href="#app/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">name()</h1>
+    <h1 class="signature">app()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L8" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L309" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="bot/0">
+
+  <div class="detail-header">
+    <a href="#bot/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">bot()</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L290" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="create_interaction/1">
+
+  <div class="detail-header">
+    <a href="#create_interaction/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">create_interaction(attrs)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L182" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="delete_user/1">
+
+  <div class="detail-header">
+    <a href="#delete_user/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">delete_user(id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L120" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="drop_metadata/1">
+
+  <div class="detail-header">
+    <a href="#drop_metadata/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">drop_metadata(map)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L326" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -349,23 +467,23 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>drop_metadata(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:source_channel/0">
+<section class="detail" id="drop_unloaded_assoc/1">
 
   <div class="detail-header">
-    <a href="#t:source_channel/0" class="detail-link" title="Link to this type">
+    <a href="#drop_unloaded_assoc/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">source_channel()</h1>
+    <h1 class="signature">drop_unloaded_assoc(map)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L15" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L323" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -378,23 +496,45 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>source_channel() :: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>()</pre>
+          <pre>drop_unloaded_assoc(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:source_guild/0">
+<section class="detail" id="get_member/2">
 
   <div class="detail-header">
-    <a href="#t:source_guild/0" class="detail-link" title="Link to this type">
+    <a href="#get_member/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">source_guild()</h1>
+    <h1 class="signature">get_member(guild_id, user_id)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L128" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="remove_message_reactions/1">
+
+  <div class="detail-header">
+    <a href="#remove_message_reactions/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">remove_message_reactions(message_id)</h1>
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L237" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -407,23 +547,24 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>source_guild() :: <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>()</pre>
+          <pre>remove_message_reactions(<a href="#t:snowflake/0">snowflake</a>()) ::
+  {:ok, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>()} | {:error, <a href="#t:reason/0">reason</a>()}</pre>
 
       </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:t/0">
+<section class="detail" id="update_member/1">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#update_member/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">t()</h1>
+    <h1 class="signature">update_member(attrs)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L19" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L130" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -432,47 +573,20 @@ Types
   </div>
 
   <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>t() :: %Remedy.Schema.Webhook{
-  __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  application: <a href="#t:application/0">application</a>(),
-  application_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  avatar: <a href="#t:avatar/0">avatar</a>(),
-  channel: <a href="#t:channel/0">channel</a>(),
-  channel_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  guild: <a href="#t:guild/0">guild</a>(),
-  guild_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  name: <a href="#t:name/0">name</a>(),
-  source_channel: <a href="#t:source_channel/0">source_channel</a>(),
-  source_channel_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  source_guild: <a href="#t:source_guild/0">source_guild</a>(),
-  source_guild_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  token: <a href="#t:token/0">token</a>(),
-  type: <a href="#t:type/0">type</a>(),
-  url: <a href="#t:url/0">url</a>(),
-  user: <a href="#t:user/0">user</a>(),
-  user_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-}</pre>
-
-      </div>
 
 
   </section>
 </section>
-<section class="detail" id="t:token/0">
+<section class="detail" id="update_user/1">
 
   <div class="detail-header">
-    <a href="#t:token/0" class="detail-link" title="Link to this type">
+    <a href="#update_user/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">token()</h1>
+    <h1 class="signature">update_user(attrs)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L9" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/event_cache.ex#L104" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -481,100 +595,6 @@ Types
   </div>
 
   <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>token() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:type/0">
-
-  <div class="detail-header">
-    <a href="#t:type/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">type()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L10" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>type() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:url/0">
-
-  <div class="detail-header">
-    <a href="#t:url/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">url()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L11" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>url() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:user/0">
-
-  <div class="detail-header">
-    <a href="#t:user/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">user()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/webhook.ex#L17" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>user() :: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()</pre>
-
-      </div>
 
 
   </section>
@@ -590,7 +610,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.8" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.8" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.8/show/lib/remedy/schema/webhook.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.8/show/lib/remedy/gateway/event_cache.ex">(current file)</a>
 
         </p>
 

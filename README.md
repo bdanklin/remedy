@@ -26,7 +26,7 @@ Remedy is an elixir library for interracting with the [Discord API](https://disc
 ```elixir
 defp deps() do
   [
-    {:remedy, "~> 0.6.4"}
+    {:remedy, "~> 0.6.8"}
   ]
 end
 ```

@@ -23,9 +23,9 @@ defmodule Remedy.Schema.Channel do
           member_count: integer(),
           default_auto_archive_duration: integer(),
           permissions: String.t(),
-          parent: Channel.t(),
+          parent_id: Snowflake.t(),
           #     owner: User.t(),
-          guild: Guild.t(),
+          guild_id: Snowflake.t(),
           permission_overwrites: [overwrite]
           #    messages: [Message.t()]
         }
@@ -51,20 +51,15 @@ defmodule Remedy.Schema.Channel do
     field :default_auto_archive_duration, :integer
     field :permissions, :string
 
-    belongs_to :parent, Channel
+    field :parent_id, Snowflake
     #  belongs_to :owner, User
-    belongs_to :guild, Guild
+    field :guild_id, Snowflake
     embeds_many :permission_overwrites, PermissionOverwrite
 
     #  has_many :messages, Message
 
     timestamps()
   end
-
-  @doc false
-  def form(params), do: params |> changeset() |> apply_changes()
-  @doc false
-  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
   def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)

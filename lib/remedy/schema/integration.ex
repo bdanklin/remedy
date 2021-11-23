@@ -8,7 +8,7 @@ defmodule Remedy.Schema.Integration do
           name: String.t(),
           type: String.t(),
           enabled: boolean(),
-          app: App.t(),
+          application: App.t(),
           guild_id: Snowflake.t()
         }
 
@@ -17,7 +17,7 @@ defmodule Remedy.Schema.Integration do
     field :name, :string
     field :type, :string
     field :enabled, :boolean
-    belongs_to :app, App
+    embeds_one :application, App
     belongs_to :guild, Guild
   end
 

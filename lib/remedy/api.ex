@@ -104,7 +104,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_current_bot_application_information({:error, _reason} = error), do: error
-  defp parse_get_current_bot_application_information({:ok, bot}), do: {:ok, App.form(bot)}
+  defp parse_get_current_bot_application_information({:ok, bot}), do: {:ok, form(bot, App)}
 
   @doc """
   Gets the authorization information for the Bot.
@@ -169,8 +169,8 @@ defmodule Remedy.API do
   defp parse_get_guild_audit_log({:ok, audit_log}, guild_id) do
     {:ok,
      audit_log
-     |> AuditLog.form()
-     |> AuditLog.shape(%{guild_id: guild_id})}
+     |> Map.put_new(:guild_id, guild_id)
+     |> form(AuditLog)}
   end
 
   ###################################################################################
@@ -207,7 +207,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_channel({:error, _reason} = error), do: error
-  defp parse_get_channel({:ok, channel}), do: {:ok, Channel.form(channel)}
+  defp parse_get_channel({:ok, channel}), do: {:ok, form(channel, Channel)}
 
   @doc """
   Modifies a channel's settings.
@@ -255,7 +255,7 @@ defmodule Remedy.API do
 
   defp parse_modify_channel({:error, _reason} = error), do: error
   defp parse_modify_channel({:ok, %{id: nil}}), do: {:error, "Request Failed"}
-  defp parse_modify_channel({:ok, %{id: _id} = channel}), do: {:ok, Channel.form(channel)}
+  defp parse_modify_channel({:ok, %{id: _id} = channel}), do: {:ok, form(channel, Channel)}
 
   @doc """
   Modify a group DM.
@@ -487,9 +487,7 @@ defmodule Remedy.API do
   defp parse_delete_channel({:error, _reason} = error), do: error
 
   defp parse_delete_channel({:ok, channel}) do
-    {:ok,
-     channel
-     |> Channel.form()}
+    {:ok, form(channel, Channel)}
   end
 
   @doc """
@@ -536,7 +534,7 @@ defmodule Remedy.API do
   defp parse_list_messages({:error, _reason} = error), do: error
 
   defp parse_list_messages({:ok, messages}) do
-    messages = for m <- messages, into: [], do: Message.form(m)
+    messages = for m <- messages, into: [], do: form(m, Message)
     {:ok, messages}
   end
 
@@ -590,7 +588,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_channel_message({:error, _reason} = error), do: error
-  defp parse_get_channel_message({:ok, channel}), do: {:ok, Message.form(channel)}
+  defp parse_get_channel_message({:ok, message}), do: {:ok, form(message, Message)}
 
   @doc """
   Posts a message to a guild text or DM channel.
@@ -661,7 +659,7 @@ defmodule Remedy.API do
   end
 
   defp parse_publish_message({:error, _reason} = error), do: error
-  defp parse_publish_message({:ok, message}), do: {:ok, Message.form(message)}
+  defp parse_publish_message({:ok, message}), do: {:ok, form(message, Message)}
 
   @doc """
   Creates a reaction for a message.
@@ -2132,7 +2130,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_current_user({:error, _reason} = error), do: error
-  defp parse_get_current_user({:ok, user}), do: {:ok, User.form(user)}
+  defp parse_get_current_user({:ok, user}), do: {:ok, form(user, User)}
 
   @doc """
   Gets a user by its `t:Remedy.Schema.User.id/0`.
@@ -2148,12 +2146,7 @@ defmodule Remedy.API do
   end
 
   defp parse_get_user({:error, _reason} = error), do: error
-
-  defp parse_get_user({:ok, user}) do
-    {:ok,
-     user
-     |> User.form()}
-  end
+  defp parse_get_user({:ok, user}), do: {:ok, form(user, User)}
 
   @doc """
   Changes the username or avatar of the current user.
@@ -2794,6 +2787,10 @@ defmodule Remedy.API do
   @unsafe {:get_gateway_bot, []}
   def get_gateway_bot do
     {:get, "/gateway/bot"} |> request() |> parse_get_gateway_bot()
+  end
+
+  defp form(attrs, module) do
+    module.changeset(attrs) |> Ecto.Changeset.apply_changes()
   end
 
   defp parse_get_gateway_bot({:error, _reason} = error), do: error

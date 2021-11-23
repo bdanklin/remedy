@@ -3,11 +3,10 @@ defmodule Remedy.Schema.Ban do
   Discord Ban Object
   """
   use Remedy.Schema
-  @primary_key false
 
   @type t :: %__MODULE__{
-          user: User.t(),
-          guild: Guild.t(),
+          user_id: Snowflake.t(),
+          guild_id: Snowflake.t(),
           reason: String.t(),
           invalid_since: DateTime.t()
         }
@@ -15,8 +14,8 @@ defmodule Remedy.Schema.Ban do
   # Primary key :guild_id ++ :user_id
   @primary_key {:id, :id, autogenerate: false}
   schema "bans" do
-    belongs_to :user, User
-    belongs_to :guild, Guild
+    field :user_id, Snowflake
+    field :guild_id, Snowflake
     field :reason, :string
     field :invalid_since, :utc_datetime, default: nil
   end

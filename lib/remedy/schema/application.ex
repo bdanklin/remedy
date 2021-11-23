@@ -14,11 +14,11 @@ defmodule Remedy.Schema.App do
           bot_require_code_grant: boolean(),
           terms_of_service_url: String.t(),
           privacy_policy_url: String.t(),
-          owner: User.t(),
+          #    owner: User.t(),
           summary: String.t(),
           verify_key: String.t(),
-          team: Team.t(),
-          guild_id: Guild.t(),
+          #    team: Team.t(),
+          #    guild_id: Guild.t(),
           primary_sku_id: Snowflake.t(),
           slug: String.t(),
           cover_image: String.t(),
@@ -42,9 +42,9 @@ defmodule Remedy.Schema.App do
     field :verify_key, :string
     field :hook, :boolean
 
-    embeds_one :owner, User
-    belongs_to :team, Team
-    belongs_to :guild, Guild
+    # embeds_one :owner, User
+    # belongs_to :team, Team
+    # belongs_to :guild, Guild
     field :primary_sku_id, Snowflake
     field :slug, :string
 
@@ -52,19 +52,9 @@ defmodule Remedy.Schema.App do
   end
 
   @doc false
-  def form(params), do: params |> changeset() |> apply_changes()
-  @doc false
-  def shape(model, params), do: model |> changeset(params) |> apply_changes()
-
-  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
   end
 
   def system_changeset(model \\ %__MODULE__{}, params) do

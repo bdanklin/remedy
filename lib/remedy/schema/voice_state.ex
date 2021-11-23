@@ -1,81 +1,71 @@
 defmodule Remedy.Schema.VoiceState do
-  @moduledoc false
-  use Remedy.Schema
-  @primary_key {:id, :id, autogenerate: false}
+  @moduledoc """
+  Voice State Update Event
+  """
 
-  @type guild_id :: term()
-  @type channel_id :: term()
-  @type self_mute :: term()
-  @type self_deaf :: term()
-  @type gateway :: term()
-  @type session :: term()
-  @type token :: term()
-  @type secret_key :: term()
-  @type session_pid :: term()
-  @type ssrc :: term()
-  @type speaking :: term()
-  @type ip :: term()
-  @type udp_socket :: term()
-  @type rtp_sequenceuence :: term()
-  @type rtp_timestamp :: term()
-  @type ffmpeg_proc :: term()
-  @type raw_audio :: term()
-  @type raw_stateful :: term()
-  @type player_pid :: term()
+  use Remedy.Schema
+
+  @typedoc "Time at which the user requested to speak, if applicable"
 
   @type t :: %__MODULE__{
-          guild_id: guild_id,
-          channel_id: channel_id,
-          self_mute: self_mute,
-          self_deaf: self_deaf,
-          gateway: gateway,
-          session: session,
-          token: token,
-          secret_key: secret_key,
-          session_pid: session_pid,
-          ssrc: ssrc,
-          speaking: speaking,
-          ip: ip,
-          port: term,
-          udp_socket: udp_socket,
-          rtp_sequenceuence: rtp_sequenceuence,
-          rtp_timestamp: rtp_timestamp,
-          ffmpeg_proc: ffmpeg_proc,
-          raw_audio: raw_audio,
-          raw_stateful: raw_stateful,
-          player_pid: player_pid
+          guild_id: Snowflake.t(),
+          channel_id: Snowflake.t(),
+          user_id: Snowflake.t(),
+          member: Member.t() | nil,
+          session_id: String.t(),
+          deaf?: boolean(),
+          mute?: boolean(),
+          self_deaf?: boolean(),
+          self_mute?: boolean(),
+          self_stream?: boolean(),
+          self_video?: boolean(),
+          suppress?: boolean(),
+          request_to_speak_timestamp: ISO8601.t() | nil
         }
 
-  schema "voice_states" do
+  @primary_key false
+  embedded_schema do
     field :guild_id, Snowflake
     field :channel_id, Snowflake
-    field :self_mute, :boolean
-    field :self_deaf, :boolean
-    field :gateway
-    field :session
-    field :token
-    field :secret_key
-    field :session_pid
-    field :ssrc
-    field :speaking
-    field :ip
-    field :port
-    field :udp_socket
-    field :rtp_sequenceuence
-    field :rtp_timestamp
-    field :ffmpeg_proc
-    field :raw_audio
-    field :raw_stateful
-    field :player_pid
+    field :user_id, Snowflake
+    field :session_id, :boolean
+    field :deaf?, :boolean
+    field :mute?, :boolean
+    field :self_deaf?, :boolean
+    field :self_mute?, :boolean
+    field :self_stream?, :boolean
+    field :self_video?, :boolean
+    field :suppress?, :boolean
+    field :request_to_speak_timestamp, ISO8601
+    embeds_one :member, Member
   end
 
-  def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
+  @doc false
+  def form(params) do
+    params |> changeset() |> validate() |> apply_changes()
+  end
 
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+  @doc false
+  def shape(model, params) do
+    model |> changeset(params) |> validate() |> apply_changes()
+  end
+
+  @doc false
+  def validate(changeset), do: changeset
+  @doc false
+  def changeset(params), do: changeset(%__MODULE__{}, params)
+  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
+
+  def changeset(%__MODULE__{} = model, params) do
+    cast(model, params, castable())
+    |> cast_embeds()
+  end
+
+  defp cast_embeds(cast_model) do
+    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
+  end
+
+  defp castable do
+    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
   end
 end

@@ -2,13 +2,7 @@ defmodule Remedy.Gateway.EventBuffer do
   @moduledoc false
 
   use GenStage
-  alias Remedy.Gateway.{Dispatch, EventBroadcaster}
-    
-  
-  
-  ############
-  ### Internal
-  ############
+  alias Remedy.Gateway.{EventHandler, EventBroadcaster}
 
   def start_link(_opts) do
     GenStage.start_link(__MODULE__, [], name: __MODULE__)
@@ -25,8 +19,7 @@ defmodule Remedy.Gateway.EventBuffer do
   end
 
   defp dispatch(events) do
-    events
-    |> Enum.map(&Dispatch.handle/1)
+    Enum.map(events, &EventHandler.handle/1)
     |> List.flatten()
     |> Enum.filter(fn event -> event != :noop end)
   end

@@ -26,19 +26,18 @@ defmodule Remedy.Schema.Guild do
           mfa_level: integer(),
           name: String.t(),
           nsfw_level: integer(),
-          permissions: String.t(),
           preferred_locale: String.t(),
           premium_subscription_count: integer(),
           premium_tier: integer(),
-          region: String.t(),
+          #       region: String.t(),
           splash: String.t(),
           system_channel_flags: integer(),
           vanity_url_code: String.t(),
           verification_level: integer(),
           widget_enabled: boolean(),
           shard: integer(),
-          application: App.t(),
-          owner: User.t(),
+          application_id: Snowflake.t(),
+          owner_id: Snowflake.t(),
           welcome_screen: WelcomeScreen.t(),
           channels: [Remedy.Schema.Channel.t()],
           emojis: [Remedy.Schema.Emoji.t()],
@@ -50,12 +49,11 @@ defmodule Remedy.Schema.Guild do
           threads: [Thread.t()],
           voice_states: [VoiceState.t()],
           bans: [Ban.t()],
-          banned_users: [User.t()],
-          afk_channel: Channel.t(),
-          public_updates_channel: Channel.t(),
-          rules_channel: Channel.t(),
-          system_channel: Channel.t(),
-          widget_channel: Channel.t()
+          afk_channel_id: Snowflake.t(),
+          public_updates_channel_id: Snowflake.t(),
+          rules_channel_id: Snowflake.t(),
+          system_channel_id: Snowflake.t(),
+          widget_channel_id: Snowflake.t()
         }
 
   @primary_key {:id, :id, autogenerate: false}
@@ -80,11 +78,10 @@ defmodule Remedy.Schema.Guild do
     field :mfa_level, :integer
     field :name, :string
     field :nsfw_level, :integer
-    field :permissions, :string
     field :preferred_locale, :string
     field :premium_subscription_count, :integer
     field :premium_tier, :integer
-    field :region, :string
+    #   field :region, :string
     field :splash, :string
     field :unavailable, :boolean
     field :system_channel_flags, :integer
@@ -92,8 +89,10 @@ defmodule Remedy.Schema.Guild do
     field :verification_level, :integer
     field :widget_enabled, :boolean
 
-    belongs_to :application, App
-    belongs_to :owner, User
+    #  field :permissions, :string
+
+    field :application_id, Snowflake
+    field :owner_id, Snowflake
 
     embeds_one :welcome_screen, WelcomeScreen
 
@@ -104,21 +103,18 @@ defmodule Remedy.Schema.Guild do
     has_many :stage_instances, StageInstance, on_delete: :nilify_all
     has_many :stickers, Sticker, on_delete: :nilify_all
     has_many :threads, Thread, on_delete: :nilify_all
-    has_many :integrations, Integration, on_delete: :nilify_all
-
     has_many :members, Member, on_delete: :nilify_all
     has_many :voice_states, VoiceState, on_delete: :nilify_all
 
-    has_one :afk_channel, Channel
-    has_one :public_updates_channel, Channel
-    has_one :rules_channel, Channel
-    has_one :system_channel, Channel
-    has_one :widget_channel, Channel
+    field :afk_channel_id, Snowflake
+    field :public_updates_channel_id, Snowflake
+    field :rules_channel_id, Snowflake
+    field :system_channel_id, Snowflake
+    field :widget_channel_id, Snowflake
 
     ## Custom
     field :shard, :integer
     has_many :bans, Ban
-    has_many :banned_users, through: [:bans, :user]
 
     timestamps()
   end
@@ -131,21 +127,8 @@ defmodule Remedy.Schema.Guild do
 
     model
     |> cast(params, to_cast)
-    |> cast_assoc(:channels)
-    |> cast_assoc(:emojis)
-    |> cast_assoc(:roles)
-    |> cast_assoc(:stage_instances)
-    |> cast_assoc(:stickers)
-    |> cast_assoc(:threads)
-
-    #    |> cast_assoc(:presences)
-    #    |> cast_assoc(:voice_states)
   end
 
-  @spec update_emojis_changeset(
-          {map, map} | %{:__struct__ => atom | %{:__changeset__ => map, optional(any) => any}, optional(atom) => any},
-          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
-        ) :: map
   @doc false
   # Provided for the :GUILD_EMOJIS_UPDATE gateway event
   def update_emojis_changeset(model, params) do
@@ -154,10 +137,6 @@ defmodule Remedy.Schema.Guild do
     |> cast_assoc(:emojis)
   end
 
-  @spec update_stickers_changeset(
-          {map, map} | %{:__struct__ => atom | %{:__changeset__ => map, optional(any) => any}, optional(atom) => any},
-          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
-        ) :: map
   @doc false
   # provided for the :GUILD_STICKERS_UPDATE gateway event.
   def update_stickers_changeset(model, params) do

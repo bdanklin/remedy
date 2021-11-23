@@ -50,7 +50,8 @@ defmodule Remedy.Schema.AuditLogEntry do
           target_id: String.t(),
           action_type: integer(),
           reason: String.t(),
-          user: User.t(),
+          user_id: Snowflake.t(),
+          #     user: User.t(),
           options: [AuditLogOption.t()],
           changes: [map()]
         }
@@ -60,8 +61,9 @@ defmodule Remedy.Schema.AuditLogEntry do
     field :target_id, :string
     field :action_type, :integer
     field :reason, :string
+    field :user_id, Snowflake
     field :changes, {:array, :map}
-    belongs_to :user, User
+    #   belongs_to :user, User
     embeds_many :options, AuditLogOption
   end
 
@@ -82,30 +84,31 @@ defmodule Remedy.Schema.AuditLogOption do
   Discord Audit Log Option Object
   """
   use Remedy.Schema
-  @type overwrite :: PermissionOverwrite.t()
 
   @type t :: %__MODULE__{
-          delete_member_days: String.t(),
-          members_removed: String.t(),
-          channel: Channel.t(),
-          message_id: Snowflake.t(),
-          count: String.t(),
           id: Snowflake,
-          overwrite: overwrite,
+          message_id: Snowflake.t(),
+          channel_id: Snowflake.t(),
+          members_removed: String.t(),
+          delete_member_days: String.t(),
+          count: String.t(),
           type: String.t(),
-          role_name: String.t()
+          role_name: String.t(),
+          #    channel: Channel.t(),
+          overwrite: PermissionOverwrite.t()
         }
 
   @primary_key false
   embedded_schema do
-    field :delete_member_days, :string
-    field :members_removed, :string
-    field :message_id, Snowflake
-    field :count, :string
     field :id, Snowflake
+    field :message_id, Snowflake
+    field :channel_id, Snowflake
+    field :members_removed, :string
+    field :delete_member_days, :string
+    field :count, :string
     field :type, :string
     field :role_name, :string
-    belongs_to :channel, Channel
+    # belongs_to :channel, Channel
     embeds_one :overwrite, PermissionOverwrite
   end
 

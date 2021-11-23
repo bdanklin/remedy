@@ -21,11 +21,6 @@ defmodule Remedy.Schema.Ready do
   end
 
   @doc false
-  def form(params), do: params |> changeset() |> apply_changes()
-  @doc false
-  def shape(model, params), do: model |> changeset(params) |> apply_changes()
-
-  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

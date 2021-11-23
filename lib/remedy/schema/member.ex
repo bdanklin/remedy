@@ -43,7 +43,6 @@ defmodule Remedy.Schema.Member do
       params
       |> put_pkey()
       |> Map.drop([:guild, :user])
-      |> IO.inspect()
 
     model
     |> cast(params, @to_cast)

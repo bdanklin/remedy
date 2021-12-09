@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Permission — Remedy v0.6.8</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-b40ccdb28c.js"></script>
+    <script src="dist/sidebar_items-13e67feada.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -175,7 +175,7 @@ Remedy.Schema.Permission <small class="app-vsn">(Remedy v0.6.8)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Same as <a href="#from_bit/1"><code class="inline">from_bit/1</code></a>, but raises <a href="https://hexdocs.pm/elixir/ArgumentError.html"><code class="inline">ArgumentError</code></a> in case of failure.</p></div>
+    <div class="summary-synopsis"><p>Same as <a href="#from_bit/1"><code class="inline">from_bit/1</code></a>, but raises in case of failure.</p></div>
 
 </div>
 <div class="summary-row">
@@ -491,7 +491,7 @@ iex&gt; Remedy.Permission.from_bit(0)
 
       </div>
 
-<p>Same as <a href="#from_bit/1"><code class="inline">from_bit/1</code></a>, but raises <a href="https://hexdocs.pm/elixir/ArgumentError.html"><code class="inline">ArgumentError</code></a> in case of failure.</p><h2 id="from_bit!/1-examples" class="section-heading">
+<p>Same as <a href="#from_bit/1"><code class="inline">from_bit/1</code></a>, but raises in case of failure.</p><h2 id="from_bit!/1-examples" class="section-heading">
   <a href="#from_bit!/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
@@ -499,7 +499,7 @@ iex&gt; Remedy.Permission.from_bit(0)
 :change_nickname
 
 iex&gt; Remedy.Permission.from_bit!(0)
-** (ArgumentError) expected a valid bit, got: `0`</code></pre>
+** expected a valid bit, got: `0`</code></pre>
   </section>
 </section>
 <section class="detail" id="from_bitset/1">

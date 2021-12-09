@@ -10,7 +10,7 @@
     <title>Remedy — Remedy v0.6.8</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-b40ccdb28c.js"></script>
+    <script src="dist/sidebar_items-13e67feada.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -91,23 +91,23 @@ Remedy
   <a href="#installation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Installation
 </h2>
-<pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="p" data-group-id="3936877388-1">(</span><span class="p" data-group-id="3936877388-1">)</span><span class="w"> </span><span class="k" data-group-id="3936877388-2">do</span><span class="w">
-  </span><span class="p" data-group-id="3936877388-3">[</span><span class="w">
-    </span><span class="p" data-group-id="3936877388-4">{</span><span class="ss">:remedy</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.6.8&quot;</span><span class="p" data-group-id="3936877388-4">}</span><span class="w">
-  </span><span class="p" data-group-id="3936877388-3">]</span><span class="w">
-</span><span class="k" data-group-id="3936877388-2">end</span></code></pre><h2 id="using-remedy-with-phoenix" class="section-heading">
+<pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="p" data-group-id="5155236530-1">(</span><span class="p" data-group-id="5155236530-1">)</span><span class="w"> </span><span class="k" data-group-id="5155236530-2">do</span><span class="w">
+  </span><span class="p" data-group-id="5155236530-3">[</span><span class="w">
+    </span><span class="p" data-group-id="5155236530-4">{</span><span class="ss">:remedy</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.6.8&quot;</span><span class="p" data-group-id="5155236530-4">}</span><span class="w">
+  </span><span class="p" data-group-id="5155236530-3">]</span><span class="w">
+</span><span class="k" data-group-id="5155236530-2">end</span></code></pre><h2 id="using-remedy-with-phoenix" class="section-heading">
   <a href="#using-remedy-with-phoenix" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Using Remedy with Phoenix
 </h2>
-<p>Directly (Phoenix), or indirectly (Remedy, via Gun), both of these libraries require Cowlib, which unfortunately suffers from being optimistic about peoples behaviour on the internet. Discord is notorious for misbehaving in regards to RFC7230 3.3.2. and conversely, Cowlib is notorious for strictly adhering to this proposed standard, even at its own peril.</p><p>Remedy uses patched versions of both of these libraries. Gun is the same as the 2.0rc at the time of publishing, and Cowlib is patched to remove the strict adherance to RFC7230. It is completely backwards compatible with the regular Cowlib 2.11 published on hex. Except it is more forgiving in regards to the the proposed standard.</p><h3 id="tl-dr" class="section-heading">
+<p>Directly (Phoenix), or indirectly (Remedy, via Gun), both of these libraries require Cowlib.</p><p>Discord is notorious for misbehaving in regards to RFC7230 3.3.2. and conversely, Cowlib is notorious for strictly adhering to this proposed standard, some of discords responses are an almost correct 204 response which cause the official Cowlib to raise frequently, crashing our consumer.</p><p>Remedy uses patched versions of both of these libraries. Gun is the same as the 2.0rc at the time of publishing, and Cowlib is patched to remove the strict adherance to RFC7230. It is completely backwards compatible with the regular Cowlib 2.11 published on hex. Except it will not raise in the case of diversion from the standard. It will pass through values regardless, which is what we need to handle discords empty 204 responses.</p><h3 id="tl-dr" class="section-heading">
   <a href="#tl-dr" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   TL;DR.
 </h3>
-<p>If you are using Phoenix or any other library that requires Cowlib 2.11. also add the following to your deps</p><pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="7765410064-1">do</span><span class="w">
-  </span><span class="p" data-group-id="7765410064-2">[</span><span class="w">
-    </span><span class="p" data-group-id="7765410064-3">{</span><span class="ss">:cowlib</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 2.11&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">hex</span><span class="p">:</span><span class="w"> </span><span class="ss">:remedy_cowlib</span><span class="p">,</span><span class="w"> </span><span class="ss">override</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="7765410064-3">}</span><span class="w">
-  </span><span class="p" data-group-id="7765410064-2">]</span><span class="w">
-</span><span class="k" data-group-id="7765410064-1">end</span></code></pre><h2 id="license" class="section-heading">
+<p>If you are using Phoenix or any other library that requires Cowlib 2.11. also add the following to your deps</p><pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="6607124212-1">do</span><span class="w">
+  </span><span class="p" data-group-id="6607124212-2">[</span><span class="w">
+    </span><span class="p" data-group-id="6607124212-3">{</span><span class="ss">:cowlib</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 2.11&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">hex</span><span class="p">:</span><span class="w"> </span><span class="ss">:remedy_cowlib</span><span class="p">,</span><span class="w"> </span><span class="ss">override</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="6607124212-3">}</span><span class="w">
+  </span><span class="p" data-group-id="6607124212-2">]</span><span class="w">
+</span><span class="k" data-group-id="6607124212-1">end</span></code></pre><h2 id="license" class="section-heading">
   <a href="#license" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   License
 </h2>

@@ -1,14 +1,13 @@
 404.html
 Remedy.API.html
-Remedy.APIError.html
 Remedy.CDN.html
-Remedy.CacheError.html
+Remedy.Commands.html
 Remedy.Consumer.html
-Remedy.EnvironmentVariableError.html
-Remedy.Gateway.EventCache.html
+Remedy.Embed.html
 Remedy.Gateway.html
-Remedy.Schema.Activity.html
+Remedy.Schema.AllowedMentions.html
 Remedy.Schema.App.html
+Remedy.Schema.ApplicationOwner.html
 Remedy.Schema.ApplicationWebhook.html
 Remedy.Schema.Attachment.html
 Remedy.Schema.AuditLog.html
@@ -38,6 +37,8 @@ Remedy.Schema.Guild.html
 Remedy.Schema.IncomingWebhook.html
 Remedy.Schema.Integration.html
 Remedy.Schema.Interaction.html
+Remedy.Schema.InteractionCallback.html
+Remedy.Schema.InteractionCallbackData.html
 Remedy.Schema.InteractionData.html
 Remedy.Schema.InteractionDataOption.html
 Remedy.Schema.InteractionDataResolved.html
@@ -67,7 +68,6 @@ Remedy.Schema.Webhook.html
 Remedy.Schema.WelcomeScreen.html
 Remedy.Schema.WelcomeScreenChannel.html
 Remedy.Schema.html
-Remedy.VoiceError.html
 api-reference.html
 assets/logo.png
 dist/app-e5e774c81fa6257aba7f.js
@@ -76,8 +76,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-9b2f91f8a1.js
-dist/sidebar_items-b40ccdb28c.js
+dist/search_items-edeee0aea5.js
+dist/sidebar_items-13e67feada.js
 index.html
 introduction.html
 search.html

@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Attachment — Remedy v0.6.8</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-b40ccdb28c.js"></script>
+    <script src="dist/sidebar_items-13e67feada.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -172,8 +172,10 @@ Types
 
           <pre>t() :: %Remedy.Schema.Attachment{
   content_type: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  ephemeral: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   filename: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   height: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   proxy_url: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   size: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   url: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
@@ -209,7 +211,7 @@ Functions
     </a>
     <h1 class="signature">changeset(model \\ %__MODULE__{}, params)</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/attachment.ex#L28" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/attachment.ex#L30" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

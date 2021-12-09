@@ -141,13 +141,13 @@ defmodule Remedy.Schema.InteractionDataResolved do
           channels: [Channel.t()],
           messages: [Message.t()]
         }
-
+  @primary_key false
   embedded_schema do
     embeds_many :users, User
-    embeds_many :members, Members
-    embeds_many :roles, Roles
-    embeds_many :channels, Channels
-    embeds_many :messages, Messages
+    embeds_many :members, Member
+    embeds_many :roles, Role
+    embeds_many :channels, Channel
+    embeds_many :messages, Message
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

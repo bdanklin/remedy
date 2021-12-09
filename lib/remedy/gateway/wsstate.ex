@@ -7,25 +7,29 @@ defmodule Remedy.Gateway.WSState do
 
   @primary_key false
   embedded_schema do
-    field :conn, :any, virtual: true, redact: true
-    field :gun_conn, :any, virtual: true, redact: true
-    field :gun_data_stream, :any, virtual: true, redact: true
-    field :heartbeat_timer, :any, virtual: true, redact: true
-    field :payload_dispatch_event, :any, virtual: true
-    field :shard_pid, :any, virtual: true, default: self(), redact: true
-    field :token, :string, default: Application.get_env(:remedy, :token), redact: true
-    field :zlib_context, :any, virtual: true, redact: true
+    field :conn, :any, virtual: true
+    field :data_stream, :any, virtual: true
+    field :zlib_context, :any, virtual: true
+
+    field :heartbeat_timer, :any, virtual: true
+    field :shard_pid, :any, virtual: true, default: self()
+    field :token, :string, default: Application.get_env(:remedy, :token)
 
     field :gateway, :string
     field :heartbeat_ack, :boolean
+
     field :heartbeat_interval, :integer
     field :last_heartbeat_ack, :utc_datetime
     field :last_heartbeat_send, :utc_datetime
+
+    field :payload_dispatch_event, :any, virtual: true
     field :payload_op_code, :integer, default: 0
     field :payload_op_event, :string, default: ""
     field :payload_sequence, :integer
+
     field :session_id, :string
     field :shard, :integer
+    field :total_shards, :integer
     field :v, :integer
   end
 

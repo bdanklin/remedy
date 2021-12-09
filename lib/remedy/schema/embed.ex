@@ -20,6 +20,7 @@ defmodule Remedy.Schema.Embed do
           video: EmbedVideo.t()
         }
 
+  @primary_key false
   embedded_schema do
     field :title, :string
     field :type, :string
@@ -38,13 +39,19 @@ defmodule Remedy.Schema.Embed do
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:title, :type, :description, :url, :timestamp, :color])
+    |> validate_required(:description)
+    |> validate_exclusion(:description, [""])
+    |> validate_length(:title, max: 256)
+    |> validate_length(:description, max: 4096)
+    |> cast_embed(:fields)
+    |> cast_embed(:author)
+    |> cast_embed(:footer)
+    |> cast_embed(:image)
+    |> cast_embed(:provider)
+    |> cast_embed(:thumbnail)
+    |> cast_embed(:video)
   end
 end
 
@@ -54,13 +61,9 @@ defmodule Remedy.Schema.EmbedAuthor do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          name: String.t(),
-          url: String.t(),
-          icon_url: String.t(),
-          proxy_icon_url: String.t()
-        }
+  @type t :: %__MODULE__{name: String.t(), url: String.t(), icon_url: String.t(), proxy_icon_url: String.t()}
 
+  @primary_key false
   embedded_schema do
     field :name
     field :url
@@ -69,13 +72,9 @@ defmodule Remedy.Schema.EmbedAuthor do
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:name, :url, :icon_url, :proxy_icon_url])
+    |> validate_required(:name)
   end
 end
 
@@ -85,26 +84,19 @@ defmodule Remedy.Schema.EmbedField do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          name: String.t(),
-          value: String.t(),
-          inline: boolean()
-        }
+  @type t :: %__MODULE__{name: String.t(), value: String.t(), inline: boolean()}
 
+  @primary_key false
   embedded_schema do
-    field :name, :string, required: true
-    field :value, :string, required: true
-    field :inline
+    field :name
+    field :value
+    field :inline, :boolean, default: false
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:name, :value, :inline])
+    |> validate_required([:name, :value])
   end
 end
 
@@ -114,26 +106,19 @@ defmodule Remedy.Schema.EmbedFooter do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          text: String.t(),
-          icon_url: String.t(),
-          proxy_icon_url: String.t()
-        }
+  @type t :: %__MODULE__{text: String.t(), icon_url: String.t(), proxy_icon_url: String.t()}
 
+  @primary_key false
   embedded_schema do
-    field :text, :string, required: true
-    field :icon_url
-    field :proxy_icon_url
+    field :text, :string
+    field :icon_url, :string
+    field :proxy_icon_url, :string
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:text, :icon_url, :proxy_icon_url])
+    |> validate_required(:text)
   end
 end
 
@@ -143,13 +128,9 @@ defmodule Remedy.Schema.EmbedImage do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          url: String.t(),
-          proxy_url: String.t(),
-          height: integer(),
-          width: integer()
-        }
+  @type t :: %__MODULE__{url: String.t(), proxy_url: String.t(), height: integer(), width: integer()}
 
+  @primary_key false
   embedded_schema do
     field :url, :string
     field :proxy_url, :string
@@ -158,13 +139,9 @@ defmodule Remedy.Schema.EmbedImage do
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:url, :proxy_url, :height, :width])
+    |> validate_required(:url)
   end
 end
 
@@ -174,24 +151,17 @@ defmodule Remedy.Schema.EmbedProvider do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          provider: String.t(),
-          url: String.t()
-        }
+  @type t :: %__MODULE__{provider: String.t(), url: String.t()}
 
+  @primary_key false
   embedded_schema do
     field :provider, :string
     field :url, :string
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:provider, :url])
   end
 end
 
@@ -201,13 +171,9 @@ defmodule Remedy.Schema.EmbedThumbnail do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          url: String.t(),
-          proxy_url: String.t(),
-          height: integer(),
-          width: integer()
-        }
+  @type t :: %__MODULE__{url: String.t(), proxy_url: String.t(), height: integer(), width: integer()}
 
+  @primary_key false
   embedded_schema do
     field :url, :string
     field :proxy_url, :string
@@ -216,29 +182,20 @@ defmodule Remedy.Schema.EmbedThumbnail do
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:url, :proxy_url, :height, :width])
   end
 end
 
 defmodule Remedy.Schema.EmbedVideo do
   @moduledoc """
-  Embed Video Schema.
+  Embed Video Object.
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          url: String.t(),
-          proxy_url: String.t(),
-          height: integer(),
-          width: integer()
-        }
+  @type t :: %__MODULE__{url: String.t(), proxy_url: String.t(), height: integer(), width: integer()}
 
+  @primary_key false
   embedded_schema do
     field :url, :string
     field :proxy_url, :string
@@ -248,17 +205,7 @@ defmodule Remedy.Schema.EmbedVideo do
 
   @doc false
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-
-    cast_model =
-      model
-      |> cast(params, fields -- embeds)
-      |> validate_required([:name])
-      |> validate_length(:name, max: 32)
-
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    model
+    |> cast(params, [:url, :proxy_url, :height, :width])
   end
 end

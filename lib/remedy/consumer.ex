@@ -216,8 +216,7 @@ defmodule Remedy.Consumer do
 
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-create)
   """
-  @type guild_create ::
-          {:GUILD_CREATE, Guild.t(), WSState.t()}
+  @type guild_create :: {:GUILD_CREATE, Guild.t(), WSState.t()}
 
   @typedoc """
 
@@ -230,16 +229,14 @@ defmodule Remedy.Consumer do
 
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-delete)
   """
-  @type guild_delete ::
-          {:GUILD_DELETE, Guild.t(), WSState.t()}
+  @type guild_delete :: {:GUILD_DELETE, Guild.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild's emojis have been updated.
 
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-emojis-update)
   """
-  @type guild_emojis_update ::
-          {:GUILD_EMOJIS_UPDATE, Guild.t(), WSState.t()}
+  @type guild_emojis_update :: {:GUILD_EMOJIS_UPDATE, Guild.t(), WSState.t()}
 
   @typedoc """
   Sent when a guild integration is updated.
@@ -523,13 +520,12 @@ defmodule Remedy.Consumer do
       @behaviour Remedy.Consumer
       alias Remedy.Consumer
 
-      def start_link(event), do: Task.start_link(fn -> __MODULE__.handle_event(event) end)
+      def start_link(event) do
+        Task.start_link(fn -> __MODULE__.handle_event(event) end)
+      end
 
       def child_spec(_arg) do
-        spec = %{
-          id: __MODULE__,
-          start: {__MODULE__, :start_link, []}
-        }
+        spec = %{id: __MODULE__, start: {__MODULE__, :start_link, []}}
 
         Supervisor.child_spec(spec, unquote(Macro.escape(opts)))
       end
@@ -542,6 +538,7 @@ defmodule Remedy.Consumer do
     end
   end
 
+  @spec start_link(any, keyword) :: :ignore | {:error, any} | {:ok, pid}
   @doc false
   def start_link(mod, opts \\ []) do
     {mod_and_opts, cs_opts} =
@@ -556,16 +553,9 @@ defmodule Remedy.Consumer do
   @doc false
   def init([mod, opts]) do
     default = [strategy: :one_for_one, subscribe_to: [EventBuffer]]
+    opts = Keyword.merge(default, opts)
+    child_spec = [%{id: mod, start: {mod, :start_link, []}, restart: :transient}]
 
-    ConsumerSupervisor.init(
-      [
-        %{
-          id: mod,
-          start: {mod, :start_link, []},
-          restart: :transient
-        }
-      ],
-      Keyword.merge(default, opts)
-    )
+    ConsumerSupervisor.init(child_spec, opts)
   end
 end

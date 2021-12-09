@@ -9,7 +9,7 @@ defmodule Remedy do
     children = [
       Remedy.API.Ratelimiter,
       Remedy.API.Rest,
-      Remedy.Cache.Repo,
+      Remedy.Repo,
       Remedy.GatewayATC,
       Remedy.Gateway,
       Remedy.DummyConsumerSupervisor
@@ -33,19 +33,19 @@ defmodule Remedy do
 
     cond do
       is_binary(ff) and is_nil(System.find_executable(ff)) ->
-        Logger.warn("""
+        Logger.error("""
         #{ff} was not found in your path. By default, Remedy requires ffmpeg to use voice.
         If you don't intend to use voice with ffmpeg, configure :remedy, :ffmpeg to nil to suppress.
         """)
 
       is_binary(yt) and is_nil(System.find_executable(yt)) ->
-        Logger.warn("""
+        Logger.error("""
         #{yt} was not found in your path. Remedy supports youtube-dl for voice.
         If you don't require youtube-dl support, configure :remedy, :youtubedl to nil to suppress.
         """)
 
       is_binary(sl) and is_nil(System.find_executable(sl)) ->
-        Logger.warn("""
+        Logger.error("""
         #{sl} was not found in your path. Remedy supports streamlink for voice.
         If you don't require streamlink support, configure :remedy, :streamlink to nil to suppress.
         """)

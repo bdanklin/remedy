@@ -11,23 +11,25 @@ defmodule Remedy.Schema.Attachment do
           url: String.t(),
           proxy_url: String.t(),
           height: integer(),
-          width: integer()
+          width: integer(),
+          ephemeral: boolean()
         }
 
-  @primary_key false
+  @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
-    field :filename, :string, required: true
-    field :content_type, :string, required: true
-    field :size, :integer, required: true
-    field :url, :string, required: true
-    field :proxy_url, :string, required: true
+    field :filename, :string
+    field :content_type, :string
+    field :size, :integer
+    field :url, :string
+    field :proxy_url, :string
     field :height, :integer
     field :width, :integer
+    field :ephemeral, :boolean
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    fields = __MODULE__.__schema__(:fields)
-    embeds = __MODULE__.__schema__(:embeds)
-    cast(model, params, fields -- embeds)
+    model
+    |> cast(params, [:filename, :content_type, :size, :url, :proxy_url, :height, :width, :ephemeral])
+    |> validate_required([:id, :filename, :content_type, :size, :url])
   end
 end

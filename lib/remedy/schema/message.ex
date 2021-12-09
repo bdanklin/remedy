@@ -15,10 +15,10 @@ defmodule Remedy.Schema.Message do
           timestamp: ISO8601.t(),
           tts: boolean(),
           type: integer(),
-          application: App.t(),
+          application_id: Snowflake.t(),
           author: User.t(),
-          channel: Channel.t(),
-          guild: Guild.t(),
+          channel_id: Snowflake.t(),
+          guild_id: Snowflake.t(),
           thread: Thread.t(),
           webhook: Webhook.t(),
           attachments: [Attachment.t()],
@@ -29,7 +29,7 @@ defmodule Remedy.Schema.Message do
           mentions: [User.t()],
           reactions: [Reaction.t()],
           sticker_items: [Sticker.t()],
-          message_reference: Reference.t(),
+          message_reference: MessageReference.t(),
           referenced_message: Message.t(),
           activity: Activity.t(),
           interaction: Interaction.t(),
@@ -48,11 +48,13 @@ defmodule Remedy.Schema.Message do
     field :tts, :boolean
     field :type, :integer
 
-    belongs_to :application, App
-    belongs_to :author, User, foreign_key: :author_id
-    belongs_to :channel, Channel
+    field :application_id, Snowflake
+    field :guild_id, Snowflake
+    field :channel_id, Snowflake
+
+    embeds_one :author, User
+
     belongs_to :thread, Channel
-    belongs_to :guild, Guild
     embeds_one :webhook, Webhook
 
     field :content, :string
@@ -65,13 +67,11 @@ defmodule Remedy.Schema.Message do
     embeds_many :reactions, Reaction
     embeds_many :sticker_items, Sticker
 
-    embeds_one :message_reference, Reference
+    embeds_one :message_reference, MessageReference
     embeds_one :referenced_message, Message
     embeds_one :activity, Activity
     embeds_one :interaction, Interaction
     embeds_one :member, Member
-
-    timestamps()
   end
 
   @doc false

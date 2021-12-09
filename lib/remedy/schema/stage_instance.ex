@@ -8,8 +8,8 @@ defmodule Remedy.Schema.StageInstance do
           topic: String.t(),
           privacy_level: integer(),
           discoverable_disabled: boolean(),
-          guild: Guild.t(),
-          channel: Channel.t()
+          guild_id: Snowflake.t(),
+          channel_id: Snowflake.t()
         }
 
   @primary_key {:id, :id, autogenerate: false}
@@ -17,14 +17,10 @@ defmodule Remedy.Schema.StageInstance do
     field :topic, :string
     field :privacy_level, :integer
     field :discoverable_disabled, :boolean
-    belongs_to :guild, Guild
-    belongs_to :channel, Channel
+    field :guild_id, Snowflake
+    field :channel_id, Snowflake
     # field :tags,  :	role tags object	the tags this role has
   end
-
-  def form(params), do: params |> changeset() |> apply_changes()
-  @doc false
-  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
   @doc false
   def changeset(model \\ %__MODULE__{}, params) do

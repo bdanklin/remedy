@@ -56,12 +56,12 @@ defmodule Remedy.Schema.AuditLogEntry do
           changes: [map()]
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
-    field :target_id, :string
+    field :target_id, Snowflake
+    field :user_id, Snowflake
     field :action_type, :integer
     field :reason, :string
-    field :user_id, Snowflake
     field :changes, {:array, :map}
     #   belongs_to :user, User
     embeds_many :options, AuditLogOption

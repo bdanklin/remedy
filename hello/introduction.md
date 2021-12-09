@@ -33,9 +33,11 @@ end
 
 ## Using Remedy with Phoenix
 
-Directly (Phoenix), or indirectly (Remedy, via Gun), both of these libraries require Cowlib, which unfortunately suffers from being optimistic about peoples behaviour on the internet. Discord is notorious for misbehaving in regards to RFC7230 3.3.2. and conversely, Cowlib is notorious for strictly adhering to this proposed standard, even at its own peril.
+Directly (Phoenix), or indirectly (Remedy, via Gun), both of these libraries require Cowlib.
 
-Remedy uses patched versions of both of these libraries. Gun is the same as the 2.0rc at the time of publishing, and Cowlib is patched to remove the strict adherance to RFC7230. It is completely backwards compatible with the regular Cowlib 2.11 published on hex. Except it is more forgiving in regards to the the proposed standard.
+Discord is notorious for misbehaving in regards to RFC7230 3.3.2. and conversely, Cowlib is notorious for strictly adhering to this proposed standard, some of discords responses are an almost correct 204 response which cause the official Cowlib to raise frequently, crashing our consumer.
+
+Remedy uses patched versions of both of these libraries. Gun is the same as the 2.0rc at the time of publishing, and Cowlib is patched to remove the strict adherance to RFC7230. It is completely backwards compatible with the regular Cowlib 2.11 published on hex. Except it will not raise in the case of diversion from the standard. It will pass through values regardless, which is what we need to handle discords empty 204 responses.
 
 ### TL;DR.
 

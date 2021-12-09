@@ -13,7 +13,7 @@
     Remedy.Application,
     Remedy.Cache.DiscordApp,
     Remedy.Cache.DiscordBot,
-    Remedy.Cache.Repo,
+    Remedy.Repo,
     Remedy.CacheSupervisor,
     Remedy.Gateway.EventBroadcaster,
     Remedy.Gateway.EventBuffer,

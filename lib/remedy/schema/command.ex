@@ -34,11 +34,6 @@ defmodule Remedy.Schema.Command do
     Enum.reduce(embeds, cast_model, fn embed, cast_model ->
       cast_embed(cast_model, embed)
     end)
-  end
-
-  @doc false
-  def validate(changeset) do
-    changeset
     |> validate_required([:name])
     |> validate_length(:name, max: 32)
   end

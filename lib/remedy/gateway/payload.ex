@@ -7,10 +7,11 @@ defmodule Remedy.Gateway.Payload do
 
     quote do
       alias unquote(parent)
-
-      import Remedy.OpcodeHelpers, only: [op_from_mod: 1]
-      use Ecto.Schema
       alias Remedy.Gateway.{Pacemaker, Payload, Session, WSState}
+      import Remedy.OpcodeHelpers, only: [op_from_mod: 1]
+      import :erlang, only: [term_to_binary: 1]
+      import Remedy.Gun, only: [websocket_send: 2]
+      use Ecto.Schema
 
       def build_payload(socket, opts), do: payload(socket, opts) |> send_out()
       defp send_out(%WSState{} = socket), do: socket
@@ -21,11 +22,9 @@ defmodule Remedy.Gateway.Payload do
           "op" => op_from_mod(__MODULE__)
         }
         |> flatten()
-        |> :erlang.term_to_binary()
-        |> Remedy.Gun.websocket_send(socket)
+        |> term_to_binary()
+        |> websocket_send(socket)
       end
-
-      ### Prepare payload for transmission.
 
       defp flatten(map), do: :maps.map(&dfl/2, map) |> Morphix.stringmorphiform!()
       defp dfl(_key, value), do: enm(value)
@@ -46,10 +45,20 @@ defmodule Remedy.Gateway.Payload do
 
   @typedoc false
   @type payload :: any | nil
+
   @typedoc false
   @type socket :: WSState.t()
+
   @typedoc false
   @type opts :: list() | nil
+
+  ## Each event is handled by its own module
+  ##
+  ## If an event is received on the gateway, mod.digest/2 is invoked.
+  ## It needs to return the socket modified as required by the event.
+  ##
+  ## If an event is to be sent mod.payload/2 is invoked.
+  ## It needs to return a tuple of {payload_to_send, socket}
 
   @doc false
   @callback payload(socket, opts) :: {payload, socket}
@@ -59,6 +68,8 @@ defmodule Remedy.Gateway.Payload do
 
   @optional_callbacks payload: 2, digest: 2
 
+  import Remedy.OpcodeHelpers, only: [is_op_event: 1, mod_from_event: 1]
+  require Logger
   alias Remedy.Gateway.{Events, WSState}
 
   alias Remedy.Gateway.Events.{
@@ -80,10 +91,6 @@ defmodule Remedy.Gateway.Payload do
         },
         warn: false
 
-  import Remedy.OpcodeHelpers, only: [is_op_event: 1, mod_from_event: 1]
-
-  require Logger
-
   @spec digest(WSState.t(), any, binary) :: WSState.t()
   def digest(socket, event, payload) do
     module_delegate(event).digest(socket, payload)
@@ -95,6 +102,7 @@ defmodule Remedy.Gateway.Payload do
   end
 
   defp module_delegate(event) when is_op_event(event) do
+    Logger.error("#{event}")
     [Events, mod_from_event(event)] |> Module.concat()
   end
 end

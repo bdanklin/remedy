@@ -79,7 +79,6 @@ defmodule Remedy.Gateway.EventHandler do
   ##
   ## Perform all caching operations here.
   ## They will be performed immediately before they are sent to the Consumer
-  ##########################################################################
 
   def handle(:CHANNEL_CREATE, payload, socket) do
     payload
@@ -227,14 +226,18 @@ defmodule Remedy.Gateway.EventHandler do
     end
   end
 
-  def handle(:GUILD_EMOJIS_UPDATE, %{guild_id: guild_id, emojis: emojis}, socket) do
-    for emoji <- emojis do
-      emoji
-      |> Map.put_new(:guild_id, guild_id)
-      |> EventCache.update_emoji()
-    end
+  def handle(:GUILD_EMOJIS_UPDATE, %{guild_id: guild_id} = payload, socket) do
+    payload
+    |> Map.delete(:guild_id)
+    |> Map.put_new(:id, guild_id)
+    |> EventCache.update_guild()
+    |> case do
+      {:ok, guild} ->
+        {:GUILD_EMOJIS_UPDATE, guild, socket}
 
-    {:GUILD_EMOJIS_UPDATE, EventCache.get_guild(guild_id), socket}
+      {:error, _changeset} ->
+        :noop
+    end
   end
 
   def handle(:GUILD_INTEGRATIONS_UPDATE, payload, socket) do
@@ -375,7 +378,12 @@ defmodule Remedy.Gateway.EventHandler do
     end
   end
 
-  def handle(:INTERACTION_CREATE, payload, socket) do
+  def handle(:INTERACTION_CREATE, %{data: %{resolved: resolved}} = payload, socket) do
+    payload =
+      put_in(payload.data.resolved, for({k, v} <- resolved, into: %{}, do: {k, for({_k, v} <- v, into: [], do: v)}))
+      |> form(Remedy.Schema.Interaction)
+      |> IO.inspect()
+
     {:INTERACTION_CREATE, payload, socket}
   end
 

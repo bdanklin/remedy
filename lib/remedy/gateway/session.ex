@@ -6,37 +6,32 @@ defmodule Remedy.Gateway.Session do
   require Logger
   use GenServer
 
-  ### External
-
   def update_presence(shard, opts \\ []) do
-    GenServer.cast(:"session_#{shard}", {:status_update, opts})
+    GenServer.cast(:"SESSION_#{shard}", {:status_update, opts})
   end
 
   def voice_status_update(shard, opts \\ []) do
-    GenServer.cast(:"session_#{shard}", {:update_voice_state, opts})
+    GenServer.cast(:"SESSION_#{shard}", {:update_voice_state, opts})
   end
 
   def request_guild_members(shard, opts \\ []) do
-    GenServer.cast(:"session_#{shard}", {:request_guild_members, opts})
+    GenServer.cast(:"SESSION_#{shard}", {:request_guild_members, opts})
   end
-
-  ### Internal
 
   @doc false
   def start_link(%{shard: shard} = opts) do
-    GenServer.start_link(__MODULE__, opts, name: :"session_#{shard}")
+    GenServer.start_link(__MODULE__, opts, name: :"SESSION_#{shard}")
   end
 
-  def init(%{gateway: gateway, shard: shard}) do
-    {:ok, %WSState{gateway: gateway, shard: shard}, {:continue, :establish_connection}}
+  def init(%{shard: shard}) do
+    {:ok, %WSState{shard: shard}, {:continue, :establish_connection}}
   end
 
   def handle_continue(:establish_connection, socket) do
     {:noreply,
      socket
      |> GatewayATC.request_connect()
-     |> Gun.open_websocket()
-     |> Gun.zlib_init()}
+     |> Gun.open_websocket()}
   end
 
   def handle_cast({:status_update, opts}, socket) do
@@ -51,6 +46,8 @@ defmodule Remedy.Gateway.Session do
     Payload.send(socket, :REQUEST_GUILD_MEMBERS, opts)
   end
 
+  ## Internal Heartbeat Timer Finished before Gateway ACK
+  ##
   def handle_info(:HEARTBEAT, %{heartbeat_ack: false} = socket) do
     Logger.warn("NO RESPONSE TO HEARTBEAT")
 
@@ -66,29 +63,37 @@ defmodule Remedy.Gateway.Session do
      |> Payload.send(:HEARTBEAT)}
   end
 
-  def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, socket) do
-    {payload, socket} = Gun.unpack_frame(socket, frame)
-
-    op = payload.op
-    event = event_from_op(op)
-    sequence = payload[:s]
-    dispatch_event = payload[:t]
-    data = payload[:d]
-
-    {:noreply,
-     %WSState{
-       socket
-       | payload_op_code: op,
-         payload_op_event: event,
-         payload_sequence: sequence,
-         payload_dispatch_event: dispatch_event
-     }
-     |> Payload.digest(event, data)}
+  ## Data Frame Arrives
+  ## Unzip with Zlib and build into the websocket state
+  ##
+  def handle_info({:gun_ws, _worker, _stream, {:binary, frame}}, %WSState{zlib_context: zlib_context} = socket) do
+    with payload <-
+           :zlib.inflate(zlib_context, frame)
+           |> :erlang.iolist_to_binary()
+           |> :erlang.binary_to_term(),
+         event <- event_from_op(payload[:op]) do
+      {:noreply,
+       %{
+         socket
+         | payload_op_code: payload[:op],
+           payload_op_event: event,
+           payload_sequence: payload[:s],
+           payload_dispatch_event: payload[:t]
+       }
+       |> Payload.digest(event, payload[:d])}
+    end
   end
 
   def handle_info({:gun_ws, _conn, _stream, :close}, socket) do
     Logger.warn("WEBSOCKET CLOSED")
     {:noreply, socket}
+  end
+
+  def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, %{session_id: _session_id} = socket) do
+    Logger.warn("WEBSOCKET CLOSED #{errno} #{inspect(reason)}")
+    Logger.warn("ATTEMPTING TO RECONNECT")
+
+    {:noreply, socket |> Pacemaker.stop() |> Pacemaker.start() |> Payload.send(:RESUME)}
   end
 
   def handle_info({:gun_ws, _conn, _stream, {:close, errno, reason}}, socket) do
@@ -101,8 +106,11 @@ defmodule Remedy.Gateway.Session do
     {:noreply, socket}
   end
 
+  def handle_info({:gun_up, _worker, _proto}, %{session_id: session_id} = socket) when is_binary(session_id) do
+    {:noreply, socket |> Pacemaker.stop() |> Pacemaker.start() |> Payload.send(:RESUME)}
+  end
+
   def handle_info({:gun_up, _worker, _proto}, socket) do
-    Logger.warn("GUN UP")
-    {:noreply, socket |> Payload.send(:IDENTIFY)}
+    {:noreply, socket |> Gun.close() |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
 end

@@ -16,13 +16,13 @@ defmodule Remedy.Schema.Emoji do
           guild: Guild.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "emojis" do
     field :name, :string
 
     field :require_colons, :boolean
     field :managed, :boolean
-    field :animated, :boolean
+    field :animated, :boolean, default: false
     field :available, :boolean
     belongs_to :user, User
     belongs_to :guild, Guild
@@ -39,8 +39,6 @@ defmodule Remedy.Schema.Emoji do
   end
 
   @doc """
-
-  > Mention is more of a ping. potentially rename
 
   Formats an `Remedy.Struct.Emoji` into a mention.
 

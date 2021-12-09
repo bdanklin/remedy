@@ -12,7 +12,6 @@ defmodule Remedy.Gateway do
   The websocket state transmitted along with events to the consumer.
   """
   @type socket :: %{
-          gateway: String.t(),
           heartbeat_ack: boolean(),
           last_heartbeat_ack: DateTime.t() | nil,
           last_heartbeat_send: DateTime.t() | nil,
@@ -25,37 +24,30 @@ defmodule Remedy.Gateway do
         }
 
   @doc false
-  def info do
-    {:ok, %{shards: shards, url: "wss://" <> url}} = API.get_gateway_bot()
+  def recommended_shard_count(), do: API.get_gateway_bot!().shards
 
-    %{url: url, shards: shards}
-  end
-
-  @doc false
-  def num_shards, do: info().shards
-
+  def shard_count(), do: Application.get_env(:remedy, :ffmpeg) || recommended_shard_count()
   @doc false
   def start_link(_args) do
-    %{url: _url, shards: _shards} = state = info()
-
-    Supervisor.start_link(__MODULE__, state, name: __MODULE__)
+    shards = shard_count()
+    Supervisor.start_link(__MODULE__, shards, name: __MODULE__)
   end
 
   @doc false
-  def init(%{url: url, shards: shards}) do
+  def init(shards) do
     children =
       [
         EventBroadcaster,
         EventBuffer
-      ] ++ shard_workers(url, shards)
+      ] ++ shard_workers(shards)
 
     Supervisor.init(children, strategy: :one_for_one, max_restarts: 3, max_seconds: 60)
   end
 
-  defp shard_workers(gateway, shards),
-    do: for(shard <- 0..(shards - 1), into: [], do: shard_worker(gateway, shard))
+  defp shard_workers(shards),
+    do: for(shard <- 0..(shards - 1), into: [], do: shard_worker(shard))
 
-  defp shard_worker(gateway, shard) do
-    Supervisor.child_spec({SessionSupervisor, %{gateway: gateway, shard: shard}}, id: shard)
+  defp shard_worker(shard) do
+    Supervisor.child_spec({SessionSupervisor, %{shard: shard}}, id: shard)
   end
 end

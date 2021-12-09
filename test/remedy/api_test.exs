@@ -9,7 +9,7 @@ defmodule Remedy.APITest do
 
   @skip_doctests [
     get_current_bot_application_information: 0,
-    get_guild_audit_log: 2
+    get_audit_log: 2
   ]
 
   # doctest Remedy.API, except: @skip_doctests
@@ -37,7 +37,7 @@ defmodule Remedy.APITest do
   end
 
   test "get guild audit log" do
-    {:ok, %AuditLog{guild_id: guild_id}} = get_guild_audit_log(@test_guild)
+    {:ok, %AuditLog{guild_id: guild_id}} = get_audit_log(@test_guild)
 
     assert guild_id == @test_guild
   end

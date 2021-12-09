@@ -66,12 +66,6 @@ defmodule Remedy.MixProject do
     [
       Schema: [
         ~r/Remedy.Schema/
-      ],
-      Exceptions: [
-        Remedy.EnvironmentVariableError,
-        Remedy.VoiceError,
-        Remedy.CacheError,
-        Remedy.APIError
       ]
     ]
   end
@@ -111,7 +105,8 @@ defmodule Remedy.MixProject do
       {:sunbake, "~> 0.2.4"},
       {:battle_standard, "~> 0.1.0"},
       {:morphix, "~> 0.8.1"},
-      {:recase, "~> 0.7.0"}
+      {:recase, "~> 0.7.0"},
+      {:exmoji, "~> 0.3.0"}
     ]
   end
 

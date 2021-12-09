@@ -42,6 +42,7 @@ defmodule Remedy.Schema do
       alias Remedy.Schema.{
         Activity,
         App,
+        ApplicationOwner,
         Attachment,
         AuditLog,
         AuditLogEntry,
@@ -89,6 +90,7 @@ defmodule Remedy.Schema do
         Provider,
         MessageReaction,
         MessageReference,
+        Reaction,
         Role,
         StageInstance,
         Sticker,

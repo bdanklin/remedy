@@ -32,11 +32,6 @@ defmodule Remedy.API.Rest do
     {:ok, state |> Gun.open_http2()}
   end
 
-  @doc """
-  Process a `%RestRequest{}`.
-
-  Returns a `%RestResponse{}`
-  """
   @spec request(%RestRequest{}) :: {:error, reason | {code, message}} | {:ok, body}
   def request(request) do
     GenServer.call(__MODULE__, {:queue, request}, :infinity)
@@ -65,29 +60,7 @@ defmodule Remedy.API.Rest do
   def handle_call({:queue, %RestRequest{} = request}, _from, state) do
     {:reply,
      request
-     |> Ratelimiter.run_check()
-     |> Gun.request(state)
-     |> process_response(request), state}
-  end
-
-  defp process_response(response, request)
-
-  defp process_response({:error, reason}, _request) do
-    Logger.warn("ERROR #{reason}")
-
-    {:error, reason}
-  end
-
-  defp process_response(
-         {:ok, %RestResponse{body: %{code: code, message: message}, status: status}},
-         %RestRequest{}
-       ) do
-    Logger.info("REQUEST REJECTED: #{message}")
-    {:error, {status, code, message}}
-  end
-
-  defp process_response({:ok, %RestResponse{body: body} = response}, %RestRequest{} = _request) do
-    Logger.debug("#{inspect(response, pretty: true)}")
-    {:ok, body}
+     #    |> Ratelimiter.run_check()
+     |> Gun.request_http2(state), state}
   end
 end

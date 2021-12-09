@@ -5,7 +5,7 @@ defmodule Remedy.Cache do
   import Sunbake.Snowflake
   import Ecto.Query, warn: false
 
-  alias Remedy.Cache.Repo
+  alias Remedy.Repo
   alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Integration, Interaction, Invite, Member, Message, Role, User}
   alias Ecto.Changeset
 
@@ -18,10 +18,6 @@ defmodule Remedy.Cache do
 
   @not_found :not_found
 
-  ###########
-  ### Channel
-  ###########
-
   @doc """
   Fetch a channel from the cache.
 
@@ -29,7 +25,7 @@ defmodule Remedy.Cache do
   @unsafe {:fetch_channel, [:id]}
   @spec fetch_channel(snowflake) :: {:error, reason} | {:ok, Remedy.Schema.Channel.t()}
   def fetch_channel(id) when is_snowflake(id) do
-    case get_channel(id) do
+    case Repo.get(Channel, id) do
       nil -> {:error, @not_found}
       %Channel{} = channel -> {:ok, channel}
     end
@@ -46,30 +42,6 @@ defmodule Remedy.Cache do
 
   def list_channels(guild_id) do
     Repo.all(where(Channel, guild_id: ^guild_id)) |> wrap_list()
-  end
-
-  ### Internal
-  @doc false
-  @spec get_channel(snowflake) :: nil | Channel.t()
-  def get_channel(id), do: Repo.get(Channel, id)
-
-  @doc false
-  @spec delete_channel(snowflake) :: {:ok, Channel.t()} | {:error, Changeset.t()}
-  def delete_channel(id), do: get_channel(id) |> Repo.delete()
-
-  @doc false
-  @spec update_channel(attrs) :: {:ok, Channel.t()} | {:error, Changeset.t()}
-  def update_channel(%{id: id} = attrs), do: update_channel(id, attrs)
-  @doc false
-  @spec update_channel(snowflake, attrs) :: {:ok, Channel.t()} | {:error, Changeset.t()}
-  def update_channel(id, attrs) do
-    case get_channel(id) do
-      nil ->
-        Channel.changeset(attrs) |> Repo.insert()
-
-      %Channel{} = channel ->
-        Channel.changeset(channel, attrs) |> Repo.update()
-    end
   end
 
   @doc """
@@ -131,18 +103,6 @@ defmodule Remedy.Cache do
   @spec get_ban(snowflake, snowflake) :: nil | Ban.t()
   def get_ban(guild_id, user_id), do: Repo.get_by(Ban, %{guild_id: guild_id, user_id: user_id})
 
-  @doc false
-  @spec delete_ban(snowflake, snowflake) :: {:ok, Ban.t()} | {:error, Changeset.t()}
-  def delete_ban(guild_id, user_id), do: get_ban(guild_id, user_id) |> Repo.delete()
-
-  @doc false
-  @spec update_ban(attrs) :: {:ok, Ban.t()} | {:error, Changeset.t()}
-  def update_ban(%{guild_id: guild_id, user_id: user_id} = attrs),
-    do: get_ban(guild_id, user_id) |> Ban.changeset(attrs) |> Repo.update()
-
-  ###########
-  ### User
-  ###########
   @doc """
   Fetch a user from the cache.
 
@@ -154,30 +114,6 @@ defmodule Remedy.Cache do
     |> Repo.get(user_id)
     |> wrap()
   end
-
-  def update_user(attrs) do
-    case get_user(attrs) do
-      nil ->
-        User.changeset(attrs)
-        |> Repo.insert()
-
-      %User{} = user ->
-        User.changeset(user, attrs)
-        |> Repo.update()
-    end
-  end
-
-  @doc false
-  def get_user(%{id: id}), do: Repo.get(User, id)
-  def get_user(id), do: Repo.get(User, id)
-
-  def delete_user(id) do
-    User |> Repo.get(id) |> Repo.delete()
-  end
-
-  ###########
-  ### Members
-  ###########
 
   @doc """
   List Members
@@ -199,15 +135,12 @@ defmodule Remedy.Cache do
     Map.put_new(attrs, :user_id, user_id) |> update_member()
   end
 
-  @doc false
-  def update_presence(%{user: user} = presence), do: Map.put_new(user, :presence, presence) |> update_user()
-
   @doc """
   Fetch a guild from the cache
   """
   @unsafe {:fetch_guild, [:id]}
   def fetch_guild(id) do
-    case get_guild(id) do
+    case Repo.get(Guild, id) do
       nil -> {:error, @not_found}
       %Guild{} = guild -> {:ok, guild |> guild_preloaders() |> drop_unloaded_assoc() |> drop_metadata()}
     end
@@ -231,136 +164,16 @@ defmodule Remedy.Cache do
     Repo.all(Guild)
   end
 
-  @doc false
-  @spec update_guild(attrs) :: any
-  def update_guild(%{id: id} = attrs) do
-    case get_guild(id) do
-      nil -> Guild.changeset(attrs) |> Repo.insert()
-      %Guild{} = guild -> Guild.changeset(guild, attrs) |> Repo.update()
-    end
-  end
-
-  @doc false
-  @spec get_guild(snowflake) :: nil | Guild.t()
-  def get_guild(guild_id), do: Repo.get(Guild, guild_id)
-
-  @doc false
-  @spec delete_guild(snowflake) :: {:ok, Guild.t()} | {:error, Changeset.t()}
-  def delete_guild(guild_id), do: get_guild(guild_id) |> Repo.delete()
-
   @doc """
-  Fetch an integration by ID.
-
+  Fetch a emoji from the cache
   """
-  def fetch_integration(integration_id) do
-    integration_id
-    |> get_integration()
-    |> wrap()
-  end
-
-  @doc false
-  @spec get_integration(snowflake) :: nil | Integration.t()
-  def get_integration(integration_id), do: Repo.get(Integration, integration_id)
-
-  @doc false
-  @spec delete_integration(snowflake) :: {:ok, Integration.t()} | {:error, Changeset.t()}
-  def delete_integration(integration_id), do: get_integration(integration_id) |> Repo.delete()
-
-  @doc false
-  @spec update_integration(attrs) :: {:ok, Integration.t()} | {:error, Changeset.t()}
-  def update_integration(%{id: integration_id} = attrs) do
-    case get_integration(integration_id) do
-      nil -> Integration.changeset(attrs) |> Repo.insert()
-      %Integration{} = integration -> Integration.changeset(integration, attrs) |> Repo.update()
-    end
-  end
-
-  #################
-  #### Interactions
-  #################
-
-  def create_interaction(attrs) do
-    attrs
-    |> Interaction.changeset()
-    |> Repo.insert()
-  end
-
-  ############
-  #### Invites
-  ############
-
-  @doc false
-  @spec get_invite(snowflake) :: nil | Invite.t()
-  def get_invite(invite_id), do: Repo.get(Invite, invite_id)
-
-  @doc false
-  @spec delete_invite(snowflake) :: {:ok, Invite.t()} | {:error, Changeset.t()}
-  def delete_invite(invite_id), do: get_invite(invite_id) |> Repo.delete()
-
-  @doc false
-  def update_invite(%{id: id} = attrs) do
-    case Repo.get(Invite, id) do
-      nil -> Invite.changeset(attrs) |> Repo.insert()
-      %Invite{} = invite -> Invite.changeset(invite, attrs) |> Repo.update()
-    end
-  end
-
-  #############
-  #### Message
-  #############
-
-  @doc false
-  def update_message(%{id: id} = attrs) do
-    case Repo.get(Message, id) do
-      nil -> Message.changeset(attrs) |> Repo.insert()
-      %Message{} = message -> Message.changeset(message, attrs) |> Repo.update()
-    end
-  end
-
-  @doc false
-  @spec get_message(snowflake) :: nil | Message.t()
-  def get_message(message_id), do: Repo.get(Message, message_id)
-
-  @doc false
-  @spec delete_message(snowflake) :: {:ok, Message.t()} | {:error, Changeset.t()}
-  def delete_message(message_id) do
-    get_message(message_id) |> Repo.delete()
-  end
-
-  @doc false
-  @spec update_message(snowflake, attrs) :: {:ok, Message.t()} | {:error, Changeset.t()}
-  def update_message(message_id, attrs) do
-    get_message(message_id) |> Message.changeset(attrs) |> Repo.update()
-  end
-
-  @spec remove_message_reactions(snowflake) :: {:ok, Message.t()} | {:error, reason}
-  def remove_message_reactions(message_id) do
-    get_message(message_id) |> Message.changeset(%{reactions: []}) |> Repo.update()
-  end
-
-  #########
-  ### Emoji
-  #########
-
-  @doc false
-  @spec get_emoji(snowflake) :: nil | Emoji.t()
-  def get_emoji(emoji_id), do: Repo.get(Emoji, emoji_id)
-
-  @doc false
-  @spec delete_emoji(snowflake) :: {:ok, Emoji.t()} | {:error, Changeset.t()}
-  def delete_emoji(emoji_id), do: get_emoji(emoji_id) |> Repo.delete()
-
-  @doc false
-  def update_emoji(%{id: id} = attrs) do
+  @unsafe {:fetch_emoji, [:id]}
+  def fetch_emoji(id) do
     case Repo.get(Emoji, id) do
-      nil -> Emoji.changeset(attrs) |> Repo.insert()
-      %Emoji{} = emoji -> Emoji.changeset(emoji, attrs) |> Repo.update()
+      nil -> {:error, @not_found}
+      %Emoji{} = emoji -> {:ok, emoji}
     end
   end
-
-  #########
-  ### Roles
-  #########
 
   @doc """
   Fetch a role from the cache.
@@ -369,35 +182,7 @@ defmodule Remedy.Cache do
   """
   @unsafe {:fetch_role, [:role_id]}
   @spec fetch_role(any) :: {:error, :not_found} | {:ok, Role.t()}
-  def fetch_role(role_id), do: get_role(role_id) |> wrap()
-
-  @doc false
-  @spec create_role(attrs) :: any
-  def create_role(attrs), do: Role.changeset(attrs) |> Repo.insert()
-
-  @doc false
-  @spec get_role(snowflake) :: nil | Role.t()
-  def get_role(id), do: Repo.get(Role, id)
-
-  @doc false
-  @unsafe {:update_role, [:id, :attrs]}
-  @spec update_role(attrs) :: {:ok, Role.t()} | {:error, Changeset.t()}
-  def update_role(%{id: role_id} = attrs) do
-    case get_role(role_id) do
-      nil -> Role.changeset(attrs) |> Repo.insert()
-      %Role{} = role -> Role.changeset(role, attrs) |> Repo.update()
-    end
-  end
-
-  @doc false
-  @spec delete_role(snowflake) :: {:ok, Role.t()} | {:error, Changeset.t()}
-  def delete_role(id), do: get_role(id) |> Repo.delete()
-
-  ###########
-  ### Threads
-  ###########
-
-  # def update_thread_members
+  def fetch_role(role_id), do: Repo.get(Role, role_id) |> wrap()
 
   @doc false
   def init_bot(bot) do
@@ -414,8 +199,6 @@ defmodule Remedy.Cache do
       %User{} = user -> Repo.delete(user)
       nil -> :noop
     end
-
-    :ok
   end
 
   @doc false
@@ -433,8 +216,6 @@ defmodule Remedy.Cache do
       %App{} = app -> Repo.delete(app)
       nil -> :noop
     end
-
-    :ok
   end
 
   alias Ecto.Association.NotLoaded

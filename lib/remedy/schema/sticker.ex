@@ -33,12 +33,6 @@ defmodule Remedy.Schema.Sticker do
     belongs_to :user, User
   end
 
-  def new(params) do
-    %__MODULE__{}
-    |> changeset(params)
-    |> apply_changes()
-  end
-
   def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

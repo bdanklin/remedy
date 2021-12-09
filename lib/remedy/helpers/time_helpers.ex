@@ -52,7 +52,6 @@ defmodule Remedy.TimeHelpers do
     use Bitwise
 
     time_elapsed_ms = (snowflake >>> 22) + discord_epoch()
-
     {:ok, datetime} = DateTime.from_unix(time_elapsed_ms, :millisecond)
     datetime
   end

@@ -33,7 +33,7 @@ defmodule Remedy.Schema.Thread do
     field :type, :integer
 
     embeds_many :permission_overwrites, PermissionOverwrite
-    embeds_one :thread_metadata, ThreadMetadata
+    embeds_one :thread_metadata, ThreadMetadata, on_replace: :update
   end
 
   @doc false
@@ -97,10 +97,7 @@ defmodule Remedy.Schema.ThreadMetadata do
   def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)
-    cast_model = cast(model, params, fields -- embeds)
 
-    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
-      cast_embed(cast_model, embed)
-    end)
+    cast(model, params, fields -- embeds)
   end
 end

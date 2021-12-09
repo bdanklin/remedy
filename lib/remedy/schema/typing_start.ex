@@ -2,7 +2,7 @@ defmodule Remedy.Schema.TypingStart do
   use Remedy.Schema
 
   @moduledoc """
-  Typing Start Event Dispatch
+  Typing Start Event
   """
 
   @type t :: %__MODULE__{

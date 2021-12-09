@@ -131,7 +131,7 @@ defmodule Remedy.Schema.Guild do
 
   @doc false
   # Provided for the :GUILD_EMOJIS_UPDATE gateway event
-  def update_emojis_changeset(model, params) do
+  def update_emojis_changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [])
     |> cast_assoc(:emojis)

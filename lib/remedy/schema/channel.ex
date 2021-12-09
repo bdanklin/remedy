@@ -54,7 +54,7 @@ defmodule Remedy.Schema.Channel do
     field :parent_id, Snowflake
     #  belongs_to :owner, User
     field :guild_id, Snowflake
-    embeds_many :permission_overwrites, PermissionOverwrite
+    embeds_many :permission_overwrites, PermissionOverwrite, on_replace: :delete
 
     #  has_many :messages, Message
 

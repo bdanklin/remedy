@@ -51,6 +51,7 @@ defmodule Remedy.Schema.ThreadMember do
   Thread Member Object
   """
   use Remedy.Schema
+  alias Remedy.ISO8601
 
   @type t :: %__MODULE__{
           user_id: Snowflake.t(),

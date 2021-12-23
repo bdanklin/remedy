@@ -16,7 +16,7 @@ defmodule Remedy.Gateway.Events.Identify do
        compress: true,
        large_threshold: 250,
        shard: [shard, Gateway.shard_count()],
-       intents: Intents.get()
+       intents: Intents.get_config()
      }, socket}
   end
 end

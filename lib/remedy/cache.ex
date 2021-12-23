@@ -2,7 +2,7 @@ defmodule Remedy.Cache do
   @moduledoc false
   ### The cache is populated only by events received from the gateway, it is not updated from interracting with the api.
 
-  import Sunbake.Snowflake
+  import Remedy.TimeHelpers, only: [is_snowflake: 1]
   import Ecto.Query, warn: false
 
   alias Remedy.Repo

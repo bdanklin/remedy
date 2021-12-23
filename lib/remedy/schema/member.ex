@@ -29,11 +29,9 @@ defmodule Remedy.Schema.Member do
     field :mute, :boolean
     field :pending, :boolean, default: false
     field :permissions, :string
-    field :roles, {:array, :integer}
+    field :roles, {:array, Snowflake}
     field :user_id, Snowflake
     field :guild_id, Snowflake
-
-    timestamps()
   end
 
   @to_cast ~w(id nick joined_at premium_since deaf mute pending permissions roles user_id guild_id)a
@@ -42,7 +40,6 @@ defmodule Remedy.Schema.Member do
     params =
       params
       |> put_pkey()
-      |> Map.drop([:guild, :user])
 
     model
     |> cast(params, @to_cast)

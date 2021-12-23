@@ -31,8 +31,8 @@ defmodule Remedy.MixProject do
 
   def application do
     [
-      extra_applications: [:logger, :inets],
-      mod: {Remedy, []}
+      extra_applications: [:logger, :inets, :jason],
+      mod: {Remedy.Application, []}
     ]
   end
 
@@ -88,22 +88,20 @@ defmodule Remedy.MixProject do
       {:mix_unused, "~> 0.2.0", only: [:dev]},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:credo, "~> 1.5.6", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.15", only: [:dev]},
+      {:ex_doc, "~> 0.27.0", only: [:dev], git: "https://github.com/bdanklin/ex_doc", ref: "228592ef"},
       {:recon, "~> 2.3", only: [:dev]},
       {:doctor, "~> 0.18.0", only: [:dev]},
-      {:map_diff, "~> 1.3", only: [:dev, :test], runtime: false},
-      {:ecto_morph, "~> 0.1.25"},
+      {:gun, "2.0.1", hex: :remedy_gun},
+      {:tz, "~> 0.20.1"},
       {:unsafe, "~> 1.0"},
       {:ex_rated, "~> 2.0"},
       {:jason, "~> 1.2"},
       {:mime, "~> 2.0"},
       {:progress_bar, "~> 2.0"},
-      {:gun, "2.0.1", hex: :remedy_gun},
       {:gen_stage, "~> 1.0"},
       {:ecto, "~> 3.7"},
+      {:ecto_morph, "~> 0.1.25"},
       {:etso, "~> 0.1.6"},
-      {:sunbake, "~> 0.2.4"},
-      {:battle_standard, "~> 0.1.0"},
       {:morphix, "~> 0.8.1"},
       {:recase, "~> 0.7.0"},
       {:exmoji, "~> 0.3.0"}

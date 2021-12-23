@@ -3,7 +3,6 @@ defmodule Remedy.GatewayATC do
 
   use GenServer
   require Logger
-  import Remedy.TimeHelpers
 
   @min_redial 5500
 
@@ -35,7 +34,7 @@ defmodule Remedy.GatewayATC do
   end
 
   defp dial(state) when state in [nil, 0], do: state
-  defp dial(last_connect), do: utc_now_ms() - last_connect
+  defp dial(last_connect), do: now() - last_connect
 
   defp wait(state) when state in [nil, 0], do: :ok
   defp wait(time_diff) when time_diff >= @min_redial, do: :ok
@@ -59,5 +58,7 @@ defmodule Remedy.GatewayATC do
     end)
   end
 
-  defp connect(:ok), do: utc_now_ms()
+  defp connect(:ok), do: now()
+
+  defp now, do: System.os_time(:millisecond)
 end

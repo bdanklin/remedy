@@ -18,8 +18,7 @@ defmodule Remedy.API.Rest do
   ]
 
   use GenServer
-  alias Remedy.Gun
-  alias Remedy.API.{Ratelimiter, RestRequest, RestResponse}
+  alias Remedy.API.{RestRequest, Gun}
   require Logger
 
   @doc false

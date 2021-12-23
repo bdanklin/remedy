@@ -1,58 +1,167 @@
 defmodule Remedy.TimeHelpers do
-  @moduledoc false
+  use Bitwise
+
+  @moduledoc """
+  Functions and Guards for working with time.
+
+  There are four formats of concern in this module:
+
+  - Snowflake: a 64-bit integer representing the number of milliseconds since the discord epoch + metadata.
+  - DateTime: a datetime.datetime object.
+  - ISO8601: a string in the ISO8601 format.
+  - UnixTime: a number representing the number of seconds since the unix epoch.
+
+  ## Guards
+
+  This module provides guards for checking whether a value is of a certain type.
+
+  - `is_snowflake(value)`
+  - `is_datetime(value)`
+  - `is_iso8601(value)`
+  - `is_unixtime(value)`
+
+  Early Snowflake   179255727561375744
+  Snowflake:        920271852159512606
+  Snowflake Epoch     5956206959001600
+  UnixTime_ms:           1639481377000
+
+  """
+
+  defguard is_snowflake(value) when is_integer(value) and value > 0x400000 and value < 0xFFFFFFFFFFFFFFFF
+  defguard is_unixtime(value) when is_integer(value) and value > 0 and value < 0xFFFFFFFFFFFFFFFF
+  defguard is_datetime(value) when is_struct(value, DateTime)
+  defguard is_iso8601(value) when is_binary(value)
 
   @doc """
-  Returns the number of ms since the Discord epoch.
+  Returns the discord epoch: `1_420_070_400_000`
   """
-  def utc_now_ms do
-    DateTime.utc_now()
-    |> DateTime.to_unix(:millisecond)
-  end
-
-  @doc """
-  Returns the number of milliseconds since unix epoch.
-  """
-  @spec now() :: integer
-  def now do
-    DateTime.utc_now()
-    |> DateTime.to_unix(:millisecond)
-  end
-
-  @doc """
-  Returns the number of microseconds since unix epoch.
-  """
-  @spec usec_now() :: integer
-  def usec_now do
-    DateTime.utc_now()
-    |> DateTime.to_unix(:microsecond)
-  end
-
-  @doc """
-  Returns the current date as an ISO formatted string.
-  """
-  @spec now_iso() :: String.t()
-  def now_iso do
-    DateTime.utc_now()
-    |> DateTime.to_iso8601()
-  end
-
   def discord_epoch, do: 1_420_070_400_000
 
   @doc """
-    Returns the creation time of the snowflake.
+  Convert a value to an elixir `DateTime`
 
-    ## Examples
+  ## Examples
 
-        iex> Nostrum.Snowflake.creation_time(177888205536886784)
-        ~U[2016-05-05 21:04:13.203Z]
+      iex> Remedy.TimeHelpers.to_datetime(nil)
+      nil
+
+      iex> Remedy.TimeHelpers.to_datetime(15824000000000)
+      ~U[2015-01-01T01:02:52.735Z]
+
+      iex> Remedy.TimeHelpers.to_datetime(919970797920067654)
+      ~U[2021-12-13T15:15:30.455Z]
+
+      iex> Remedy.TimeHelpers.to_datetime("2021-12-13T15:13:33.774426Z")
+      ~U[2021-12-13T15:13:33.774426Z]
+
+      iex> Remedy.TimeHelpers.to_datetime(:some_atom)
+      :error
+
 
   """
-  @spec creation_time(any()) :: DateTime.t()
-  def creation_time(snowflake) do
-    use Bitwise
+  def to_datetime(nil), do: nil
+  def to_datetime(value) when is_binary(value), do: DateTime.from_iso8601(value) |> elem(1)
+  def to_datetime(value) when is_datetime(value), do: value
 
-    time_elapsed_ms = (snowflake >>> 22) + discord_epoch()
-    {:ok, datetime} = DateTime.from_unix(time_elapsed_ms, :millisecond)
-    datetime
+  def to_datetime(value) when is_snowflake(value) do
+    ((value >>> 22) + discord_epoch()) |> DateTime.from_unix!(:millisecond)
   end
+
+  def to_datetime(_value), do: :error
+
+  @doc """
+  Same as `f:to_datetime/1`, but allows the 'from' to be selected as the second argument.
+
+  Use carefully, passing the wrong value may result in unexpected behavior.
+
+  ## From
+
+  - `:snowflake`
+  - `:unix_ms`
+  - `:iso8601`
+
+  """
+  def to_datetime(value, from)
+  def to_datetime(value, :snowflake), do: ((value >>> 22) + discord_epoch()) |> DateTime.from_unix!(:millisecond)
+  def to_datetime(value, :unix_ms), do: DateTime.from_unix!(value, :milliseconds)
+  def to_datetime(value, :iso8601), do: DateTime.from_iso8601(value) |> elem(1)
+
+  @doc """
+  Convert a value to a string representation of the ISO8601 format.
+
+  ## Examples
+
+      iex Remedy.TimeHelpers.to_iso8601(nil)
+      nil
+
+      iex> Remedy.TimeHelpers.to_iso8601(15824000000000)
+      "2015-01-01T01:02:52.735Z"
+
+      iex> Remedy.TimeHelpers.to_iso8601(919970797920067654)
+      "2021-12-13T15:15:30.455Z"
+
+      iex> Remedy.TimeHelpers.to_iso8601("2021-12-13T15:13:33.774426Z")
+      "2021-12-13T15:13:33.774426Z"
+
+      iex Remedy.TimeHelpers.to_iso8601(:some_atom)
+      :error
+
+  """
+  @doc since: "0.6.8"
+  @spec to_iso8601(any) :: binary() | nil
+
+  def to_iso8601(value)
+  def to_iso8601(nil), do: nil
+  def to_iso8601(value) when is_datetime(value), do: to_string(value)
+  def to_iso8601(value) when is_iso8601(value), do: DateTime.from_iso8601(value) |> elem(1) |> to_string()
+
+  def to_iso8601(value) when is_snowflake(value) do
+    ((value >>> 22) + discord_epoch()) |> DateTime.from_unix!(:millisecond) |> to_string()
+  end
+
+  def to_iso8601(value) when is_integer(value) do
+    case System.os_time(:second) > value do
+      true -> DateTime.from_unix!(value, :millisecond) |> to_string()
+      false -> DateTime.from_unix!(value, :second) |> to_string()
+    end
+  end
+
+  def to_iso8601(_value), do: :error
+
+  @doc """
+  Convert a value to its unix time.
+
+  ## Examples
+
+      iex Remedy.TimeHelpers.to_unixtime(nil)
+      nil
+
+      iex> Remedy.TimeHelpers.to_unixtime(15824000000000)
+      1639408530455
+
+      iex> Remedy.TimeHelpers.to_unixtime(919970797920067654)
+      1639408530455
+
+      iex> Remedy.TimeHelpers.to_unixtime("2021-12-13T15:13:33.774426Z")
+      1639408530455
+
+      iex Remedy.TimeHelpers.to_unixtime(:some_atom)
+      :error
+
+  """
+  def to_unixtime(nil), do: nil
+
+  def to_unixtime(value) when is_snowflake(value) do
+    (value >>> 22) + discord_epoch()
+  end
+
+  def to_unixtime(value) when is_datetime(value) do
+    value |> DateTime.to_unix(:millisecond)
+  end
+
+  def to_unixtime(value) when is_iso8601(value) do
+    DateTime.from_iso8601(value) |> elem(1) |> DateTime.to_unix(:millisecond)
+  end
+
+  def to_unixtime(_value), do: :error
 end

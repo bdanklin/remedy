@@ -5,7 +5,7 @@ defmodule Remedy.Gateway.EventCache do
 
   import Ecto.Query, warn: false
 
-  alias Sunbake.Snowflake
+  alias Remedy.Snowflake
   alias Remedy.Repo
   alias Ecto.Changeset
 

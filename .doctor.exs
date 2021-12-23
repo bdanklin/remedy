@@ -4,7 +4,7 @@
   ignore_modules: [
     ~r(^Remedy.Gateway.Dispatch),
     ~r(^Remedy.Gateway.Events),
-    ~r(^Remedy.Gun),
+    ~r(^Remedy.Gateway.Gun),
     ~r(^Remedy.Helpers),
     ~r(^Mix.Tasks),
     Remedy.API.Rest,

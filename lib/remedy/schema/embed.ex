@@ -3,6 +3,7 @@ defmodule Remedy.Schema.Embed do
   Discord Embed Object
   """
   use Remedy.Schema
+  alias Remedy.ISO8601
 
   @type t :: %__MODULE__{
           title: String.t(),
@@ -20,6 +21,7 @@ defmodule Remedy.Schema.Embed do
           video: EmbedVideo.t()
         }
 
+  @derive {Jason.Encoder, []}
   @primary_key false
   embedded_schema do
     field :title, :string

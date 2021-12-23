@@ -7,10 +7,10 @@ defmodule Remedy.Gateway.Payload do
 
     quote do
       alias unquote(parent)
-      alias Remedy.Gateway.{Pacemaker, Payload, Session, WSState}
+      alias Remedy.Gateway.{Gun, Pacemaker, Payload, Session, WSState}
       import Remedy.OpcodeHelpers, only: [op_from_mod: 1]
       import :erlang, only: [term_to_binary: 1]
-      import Remedy.Gun, only: [websocket_send: 2]
+      import Remedy.Gateway.Gun, only: [websocket_send: 2]
       use Ecto.Schema
 
       def build_payload(socket, opts), do: payload(socket, opts) |> send_out()

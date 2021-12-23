@@ -1,5 +1,5 @@
 defmodule Remedy.CDN do
-  alias Sunbake.Snowflake
+  alias Remedy.Snowflake
   @cdn "https://cdn.discordapp.com"
   @type uri :: String.t()
 

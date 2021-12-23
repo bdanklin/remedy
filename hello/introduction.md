@@ -29,7 +29,11 @@ defp deps() do
   ]
 end
 ```
+## Configuration
 
+### Intents
+
+###
 
 ## Using Remedy with Phoenix
 

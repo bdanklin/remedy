@@ -16,17 +16,6 @@ defmodule Remedy.Schema do
   alias Remedy.Schema, as: Discord
   ```
 
-  Which would make all of the schema available as [`%Discord.Guild{}`](`t:Remedy.Schema.Guild.t/0`).
-
-  ## Helper Functions
-
-  Should you be looking for help manipulating any of the individual Schema, helper functions exist within the particular modules
-
-  ## Callbacks
-
-  While the callbacks within this module primarily exist for internal use only. They can be invoked to manually validate certain structs before sending them to Discord through the `Remedy.API` module.
-
-
   """
 
   @callback new(params :: map()) :: struct :: map()
@@ -111,8 +100,7 @@ defmodule Remedy.Schema do
 
       use Ecto.Schema
       import Ecto.Changeset
-      import Sunbake.Snowflake, only: [is_snowflake: 1]
-      alias Sunbake.{ISO8601, Snowflake}
+      alias Remedy.{ISO8601, Snowflake}
     end
   end
 end

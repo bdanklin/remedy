@@ -3,6 +3,7 @@ defmodule Remedy.Schema.Invite do
   Invite Object
   """
   use Remedy.Schema
+  alias Remedy.ISO8601
 
   @type t :: %__MODULE__{
           target_type: integer(),
@@ -32,9 +33,9 @@ defmodule Remedy.Schema.Invite do
     field :temporary, :integer
     field :created_at, :integer
     embeds_one :target_user, User
-    belongs_to :channel, Channel
-    belongs_to :guild, Guild
-    belongs_to :inviter, User
+    embeds_one :channel, Channel
+    embeds_one :guild, Guild
+    embeds_one :inviter, User
   end
 
   @doc false

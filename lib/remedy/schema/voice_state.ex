@@ -4,7 +4,7 @@ defmodule Remedy.Schema.VoiceState do
   """
 
   use Remedy.Schema
-
+  alias Remedy.ISO8601
   @typedoc "Time at which the user requested to speak, if applicable"
 
   @type t :: %__MODULE__{

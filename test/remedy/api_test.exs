@@ -22,14 +22,6 @@ defmodule Remedy.APITest do
   @test_voice_channel 895_068_896_309_161_984
   @application_id 883_307_747_305_725_972
 
-  test "get current bot application information" do
-    assert get_current_bot_application_information!().id == @application_id
-  end
-
-  test "get_current_authorization_information" do
-    assert get_current_authorization_information() == {:error, {401, 50001, "Missing Access"}}
-  end
-
   test "get channel" do
     {:ok, %Channel{id: id}} = get_channel(@test_text_channel)
 

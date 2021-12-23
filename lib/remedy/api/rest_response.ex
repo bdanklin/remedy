@@ -10,6 +10,7 @@ defmodule Remedy.API.RestResponse do
 
   defstruct [:status, :headers, :body]
 
+  @spec decode({:error, any} | {:ok, Remedy.API.RestResponse.t()}) :: {:error, any} | {:ok, any}
   def decode({:error, _reason} = error), do: error
 
   def decode({:ok, %__MODULE__{body: %{"message" => message, "retry_after" => retry_after}, status: 429}}) do

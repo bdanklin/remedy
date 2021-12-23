@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Session do
   @moduledoc false
-  alias Remedy.{GatewayATC, Gun}
-  alias Remedy.Gateway.{Pacemaker, Payload, WSState}
+  alias Remedy.GatewayATC
+  alias Remedy.Gateway.{Gun, Pacemaker, Payload, WSState}
   import Remedy.OpcodeHelpers
   require Logger
   use GenServer

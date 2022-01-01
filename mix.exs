@@ -85,12 +85,12 @@ defmodule Remedy.MixProject do
 
   def groups_for_functions do
     [
-      Interactions: &(&1[:section] == :interactions),
-      Commands: &(&1[:section] == :commands),
-      Stickers: &(&1[:section] == :stickers),
-      Emojis: &(&1[:section] == :emojis),
-      Reactions: &(&1[:section] == :reactions),
-      Guards: &(&1[:section] == :guards)
+#      Interactions: &(&1[:section] == :interactions),
+#      Commands: &(&1[:section] == :commands),
+#      Stickers: &(&1[:section] == :stickers),
+#      Emojis: &(&1[:section] == :emojis),
+#      Reactions: &(&1[:section] == :reactions),
+#      Guards: &(&1[:section] == :guards)
     ]
   end
 

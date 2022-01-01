@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.27.3">
     <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Schema.App — Remedy v0.6.9</title>
+    <title>Remedy.Schema.PermissionOverwrite — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
     <script src="dist/sidebar_items-f4ab7d793f.js"></script>
@@ -84,10 +84,10 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Schema.App</span> 
+  <span translate="no">Remedy.Schema.PermissionOverwrite</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/app.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission_overwrite.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,7 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Discord Application Object</p>
+<p>Discord Permission Overwrite Object</p>
   </section>
 
 
@@ -147,7 +147,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/app.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission_overwrite.ex#L8" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -162,20 +162,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">t() :: %Remedy.Schema.App{
+          <pre translate="no">t() :: %Remedy.Schema.PermissionOverwrite{
   __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  bot_public: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  bot_require_code_grant: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  cover_image: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  description: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  flags: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  icon: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  allow: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  deny: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
-  name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  owner: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(),
-  privacy_policy_url: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  remedy_system: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  terms_of_service_url: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
+  role: <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>(),
+  type: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  user: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()
 }</pre>
 
       </div>
@@ -197,7 +191,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/app.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/permission_overwrite.ex">(current file)</a>
 
         </p>
 

@@ -10,7 +10,7 @@
     <title>Remedy.Schema.MessageFlags — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-501644e555.js"></script>
+    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.Schema.MessageFlags</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/flags/message_flags.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/message_flags.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,21 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Message Flags Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:CROSSPOSTED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:IS_CROSSPOST</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:SUPPRESS_EMBEDS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:SOURCE_MESSAGE_DELETED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 4</code></td><td style="text-align: left;"><code class="inline">:URGENT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 5</code></td><td style="text-align: left;"><code class="inline">:HAS_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:EPHEMERAL</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:LOADING</code></td></tr></tbody></table><h2 id="module-representations" class="section-heading">
-  <a href="#module-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Representations
-</h2>
-<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">255</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11111111</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6488791628-1">[</span><span class="s">&quot;CROSSPOSTED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EPHEMERAL&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HAS_THREAD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;IS_CROSSPOST&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;LOADING&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;SOURCE_MESSAGE_DELETED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SUPPRESS_EMBEDS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;URGENT&quot;</span><span class="p" data-group-id="6488791628-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="7221439952-1">%{</span><span class="w">
-  </span><span class="ss">CROSSPOSTED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">EPHEMERAL</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">HAS_THREAD</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">IS_CROSSPOST</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">LOADING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">SOURCE_MESSAGE_DELETED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">SUPPRESS_EMBEDS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">URGENT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="7221439952-1">}</span></code></pre>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p>
   </section>
 
 
@@ -134,6 +120,8 @@ Remedy
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>Message Flags Type</p></div>
 
       </div>
 
@@ -161,7 +149,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/flags/message_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/message_flags.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -183,7 +171,22 @@ Types
 
 
 
-
+<p>Message Flags Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:CROSSPOSTED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:IS_CROSSPOST</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:SUPPRESS_EMBEDS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:SOURCE_MESSAGE_DELETED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 4</code></td><td style="text-align: left;"><code class="inline">:URGENT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 5</code></td><td style="text-align: left;"><code class="inline">:HAS_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:EPHEMERAL</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:LOADING</code></td></tr></tbody></table><h2 id="t:t/0-representations" class="section-heading">
+  <a href="#t:t/0-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Representations
+</h2>
+<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">255</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11111111</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3470581093-1">[</span><span class="s">&quot;CROSSPOSTED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EPHEMERAL&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HAS_THREAD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;IS_CROSSPOST&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;LOADING&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;SOURCE_MESSAGE_DELETED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SUPPRESS_EMBEDS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;URGENT&quot;</span><span class="p" data-group-id="3470581093-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3934224336-1">[</span><span class="ss">:CROSSPOSTED</span><span class="p">,</span><span class="w"> </span><span class="ss">:EPHEMERAL</span><span class="p">,</span><span class="w"> </span><span class="ss">:HAS_THREAD</span><span class="p">,</span><span class="w"> </span><span class="ss">:IS_CROSSPOST</span><span class="p">,</span><span class="w"> </span><span class="ss">:LOADING</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:SOURCE_MESSAGE_DELETED</span><span class="p">,</span><span class="w"> </span><span class="ss">:SUPPRESS_EMBEDS</span><span class="p">,</span><span class="w"> </span><span class="ss">:URGENT</span><span class="p" data-group-id="3934224336-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8824609615-1">%{</span><span class="w">
+  </span><span class="ss">CROSSPOSTED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">EPHEMERAL</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">HAS_THREAD</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">IS_CROSSPOST</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">LOADING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SOURCE_MESSAGE_DELETED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SUPPRESS_EMBEDS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">URGENT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="8824609615-1">}</span></code></pre>
   </section>
 </section>
 
@@ -197,7 +200,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/flags/message_flags.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/message_flags.ex">(current file)</a>
 
         </p>
 

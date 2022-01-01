@@ -10,7 +10,7 @@
     <title>Remedy.Schema.ApplicationFlags — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-501644e555.js"></script>
+    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.Schema.ApplicationFlags</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/flags/application_flags.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application_flags.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,23 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Application Flags Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_PRESENCE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 13</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_PRESENCE_LIMITED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_GUILD_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 15</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_GUILD_MEMBERS_LIMITED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 16</code></td><td style="text-align: left;"><code class="inline">:VERIFICATION_PENDING_GUILD_LIMIT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 17</code></td><td style="text-align: left;"><code class="inline">:EMBEDDED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 18</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_MESSAGE_CONTENT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 19</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_MESSAGE_CONTENT_LIMITED</code></td></tr></tbody></table><h2 id="module-representations" class="section-heading">
-  <a href="#module-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Representations
-</h2>
-<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1044480</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11111111000000000000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3269018561-1">[</span><span class="s">&quot;EMBEDDED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_GUILD_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_GUILD_MEMBERS_LIMITED&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GATEWAY_MESSAGE_CONTENT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_MESSAGE_CONTENT_LIMITED&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GATEWAY_PRESENCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_PRESENCE_LIMITED&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;VERIFICATION_PENDING_GUILD_LIMIT&quot;</span><span class="p" data-group-id="3269018561-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="1890578994-1">%{</span><span class="w">
-  </span><span class="ss">EMBEDDED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GATEWAY_GUILD_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GATEWAY_GUILD_MEMBERS_LIMITED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GATEWAY_MESSAGE_CONTENT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GATEWAY_MESSAGE_CONTENT_LIMITED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GATEWAY_PRESENCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GATEWAY_PRESENCE_LIMITED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">VERIFICATION_PENDING_GUILD_LIMIT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="1890578994-1">}</span></code></pre>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p>
   </section>
 
 
@@ -136,6 +120,8 @@ Remedy
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>Application Flags Type</p></div>
 
       </div>
 
@@ -163,7 +149,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/flags/application_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application_flags.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -185,7 +171,25 @@ Types
 
 
 
-
+<p>Application Flags Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_PRESENCE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 13</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_PRESENCE_LIMITED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_GUILD_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 15</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_GUILD_MEMBERS_LIMITED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 16</code></td><td style="text-align: left;"><code class="inline">:VERIFICATION_PENDING_GUILD_LIMIT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 17</code></td><td style="text-align: left;"><code class="inline">:EMBEDDED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 18</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_MESSAGE_CONTENT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 19</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_MESSAGE_CONTENT_LIMITED</code></td></tr></tbody></table><h2 id="t:t/0-representations" class="section-heading">
+  <a href="#t:t/0-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Representations
+</h2>
+<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1044480</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11111111000000000000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8136166011-1">[</span><span class="s">&quot;EMBEDDED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_GUILD_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_GUILD_MEMBERS_LIMITED&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;GATEWAY_MESSAGE_CONTENT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_MESSAGE_CONTENT_LIMITED&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;GATEWAY_PRESENCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GATEWAY_PRESENCE_LIMITED&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;VERIFICATION_PENDING_GUILD_LIMIT&quot;</span><span class="p" data-group-id="8136166011-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="7372811484-1">[</span><span class="ss">:EMBEDDED</span><span class="p">,</span><span class="w"> </span><span class="ss">:GATEWAY_GUILD_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GATEWAY_GUILD_MEMBERS_LIMITED</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:GATEWAY_MESSAGE_CONTENT</span><span class="p">,</span><span class="w"> </span><span class="ss">:GATEWAY_MESSAGE_CONTENT_LIMITED</span><span class="p">,</span><span class="w"> </span><span class="ss">:GATEWAY_PRESENCE</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:GATEWAY_PRESENCE_LIMITED</span><span class="p">,</span><span class="w"> </span><span class="ss">:VERIFICATION_PENDING_GUILD_LIMIT</span><span class="p" data-group-id="7372811484-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8072685897-1">%{</span><span class="w">
+  </span><span class="ss">EMBEDDED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GATEWAY_GUILD_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GATEWAY_GUILD_MEMBERS_LIMITED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GATEWAY_MESSAGE_CONTENT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GATEWAY_MESSAGE_CONTENT_LIMITED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GATEWAY_PRESENCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GATEWAY_PRESENCE_LIMITED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VERIFICATION_PENDING_GUILD_LIMIT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="8072685897-1">}</span></code></pre>
   </section>
 </section>
 
@@ -199,7 +203,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/flags/application_flags.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/application_flags.ex">(current file)</a>
 
         </p>
 

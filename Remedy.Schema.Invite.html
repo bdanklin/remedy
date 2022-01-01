@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Invite — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-501644e555.js"></script>
+    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -147,7 +147,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/invite.ex#L8" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/invite.ex#L7" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -166,9 +166,9 @@ Types
   __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   approximate_member_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   approximate_presence_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  channel: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(),
+  channel: <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>() | nil,
   code: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  created_at: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  created_at: <a href="Remedy.ISO8601.html#t:t/0">Remedy.ISO8601.t</a>(),
   expires_at: <a href="Remedy.ISO8601.html#t:t/0">Remedy.ISO8601.t</a>(),
   guild: <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(),
   inviter: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(),

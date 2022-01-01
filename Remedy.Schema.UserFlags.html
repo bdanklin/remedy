@@ -10,7 +10,7 @@
     <title>Remedy.Schema.UserFlags — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-501644e555.js"></script>
+    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.Schema.UserFlags</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/flags/user_flags.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,31 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>User Flags Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:DISCORD_EMPLOYEE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:PARTNERED_SERVER_OWNER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_EVENTS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:BUG_HUNTER_LEVEL_1</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_BRAVERY</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_BRILLIANCE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 8</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_BALANCE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 9</code></td><td style="text-align: left;"><code class="inline">:EARLY_NITRO_SUPPORTER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 10</code></td><td style="text-align: left;"><code class="inline">:TEAM_PSEUDO_USER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:SYSTEM</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:BUG_HUNTER_LEVEL_2</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 16</code></td><td style="text-align: left;"><code class="inline">:VERIFIED_BOT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 17</code></td><td style="text-align: left;"><code class="inline">:VERIFIED_DEVELOPER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 18</code></td><td style="text-align: left;"><code class="inline">:CERTIFIED_MODERATOR</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 19</code></td><td style="text-align: left;"><code class="inline">:BOT_HTTP_INTERACTIONS</code></td></tr></tbody></table><h2 id="module-representations" class="section-heading">
-  <a href="#module-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Representations
-</h2>
-<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1005519</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11110101011111001111</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5889186325-1">[</span><span class="s">&quot;BOT_HTTP_INTERACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BUG_HUNTER_LEVEL_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BUG_HUNTER_LEVEL_2&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;CERTIFIED_MODERATOR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DISCORD_EMPLOYEE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EARLY_NITRO_SUPPORTER&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;HYPESQUAD_BALANCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HYPESQUAD_BRAVERY&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HYPESQUAD_BRILLIANCE&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;HYPESQUAD_EVENTS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PARTNERED_SERVER_OWNER&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYSTEM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TEAM_PSEUDO_USER&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;VERIFIED_BOT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VERIFIED_DEVELOPER&quot;</span><span class="p" data-group-id="5889186325-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0677338315-1">%{</span><span class="w">
-  </span><span class="ss">BOT_HTTP_INTERACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">BUG_HUNTER_LEVEL_1</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">BUG_HUNTER_LEVEL_2</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">CERTIFIED_MODERATOR</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">DISCORD_EMPLOYEE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">EARLY_NITRO_SUPPORTER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">HYPESQUAD_BALANCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">HYPESQUAD_BRAVERY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">HYPESQUAD_BRILLIANCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">HYPESQUAD_EVENTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">PARTNERED_SERVER_OWNER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">SYSTEM</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">TEAM_PSEUDO_USER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">VERIFIED_BOT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">VERIFIED_DEVELOPER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="0677338315-1">}</span></code></pre>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p>
   </section>
 
 
@@ -144,6 +120,8 @@ Remedy
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>User Flags Type</p></div>
 
       </div>
 
@@ -171,7 +149,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/flags/user_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/user_flags.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -193,7 +171,35 @@ Types
 
 
 
-
+<p>User Flags Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:DISCORD_EMPLOYEE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:PARTNERED_SERVER_OWNER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_EVENTS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:BUG_HUNTER_LEVEL_1</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_BRAVERY</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_BRILLIANCE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 8</code></td><td style="text-align: left;"><code class="inline">:HYPESQUAD_BALANCE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 9</code></td><td style="text-align: left;"><code class="inline">:EARLY_NITRO_SUPPORTER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 10</code></td><td style="text-align: left;"><code class="inline">:TEAM_PSEUDO_USER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:SYSTEM</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:BUG_HUNTER_LEVEL_2</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 16</code></td><td style="text-align: left;"><code class="inline">:VERIFIED_BOT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 17</code></td><td style="text-align: left;"><code class="inline">:VERIFIED_DEVELOPER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 18</code></td><td style="text-align: left;"><code class="inline">:CERTIFIED_MODERATOR</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 19</code></td><td style="text-align: left;"><code class="inline">:BOT_HTTP_INTERACTIONS</code></td></tr></tbody></table><h2 id="t:t/0-representations" class="section-heading">
+  <a href="#t:t/0-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Representations
+</h2>
+<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1005519</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11110101011111001111</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5818051032-1">[</span><span class="s">&quot;BOT_HTTP_INTERACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BUG_HUNTER_LEVEL_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BUG_HUNTER_LEVEL_2&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;CERTIFIED_MODERATOR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DISCORD_EMPLOYEE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EARLY_NITRO_SUPPORTER&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;HYPESQUAD_BALANCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HYPESQUAD_BRAVERY&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HYPESQUAD_BRILLIANCE&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;HYPESQUAD_EVENTS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PARTNERED_SERVER_OWNER&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYSTEM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TEAM_PSEUDO_USER&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;VERIFIED_BOT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VERIFIED_DEVELOPER&quot;</span><span class="p" data-group-id="5818051032-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2787261355-1">[</span><span class="ss">:BOT_HTTP_INTERACTIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:BUG_HUNTER_LEVEL_1</span><span class="p">,</span><span class="w"> </span><span class="ss">:BUG_HUNTER_LEVEL_2</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:CERTIFIED_MODERATOR</span><span class="p">,</span><span class="w"> </span><span class="ss">:DISCORD_EMPLOYEE</span><span class="p">,</span><span class="w"> </span><span class="ss">:EARLY_NITRO_SUPPORTER</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:HYPESQUAD_BALANCE</span><span class="p">,</span><span class="w"> </span><span class="ss">:HYPESQUAD_BRAVERY</span><span class="p">,</span><span class="w"> </span><span class="ss">:HYPESQUAD_BRILLIANCE</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:HYPESQUAD_EVENTS</span><span class="p">,</span><span class="w"> </span><span class="ss">:PARTNERED_SERVER_OWNER</span><span class="p">,</span><span class="w"> </span><span class="ss">:SYSTEM</span><span class="p">,</span><span class="w"> </span><span class="ss">:TEAM_PSEUDO_USER</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:VERIFIED_BOT</span><span class="p">,</span><span class="w"> </span><span class="ss">:VERIFIED_DEVELOPER</span><span class="p" data-group-id="2787261355-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2003779591-1">%{</span><span class="w">
+  </span><span class="ss">BOT_HTTP_INTERACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">BUG_HUNTER_LEVEL_1</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">BUG_HUNTER_LEVEL_2</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">CERTIFIED_MODERATOR</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">DISCORD_EMPLOYEE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">EARLY_NITRO_SUPPORTER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">HYPESQUAD_BALANCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">HYPESQUAD_BRAVERY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">HYPESQUAD_BRILLIANCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">HYPESQUAD_EVENTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">PARTNERED_SERVER_OWNER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SYSTEM</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">TEAM_PSEUDO_USER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VERIFIED_BOT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VERIFIED_DEVELOPER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="2003779591-1">}</span></code></pre>
   </section>
 </section>
 
@@ -207,7 +213,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/flags/user_flags.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/user_flags.ex">(current file)</a>
 
         </p>
 

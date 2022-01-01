@@ -21,12 +21,15 @@ defmodule Remedy.Gateway.EventBuffer do
 
   defp dispatch(events) do
     events
-    |> Task.async_stream(fn event ->
-      event
-      #    |> EventParser.handle()
-      |> tap(&EventHandler.handle(&1))
-      |> tap(&Task.start(Commands, :invoke, [&1]))
-    end)
+    |> Task.async_stream(
+      fn event ->
+        event
+        #    |> EventParser.handle()
+        |> tap(&EventHandler.handle(&1))
+        |> tap(&Task.start(Commands, :invoke, [&1]))
+      end,
+      timeout: :infinity
+    )
     |> Enum.reduce([], fn {:ok, event}, acc -> [event] ++ acc end)
     |> List.flatten()
     |> Enum.filter(fn event -> event != :noop end)

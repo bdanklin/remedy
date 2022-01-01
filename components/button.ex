@@ -1,4 +1,4 @@
-defmodule Remedy.Schema.Component.Button do
+defmodule Remedy.Component.Button do
   @moduledoc """
   Helpers for dealing with Button Components
   """

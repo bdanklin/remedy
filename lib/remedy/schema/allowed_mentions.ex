@@ -1,6 +1,13 @@
 defmodule Remedy.Schema.AllowedMentions do
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          parse: [String.t()],
+          replied_user: :boolean,
+          roles: [String.t()],
+          users: [String.t()]
+        }
+
   embedded_schema do
     field :parse, {:array, :string}
     field :replied_user, :boolean

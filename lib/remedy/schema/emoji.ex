@@ -7,7 +7,6 @@ defmodule Remedy.Schema.Emoji do
 
   @type t :: %__MODULE__{
           name: String.t(),
-          #       roles: [Role.t()],
           require_colons: boolean(),
           managed: boolean(),
           animated: boolean(),
@@ -19,7 +18,6 @@ defmodule Remedy.Schema.Emoji do
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "emojis" do
     field :name, :string
-
     field :require_colons, :boolean
     field :managed, :boolean
     field :animated, :boolean, default: false

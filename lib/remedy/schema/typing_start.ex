@@ -26,9 +26,9 @@ defmodule Remedy.Schema.TypingStart do
   def form(attrs), do: changeset(attrs) |> apply_changes()
 
   @doc false
-  def changeset(model \\ %__MODULE__{}, attrs) do
+  def changeset(model \\ %__MODULE__{}, params) do
     model
-    |> cast(attrs, [:channel_id, :guild_id, :user_id, :timestamp])
+    |> cast(params, [:channel_id, :guild_id, :user_id, :timestamp])
     |> validate_required([:channel_id, :user_id, :timestamp])
     |> cast_embed(:member)
   end

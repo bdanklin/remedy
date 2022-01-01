@@ -15,7 +15,7 @@ defmodule Remedy.Schema.Role do
           guild: Guild.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "roles" do
     field :name, :string
     field :color, :integer

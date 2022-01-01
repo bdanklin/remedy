@@ -2,25 +2,7 @@ defmodule Remedy.Schema do
   @moduledoc """
   Schema sets out all of the objects and types used within the Discord API.
 
-  > The unfortunate reason that this is required is because Discord is unreliable at delivering particular types. For example, `:id` can be returned as either an integer or a string. This is no use to man nor beast.
-
-  It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly, or the whole schema module, for example:
-
-    ```elixir
-  alias Remedy.Schema.Member
-  ```
-
-  Which would make an individual resource available as [`%Member{}`](`t:Remedy.Schema.Member.t/0`).
-
-  ```elixir
-  alias Remedy.Schema, as: Discord
-  ```
-
   """
-
-  @callback new(params :: map()) :: struct :: map()
-  @callback update(struct :: map(), params :: map()) :: struct :: map()
-  @callback validate(changeset :: Ecto.Changeset.t()) :: changeset :: Ecto.Changeset.t()
 
   defmacro __using__(_env) do
     parent = __MODULE__
@@ -31,12 +13,14 @@ defmodule Remedy.Schema do
       alias Remedy.Schema.{
         Activity,
         App,
+        ApplicationFlags,
         ApplicationOwner,
         Attachment,
         AuditLog,
         AuditLogEntry,
         AuditLogOption,
         Ban,
+        CallbackDataFlags,
         Channel,
         ChannelPinsUpdate,
         ClientStatus,
@@ -64,6 +48,7 @@ defmodule Remedy.Schema do
         GuildMemberUpdate,
         GuildRoleCreate,
         GuildRoleUpdate,
+        GuildSystemChannelFlags,
         Integration,
         Interaction,
         InteractionData,
@@ -71,14 +56,15 @@ defmodule Remedy.Schema do
         InteractionDataResolved,
         Member,
         Message,
+        MessageFlags,
+        MessageReaction,
         MessageReactionRemoveEmoji,
+        MessageReference,
         Overwrite,
         PermissionOverwrite,
         Presence,
         PresenceUpdate,
         Provider,
-        MessageReaction,
-        MessageReference,
         Reaction,
         Role,
         StageInstance,
@@ -88,9 +74,11 @@ defmodule Remedy.Schema do
         TeamMember,
         Thread,
         ThreadMember,
+        ThreadMemberFlags,
         ThreadMetadata,
         UnavailableGuild,
         User,
+        UserFlags,
         Voice,
         VoiceState,
         Webhook,
@@ -100,7 +88,12 @@ defmodule Remedy.Schema do
 
       use Ecto.Schema
       import Ecto.Changeset
-      alias Remedy.{ISO8601, Snowflake}
+
+      alias Remedy.{
+        ISO8601,
+        Snowflake,
+        Colour
+      }
     end
   end
 end

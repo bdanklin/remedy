@@ -21,6 +21,7 @@ defmodule Remedy.Schema.Ban do
   end
 
   @doc false
+
   def changeset(model \\ %__MODULE__{}, params) do
     params = params |> put_pkey()
 

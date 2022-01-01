@@ -70,6 +70,7 @@ defmodule Remedy.Consumer do
     end
   end
   ```
+
   """
 
   use ConsumerSupervisor
@@ -95,9 +96,6 @@ defmodule Remedy.Consumer do
     WebhooksUpdate
   }
 
-  @doc """
-
-  """
   @callback handle_event(event) :: any
 
   @callback handle_event(any()) :: :noop
@@ -502,12 +500,27 @@ defmodule Remedy.Consumer do
   @type thread_update ::
           {:THREAD_UPDATE, Thread.t(), WSState.t()}
 
+  @typedoc """
+  Sent when a user begins typing in a channel.
+  """
   @type typing_start ::
           {:TYPING_START, TypingStart.t(), WSState.t()}
+
+  @typedoc """
+  Sent when a user is updated.
+  """
   @type user_update ::
           {:USER_UPDATE, User.t(), WSState.t()}
+
+  @typedoc """
+  Sent when a user's voice state is updated.
+  """
   @type voice_state_update ::
           {:VOICE_STATE_UPDATE, VoiceState.t(), WSState.t()}
+
+  @typedoc """
+  Sent when a webhook is updated.
+  """
   @type webhooks_update ::
           {:WEBHOOKS_UPDATE, WebhooksUpdate.t(), WSState.t()}
 

@@ -1,13 +1,11 @@
 defmodule Remedy.Cache do
   @moduledoc false
-  ### The cache is populated only by events received from the gateway, it is not updated from interracting with the api.
 
   import Remedy.TimeHelpers, only: [is_snowflake: 1]
   import Ecto.Query, warn: false
 
   alias Remedy.Repo
-  alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Integration, Interaction, Invite, Member, Message, Role, User}
-  alias Ecto.Changeset
+  alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Invite, Member, Message, Role, User}
 
   use Unsafe.Generator, handler: :unwrap, docs: true
 

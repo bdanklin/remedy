@@ -62,8 +62,9 @@ defmodule Remedy.Gateway.EventHandler do
   def handle({event, payload, socket}) do
     payload = payload |> Morphix.atomorphiform!()
 
-    if Application.get_env(:remedy, :log_everything, true),
-      do: Logger.debug("#{inspect(event)}, #{inspect(payload, pretty: true, limit: :infinity)}")
+    if Application.get_env(:remedy, :log_everything, true), do: nil
+    #  do: Logger.debug("#{inspect(event)}, #{inspect(payload, pretty: true, limit: :infinity)}")
+    #  do: Logger.debug("#{inspect(event)}")
 
     case event in @dispatch_events do
       true ->

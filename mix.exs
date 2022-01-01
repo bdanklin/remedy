@@ -1,10 +1,9 @@
 defmodule Remedy.MixProject do
-  @moduledoc false
   use Mix.Project
 
   @app :remedy
   @name "Remedy"
-  @version "0.6.8"
+  @version "0.6.9"
   @scm_url "https://github.com/bdanklin/remedy"
   @doc_url "https://bdanklin.github.io/remedy/"
   @description "Discord Library in Elixir."
@@ -23,7 +22,7 @@ defmodule Remedy.MixProject do
       homepage_url: @doc_url,
       description: @description,
       deps: deps(),
-      dialyzer: dialyzer(),
+      dialyzer: [plt_add_deps: :app_tree, plt_add_apps: [:mix]],
       docs: docs(),
       package: package()
     ]
@@ -45,13 +44,15 @@ defmodule Remedy.MixProject do
       main: "introduction",
       extra_section: "HELLO",
       nest_modules_by_prefix: nest_for_modules(),
-      groups_for_modules: groups_for_modules()
+      groups_for_modules: groups_for_modules(),
+      groups_for_functions: groups_for_functions()
     ]
   end
 
   def extras do
     [
-      "hello/introduction.md"
+      "hello/introduction.md",
+      "hello/getting_started.md"
     ]
   end
 
@@ -64,9 +65,32 @@ defmodule Remedy.MixProject do
 
   def groups_for_modules do
     [
-      Schema: [
-        ~r/Remedy.Schema/
+      API: [Remedy.API],
+      Schema: [~r/Remedy.Schema/],
+      Types: [
+        Remedy.ISO8601,
+        Remedy.Colour,
+        Remedy.Snowflake,
+        Remedy.Flag,
+        Remedy.ApplicationFlags
+      ],
+      Helpers: [
+        Remedy.TimeHelpers,
+        Remedy.OpcodeHelpers,
+        Remedy.DateHelpers,
+        Remedy.ColourHelpers
       ]
+    ]
+  end
+
+  def groups_for_functions do
+    [
+      Interactions: &(&1[:section] == :interactions),
+      Commands: &(&1[:section] == :commands),
+      Stickers: &(&1[:section] == :stickers),
+      Emojis: &(&1[:section] == :emojis),
+      Reactions: &(&1[:section] == :reactions),
+      Guards: &(&1[:section] == :guards)
     ]
   end
 
@@ -84,31 +108,34 @@ defmodule Remedy.MixProject do
 
   defp deps do
     [
+      ## Dev / Test Only
+      {:ex_doc, "~> 0.27.3", only: [:dev], hex: :remedy_exdoc, runtime: false},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
       {:mix_unused, "~> 0.2.0", only: [:dev]},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:credo, "~> 1.5.6", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.27.0", only: [:dev], git: "https://github.com/bdanklin/ex_doc", ref: "228592ef"},
-      {:recon, "~> 2.3", only: [:dev]},
       {:doctor, "~> 0.18.0", only: [:dev]},
+      ## Web
       {:gun, "2.0.1", hex: :remedy_gun},
-      {:tz, "~> 0.20.1"},
+      ## Unsafe Function Bindings !
       {:unsafe, "~> 1.0"},
+      ## Rate Limiter
       {:ex_rated, "~> 2.0"},
-      {:jason, "~> 1.2"},
-      {:mime, "~> 2.0"},
+      ## CLI
       {:progress_bar, "~> 2.0"},
+      ## Data Processing
       {:gen_stage, "~> 1.0"},
+      ## DB, Casting & Parsing
+      {:jason, "~> 1.2"},
       {:ecto, "~> 3.7"},
       {:ecto_morph, "~> 0.1.25"},
       {:etso, "~> 0.1.6"},
       {:morphix, "~> 0.8.1"},
+      {:mime, "~> 2.0"},
+      {:exmoji, "~> 0.3.0"},
       {:recase, "~> 0.7.0"},
-      {:exmoji, "~> 0.3.0"}
+      ## Timezone
+      {:tz, "~> 0.20.1"}
     ]
-  end
-
-  def dialyzer do
-    [plt_add_deps: :app_tree, plt_add_apps: [:mix]]
   end
 end

@@ -31,16 +31,11 @@ defmodule Remedy.Schema.WelcomeScreenChannel do
   Guild Welcome Screen Channel
   """
 
-  @type channel_id :: Snowflake.t()
-  @type description :: String.t()
-  @type emoji_id :: Snowflake.t()
-  @type emoji_name :: String.t()
-
   @type t :: %__MODULE__{
-          channel_id: channel_id,
-          description: description,
-          emoji_id: emoji_id,
-          emoji_name: emoji_name
+          channel_id: Snowflake.t(),
+          description: String.t(),
+          emoji_id: Snowflake.t(),
+          emoji_name: String.t()
         }
   @primary_key false
   embedded_schema do

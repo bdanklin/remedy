@@ -36,12 +36,12 @@ defmodule Remedy.Schema.Message do
           member: Member.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "messages" do
     field :timestamp, ISO8601
     field :edited_timestamp, ISO8601
 
-    field :flags, :integer
+    field :flags, MessageFlags
     field :mention_everyone, :boolean
     field :nonce, :integer
     field :pinned, :boolean

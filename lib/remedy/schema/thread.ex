@@ -19,7 +19,7 @@ defmodule Remedy.Schema.Thread do
           type: integer()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "channels" do
     field :guild_id, Snowflake
     field :owner_id, Snowflake
@@ -59,11 +59,11 @@ defmodule Remedy.Schema.ThreadMember do
           flags: integer()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "thread_members" do
     field :user_id, Snowflake
     field :join_timestamp, ISO8601
-    field :flags, :integer
+    field :flags, ThreadMemberFlags
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

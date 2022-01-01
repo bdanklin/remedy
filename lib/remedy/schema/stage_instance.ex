@@ -12,7 +12,7 @@ defmodule Remedy.Schema.StageInstance do
           channel_id: Snowflake.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "stage_instances" do
     field :topic, :string
     field :privacy_level, :integer

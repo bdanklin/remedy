@@ -13,7 +13,7 @@ defmodule Remedy.Schema.PermissionOverwrite do
           deny: String.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "permission_overwrite" do
     embeds_one :role, Role
     embeds_one :user, User

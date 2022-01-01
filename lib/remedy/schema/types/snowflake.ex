@@ -1,8 +1,7 @@
 defmodule Remedy.Snowflake do
   @moduledoc """
-  Module for assisting with Discord Snowflakes.
+  Discord Snowflake Type
 
-  Data is saved as an integer field to the database.
   """
   import Remedy.TimeHelpers
   use Ecto.Type
@@ -10,8 +9,11 @@ defmodule Remedy.Snowflake do
 
   @typedoc """
   A discord snowflake.
+
+  0x400000..0xFFFFFFFFFFFFFFFF
+
   """
-  @type t :: 0x400000..0xFFFFFFFFFFFFFFFF
+  @type t() :: 0x400000..0xFFFFFFFFFFFFFFFF
 
   @doc false
   @impl true
@@ -37,8 +39,6 @@ defmodule Remedy.Snowflake do
 
   @doc false
   @impl true
-  @unsafe {:load, [:id]}
-  @spec load(any) :: t() | nil
   def load(value) when is_snowflake(value), do: {:ok, value}
 
   @doc false

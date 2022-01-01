@@ -1,10 +1,15 @@
-defmodule Remedy.Schema.InteractionCallback do
+defmodule Remedy.Schema.Callback do
   use Remedy.Schema
+
+  @type t :: %__MODULE__{
+          type: :integer,
+          data: CallbackData.t()
+        }
 
   @primary_key false
   embedded_schema do
     field :type, :integer
-    embeds_one :data, InteractionCallbackData
+    embeds_one :data, CallbackData
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

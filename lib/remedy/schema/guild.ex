@@ -84,7 +84,7 @@ defmodule Remedy.Schema.Guild do
     #   field :region, :string
     field :splash, :string
     field :unavailable, :boolean
-    field :system_channel_flags, :integer
+    field :system_channel_flags, GuildSystemChannelFlags
     field :vanity_url_code, :string
     field :verification_level, :integer
     field :widget_enabled, :boolean
@@ -98,7 +98,7 @@ defmodule Remedy.Schema.Guild do
 
     has_many :channels, Channel, on_delete: :nilify_all
     has_many :emojis, Emoji, on_delete: :nilify_all
-    has_many :presences, Presence
+    # has_many :presences, Presence
     has_many :roles, Role, on_delete: :nilify_all
     has_many :stage_instances, StageInstance, on_delete: :nilify_all
     has_many :stickers, Sticker, on_delete: :nilify_all

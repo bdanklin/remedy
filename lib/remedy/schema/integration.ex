@@ -12,7 +12,7 @@ defmodule Remedy.Schema.Integration do
           guild_id: Snowflake.t()
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "integrations" do
     field :name, :string
     field :type, :string
@@ -20,12 +20,6 @@ defmodule Remedy.Schema.Integration do
     embeds_one :application, App
     belongs_to :guild, Guild
   end
-
-  @doc false
-
-  def form(params), do: params |> changeset() |> apply_changes()
-  @doc false
-  def shape(model, params), do: model |> changeset(params) |> apply_changes()
 
   @doc false
   def changeset(model \\ %__MODULE__{}, params) do

@@ -1,35 +1,41 @@
 defmodule Remedy.TimeHelpers do
-  use Bitwise
-
   @moduledoc """
   Functions and Guards for working with time.
 
   There are four formats of concern in this module:
 
-  - Snowflake: a 64-bit integer representing the number of milliseconds since the discord epoch + metadata.
-  - DateTime: a datetime.datetime object.
-  - ISO8601: a string in the ISO8601 format.
-  - UnixTime: a number representing the number of seconds since the unix epoch.
+  - `Snowflake` - a 64-bit integer representing the number of milliseconds since the discord epoch + metadata.
+  - `t:DateTime/0` - a datetime.datetime object.
+  - `ISO8601` - a string in the ISO8601 format.
+  - `UnixTime` - a number representing the number of seconds since the unix epoch.
 
-  ## Guards
 
-  This module provides guards for checking whether a value is of a certain type.
-
-  - `is_snowflake(value)`
-  - `is_datetime(value)`
-  - `is_iso8601(value)`
-  - `is_unixtime(value)`
-
-  Early Snowflake   179255727561375744
-  Snowflake:        920271852159512606
-  Snowflake Epoch     5956206959001600
-  UnixTime_ms:           1639481377000
 
   """
+  use Bitwise
 
+  @doc """
+  Guard to test if a value is a Snowflake.
+  """
+  @doc section: :guards
   defguard is_snowflake(value) when is_integer(value) and value > 0x400000 and value < 0xFFFFFFFFFFFFFFFF
+
+  @doc """
+  Guard to test if a value is probably a unix_time.
+  """
+  @doc section: :guards
   defguard is_unixtime(value) when is_integer(value) and value > 0 and value < 0xFFFFFFFFFFFFFFFF
+
+  @doc """
+  Guard to test if a value is a `DateTime`.
+  """
+  @doc section: :guards
   defguard is_datetime(value) when is_struct(value, DateTime)
+
+  @doc """
+  Guard to test if a value is an ISO8601 encoded string.
+  """
+  @doc section: :guards
   defguard is_iso8601(value) when is_binary(value)
 
   @doc """
@@ -68,23 +74,6 @@ defmodule Remedy.TimeHelpers do
   end
 
   def to_datetime(_value), do: :error
-
-  @doc """
-  Same as `f:to_datetime/1`, but allows the 'from' to be selected as the second argument.
-
-  Use carefully, passing the wrong value may result in unexpected behavior.
-
-  ## From
-
-  - `:snowflake`
-  - `:unix_ms`
-  - `:iso8601`
-
-  """
-  def to_datetime(value, from)
-  def to_datetime(value, :snowflake), do: ((value >>> 22) + discord_epoch()) |> DateTime.from_unix!(:millisecond)
-  def to_datetime(value, :unix_ms), do: DateTime.from_unix!(value, :milliseconds)
-  def to_datetime(value, :iso8601), do: DateTime.from_iso8601(value) |> elem(1)
 
   @doc """
   Convert a value to a string representation of the ISO8601 format.

@@ -13,7 +13,7 @@ defmodule Remedy.Schema.Team do
           team_members: [TeamMember.t()]
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
     field :icon, :string
     field :name, :string

@@ -1,4 +1,4 @@
-defmodule Remedy.Schema.Component.ActionRow do
+defmodule Remedy.Component.ActionRow do
   @moduledoc """
   Action Rows.
   """

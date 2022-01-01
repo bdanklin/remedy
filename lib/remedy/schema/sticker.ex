@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Sticker do
   Sticker
   """
   use Remedy.Schema
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
 
   @type t :: %__MODULE__{
           name: String.t(),
@@ -28,7 +28,7 @@ defmodule Remedy.Schema.Sticker do
     field :format_type, :integer
     field :available, :boolean
     field :sort_value, :integer
-    belongs_to :sticker_pack, StickerPack
+    embeds_one :sticker_pack, StickerPack
     belongs_to :guild, Guild
     belongs_to :user, User
   end
@@ -58,15 +58,15 @@ defmodule Remedy.Schema.StickerPack do
           stickers: [Sticker.t()]
         }
 
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "sticker_packs" do
     field :name, :string
     field :description, :string
     field :banner_asset_id, Snowflake, virtual: true
     # field :sku_id	snowflake	id of the pack's SKU
 
-    has_one :cover_sticker, Sticker
-    has_many :stickers, Sticker
+    embeds_one :cover_sticker, Sticker
+    embeds_many :stickers, Sticker
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

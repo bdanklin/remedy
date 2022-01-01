@@ -8,8 +8,6 @@ defmodule Remedy.CDN do
 
   Storing images and other assets can be painful, use this module to retreive assets from the discord cdn rather than storing them.
 
-  Each function takes the required parameters to directly access a resource.
-
   ## Format
 
   All images are returned as either a `.png` or a `.gif` if the asset is animated. This is done automatically.
@@ -23,28 +21,25 @@ defmodule Remedy.CDN do
 
   """
 
-  @typedoc """
-  The images size.
-  """
+  @typedoc "The images size."
   @type size :: integer() | nil
 
-  @typedoc """
-  The snowflake id of the resource.
-  """
+  @typedoc "The snowflake id of the resource."
   @type snowflake :: Snowflake.t()
 
-  @typedoc """
-  The images hash.
-  """
+  @typedoc "The images hash."
   @type hash :: binary()
 
-  @typedoc """
-  A four digit integer assigned by discord to avoid duplicate usernames
-  """
+  @typedoc "A four digit integer assigned by discord to avoid duplicate usernames"
   @type discriminator :: integer()
 
   @doc """
   Returns the url for a custom emoji.
+
+  ## Examples
+
+      iex> Remedy.CDN.emoji(12345678901234567890123456789012, 128)
+      "https://cdn.discordapp.com/emojis/12345678901234567890123456789012.png?size=128"
 
   """
   @spec custom_emoji(snowflake, size) :: binary
@@ -88,6 +83,10 @@ defmodule Remedy.CDN do
   @doc """
   Returns the url for a guilds discovery splash.
 
+  ## Examples
+
+      iex> Remedy.CDN.guild_discovery_splash(848619361782726696, "7ed6ea26b7a5e64f78ca5df202cf4d13")
+      "https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png"
 
   """
   @spec guild_discovery_splash(snowflake, hash, size) :: uri
@@ -99,6 +98,10 @@ defmodule Remedy.CDN do
   @doc """
   Returns the url for a guilds banner.
 
+  ## Examples
+
+      iex> Remedy.CDN.guild_banner(848619361782726696, "7ed6ea26b7a5e64f78ca5df202cf4d13")
+      "https://cdn.discordapp.com/banners/848619361782726696/"7ed6ea26b7a5e64f78ca5df202cf4d13"
 
   """
 
@@ -162,6 +165,10 @@ defmodule Remedy.CDN do
   @doc """
   Returns the url for the applications icon.
 
+  ## Examples
+
+      iex> Remedy.CDN.application_icon(12345678901234567890123456789012, "f817c5adaf96672c94a17de8e944f427")
+      "https://cdn.discordapp.com/app-icons/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png"
 
   """
 
@@ -174,6 +181,10 @@ defmodule Remedy.CDN do
   @doc """
   Returns an application cover url.
 
+  ## Examples
+
+      iex> Remedy.CDN.application_cover(12345678901234567890123456789012, "f817c5adaf96672c94a17de8e944f427")
+      "https://cdn.discordapp.com/app-cover-images/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png"
 
   """
   @spec application_cover(snowflake, hash, size) :: uri
@@ -185,6 +196,10 @@ defmodule Remedy.CDN do
   @doc """
   Returns an application asset url.
 
+  ## Examples
+
+      iex> Remedy.CDN.application_asset(12345678901234567890123456789012, "f817c5adaf96672c94a17de8e944f427")
+      "https://cdn.discordapp.com/app-assets/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png"
 
   """
   @spec application_asset(snowflake, hash, size) :: uri
@@ -196,6 +211,10 @@ defmodule Remedy.CDN do
   @doc """
   Returns an achievement icon url.
 
+  ## Examples
+
+      iex> Remedy.CDN.achievement_icon(12345678901234567890123456789012, "f817c5adaf96672c94a17de8e944f427")
+      "https://cdn.discordapp.com/achievement-icons/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png"
 
   """
 
@@ -207,6 +226,7 @@ defmodule Remedy.CDN do
 
   @doc """
   Returns a sticker banner url.
+
   """
   @spec sticker_pack_banner(snowflake, size) :: uri
   def sticker_pack_banner(banner_asset_id, size) do

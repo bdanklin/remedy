@@ -102,7 +102,7 @@ defmodule Remedy.Gateway.Payload do
   end
 
   defp module_delegate(event) when is_op_event(event) do
-    Logger.error("#{event}")
+    #  Logger.info("#{event}")
     [Events, mod_from_event(event)] |> Module.concat()
   end
 end

@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Channel do
   Discord Channel Object
   """
   use Remedy.Schema
-  @type overwrite :: PermissionOverwrite.t()
+
   @type t :: %__MODULE__{
           type: integer(),
           position: integer(),
@@ -26,7 +26,7 @@ defmodule Remedy.Schema.Channel do
           parent_id: Snowflake.t(),
           #     owner: User.t(),
           guild_id: Snowflake.t(),
-          permission_overwrites: [overwrite]
+          permission_overwrites: [PermissionOverwrite.t()]
           #    messages: [Message.t()]
         }
 
@@ -57,8 +57,6 @@ defmodule Remedy.Schema.Channel do
     embeds_many :permission_overwrites, PermissionOverwrite, on_replace: :delete
 
     #  has_many :messages, Message
-
-    timestamps()
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

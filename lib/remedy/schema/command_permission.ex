@@ -1,0 +1,22 @@
+defmodule Remedy.Schema.CommandPermission do
+  @moduledoc """
+  Command Permission Object
+  """
+  use Remedy.Schema
+
+  @primary_key {:id, Snowflake, autogenerate: false}
+  embedded_schema do
+    field :type, :integer
+    field :permission, :boolean
+  end
+
+  def changeset(model \\ %__MODULE__{}, params) do
+    fields = __MODULE__.__schema__(:fields)
+    embeds = __MODULE__.__schema__(:embeds)
+    cast_model = cast(model, params, fields -- embeds)
+
+    Enum.reduce(embeds, cast_model, fn embed, cast_model ->
+      cast_embed(cast_model, embed)
+    end)
+  end
+end

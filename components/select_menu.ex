@@ -1,4 +1,4 @@
-defmodule Remedy.Schema.Component.SelectMenu do
+defmodule Remedy.Component.SelectMenu do
   @moduledoc """
   Select Menu
   """

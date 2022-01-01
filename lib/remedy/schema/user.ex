@@ -7,7 +7,7 @@ defmodule Remedy.Schema.User do
   @type t :: %__MODULE__{
           id: Snowflake.t(),
           username: String.t(),
-          discriminator: 0..9999,
+          discriminator: discriminator :: 0..9999,
           avatar: String.t() | nil,
           bot: boolean(),
           system: boolean(),
@@ -35,9 +35,9 @@ defmodule Remedy.Schema.User do
     field :locale, :string
     field :verified, :boolean
     field :email, :string
-    field :flags, :integer
+    field :flags, UserFlags
     field :premium_type, :integer
-    field :public_flags, :integer
+    field :public_flags, UserFlags
 
     embeds_one :presence, Presence, on_replace: :update
     field :remedy_system, :boolean, default: false

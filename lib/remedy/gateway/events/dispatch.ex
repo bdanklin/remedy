@@ -23,14 +23,14 @@ defmodule Remedy.Gateway.Events.Dispatch do
       ) do
     Cache.init_app(app)
     Cache.init_bot(user)
-    Logger.error("#{inspect(payload, pretty: true)}")
+    Logger.debug("#{inspect(payload, pretty: true)}")
 
     %WSState{socket | v: v, session_id: session_id}
   end
 
   def digest(%WSState{payload_dispatch_event: payload_dispatch_event} = socket, payload) do
     EventBroadcaster.digest({payload_dispatch_event, payload, socket})
-
+    #  Logger.debug("#{inspect(payload_dispatch_event)}")
     socket
   end
 end

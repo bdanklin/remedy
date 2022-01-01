@@ -16,7 +16,7 @@ defmodule Remedy.Schema.Reaction do
         }
 
   # Primary key :message_id ++ :user_id ++ :emoji_id
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
     embeds_one :user, User
     embeds_one :channel, Channel

@@ -1,8 +1,5 @@
 defmodule Remedy.Gateway do
-  @moduledoc """
-  Exposes functions for gateway interraction.
-  """
-
+  @moduledoc false
   use Supervisor
   alias Remedy.API
   alias Remedy.Gateway.{EventBroadcaster, EventBuffer, SessionSupervisor}
@@ -44,10 +41,9 @@ defmodule Remedy.Gateway do
     Supervisor.init(children, strategy: :one_for_one, max_restarts: 3, max_seconds: 60)
   end
 
-  defp shard_workers(shards),
-    do: for(shard <- 0..(shards - 1), into: [], do: shard_worker(shard))
-
-  defp shard_worker(shard) do
-    Supervisor.child_spec({SessionSupervisor, %{shard: shard}}, id: shard)
+  defp shard_workers(shards) do
+    for shard <- 0..(shards - 1), into: [] do
+      Supervisor.child_spec({SessionSupervisor, %{shard: shard}}, id: shard)
+    end
   end
 end

@@ -20,7 +20,7 @@ defmodule Remedy.Schema.Member do
         }
 
   # Primary key :guild_id ++ :user_id
-  @primary_key {:id, :id, autogenerate: false}
+  @primary_key {:id, Snowflake, autogenerate: false}
   schema "members" do
     field :nick, :string
     field :joined_at, ISO8601

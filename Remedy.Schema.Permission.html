@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.8">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Schema.Permission — Remedy v0.6.8</title>
-    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
+    <title>Remedy.Schema.Permission — Remedy v0.6.9</title>
+    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-13e67feada.js"></script>
+    <script src="dist/sidebar_items-5b9fcb81e2.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
+    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
 
 
   </head>
@@ -54,11 +54,11 @@
 
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
-      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName">
+      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
       </a>
-      <strong class="sidebar-projectVersion">
-        v0.6.8
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.6.9
       </strong>
     </div>
 
@@ -83,224 +83,111 @@ Remedy
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-      <h1>
-Remedy.Schema.Permission <small class="app-vsn">(Remedy v0.6.8)</small>
+<h1>
+  <span translate="no">Remedy.Schema.Permission</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" title="View Source" class="view-source" rel="help">
-            <span class="icon-code" aria-hidden="true"></span>
-            <span class="sr-only">View Source</span>
-          </a>
-
-      </h1>
-
-
-        <section id="moduledoc">
-<p>Permissions Object</p>
-        </section>
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" title="View Source" class="view-source" rel="help">
+      <span class="icon-code" aria-hidden="true"></span>
+      <span class="sr-only">View Source</span>
+    </a>
 
 
-        <section id="summary" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#summary">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-            Summary
-          </h1>
+</h1>
+
+
+  <section id="moduledoc">
+<p>Permission Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:CREATE_INSTANT_INVITE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:KICK_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:BAN_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:ADMINISTRATOR</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 4</code></td><td style="text-align: left;"><code class="inline">:MANAGE_CHANNELS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 5</code></td><td style="text-align: left;"><code class="inline">:MANAGE_GUILD</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:ADD_REACTIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:VIEW_AUDIT_LOG</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 8</code></td><td style="text-align: left;"><code class="inline">:PRIORITY_SPEAKER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 9</code></td><td style="text-align: left;"><code class="inline">:STREAM</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 10</code></td><td style="text-align: left;"><code class="inline">:VIEW_CHANNEL</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 11</code></td><td style="text-align: left;"><code class="inline">:SEND_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:SEND_TTS_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 13</code></td><td style="text-align: left;"><code class="inline">:MANAGE_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:EMBED_LINKS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 15</code></td><td style="text-align: left;"><code class="inline">:ATTACH_FILES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 16</code></td><td style="text-align: left;"><code class="inline">:READ_MESSAGE_HISTORY</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 17</code></td><td style="text-align: left;"><code class="inline">:MENTION_EVERYONE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 18</code></td><td style="text-align: left;"><code class="inline">:USE_EXTERNAL_EMOJIS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 19</code></td><td style="text-align: left;"><code class="inline">:VIEW_GUILD_INSIGHTS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 20</code></td><td style="text-align: left;"><code class="inline">:CONNECT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 21</code></td><td style="text-align: left;"><code class="inline">:SPEAK</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 22</code></td><td style="text-align: left;"><code class="inline">:MUTE_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 23</code></td><td style="text-align: left;"><code class="inline">:DEAFEN_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 24</code></td><td style="text-align: left;"><code class="inline">:MOVE_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 25</code></td><td style="text-align: left;"><code class="inline">:USE_VAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 26</code></td><td style="text-align: left;"><code class="inline">:CHANGE_NICKNAME</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 27</code></td><td style="text-align: left;"><code class="inline">:MANAGE_NICKNAMES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 28</code></td><td style="text-align: left;"><code class="inline">:MANAGE_ROLES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 29</code></td><td style="text-align: left;"><code class="inline">:MANAGE_WEBHOOKS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 30</code></td><td style="text-align: left;"><code class="inline">:MANAGE_EMOJIS_AND_STICKERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 31</code></td><td style="text-align: left;"><code class="inline">:USE_APPLICATION_COMMANDS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 32</code></td><td style="text-align: left;"><code class="inline">:REQUEST_TO_SPEAK</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 34</code></td><td style="text-align: left;"><code class="inline">:MANAGE_THREADS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 35</code></td><td style="text-align: left;"><code class="inline">:USE_PUBLIC_THREADS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 36</code></td><td style="text-align: left;"><code class="inline">:USE_PRIVATE_THREADS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 37</code></td><td style="text-align: left;"><code class="inline">:USE_EXTERNAL_STICKERS</code></td></tr></tbody></table><h2 id="module-representations" class="section-heading">
+  <a href="#module-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Representations
+</h2>
+<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">266287972351</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11110111111111111111111111111111111111</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3273518840-1">[</span><span class="s">&quot;CREATE_INSTANT_INVITE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SEND_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIEW_AUDIT_LOG&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_THREADS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MANAGE_WEBHOOKS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ADD_REACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;STREAM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_EXTERNAL_STICKERS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;PRIORITY_SPEAKER&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ATTACH_FILES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ADMINISTRATOR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_EXTERNAL_EMOJIS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;USE_PUBLIC_THREADS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_NICKNAMES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;READ_MESSAGE_HISTORY&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;USE_APPLICATION_COMMANDS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MENTION_EVERYONE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_VAD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIEW_CHANNEL&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MANAGE_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_CHANNELS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_ROLES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MUTE_MEMBERS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MOVE_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;REQUEST_TO_SPEAK&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SEND_TTS_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_PRIVATE_THREADS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;DEAFEN_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_GUILD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EMBED_LINKS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CONNECT&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MANAGE_EMOJIS_AND_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BAN_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SPEAK&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CHANGE_NICKNAME&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;KICK_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIEW_GUILD_INSIGHTS&quot;</span><span class="p" data-group-id="3273518840-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0065687637-1">%{</span><span class="w">
+  </span><span class="ss">CREATE_INSTANT_INVITE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SEND_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VIEW_AUDIT_LOG</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_THREADS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_WEBHOOKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">ADD_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">STREAM</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_EXTERNAL_STICKERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">PRIORITY_SPEAKER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">ATTACH_FILES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">ADMINISTRATOR</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_EXTERNAL_EMOJIS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_PUBLIC_THREADS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_NICKNAMES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">READ_MESSAGE_HISTORY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_APPLICATION_COMMANDS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MENTION_EVERYONE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_VAD</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VIEW_CHANNEL</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_CHANNELS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_ROLES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MUTE_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MOVE_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">REQUEST_TO_SPEAK</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SEND_TTS_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_PRIVATE_THREADS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">DEAFEN_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_GUILD</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">EMBED_LINKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">CONNECT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_EMOJIS_AND_STICKERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">BAN_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SPEAK</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">CHANGE_NICKNAME</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">KICK_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VIEW_GUILD_INSIGHTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="0065687637-1">}</span></code></pre>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
 
   <div class="summary-types summary">
     <h2>
       <a href="#types">Types</a>
     </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:bit/0">bit()</a>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:t/0" translate="no">t()</a>
+
+        </div>
+
+      </div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Represents a single permission as a bitvalue.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:bitset/0">bitset()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Represents a set of permissions as a bitvalue.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:t/0">t()</a>
-
-  </div>
-
-</div>
-
-  </div>
-
-  <div class="summary-functions summary">
-    <h2>
-      <a href="#functions">Functions</a>
-    </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#all/0">all()</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Returns a list of all permissions.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#changeset/2">changeset(model \\ %__MODULE__{}, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#from_bit/1">from_bit(bit)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Converts the given bit to a permission.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#from_bit!/1">from_bit!(bit)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Same as <a href="#from_bit/1"><code class="inline">from_bit/1</code></a>, but raises in case of failure.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#from_bitset/1">from_bitset(bitset)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Converts the given bitset to a list of permissions.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#from_integer/1">from_integer(flag_value)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#is_permission/1">is_permission(term)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Returns <code class="inline">true</code> if <code class="inline">term</code> is a permission; otherwise returns <code class="inline">false</code>.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#to_bit/1">to_bit(permission)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Converts the given permission to a bit.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#to_bitset/1">to_bitset(permissions)</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Converts the given enumerable of permissions to a bitset.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#to_integer/1">to_integer(flag_struct)</a>
-
-  </div>
-
-</div>
-
-  </div>
-
-        </section>
+  </section>
 
 
-        <section id="types" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#types">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
 Types
-          </h1>
-          <div class="types-list">
-<section class="detail" id="t:bit/0">
-
-  <div class="detail-header">
-    <a href="#t:bit/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">bit()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L11" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>bit() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()</pre>
-
-      </div>
-
-<p>Represents a single permission as a bitvalue.</p>
-  </section>
-</section>
-<section class="detail" id="t:bitset/0">
-
-  <div class="detail-header">
-    <a href="#t:bitset/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">bitset()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L16" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>bitset() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()</pre>
-
-      </div>
-
-<p>Represents a set of permissions as a bitvalue.</p>
-  </section>
-</section>
+    </h1>
+    <div class="types-list">
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -308,245 +195,8 @@ Types
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">t()</h1>
+    <h1 class="signature" translate="no">t()</h1>
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L18" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>t() :: %Remedy.Schema.Permission{
-  ADD_REACTIONS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  ADMINISTRATOR: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  ATTACH_FILES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  BAN_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  CHANGE_NICKNAME: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  CONNECT: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  CREATE_INSTANT_INVITE: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  DEAFEN_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  EMBED_LINKS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  KICK_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_CHANNELS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_EMOJIS_AND_STICKERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_GUILD: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_MESSAGES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_NICKNAMES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_ROLES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_THREADS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MANAGE_WEBHOOKS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MENTION_EVERYONE: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MOVE_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  MUTE_MEMBERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  PRIORITY_SPEAKER: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  READ_MESSAGE_HISTORY: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  REQUEST_TO_SPEAK: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  SEND_MESSAGES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  SEND_TTS_MESSAGES: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  SPEAK: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  STREAM: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  USE_APPLICATION_COMMANDS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  USE_EXTERNAL_EMOJIS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  USE_EXTERNAL_STICKERS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  USE_PRIVATE_THREADS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  USE_PUBLIC_THREADS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  USE_VAD: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  VIEW_AUDIT_LOG: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  VIEW_CHANNEL: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  VIEW_GUILD_INSIGHTS: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-}</pre>
-
-      </div>
-
-
-  </section>
-</section>
-
-          </div>
-        </section>
-
-        <section id="functions" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#functions">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-Functions
-          </h1>
-          <div class="functions-list">
-<section class="detail" id="all/0">
-
-  <div class="detail-header">
-    <a href="#all/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">all()</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L170" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>Returns a list of all permissions.</p>
-  </section>
-</section>
-<section class="detail" id="changeset/2">
-
-    <span id="changeset/1"></span>
-
-  <div class="detail-header">
-    <a href="#changeset/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">changeset(model \\ %__MODULE__{}, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L98" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
-<section class="detail" id="from_bit/1">
-
-  <div class="detail-header">
-    <a href="#from_bit/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">from_bit(bit)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L188" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>from_bit(<a href="#t:bit/0">bit</a>()) :: {:ok, <a href="#t:t/0">t</a>()} | :error</pre>
-
-      </div>
-
-<p>Converts the given bit to a permission.</p><p>This function returns <code class="inline">:error</code> if <code class="inline">bit</code> does not map to a permission.</p><h2 id="from_bit/1-examples" class="section-heading">
-  <a href="#from_bit/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="Elixir">iex&gt; Remedy.Permission.from_bit(0x04000000)
-{:ok, :change_nickname}
-
-iex&gt; Remedy.Permission.from_bit(0)
-:error</code></pre>
-  </section>
-</section>
-<section class="detail" id="from_bit!/1">
-
-  <div class="detail-header">
-    <a href="#from_bit!/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">from_bit!(bit)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L206" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>from_bit!(<a href="#t:bit/0">bit</a>()) :: <a href="#t:t/0">t</a>()</pre>
-
-      </div>
-
-<p>Same as <a href="#from_bit/1"><code class="inline">from_bit/1</code></a>, but raises in case of failure.</p><h2 id="from_bit!/1-examples" class="section-heading">
-  <a href="#from_bit!/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="Elixir">iex&gt; Remedy.Permission.from_bit!(0x04000000)
-:change_nickname
-
-iex&gt; Remedy.Permission.from_bit!(0)
-** expected a valid bit, got: `0`</code></pre>
-  </section>
-</section>
-<section class="detail" id="from_bitset/1">
-
-  <div class="detail-header">
-    <a href="#from_bitset/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">from_bitset(bitset)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L229" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>from_bitset(<a href="#t:bitset/0">bitset</a>()) :: [<a href="#t:t/0">t</a>()]</pre>
-
-      </div>
-
-<p>Converts the given bitset to a list of permissions.</p><p>If invalid bits are given they will be omitted from the results.</p><h2 id="from_bitset/1-examples" class="section-heading">
-  <a href="#from_bitset/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="Elixir">iex&gt; Remedy.Permission.from_bitset(0x08000002)
-[:manage_nicknames, :kick_members]
-
-iex&gt; Remedy.Permission.from_bitset(0x4000000000000)
-[]</code></pre>
-  </section>
-</section>
-<section class="detail" id="from_integer/1">
-
-  <div class="detail-header">
-    <a href="#from_integer/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">from_integer(flag_value)</h1>
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -556,150 +206,47 @@ iex&gt; Remedy.Permission.from_bitset(0x4000000000000)
 
   </div>
 
-  <section class="docstring">
 
-
-  </section>
-</section>
-<section class="detail" id="is_permission/1">
-
-  <div class="detail-header">
-    <a href="#is_permission/1" class="detail-link" title="Link to this macro">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this macro</span>
-    </a>
-    <h1 class="signature">is_permission(term)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L164" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-      <span class="note">(macro)</span>
-
-  </div>
 
   <section class="docstring">
 
-<p>Returns <code class="inline">true</code> if <code class="inline">term</code> is a permission; otherwise returns <code class="inline">false</code>.</p><h2 id="is_permission/1-examples" class="section-heading">
-  <a href="#is_permission/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="Elixir">iex&gt; Remedy.Permission.is_permission(:administrator)
-true
-
-iex&gt; Remedy.Permission.is_permission(:not_a_permission)
-false</code></pre>
-  </section>
-</section>
-<section class="detail" id="to_bit/1">
-
-  <div class="detail-header">
-    <a href="#to_bit/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">to_bit(permission)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L252" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>Converts the given permission to a bit.</p><h2 id="to_bit/1-examples" class="section-heading">
-  <a href="#to_bit/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="Elixir">iex&gt; Remedy.Permission.to_bit(:administrator)
-8</code></pre>
-  </section>
-</section>
-<section class="detail" id="to_bitset/1">
-
-  <div class="detail-header">
-    <a href="#to_bitset/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">to_bitset(permissions)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L265" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
+      <h3>Specs</h3>
       <div class="specs">
 
-          <pre>to_bitset(<a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>()) :: <a href="#t:bitset/0">bitset</a>()</pre>
+          <pre translate="no">t() :: 0..266_287_972_351</pre>
 
       </div>
 
-<p>Converts the given enumerable of permissions to a bitset.</p><h2 id="to_bitset/1-examples" class="section-heading">
-  <a href="#to_bitset/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="Elixir">iex&gt; Remedy.Permission.to_bitset([:administrator, :create_instant_invite])
-9</code></pre>
-  </section>
-</section>
-<section class="detail" id="to_integer/1">
-
-  <div class="detail-header">
-    <a href="#to_integer/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">to_integer(flag_struct)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
 
 
-  </div>
-
-  <section class="docstring">
 
 
   </section>
 </section>
 
-          </div>
-        </section>
+    </div>
+  </section>
 
       <footer class="footer">
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.8" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.8" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.8/show/lib/remedy/schema/permission.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/permission.ex">(current file)</a>
 
         </p>
 
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
           </span>
           <span class="line">
             Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
           </span>
         </p>
         <p>
@@ -709,15 +256,11 @@ false</code></pre>
           <button class="line footer-button display-shortcuts-help">
             Display keyboard shortcuts
           </button>
-          <button class="line footer-button night-mode-toggle">
-            Toggle night mode
-          </button>
           <button class="line footer-button display-quick-switch">
             Go to a HexDocs package
           </button>
-          <button class="line footer-button tooltips-toggle">
-            <span class="tooltips-option-disable">Disable tooltips</span>
-            <span class="tooltips-option-enable">Enable tooltips</span>
+          <button class="line footer-button display-settings">
+            Settings
           </button>
         </p>
       </footer>

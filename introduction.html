@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.8">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy — Remedy v0.6.8</title>
-    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
+    <title>Remedy — Remedy v0.6.9</title>
+    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-13e67feada.js"></script>
+    <script src="dist/sidebar_items-5b9fcb81e2.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
+    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
 
 
   </head>
@@ -54,11 +54,11 @@
 
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
-      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName">
+      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
       </a>
-      <strong class="sidebar-projectVersion">
-        v0.6.8
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.6.9
       </strong>
     </div>
 
@@ -83,31 +83,25 @@ Remedy
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-<h1>Remedy</h1><p><a href="https://github.com/bdanklin/remedy/actions/workflows/docs.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg" alt="Publish Docs"/></a> <a href="https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml/badge.svg" alt="Codacy Security Scan"/></a> <a href="https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml/badge.svg" alt="Credo, ExDoc, Doctor, Dialyzer"/></a></p><p>Remedy is an elixir library for interracting with the <a href="https://discord.com/developers/docs/intro">Discord API</a>. The project began as a fork of the <a href="https://github.com/kraigie/nostrum">Nostrum library</a></p><h2 id="to-do" class="section-heading">
-  <a href="#to-do" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  To Do
-</h2>
-<ul><li>[ ] Complete doc coverage<ul><li>[ ] make doctests work</li></ul></li><li>[ ] Complete test coverage</li><li>[x] new github actions</li><li>[x] Convert structs to schema</li><li>[x] Convert Cache to Ecto + Etso</li><li>[x] use Gun as the only HTTP client</li><li>[ ] Re implement voice</li><li>[x] rewrite gateway modules</li><li>[x] Code clean up to respect contexts</li><li>[ ] smash morphix apart and just take the 1 function i use</li><li>[ ] Remove config.exs</li></ul><h2 id="installation" class="section-heading">
+<h1 id="content">
+Remedy
+
+    <a href="https://github.com/bdanklin/remedy/blob/master/hello/introduction.md#L1" title="View Source" class="view-source" rel="help">
+      <span class="icon-code" aria-hidden="true"></span>
+      <span class="sr-only">View Source</span>
+    </a>
+
+</h1>
+
+<p><a href="https://github.com/bdanklin/remedy/actions/workflows/docs.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/docs.yml/badge.svg" alt="Publish Docs"/></a> <a href="https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/codacy-analysis.yml/badge.svg" alt="Codacy Security Scan"/></a> <a href="https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml"><img src="https://github.com/bdanklin/remedy/actions/workflows/ex_check.yml/badge.svg" alt="Credo, ExDoc, Doctor, Dialyzer"/></a></p><p>Remedy is an elixir library for interracting with the <a href="https://discord.com/developers/docs/intro">Discord API</a>. The project began as a fork of the <a href="https://github.com/kraigie/nostrum">Nostrum library</a></p><h2 id="installation" class="section-heading">
   <a href="#installation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Installation
 </h2>
-<pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="p" data-group-id="5155236530-1">(</span><span class="p" data-group-id="5155236530-1">)</span><span class="w"> </span><span class="k" data-group-id="5155236530-2">do</span><span class="w">
-  </span><span class="p" data-group-id="5155236530-3">[</span><span class="w">
-    </span><span class="p" data-group-id="5155236530-4">{</span><span class="ss">:remedy</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.6.8&quot;</span><span class="p" data-group-id="5155236530-4">}</span><span class="w">
-  </span><span class="p" data-group-id="5155236530-3">]</span><span class="w">
-</span><span class="k" data-group-id="5155236530-2">end</span></code></pre><h2 id="using-remedy-with-phoenix" class="section-heading">
-  <a href="#using-remedy-with-phoenix" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Using Remedy with Phoenix
-</h2>
-<p>Directly (Phoenix), or indirectly (Remedy, via Gun), both of these libraries require Cowlib.</p><p>Discord is notorious for misbehaving in regards to RFC7230 3.3.2. and conversely, Cowlib is notorious for strictly adhering to this proposed standard, some of discords responses are an almost correct 204 response which cause the official Cowlib to raise frequently, crashing our consumer.</p><p>Remedy uses patched versions of both of these libraries. Gun is the same as the 2.0rc at the time of publishing, and Cowlib is patched to remove the strict adherance to RFC7230. It is completely backwards compatible with the regular Cowlib 2.11 published on hex. Except it will not raise in the case of diversion from the standard. It will pass through values regardless, which is what we need to handle discords empty 204 responses.</p><h3 id="tl-dr" class="section-heading">
-  <a href="#tl-dr" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  TL;DR.
-</h3>
-<p>If you are using Phoenix or any other library that requires Cowlib 2.11. also add the following to your deps</p><pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="6607124212-1">do</span><span class="w">
-  </span><span class="p" data-group-id="6607124212-2">[</span><span class="w">
-    </span><span class="p" data-group-id="6607124212-3">{</span><span class="ss">:cowlib</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 2.11&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">hex</span><span class="p">:</span><span class="w"> </span><span class="ss">:remedy_cowlib</span><span class="p">,</span><span class="w"> </span><span class="ss">override</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="6607124212-3">}</span><span class="w">
-  </span><span class="p" data-group-id="6607124212-2">]</span><span class="w">
-</span><span class="k" data-group-id="6607124212-1">end</span></code></pre><h2 id="license" class="section-heading">
+<p>Add remedy to your deps inside <code class="inline">mix.exs</code></p><pre><code class="makeup elixir" translate="no"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="p" data-group-id="3672879856-1">(</span><span class="p" data-group-id="3672879856-1">)</span><span class="w"> </span><span class="k" data-group-id="3672879856-2">do</span><span class="w">
+  </span><span class="p" data-group-id="3672879856-3">[</span><span class="w">
+    </span><span class="p" data-group-id="3672879856-4">{</span><span class="ss">:remedy</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.6.8&quot;</span><span class="p" data-group-id="3672879856-4">}</span><span class="w">
+  </span><span class="p" data-group-id="3672879856-3">]</span><span class="w">
+</span><span class="k" data-group-id="3672879856-2">end</span></code></pre><h2 id="license" class="section-heading">
   <a href="#license" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   License
 </h2>
@@ -127,6 +121,15 @@ API Reference
   </div>
   <div class="bottom-actions-item">
 
+      <a href="getting_started.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Getting Started
+        </span>
+      </a>
+
   </div>
 </div>
 
@@ -134,22 +137,22 @@ API Reference
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.8" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.8" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.8/show/hello/introduction.md">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/hello/introduction.md">(current file)</a>
 
         </p>
 
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
           </span>
           <span class="line">
             Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
           </span>
         </p>
         <p>
@@ -159,15 +162,11 @@ API Reference
           <button class="line footer-button display-shortcuts-help">
             Display keyboard shortcuts
           </button>
-          <button class="line footer-button night-mode-toggle">
-            Toggle night mode
-          </button>
           <button class="line footer-button display-quick-switch">
             Go to a HexDocs package
           </button>
-          <button class="line footer-button tooltips-toggle">
-            <span class="tooltips-option-disable">Disable tooltips</span>
-            <span class="tooltips-option-enable">Enable tooltips</span>
+          <button class="line footer-button display-settings">
+            Settings
           </button>
         </p>
       </footer>

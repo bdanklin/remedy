@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.25.3">
-    <meta name="project" content="Remedy v0.6.8">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Schema — Remedy v0.6.8</title>
-    <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
+    <title>Remedy.Schema — Remedy v0.6.9</title>
+    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-13e67feada.js"></script>
+    <script src="dist/sidebar_items-5b9fcb81e2.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-e5e774c81fa6257aba7f.js"></script>
+    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
 
 
   </head>
@@ -54,11 +54,11 @@
 
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
-      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName">
+      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
       </a>
-      <strong class="sidebar-projectVersion">
-        v0.6.8
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.6.9
       </strong>
     </div>
 
@@ -83,190 +83,45 @@ Remedy
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-      <h1>
-Remedy.Schema <small>behaviour</small> <small class="app-vsn">(Remedy v0.6.8)</small>
+<h1>
+  <span translate="no">Remedy.Schema</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-          <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L1" title="View Source" class="view-source" rel="help">
-            <span class="icon-code" aria-hidden="true"></span>
-            <span class="sr-only">View Source</span>
-          </a>
-
-      </h1>
-
-
-        <section id="moduledoc">
-<p>Schema sets out all of the objects and types used within the Discord API.</p><blockquote><p>The unfortunate reason that this is required is because Discord is unreliable at delivering particular types. For example, <code class="inline">:id</code> can be returned as either an integer or a string. This is no use to man nor beast.</p></blockquote><p>It is not recommended to use this behaviour within your application. Instead you can import or alias the particular schema directly, or the whole schema module, for example:</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema.Member</span></code></pre><p>Which would make an individual resource available as <a href="Remedy.Schema.Member.html#t:t/0"><code class="inline">%Member{}</code></a>.</p><pre><code class="makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">Remedy.Schema</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Discord</span></code></pre><p>Which would make all of the schema available as <a href="Remedy.Schema.Guild.html#t:t/0"><code class="inline">%Discord.Guild{}</code></a>.</p><h2 id="module-helper-functions" class="section-heading">
-  <a href="#module-helper-functions" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Helper Functions
-</h2>
-<p>Should you be looking for help manipulating any of the individual Schema, helper functions exist within the particular modules</p><h2 id="module-callbacks" class="section-heading">
-  <a href="#module-callbacks" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Callbacks
-</h2>
-<p>While the callbacks within this module primarily exist for internal use only. They can be invoked to manually validate certain structs before sending them to Discord through the <a href="Remedy.API.html"><code class="inline">Remedy.API</code></a> module.</p>
-        </section>
-
-
-        <section id="summary" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#summary">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-            Summary
-          </h1>
-
-  <div class="summary-callbacks summary">
-    <h2>
-      <a href="#callbacks">Callbacks</a>
-    </h2>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#c:new/1">new(params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#c:update/2">update(struct, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#c:validate/1">validate(changeset)</a>
-
-  </div>
-
-</div>
-
-  </div>
-
-        </section>
-
-
-        <section id="callbacks" class="details-list">
-          <h1 class="section-heading">
-            <a class="hover-link" href="#callbacks">
-              <span class="icon-link" aria-hidden="true"></span>
-              <span class="sr-only">Link to this section</span>
-            </a>
-Callbacks
-          </h1>
-          <div class="callbacks-list">
-<section class="detail" id="c:new/1">
-
-  <div class="detail-header">
-    <a href="#c:new/1" class="detail-link" title="Link to this callback">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this callback</span>
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L1" title="View Source" class="view-source" rel="help">
+      <span class="icon-code" aria-hidden="true"></span>
+      <span class="sr-only">View Source</span>
     </a>
-    <h1 class="signature">new(params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L32" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
 
 
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>new(params :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: struct :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
-
-      </div>
+</h1>
 
 
+  <section id="moduledoc">
+<p>Schema sets out all of the objects and types used within the Discord API.</p>
   </section>
-</section>
-<section class="detail" id="c:update/2">
-
-  <div class="detail-header">
-    <a href="#c:update/2" class="detail-link" title="Link to this callback">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this callback</span>
-    </a>
-    <h1 class="signature">update(struct, params)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L33" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
 
 
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>update(struct :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), params :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: struct :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="c:validate/1">
-
-  <div class="detail-header">
-    <a href="#c:validate/1" class="detail-link" title="Link to this callback">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this callback</span>
-    </a>
-    <h1 class="signature">validate(changeset)</h1>
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema.ex#L34" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>validate(changeset :: <a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()) :: changeset :: <a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-
-          </div>
-        </section>
 
       <footer class="footer">
 
         <p>
           Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.8" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.8" class="line">Preview</a>
+          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.8/show/lib/remedy/schema.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema.ex">(current file)</a>
 
         </p>
 
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.25.3) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
           </span>
           <span class="line">
             Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
           </span>
         </p>
         <p>
@@ -276,15 +131,11 @@ Callbacks
           <button class="line footer-button display-shortcuts-help">
             Display keyboard shortcuts
           </button>
-          <button class="line footer-button night-mode-toggle">
-            Toggle night mode
-          </button>
           <button class="line footer-button display-quick-switch">
             Go to a HexDocs package
           </button>
-          <button class="line footer-button tooltips-toggle">
-            <span class="tooltips-option-disable">Disable tooltips</span>
-            <span class="tooltips-option-enable">Enable tooltips</span>
+          <button class="line footer-button display-settings">
+            Settings
           </button>
         </p>
       </footer>

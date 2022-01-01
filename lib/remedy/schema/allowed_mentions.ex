@@ -1,15 +1,18 @@
 defmodule Remedy.Schema.AllowedMentions do
+  @moduledoc """
+  Discord Allowed Mentions Object
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{
           parse: [String.t()],
           replied_user: :boolean,
-          roles: [String.t()],
-          users: [String.t()]
+          roles: [Snowflake.t()],
+          users: [Snowflake.t()]
         }
 
   embedded_schema do
-    field :parse, {:array, :string}
+    field :parse, Ecto.Enum, values: [:roles, :users, :everyone]
     field :replied_user, :boolean
     field :roles, {:array, Snowflake}
     field :users, {:array, Snowflake}
@@ -18,6 +21,5 @@ defmodule Remedy.Schema.AllowedMentions do
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:replied_user, :parse, :roles, :users])
-    |> validate_inclusion(:parse, ["roles", "users", "everyone"])
   end
 end

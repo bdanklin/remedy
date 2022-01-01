@@ -3,7 +3,7 @@ defmodule Remedy.Schema.Channel do
   Discord Channel Object
   """
   use Remedy.Schema
-
+  @type test :: 1 | 2 | 3
   @type t :: %__MODULE__{
           type: integer(),
           position: integer(),

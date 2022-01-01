@@ -6,7 +6,7 @@ defmodule Remedy.Schema.Role do
 
   @type t :: %__MODULE__{
           name: String.t(),
-          color: integer(),
+          color: Colour,
           hoist: boolean(),
           position: integer(),
           permissions: String.t(),
@@ -18,7 +18,7 @@ defmodule Remedy.Schema.Role do
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "roles" do
     field :name, :string
-    field :color, :integer
+    field :color, Colour
     field :hoist, :boolean
     field :position, :integer
     field :permissions, :integer

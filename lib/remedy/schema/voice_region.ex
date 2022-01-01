@@ -14,7 +14,7 @@ defmodule Remedy.Schema.VoiceRegion do
         }
 
   @primary_key {:id, :string, autogenerate: false}
-  schema "voice_regions" do
+  embedded_schema do
     field :name, :string
     field :vip, :boolean
     field :optimal, :boolean

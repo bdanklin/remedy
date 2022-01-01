@@ -3,9 +3,6 @@ defmodule Remedy.Schema.App do
   Discord Application Object
   """
   use Remedy.Schema
-  alias Remedy.Schema.ApplicationFlags
-
-  @type flags :: %__MODULE__{}
 
   @type t :: %__MODULE__{
           id: Snowflake.t(),

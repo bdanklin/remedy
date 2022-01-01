@@ -31,7 +31,7 @@ defmodule Remedy.Schema.Guild do
           premium_tier: integer(),
           #       region: String.t(),
           splash: String.t(),
-          system_channel_flags: integer(),
+          system_channel_flags: GuildSystemChannelFlags.t(),
           vanity_url_code: String.t(),
           verification_level: integer(),
           widget_enabled: boolean(),

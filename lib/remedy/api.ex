@@ -572,12 +572,12 @@ defmodule Remedy.API do
 
   - `:content`  - `:string, max: 2000`
   - `:tts`  - `:boolean`
-  - `:embeds`  - {:array, Embed | :map}
+  - `:embeds`  - `{:array, Embed | :map}`
   - `:allowed_mentions`  - `AllowedMentions | :map`
-  - `:message_reference`  - `MessageReference | :map
-  - `:components`  - `{:array, Component | :map}
-  - `:sticker_ids`  - `{:array, Snowflake}
-  - `:attachments`  - `{:array, Attachment}
+  - `:message_reference`  - `MessageReference | :map`
+  - `:components`  - `{:array, Component | :map}`
+  - `:sticker_ids`  - `{:array, Snowflake}`
+  - `:attachments`  - `{:array, Attachment}`
 
   > Note: At least one of the following is required: `:content`, `:file`, `:embed`.
 
@@ -1698,11 +1698,11 @@ defmodule Remedy.API do
 
   ## Examples
 
-    iex> Remedy.API.get_emoji(guild_id, emoji_id)
-    {:ok, %Emoji{}}
+      iex> Remedy.API.get_emoji(guild_id, emoji_id)
+      {:ok, %Emoji{}}
 
-    iex Remedy.API.get_emoji(guild_id, bad_emoji_id)
-    {:error, reason}
+      iex Remedy.API.get_emoji(guild_id, bad_emoji_id)
+      {:error, reason}
 
   """
   @doc section: :emojis
@@ -4920,8 +4920,8 @@ defmodule Remedy.API do
 
   ## Examples
 
-    iex> Remedy.API.cast_command_permissions(guild_id, good_command_id, permissions: [{id: "user_id", allow: true}])
-    {:ok, %CommandPermission{}}
+      iex> Remedy.API.cast_command_permissions(guild_id, good_command_id, permissions: [{id: "user_id", allow: true}])
+      {:ok, %CommandPermission{}}
 
 
 
@@ -4952,14 +4952,12 @@ defmodule Remedy.API do
 
   ## Options
 
-    ## Options
-
   - `:permissions`  - `{:array, CommandPermission}`
 
   ## Examples
 
-    iex> Remedy.API.cast_command_permissions(guild_id, good_command_id, permissions: [{id: "user_id", allow: true}])
-    {:ok, %CommandPermission{}}
+      iex> Remedy.API.cast_command_permissions(guild_id, good_command_id, permissions: [{id: "user_id", allow: true}])
+      {:ok, %CommandPermission{}}
 
 
 
@@ -5118,7 +5116,7 @@ defmodule Remedy.API do
   Get a followup message for an interaction.
 
   Does not support ephemeral messages.
-  
+
   See `get_message/4` for more information.
 
   """

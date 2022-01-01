@@ -3,7 +3,6 @@ defmodule Remedy.Schema.Invite do
   Invite Object
   """
   use Remedy.Schema
-  alias Remedy.ISO8601
 
   @type t :: %__MODULE__{
           target_type: integer(),
@@ -14,9 +13,9 @@ defmodule Remedy.Schema.Invite do
           max_uses: integer(),
           max_age: integer(),
           temporary: integer(),
-          created_at: integer(),
+          created_at: ISO8601.t(),
           target_user: User.t(),
-          channel: Channel.t(),
+          channel: Channel.t() | nil,
           guild: Guild.t(),
           inviter: User.t()
         }

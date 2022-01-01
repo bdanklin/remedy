@@ -8,7 +8,7 @@ defmodule Remedy.Schema.Message do
           id: Snowflake.t(),
           content: String.t(),
           edited_timestamp: ISO8601.t(),
-          flags: integer(),
+          flags: MessageFlags.t(),
           mention_everyone: boolean(),
           nonce: String.t(),
           pinned: boolean(),

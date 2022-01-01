@@ -9,7 +9,7 @@ defmodule Remedy.Schema.AuditLogEntry do
           action_type: integer(),
           reason: String.t(),
           user_id: Snowflake.t(),
-          #     user: User.t(),
+          user: User.t(),
           options: [AuditLogOption.t()],
           changes: [map()]
         }
@@ -21,7 +21,7 @@ defmodule Remedy.Schema.AuditLogEntry do
     field :action_type, :integer
     field :reason, :string
     field :changes, {:array, :map}
-    #   belongs_to :user, User
+    embeds_one :user, User
     embeds_many :options, AuditLogOption
   end
 

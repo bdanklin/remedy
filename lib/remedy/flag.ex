@@ -74,8 +74,9 @@ defmodule Remedy.FlagBeforeCompile do
   defmacro __before_compile__(_env) do
     quote do
       use Remedy.FlagType,
-        type: Remedy.FlagType.flag_spec(%__MODULE__{}),
-        doc: Remedy.FlagType.moduledoc(%__MODULE__{})
+        type_spec: Remedy.FlagType.type_spec(%__MODULE__{}),
+        type_doc: Remedy.FlagType.type_doc(%__MODULE__{}),
+        module_doc: Remedy.FlagType.module_doc(%__MODULE__{})
 
       @impl true
       def to_map(flags)
@@ -148,6 +149,8 @@ defmodule Remedy.FlagBeforeCompile do
         end)
       end
 
+      ## Ecto Type Implementations
+
       @doc false
       def cast(nil), do: {:ok, nil}
       def cast(value) when is_integer(value), do: {:ok, value |> to_integer()}
@@ -180,31 +183,17 @@ end
 
 defmodule Remedy.FlagType do
   @moduledoc false
-  defmacro __using__(type: type, doc: doc) do
-    quote bind_quoted: [doc: doc, type: type] do
-      @moduledoc doc
-      @type unquote(type)
+  defmacro __using__(type_spec: type_spec, type_doc: type_doc, module_doc: module_doc) do
+    quote bind_quoted: [type_spec: type_spec, type_doc: type_doc, module_doc: module_doc] do
+      @moduledoc module_doc
+      @typedoc type_doc
+      @type unquote({:t, [], Elixir}) :: unquote(type_spec)
     end
   end
 
-  def flag_spec(struct) do
-    struct
-    |> max_flag_value()
-    |> type_ast()
-  end
-
-  def max_flag_value(struct) do
-    struct
-    |> Map.from_struct()
-    |> Enum.reduce(0, fn {_k, v}, acc -> acc + v end)
-  end
-
-  def type_ast(max) do
-    {:"::", [], [{:t, [], Elixir}, {:.., [context: Elixir, import: Kernel], [0, max]}]}
-  end
-
-  def moduledoc(flag_struct) do
-    ~s(#{title(flag_struct)} Type
+  def module_doc(_struct), do: "`Ecto.Type` compatible bit flag type."
+  def type_spec(struct), do: {:.., [context: Elixir, import: Kernel], [0, max(struct)]}
+  def type_doc(flag_struct), do: ~s(#{title(flag_struct)} Type
 
 #{top_row()}
 #{rows(flag_struct)}
@@ -215,31 +204,44 @@ The following representations are all valid when casting to a schema. However th
 
 #### Decimal Integer
 ```elixir
-#{inspect(max_flag_value(flag_struct))}
+#{decimal_integer(flag_struct)}
 ```
 
 #### Binary Integer
 ```elixir
-#{inspect(max_flag_value(flag_struct), base: :binary)}
+#{binary_integer(flag_struct)}
 ```
 
 #### String List
 ```elixir
-#{inspect(keys_list(flag_struct), pretty: true)}
+#{string_list(flag_struct)}
+```
+
+#### Atom List
+```elixir
+#{inspect(atom_keys_list(flag_struct), pretty: true)}
 ```
 
 #### Boolean Map
 ```elixir
 #{inspect(boolean_map(flag_struct), pretty: true)}
 ```
-    )
+)
+
+  defp decimal_integer(flag_struct) do
+    flag_struct |> max() |> inspect(pretty: true)
   end
 
-  defp keys_list(struct) do
-    struct
-    |> Map.from_struct()
-    |> Map.keys()
-    |> Enum.map(&Atom.to_string/1)
+  defp binary_integer(flag_struct) do
+    flag_struct |> max() |> inspect(base: :binary, pretty: true)
+  end
+
+  defp string_list(struct) do
+    struct |> Map.from_struct() |> Map.keys() |> Enum.map(&Atom.to_string/1) |> inspect(pretty: true)
+  end
+
+  defp atom_keys_list(struct) do
+    struct |> Map.from_struct() |> Map.keys()
   end
 
   defp boolean_map(struct) do
@@ -272,6 +274,12 @@ The following representations are all valid when casting to a schema. However th
     bv = bitshift(v)
 
     " | `1 << #{bv}` | `:#{to_string(k)}` | \n "
+  end
+
+  defp max(struct) do
+    struct
+    |> Map.from_struct()
+    |> Enum.reduce(0, fn {_k, v}, acc -> acc + v end)
   end
 
   defp bitshift(integer) do

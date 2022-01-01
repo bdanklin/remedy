@@ -1,11 +1,4 @@
 defmodule Remedy.Schema.Permission do
-  @moduledoc """
-  Permissions Object
-
-  ## Flags
-
-  """
-
   use Remedy.Flag
 
   defstruct CREATE_INSTANT_INVITE: 1 <<< 0,

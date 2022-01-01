@@ -15,9 +15,6 @@ defmodule Remedy.Schema.Attachment do
           ephemeral: boolean()
         }
 
-  @doc """
-  Attachment Schema
-  """
   @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
     field :filename, :string

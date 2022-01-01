@@ -10,6 +10,7 @@ defmodule Remedy.ColourHelpers do
 
   @type hex_integer :: 0..0xFFFFFF
 
+  @doc false
   @doc section: :guards
   defguard is_component(r) when r in 0..0xFF
 

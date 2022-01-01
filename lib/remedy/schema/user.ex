@@ -52,6 +52,7 @@ defmodule Remedy.Schema.User do
     |> cast_embed(:presence)
   end
 
+  @doc false
   def system_changeset(model \\ %__MODULE__{}, params) do
     model
     |> changeset(params)

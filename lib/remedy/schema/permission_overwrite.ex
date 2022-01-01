@@ -1,8 +1,9 @@
 defmodule Remedy.Schema.PermissionOverwrite do
-  @moduledoc false
+  @moduledoc """
+  Discord Permission Overwrite Object
+  """
   # type	int	either 0 (role) or 1 (member) <- use to build changeset
   use Remedy.Schema
-  @primary_key false
 
   @type t :: %__MODULE__{
           id: Snowflake.t(),

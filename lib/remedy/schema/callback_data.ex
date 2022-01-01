@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.CallbackData do
+  @moduledoc """
+  Discord Interaction Callback Data Object
+  """
   use Remedy.Schema
   alias Remedy.Schema.CallbackDataFlags
 

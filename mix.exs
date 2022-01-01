@@ -65,14 +65,19 @@ defmodule Remedy.MixProject do
 
   def groups_for_modules do
     [
-      API: [Remedy.API],
+      #      API: [Remedy.API],
+      #     CDN: [Remedy.CDN],
+      Events: [
+        Remedy.Consumer,
+        Remedy.Gateway,
+        Remedy.Gateway.Intents
+      ],
       Schema: [~r/Remedy.Schema/],
       Types: [
         Remedy.ISO8601,
         Remedy.Colour,
         Remedy.Snowflake,
-        Remedy.Flag,
-        Remedy.ApplicationFlags
+        Remedy.Flag
       ],
       Helpers: [
         Remedy.TimeHelpers,
@@ -85,12 +90,12 @@ defmodule Remedy.MixProject do
 
   def groups_for_functions do
     [
-#      Interactions: &(&1[:section] == :interactions),
-#      Commands: &(&1[:section] == :commands),
-#      Stickers: &(&1[:section] == :stickers),
-#      Emojis: &(&1[:section] == :emojis),
-#      Reactions: &(&1[:section] == :reactions),
-#      Guards: &(&1[:section] == :guards)
+      #      Interactions: &(&1[:section] == :interactions),
+      #      Commands: &(&1[:section] == :commands),
+      #      Stickers: &(&1[:section] == :stickers),
+      #      Emojis: &(&1[:section] == :emojis),
+      #      Reactions: &(&1[:section] == :reactions),
+      Guards: &(&1[:section] == :guards)
     ]
   end
 

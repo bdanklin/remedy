@@ -6,14 +6,14 @@ defmodule Remedy.Schema.InteractionDataOption do
 
   @type t :: %__MODULE__{
           name: String.t(),
-          type: integer(),
+          type: CommandType,
           value: String.t(),
           options: [__MODULE__.t()]
         }
 
   embedded_schema do
     field :name, :string
-    field :type, :integer
+    field :type, CommandType
     field :value, :string
     embeds_many :options, __MODULE__
   end

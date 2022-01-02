@@ -10,8 +10,8 @@ defmodule Remedy.Schema.Sticker do
           asset: String.t(),
           description: String.t(),
           tags: String.t(),
-          type: integer(),
-          format_type: integer(),
+          type: StickerType.t(),
+          format_type: StickerFormatType.t(),
           available: boolean(),
           sort_value: integer(),
           sticker_pack: StickerPack.t(),
@@ -24,8 +24,8 @@ defmodule Remedy.Schema.Sticker do
     field :asset, :string
     field :description, :string
     field :tags, :string
-    field :type, :integer
-    field :format_type, :integer
+    field :type, StickerType
+    field :format_type, StickerFormatType
     field :available, :boolean
     field :sort_value, :integer
     embeds_one :sticker_pack, StickerPack

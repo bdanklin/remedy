@@ -28,50 +28,46 @@ defmodule Remedy.API do
 
   For example, if you have the following guild:
 
-  ```elixir
-  iex> Remedy.API.get_guild!(81384788765712384)
-  %Remedy.Schema.Guild{
-    id: 81384788765712384,
-    name: "Remedy",
-    icon: "f817c5adaf96672c94a17de8e944f427",
-    ...
-  }
-  ```
+      iex> Remedy.API.get_guild!(81384788765712384)
+      %Remedy.Schema.Guild{
+        id: 81384788765712384,
+        name: "Remedy",
+        icon: "f817c5adaf96672c94a17de8e944f427",
+        ...
+      }
+
   Calling `modify_guild(81384788765712384, name: "New Remedy Server")` will change the name to "New Remedy Server", but will not change the icon.
 
-  ```elixir
-  iex> Remedy.API.modify_guild!(81384788765712384, name: "New Remedy Server")
-  %Remedy.Schema.Guild{
-    id: 81384788765712384,
-    name: "New Remedy Server",
-    icon: "f817c5adaf96672c94a17de8e944f427",
-    ...
-  }
-  ```
+      iex> Remedy.API.modify_guild!(81384788765712384, name: "New Remedy Server")
+      %Remedy.Schema.Guild{
+        id: 81384788765712384,
+        name: "New Remedy Server",
+        icon: "f817c5adaf96672c94a17de8e944f427",
+        ...
+      }
+
 
   Conversely for casting functions, it will perform a create, update, delete in one operation, and then read the resultant. For example, if your guild is set up with the following application commands:
 
-  ```elixir
-  iex> Remedy.API.list_commands!(81384788765712384)
-  [
-    %{name: "foo", description: "Foo the bot"},
-    %{name: "bar", description: "Bar the bot"},
-    %{name: "ping", description: "Ping the bot"}
-  ]
-  ```
+      iex> Remedy.API.list_commands!(81384788765712384)
+      [
+        %{name: "foo", description: "Foo the bot"},
+        %{name: "bar", description: "Bar the bot"},
+        %{name: "ping", description: "Ping the bot"}
+      ]
+
   Casting the below will overwrite, update, and replace the entire array of commands.
 
-  ```elixir
-  iex> commands = [
-                    %{name: "foo", description: "Bar the bot"},
-                    %{name: "baz", description: "baz the bot"}
-  ]
-  ...> Remedy.API.cast_commands!(81384788765712384, commands)
-  [
-    %{name: "foo", description: "Bar the bot"},
-    %{name: "baz", description: "baz the bot"}
-  ]
-  ```
+      iex> commands = [
+                        %{name: "foo", description: "Bar the bot"},
+                        %{name: "baz", description: "baz the bot"}
+      ]
+      ...> Remedy.API.cast_commands!(81384788765712384, commands)
+      [
+        %{name: "foo", description: "Bar the bot"},
+        %{name: "baz", description: "baz the bot"}
+      ]
+
   Matching on the name, commands with a name that already exists will be updated. Names that are not provided will be deleted, and new commands will be created.
 
   """
@@ -83,23 +79,7 @@ defmodule Remedy.API do
     only: [is_snowflake: 1],
     warn: false
 
-  alias Remedy.Schema.{
-    App,
-    AuditLog,
-    Channel,
-    Embed,
-    Emoji,
-    Guild,
-    Integration,
-    Invite,
-    Member,
-    Message,
-    Permission,
-    Role,
-    Sticker,
-    Thread,
-    User
-  }
+  use Remedy.Schema, :schema_alias
 
   alias Remedy.API.{
     Rest,
@@ -125,11 +105,6 @@ defmodule Remedy.API do
   Error returned from the HTTP Adapter
   """
   @type error :: any()
-
-  @typedoc """
-  A Discord Snowflake
-  """
-  @type snowflake :: Remedy.Snowflake.t() | String.t()
 
   @typedoc """
   Reason for an error
@@ -216,10 +191,10 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:action_type`  - `:integer` - [Audit Log Action Types](https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events)
-  - `:before`  - `Snowflake`
-  - `:user_id`  - `Snowflake`
-  - `:limit`  - `:integer, default: 50, min: 1, max: 100`
+  - `:action_type`  - `t:Remedy.Schema.AuditLogActionType.c/0`
+  - `:before`  - `t:Remedy.Snowflake.c/0`
+  - `:user_id`  - `t:Remedy.Snowflake.c/0`
+  - `:limit`  - `t:integer/0` - `default: 50, min: 1, max: 100`
 
   ## Examples
 
@@ -237,7 +212,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id/audit-logs"
   @unsafe {:get_audit_log, [:guild_id, :opts]}
-  @spec get_audit_log(snowflake | Guild.t(), opts) :: {:error, any} | {:ok, AuditLog.t()}
+  @spec get_audit_log(Snowflake.c() | Guild.t(), opts) :: {:error, any} | {:ok, AuditLog.t()}
   def get_audit_log(guild_id, opts \\ [])
   def get_audit_log(%Guild{id: id}, opts), do: get_audit_log(id, opts)
 
@@ -286,7 +261,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id"
   @unsafe {:get_channel, [:channel_id]}
-  @spec get_channel(snowflake | Channel.t() | Message.t()) :: {:error, any} | {:ok, Channel.t()}
+  @spec get_channel(Snowflake.c() | Channel.t() | Message.t()) :: {:error, any} | {:ok, Channel.t()}
   def get_channel(channel_id)
 
   def get_channel(channel_id) when is_snowflake(channel_id) do
@@ -310,12 +285,12 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 2, max: 100`
-  - `:position`  - `:integer` - Not contiguous, will be ordered by `:id` if duplicates exist.
-  - `:topic`  `:string, min: 0, max: 1024`
+  - `:name`  - `t:String.t/0` - `min: 2, max: 100`
+  - `:position`  - `t:integer/0` - Not contiguous, will be ordered by `:id` if duplicates exist.
+  - `:topic`  `t:String.t/0` - `min: 0, max: 1024`
   - `:nsfw`  `:boolean, default: false`
-  - `:bitrate`  - `:integer, min: 8000, max: 128000`
-  - `:user_limit`  - `:integer, min: 1, max: 99, unlimited: 0`
+  - `:bitrate`  - `t:integer/0` - `min: 8000, max: 128000`
+  - `:user_limit`  - `t:integer/0` - `min: 1, max: 99, unlimited: 0`
   - `:permission_overwrites`  - `{:array, %Overwrite{}}`
   - `:parent_id`  - category to place the channel under.
 
@@ -333,7 +308,7 @@ defmodule Remedy.API do
   @doc method: "patch"
   @doc route: "/channels/:channel_id"
   @unsafe {:modify_channel, [:channel_id, :opts]}
-  @spec modify_channel(snowflake, opts) :: {:error, any} | {:ok, Channel.t()}
+  @spec modify_channel(Snowflake.c(), opts) :: {:error, any} | {:ok, Channel.t()}
   def modify_channel(channel_id, opts \\ [])
 
   def modify_channel(channel_id, opts) when is_snowflake(channel_id) and is_list(opts) do
@@ -402,7 +377,7 @@ defmodule Remedy.API do
   @doc events: ["CHANNEL_DELETE"]
   @doc route: "/channels/:channel_id"
   @doc audit_log: true
-  @spec delete_channel(snowflake, opts) :: {:error, any} | {:ok, map}
+  @spec delete_channel(Snowflake.c(), opts) :: {:error, any} | {:ok, map}
   @unsafe {:delete_channel, [:channel_id, :opts]}
   def delete_channel(channel, opts \\ [])
 
@@ -427,12 +402,12 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:before`  - `Snowflake` - Retrieve messages before this message.
-  - `:after`  - `Snowflake` - Retrieve messages after this message.
-  - `:around`  - `Snowflake` - Retrieve messages around this message.
-  - `:limit`  - `:integer, min: 1, max: 100` - The maximum number of messages to retrieve.
+  - `:before`  - `t:Remedy.Snowflake.c/0` - Retrieve messages before this message.
+  - `:after`  - `t:Remedy.Snowflake.c/0` - Retrieve messages after this message.
+  - `:around`  - `t:Remedy.Snowflake.c/0` - Retrieve messages around this message.
+  - `:limit`  - `t:integer/0` - `min: 1, max: 100` - The maximum number of messages to retrieve.
 
-  > Only one of `:before`, `:after`, or `:around` may be specified.
+  > Only one of `:before``:after`or `:around` may be specified.
 
   ## Helpers
 
@@ -451,7 +426,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id/messages"
   @unsafe {:list_messages, [:channel_id, :params]}
-  @spec list_messages(snowflake, opts) :: {:error, any} | {:ok, [Remedy.Schema.Channel.t()]}
+  @spec list_messages(Snowflake.c(), opts) :: {:error, any} | {:ok, [Remedy.Schema.Channel.t()]}
   def list_messages(channel_id, opts \\ []) do
     data = %{limit: 50}
     types = %{before: Snowflake, after: Snowflake, around: Snowflake, limit: :integer}
@@ -554,7 +529,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id/messages/:message_id"
   @unsafe {:get_message, [:channel_id, :message_id]}
-  @spec get_message(snowflake, snowflake) :: {:error, any} | {:ok, Message.t()}
+  @spec get_message(Snowflake.c(), Snowflake.c()) :: {:error, any} | {:ok, Message.t()}
   def get_message(channel_id, message_id) do
     {:get, "/channels/#{channel_id}/messages/#{message_id}", nil, nil, nil}
     |> request()
@@ -570,7 +545,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:content`  - `:string, max: 2000`
+  - `:content`  - `t:String.t/0` - `max: 2000`
   - `:tts`  - `:boolean`
   - `:embeds`  - `{:array, Embed | :map}`
   - `:allowed_mentions`  - `AllowedMentions | :map`
@@ -579,7 +554,7 @@ defmodule Remedy.API do
   - `:sticker_ids`  - `{:array, Snowflake}`
   - `:attachments`  - `{:array, Attachment}`
 
-  > Note: At least one of the following is required: `:content`, `:file`, `:embed`.
+  > Note: At least one of the following is required: `:content``:file``:embed`.
 
   ## Examples
 
@@ -593,7 +568,7 @@ defmodule Remedy.API do
   @doc method: "post"
   @doc route: "/channels/:channel_id/messages"
   @doc events: ["MESSAGE_CREATE"]
-  @spec create_message(snowflake, opts | binary | map | Message.t() | Embed.t()) ::
+  @spec create_message(Snowflake.c(), opts | binary | map | Message.t() | Embed.t()) ::
           {:error, any} | {:ok, any}
   @unsafe {:create_message, [:channel_id, :message]}
   def create_message(channel_id, opts \\ [])
@@ -671,7 +646,7 @@ defmodule Remedy.API do
   @doc permissions: ["SEND_MESSAGES", "MANAGE_MESSAGES"]
   @doc method: "post"
   @doc route: "/channels/:channel_id/messages/:message_id/crosspost"
-  @spec publish_message(snowflake, snowflake) :: {:error, any} | {:ok, map}
+  @spec publish_message(Snowflake.c(), Snowflake.c()) :: {:error, any} | {:ok, map}
   @unsafe {:publish_message, [:channel_id, :message_id]}
   def publish_message(channel_id, message_id) do
     {:post, "/channels/#{channel_id}/messages/#{message_id}/crosspost", nil, nil, nil}
@@ -698,14 +673,15 @@ defmodule Remedy.API do
   @doc method: "put"
   @doc route: "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me"
   @unsafe {:add_reaction, [:channel_id, :message_id, :emoji]}
-  @spec add_reaction(snowflake, snowflake, binary | Emoji.t() | map) :: :ok | {:error, reason}
+  @spec add_reaction(Snowflake.c(), Snowflake.c(), String.t()) :: :ok | {:error, reason}
   def add_reaction(channel_id, message_id, emoji) when is_binary(emoji) do
     {:put, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me", nil, nil, nil}
     |> request()
     |> shape()
   end
 
-  def add_reaction(channel_id, message_id, %{name: name, id: id}) do
+  @spec add_reaction(Snowflake.c(), Snowflake.c(), Emoji.c()) :: :ok | {:error, reason}
+  def add_reaction(channel_id, message_id, %{name: name, id: id} = emoji) when is_map(emoji) do
     add_reaction(channel_id, message_id, "#{name}:#{id}")
   end
 
@@ -752,7 +728,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me"
   @unsafe {:remove_reaction, [:channel_id, :message_id, :emoji]}
-  @spec remove_reaction(snowflake, snowflake, term) :: :ok | {:error, reason}
+  @spec remove_reaction(Snowflake.c(), Snowflake.c(), term) :: :ok | {:error, reason}
   def remove_reaction(channel_id, message_id, emoji) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me", nil, nil, nil}
     |> request()
@@ -774,7 +750,7 @@ defmodule Remedy.API do
   @doc events: ["MESSAGE_REACTION_REMOVE"]
   @doc method: "delete"
   @doc route: "/channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id"
-  @spec remove_reaction(snowflake, snowflake, snowflake, any) :: {:error, any} | {:ok, any}
+  @spec remove_reaction(Snowflake.c(), Snowflake.c(), Snowflake.c(), any) :: {:error, any} | {:ok, any}
   @unsafe {:remove_reaction, [:channel_id, :message_id, :emoji, :user_id]}
   def remove_reaction(channel_id, message_id, emoji, user_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/#{user_id}", nil, nil, nil}
@@ -793,7 +769,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id/messages/:message_id/reactions/:emoji"
   @unsafe {:list_reactions, [:channel_id, :message_id, :emoji]}
-  @spec list_reactions(snowflake, snowflake, any) :: {:ok, [User.t()]}
+  @spec list_reactions(Snowflake.c(), Snowflake.c(), any) :: {:ok, [User.t()]}
   def list_reactions(channel_id, message_id, emoji) do
     {:get, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}", nil, nil, nil}
     |> request()
@@ -815,7 +791,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/channels/:channel_id/messages/:message_id/reactions"
   @doc events: ["MESSAGE_REACTION_REMOVE_ALL"]
-  @spec clear_reactions(snowflake, snowflake) :: {:error, reason} | :ok
+  @spec clear_reactions(Snowflake.c(), Snowflake.c()) :: {:error, reason} | :ok
   @unsafe {:clear_reactions, [:channel_id, :message_id]}
   def clear_reactions(channel_id, message_id) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions", nil, nil, nil}
@@ -839,7 +815,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/channels/:channel_id/messages/:message_id/reactions/:emoji"
   @unsafe {:clear_reactions, [:channel_id, :message_id, :emoji]}
-  @spec clear_reactions(snowflake, snowflake, any) :: {:error, reason} | :ok
+  @spec clear_reactions(Snowflake.c(), Snowflake.c(), any) :: {:error, reason} | :ok
   def clear_reactions(channel_id, message_id, emoji) do
     {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}", nil, nil, nil}
     |> request()
@@ -869,7 +845,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/messages/:message_id"
   @doc audit_log: true
   @unsafe {:modify_message, [:channel_id, :message_id, :opts]}
-  @spec modify_message(snowflake, snowflake, opts) :: :ok | {:error, reason}
+  @spec modify_message(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def modify_message(channel_id, message_id, opts \\ [])
 
   def modify_message(webhook_id, webhook_token, message_id) when is_snowflake(message_id) do
@@ -905,7 +881,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/messages/:message_id"
   @doc audit_log: true
   @unsafe {:delete_message, [:channel_id, :message_id]}
-  @spec delete_message(snowflake, snowflake, opts) :: :ok | {:error, reason}
+  @spec delete_message(Snowflake.c(), Snowflake.c() | String.t(), opts) :: :ok | {:error, reason}
   def delete_message(channel_id, message_id, opts \\ [])
 
   def delete_message(webhook_id, webhook_token, message_id) when is_snowflake(message_id) do
@@ -941,7 +917,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/messages/bulk-delete"
   @doc audit_log: true
   @unsafe {:delete_messages, [:channel_id, :opts]}
-  @spec delete_messages(snowflake, opts) :: {:error, reason} | :ok
+  @spec delete_messages(Snowflake.c(), opts) :: {:error, reason} | :ok
   def delete_messages(channel_id, opts \\ [])
 
   def delete_messages(channel_id, opts) when is_snowflake(channel_id) do
@@ -979,11 +955,11 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:type`  - `:integer, role: 0, member: 1`
-    - `:allow`  - `:integer | Permission`
-    - `:deny`  - `:integer | Permission`
+    - `:type`  - `t:integer/0` - `role: 0, member: 1`
+    - `:allow`  - `t:integer/0` - ` | Permission`
+    - `:deny`  - `t:integer/0` - ` | Permission`
 
-  > note: If `:allow`, or `:deny` are not explicitly set they will be set to 0.
+  > note: If `:allow`or `:deny` are not explicitly set they will be set to 0.
 
   ## Examples
 
@@ -998,7 +974,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/permissions/:overwrite_id"
   @doc audit_log: true
   @unsafe {:modify_channel_permissions, [:channel_id, :overwrite_id]}
-  @spec modify_channel_permissions(snowflake, snowflake, opts) :: :ok | {:error, reason}
+  @spec modify_channel_permissions(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def modify_channel_permissions(channel_id, overwrite_id, opts) do
     data = %{allow: 0, deny: 0}
     types = %{type: :integer, allow: Permission, deny: Permission}
@@ -1038,7 +1014,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id/invites"
   @unsafe {:list_channel_invites, [:channel_id]}
-  @spec list_channel_invites(snowflake) :: {:ok, [Invite.t()]} | {:error, reason}
+  @spec list_channel_invites(Snowflake.c()) :: {:ok, [Invite.t()]} | {:error, reason}
   def list_channel_invites(channel_id) do
     {:get, "/channels/#{channel_id}/invites", nil, nil, nil}
     |> request()
@@ -1050,14 +1026,14 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:max_age`  -  `:integer, min: 0, max: 604800, default: 86400` - duration of invite in seconds before expiry, or 0 for never.
-    - `:max_uses`  -  `:integer, min: 0, max: 100, default: 0` - number of times the invite can be used, or 0 for unlimited.
+    - `:max_age`  -  `t:integer/0` - `min: 0, max: 604800, default: 86400` - duration of invite in seconds before expiry, or 0 for never.
+    - `:max_uses`  -  `t:integer/0` - `min: 0, max: 100, default: 0` - number of times the invite can be used, or 0 for unlimited.
     - `:temporary`  - `:boolean, default: false` - Whether the invite should grant temporary membership.
     - `:unique`  - `:boolean, default: false` - 	if true, don't try to reuse a similar invite (useful for creating many unique one time use invites)
-    - `:target_type`  - `:integer` - 	the type of target for this voice channel invite.
+    - `:target_type`  - `t:integer/0` - 	the type of target for this voice channel invite.
       - `stream: 1, embedded: 2`
-    - `:target_user_id`  - `Snowflake` - 	the id of the user whose stream to display for this invite, required if target_type is 1, the user must be streaming in the channel
-    - `:target_application_id`  - `Snowflake`  - 	the id of the embedded application to open for this invite, required if target_type is 2, the application must have the EMBEDDED flag
+    - `:target_user_id`  - `t:Remedy.Snowflake.c/0` - 	the id of the user whose stream to display for this invite, required if target_type is 1, the user must be streaming in the channel
+    - `:target_application_id`  - `t:Remedy.Snowflake.c/0`  - 	the id of the embedded application to open for this invite, required if target_type is 2, the application must have the EMBEDDED flag
 
   ## Target Type
 
@@ -1079,7 +1055,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/invites"
   @doc audit_log: true
   @unsafe {:create_channel_invite, [:channel_id]}
-  @spec create_invite(snowflake, opts) :: {:ok, Invite.t()} | {:error, reason}
+  @spec create_invite(Snowflake.c(), opts) :: {:ok, Invite.t()} | {:error, reason}
   def create_invite(channel_id, opts) do
     data = %{max_age: 86400, max_uses: 0, temporary: false, unique: false}
 
@@ -1122,7 +1098,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/channels/:channel_id/permissions/:overwrite_id"
   @doc audit_log: true
-  @spec delete_channel_permission(snowflake, snowflake, opts) :: {:error, reason} | :ok
+  @spec delete_channel_permission(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   @unsafe {:delete_channel_permissions, [:channel_id, :overwrite_id, :reason]}
   def delete_channel_permission(channel_id, overwrite_id, opts) do
     reason = opts[:reason]
@@ -1148,7 +1124,7 @@ defmodule Remedy.API do
   @doc method: "post"
   @doc route: "/channels/:channel_id/followers"
   @unsafe {:follow_news_channel, [:channel_id, :webhook_channel_id]}
-  @spec follow_news_channel(snowflake, snowflake) :: {:ok, Channel.t()} | {:error, reason}
+  @spec follow_news_channel(Snowflake.c(), Snowflake.c()) :: {:ok, Channel.t()} | {:error, reason}
   def follow_news_channel(channel_id, webhook_channel_id) do
     body = %{webhook_channel_id: webhook_channel_id}
 
@@ -1178,7 +1154,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/typing"
   @doc audit_log: false
   @unsafe {:start_typing, [:channel_id]}
-  @spec start_typing(snowflake) :: :ok | {:error, reason}
+  @spec start_typing(Snowflake.c()) :: :ok | {:error, reason}
   def start_typing(channel_id) do
     {:post, "/channels/#{channel_id}/typing", nil, nil, nil}
     |> request()
@@ -1200,7 +1176,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/pins"
   @doc audit_log: false
   @unsafe {:list_pinned_messages, [:channel_id]}
-  @spec list_pinned_messages(snowflake) :: {:ok, Message.t()} | {:error, reason}
+  @spec list_pinned_messages(Snowflake.c()) :: {:ok, Message.t()} | {:error, reason}
   def list_pinned_messages(channel_id) do
     {:get, "/channels/#{channel_id}/pins", nil, nil, nil}
     |> request()
@@ -1225,7 +1201,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/pins/:message_id"
   @doc audit_log: true
   @unsafe {:pin_message, [:channel_id, :message_id]}
-  @spec pin_message(snowflake, snowflake, opts) :: :ok | {:error, any}
+  @spec pin_message(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, any}
   def pin_message(channel_id, message_id, opts \\ [])
 
   def pin_message(channel_id, message_id, opts) when is_snowflake(channel_id) and is_snowflake(message_id) do
@@ -1252,7 +1228,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/pins/:message_id"
   @doc audit_log: true
   @unsafe {:unpin_message, [:channel_id, :message_id, :opts]}
-  @spec unpin_message(snowflake, snowflake, opts) :: :ok | {:error, reason}
+  @spec unpin_message(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def unpin_message(channel_id, message_id, opts \\ []) do
     reason = opts[:reason]
 
@@ -1265,7 +1241,7 @@ defmodule Remedy.API do
   ##  Cannot be used by bots. Can only be used by GameSDK
   ##  since: "0.6.0"
   @doc false
-  @spec group_dm_add_recipient(snowflake, snowflake) :: :ok | {:error, any}
+  @spec group_dm_add_recipient(Snowflake.c(), Snowflake.c()) :: :ok | {:error, any}
   @unsafe {:group_dm_add_recipient, [:channel_id, :user_id]}
   def group_dm_add_recipient(channel_id, user_id) do
     {:put, "/channels/#{channel_id}/recipients/#{user_id}", nil, nil, nil}
@@ -1277,7 +1253,7 @@ defmodule Remedy.API do
   ##  Cannot be used by bots. Can only be used by GameSDK
   ##  since: "0.6.0"
   @doc false
-  @spec group_dm_remove_recipient(snowflake, snowflake) :: :ok | {:error, any}
+  @spec group_dm_remove_recipient(Snowflake.c(), Snowflake.c()) :: :ok | {:error, any}
   @unsafe {:group_dm_remove_recipient, [:channel_id, :user_id]}
   def group_dm_remove_recipient(channel_id, user_id) do
     {:delete, "/channels/#{channel_id}/recipients/#{user_id}", nil, nil, nil}
@@ -1290,9 +1266,9 @@ defmodule Remedy.API do
 
   ## Option
 
-  - `:name`  - `:string, min: 1, max: 100`
+  - `:name`  - `t:String.t/0` - `min: 1, max: 100`
   - `:auto_archive_duration`  - `integer: 60, 1440, 4320, 10080`
-  - `:rate_limit_per_user`  - `:integer, min: 0, max: 21600` - Message sending cooldown in seconds.
+  - `:rate_limit_per_user`  - `t:integer/0` - `min: 0, max: 21600` - Message sending cooldown in seconds.
 
   ## Examples
 
@@ -1308,7 +1284,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/messages/:message_id/threads"
   @doc audit_log: true
   @unsafe {:create_thread, [:channel_id, :message_id, :opts]}
-  @spec create_thread(snowflake, snowflake, opts) :: {:ok, Message.t()} | {:error, reason}
+  @spec create_thread(Snowflake.c(), Snowflake.c(), opts) :: {:ok, Message.t()} | {:error, reason}
 
   def create_thread(channel_id, message_id, opts) when is_snowflake(channel_id) and is_snowflake(message_id) do
     data = %{}
@@ -1339,8 +1315,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 100`
-  - `:type`  - `:integer`
+  - `:name`  - `t:String.t/0` - `min: 1, max: 100`
+  - `:type`  - `t:integer/0`
     - `11` - `:GUILD_PUBLIC_THREAD`
     - `12` - `:GUILD_PRIVATE_THREAD`
   - `:invitable`  - `:boolean` - 	whether non-moderators can add other non-moderators to a thread; only available when creating a private thread
@@ -1359,7 +1335,7 @@ defmodule Remedy.API do
   @doc route: "/channels/:channel_id/threads"
   @doc audit_log: true
   @unsafe {:create_thread, [:channel_id, :opts]}
-  @spec create_thread(snowflake, opts) :: {:error, reason} | {:ok, Thread.t()}
+  @spec create_thread(Snowflake.c(), opts) :: {:error, reason} | {:ok, Thread.t()}
   def create_thread(channel_id, opts) do
     data = %{}
     types = %{name: :string, auto_archive_duration: :integer, rate_limit_per_user: :integer}
@@ -1403,7 +1379,7 @@ defmodule Remedy.API do
   @doc method: "put"
   @doc route: "/channels/:channel_id/thread-members/@me"
   @unsafe {:join_thread, [:channel_id]}
-  @spec join_thread(snowflake) :: :ok | {:error, any}
+  @spec join_thread(Snowflake.c()) :: :ok | {:error, any}
   def join_thread(channel_id) do
     {:put, "/channels/#{channel_id}/thread-members/@me", nil, nil, nil}
     |> request()
@@ -1428,7 +1404,7 @@ defmodule Remedy.API do
   @doc method: "put"
   @doc route: "/channels/:channel_id/thread-members/:user_id"
   @unsafe {:add_thread_member, [:channel_id, :user_id]}
-  @spec add_thread_member(snowflake, snowflake) :: {:error, any} | :ok
+  @spec add_thread_member(Snowflake.c(), Snowflake.c()) :: {:error, any} | :ok
   def add_thread_member(channel_id, user_id) do
     {:put, "/channels/#{channel_id}/thread-members/#{user_id}", nil, nil, nil}
     |> request()
@@ -1451,7 +1427,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/channels/:channel_id/thread-members/@me"
   @unsafe {:leave_thread, [:channel_id]}
-  @spec leave_thread(snowflake) :: :ok
+  @spec leave_thread(Snowflake.c()) :: :ok
   def leave_thread(channel_id) do
     {:delete, "/channels/#{channel_id}/thread-members/@me", nil, nil, nil}
     |> request()
@@ -1476,7 +1452,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/channels/:channel_id/thread-members/:user_id"
   @unsafe {:remove_thread_member, [:channel_id, :user_id]}
-  @spec remove_thread_member(snowflake, snowflake) :: :ok | {:error, any}
+  @spec remove_thread_member(Snowflake.c(), Snowflake.c()) :: :ok | {:error, any}
   def remove_thread_member(channel_id, user_id) do
     {:delete, "/channels/#{channel_id}/thread-members/#{user_id}", nil, nil, nil}
     |> request()
@@ -1497,7 +1473,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id/thread-members"
   @unsafe {:list_thread_members, [:channel_id]}
-  @spec list_thread_members(snowflake) :: {:error, reason} | {:ok, [User.t()]}
+  @spec list_thread_members(Snowflake.c()) :: {:error, reason} | {:ok, [User.t()]}
   def list_thread_members(channel_id) do
     {:get, "/channels/#{channel_id}/thread-members", nil, nil, nil}
     |> request()
@@ -1558,8 +1534,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:before`  - `Snowflake`
-  - `:limit`  - `:integer`
+  - `:before`  - `t:Remedy.Snowflake.c/0`
+  - `:limit`  - `t:integer/0`
 
   ## Examples
 
@@ -1572,7 +1548,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id/threads/archived/public"
   @unsafe {:list_public_archived_threads, [:channel_id]}
-  @spec list_public_archived_threads(snowflake, opts) :: {:error, any} | {:ok, any}
+  @spec list_public_archived_threads(Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def list_public_archived_threads(channel_id, opts \\ []) do
     data = %{}
     types = %{before: ISO8601, limit: :integer}
@@ -1593,8 +1569,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:before`  - `Snowflake`
-  - `:limit`  - `:integer`
+  - `:before`  - `t:Remedy.Snowflake.c/0`
+  - `:limit`  - `t:integer/0`
 
   ## Examples
 
@@ -1607,7 +1583,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/channels/:channel_id/threads/archived/private"
   @unsafe {:list_private_archived_threads, [:channel_id]}
-  @spec list_private_archived_threads(snowflake, opts) :: {:ok, [Thread.t()]} | {:error, reason}
+  @spec list_private_archived_threads(Snowflake.c(), opts) :: {:ok, [Thread.t()]} | {:error, reason}
   def list_private_archived_threads(channel_id, opts \\ []) do
     data = %{}
     types = %{before: ISO8601, limit: :integer}
@@ -1628,8 +1604,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:before`  - `Snowflake`
-  - `:limit`  - `:integer`
+  - `:before`  - `t:Remedy.Snowflake.c/0`
+  - `:limit`  - `t:integer/0`
 
   ## Examples
 
@@ -1642,7 +1618,7 @@ defmodule Remedy.API do
   @doc permissions: ["READ_MESSAGE_HISTORY"]
   @doc method: "get"
   @doc route: "/channels/:channel_id/users/@me/threads/archived/private"
-  @spec list_joined_private_archived_threads(snowflake, opts) :: {:ok, [Thread.t()]} | {:error, reason}
+  @spec list_joined_private_archived_threads(Snowflake.c(), opts) :: {:ok, [Thread.t()]} | {:error, reason}
   def list_joined_private_archived_threads(channel_id, opts \\ []) do
     data = %{}
     types = %{before: ISO8601, limit: :integer}
@@ -1686,7 +1662,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id/emojis"
   @unsafe {:list_emojis, [:guild_id]}
-  @spec list_emojis(snowflake) :: {:error, reason} | {:ok, [Emoji.t()]}
+  @spec list_emojis(Snowflake.c()) :: {:error, reason} | {:ok, [Emoji.t()]}
   def list_emojis(guild_id) do
     {:get, "/guilds/#{guild_id}/emojis", nil, nil, nil}
     |> request()
@@ -1711,7 +1687,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id/emojis/:emoji_id"
   @unsafe {:get_emoji, [:guild_id, :emoji_id]}
-  @spec get_emoji(snowflake, snowflake) :: {:error, reason} | {:ok, Emoji.t()}
+  @spec get_emoji(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Emoji.t()}
   def get_emoji(guild_id, emoji_id) do
     {:get, "/guilds/#{guild_id}/emojis/#{emoji_id}", nil, nil, nil}
     |> request()
@@ -1743,7 +1719,7 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/emojis"
   @doc audit_log: true
   @unsafe {:create_emoji, [:guild_id, :opts]}
-  @spec create_emoji(snowflake, opts) :: {:ok, Emoji.t()} | {:error, reason}
+  @spec create_emoji(Snowflake.c(), opts) :: {:ok, Emoji.t()} | {:error, reason}
   def create_emoji(guild_id, opts) do
     data = %{}
     types = %{name: :string, image: :string, roles: {:array, Snowflake}, reason: :string}
@@ -1783,7 +1759,7 @@ defmodule Remedy.API do
   @doc method: "patch"
   @doc route: "/guilds/:guild_id/emojis/:emoji_id"
   @unsafe {:modify_emoji, [:guild_id, :emoji_id, :opts]}
-  @spec modify_emoji(snowflake, snowflake, opts) :: {:ok, Emoji.t()}
+  @spec modify_emoji(Snowflake.c(), Snowflake.c(), opts) :: {:ok, Emoji.t()}
   def modify_emoji(guild_id, emoji_id, opts \\ []) do
     data = %{}
     types = %{name: :string, roles: {:array, Snowflake}}
@@ -1813,7 +1789,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/guilds/:guild_id/emojis/:emoji_id"
   @doc audit_log: true
-  @spec delete_emoji(snowflake, snowflake, opts) :: :ok | {:error, any}
+  @spec delete_emoji(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, any}
   @unsafe {:delete_emoji, [:guild_id, :emoji_id, :opts]}
   def delete_emoji(guild_id, emoji_id, opts \\ []) do
     reason = Keyword.take(opts, [:reason])
@@ -1841,26 +1817,26 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 2, max: 100`
+  - `:name`  - `t:String.t/0` - `min: 2, max: 100`
   - `:icon`  - `:image_data`
-  - `:verification_level`  - `:integer`
+  - `:verification_level`  - `t:integer/0`
     - `0`  - `:none` - unrestricted
     - `1`  - `:low` - must have verified email on account
     - `2`  - `:medium` - must be registered on Discord for longer than 5 minutes
     - `3`  - `:high` - must be a member of the server for longer than 10 minutes
     - `4`  - `:very_high` - must have a verified phone number
-  - `:default_message_notifications`  - `:integer`
-  - `:explicit_content_filter`  - `:integer`
+  - `:default_message_notifications`  - `t:integer/0`
+  - `:explicit_content_filter`  - `t:integer/0`
     - `0`  - `:disabled`
     - `1`  - `:members_without_roles`
     - `2`  - `:all_members`
   - `:roles`  - `{:array, :role}`
   - `:channels`  - `{:array, :channel}`
-  - `:afl_channel_id`  - `:snowflake`
-  - `:afk_timeout`  - `:integer, :seconds`
+  - `:afl_channel_id`  - `t:Remedy.Snowflake.c/0`
+  - `:afk_timeout`  - `t:integer/0` - `:seconds`
   - `:template`  - `:string`
 
-  > If `:template` is provided, the following. All options except `:name`, and `:icon` are ignored.
+  > If `:template` is provided, the following. All options except `:name`and `:icon` are ignored.
 
   > When using the `:roles` parameter, the first member of the array is used to change properties of the guild's `@everyone` role. If you are trying to bootstrap a guild with additional roles, keep this in mind.
 
@@ -1933,7 +1909,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id"
   @unsafe {:get_guild, [:guild_id]}
-  @spec get_guild(snowflake) :: {:error, reason} | {:ok, Guild.t()}
+  @spec get_guild(Snowflake.c()) :: {:error, reason} | {:ok, Guild.t()}
   def get_guild(guild_id) do
     {:get, "/guilds/#{guild_id}", nil, nil, nil}
     |> request()
@@ -1944,31 +1920,31 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 2, max: 100`
+  - `:name`  - `t:String.t/0` - `min: 2, max: 100`
   - `:icon`  - `:image_data`
-  - `:verification_level`  - `:integer`
+  - `:verification_level`  - `t:integer/0`
     - `0`  - `:none` - unrestricted
     - `1`  - `:low` - must have verified email on account
     - `2`  - `:medium` - must be registered on Discord for longer than 5 minutes
     - `3`  - `:high` - must be a member of the server for longer than 10 minutes
     - `4`  - `:very_high` - must have a verified phone number
-  - `:default_message_notifications`  - `:integer`
+  - `:default_message_notifications`  - `t:integer/0`
     - `0`  - `:all_messages` - members will receive notifications for all messages by default
     - `1`  - `:only_mentions` - members will receive notifications only for mentions by default
-  - `:explicit_content_filter`  - `:integer`
+  - `:explicit_content_filter`  - `t:integer/0`
     - `0`  - `:disabled`
     - `1`  - `:members_without_roles`
     - `2`  - `:all_members`
   - `:roles`  - `{:array, :role}`
   - `:channels`  - `{:array, :channel}`
-  - `:afk_channel_id`  - `:snowflake`
-  - `:afk_timeout`  - `:integer, :seconds`
+  - `:afk_channel_id`  - `t:Remedy.Snowflake.c/0`
+  - `:afk_timeout`  - `t:integer/0` - `:seconds`
   - `:icon`  - `:string`
-  - `:owner_id`  - `Snowflake` - to transfer guild ownership to (must be owner)
+  - `:owner_id`  - `t:Remedy.Snowflake.c/0` - to transfer guild ownership to (must be owner)
   - `:splash`  - `:string`
-  - `:system_channel_id` - `Snowflake`
-  - `:rules_channel_id`  - `Snowflake`
-  - `:public_updates_channel_id`  - `Snowflake`
+  - `:system_channel_id` - `t:Remedy.Snowflake.c/0`
+  - `:rules_channel_id`  - `t:Remedy.Snowflake.c/0`
+  - `:public_updates_channel_id`  - `t:Remedy.Snowflake.c/0`
 
   ## Examples
 
@@ -1983,7 +1959,7 @@ defmodule Remedy.API do
   @doc events: ["GUILD_UPDATE"]
   @doc permissions: ["MANAGE_GUILD"]
   @unsafe {:modify_guild, [:guild_id, :opts]}
-  @spec modify_guild(snowflake, opts) :: {:error, reason} | {:ok, Guild.t()}
+  @spec modify_guild(Snowflake.c(), opts) :: {:error, reason} | {:ok, Guild.t()}
   def modify_guild(guild_id, opts \\ []) do
     reason = opts[:reason]
     data = %{}
@@ -2038,7 +2014,7 @@ defmodule Remedy.API do
   @doc method: "delete"
   @doc route: "/guilds/:guild_id"
   @unsafe {:delete_guild, [:guild_id]}
-  @spec delete_guild(snowflake) :: {:error, reason} | :ok
+  @spec delete_guild(Snowflake.c()) :: {:error, reason} | :ok
   def delete_guild(guild_id) do
     {:delete, "/guilds/#{guild_id}", nil, nil, nil}
     |> request()
@@ -2060,7 +2036,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id/channels"
   @unsafe {:list_channels, [:guild_id]}
-  @spec list_channels(snowflake) :: {:error, reason} | {:ok, [Channel.t()]}
+  @spec list_channels(Snowflake.c()) :: {:error, reason} | {:ok, [Channel.t()]}
   def list_channels(guild_id) do
     {:get, "/guilds/#{guild_id}/channels", nil, nil, nil}
     |> request()
@@ -2072,13 +2048,13 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 2, max: 100`
+  - `:name`  - `t:String.t/0` - `min: 2, max: 100`
   - `:type` - `t:Remedy.Schema.Channel.t/0`
-  - `:topic`  - `:string, min: 8, max: 256`
-  - `:bitrate`  - `:integer, min: 8, max: 256`
-  - `:user_limit`  - `:integer, min: 1, max: 99, unlimited: 0`
-  - `:permission_overwrites`  - `[t:Remedy.Schema.PermissionOverwrite.t/0]`
-  - `:parent_id`  - `t:Snowflake.t/0` - Category to place the channel under.
+  - `:topic`  - `t:String.t/0` - `min: 8, max: 256`
+  - `:bitrate`  - `t:integer/0` - `min: 8, max: 256`
+  - `:user_limit`  - `t:integer/0` - `min: 1, max: 99, unlimited: 0`
+  - `:permission_overwrites`  - [`t:Remedy.Schema.PermissionOverwrite.t/0`]
+  - `:parent_id`  - `t:Remedy.Snowflake.c/0` - Category to place the channel under.
   - `:nsfw`  - `:boolean`
 
   ## Examples
@@ -2093,7 +2069,7 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/channels"
   @doc since: "0.6.8"
   @unsafe {:create_channel, [:guild_id, :opts]}
-  @spec create_channel(snowflake, opts) :: {:error, any} | {:ok, any}
+  @spec create_channel(Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def create_channel(guild_id, opts) do
     data = %{name: "", nsfw: false, user_limit: 0}
 
@@ -2142,7 +2118,7 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/channels"
   @doc audit_log: true
   @unsafe {:modify_channel_positions, [:guild_id, :opts]}
-  @spec modify_channel_positions(snowflake, opts) :: {:error, any} | {:ok, any}
+  @spec modify_channel_positions(Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def modify_channel_positions(guild_id, opts) do
     data = %{}
     types = %{positions: {:array, :map}}
@@ -2171,7 +2147,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id/members/:user_id"
   @unsafe {:get_member, [:guild_id, :user_id]}
-  @spec get_member(snowflake, snowflake) :: {:error, reason} | {:ok, Member.t()}
+  @spec get_member(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Member.t()}
   def get_member(guild_id, user_id) do
     {:get, "/guilds/#{guild_id}/members/#{user_id}", nil, nil, nil}
     |> request()
@@ -2183,8 +2159,8 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:limit`  - `:integer, min: 1, max: 1000, default: 1`
-    - `:after`  - `Snowflake, default: 0` - get members after this user ID
+    - `:limit`  - `t:integer/0` - `min: 1, max: 1000, default: 1`
+    - `:after`  - `t:Remedy.Snowflake.c/0` - `default: 0` - get members after this user ID
 
   ## Examples
 
@@ -2196,7 +2172,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id/members"
   @unsafe {:list_members, [:guild_id, :opts]}
-  @spec list_members(snowflake, opts) :: {:error, reason} | {:ok, [Member.t()]}
+  @spec list_members(Snowflake.c(), opts) :: {:error, reason} | {:ok, [Member.t()]}
   def list_members(guild_id, opts) do
     data = %{limit: 1, after: 0}
     types = %{limit: :integer, after: Snowflake}
@@ -2218,7 +2194,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:limit`  - `:integer, min: 1, max: 1000, default: 1`
+  - `:limit`  - `t:integer/0` - `min: 1, max: 1000, default: 1`
   - `:query`  - `:string` - Matches against nickname and username
 
   ## Examples
@@ -2232,7 +2208,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "/guilds/:guild_id/members/search"
   @unsafe {:search_members, [:guild_id, :opts]}
-  @spec search_members(snowflake, opts) :: {:error, reason} | {:ok, [GuildMember.t()]}
+  @spec search_members(Snowflake.c(), opts) :: {:error, reason} | {:ok, [GuildMember.t()]}
   def search_members(guild_id, opts) do
     data = %{limit: 1}
     types = %{limit: :integer, query: :string}
@@ -2286,7 +2262,7 @@ defmodule Remedy.API do
   ## """
   @doc false
   @unsafe {:add_member, [:guild_id, :user_id, :opts]}
-  @spec add_member(snowflake, snowflake, opts) :: {:error, any} | {:ok, any}
+  @spec add_member(Snowflake.c(), Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def add_member(guild_id, user_id, opts) do
     data = %{}
 
@@ -2318,7 +2294,7 @@ defmodule Remedy.API do
   - `:roles`  - `{:array, Snowflake}` - of role ids the member is assigned
   - `:mute`  -  `:boolean` - if the user is muted
   - `:deaf`  - `:boolean` - if the user is deafened
-  - `:channel_id`  - `Snowflake` - id of channel to move user to (if they are connected to voice)
+  - `:channel_id`  - `t:Remedy.Snowflake.c/0` - id of channel to move user to (if they are connected to voice)
 
   ## Examples
 
@@ -2333,7 +2309,7 @@ defmodule Remedy.API do
   @doc method: "patch"
   @doc route: "/guilds/:guild_id/members/:user_id"
   @unsafe {:modify_member, [:guild_id, :user_id, :opts]}
-  @spec modify_member(snowflake, snowflake, opts) :: {:error, any} | {:ok, any}
+  @spec modify_member(Snowflake.c(), Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def modify_member(guild_id, user_id, opts) do
     data = %{}
 
@@ -2378,7 +2354,7 @@ defmodule Remedy.API do
   @doc method: "patch"
   @doc audit_log: true
   @unsafe {:modify_bot, [:guild_id, :opts]}
-  @spec modify_bot(snowflake, opts) :: {:error, reason} | {:ok, Member.t()}
+  @spec modify_bot(Snowflake.c(), opts) :: {:error, reason} | {:ok, Member.t()}
   def modify_bot(guild_id, opts) do
     data = %{}
     types = %{nick: :string}
@@ -2411,7 +2387,7 @@ defmodule Remedy.API do
   @doc method: "PUT"
   @doc route: "guilds/:guild_id/members/:user_id/roles/:role_id"
   @unsafe {:add_role, [:guild_id, :user_id, :role_id, :opts]}
-  @spec add_role(snowflake, snowflake, snowflake, opts) :: {:error, reason} | {:ok, Member.t()}
+  @spec add_role(Snowflake.c(), Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Member.t()}
   def add_role(guild_id, user_id, role_id, opts) do
     reason = opts[:reason]
 
@@ -2435,7 +2411,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "guilds/:guild_id/members/:user_id/roles/:role_id"
   @unsafe {:remove_role, [:guild_id, :user_id, :role_id, :opts]}
-  @spec remove_role(snowflake, snowflake, snowflake, opts) :: {:error, reason} | :ok
+  @spec remove_role(Snowflake.c(), Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def remove_role(guild_id, user_id, role_id, opts \\ []) do
     reason = opts[:reason]
 
@@ -2459,7 +2435,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "guilds/:guild_id/members/:user_id"
   @unsafe {:remove_member, [:guild_id, :user_id, :opts]}
-  @spec remove_member(snowflake, snowflake, opts) :: {:error, reason} | :ok
+  @spec remove_member(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def remove_member(guild_id, user_id, opts \\ []) do
     reason = opts[:reason]
 
@@ -2491,7 +2467,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "guilds/:guild_id/bans"
   @unsafe {:list_bans, [:guild_id]}
-  @spec list_bans(snowflake) :: {:error, reason} | {:ok, [Ban.t()]}
+  @spec list_bans(Snowflake.c()) :: {:error, reason} | {:ok, [Ban.t()]}
   def list_bans(guild_id) do
     {:get, "/guilds/#{guild_id}/bans", nil, nil, nil}
     |> request()
@@ -2521,7 +2497,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "guilds/:guild_id/bans/:user_id"
   @unsafe {:get_ban, [:guild_id, :user_id]}
-  @spec get_ban(snowflake, snowflake) :: {:error, reason} | {:ok, Ban.t()}
+  @spec get_ban(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Ban.t()}
   def get_ban(guild_id, user_id) do
     {:get, "/guilds/#{guild_id}/bans/#{user_id}", nil, nil, nil}
     |> request()
@@ -2544,7 +2520,7 @@ defmodule Remedy.API do
   @doc method: "PUT"
   @doc route: "guilds/:guild_id/bans/:user_id"
   @unsafe {:ban_user, [:guild_id, :user_id, :opts]}
-  @spec ban_user(snowflake, snowflake, opts) :: {:error, reason} | :ok
+  @spec ban_user(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def ban_user(guild_id, user_id, opts \\ []) do
     data = %{}
     types = %{delete_message_days: :integer}
@@ -2578,7 +2554,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "guilds/:guild_id/bans/:user_id"
   @unsafe {:unban_user, [:guild_id, :user_id, :opts]}
-  @spec unban_user(snowflake, snowflake, opts) :: :ok | {:error, reason}
+  @spec unban_user(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def unban_user(guild_id, user_id, opts \\ []) do
     reason = opts[:reason]
 
@@ -2600,7 +2576,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "guilds/:guild_id/roles"
   @unsafe {:list_roles, [:guild_id]}
-  @spec list_roles(snowflake) :: {:ok, [Role.t()]} | {:error, reason}
+  @spec list_roles(Snowflake.c()) :: {:ok, [Role.t()]} | {:error, reason}
   def list_roles(guild_id) do
     {:get, "/guilds/#{guild_id}/roles", nil, nil, nil}
     |> request()
@@ -2630,7 +2606,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "guilds/:guild_id/roles"
   @unsafe {:create_role, [:guild_id, :opts]}
-  @spec create_role(snowflake, opts) :: {:ok, Role.t()} | {:error, reason}
+  @spec create_role(Snowflake.c(), opts) :: {:ok, Role.t()} | {:error, reason}
   def create_role(guild_id, opts \\ []) do
     data = %{name: "new role", permissions: 0, color: 0, hoist: false, mentionable: false}
     types = %{name: :string, permissions: Permission, color: :integer, hoist: :boolean, mentionable: :boolean}
@@ -2663,10 +2639,10 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "guilds/:guild_id/roles"
   @unsafe {:modify_role_positions, [:guild_id, :opts]}
-  @spec modify_role_positions(snowflake, opts) :: {:ok, [Role.t()]} | {:error, reason}
+  @spec modify_role_positions(Snowflake.c(), opts) :: {:ok, [Role.t()]} | {:error, reason}
   def modify_role_positions(guild_id, opts \\ []) do
     data = %{}
-    types = %{positions: [%{id: :snowflake, position: :integer}]}
+    types = %{positions: [%{id: Snowflake, position: :integer}]}
     keys = Map.keys(types)
     params = Enum.into(data, %{})
     reason = opts[:reason]
@@ -2704,7 +2680,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "guilds/:guild_id/roles/:role_id"
   @unsafe {:modify_role, [:guild_id, :role_id, :opts]}
-  @spec modify_role(snowflake, snowflake, opts) :: {:ok, Role.t()} | {:error, reason}
+  @spec modify_role(Snowflake.c(), Snowflake.c(), opts) :: {:ok, Role.t()} | {:error, reason}
   def modify_role(guild_id, role_id, opts \\ []) do
     data = %{}
     types = %{name: :string, permissions: Permission, color: :integer, hoist: :boolean, mentionable: :boolean}
@@ -2737,7 +2713,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "guilds/:guild_id/roles/:role_id"
   @unsafe {:delete_role, [:guild_id, :role_id, :opts]}
-  @spec delete_role(snowflake, snowflake, opts) :: :ok | {:error, reason}
+  @spec delete_role(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def delete_role(guild_id, role_id, opts \\ []) do
     reason = opts[:reason]
 
@@ -2751,7 +2727,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:days`  - `:integer, min: 1, max: 30`
+  - `:days`  - `t:integer/0` - `min: 1, max: 30`
   - `:include_roles` - `:string` - comma delimited list of role IDs to include in the count
 
   ## Examples
@@ -2766,7 +2742,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "guilds/:guild_id/prune"
   @unsafe {:get_prune_count, [:guild_id, :opts]}
-  @spec get_prune_count(snowflake, opts) :: {:ok, %{pruned: integer}} | {:error, reason}
+  @spec get_prune_count(Snowflake.c(), opts) :: {:ok, %{pruned: integer}} | {:error, reason}
   def get_prune_count(guild_id, opts \\ []) do
     data = %{}
     types = %{days: :integer, include_roles: :string}
@@ -2787,7 +2763,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:days`  - `:integer, min: 1, max: 30`
+  - `:days`  - `t:integer/0` - `min: 1, max: 30`
   - `:include_roles` - `{:array, Snowflake}` - array of role IDs to include in the count
   - `:compute_prune_count` - `:boolean` - whether to compute the prune count
 
@@ -2803,7 +2779,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "guilds/:guild_id/prune"
   @unsafe {:prune_guild, [:guild_id, :opts]}
-  @spec prune_guild(snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec prune_guild(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def prune_guild(guild_id, opts \\ []) do
     data = %{}
     types = %{days: :integer, include_roles: {:array, Snowflake}, compute_prune_count: :boolean}
@@ -2824,7 +2800,7 @@ defmodule Remedy.API do
   @doc """
   Gets a list of voice regions for the guild.
 
-  > Unlike `f:list_voice_regions/0` this returns VIP servers when the guild is VIP-enabled.
+  Unlike `list_voice_regions/0` this returns VIP servers when the guild is VIP-enabled.
 
   ## Examples
 
@@ -2840,7 +2816,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "guilds/:guild_id/regions"
   @unsafe {:list_voice_regions, [:guild_id]}
-  @spec list_voice_regions(snowflake) :: {:ok, any} | {:error, reason}
+  @spec list_voice_regions(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def list_voice_regions(guild_id) do
     {:get, "/guilds/#{guild_id}/regions", nil, nil, nil}
     |> request()
@@ -2861,7 +2837,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "guilds/:guild_id/invites"
   @unsafe {:list_guild_invites, [:guild_id]}
-  @spec list_guild_invites(snowflake) :: {:ok, any} | {:error, reason}
+  @spec list_guild_invites(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def list_guild_invites(guild_id) do
     {:get, "/guilds/#{guild_id}/invites", nil, nil, nil}
     |> request()
@@ -2881,7 +2857,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "guilds/:guild_id/integrations"
   @unsafe {:list_integrations, [:guild_id]}
-  @spec list_integrations(snowflake) :: {:ok, [Integration.t()]} | {:error, reason}
+  @spec list_integrations(Snowflake.c()) :: {:ok, [Integration.t()]} | {:error, reason}
   def list_integrations(guild_id) do
     {:get, "/guilds/#{guild_id}/integrations", nil, nil, nil}
     |> request()
@@ -2905,7 +2881,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "guilds/:guild_id/integrations/:integration_id"
   @unsafe {:remove_integration, [:guild_id, :integration_id, :opts]}
-  @spec remove_integration(snowflake, snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec remove_integration(Snowflake.c(), Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def remove_integration(guild_id, integration_id, opts) do
     reason = opts[:reason]
 
@@ -2928,7 +2904,7 @@ defmodule Remedy.API do
   @doc method: "get"
   @doc route: "guilds/:guild_id/integrations/:integration_id/sync"
   @unsafe {:get_guild_widget_settings, [:guild_id]}
-  @spec get_widget_settings(snowflake) :: {:ok, any} | {:error, reason}
+  @spec get_widget_settings(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_widget_settings(guild_id) do
     {:get, "/guilds/#{guild_id}/widget", nil, nil, nil}
     |> request()
@@ -2948,7 +2924,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "guilds/:guild_id/widget.json"
   @unsafe {:get_widget, [:guild_id]}
-  @spec get_widget(snowflake) :: {:ok, any} | {:error, reason}
+  @spec get_widget(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_widget(guild_id) do
     {:get, "/guilds/#{guild_id}/widget.json", nil, nil, nil}
     |> request()
@@ -2969,7 +2945,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "guilds/:guild_id/vanity_url"
   @unsafe {:get_guild_vanity_url, [:guild_id]}
-  @spec get_url(snowflake) :: {:ok, any} | {:error, reason}
+  @spec get_url(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_url(guild_id) do
     {:get, "/guilds/#{guild_id}/vanity-url", nil, nil, nil}
     |> request()
@@ -3039,7 +3015,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "guilds/:guild_id/welcome-screen"
   @unsafe {:get_welcome, [:guild_id]}
-  @spec get_welcome(snowflake) :: {:ok, any} | {:error, reason}
+  @spec get_welcome(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_welcome(guild_id) do
     {:get, "/guilds/#{guild_id}/welcome-screen", nil, nil, nil}
     |> request()
@@ -3091,14 +3067,18 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:channel_id`  - `:snowflake` - The id of the channel the user is currently in.
-  - `:suppress`  - `:boolean` - Toggles the user's suppress state
-  - `:request_to_speak_timestamp`  - `ISO8601` - The time at which the user requested to speak.
+  - `:channel_id`  - `t:Remedy.Snowflake.c/0` - The id of the channel the user is currently in.
+  - `:suppress`  - `t:boolean/0` - Toggles the user's suppress state
+  - `:request_to_speak_timestamp`  - `t:Remedy.ISO8601.c/0` - The time at which the user requested to speak.
 
   > `:channel_id` must currently point to a stage channel.
+
   > current user must already have joined `:channel_id`.
+
   > You must have the `:MUTE_MEMBERS` permission to unsuppress yourself. You can always suppress yourself.
+
   > You must have the `:REQUEST_TO_SPEAK` permission to request to speak. You can always clear your own request to speak.
+
   > You are able to set `:request_to_speak_timestamp` to any present or future time.
 
   ## Examples
@@ -3116,7 +3096,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/guilds/:guild_id/voice-states/@me"
   @unsafe {:modify_bot_voice, [:guild_id, :opts]}
-  @spec modify_bot_voice(snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec modify_bot_voice(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_bot_voice(guild_id, opts \\ []) do
     data = %{}
     types = %{channel_id: Snowflake, suppress: :boolean, request_to_speak_timestamp: ISO8601}
@@ -3138,7 +3118,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:channel_id`  - `:snowflake` - The id of the channel the user is currently in.
+  - `:channel_id`  - `t:Remedy.Snowflake.c/0` - The id of the channel the user is currently in.
   - `:suppress`  - `:boolean` - Toggles the user's suppress state
 
   > `:channel_id` must currently point to a stage channel.
@@ -3160,7 +3140,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/guilds/:guild_id/voice-states/:user_id"
   @unsafe {:modify_user_voice, [:guild_id, :user_id, :opts]}
-  @spec modify_user_voice(snowflake, snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec modify_user_voice(Snowflake.c(), Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_user_voice(guild_id, user_id, opts \\ []) do
     data = %{}
     types = %{channel_id: Snowflake, suppress: :boolean}
@@ -3207,7 +3187,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "guild-templates/:template_id"
   @unsafe {:create_guild_from_template, [:template_id, :opts]}
-  @spec create_guild_from_template(snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec create_guild_from_template(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   defp create_guild_from_template(template_code, opts) when not is_list(template_code) do
     data = %{}
     types = %{name: :string, icon: :string}
@@ -3228,8 +3208,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 2, max: 100` - The name of the template.
-  - `:description`  - `:string, min: 0, max: 120` - The description of the template.
+  - `:name`  - `t:String.t/0` - `min: 2, max: 100` - The name of the template.
+  - `:description`  - `t:String.t/0` - `min: 0, max: 120` - The description of the template.
 
   ## Examples
 
@@ -3243,7 +3223,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "/guilds/:guild_id/templates"
   @unsafe {:create_template, [:guild_id, :opts]}
-  @spec create_template(snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec create_template(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def create_template(guild_id, opts \\ []) do
     data = %{}
     types = %{name: :string, description: :string}
@@ -3276,7 +3256,7 @@ defmodule Remedy.API do
   @doc method: "PUT"
   @doc route: "/guilds/:guild_id/templates/:template_id"
   @unsafe {:sync_template, [:guild_id, :template_id]}
-  @spec sync_template(snowflake, snowflake) :: {:ok, any} | {:error, reason}
+  @spec sync_template(Snowflake.c(), Snowflake.c()) :: {:ok, any} | {:error, reason}
   def sync_template(guild_id, template_code) do
     {:put, "/guilds/#{guild_id}/templates/#{template_code}", nil, nil, nil}
     |> request()
@@ -3288,8 +3268,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 100` - The name of the template.
-  - `:description`  - `:string, min: 0, max: 120` - The description of the template.
+  - `:name`  - `t:String.t/0` - `min: 1, max: 100` - The name of the template.
+  - `:description`  - `t:String.t/0` - `min: 0, max: 120` - The description of the template.
 
   ## Examples
 
@@ -3303,7 +3283,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/guilds/:guild_id/templates/:template_id"
   @unsafe {:modify_template, [:guild_id, :template_id, :opts]}
-  @spec modify_template(snowflake, snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec modify_template(Snowflake.c(), Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_template(guild_id, template_code, opts \\ []) do
     data = %{}
     types = %{name: :string, description: :string}
@@ -3335,7 +3315,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/guilds/:guild_id/templates/:template_id"
   @unsafe {:delete_template, [:guild_id, :template_id]}
-  @spec delete_template(snowflake, snowflake) :: {:ok, any} | {:error, reason}
+  @spec delete_template(Snowflake.c(), Snowflake.c()) :: {:ok, any} | {:error, reason}
   def delete_template(guild_id, template_code) do
     {:delete, "/guilds/#{guild_id}/templates/#{template_code}", nil, nil, nil}
     |> request()
@@ -3362,7 +3342,7 @@ defmodule Remedy.API do
 
     - `:with_counts`  - `:boolean` - Whether to include the approximate member counts.
     - `:with_expiration`  - `:boolean` - Whether to include the expiration date.
-    - `:guild_scheduled_event_id`  - `Snowflake` - The ID of the guild scheduled event to include with the invite.
+    - `:guild_scheduled_event_id`  - `t:Remedy.Snowflake.c/0` - The ID of the guild scheduled event to include with the invite.
 
   ## Examples
 
@@ -3434,9 +3414,9 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:channel_id`  - `Snowflake`
+  - `:channel_id`  - `t:Remedy.Snowflake.c/0`
   - `:name`  - `:string`
-  - `:privacy_level`  - `:integer`
+  - `:privacy_level`  - `t:integer/0`
     - 1 - PUBLIC, The Stage instance is visible publicly, such as on Stage Discovery.
     - 2 - GUILD_ONLY,	The Stage instance is visible to only guild members.
 
@@ -3483,7 +3463,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/stage-instances/:channel_id"
   @unsafe {:get_stage, [:channel_id]}
-  @spec get_stage(snowflake) :: {:ok, any} | {:error, reason}
+  @spec get_stage(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_stage(channel_id) do
     {:get, "/stage-instances/#{channel_id}", nil, nil, nil}
     |> request()
@@ -3496,7 +3476,7 @@ defmodule Remedy.API do
   ## Options
 
   - `:name`  - `:string`
-  - `:privacy_level`  - `:integer`
+  - `:privacy_level`  - `t:integer/0`
     - 1 - PUBLIC, The Stage instance is visible publicly, such as on Stage Discovery.
     - 2 - GUILD_ONLY,	The Stage instance is visible to only guild members.
 
@@ -3512,7 +3492,7 @@ defmodule Remedy.API do
   @doc route: "/stage-instances/:channel_id"
   @doc audit_log: true
   @unsafe {:modify_stage, [:channel_id, :opts]}
-  @spec modify_stage(snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec modify_stage(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_stage(channel_id, opts \\ []) do
     data = %{}
     types = %{topic: :string, privacy_level: :integer}
@@ -3545,7 +3525,7 @@ defmodule Remedy.API do
   @doc route: "/stage-instances/:channel_id"
   @doc audit_log: true
   @unsafe {:delete_stage, [:channel_id]}
-  @spec delete_stage(snowflake, opts) :: {:ok, any} | {:error, reason}
+  @spec delete_stage(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def delete_stage(channel_id, opts) do
     reason = opts[:reason]
 
@@ -3581,7 +3561,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/stickers/:sticker_id"
   @unsafe {:get_sticker, [:sticker_id]}
-  @spec get_sticker(snowflake) :: {:error, any} | {:ok, Sticker.t()}
+  @spec get_sticker(Snowflake.c()) :: {:error, any} | {:ok, Sticker.t()}
   def get_sticker(sticker_id) do
     {:get, "/stickers/#{sticker_id}", nil, nil, nil}
     |> request()
@@ -3617,7 +3597,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/guilds/:guild_id/stickers"
   @unsafe {:list_stickers, [:guild_id]}
-  @spec list_stickers(snowflake) :: {:error, reason} | {:ok, [Sticker.t()]}
+  @spec list_stickers(Snowflake.c()) :: {:error, reason} | {:ok, [Sticker.t()]}
   def list_stickers(guild_id) do
     {:get, "/guilds/#{guild_id}/stickers", nil, nil, nil}
     |> request()
@@ -3644,7 +3624,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/guilds/:guild_id/stickers/:sticker_id"
   @unsafe {:get_sticker, [:guild_id, :sticker_id]}
-  @spec get_sticker(snowflake, snowflake) :: {:error, reason} | {:ok, Sticker.t()}
+  @spec get_sticker(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Sticker.t()}
   def get_sticker(guild_id, sticker_id) do
     {:get, "/guilds/#{guild_id}/stickers/#{sticker_id}", nil, nil, nil}
     |> request()
@@ -3678,7 +3658,7 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/stickers"
   @doc audit_log: true
   @unsafe {:create_sticker, [:guild_id, :sticker_id, :opts]}
-  @spec create_sticker(snowflake, snowflake, opts) :: {:error, reason} | {:ok, Sticker.t()}
+  @spec create_sticker(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Sticker.t()}
   def create_sticker(guild_id, sticker_id, opts \\ []) do
     data = %{}
     types = %{name: :string, description: :string, tags: :string, file: :string}
@@ -3721,7 +3701,7 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/stickers/:sticker_id"
   @doc audit_log: true
   @unsafe {:modify_sticker, [:guild_id, :sticker_id, :opts]}
-  @spec modify_sticker(snowflake, snowflake, opts) :: {:error, reason} | {:ok, Sticker.t()}
+  @spec modify_sticker(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Sticker.t()}
   def modify_sticker(guild_id, sticker_id, opts \\ []) do
     data = %{}
     types = %{name: :string, description: :string, tags: :string}
@@ -3760,7 +3740,7 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/stickers/:sticker_id"
   @doc audit_log: true
   @unsafe {:delete_sticker, [:guild_id, :sticker_id]}
-  @spec delete_sticker(snowflake, snowflake, opts) :: {:error, reason} | :ok
+  @spec delete_sticker(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def delete_sticker(guild_id, sticker_id, opts \\ []) do
     {:delete, "/guilds/#{guild_id}/stickers/#{sticker_id}", nil, opts[:reason], nil}
     |> request()
@@ -3819,7 +3799,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/users/:user_id"
   @unsafe {:get_user, [:user_id]}
-  @spec get_user(snowflake) :: {:error, reason} | {:ok, User.t()}
+  @spec get_user(Snowflake.c()) :: {:error, reason} | {:ok, User.t()}
   def get_user(user_id) do
     {:get, "/users/#{user_id}", nil, nil, nil}
     |> request()
@@ -3910,7 +3890,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/users/@me/guilds/:guild_id"
   @unsafe {:leave_guild, [:guild_id]}
-  @spec leave_guild(snowflake) :: {:error, reason} | :ok
+  @spec leave_guild(Snowflake.c()) :: {:error, reason} | :ok
   def leave_guild(guild_id) do
     {:delete, "/users/@me/guilds/#{guild_id}", nil, nil, nil}
     |> request()
@@ -3930,7 +3910,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "/users/@me/channels"
   @unsafe {:create_dm, [:user_id]}
-  @spec create_dm(snowflake) :: {:error, reason} | {:ok, Channel.t()}
+  @spec create_dm(Snowflake.c()) :: {:error, reason} | {:ok, Channel.t()}
   def create_dm(user_id) do
     body = %{recipient_id: user_id}
 
@@ -4006,8 +3986,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 80` - The name of the webhook, cannot be 'Clyde'.
-  - `:avatar`  - `:string, max: 2048` - The avatar of the webhook, as a base64-encoded string.
+  - `:name`  - `t:String.t/0` - `min: 1, max: 80` - The name of the webhook, cannot be 'Clyde'.
+  - `:avatar`  - `t:String.t/0` - `max: 2048` - The avatar of the webhook, as a base64-encoded string.
 
   ## Examples
 
@@ -4021,7 +4001,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "/channels/:channel_id/webhooks"
   @unsafe {:create_webhook, [:channel_id, :opts]}
-  @spec create_webhook(snowflake, opts) :: {:error, reason} | {:ok, Webhook.t()}
+  @spec create_webhook(Snowflake.c(), opts) :: {:error, reason} | {:ok, Webhook.t()}
   def create_webhook(channel_id, opts \\ []) do
     data = %{}
     types = %{name: :string, avatar: :string}
@@ -4052,7 +4032,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/channels/:channel_id/webhooks"
   @unsafe {:list_channel_webhooks, [:channel_id]}
-  @spec list_channel_webhooks(snowflake) :: {:error, reason} | {:ok, [Webhook.t()]}
+  @spec list_channel_webhooks(Snowflake.c()) :: {:error, reason} | {:ok, [Webhook.t()]}
   def list_channel_webhooks(channel_id) do
     {:get, "/channels/#{channel_id}/webhooks", nil, nil, nil}
     |> request()
@@ -4072,7 +4052,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/guilds/:guild_id/webhooks"
   @unsafe {:list_guild_webhooks, [:guild_id]}
-  @spec list_guild_webhooks(snowflake) :: {:error, reason} | {:ok, [Webhook.t()]}
+  @spec list_guild_webhooks(Snowflake.c()) :: {:error, reason} | {:ok, [Webhook.t()]}
   def list_guild_webhooks(guild_id) do
     {:get, "/guilds/#{guild_id}/webhooks", nil, nil, nil}
     |> request()
@@ -4091,7 +4071,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/webhooks/:webhook_id"
   @unsafe {:get_webhook, [:webhook_id]}
-  @spec get_webhook(snowflake) :: {:error, reason} | {:ok, Webhook.t()}
+  @spec get_webhook(Snowflake.c()) :: {:error, reason} | {:ok, Webhook.t()}
   def get_webhook(webhook_id) do
     {:get, "/webhooks/#{webhook_id}", nil, nil, nil}
     |> request()
@@ -4120,9 +4100,9 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 80` - The name of the webhook, cannot be 'Clyde'.
-  - `:avatar`  - `:string, max: 2048` - The avatar of the webhook, as a base64-encoded string.
-  - `:channel_id`  - `:snowflake` - The channel id to move the webhook to.
+  - `:name`  - `t:String.t/0` - `min: 1, max: 80` - The name of the webhook, cannot be 'Clyde'.
+  - `:avatar`  - `t:String.t/0` - `max: 2048` - The avatar of the webhook, as a base64-encoded string.
+  - `:channel_id`  - `t:Remedy.Snowflake.c/0` - The channel id to move the webhook to.
 
   ## Examples
 
@@ -4135,7 +4115,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/webhooks/:webhook_id"
   @unsafe {:modify_webhook, [:webhook_id, :opts]}
-  @spec modify_webhook(snowflake, opts) :: {:error, reason} | {:ok, Webhook.t()}
+  @spec modify_webhook(Snowflake.c(), opts) :: {:error, reason} | {:ok, Webhook.t()}
   def modify_webhook(webhook_id, opts) do
     data = %{}
     types = %{name: :string, avatar: :string, channel_id: Snowflake}
@@ -4158,8 +4138,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 80` - The name of the webhook, cannot be 'Clyde'.
-  - `:avatar`  - `:string, max: 2048` - The avatar of the webhook, as a base64-encoded string.
+  - `:name`  - `t:String.t/0` - `min: 1, max: 80` - The name of the webhook, cannot be 'Clyde'.
+  - `:avatar`  - `t:String.t/0` - `max: 2048` - The avatar of the webhook, as a base64-encoded string.
 
   ## Examples
 
@@ -4199,7 +4179,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/webhooks/:webhook_id"
   @unsafe {:delete_webhook, [:webhook_id]}
-  @spec delete_webhook(snowflake) :: {:error, reason} | :ok
+  @spec delete_webhook(Snowflake.c()) :: {:error, reason} | :ok
   def delete_webhook(webhook_id) do
     {:delete, "/webhooks/#{webhook_id}", nil, nil, nil}
     |> request()
@@ -4219,7 +4199,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/webhooks/:webhook_id/:webhook_token"
   @unsafe {:delete_webhook_with_token, [:webhook_id, :webhook_token]}
-  @spec delete_webhook(snowflake, any) :: {:error, any} | {:ok, any}
+  @spec delete_webhook(Snowflake.c(), any) :: {:error, any} | {:ok, any}
   def delete_webhook(webhook_id, webhook_token) do
     {:delete, "/webhooks/#{webhook_id}/#{webhook_token}", nil, nil, nil}
     |> request()
@@ -4232,8 +4212,8 @@ defmodule Remedy.API do
   ## Options
 
   - `:wait`  - (`:boolean`) Wait for server confirmation of message send before response, and returns the created message body (defaults to false; when false a message that is not saved does not return an error)
-  - `:thread_id`  - `Snowflake` - Send a message to the specified thread within a webhook's channel. The thread will automatically be unarchived.
-  - `:content`  - `:string, max: 2000` - The content of the webhook message.
+  - `:thread_id`  - `t:Remedy.Snowflake.c/0` - Send a message to the specified thread within a webhook's channel. The thread will automatically be unarchived.
+  - `:content`  - `t:String.t/0` - `max: 2000` - The content of the webhook message.
   - `:username`  - `:string` - Override the username of the webhook message.
   - `:avatar_url`  - `:string` - Override the avatar of the webhook message.
   - `:tts`  - `:boolean` - Whether the message should be read aloud by Discord.
@@ -4254,7 +4234,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "/webhooks/:webhook_id/:webhook_token"
   @unsafe {:execute_webhook, [:webhook_id, :webhook_token, :opts]}
-  @spec execute_webhook(snowflake, any, opts) :: {:error, reason} | {:ok, Message.t()}
+  @spec execute_webhook(Snowflake.c(), any, opts) :: {:error, reason} | {:ok, Message.t()}
   def execute_webhook(webhook_id, webhook_token, opts) do
     query_data = %{wait: false}
     query_types = %{wait: :boolean, thread_id: Snowflake}
@@ -4297,7 +4277,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/webhooks/:webhook_id/:webhook_token/slack"
   @unsafe {:execute_slack_webhook, [:webhook_id, :webhook_token]}
-  @spec execute_slack_webhook(snowflake, any) :: {:error, reason} | :ok
+  @spec execute_slack_webhook(Snowflake.c(), any) :: {:error, reason} | :ok
   def execute_slack_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}/slack", nil, nil, nil}
     |> request()
@@ -4310,7 +4290,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/webhooks/:webhook_id/:webhook_token/github"
   @unsafe {:execute_github_webhook, [:webhook_id, :webhook_token]}
-  @spec execute_github_webhook(snowflake, token) :: {:error, reason} | :ok
+  @spec execute_github_webhook(Snowflake.c(), token) :: {:error, reason} | :ok
   def execute_github_webhook(webhook_id, webhook_token) do
     {:post, "/webhooks/#{webhook_id}/#{webhook_token}/github", nil, nil, nil}
     |> request()
@@ -4321,7 +4301,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:thread_id`  - `Snowflake` - Get a message from the specified thread within a webhook's channel.
+  - `:thread_id`  - `t:Remedy.Snowflake.c/0` - Get a message from the specified thread within a webhook's channel.
 
   ## Examples
 
@@ -4333,7 +4313,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/webhooks/:webhook_id/:webhook_token/messages/:message_id"
   @unsafe {:get_message, [:webhook_id, :webhook_token, :message_id, :opts]}
-  @spec get_message(snowflake, any, snowflake, opts) :: {:error, reason} | {:ok, Message.t()}
+  @spec get_message(Snowflake.c(), any, Snowflake.c(), opts) :: {:error, reason} | {:ok, Message.t()}
   def get_message(webhook_id, webhook_token, message_id, opts \\ []) do
     data = %{}
     types = %{thread_id: Snowflake}
@@ -4354,7 +4334,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:content`  - `:string, max: 2000` - The content of the webhook message.
+  - `:content`  - `t:String.t/0` - `max: 2000` - The content of the webhook message.
   - `:username`  - `:string` - Override the username of the webhook message.
   - `:avatar_url`  - `:string` - Override the avatar of the webhook message.
   - `:tts`  - `:boolean` - Whether the message should be read aloud by Discord.
@@ -4376,7 +4356,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/webhooks/:webhook_id/:webhook_token/messages/:message_id"
   @unsafe {:modify_message, [:webhook_id, :webhook_token, :message_id, :opts]}
-  @spec modify_message(snowflake, any, snowflake, opts) :: {:error, reason} | {:ok, Message.t()}
+  @spec modify_message(Snowflake.c(), any, Snowflake.c(), opts) :: {:error, reason} | {:ok, Message.t()}
   def modify_message(webhook_id, webhook_token, message_id, opts) do
     query_data = %{wait: false}
     query_types = %{wait: :boolean, thread_id: Snowflake}
@@ -4425,7 +4405,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/webhooks/:webhook_id/:webhook_token/messages/:message_id"
   @unsafe {:delete_message, [:webhook_id, :webhook_token, :message_id, :opts]}
-  @spec delete_message(snowflake, any, snowflake, opts) :: {:error, reason} | {:ok, Message.t()}
+  @spec delete_message(Snowflake.c(), any, Snowflake.c(), opts) :: {:error, reason} | {:ok, Message.t()}
   def delete_message(webhook_id, webhook_token, message_id, opts) do
     data = %{}
     types = %{thread_id: Snowflake}
@@ -4488,14 +4468,11 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 32`
-  - `:description` - `:string, min: 1, max: 100`
-  - `:options`  - `{:array, CommandOption}`
-  - `:default_permission`  - `:boolean, default: true`
-  - `:type`  - `:integer`
-    `1` - `:chat_input` - Slash commands; a text-based command that shows up when a user types `/`
-    `2` - `:user` - A UI-based command that shows up when you right click or tap on a user
-    `3` - `:message` - A UI-based command that shows up when you right click or tap on a message
+  - `:name`  - `t:String.t/0` - `min: 1, max: 32`
+  - `:description` - `t:String.t/0` - `min: 1, max: 100`
+  - `:options`  - [`t:Remedy.Schema.CommandOption.t/0`]
+  - `:default_permission`  - `t:boolean/0` - `default: true`
+  - `:type`  - `t:Remedy.Schema.CommandType.c/0`
 
   ## Example
 
@@ -4551,7 +4528,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/applications/:application_id/commands/:command_id"
   @unsafe {:get_command, [:command_id]}
-  @spec get_command(snowflake) :: {:error, reason} | {:ok, Command.t()}
+  @spec get_command(Snowflake.c()) :: {:error, reason} | {:ok, Command.t()}
   def get_command(command_id) do
     {:get, "/applications/#{bot_id()}/commands/#{command_id}", nil, nil, nil}
     |> request()
@@ -4565,10 +4542,10 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 32`
-  - `:description` - `:string, min: 1, max: 100`
-  - `:options`  - `{:array, CommandOption}`
-  - `:default_permission`  - `:boolean, default: true` - whether the command is enabled by default when the app is added to a guild
+  - `:name` - `t:String.t/0` - `min: 1, max: 32`
+  - `:description` - `t:String.t/0` - `min: 1, max: 100`
+  - `:options` - [`t:/Remedy.Schema.CommandOption.c/0`]
+  - `:default_permission` - `t:boolean/0` - `default: true` - whether the command is enabled by default when the app is added to a guild
 
   ## Examples
 
@@ -4580,7 +4557,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/applications/:application_id/commands/:command_id"
   @unsafe {:modify_command, [:command_id, :opts]}
-  @spec modify_command(snowflake, opts) :: {:error, reason} | {:ok, Command.t()}
+  @spec modify_command(Snowflake.c(), opts) :: {:error, reason} | {:ok, Command.t()}
   def modify_command(command_id, opts) do
     data = %{}
     types = %{name: :string, description: :string, options: {:array, CommandOption}, default_permission: :boolean}
@@ -4606,7 +4583,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/applications/:application_id/commands/:command_id"
   @unsafe {:delete_command, [:command_id]}
-  @spec delete_command(snowflake) :: {:error, reason} | :ok
+  @spec delete_command(Snowflake.c()) :: {:error, reason} | :ok
   def delete_command(command_id) do
     {:delete, "/applications/#{bot_id()}/commands/#{command_id}", nil, nil, nil}
     |> request()
@@ -4674,7 +4651,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands"
   @unsafe {:list_commands, [:guild_id]}
-  @spec list_commands(snowflake) :: {:error, reason} | {:ok, [Command.t()]}
+  @spec list_commands(Snowflake.c()) :: {:error, reason} | {:ok, [Command.t()]}
   def list_commands(guild_id) do
     {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands", nil, nil, nil}
     |> request()
@@ -4686,11 +4663,11 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 32`
-  - `:description` - `:string, min: 1, max: 100`
+  - `:name`  - `t:String.t/0` - `min: 1, max: 32`
+  - `:description` - `t:String.t/0` - `min: 1, max: 100`
   - `:options`  - `{:array, CommandOption}`
   - `:default_permission`  - `:boolean, default: true` - whether the command is enabled by default when the app is added to a guild
-  - `:type`  - `:integer`
+  - `:type`  - `t:integer/0`
     `1` - `:chat_input` - Slash commands; a text-based command that shows up when a user types `/`
     `2` - `:user` - A UI-based command that shows up when you right click or tap on a user
     `3` - `:message` - A UI-based command that shows up when you right click or tap on a message
@@ -4706,7 +4683,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands"
   @unsafe {:create_command, [:guild_id, :opts]}
-  @spec create_command(snowflake, opts) :: {:error, reason} | {:ok, Command.t()}
+  @spec create_command(Snowflake.c(), opts) :: {:error, reason} | {:ok, Command.t()}
   def create_command(guild_id, opts) do
     body = %{}
 
@@ -4747,7 +4724,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/:command_id"
   @unsafe {:get_command, [:guild_id, :command_id]}
-  @spec get_command(snowflake, snowflake) :: {:error, reason} | {:ok, [Command.t()]}
+  @spec get_command(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, [Command.t()]}
   def get_command(guild_id, command_id) do
     {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}", nil, nil, nil}
     |> request()
@@ -4761,8 +4738,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:name`  - `:string, min: 1, max: 32`
-  - `:description` - `:string, min: 1, max: 100`
+  - `:name`  - `t:String.t/0` - `min: 1, max: 32`
+  - `:description` - `t:String.t/0` - `min: 1, max: 100`
   - `:options`  - `{:array, CommandOption}`
   - `:default_permission`  - `:boolean, default: true` - whether the command is enabled by default when the app is added to a guild
 
@@ -4780,7 +4757,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/:command_id"
   @unsafe {:modify_command, [:guild_id, :command_id, :opts]}
-  @spec modify_command(snowflake, snowflake, opts) :: {:error, reason} | {:ok, Command.t()}
+  @spec modify_command(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Command.t()}
   def modify_command(guild_id, command_id, opts) do
     data = %{}
 
@@ -4820,7 +4797,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/:command_id"
   @unsafe {:delete_command, [:guild_id, :command_id]}
-  @spec delete_command(snowflake, snowflake) :: {:error, reason} | :ok
+  @spec delete_command(Snowflake.c(), Snowflake.c()) :: {:error, reason} | :ok
   def delete_command(guild_id, command_id) do
     {:delete, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}", nil, nil, nil}
     |> request()
@@ -4850,7 +4827,7 @@ defmodule Remedy.API do
   @doc method: "PUT"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands"
   @unsafe {:cast_commands, [:guild_id, :opts]}
-  @spec cast_commands(snowflake, opts) :: {:error, reason} | :ok
+  @spec cast_commands(Snowflake.c(), opts) :: {:error, reason} | :ok
   def cast_commands(guild_id, opts) do
     body = %{}
 
@@ -4884,7 +4861,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/permissions"
   @unsafe {:list_command_permissions, [:guild_id]}
-  @spec list_command_permissions(snowflake) :: {:error, reason} | {:ok, [CommandPermission.t()]}
+  @spec list_command_permissions(Snowflake.c()) :: {:error, reason} | {:ok, [CommandPermission.t()]}
   def list_command_permissions(guild_id) do
     {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/permissions", nil, nil, nil}
     |> request()
@@ -4916,7 +4893,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:permissions`  - `{:array, CommandPermission}`
+  - `:permissions`  - `[[t:Remedy.Schema.CommandPermission/0]](#CommandPermission)`
 
   ## Examples
 
@@ -4931,7 +4908,8 @@ defmodule Remedy.API do
   @doc method: "PUT"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/:command_id/permissions"
   @unsafe {:cast_command_permissions, [:guild_id, :command_id, :opts]}
-  @spec cast_command_permissions(snowflake, snowflake, opts) :: {:error, reason} | {:ok, [CommandPermission.t()]}
+  @spec cast_command_permissions(Snowflake.c(), Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, [CommandPermission.t()]}
   def cast_command_permissions(guild_id, command_id, opts) do
     data = %{}
     types = %{permissions: {:array, CommandPermission}}
@@ -4967,7 +4945,7 @@ defmodule Remedy.API do
   @doc method: "PUT"
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/permissions"
   @unsafe {:cast_command_permissions, [:guild_id, :opts]}
-  @spec cast_command_permissions(snowflake, opts) :: {:error, reason} | {:ok, [CommandPermission.t()]}
+  @spec cast_command_permissions(Snowflake.c(), opts) :: {:error, reason} | {:ok, [CommandPermission.t()]}
   def cast_command_permissions(guild_id, opts) do
     data = %{}
     types = %{permissions: {:array, CommandPermission}}
@@ -4999,7 +4977,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:type`  - `:integer`
+  - `:type`  - `t:integer/0`
     - `1` - PONG, ACK a Ping
     - `4` - CHANNEL_MESSAGE_WITH_SOURCE, respond to an interaction with a message
     - `5` - DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE, ACK an interaction and edit a response later, the user sees a loading state
@@ -5019,7 +4997,7 @@ defmodule Remedy.API do
   @doc method: "POST"
   @doc route: "/interactions/:interaction_id/:interaction_token/callback"
   @unsafe {:create_response, [:interaction_id, :interaction_token, :type, :data]}
-  @spec create_response(snowflake, token, opts) :: {:error, reason} | {:ok, [Callback.t()]}
+  @spec create_response(Snowflake.c(), token, opts) :: {:error, reason} | {:ok, [Callback.t()]}
   def create_response(interaction_id, interaction_token, opts) do
     data = %{}
     types = %{type: :integer, data: CallbackData}
@@ -5075,7 +5053,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  `:thread_id` - `Snowflake`
+  `:thread_id` - `t:Remedy.Snowflake.c/0`
 
   See `delete_message/4` for more information.
 
@@ -5128,7 +5106,7 @@ defmodule Remedy.API do
   @doc method: "GET"
   @doc route: "/webhooks/:application_id/:interaction_token/messages/:message_id"
   @unsafe {:get_followup, [:interaction_token, :message_id]}
-  @spec get_followup(token, snowflake) :: {:error, reason} | {:ok, [Message.t()]}
+  @spec get_followup(token, Snowflake.c()) :: {:error, reason} | {:ok, [Message.t()]}
   def get_followup(interaction_token, message_id) do
     get_message(bot_id(), interaction_token, message_id)
   end
@@ -5147,7 +5125,7 @@ defmodule Remedy.API do
   @doc method: "PATCH"
   @doc route: "/webhooks/:application_id/:interaction_token/messages/:message_id"
   @unsafe {:modify_followup, [:interaction_token, :message_id, :opts]}
-  @spec modify_followup(token, snowflake, opts) :: {:error, reason} | {:ok, [Message.t()]}
+  @spec modify_followup(token, Snowflake.c(), opts) :: {:error, reason} | {:ok, [Message.t()]}
   def modify_followup(interaction_token, message_id, opts) do
     modify_message(bot_id(), interaction_token, message_id, opts)
   end
@@ -5166,7 +5144,7 @@ defmodule Remedy.API do
   @doc method: "DELETE"
   @doc route: "/webhooks/:application_id/:interaction_token/messages/:message_id"
   @unsafe {:delete_followup, [:interaction_token, :message_id]}
-  @spec delete_followup(token, snowflake, opts) :: :ok | {:error, reason}
+  @spec delete_followup(token, Snowflake.c(), opts) :: :ok | {:error, reason}
   def delete_followup(interaction_token, message_id, opts) do
     delete_message(bot_id(), interaction_token, message_id, opts)
   end
@@ -5211,6 +5189,186 @@ defmodule Remedy.API do
     {:get, "/gateway/bot", nil, nil, nil}
     |> request()
   end
+
+  ##################################################################
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ### ░███████╗░██╗░░░██╗░███████╗░███╗░░██╗░████████╗░░██████╗░ ###
+  ### ░██╔════╝░██║░░░██║░██╔════╝░████╗░██║░╚══██╔══╝░██╔════╝░ ###
+  ### ░█████╗░░░╚██╗░██╔╝░█████╗░░░██╔██╗██║░░░░██║░░░░╚█████╗░░ ###
+  ### ░██╔══╝░░░░╚████╔╝░░██╔══╝░░░██║╚████║░░░░██║░░░░░╚═══██╗░ ###
+  ### ░███████╗░░░╚██╔╝░░░███████╗░██║░╚███║░░░░██║░░░░██████╔╝░ ###
+  ### ░╚══════╝░░░░╚═╝░░░░╚══════╝░╚═╝░░╚══╝░░░░╚═╝░░░░╚═════╝░░ ###
+  ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
+  ##################################################################
+
+  @doc """
+  List scheduled events for a guild
+
+  ## Options
+
+  - `:with_user_count`  - `:boolean` - Whether to include the number of users subscribed to each event
+
+  """
+  @doc since: "0.6.9"
+  @doc permissions: "VIEW_CHANNEL"
+  @doc method: "GET"
+  @doc route: "/guilds/:guild_id/scheduled_events"
+  @unsafe {:list_events, [:guild_id, :opts]}
+  @spec list_events(Snowflake.c(), opts) :: [Event.t()]
+  def list_events(guild_id, opts) do
+    data = %{}
+    types = %{with_user_count: :boolean}
+    keys = Map.keys(types)
+    params = Enum.into(opts, %{})
+
+    params = {data, types} |> cast(params, keys)
+
+    {:get, "/guilds/#{guild_id}/scheduled_events", params, nil, nil}
+    |> request()
+    |> shape(Event)
+  end
+
+  @doc """
+  Create a scheduled event.
+
+  ## Options
+
+  - `:channel_id`  - `t:Remedy.Snowflake.c/0`
+  - `:entity_metadata`  - `t:Remedy.Schema.EventEntityMetadata.t/0` | `t:map/0`
+  - `:name`  - `t:String.t/0`
+  - `:privacy_level`  - `t:Remedy.Schema.EventPrivacyLevel.t/0`
+  - `:scheduled_start_time`  - `t:Remedy.ISO8601.t/0`
+  - `:scheduled_end_time`  - `t:Remedy.ISO8601.t/0`
+  - `:description`  - `t:string/0`
+  - `:entity_type`  - `t:Remedy.Schema.EventEntityType.t/0`
+
+  """
+  @doc since: "0.6.9"
+  @doc method: "POST"
+  @doc permissions: ["MANAGE_CHANNELS", "MANAGE_EVENTS", "MUTE_MEMBERS", "MOVE_MEMBERS"]
+  @doc route: "/guilds/:guild_id/scheduled_events"
+  @doc audit_log: true
+  @unsafe {:create_event, [:guild_id, :opts]}
+  @spec create_event(Snowflake.c(), opts) :: Event.t()
+  def create_event(guild_id, opts) do
+    data = %{}
+
+    types = %{
+      channel_id: Snowflake,
+      entity_metadata: EventEntityMetadata,
+      name: :string,
+      privacy_level: EventPrivacyLevel,
+      scheduled_start_time: ISO8601,
+      scheduled_end_time: ISO8601,
+      description: :string,
+      entity_type: EventEntityType
+    }
+
+    keys = Map.keys(types)
+    params = Enum.into(opts, %{})
+    body = {data, types} |> cast(params, keys)
+    reason = opts[:reason]
+
+    {:post, "/guilds/#{guild_id}/scheduled_events", nil, reason, body}
+    |> request()
+    |> shape(Event)
+  end
+
+  @doc """
+  Get a scheduled event.
+
+  ## Options
+
+  - `:with_user_count`  - `:boolean` - Whether to include the number of users subscribed to each event
+
+  """
+  @doc since: "0.6.9"
+  @doc method: "GET"
+  @doc permissions: "VIEW_CHANNEL"
+  @doc route: "/guilds/:guild_id/scheduled_events/:event_id"
+  @unsafe {:get_event, [:guild_id, :event_id, :opts]}
+  @spec get_event(Snowflake.c(), Snowflake.c(), opts) :: Event.t()
+  def get_event(guild_id, event_id, opts) do
+    data = %{}
+    types = %{with_user_count: :boolean}
+    keys = Map.keys(types)
+    params = Enum.into(opts, %{})
+
+    params = {data, types} |> cast(params, keys)
+
+    {:get, "/guilds/#{guild_id}/scheduled_events/#{event_id}", params, nil, nil}
+    |> request()
+    |> shape(Event)
+  end
+
+  @doc """
+  Modify a scheduled event.
+
+  ## Options
+
+  - `:channel_id`  - `t:Remedy.Snowflake.c/0`
+  - `:entity_metadata` - `EntityMetadata | :map`
+  - `:name`  - `:string`
+  - `:privacy_level`  - `EventPrivacyLevel`
+  - `:scheduled_start_time`  - `t:Remedy.ISO8601.t/0`
+  - `:scheduled_end_time`  - `t:Remedy.ISO8601.t/0`
+  - `:description`  - `:string`
+  - `:entity_type`  - `EventEntityType`
+  - `:status`  - `EventStatus`
+
+  """
+  @doc since: "0.6.9"
+  @doc method: "PATCH"
+  @doc permissions: ["MANAGE_CHANNELS", "MANAGE_EVENTS", "MUTE_MEMBERS", "MOVE_MEMBERS"]
+  @doc route: "/guilds/:guild_id/scheduled_events/:event_id"
+  @doc audit_log: true
+  @unsafe {:modify_event, [:guild_id, :event_id, :opts]}
+  @spec modify_event(Snowflake.c(), Snowflake.c(), opts) :: Event.t()
+  def modify_event(guild_id, event_id, opts) do
+    data = %{}
+
+    types = %{
+      channel_id: Snowflake,
+      entity_metadata: EntityMetadata,
+      name: :string,
+      privacy_level: EventPrivacyLevel,
+      scheduled_start_time: ISO8601,
+      scheduled_end_time: ISO8601,
+      description: :string,
+      entity_type: Snowflake
+    }
+
+    keys = Map.keys(types)
+    params = Enum.into(opts, %{})
+    body = {data, types} |> cast(params, keys)
+    reason = opts[:reason]
+
+    {:patch, "/guilds/#{guild_id}/scheduled_events/#{event_id}", nil, reason, body}
+    |> request()
+    |> shape(Event)
+  end
+
+  @doc """
+  Delete a scheduled event.
+
+  """
+  @doc since: "0.6.9"
+  @doc method: "DELETE"
+  @doc permissions: ["MANAGE_CHANNELS", "MANAGE_EVENTS", "MUTE_MEMBERS", "MOVE_MEMBERS"]
+  @doc route: "/guilds/:guild_id/scheduled_events/:event_id"
+  @doc audit_log: true
+  @unsafe {:delete_event, [:guild_id, :event_id, :opts]}
+  @spec delete_event(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
+  def delete_event(guild_id, event_id, opts) do
+    reason = opts[:reason]
+
+    {:delete, "/guilds/#{guild_id}/scheduled_events/#{event_id}", nil, reason, nil}
+    |> request()
+  end
+
+  ############################################################################
+  ## PRIVATE ## PRIVATE ## PRIVATE ## PRIVATE ## PRIVATE ## PRIVATE ## PRIVATE
+  ############################################################################
 
   #############################################################################
   ## Grab the bots ID from the Cache

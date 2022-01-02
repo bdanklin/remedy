@@ -21,5 +21,6 @@ defmodule Remedy.Schema.EmbedFooter do
     model
     |> cast(params, [:text, :icon_url, :proxy_icon_url])
     |> validate_required(:text)
+    |> validate_length(:text, max: 2048)
   end
 end

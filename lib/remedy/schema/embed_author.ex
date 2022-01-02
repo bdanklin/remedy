@@ -23,5 +23,6 @@ defmodule Remedy.Schema.EmbedAuthor do
     model
     |> cast(params, [:name, :url, :icon_url, :proxy_icon_url])
     |> validate_required(:name)
+    |> validate_length(:name, max: 256)
   end
 end

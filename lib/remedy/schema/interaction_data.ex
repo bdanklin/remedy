@@ -9,7 +9,7 @@ defmodule Remedy.Schema.InteractionData do
   @type t :: %__MODULE__{
           id: Snowflake.t(),
           name: String.t(),
-          type: integer(),
+          type: CommandType.t(),
           custom_id: String.t(),
           component_type: integer(),
           values: [String.t()],
@@ -22,7 +22,7 @@ defmodule Remedy.Schema.InteractionData do
   embedded_schema do
     field :id, Snowflake
     field :name, :string
-    field :type, :integer
+    field :type, CommandType
     field :custom_id, :string
     field :component_type, :integer
     field :values, {:array, :string}

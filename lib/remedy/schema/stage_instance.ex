@@ -1,4 +1,4 @@
-defmodule Remedy.Schema.StageInstance do
+defmodule Remedy.Schema.Stage do
   @moduledoc """
   Stage Instance
   """
@@ -6,7 +6,7 @@ defmodule Remedy.Schema.StageInstance do
 
   @type t :: %__MODULE__{
           topic: String.t(),
-          privacy_level: integer(),
+          privacy_level: StagePrivacyLevel,
           discoverable_disabled: boolean(),
           guild_id: Snowflake.t(),
           channel_id: Snowflake.t()
@@ -15,7 +15,7 @@ defmodule Remedy.Schema.StageInstance do
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "stage_instances" do
     field :topic, :string
-    field :privacy_level, :integer
+    field :privacy_level, StagePrivacyLevel
     field :discoverable_disabled, :boolean
     field :guild_id, Snowflake
     field :channel_id, Snowflake

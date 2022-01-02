@@ -5,14 +5,37 @@ defmodule Remedy.Schema.Emoji do
   use Remedy.Schema
   alias Remedy.CDN
 
+  @typedoc """
+  Emoji Type.
+  """
   @type t :: %__MODULE__{
+          id: Snowflake.t() | nil,
           name: String.t(),
-          require_colons: boolean(),
-          managed: boolean(),
-          animated: boolean(),
-          available: boolean(),
-          user: User.t(),
-          guild: Guild.t()
+          require_colons: boolean() | nil,
+          managed: boolean() | nil,
+          animated: boolean() | nil,
+          available: boolean() | nil,
+          user: User.t() | nil,
+          guild: Guild.t() | nil
+        }
+
+  @typedoc """
+  Castable to Emoji.
+  """
+  @type c :: params() | t()
+
+  @typedoc """
+  Emoji Params Type
+  """
+  @type params :: %{
+          required(:name) => String.t(),
+          optional(:id) => Snowflake.t(),
+          optional(:require_colons) => boolean(),
+          optional(:managed) => boolean(),
+          optional(:animated) => boolean(),
+          optional(:available) => boolean(),
+          optional(:user) => User.t(),
+          optional(:guild) => Guild.t()
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}

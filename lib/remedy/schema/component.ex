@@ -133,7 +133,7 @@ defmodule Remedy.Schema.Component do
   use Remedy.Schema
 
   embedded_schema do
-    field :type, :integer
+    field :type, ComponentType
     field :custom_id, :string
     field :disabled, :boolean
     field :style, :integer

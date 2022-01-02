@@ -9,7 +9,7 @@ defmodule Remedy.Schema.PermissionOverwrite do
           id: Snowflake.t(),
           role: Role.t(),
           user: User.t(),
-          type: integer(),
+          type: PermissionOverwriteType.t(),
           allow: String.t(),
           deny: String.t()
         }
@@ -18,7 +18,7 @@ defmodule Remedy.Schema.PermissionOverwrite do
   schema "permission_overwrite" do
     embeds_one :role, Role
     embeds_one :user, User
-    field :type, :integer
+    field :type, PermissionOverwriteType
     field :allow, :string
     field :deny, :string
   end

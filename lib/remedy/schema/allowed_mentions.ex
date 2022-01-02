@@ -6,10 +6,12 @@ defmodule Remedy.Schema.AllowedMentions do
 
   @type t :: %__MODULE__{
           parse: [String.t()],
-          replied_user: :boolean,
+          replied_user: boolean(),
           roles: [Snowflake.t()],
           users: [Snowflake.t()]
         }
+
+  @type c :: t | %{}
 
   embedded_schema do
     field :parse, Ecto.Enum, values: [:roles, :users, :everyone]

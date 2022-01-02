@@ -5,7 +5,7 @@ defmodule Remedy.Schema.CommandOption do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          type: integer(),
+          type: CommandType.t(),
           name: String.t(),
           description: String.t(),
           required: boolean(),
@@ -15,13 +15,13 @@ defmodule Remedy.Schema.CommandOption do
         }
 
   embedded_schema do
-    field :type, :integer
+    field :type, CommandType
     field :name, :string
     field :description, :string
     field :required, :boolean
     embeds_many :choices, CommandOptionChoice
     embeds_many :options, __MODULE__
-    field :channel_types, {:array, :integer}
+    field :channel_types, {:array, ChannelType}
   end
 
   @doc false

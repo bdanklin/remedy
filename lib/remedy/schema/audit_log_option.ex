@@ -11,7 +11,7 @@ defmodule Remedy.Schema.AuditLogOption do
           members_removed: String.t(),
           delete_member_days: String.t(),
           count: String.t(),
-          type: String.t(),
+          type: AuditLogOptionType.t(),
           role_name: String.t(),
           #    channel: Channel.t(),
           overwrite: PermissionOverwrite.t()
@@ -25,7 +25,7 @@ defmodule Remedy.Schema.AuditLogOption do
     field :members_removed, :string
     field :delete_member_days, :string
     field :count, :string
-    field :type, :string
+    field :type, AuditLogOptionType
     field :role_name, :string
     # belongs_to :channel, Channel
     embeds_one :overwrite, PermissionOverwrite

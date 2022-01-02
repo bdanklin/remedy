@@ -5,8 +5,7 @@ defmodule Remedy.Cache do
   import Ecto.Query, warn: false
 
   alias Remedy.Repo
-  alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Invite, Member, Message, Role, User}
-
+  alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Member, Role, User}
   use Unsafe.Generator, handler: :unwrap, docs: true
 
   @type snowflake :: Snowflake.t()

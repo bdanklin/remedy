@@ -44,7 +44,7 @@ defmodule Remedy.Schema.Guild do
           members: [Remedy.Schema.Member.t()],
           #       presences: [Presence.t()],
           roles: [Role.t()],
-          stage_instances: [StageInstance.t()],
+          stage_instances: [Stage.t()],
           stickers: [Sticker.t()],
           threads: [Thread.t()],
           voice_states: [VoiceState.t()],
@@ -100,7 +100,7 @@ defmodule Remedy.Schema.Guild do
     has_many :emojis, Emoji, on_delete: :nilify_all
     # has_many :presences, Presence
     has_many :roles, Role, on_delete: :nilify_all
-    has_many :stage_instances, StageInstance, on_delete: :nilify_all
+    has_many :stage_instances, Stage, on_delete: :nilify_all
     has_many :stickers, Sticker, on_delete: :nilify_all
     has_many :threads, Thread, on_delete: :nilify_all
     has_many :members, Member, on_delete: :nilify_all

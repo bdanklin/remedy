@@ -8,7 +8,7 @@ defmodule Remedy.Schema.ThreadMember do
   @type t :: %__MODULE__{
           user_id: Snowflake.t(),
           join_timestamp: ISO8601.t(),
-          flags: integer()
+          flags: ThreadMemberFlags.t()
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}

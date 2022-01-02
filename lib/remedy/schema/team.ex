@@ -18,8 +18,8 @@ defmodule Remedy.Schema.Team do
     field :icon, :string
     field :name, :string
     field :owner_user_id, Snowflake
-    has_one :application, App
-    has_many :team_members, TeamMember
+    embeds_one :application, App
+    embeds_many :team_members, TeamMember
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

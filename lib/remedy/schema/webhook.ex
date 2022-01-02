@@ -8,7 +8,7 @@ defmodule Remedy.Schema.Webhook do
           avatar: String.t(),
           name: String.t(),
           token: String.t(),
-          type: integer(),
+          type: WebhookType.t(),
           url: String.t(),
           application: App.t(),
           channel: Channel.t(),
@@ -23,7 +23,7 @@ defmodule Remedy.Schema.Webhook do
     field :avatar, :string
     field :name, :string
     field :token, :string
-    field :type, :integer
+    field :type, WebhookType
     field :url, :string
     belongs_to :application, App
     belongs_to :channel, Channel

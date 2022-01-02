@@ -15,8 +15,8 @@ defmodule Remedy.Schema.TeamMember do
   embedded_schema do
     field :membership_state, :integer
     field :permissions, {:array, :string}
-    belongs_to :team, Team
-    belongs_to :user, User
+    embeds_one :team, Team
+    embeds_one :user, User
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

@@ -5,7 +5,7 @@ defmodule Remedy.Schema.Command do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          type: integer(),
+          type: CommandType.t(),
           name: String.t(),
           description: String.t(),
           default_permission: boolean(),
@@ -16,7 +16,7 @@ defmodule Remedy.Schema.Command do
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "commands" do
-    field :type, :integer, default: 1
+    field :type, CommandType
     field :name, :string
     field :description, :string
     field :default_permission, :boolean, default: true

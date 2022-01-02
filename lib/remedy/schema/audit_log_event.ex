@@ -1,12 +1,12 @@
 defmodule Remedy.Schema.AuditLogEntry do
   @moduledoc """
-  Discord Audit Log Entry Object
+  Discord Audit Log Event Object
   """
   use Remedy.Schema
 
   @type t :: %__MODULE__{
           target_id: String.t(),
-          action_type: integer(),
+          action_type: AuditLogActionType.t(),
           reason: String.t(),
           user_id: Snowflake.t(),
           user: User.t(),
@@ -18,7 +18,7 @@ defmodule Remedy.Schema.AuditLogEntry do
   embedded_schema do
     field :target_id, Snowflake
     field :user_id, Snowflake
-    field :action_type, :integer
+    field :action_type, AuditLogActionType
     field :reason, :string
     field :changes, {:array, :map}
     embeds_one :user, User

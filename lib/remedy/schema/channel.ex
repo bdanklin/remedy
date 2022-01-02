@@ -3,9 +3,9 @@ defmodule Remedy.Schema.Channel do
   Discord Channel Object
   """
   use Remedy.Schema
-  @type test :: 1 | 2 | 3
+
   @type t :: %__MODULE__{
-          type: integer(),
+          type: ChannelType.t(),
           position: integer(),
           name: String.t(),
           topic: String.t(),
@@ -32,7 +32,7 @@ defmodule Remedy.Schema.Channel do
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "channels" do
-    field :type, :integer
+    field :type, ChannelType
     field :position, :integer
     field :name, :string
     field :topic, :string

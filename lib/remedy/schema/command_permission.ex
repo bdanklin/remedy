@@ -4,9 +4,15 @@ defmodule Remedy.Schema.CommandPermission do
   """
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          id: Snowflake.t(),
+          type: CommandPermissionType.t(),
+          permission: :boolean
+        }
+
   @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
-    field :type, :integer
+    field :type, CommandPermissionType
     field :permission, :boolean
   end
 

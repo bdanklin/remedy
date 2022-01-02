@@ -6,7 +6,7 @@ defmodule Remedy.TimeHelpers do
 
   - `Snowflake` - a 64-bit integer representing the number of milliseconds since the discord epoch + metadata.
   - `t:DateTime/0` - a datetime.datetime object.
-  - `ISO8601` - a string in the ISO8601 format.
+  - `t:Remedy.ISO8601.t/0` - a string in the ISO8601 format.
   - `UnixTime` - a number representing the number of seconds since the unix epoch.
 
 

@@ -524,9 +524,9 @@ defmodule Remedy.Consumer do
   @type webhooks_update ::
           {:WEBHOOKS_UPDATE, WebhooksUpdate.t(), WSState.t()}
 
-  ## voice_server_update :: {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), WSState.t()}
-  ## voice_ready :: {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}
-  ## voice_speaking_update :: {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}
+  @type voice_server_update :: {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), WSState.t()}
+  @type voice_ready :: {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}
+  @type voice_speaking_update :: {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}
 
   defmacro __using__(opts) do
     quote location: :keep do

@@ -62,9 +62,15 @@ defmodule Remedy.TypeBeforeCompile do
   defmacro __before_compile__(_env) do
     quote do
       use Remedy.TypeType,
+        module_doc: Remedy.TypeType.module_doc(%__MODULE__{}),
         type_spec: Remedy.TypeType.type_spec(%__MODULE__{}),
         type_doc: Remedy.TypeType.type_doc(%__MODULE__{}),
-        module_doc: Remedy.TypeType.module_doc(%__MODULE__{})
+        cast_doc: Remedy.TypeType.cast_doc(%__MODULE__{}),
+        cast_spec: Remedy.TypeType.cast_spec(%__MODULE__{}),
+        flag_doc: Remedy.TypeType.flag_doc(%__MODULE__{}),
+        flag_spec: Remedy.TypeType.flag_spec(%__MODULE__{}),
+        load_doc: Remedy.TypeType.load_doc(%__MODULE__{}),
+        load_spec: Remedy.TypeType.load_spec(%__MODULE__{})
 
       defp keys, do: %__MODULE__{} |> Map.from_struct() |> Enum.map(fn {k, _v} -> to_string(k) end)
       defp key_vals, do: %__MODULE__{} |> Map.from_struct() |> Enum.map(fn {k, v} -> {to_string(k), v} end)
@@ -100,6 +106,9 @@ defmodule Remedy.TypeBeforeCompile do
       def to_binary(string) when is_binary(string), do: if(string in keys(), do: string, else: :error)
 
       @doc false
+      def to_atom_key(type), do: to_binary(type) |> String.to_existing_atom()
+
+      @doc false
       def cast(nil), do: {:ok, nil}
       def cast(value) when is_integer(value), do: {:ok, value |> to_integer()}
       def cast(value) when is_binary(value), do: {:ok, value |> to_integer()}
@@ -113,7 +122,7 @@ defmodule Remedy.TypeBeforeCompile do
       def dump(_value), do: :error
 
       @doc false
-      def load(value) when is_integer(value), do: {:ok, value |> to_binary()}
+      def load(value) when is_integer(value), do: {:ok, value |> to_atom_key()}
 
       @doc false
       def type, do: :integer
@@ -131,53 +140,117 @@ end
 
 defmodule Remedy.TypeType do
   @moduledoc false
-  defmacro __using__(type_spec: type_spec, type_doc: type_doc, module_doc: module_doc) do
-    quote bind_quoted: [type_spec: type_spec, type_doc: type_doc, module_doc: module_doc] do
+  defmacro __using__(
+             module_doc: module_doc,
+             type_spec: type_spec,
+             type_doc: type_doc,
+             cast_doc: cast_doc,
+             cast_spec: cast_spec,
+             flag_doc: flag_doc,
+             flag_spec: flag_spec,
+             load_doc: load_doc,
+             load_spec: load_spec
+           ) do
+    quote bind_quoted: [
+            module_doc: module_doc,
+            type_spec: type_spec,
+            type_doc: type_doc,
+            cast_doc: cast_doc,
+            cast_spec: cast_spec,
+            flag_doc: flag_doc,
+            flag_spec: flag_spec,
+            load_doc: load_doc,
+            load_spec: load_spec
+          ] do
       @moduledoc module_doc
+
       @typedoc type_doc
       @type unquote({:t, [], Elixir}) :: unquote(type_spec)
+
+      @typedoc cast_doc
+      @type unquote({:c, [], Elixir}) :: unquote(cast_spec)
+
+      @typedoc flag_doc
+      @type unquote({:f, [], Elixir}) :: unquote(flag_spec)
+
+      @typedoc load_doc
+      @type unquote({:load, [], Elixir}) :: unquote(load_spec)
     end
   end
 
-  def module_doc(_struct),
-    do: """
-    `Ecto.Type` compatible Type type ( type? ¿ǝdʎʇ ).
-    """
+  def module_doc(struct),
+    do: ~s(`Ecto.Type` compatible Type type type? ¿ǝdʎʇ.
 
-  def type_spec(struct) when is_struct(struct), do: struct |> vals() |> Enum.sort_by(& &1) |> type_spec()
-  def type_spec([item]), do: item
-  def type_spec([head | tail]), do: {:|, [], [head, type_spec(tail)]}
 
-  def type_doc(struct),
-    do: ~s(#{name(struct)} Values
+ | Value | Type  |
+ | ----: | ----  |
+ #{rows(struct)}
 
-  | Value | Type  |
-  | ----: | ----  |
-#{rows(struct)}
+## Casting
 
-## Representations
-
-The following representations are all valid when casting to a schema.
+The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an `t:integer/0` value for storage.
 
 #### Integer Type
-```elixir
-#{integer_type(struct)}
-```
+
+    #{integer_type(struct)}
+
 
 #### String Type
-```elixir
-#{string_type(struct)}
-```
+
+    #{string_type(struct)}
+
 
 #### Atom Type
-```elixir
-#{atom_type(struct)}
-```
+
+    #{atom_type(struct)}
+
 )
 
-  defp name(%name{} = struct) when is_struct(struct) do
+  def type_doc(struct) do
+    "#{name(struct)} Type"
+  end
+
+  def type_spec(struct) do
+    upper_bound = Map.from_struct(struct) |> Map.values() |> Enum.max()
+
+    {:.., [context: Elixir, import: Kernel], [0, upper_bound]}
+  end
+
+  def cast_doc(struct) do
+    ~s(Castable to #{name(struct)} Type
+
+See [Casting](#module-casting\) for more information.)
+  end
+
+  def cast_spec(_struct) do
+    ([{:t, [], Elixir}] ++
+       [{:f, [if_undefined: :apply], Elixir}] ++
+       [{{:., [], [{:__aliases__, [alias: false], [:String]}, :t]}, [], []}])
+    |> pipe_spec()
+  end
+
+  def flag_doc(struct) do
+    "#{name(struct)} Values"
+  end
+
+  def flag_spec(struct) do
+    struct |> Map.from_struct() |> Map.keys() |> pipe_spec()
+  end
+
+  def load_doc(struct) do
+    ~s(Loaded #{name(struct)})
+  end
+
+  def load_spec(_struct) do
+    {:f, [if_undefined: :apply], Elixir}
+  end
+
+  def name(%name{} = struct) when is_struct(struct) do
     name |> Module.split() |> List.last() |> Recase.to_title()
   end
+
+  defp pipe_spec([item]), do: item
+  defp pipe_spec([head | tail]), do: {:|, [], [head, pipe_spec(tail)]}
 
   defp rows(struct) do
     struct
@@ -193,37 +266,28 @@ The following representations are all valid when casting to a schema.
 
   defp integer_type(struct) do
     struct
-    |> vals()
+    |> Map.from_struct()
+    |> Map.values()
     |> Enum.random()
     |> inspect(pretty: true)
   end
 
   defp string_type(struct) do
     struct
-    |> keys()
+    |> Map.from_struct()
+    |> Map.keys()
     |> Enum.random()
+    |> Atom.to_string()
     |> inspect(pretty: true)
   end
 
   defp atom_type(struct) do
     struct
-    |> keys()
+    |> Map.from_struct()
+    |> Map.keys()
     |> Enum.random()
-    |> String.to_existing_atom()
     |> inspect(pretty: true)
   end
 
   ## Keys, Vals, KeysVals Helpers
-
-  defp keys(struct) do
-    struct
-    |> Map.from_struct()
-    |> Enum.map(fn {k, _v} -> to_string(k) end)
-  end
-
-  defp vals(struct) do
-    struct
-    |> Map.from_struct()
-    |> Enum.map(fn {_k, v} -> v end)
-  end
 end

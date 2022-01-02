@@ -9,13 +9,15 @@ defmodule Remedy.Schema.App do
           name: String.t(),
           icon: String.t(),
           description: String.t(),
+          summary: String.t(),
+          bot: User.t(),
           bot_public: boolean(),
           bot_require_code_grant: boolean(),
           terms_of_service_url: String.t(),
           privacy_policy_url: String.t(),
           owner: User.t(),
           cover_image: String.t(),
-          flags: integer()
+          flags: ApplicationFlags.t()
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -29,6 +31,9 @@ defmodule Remedy.Schema.App do
     field :privacy_policy_url, :string
     field :cover_image, :string
     field :flags, ApplicationFlags
+
+    embeds_one :bot, User
+    field :summary, :string
 
     embeds_one :owner, User
     field :remedy_system, :boolean, default: false, redact: true

@@ -21,5 +21,7 @@ defmodule Remedy.Schema.EmbedField do
     model
     |> cast(params, [:name, :value, :inline])
     |> validate_required([:name, :value])
+    |> validate_length(:name, max: 256)
+    |> validate_length(:value, max: 1024)
   end
 end

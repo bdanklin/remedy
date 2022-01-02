@@ -16,7 +16,7 @@ defmodule Remedy.Schema.Thread do
           permission_overwrites: [PermissionOverwrite.t()],
           rate_limit_per_user: integer(),
           thread_metadata: ThreadMetadata.t(),
-          type: integer()
+          type: ChannelType.t()
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -30,7 +30,7 @@ defmodule Remedy.Schema.Thread do
     field :message_count, :integer
     field :name, :string
     field :rate_limit_per_user, :integer
-    field :type, :integer
+    field :type, ChannelType
 
     embeds_many :permission_overwrites, PermissionOverwrite
     embeds_one :thread_metadata, ThreadMetadata, on_replace: :update

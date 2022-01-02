@@ -14,7 +14,7 @@ defmodule Remedy.Schema.Message do
           pinned: boolean(),
           timestamp: ISO8601.t(),
           tts: boolean(),
-          type: integer(),
+          type: MessageType.t(),
           application_id: Snowflake.t(),
           author: User.t(),
           channel_id: Snowflake.t(),
@@ -46,7 +46,7 @@ defmodule Remedy.Schema.Message do
     field :nonce, :integer
     field :pinned, :boolean
     field :tts, :boolean
-    field :type, :integer
+    field :type, MessageType
 
     field :application_id, Snowflake
     field :guild_id, Snowflake

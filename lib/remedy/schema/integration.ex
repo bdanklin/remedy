@@ -5,20 +5,40 @@ defmodule Remedy.Schema.Integration do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
+          id: Snowflake.t(),
           name: String.t(),
-          type: String.t(),
+          type: IntegrationType.t(),
           enabled: boolean(),
-          application: App.t(),
-          guild_id: Snowflake.t()
+          syncing: boolean(),
+          role_id: Snowflake.t(),
+          enable_emoticons: boolean(),
+          expire_behavior: IntegrationExpireType.t(),
+          expire_grace_period: integer(),
+          user: User.t(),
+          account: Account.t(),
+          synced_at: ISO8601.t(),
+          subscriber_count: integer(),
+          revoked: boolean(),
+          application: App.t()
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "integrations" do
     field :name, :string
-    field :type, :string
+    field :type, IntegrationType
     field :enabled, :boolean
+    field :syncing, :boolean
+    field :role_id, Snowflake
+    field :enable_emoticons, :boolean
+    field :expire_behavior, IntegrationExpireType
+    field :expire_grace_period, :integer
+    field :synced_at, ISO8601
+    field :subscriber_count, :integer
+    field :revoked, :boolean
+
+    embeds_one :account, Account
+    embeds_one :user, User
     embeds_one :application, App
-    belongs_to :guild, Guild
   end
 
   @doc false

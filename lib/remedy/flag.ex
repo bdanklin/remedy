@@ -9,8 +9,10 @@ defmodule Remedy.Flag do
   ##  This module will implement
   ##  - Ecto.Type to use in an Ecto Schema
   ##  - helper functions.
+  ##  - Module Docs
+  ##  - Type Specs & Docs
+  ##  - Examples
   ##
-  ##  Do not specify @moduledoc or @type
   ##
   ##  The example below is generated from
   ##
@@ -74,9 +76,15 @@ defmodule Remedy.FlagBeforeCompile do
   defmacro __before_compile__(_env) do
     quote do
       use Remedy.FlagType,
+        module_doc: Remedy.FlagType.module_doc(%__MODULE__{}),
         type_spec: Remedy.FlagType.type_spec(%__MODULE__{}),
         type_doc: Remedy.FlagType.type_doc(%__MODULE__{}),
-        module_doc: Remedy.FlagType.module_doc(%__MODULE__{})
+        cast_doc: Remedy.FlagType.cast_doc(%__MODULE__{}),
+        cast_spec: Remedy.FlagType.cast_spec(%__MODULE__{}),
+        flag_doc: Remedy.FlagType.flag_doc(%__MODULE__{}),
+        flag_spec: Remedy.FlagType.flag_spec(%__MODULE__{}),
+        load_doc: Remedy.FlagType.load_doc(%__MODULE__{}),
+        load_spec: Remedy.FlagType.load_spec(%__MODULE__{})
 
       @impl true
       def to_map(flags)
@@ -183,24 +191,57 @@ end
 
 defmodule Remedy.FlagType do
   @moduledoc false
-  defmacro __using__(type_spec: type_spec, type_doc: type_doc, module_doc: module_doc) do
-    quote bind_quoted: [type_spec: type_spec, type_doc: type_doc, module_doc: module_doc] do
+  defmacro __using__(
+             module_doc: module_doc,
+             type_spec: type_spec,
+             type_doc: type_doc,
+             cast_doc: cast_doc,
+             cast_spec: cast_spec,
+             flag_doc: flag_doc,
+             flag_spec: flag_spec,
+             load_doc: load_doc,
+             load_spec: load_spec
+           ) do
+    quote bind_quoted: [
+            module_doc: module_doc,
+            type_spec: type_spec,
+            type_doc: type_doc,
+            cast_doc: cast_doc,
+            cast_spec: cast_spec,
+            flag_doc: flag_doc,
+            flag_spec: flag_spec,
+            load_doc: load_doc,
+            load_spec: load_spec
+          ] do
       @moduledoc module_doc
+
       @typedoc type_doc
       @type unquote({:t, [], Elixir}) :: unquote(type_spec)
+
+      @typedoc cast_doc
+      @type unquote({:c, [], Elixir}) :: unquote(cast_spec)
+
+      @typedoc flag_doc
+      @type unquote({:f, [], Elixir}) :: unquote(flag_spec)
+
+      @typedoc load_doc
+      @type unquote({:load, [], Elixir}) :: unquote(load_spec)
     end
   end
 
-  def module_doc(_struct), do: "`Ecto.Type` compatible bit flag type."
-  def type_spec(struct), do: {:.., [context: Elixir, import: Kernel], [0, max(struct)]}
-  def type_doc(flag_struct), do: ~s(#{title(flag_struct)} Type
+  use Bitwise
 
-#{top_row()}
+  def module_doc(flag_struct),
+    do: ~s(`Ecto.Type` compatible bit flag type.
+
+
+ | Bit   | Flag  |
+ | ----: | ----- |
 #{rows(flag_struct)}
 
-## Representations
+## Casting
 
-The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.
+The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an `t:integer/0` value for storage.
 
 #### Decimal Integer
 ```elixir
@@ -219,47 +260,91 @@ The following representations are all valid when casting to a schema. However th
 
 #### Atom List
 ```elixir
-#{inspect(atom_keys_list(flag_struct), pretty: true)}
+#{atom_list(flag_struct)}
 ```
 
 #### Boolean Map
 ```elixir
-#{inspect(boolean_map(flag_struct), pretty: true)}
+#{boolean_map(flag_struct)}
 ```
 )
 
+  def type_doc(struct) do
+    "#{name(struct)} Type"
+  end
+
+  def type_spec(struct) do
+    upper_bound = Map.from_struct(struct) |> Map.values() |> Enum.sum()
+
+    {:.., [context: Elixir, import: Kernel], [0, upper_bound]}
+  end
+
+  def cast_doc(struct) do
+    "Castable to #{name(struct)} Type"
+  end
+
+  def cast_spec(_struct) do
+    ([{:t, [], Elixir}] ++
+       [[{:f, [if_undefined: :apply], Elixir}]] ++
+       [{:map, [], []}] ++
+       [[{{:., [], [{:__aliases__, [alias: false], [:String]}, :t]}, [], []}]])
+    |> pipe_spec()
+  end
+
+  def flag_doc(struct) do
+    "#{name(struct)} Flags"
+  end
+
+  def flag_spec(struct) do
+    struct |> Map.from_struct() |> Map.keys() |> pipe_spec()
+  end
+
+  def load_doc(struct) do
+    ~s(Loaded #{name(struct)} Flags)
+  end
+
+  def load_spec(_struct) do
+    [{:f, [if_undefined: :apply], Elixir}]
+  end
+
+  def pipe_spec([item]), do: item
+  def pipe_spec([head | tail]), do: {:|, [], [head, pipe_spec(tail)]}
+
   defp decimal_integer(flag_struct) do
-    flag_struct |> max() |> inspect(pretty: true)
+    random_set(flag_struct) |> Enum.reduce(0, fn {_k, v}, acc -> acc + v end) |> inspect(pretty: true)
   end
 
   defp binary_integer(flag_struct) do
-    flag_struct |> max() |> inspect(base: :binary, pretty: true)
+    random_set(flag_struct) |> Enum.reduce(0, fn {_k, v}, acc -> acc + v end) |> inspect(base: :binary, pretty: true)
   end
 
   defp string_list(struct) do
-    struct |> Map.from_struct() |> Map.keys() |> Enum.map(&Atom.to_string/1) |> inspect(pretty: true)
+    random_set(struct)
+    |> Map.keys()
+    |> Enum.map(&Atom.to_string/1)
+    |> inspect(pretty: true)
   end
 
-  defp atom_keys_list(struct) do
-    struct |> Map.from_struct() |> Map.keys()
+  defp atom_list(struct) do
+    random_set(struct) |> Map.keys() |> inspect(pretty: true)
   end
 
-  defp boolean_map(struct) do
+  def boolean_map(struct) do
+    random_set(struct) |> Enum.map(fn {k, _v} -> {k, true} end) |> Enum.into(%{}) |> inspect(pretty: true)
+  end
+
+  def name(%name{} = struct) when is_struct(struct) do
+    name |> Module.split() |> List.last() |> Recase.to_title()
+  end
+
+  defp random_set(struct) do
+    take_elements = Enum.random(1..ceil((Map.keys(struct) |> Enum.count()) / 2))
+
     struct
     |> Map.from_struct()
-    |> Enum.map(fn {k, _v} -> {k, true} end)
+    |> Enum.shuffle()
+    |> Enum.take(take_elements)
     |> Enum.into(%{})
-  end
-
-  defp title(%name{} = struct) when is_struct(struct) do
-    name
-    |> Module.split()
-    |> List.last()
-    |> Recase.to_title()
-  end
-
-  def top_row do
-    " | Bit | Flag  |\n | ----: | ---- | "
   end
 
   def rows(struct) do
@@ -274,12 +359,6 @@ The following representations are all valid when casting to a schema. However th
     bv = bitshift(v)
 
     " | `1 << #{bv}` | `:#{to_string(k)}` | \n "
-  end
-
-  defp max(struct) do
-    struct
-    |> Map.from_struct()
-    |> Enum.reduce(0, fn {_k, v}, acc -> acc + v end)
   end
 
   defp bitshift(integer) do

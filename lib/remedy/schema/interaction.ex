@@ -5,7 +5,7 @@ defmodule Remedy.Schema.Interaction do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          type: integer(),
+          type: InteractionType.t(),
           data: InteractionData.t(),
           token: String.t(),
           version: integer(),
@@ -19,11 +19,9 @@ defmodule Remedy.Schema.Interaction do
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "interaction" do
-    field :type, :integer
+    field :type, InteractionType
     field :token, :string
     field :version, :integer
-
-    field :inserted_at, :utc_datetime
 
     embeds_one :user, User
     embeds_one :message, Message

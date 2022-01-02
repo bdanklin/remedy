@@ -3,7 +3,6 @@ defmodule Remedy.Schema.Embed do
   Discord Embed Object
   """
   use Remedy.Schema
-  alias Remedy.ISO8601
 
   @type t :: %__MODULE__{
           title: String.t(),
@@ -25,7 +24,7 @@ defmodule Remedy.Schema.Embed do
   @primary_key false
   embedded_schema do
     field :title, :string
-    field :type, :string
+    field :type, :string, default: "rich"
     field :description, :string
     field :url, :string
     field :timestamp, ISO8601

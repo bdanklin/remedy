@@ -3,13 +3,8 @@ defmodule Remedy.Schema do
   Schema sets out all of the objects and types used within the Discord API.
 
   """
-
-  defmacro __using__(_env) do
-    parent = __MODULE__
-
+  def schema_alias do
     quote do
-      alias unquote(parent)
-
       alias Remedy.Schema.{
         Activity,
         App,
@@ -18,16 +13,26 @@ defmodule Remedy.Schema do
         Attachment,
         AuditLog,
         AuditLogEntry,
+        AuditLogActionType,
         AuditLogOption,
+        AuditLogOptionType,
         Ban,
+        Callback,
+        CallbackData,
         CallbackDataFlags,
+        CallbackType,
         Channel,
+        ChannelType,
         ChannelPinsUpdate,
         ClientStatus,
         Command,
         CommandOption,
         CommandOptionChoice,
+        CommandPermission,
+        CommandPermissionType,
+        CommandType,
         Component,
+        ComponentType,
         ComponentOption,
         Embed,
         EmbedAuthor,
@@ -38,11 +43,15 @@ defmodule Remedy.Schema do
         EmbedThumbnail,
         EmbedVideo,
         Emoji,
+        Event,
+        EventStatus,
+        EventPrivacyLevel,
+        EventEntityMetadata,
+        EventEntityType,
         Guild,
         GuildBanAdd,
         GuildBanRemove,
         GuildEmojisUpdate,
-        GuildIntegrationsUpdate,
         GuildMemberRemove,
         GuildMembersChunk,
         GuildMemberUpdate,
@@ -50,26 +59,35 @@ defmodule Remedy.Schema do
         GuildRoleUpdate,
         GuildSystemChannelFlags,
         Integration,
+        IntegrationExpireType,
+        IntegrationType,
         Interaction,
         InteractionData,
         InteractionDataOption,
         InteractionDataResolved,
+        InteractionType,
         Member,
         Message,
+        MessageActivity,
+        MessageActivityType,
         MessageFlags,
         MessageReaction,
         MessageReactionRemoveEmoji,
         MessageReference,
-        Overwrite,
+        MessageType,
         PermissionOverwrite,
+        PermissionOverwriteType,
         Presence,
         PresenceUpdate,
         Provider,
         Reaction,
         Role,
-        StageInstance,
+        Stage,
+        StagePrivacyLevel,
         Sticker,
+        StickerFormatType,
         StickerPack,
+        StickerType,
         Team,
         TeamMember,
         Thread,
@@ -82,18 +100,32 @@ defmodule Remedy.Schema do
         Voice,
         VoiceState,
         Webhook,
+        WebhookType,
         WelcomeScreen,
         WelcomeScreenChannel
       }
-
-      use Ecto.Schema
-      import Ecto.Changeset
 
       alias Remedy.{
         ISO8601,
         Snowflake,
         Colour
       }
+    end
+  end
+
+  defmacro __using__(which) when which in [:schema_alias] do
+    apply(__MODULE__, which, [])
+  end
+
+  defmacro __using__(_options) do
+    parent = __MODULE__
+
+    quote do
+      alias unquote(parent)
+
+      use Ecto.Schema
+      import Ecto.Changeset
+      unquote(schema_alias())
     end
   end
 end

@@ -1,34 +1,46 @@
 defmodule Remedy.Colour do
   @moduledoc """
-  Ecto.Type implementation of Colours used in discord embeds.
+  Ecto.Type implementation of Colours.
 
   Data will be saved as an integer, for example `"#FF0000"` will be saved as `16711680`, which is the decimal representation of `0xFF0000`.
 
-  It can be accepted in a number of forms:
+  ## Casting
 
-  ```elixir
-  # 6 element Hex code as a string
-  "#FF0000"
+  The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an `t:integer/0` value for storage.
 
-  # 3 element Hex code as a string
-  "#F00"
+  #### Hex Code as a string
 
-  # 6 element Hex code as an integer
-  0xFF0000
+      "#FF0000"
 
-  # Decimal representation
-  16711680
+
+  #### Hex Code as a string.
+
+      "#F00"
+
+
+  #### Hex code as an integer
+
+      0xFF0000
+
+
+  #### Decimal representation
+
+      16711680
 
   """
   import Remedy.ColourHelpers
-  use Unsafe.Generator, handler: :unwrap, docs: true
+  use Unsafe.Generator, handler: :unwrap, docs: false
   use Ecto.Type
 
   @typedoc """
-  A _so-called_ color according to _so-called_ discord.
+  A _so called_ Colour Type.
   """
-
   @type t :: String.t()
+
+  @typedoc """
+  Castable to Colour.
+  """
+  @type c :: Integer.t() | String.t()
 
   @doc false
   @impl true

@@ -6,11 +6,9 @@ defmodule Remedy.CDN do
   @moduledoc """
   Discord CDN interface.
 
-  Storing images and other assets can be painful, use this module to retreive assets from the discord cdn rather than storing them.
-
   ## Format
 
-  All images are returned as either a `.png` or a `.gif` if the asset is animated. This is done automatically.
+  All images are returned as either a `.png` or a `.gif` if the asset is animated. This is done automatically where possible.
 
   ## Size
 

@@ -2,13 +2,13 @@ defmodule Remedy.Schema.Callback do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          type: :integer,
+          type: CallbackType.t(),
           data: CallbackData.t()
         }
 
   @primary_key false
   embedded_schema do
-    field :type, :integer
+    field :type, CallbackType
     embeds_one :data, CallbackData
   end
 

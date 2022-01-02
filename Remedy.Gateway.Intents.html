@@ -10,7 +10,7 @@
     <title>Remedy.Gateway.Intents — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,7 +97,15 @@ Remedy
 
 
   <section id="moduledoc">
-<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:GUILDS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:GUILD_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:GUILD_BANS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:GUILD_EMOJIS_AND_STICKERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 4</code></td><td style="text-align: left;"><code class="inline">:GUILD_INTEGRATIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 5</code></td><td style="text-align: left;"><code class="inline">:GUILD_WEBHOOKS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:GUILD_INVITES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:GUILD_VOICE_STATES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 8</code></td><td style="text-align: left;"><code class="inline">:GUILD_PRESENCES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 9</code></td><td style="text-align: left;"><code class="inline">:GUILD_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 10</code></td><td style="text-align: left;"><code class="inline">:GUILD_MESSAGE_REACTIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 11</code></td><td style="text-align: left;"><code class="inline">:GUILD_MESSAGE_TYPING</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:DIRECT_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 13</code></td><td style="text-align: left;"><code class="inline">:DIRECT_MESSAGE_REACTIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:DIRECT_MESSAGE_TYPING</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 15</code></td><td style="text-align: left;"><code class="inline">:GUILD_SCHEDULED_EVENTS</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
+  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Casting
+</h2>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">49395</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b10010010010010</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2782907808-1">[</span><span class="s">&quot;DIRECT_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DIRECT_MESSAGE_REACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILDS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;GUILD_EMOJIS_AND_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_INTEGRATIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_INVITES&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;GUILD_PRESENCES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_VOICE_STATES&quot;</span><span class="p" data-group-id="2782907808-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0005604264-1">[</span><span class="ss">:GUILDS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_BANS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_EMOJIS_AND_STICKERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_INTEGRATIONS</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:GUILD_INVITES</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_MESSAGE_REACTIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_MESSAGE_TYPING</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:GUILD_SCHEDULED_EVENTS</span><span class="p" data-group-id="0005604264-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3372083617-1">%{</span><span class="ss">GUILD_BANS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">GUILD_MESSAGE_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">GUILD_WEBHOOKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="3372083617-1">}</span></code></pre>
   </section>
 
 
@@ -114,6 +122,36 @@ Remedy
     <h2>
       <a href="#types">Types</a>
     </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:c/0" translate="no">c()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Castable to Intents Type</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:f/0" translate="no">f()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Intents Flags</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:load/0" translate="no">load()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Loaded Intents Flags</p></div>
+
+      </div>
 
       <div class="summary-row">
         <div class="summary-signature">
@@ -139,6 +177,127 @@ Remedy
 Types
     </h1>
     <div class="types-list">
+<section class="detail" id="t:c/0">
+
+  <div class="detail-header">
+    <a href="#t:c/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">c()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/intents.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | [<a href="#t:f/0">f</a>()] | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+
+
+
+<p>Castable to Intents Type</p>
+  </section>
+</section>
+<section class="detail" id="t:f/0">
+
+  <div class="detail-header">
+    <a href="#t:f/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">f()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/intents.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">f() ::
+  :DIRECT_MESSAGES
+  | :DIRECT_MESSAGE_REACTIONS
+  | :DIRECT_MESSAGE_TYPING
+  | :GUILDS
+  | :GUILD_BANS
+  | :GUILD_EMOJIS_AND_STICKERS
+  | :GUILD_INTEGRATIONS
+  | :GUILD_INVITES
+  | :GUILD_MEMBERS
+  | :GUILD_MESSAGES
+  | :GUILD_MESSAGE_REACTIONS
+  | :GUILD_MESSAGE_TYPING
+  | :GUILD_PRESENCES
+  | :GUILD_SCHEDULED_EVENTS
+  | :GUILD_VOICE_STATES
+  | :GUILD_WEBHOOKS</pre>
+
+      </div>
+
+
+
+
+<p>Intents Flags</p>
+  </section>
+</section>
+<section class="detail" id="t:load/0">
+
+  <div class="detail-header">
+    <a href="#t:load/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">load()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/intents.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">load() :: [<a href="#t:f/0">f</a>()]</pre>
+
+      </div>
+
+
+
+
+<p>Loaded Intents Flags</p>
+  </section>
+</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -171,36 +330,7 @@ Types
 
 
 
-<p>Intents Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:GUILDS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:GUILD_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:GUILD_BANS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:GUILD_EMOJIS_AND_STICKERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 4</code></td><td style="text-align: left;"><code class="inline">:GUILD_INTEGRATIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 5</code></td><td style="text-align: left;"><code class="inline">:GUILD_WEBHOOKS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:GUILD_INVITES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:GUILD_VOICE_STATES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 8</code></td><td style="text-align: left;"><code class="inline">:GUILD_PRESENCES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 9</code></td><td style="text-align: left;"><code class="inline">:GUILD_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 10</code></td><td style="text-align: left;"><code class="inline">:GUILD_MESSAGE_REACTIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 11</code></td><td style="text-align: left;"><code class="inline">:GUILD_MESSAGE_TYPING</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:DIRECT_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 13</code></td><td style="text-align: left;"><code class="inline">:DIRECT_MESSAGE_REACTIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:DIRECT_MESSAGE_TYPING</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 15</code></td><td style="text-align: left;"><code class="inline">:GUILD_SCHEDULED_EVENTS</code></td></tr></tbody></table><h2 id="t:t/0-representations" class="section-heading">
-  <a href="#t:t/0-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Representations
-</h2>
-<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">65535</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1111111111111111</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2821717754-1">[</span><span class="s">&quot;DIRECT_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DIRECT_MESSAGE_REACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DIRECT_MESSAGE_TYPING&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GUILDS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_BANS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_EMOJIS_AND_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_INTEGRATIONS&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GUILD_INVITES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MESSAGE_REACTIONS&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GUILD_MESSAGE_TYPING&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_PRESENCES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_SCHEDULED_EVENTS&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GUILD_VOICE_STATES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_WEBHOOKS&quot;</span><span class="p" data-group-id="2821717754-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="1981036179-1">[</span><span class="ss">:DIRECT_MESSAGES</span><span class="p">,</span><span class="w"> </span><span class="ss">:DIRECT_MESSAGE_REACTIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:DIRECT_MESSAGE_TYPING</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILDS</span><span class="p">,</span><span class="w">
- </span><span class="ss">:GUILD_BANS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_EMOJIS_AND_STICKERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_INTEGRATIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_INVITES</span><span class="p">,</span><span class="w">
- </span><span class="ss">:GUILD_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_MESSAGES</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_MESSAGE_REACTIONS</span><span class="p">,</span><span class="w">
- </span><span class="ss">:GUILD_MESSAGE_TYPING</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_PRESENCES</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_SCHEDULED_EVENTS</span><span class="p">,</span><span class="w">
- </span><span class="ss">:GUILD_VOICE_STATES</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_WEBHOOKS</span><span class="p" data-group-id="1981036179-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8989133187-1">%{</span><span class="w">
-  </span><span class="ss">DIRECT_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">DIRECT_MESSAGE_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">DIRECT_MESSAGE_TYPING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILDS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_BANS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_EMOJIS_AND_STICKERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_INTEGRATIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_INVITES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MESSAGE_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MESSAGE_TYPING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_PRESENCES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_SCHEDULED_EVENTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_VOICE_STATES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_WEBHOOKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="8989133187-1">}</span></code></pre>
+<p>Intents Type</p>
   </section>
 </section>
 

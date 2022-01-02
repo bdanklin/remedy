@@ -10,7 +10,7 @@
     <title>Remedy.Colour — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.Colour</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/colour.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/colour.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,17 +97,11 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Ecto.Type implementation of Colours used in discord embeds.</p><p>Data will be saved as an integer, for example <code class="inline">&quot;#FF0000&quot;</code> will be saved as <code class="inline">16711680</code>, which is the decimal representation of <code class="inline">0xFF0000</code>.</p><p>It can be accepted in a number of forms:</p><pre><code class="makeup elixir" translate="no"><span class="c1"># 6 element Hex code as a string</span><span class="w">
-</span><span class="s">&quot;#FF0000&quot;</span><span class="w">
-
-</span><span class="c1"># 3 element Hex code as a string</span><span class="w">
-</span><span class="s">&quot;#F00&quot;</span><span class="w">
-
-</span><span class="c1"># 6 element Hex code as an integer</span><span class="w">
-</span><span class="mh">0xFF0000</span><span class="w">
-
-</span><span class="c1"># Decimal representation</span><span class="w">
-</span><span class="mi">16711680</span></code></pre>
+<p>Ecto.Type implementation of Colours.</p><p>Data will be saved as an integer, for example <code class="inline">&quot;#FF0000&quot;</code> will be saved as <code class="inline">16711680</code>, which is the decimal representation of <code class="inline">0xFF0000</code>.</p><h2 id="module-casting" class="section-heading">
+  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Casting
+</h2>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Hex Code as a string</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;#FF0000&quot;</span></code></pre><h4>Hex Code as a string.</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;#F00&quot;</span></code></pre><h4>Hex code as an integer</h4><pre><code class="makeup elixir" translate="no"><span class="mh">0xFF0000</span></code></pre><h4>Decimal representation</h4><pre><code class="makeup elixir" translate="no"><span class="mi">16711680</span></code></pre>
   </section>
 
 
@@ -127,48 +121,21 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#t:c/0" translate="no">c()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Castable to Colour.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>A <em>so-called</em> color according to <em>so-called</em> discord.</p></div>
-
-      </div>
-
-  </div>
-
-  <div class="summary-functions summary">
-    <h2>
-      <a href="#functions">Functions</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#cast!/1" translate="no">cast!(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Unsafe proxy definition for <code class="inline">cast/1</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#dump!/1" translate="no">dump!(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Unsafe proxy definition for <code class="inline">dump/1</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#load!/1" translate="no">load!(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Unsafe proxy definition for <code class="inline">load/1</code>.</p></div>
+          <div class="summary-synopsis"><p>A <em>so called</em> Colour Type.</p></div>
 
       </div>
 
@@ -186,6 +153,41 @@ Remedy
 Types
     </h1>
     <div class="types-list">
+<section class="detail" id="t:c/0">
+
+  <div class="detail-header">
+    <a href="#t:c/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">c()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/colour.ex#L43" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">c() :: Integer.t() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Castable to Colour.</p>
+  </section>
+</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -196,7 +198,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/colour.ex#L31" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/colour.ex#L38" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -218,104 +220,7 @@ Types
 
 
 
-<p>A <em>so-called</em> color according to <em>so-called</em> discord.</p>
-  </section>
-</section>
-
-    </div>
-  </section>
-
-  <section id="functions" class="details-list">
-    <h1 class="section-heading">
-      <a class="hover-link" href="#functions">
-        <span class="icon-link" aria-hidden="true"></span>
-        <span class="sr-only">Link to this section</span>
-      </a>
-Functions
-    </h1>
-    <div class="functions-list">
-<section class="detail" id="cast!/1">
-
-  <div class="detail-header">
-    <a href="#cast!/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">cast!(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/colour.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-
-
-  <section class="docstring">
-
-
-
-
-<p>Unsafe proxy definition for <code class="inline">cast/1</code>.</p>
-  </section>
-</section>
-<section class="detail" id="dump!/1">
-
-  <div class="detail-header">
-    <a href="#dump!/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">dump!(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/colour.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-
-
-  <section class="docstring">
-
-
-
-
-<p>Unsafe proxy definition for <code class="inline">dump/1</code>.</p>
-  </section>
-</section>
-<section class="detail" id="load!/1">
-
-  <div class="detail-header">
-    <a href="#load!/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">load!(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/colour.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-
-
-  <section class="docstring">
-
-
-
-
-<p>Unsafe proxy definition for <code class="inline">load/1</code>.</p>
+<p>A <em>so called</em> Colour Type.</p>
   </section>
 </section>
 
@@ -329,7 +234,7 @@ Functions
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/types/colour.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/types/colour.ex">(current file)</a>
 
         </p>
 

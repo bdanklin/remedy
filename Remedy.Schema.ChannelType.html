@@ -10,7 +10,7 @@
     <title>Remedy.Schema.ChannelType — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,7 +97,11 @@ Remedy
 
 
   <section id="moduledoc">
-<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type ( type? ¿ǝdʎʇ ).</p>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p><table><thead><tr><th style="text-align: right;">Value</th><th style="text-align: left;">Type</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">0</code></td><td style="text-align: left;"><code class="inline">:GUILD_TEXT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1</code></td><td style="text-align: left;"><code class="inline">:DM</code></td></tr><tr><td style="text-align: right;"><code class="inline">2</code></td><td style="text-align: left;"><code class="inline">:GUILD_VOICE</code></td></tr><tr><td style="text-align: right;"><code class="inline">3</code></td><td style="text-align: left;"><code class="inline">:GROUP_DM</code></td></tr><tr><td style="text-align: right;"><code class="inline">4</code></td><td style="text-align: left;"><code class="inline">:GUILD_CATEGORY</code></td></tr><tr><td style="text-align: right;"><code class="inline">5</code></td><td style="text-align: left;"><code class="inline">:GUILD_NEWS</code></td></tr><tr><td style="text-align: right;"><code class="inline">6</code></td><td style="text-align: left;"><code class="inline">:GUILD_STORE</code></td></tr><tr><td style="text-align: right;"><code class="inline">7</code></td><td style="text-align: left;"><code class="inline">:GUILD_NEWS_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">8</code></td><td style="text-align: left;"><code class="inline">:GUILD_PUBLIC_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">9</code></td><td style="text-align: left;"><code class="inline">:GUILD_PRIVATE_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">10</code></td><td style="text-align: left;"><code class="inline">:GUILD_STAGE_VOICE</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
+  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Casting
+</h2>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">5</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;GUILD_PRIVATE_THREAD&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:GUILD_PUBLIC_THREAD</span></code></pre>
   </section>
 
 
@@ -117,11 +121,41 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:t/0" translate="no">t()</a>
+          <a href="#t:c/0" translate="no">c()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Castable to Channel Type Type</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:f/0" translate="no">f()</a>
 
         </div>
 
           <div class="summary-synopsis"><p>Channel Type Values</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:load/0" translate="no">load()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Loaded Channel Type</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:t/0" translate="no">t()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Channel Type Type</p></div>
 
       </div>
 
@@ -139,6 +173,122 @@ Remedy
 Types
     </h1>
     <div class="types-list">
+<section class="detail" id="t:c/0">
+
+  <div class="detail-header">
+    <a href="#t:c/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">c()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel_type.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | <a href="#t:f/0">f</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Castable to Channel Type Type</p><p>See <a href="#module-casting">Casting</a> for more information.</p>
+  </section>
+</section>
+<section class="detail" id="t:f/0">
+
+  <div class="detail-header">
+    <a href="#t:f/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">f()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel_type.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">f() ::
+  :DM
+  | :GROUP_DM
+  | :GUILD_CATEGORY
+  | :GUILD_NEWS
+  | :GUILD_NEWS_THREAD
+  | :GUILD_PRIVATE_THREAD
+  | :GUILD_PUBLIC_THREAD
+  | :GUILD_STAGE_VOICE
+  | :GUILD_STORE
+  | :GUILD_TEXT
+  | :GUILD_VOICE</pre>
+
+      </div>
+
+
+
+
+<p>Channel Type Values</p>
+  </section>
+</section>
+<section class="detail" id="t:load/0">
+
+  <div class="detail-header">
+    <a href="#t:load/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">load()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/channel_type.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">load() :: <a href="#t:f/0">f</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Loaded Channel Type</p>
+  </section>
+</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -164,18 +314,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">t() :: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10</pre>
+          <pre translate="no">t() :: 0..10</pre>
 
       </div>
 
 
 
 
-<p>Channel Type Values</p><table><thead><tr><th style="text-align: right;">Value</th><th style="text-align: left;">Type</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">0</code></td><td style="text-align: left;"><code class="inline">:GUILD_TEXT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1</code></td><td style="text-align: left;"><code class="inline">:DM</code></td></tr><tr><td style="text-align: right;"><code class="inline">2</code></td><td style="text-align: left;"><code class="inline">:GUILD_VOICE</code></td></tr><tr><td style="text-align: right;"><code class="inline">3</code></td><td style="text-align: left;"><code class="inline">:GROUP_DM</code></td></tr><tr><td style="text-align: right;"><code class="inline">4</code></td><td style="text-align: left;"><code class="inline">:GUILD_CATEGORY</code></td></tr><tr><td style="text-align: right;"><code class="inline">5</code></td><td style="text-align: left;"><code class="inline">:GUILD_NEWS</code></td></tr><tr><td style="text-align: right;"><code class="inline">6</code></td><td style="text-align: left;"><code class="inline">:GUILD_STORE</code></td></tr><tr><td style="text-align: right;"><code class="inline">7</code></td><td style="text-align: left;"><code class="inline">:GUILD_NEWS_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">8</code></td><td style="text-align: left;"><code class="inline">:GUILD_PUBLIC_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">9</code></td><td style="text-align: left;"><code class="inline">:GUILD_PRIVATE_THREAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">10</code></td><td style="text-align: left;"><code class="inline">:GUILD_STAGE_VOICE</code></td></tr></tbody></table><h2 id="t:t/0-representations" class="section-heading">
-  <a href="#t:t/0-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Representations
-</h2>
-<p>The following representations are all valid when casting to a schema.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">5</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;GUILD_STORE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:GUILD_NEWS_THREAD</span></code></pre>
+<p>Channel Type Type</p>
   </section>
 </section>
 

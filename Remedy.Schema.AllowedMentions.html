@@ -10,7 +10,7 @@
     <title>Remedy.Schema.AllowedMentions — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -117,6 +117,14 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#t:c/0" translate="no">c()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
@@ -152,6 +160,41 @@ Remedy
 Types
     </h1>
     <div class="types-list">
+<section class="detail" id="t:c/0">
+
+  <div class="detail-header">
+    <a href="#t:c/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">c()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/allowed_mentions.ex#L14" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | %{}</pre>
+
+      </div>
+
+
+
+
+
+  </section>
+</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -180,7 +223,7 @@ Types
           <pre translate="no">t() :: %Remedy.Schema.AllowedMentions{
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   parse: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()],
-  replied_user: :boolean,
+  replied_user: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   roles: [<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>()],
   users: [<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>()]
 }</pre>
@@ -218,7 +261,7 @@ Functions
     <h1 class="signature" translate="no">changeset(model \\ %__MODULE__{}, params)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/allowed_mentions.ex#L21" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/allowed_mentions.ex#L23" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

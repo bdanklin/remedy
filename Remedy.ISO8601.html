@@ -10,7 +10,7 @@
     <title>Remedy.ISO8601 — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.ISO8601</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/iso8601.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/iso8601.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,7 +97,12 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Ecto.Type implementation of ISO8601 date-time strings.</p><p>Data will be saved as a string field in the database in the form of</p><pre><code class="makeup elixir" translate="no"><span class="s">&quot;2015-01-01T01:02:52.735Z&quot;</span></code></pre><p>It can be provided to this function in unixtime, as a Snowflake, a string representation of the ISO8601 date, or a DateTime object.</p>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible limited ISO8601 type.</p><p>ISO8601 is an international standard covering the worldwide exchange and communication of date and time related data. It is maintained by the Geneva-based International Organization for Standardization (ISO) and was first published in 1988, with updates in 1991, 2000, 2004, and 2019. The standard aims to provide a well-defined, unambiguous method of representing calendar dates and times in worldwide communications, especially to avoid misinterpreting numeric dates and times when such data is transferred between countries with different conventions for writing numeric dates and times.</p><p>This implementation is limited in that it does not handle ranges of dates, and it does not handle time zones. It provides conveniences for conversion of Snowflakes, Unix Timestamps and DateTime structs. A field that accepts an ISO8601 date can therefore accept any of the mentioned formats. The data will be parsed and cast automatically.</p><h2 id="module-casting" class="section-heading">
+  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Casting
+</h2>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to a <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types"><code class="inline">binary/0</code></a> value for storage.</p><h4>ISO8601 Timestamp</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;2015-01-01T01:02:52.735Z&quot;</span></code></pre><h4>Unix Timestamp</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1420070400</span></code></pre><h4>DateTime Struct</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6710094853-1">%</span><span class="nc" data-group-id="6710094853-1">DateTime</span><span class="p" data-group-id="6710094853-1">{</span><span class="ss">year</span><span class="p">:</span><span class="w"> </span><span class="mi">2015</span><span class="p">,</span><span class="w"> </span><span class="ss">month</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">day</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">hour</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">minute</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+</span><span class="ss">second</span><span class="p">:</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="ss">millisecond</span><span class="p">:</span><span class="w"> </span><span class="mi">735</span><span class="p">,</span><span class="w"> </span><span class="ss">microsecond</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">nanosecond</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">timezone</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p" data-group-id="6710094853-1">}</span></code></pre><p>It can be provided to this function in unixtime, as a Snowflake, a string representation of the ISO8601 date, or a DateTime object.</p>
   </section>
 
 
@@ -117,48 +122,21 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#t:c/0" translate="no">c()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Castable to ISO8601 Type.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>A date-time string in ISO8601 format.</p></div>
-
-      </div>
-
-  </div>
-
-  <div class="summary-functions summary">
-    <h2>
-      <a href="#functions">Functions</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#cast!/1" translate="no">cast!(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Unsafe proxy definition for <code class="inline">cast/1</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#dump!/1" translate="no">dump!(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Unsafe proxy definition for <code class="inline">dump/1</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#load!/1" translate="no">load!(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Unsafe proxy definition for <code class="inline">load/1</code>.</p></div>
+          <div class="summary-synopsis"><p>An ISO8601 Type.</p></div>
 
       </div>
 
@@ -176,17 +154,17 @@ Remedy
 Types
     </h1>
     <div class="types-list">
-<section class="detail" id="t:t/0">
+<section class="detail" id="t:c/0">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#t:c/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <h1 class="signature" translate="no">c()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/iso8601.ex#L18" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/iso8601.ex#L43" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -201,40 +179,27 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">t() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+          <pre translate="no">c() :: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | ISO8601.t() | nil</pre>
 
       </div>
 
 
 
 
-<p>A date-time string in ISO8601 format.</p>
+<p>Castable to ISO8601 Type.</p>
   </section>
 </section>
-
-    </div>
-  </section>
-
-  <section id="functions" class="details-list">
-    <h1 class="section-heading">
-      <a class="hover-link" href="#functions">
-        <span class="icon-link" aria-hidden="true"></span>
-        <span class="sr-only">Link to this section</span>
-      </a>
-Functions
-    </h1>
-    <div class="functions-list">
-<section class="detail" id="cast!/1">
+<section class="detail" id="t:t/0">
 
   <div class="detail-header">
-    <a href="#cast!/1" class="detail-link" title="Link to this function">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">cast!(value)</h1>
+    <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/iso8601.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/iso8601.ex#L38" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -246,66 +211,17 @@ Functions
 
   <section class="docstring">
 
+      <h3>Specs</h3>
+      <div class="specs">
 
+          <pre translate="no">t() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
 
-
-<p>Unsafe proxy definition for <code class="inline">cast/1</code>.</p>
-  </section>
-</section>
-<section class="detail" id="dump!/1">
-
-  <div class="detail-header">
-    <a href="#dump!/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">dump!(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/iso8601.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-
-
-  <section class="docstring">
+      </div>
 
 
 
 
-<p>Unsafe proxy definition for <code class="inline">dump/1</code>.</p>
-  </section>
-</section>
-<section class="detail" id="load!/1">
-
-  <div class="detail-header">
-    <a href="#load!/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">load!(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/iso8601.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-
-
-  <section class="docstring">
-
-
-
-
-<p>Unsafe proxy definition for <code class="inline">load/1</code>.</p>
+<p>An ISO8601 Type.</p>
   </section>
 </section>
 
@@ -319,7 +235,7 @@ Functions
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/types/iso8601.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/types/iso8601.ex">(current file)</a>
 
         </p>
 

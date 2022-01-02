@@ -10,7 +10,7 @@
     <title>Remedy.Snowflake — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.Snowflake</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/snowflake.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/snowflake.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,7 +97,18 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Discord Snowflake Type</p>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Discord Snowflake type.</p><p>Discord utilizes Twitter's snowflake format for uniquely identifiable descriptors (IDs). These IDs are guaranteed to be unique across all of Discord, except in some unique scenarios in which child objects share their parent's ID.</p><p>Snowflakes consist of a timestamp as well as metadata. Converting to another timestamp method will produce a valid and accurate timestamp. However, converting a value from a snowflake is a destructive operation and cannot be reversed.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">snowflake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">927056337051992064</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="n">butchered_snowflake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">snowflake</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">to_iso8601</span><span class="p" data-group-id="1965983986-1">(</span><span class="p" data-group-id="1965983986-1">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">to_snowflake</span><span class="p" data-group-id="1965983986-2">(</span><span class="p" data-group-id="1965983986-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="n">butchered_snowflake</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">snowflake</span><span class="w">
+</span><span class="no">false</span></code></pre><p>While the utilities exist to execute such functionality, care should be taken.</p><p>For example:</p><ul><li>Converting an ISO8601 string to a snowflake for the purpose of pagination is reasonably safe to do.</li><li>Using a message's snowflake ID in a filtering operation is also safe.</li><li>Converting a DateTime struct to a snowflake to attempt to get a message's ID is not.</li></ul><h2 id="module-pagination" class="section-heading">
+  <a href="#module-pagination" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Pagination
+</h2>
+<p>Discord typically uses snowflake IDs in many of the API routes for pagination. The standardized pagination paradigm utilized is one in which you can specify IDs before and after in combination with limit to retrieve a desired page of results. You will want to refer to the specific endpoint documentation for details.</p><h2 id="module-casting" class="section-heading">
+  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Casting
+</h2>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">927056337051992064</span></code></pre><h4>ISO8601 String</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;2019-01-01T00:00:00Z&quot;</span></code></pre>
   </section>
 
 
@@ -117,11 +128,21 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#t:c/0" translate="no">c()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Castable to Discord Snowflake.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>A discord snowflake.</p></div>
+          <div class="summary-synopsis"><p>A Discord Snowflake Type.</p></div>
 
       </div>
 
@@ -139,6 +160,41 @@ Remedy
 Types
     </h1>
     <div class="types-list">
+<section class="detail" id="t:c/0">
+
+  <div class="detail-header">
+    <a href="#t:c/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">c()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/snowflake.ex#L51" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | ISO8601.t() | <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Castable to Discord Snowflake.</p>
+  </section>
+</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -149,7 +205,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/types/snowflake.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/snowflake.ex#L46" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -171,7 +227,7 @@ Types
 
 
 
-<p>A discord snowflake.</p><p>0x400000..0xFFFFFFFFFFFFFFFF</p>
+<p>A Discord Snowflake Type.</p>
   </section>
 </section>
 
@@ -185,7 +241,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/types/snowflake.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/types/snowflake.ex">(current file)</a>
 
         </p>
 

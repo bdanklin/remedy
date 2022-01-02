@@ -10,7 +10,7 @@
     <title>Remedy.Schema.ThreadMemberFlags — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,7 +97,11 @@ Remedy
 
 
   <section id="moduledoc">
-<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p>
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:NOTIFICATIONS</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
+  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Casting
+</h2>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9456194694-1">[</span><span class="s">&quot;NOTIFICATIONS&quot;</span><span class="p" data-group-id="9456194694-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6147475829-1">[</span><span class="ss">:NOTIFICATIONS</span><span class="p" data-group-id="6147475829-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2741808650-1">%{</span><span class="ss">NOTIFICATIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="2741808650-1">}</span></code></pre>
   </section>
 
 
@@ -114,6 +118,36 @@ Remedy
     <h2>
       <a href="#types">Types</a>
     </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:c/0" translate="no">c()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Castable to Thread Member Flags Type</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:f/0" translate="no">f()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Thread Member Flags Flags</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:load/0" translate="no">load()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Loaded Thread Member Flags Flags</p></div>
+
+      </div>
 
       <div class="summary-row">
         <div class="summary-signature">
@@ -139,6 +173,111 @@ Remedy
 Types
     </h1>
     <div class="types-list">
+<section class="detail" id="t:c/0">
+
+  <div class="detail-header">
+    <a href="#t:c/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">c()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread_member_flags.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | [<a href="#t:f/0">f</a>()] | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+
+      </div>
+
+
+
+
+<p>Castable to Thread Member Flags Type</p>
+  </section>
+</section>
+<section class="detail" id="t:f/0">
+
+  <div class="detail-header">
+    <a href="#t:f/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">f()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread_member_flags.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">f() :: :NOTIFICATIONS</pre>
+
+      </div>
+
+
+
+
+<p>Thread Member Flags Flags</p>
+  </section>
+</section>
+<section class="detail" id="t:load/0">
+
+  <div class="detail-header">
+    <a href="#t:load/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">load()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/thread_member_flags.ex#L1" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">load() :: [<a href="#t:f/0">f</a>()]</pre>
+
+      </div>
+
+
+
+
+<p>Loaded Thread Member Flags Flags</p>
+  </section>
+</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -171,11 +310,7 @@ Types
 
 
 
-<p>Thread Member Flags Type</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:NOTIFICATIONS</code></td></tr></tbody></table><h2 id="t:t/0-representations" class="section-heading">
-  <a href="#t:t/0-representations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Representations
-</h2>
-<p>The following representations are all valid when casting to a schema. However the underlying data will always be stored as an integer, and displayed as a list of strings.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6123149956-1">[</span><span class="s">&quot;NOTIFICATIONS&quot;</span><span class="p" data-group-id="6123149956-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6243486982-1">[</span><span class="ss">:NOTIFICATIONS</span><span class="p" data-group-id="6243486982-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8151215475-1">%{</span><span class="ss">NOTIFICATIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="8151215475-1">}</span></code></pre>
+<p>Thread Member Flags Type</p>
   </section>
 </section>
 

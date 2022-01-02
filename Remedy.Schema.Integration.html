@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Integration — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f4ab7d793f.js"></script>
+    <script src="dist/sidebar_items-519a9742f1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -164,13 +164,21 @@ Types
 
           <pre translate="no">t() :: %Remedy.Schema.Integration{
   __meta__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  account: Account.t(),
   application: <a href="Remedy.Schema.App.html#t:t/0">Remedy.Schema.App.t</a>(),
+  enable_emoticons: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   enabled: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  guild: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  guild_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
-  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  expire_behavior: <a href="Remedy.Schema.IntegrationExpireType.html#t:t/0">Remedy.Schema.IntegrationExpireType.t</a>(),
+  expire_grace_period: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
   name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  type: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
+  revoked: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  role_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
+  subscriber_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  synced_at: <a href="Remedy.ISO8601.html#t:t/0">Remedy.ISO8601.t</a>(),
+  syncing: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  type: <a href="Remedy.Schema.IntegrationType.html#t:t/0">Remedy.Schema.IntegrationType.t</a>(),
+  user: <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>()
 }</pre>
 
       </div>

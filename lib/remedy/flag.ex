@@ -86,6 +86,8 @@ defmodule Remedy.FlagBeforeCompile do
         load_doc: Remedy.FlagType.load_doc(%__MODULE__{}),
         load_spec: Remedy.FlagType.load_spec(%__MODULE__{})
 
+      use Unsafe.Generator, docs: true
+
       @impl true
       def to_map(flags)
 
@@ -140,7 +142,7 @@ defmodule Remedy.FlagBeforeCompile do
       def to_integer(set) when is_list(set) do
         set =
           Enum.map(set, &to_string(&1))
-          |> Enum.map(&String.to_atom(&1))
+          |> Enum.map(&String.to_existing_atom(&1))
 
         %__MODULE__{}
         |> Map.from_struct()
@@ -160,6 +162,7 @@ defmodule Remedy.FlagBeforeCompile do
       ## Ecto Type Implementations
 
       @doc false
+      @unsafe {:cast, []}
       def cast(nil), do: {:ok, nil}
       def cast(value) when is_integer(value), do: {:ok, value |> to_integer()}
       def cast(value) when is_map(value), do: {:ok, value |> to_integer()}
@@ -167,12 +170,14 @@ defmodule Remedy.FlagBeforeCompile do
       def cast(_value), do: :error
 
       @doc false
+      @unsafe {:dump, [:value]}
       def dump(value) when is_integer(value), do: {:ok, value}
       def dump(value) when is_map(value), do: {:ok, value |> to_integer()}
       def dump(value) when is_list(value), do: {:ok, value |> to_integer()}
       def dump(_value), do: :error
 
       @doc false
+      @unsafe {:load, [:value]}
       def load(value) when is_integer(value), do: {:ok, value |> to_list()}
 
       @doc false
@@ -367,4 +372,7 @@ The following are examples of valid inputs for casting. Regardless of the format
     |> String.trim_leading("1")
     |> String.length()
   end
+
+  def unwrap({:ok, value}), do: value
+  def unwrap(:error), do: :error
 end

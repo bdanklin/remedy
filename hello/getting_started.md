@@ -27,7 +27,7 @@ To calculate the integer value, there are a number of community made intents cal
       gateway_intents: :all,
     ```
 
-  - `value`  - `:integer` - The value of the intents to subscribe to.
+  - `value` - `:integer` - The value of the intents to subscribe to.
     ```elixir
     config :remedy,
       gateway_intents: 14275,

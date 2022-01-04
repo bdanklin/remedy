@@ -6,10 +6,11 @@ defmodule Remedy.Schema.Presence do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
+          code: String.t(),
           status: String.t(),
+          user: User.t(),
           activities: [Activity.t()],
-          client_status: ClientStatus.t(),
-          code: String.t()
+          client_status: ClientStatus.t()
         }
 
   @primary_key false
@@ -17,7 +18,7 @@ defmodule Remedy.Schema.Presence do
     field :code, :string
     field :status, :string
     belongs_to :user, User
-    # belongs_to :guild, Guild
+    field :guild_id, Snowflake
     field :activities, {:array, :map}
     embeds_one :client_status, ClientStatus, on_replace: :delete
   end
@@ -25,12 +26,6 @@ defmodule Remedy.Schema.Presence do
   @doc false
 
   def changeset(model \\ %__MODULE__{}, params) do
-    params =
-      params
-      |> Map.put(:status, params[:status] |> to_string())
-      |> Map.put_new(:user_id, params[:user][:id])
-      |> Map.delete(:user)
-
     model
     |> cast(params, [:code, :user_id, :status, :activities])
     |> cast_embed(:client_status)

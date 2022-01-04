@@ -25,21 +25,19 @@ defmodule Remedy.ISO8601 do
       %DateTime{year: 2015, month: 1, day: 1, hour: 1, minute: 2,
       second: 52, millisecond: 735, microsecond: 0, nanosecond: 0, timezone: nil}
 
+  #### Discord Snowflake
 
-  It can be provided to this function in unixtime, as a Snowflake, a string representation of the ISO8601 date, or a DateTime object.
+      "12345678901234567"
+
+
   """
   import Remedy.TimeHelpers
-  use Unsafe.Generator, handler: :unwrap, docs: false
   use Ecto.Type
 
-  @typedoc """
-  An ISO8601 Type.
-  """
+  @typedoc "An ISO8601 Type."
   @type t() :: String.t()
 
-  @typedoc """
-  Castable to ISO8601 Type.
-  """
+  @typedoc "Castable to ISO8601 Type."
   @type c() :: DateTime.t() | String.t() | ISO8601.t() | nil
 
   @doc false
@@ -49,28 +47,26 @@ defmodule Remedy.ISO8601 do
 
   @doc false
   @impl true
-  @unsafe {:cast, [:value]}
   @spec cast(any) :: :error | {:ok, nil | binary}
   def cast(value)
   def cast(nil), do: {:ok, nil}
-  def cast(value) when is_iso8601(value), do: {:ok, to_iso8601(value)}
-  def cast(value) when is_datetime(value), do: {:ok, to_iso8601(value)}
-  def cast(value) when is_unixtime(value), do: {:ok, to_iso8601(value)}
-  def cast(_value), do: :error
+
+  def cast(value) do
+    case to_iso8601(value) do
+      :error -> :error
+      value -> {:ok, value}
+    end
+  end
 
   @doc false
   @impl true
-  @unsafe {:dump, [:value]}
   @spec dump(any) :: :error | {:ok, nil | binary}
   def dump(nil), do: {:ok, nil}
-  def dump(value) when is_unixtime(value), do: {:ok, to_iso8601(value)}
-  def dump(value) when is_iso8601(value), do: {:ok, to_iso8601(value)}
-  def dump(value) when is_datetime(value), do: {:ok, to_iso8601(value)}
+
   def dump(_value), do: :error
 
   @doc false
   @impl true
-  @unsafe {:load, [:value]}
   @spec load(any) :: {:ok, t() | nil}
   def load(value), do: {:ok, value}
 
@@ -81,7 +77,4 @@ defmodule Remedy.ISO8601 do
   @doc false
   @impl true
   def embed_as(_value), do: :dump
-
-  defp unwrap({:ok, body}), do: body
-  defp unwrap({:error, _}), do: raise(ArgumentError)
 end

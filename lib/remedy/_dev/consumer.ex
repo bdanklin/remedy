@@ -1,7 +1,7 @@
-defmodule Remedy.DummyConsumerSupervisor do
+defmodule Remedy.DevConsumerSupervisor do
   @moduledoc false
   use Supervisor
-  alias Remedy.DummyConsumer
+  alias Remedy.DevConsumer
 
   def start_link(arg) do
     Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
@@ -10,14 +10,14 @@ defmodule Remedy.DummyConsumerSupervisor do
   @impl true
   def init(_init_arg) do
     children = [
-      DummyConsumer
+      DevConsumer
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
   end
 end
 
-defmodule Remedy.DummyConsumer do
+defmodule Remedy.DevConsumer do
   @moduledoc false
   require Logger
   use Remedy.Consumer

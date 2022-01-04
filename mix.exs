@@ -114,12 +114,13 @@ defmodule Remedy.MixProject do
   defp deps do
     [
       ## Dev / Test Only
-      {:ex_doc, "~> 0.27.3", only: [:dev], hex: :remedy_exdoc, runtime: false},
+      {:ex_doc, "~> 0.27.4", only: [:dev], hex: :remedy_exdoc, runtime: false},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
       {:mix_unused, "~> 0.2.0", only: [:dev]},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:credo, "~> 1.5.6", only: [:dev], runtime: false},
       {:doctor, "~> 0.18.0", only: [:dev]},
+      {:faker, "~> 0.17", only: [:test, :dev]},
       ## Web
       {:gun, "2.0.1", hex: :remedy_gun},
       ## Unsafe Function Bindings !

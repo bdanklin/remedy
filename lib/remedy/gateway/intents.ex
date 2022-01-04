@@ -1,5 +1,13 @@
 defmodule Remedy.Gateway.Intents do
   @moduledoc false
+  ## Privileged Intents
+  ##
+  ## :GUILD_PRESENCES
+  ## Required for your bot to receive Presence Update events.
+  ##
+  ## :GUILD_MEMBERS
+  ## Required for your bot to receive events listed under GUILD_MEMBERS.
+  ##
   use Remedy.Flag
 
   defstruct GUILDS: 1 <<< 0,
@@ -18,33 +26,4 @@ defmodule Remedy.Gateway.Intents do
             DIRECT_MESSAGE_REACTIONS: 1 <<< 13,
             DIRECT_MESSAGE_TYPING: 1 <<< 14,
             GUILD_SCHEDULED_EVENTS: 1 <<< 15
-
-  @doc false
-  def get_config do
-    Application.get_env(:remedy, :gateway_intents)
-    |> resolve()
-    |> to_integer()
-  end
-
-  defp resolve(:all) do
-    %__MODULE__{}
-    |> Map.from_struct()
-    |> Map.keys()
-  end
-
-  defp resolve(value) when is_number(value) do
-    value
-  end
-
-  defp resolve(list_of_intents) when is_list(list_of_intents) do
-    %__MODULE__{}
-    |> Map.from_struct()
-    |> Map.to_list()
-    |> Enum.filter(fn
-      {k, _v} -> k in list_of_intents
-    end)
-    |> Enum.reduce([], fn
-      {k, _v}, acc -> acc ++ [k]
-    end)
-  end
 end

@@ -7,7 +7,7 @@ defmodule Remedy.Snowflake do
   Snowflakes consist of a timestamp as well as metadata. Converting to another timestamp method will produce a valid and accurate timestamp. However, converting a value from a snowflake is a destructive operation and cannot be reversed.
 
       iex> snowflake = 927056337051992064
-      ...> butchered_snowflake = snowflake |> to_iso8601() |> to_snowflake()
+      ...> butchered_snowflake = snowflake |> Remedy.ISO8601.to_iso8601() |> Remedy.Snowflake.to_snowflake()
       ...> butchered_snowflake == snowflake
       false
 
@@ -40,6 +40,10 @@ defmodule Remedy.Snowflake do
   use Ecto.Type
   use Unsafe.Generator, handler: :unwrap, docs: false
 
+  @doc false
+
+  def factory, do: Faker.random_between(0x400000, 0xFFFFFFFFFFFFFFFF)
+
   @typedoc """
   A Discord Snowflake Type.
   """
@@ -55,21 +59,22 @@ defmodule Remedy.Snowflake do
   @spec type :: :integer
   def type, do: :integer
 
+  @spec cast(any) :: :error | {:ok, nil | t()}
   @doc false
   @impl true
   @unsafe {:cast, [:value]}
   def cast(value)
   def cast(nil), do: {:ok, nil}
-  def cast(value) when is_snowflake(value), do: {:ok, value}
-  def cast(value) when is_binary(value), do: {:ok, String.to_integer(value)}
-  def cast(_value), do: :error
+  def cast(value), do: to_snowflake(value) |> casted()
+
+  defp casted(:error), do: :error
+  defp casted(snowflake), do: {:ok, snowflake}
 
   @doc false
   @impl true
   @unsafe {:dump, [:snowflake]}
   def dump(nil), do: {:ok, nil}
-  def dump(value) when is_snowflake(value), do: {:ok, value}
-  def dump(value) when is_binary(value), do: {:ok, String.to_integer(value)}
+  def dump(value) when is_snowflake(value), do: {:ok, to_snowflake(value)}
   def dump(_value), do: :error
 
   @doc false
@@ -78,7 +83,7 @@ defmodule Remedy.Snowflake do
 
   @doc false
   @impl true
-  def equal?(term1, term2), do: to_unixtime(term1) == to_unixtime(term2)
+  def equal?(term1, term2), do: to_snowflake(term1) == to_snowflake(term2)
 
   @doc false
   @impl true

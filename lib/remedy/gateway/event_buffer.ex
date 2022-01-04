@@ -2,8 +2,7 @@ defmodule Remedy.Gateway.EventBuffer do
   @moduledoc false
 
   use GenStage
-  alias Remedy.Gateway.{EventHandler, EventBroadcaster, EventParser}
-  alias Remedy.Commands
+  alias Remedy.Gateway.{EventHandler, EventBroadcaster}
 
   def start_link(_opts) do
     GenStage.start_link(__MODULE__, [], name: __MODULE__)
@@ -25,8 +24,8 @@ defmodule Remedy.Gateway.EventBuffer do
       fn event ->
         event
         #    |> EventParser.handle()
+        #    |> tap(&Task.start(Commands, :invoke, [&1]))
         |> tap(&EventHandler.handle(&1))
-        |> tap(&Task.start(Commands, :invoke, [&1]))
       end,
       timeout: :infinity
     )

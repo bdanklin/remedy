@@ -7,6 +7,10 @@ defmodule Remedy.Schema do
     quote do
       alias Remedy.Schema.{
         Activity,
+        ActivityButtons,
+        ActivityType,
+        ActivityFlags,
+        ActivitySecrets,
         App,
         ApplicationFlags,
         ApplicationOwner,
@@ -80,6 +84,7 @@ defmodule Remedy.Schema do
         Presence,
         PresenceUpdate,
         Provider,
+        ResponseType,
         Reaction,
         Role,
         Stage,
@@ -108,6 +113,7 @@ defmodule Remedy.Schema do
       alias Remedy.{
         ISO8601,
         Snowflake,
+        Timestamp,
         Colour
       }
     end

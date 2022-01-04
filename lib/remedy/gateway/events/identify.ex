@@ -1,22 +1,20 @@
 defmodule Remedy.Gateway.Events.Identify do
   @moduledoc false
-
-  alias Remedy.Gateway
-  alias Remedy.Gateway.Intents
   use Remedy.Gateway.Payload
+  import Remedy, only: [token: 0, shards: 0, intents: 0, system_architecture: 0]
 
   def payload(%WSState{shard: shard} = socket, _opts) do
     {%{
-       token: Application.get_env(:remedy, :token),
+       token: token(),
        properties: %{
-         "$os" => "#{to_string(:erlang.system_info(:system_architecture))}",
+         "$os" => system_architecture(),
          "$browser" => "Remedy",
          "$device" => "Remedy"
        },
        compress: true,
        large_threshold: 250,
-       shard: [shard, Gateway.shard_count()],
-       intents: Intents.get_config()
+       shard: [shard, shards()],
+       intents: intents()
      }, socket}
   end
 end

@@ -12,7 +12,7 @@ defmodule Remedy.Application do
       Remedy.Repo,
       Remedy.GatewayATC,
       Remedy.Gateway,
-      Remedy.DummyConsumerSupervisor
+      Remedy.DevConsumerSupervisor
     ]
 
     with :ok <- check_token(),

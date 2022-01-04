@@ -1,32 +1,16 @@
-defmodule ApplicationFlags do
-  use Bitwise
+defmodule Solve do
+  def floop(_, _)
+  def floop(0, _), do: [[]]
+  def floop(_, []), do: []
 
-  defstruct GATEWAY_PRESENCE: 1 <<< 12,
-            GATEWAY_PRESENCE_LIMITED: 1 <<< 13,
-            GATEWAY_GUILD_MEMBERS: 1 <<< 14,
-            GATEWAY_GUILD_MEMBERS_LIMITED: 1 <<< 15,
-            VERIFICATION_PENDING_GUILD_LIMIT: 1 <<< 16,
-            EMBEDDED: 1 <<< 17,
-            GATEWAY_MESSAGE_CONTENT: 1 <<< 18,
-            GATEWAY_MESSAGE_CONTENT_LIMITED: 1 <<< 19
-end
-
-defmodule Test do
-  use Bitwise
-
-  def run do
-    max =
-      ApplicationFlags.__struct__()
-      |> Map.from_struct()
-      |> Enum.map(fn {_k, v} -> v end)
-      |> Enum.reduce(0, fn v, acc -> acc + v end)
-
-    0..max
-    |> Stream.filter(fn x -> x == (x &&& max) end)
-    |> Enum.into([])
-    |> Enum.count()
-    |> IO.inspect()
+  def floop(m, [h | t]) do
+    IO.inspect("#{inspect(m)}, #{inspect(h)}, #{inspect(t)}")
+    for l <- floop(m - 1, t) do
+      [h | l]) ++ floop(m, t)
+    end
   end
 end
 
-Test.run()
+k = Enum.random(1..20)
+n = Enum.random(1..(k - 1))
+Solve.floop(n, k)

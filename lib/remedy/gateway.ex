@@ -1,9 +1,9 @@
 defmodule Remedy.Gateway do
   @moduledoc false
   use Supervisor
-  alias Remedy.API
   alias Remedy.Gateway.{EventBroadcaster, EventBuffer, SessionSupervisor}
   require Logger
+  import Remedy, only: [shards: 0]
 
   @typedoc """
   The websocket state transmitted along with events to the consumer.
@@ -21,28 +21,23 @@ defmodule Remedy.Gateway do
         }
 
   @doc false
-  def recommended_shard_count(), do: API.get_gateway_bot!().shards
-
-  def shard_count(), do: Application.get_env(:remedy, :ffmpeg) || recommended_shard_count()
-  @doc false
-  def start_link(_args) do
-    shards = shard_count()
-    Supervisor.start_link(__MODULE__, shards, name: __MODULE__)
+  def start_link(args) do
+    Supervisor.start_link(__MODULE__, args, name: __MODULE__)
   end
 
   @doc false
-  def init(shards) do
+  def init(_shards) do
     children =
       [
         EventBroadcaster,
         EventBuffer
-      ] ++ shard_workers(shards)
+      ] ++ shard_workers()
 
     Supervisor.init(children, strategy: :one_for_one, max_restarts: 3, max_seconds: 60)
   end
 
-  defp shard_workers(shards) do
-    for shard <- 0..(shards - 1), into: [] do
+  defp shard_workers() do
+    for shard <- 0..(shards() - 1), into: [] do
       Supervisor.child_spec({SessionSupervisor, %{shard: shard}}, id: shard)
     end
   end

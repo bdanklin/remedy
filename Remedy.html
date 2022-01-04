@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-519a9742f1.js"></script>
+    <script src="dist/sidebar_items-7d61f27e70.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -117,6 +117,16 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#intents/0" translate="no">intents()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retreive the configured gateway intents for the bot.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#link/2" translate="no">link(type, format)</a>
 
         </div>
@@ -130,6 +140,36 @@ Remedy
         </div>
 
           <div class="summary-synopsis"><p>Format various types to a &quot;mention&quot;</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#shards/0" translate="no">shards()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retreive the configured shard count</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#system_architecture/0" translate="no">system_architecture()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retreive the current system architecture.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#token/0" translate="no">token()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retreive the bot token.</p></div>
 
       </div>
 
@@ -147,6 +187,39 @@ Remedy
 Functions
     </h1>
     <div class="functions-list">
+<section class="detail" id="intents/0">
+
+  <div class="detail-header">
+    <a href="#intents/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">intents()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L100" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">intents() :: <a href="Remedy.Gateway.Intents.html#t:t/0">Remedy.Gateway.Intents.t</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Retreive the configured gateway intents for the bot.</p>
+  </section>
+</section>
 <section class="detail" id="link/2">
 
   <div class="detail-header">
@@ -157,15 +230,13 @@ Functions
     <h1 class="signature" translate="no">link(type, format)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L42" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L161" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
 
 
   </div>
-
-
 
   <section class="docstring">
 
@@ -187,7 +258,7 @@ Functions
     <h1 class="signature" translate="no">mention(type, format \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L12" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L131" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -195,14 +266,114 @@ Functions
 
   </div>
 
-
-
   <section class="docstring">
 
 
 
 
 <p>Format various types to a &quot;mention&quot;</p>
+  </section>
+</section>
+<section class="detail" id="shards/0">
+
+  <div class="detail-header">
+    <a href="#shards/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">shards()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L21" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">shards() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Retreive the configured shard count</p><h2 id="shards/0-examples" class="section-heading">
+  <a href="#shards/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy</span><span class="o">.</span><span class="n">shard_count</span><span class="w">
+</span><span class="mi">3</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="system_architecture/0">
+
+  <div class="detail-header">
+    <a href="#system_architecture/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">system_architecture()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L51" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">system_architecture() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Retreive the current system architecture.</p><p>This is used to report to Discord the architecture of the system as required when establishing gateway connections.</p><h2 id="system_architecture/0-examples" class="section-heading">
+  <a href="#system_architecture/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy</span><span class="o">.</span><span class="n">get_system_architecture</span><span class="p" data-group-id="5933303872-1">(</span><span class="p" data-group-id="5933303872-1">)</span><span class="w">
+</span><span class="s">&quot;x86_64-redhat-linux-gnu&quot;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="token/0">
+
+  <div class="detail-header">
+    <a href="#token/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">token()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L58" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+<p>Retreive the bot token.</p>
   </section>
 </section>
 
@@ -223,7 +394,7 @@ Functions
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
           </span>
           <span class="line">

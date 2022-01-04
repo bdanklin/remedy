@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.TimeHelpers — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-519a9742f1.js"></script>
+    <script src="dist/sidebar_items-7d61f27e70.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -125,36 +125,6 @@ Remedy
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#is_iso8601/1" translate="no">is_iso8601(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Guard to test if a value is an ISO8601 encoded string.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#is_snowflake/1" translate="no">is_snowflake(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Guard to test if a value is a Snowflake.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#is_unixtime/1" translate="no">is_unixtime(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Guard to test if a value is probably a unix_time.</p></div>
-
-      </div>
-
   </div>
 
   <div class="summary-functions summary">
@@ -168,7 +138,63 @@ Remedy
 
         </div>
 
-          <div class="summary-synopsis"><p>Returns the discord epoch: <code class="inline">1_420_070_400_000</code></p></div>
+          <div class="summary-synopsis"><p>Returns the discord epoch.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#is_datetime?/1" translate="no">is_datetime?(value)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Check if the term is a valid <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0"><code class="inline">DateTime.t/0</code></a>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#is_iso8601?/1" translate="no">is_iso8601?(value)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Test if a value is an ISO8601 encoded string.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#is_snowflake/1" translate="no">is_snowflake(value)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#is_snowflake?/1" translate="no">is_snowflake?(value)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p> Function to test if a term is an integer snowflake or binary snowflake</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#is_unixtime/1" translate="no">is_unixtime(value)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#is_unixtime?/1" translate="no">is_unixtime?(value)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Check if the term is a valid <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0"><code class="inline">DateTime.t/0</code></a>.</p></div>
 
       </div>
 
@@ -189,6 +215,14 @@ Remedy
         </div>
 
           <div class="summary-synopsis"><p>Convert a value to a string representation of the ISO8601 format.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#to_snowflake/1" translate="no">to_snowflake(value)</a>
+
+        </div>
 
       </div>
 
@@ -226,7 +260,7 @@ Guards
     <h1 class="signature" translate="no">is_datetime(value)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L33" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L36" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -235,8 +269,6 @@ Guards
       <span class="note">(macro)</span>
 
   </div>
-
-
 
   <section class="docstring">
 
@@ -244,96 +276,6 @@ Guards
 
 
 <p>Guard to test if a value is a <a href="https://hexdocs.pm/elixir/DateTime.html"><code class="inline">DateTime</code></a>.</p>
-  </section>
-</section>
-<section class="detail" id="is_iso8601/1">
-
-  <div class="detail-header">
-    <a href="#is_iso8601/1" class="detail-link" title="Link to this macro">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this macro</span>
-    </a>
-    <h1 class="signature" translate="no">is_iso8601(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L39" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-      <span class="note">(macro)</span>
-
-  </div>
-
-
-
-  <section class="docstring">
-
-
-
-
-<p>Guard to test if a value is an ISO8601 encoded string.</p>
-  </section>
-</section>
-<section class="detail" id="is_snowflake/1">
-
-  <div class="detail-header">
-    <a href="#is_snowflake/1" class="detail-link" title="Link to this macro">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this macro</span>
-    </a>
-    <h1 class="signature" translate="no">is_snowflake(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L21" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-      <span class="note">(macro)</span>
-
-  </div>
-
-
-
-  <section class="docstring">
-
-
-
-
-<p>Guard to test if a value is a Snowflake.</p>
-  </section>
-</section>
-<section class="detail" id="is_unixtime/1">
-
-  <div class="detail-header">
-    <a href="#is_unixtime/1" class="detail-link" title="Link to this macro">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this macro</span>
-    </a>
-    <h1 class="signature" translate="no">is_unixtime(value)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L27" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-      <span class="note">(macro)</span>
-
-  </div>
-
-
-
-  <section class="docstring">
-
-
-
-
-<p>Guard to test if a value is probably a unix_time.</p>
   </section>
 </section>
 
@@ -359,7 +301,7 @@ Functions
     <h1 class="signature" translate="no">discord_epoch()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L44" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L22" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -367,14 +309,209 @@ Functions
 
   </div>
 
+  <section class="docstring">
 
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">discord_epoch() :: 1_420_070_400_000</pre>
+
+      </div>
+
+
+
+
+<p>Returns the discord epoch.</p>
+  </section>
+</section>
+<section class="detail" id="is_datetime?/1">
+
+  <div class="detail-header">
+    <a href="#is_datetime?/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">is_datetime?(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L53" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">is_datetime?(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Check if the term is a valid <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0"><code class="inline">DateTime.t/0</code></a>.</p><h2 id="is_datetime?/1-examples" class="section-heading">
+  <a href="#is_datetime?/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">date_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">DateTime</span><span class="o">.</span><span class="n">now!</span><span class="p" data-group-id="2508517589-1">(</span><span class="s">&quot;Etc/UTC&quot;</span><span class="p" data-group-id="2508517589-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">is_datetime?</span><span class="p" data-group-id="2508517589-2">(</span><span class="n">date_time</span><span class="p" data-group-id="2508517589-2">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;2020-01-01T00:00:00Z&quot;</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">is_datetime?</span><span class="p" data-group-id="2508517589-3">(</span><span class="p" data-group-id="2508517589-3">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="is_iso8601?/1">
+
+  <div class="detail-header">
+    <a href="#is_iso8601?/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">is_iso8601?(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L127" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
 
   <section class="docstring">
 
 
 
 
-<p>Returns the discord epoch: <code class="inline">1_420_070_400_000</code></p>
+<p>Test if a value is an ISO8601 encoded string.</p>
+  </section>
+</section>
+<section class="detail" id="is_snowflake/1">
+
+  <div class="detail-header">
+    <a href="#is_snowflake/1" class="detail-link" title="Link to this macro">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_snowflake(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L24" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+
+  </section>
+</section>
+<section class="detail" id="is_snowflake?/1">
+
+  <div class="detail-header">
+    <a href="#is_snowflake?/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">is_snowflake?(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L63" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">is_snowflake?(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+
+
+<p> Function to test if a term is an integer snowflake or binary snowflake</p>
+  </section>
+</section>
+<section class="detail" id="is_unixtime/1">
+
+  <div class="detail-header">
+    <a href="#is_unixtime/1" class="detail-link" title="Link to this macro">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_unixtime(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L29" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+
+  </section>
+</section>
+<section class="detail" id="is_unixtime?/1">
+
+  <div class="detail-header">
+    <a href="#is_unixtime?/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">is_unixtime?(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L58" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">is_unixtime?(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Check if the term is a valid <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0"><code class="inline">DateTime.t/0</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="to_datetime/1">
@@ -387,7 +524,7 @@ Functions
     <h1 class="signature" translate="no">to_datetime(value)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L68" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L93" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -395,9 +532,14 @@ Functions
 
   </div>
 
-
-
   <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_datetime(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil | :error</pre>
+
+      </div>
 
 
 
@@ -406,20 +548,12 @@ Functions
   <a href="#to_datetime/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_datetime</span><span class="p" data-group-id="8848082406-1">(</span><span class="no">nil</span><span class="p" data-group-id="8848082406-1">)</span><span class="w">
-</span><span class="no">nil</span><span class="w">
-
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_datetime</span><span class="p" data-group-id="8848082406-2">(</span><span class="mi">15824000000000</span><span class="p" data-group-id="8848082406-2">)</span><span class="w">
-</span><span class="ld">~U[2015-01-01T01:02:52.735Z]</span><span class="w">
-
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_datetime</span><span class="p" data-group-id="8848082406-3">(</span><span class="mi">919970797920067654</span><span class="p" data-group-id="8848082406-3">)</span><span class="w">
-</span><span class="ld">~U[2021-12-13T15:15:30.455Z]</span><span class="w">
-
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_datetime</span><span class="p" data-group-id="8848082406-4">(</span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="p" data-group-id="8848082406-4">)</span><span class="w">
-</span><span class="ld">~U[2021-12-13T15:13:33.774426Z]</span><span class="w">
-
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_datetime</span><span class="p" data-group-id="8848082406-5">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="8848082406-5">)</span><span class="w">
-</span><span class="ss">:error</span></code></pre>
+<p>iex&gt; Remedy.TimeHelpers.to_datetime(nil)
+nil</p><p>iex&gt; Remedy.TimeHelpers.to_datetime(15824000000000)
+~U[2015-01-01T01:02:52.735Z]</p><p>iex&gt; Remedy.TimeHelpers.to_datetime(919970797920067654)
+~U[2021-12-13T15:15:30.455Z]</p><p>iex&gt; Remedy.TimeHelpers.to_datetime(&quot;2021-12-13T15:13:33.774426Z&quot;)
+~U[2021-12-13T15:13:33.774426Z]</p><p>iex&gt; Remedy.TimeHelpers.to_datetime(:some_atom)
+:error</p>
   </section>
 </section>
 <section class="detail" id="to_iso8601/1">
@@ -432,7 +566,7 @@ Functions
     <h1 class="signature" translate="no">to_iso8601(value)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L102" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L155" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -442,14 +576,12 @@ Functions
 
   </div>
 
-
-
   <section class="docstring">
 
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">to_iso8601(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>() | nil</pre>
+          <pre translate="no">to_iso8601(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="Remedy.ISO8601.html#t:t/0">Remedy.ISO8601.t</a>() | nil | :error</pre>
 
       </div>
 
@@ -460,20 +592,53 @@ Functions
   <a href="#to_iso8601/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="3998124942-1">(</span><span class="no">nil</span><span class="p" data-group-id="3998124942-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="8950843717-1">(</span><span class="no">nil</span><span class="p" data-group-id="8950843717-1">)</span><span class="w">
 </span><span class="no">nil</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="3998124942-2">(</span><span class="mi">15824000000000</span><span class="p" data-group-id="3998124942-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="8950843717-2">(</span><span class="mi">15824000000000</span><span class="p" data-group-id="8950843717-2">)</span><span class="w">
 </span><span class="s">&quot;2015-01-01T01:02:52.735Z&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="3998124942-3">(</span><span class="mi">919970797920067654</span><span class="p" data-group-id="3998124942-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="8950843717-3">(</span><span class="mi">919970797920067654</span><span class="p" data-group-id="8950843717-3">)</span><span class="w">
 </span><span class="s">&quot;2021-12-13T15:15:30.455Z&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="3998124942-4">(</span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="p" data-group-id="3998124942-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="8950843717-4">(</span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="p" data-group-id="8950843717-4">)</span><span class="w">
 </span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="w">
 
-</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="3998124942-5">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="3998124942-5">)</span><span class="w">
+</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="8950843717-5">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="8950843717-5">)</span><span class="w">
 </span><span class="ss">:error</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="to_snowflake/1">
+
+  <div class="detail-header">
+    <a href="#to_snowflake/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">to_snowflake(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L238" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_snowflake(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>() | :error</pre>
+
+      </div>
+
+
+
+
+
   </section>
 </section>
 <section class="detail" id="to_unixtime/1">
@@ -486,7 +651,7 @@ Functions
     <h1 class="signature" translate="no">to_unixtime(value)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L141" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/time_helpers.ex#L215" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -494,9 +659,14 @@ Functions
 
   </div>
 
-
-
   <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_unixtime(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: Timestamp.t() | nil | :error</pre>
+
+      </div>
 
 
 
@@ -505,19 +675,19 @@ Functions
   <a href="#to_unixtime/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="9160834180-1">(</span><span class="no">nil</span><span class="p" data-group-id="9160834180-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6765538366-1">(</span><span class="no">nil</span><span class="p" data-group-id="6765538366-1">)</span><span class="w">
 </span><span class="no">nil</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="9160834180-2">(</span><span class="mi">15824000000000</span><span class="p" data-group-id="9160834180-2">)</span><span class="w">
-</span><span class="mi">1639408530455</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6765538366-2">(</span><span class="mi">797634639408530455</span><span class="p" data-group-id="6765538366-2">)</span><span class="w">
+</span><span class="mi">1610241317369</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="9160834180-3">(</span><span class="mi">919970797920067654</span><span class="p" data-group-id="9160834180-3">)</span><span class="w">
-</span><span class="mi">1639408530455</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6765538366-3">(</span><span class="s">&quot;2021-01-10T01:15:17.369Z&quot;</span><span class="p" data-group-id="6765538366-3">)</span><span class="w">
+</span><span class="mi">1610241317369</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="9160834180-4">(</span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="p" data-group-id="9160834180-4">)</span><span class="w">
-</span><span class="mi">1639408530455</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">date_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">DateTime</span><span class="o">.</span><span class="n">now!</span><span class="p" data-group-id="6765538366-4">(</span><span class="s">&quot;Etc/UTC&quot;</span><span class="p" data-group-id="6765538366-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6765538366-5">(</span><span class="n">date_time</span><span class="p" data-group-id="6765538366-5">)</span><span class="w">
 
-</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="9160834180-5">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="9160834180-5">)</span><span class="w">
+</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6765538366-6">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="6765538366-6">)</span><span class="w">
 </span><span class="ss">:error</span></code></pre>
   </section>
 </section>
@@ -539,7 +709,7 @@ Functions
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
           </span>
           <span class="line">

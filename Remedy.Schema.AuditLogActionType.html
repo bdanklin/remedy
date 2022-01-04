@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Schema.AuditLogActionType — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-519a9742f1.js"></script>
+    <script src="dist/sidebar_items-7d61f27e70.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -101,7 +101,7 @@ Remedy
   <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">73</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;INVITE_CREATE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:WEBHOOK_CREATE</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">12</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;ROLE_DELETE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:EMOJI_UPDATE</span></code></pre>
   </section>
 
 
@@ -191,8 +191,6 @@ Types
 
   </div>
 
-
-
   <section class="docstring">
 
       <h3>Specs</h3>
@@ -226,61 +224,59 @@ Types
 
   </div>
 
-
-
   <section class="docstring">
 
       <h3>Specs</h3>
       <div class="specs">
 
           <pre translate="no">f() ::
-  :MEMBER_ROLE_UPDATE
-  | :ROLE_DELETE
-  | :STAGE_INSTANCE_CREATE
-  | :INTEGRATION_DELETE
-  | :INTEGRATION_UPDATE
-  | :INVITE_CREATE
-  | :THREAD_DELETE
-  | :INVITE_UPDATE
-  | :EMOJI_UPDATE
-  | :WEBHOOK_DELETE
-  | :STICKER_DELETE
-  | :INTEGRATION_CREATE
-  | :MEMBER_UPDATE
-  | :MEMBER_PRUNE
+  :MEMBER_UPDATE
   | :MESSAGE_BULK_DELETE
-  | :MESSAGE_PIN
-  | :CHANNEL_OVERWRITE_CREATE
-  | :GUILD_SCHEDULED_EVENT_DELETE
-  | :MEMBER_KICK
-  | :CHANNEL_OVERWRITE_UPDATE
-  | :WEBHOOK_UPDATE
-  | :CHANNEL_DELETE
-  | :EMOJI_CREATE
-  | :MESSAGE_DELETE
-  | :CHANNEL_UPDATE
-  | :GUILD_SCHEDULED_EVENT_UPDATE
+  | :THREAD_DELETE
   | :INVITE_DELETE
-  | :ROLE_CREATE
-  | :GUILD_SCHEDULED_EVENT_CREATE
-  | :EMOJI_DELETE
-  | :BOT_ADD
-  | :MEMBER_BAN_ADD
-  | :STICKER_CREATE
+  | :MEMBER_KICK
   | :MEMBER_DISCONNECT
+  | :STICKER_DELETE
+  | :INTEGRATION_UPDATE
+  | :CHANNEL_DELETE
+  | :EMOJI_UPDATE
+  | :MESSAGE_UNPIN
+  | :WEBHOOK_CREATE
+  | :ROLE_CREATE
+  | :INVITE_CREATE
+  | :INTEGRATION_DELETE
+  | :GUILD_UPDATE
+  | :CHANNEL_CREATE
+  | :WEBHOOK_UPDATE
+  | :CHANNEL_OVERWRITE_UPDATE
+  | :STAGE_INSTANCE_UPDATE
+  | :MEMBER_BAN_ADD
+  | :MEMBER_PRUNE
   | :STAGE_INSTANCE_DELETE
+  | :STAGE_INSTANCE_CREATE
+  | :MESSAGE_DELETE
+  | :THREAD_UPDATE
+  | :CHANNEL_UPDATE
+  | :GUILD_SCHEDULED_EVENT_CREATE
+  | :MEMBER_MOVE
+  | :ROLE_UPDATE
+  | :INVITE_UPDATE
+  | :MESSAGE_PIN
+  | :WEBHOOK_DELETE
+  | :ROLE_DELETE
+  | :STICKER_CREATE
   | :THREAD_CREATE
   | :STICKER_UPDATE
-  | :MESSAGE_UNPIN
-  | :MEMBER_MOVE
+  | :INTEGRATION_CREATE
+  | :GUILD_SCHEDULED_EVENT_DELETE
+  | :GUILD_SCHEDULED_EVENT_UPDATE
+  | :EMOJI_DELETE
+  | :CHANNEL_OVERWRITE_CREATE
+  | :MEMBER_ROLE_UPDATE
+  | :EMOJI_CREATE
+  | :BOT_ADD
   | :MEMBER_BAN_REMOVE
-  | :WEBHOOK_CREATE
-  | :THREAD_UPDATE
-  | :GUILD_UPDATE
-  | :CHANNEL_OVERWRITE_DELETE
-  | :ROLE_UPDATE
-  | :CHANNEL_CREATE
-  | :STAGE_INSTANCE_UPDATE</pre>
+  | :CHANNEL_OVERWRITE_DELETE</pre>
 
       </div>
 
@@ -307,8 +303,6 @@ Types
 
 
   </div>
-
-
 
   <section class="docstring">
 
@@ -343,8 +337,6 @@ Types
 
   </div>
 
-
-
   <section class="docstring">
 
       <h3>Specs</h3>
@@ -378,7 +370,7 @@ Types
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
           </span>
           <span class="line">

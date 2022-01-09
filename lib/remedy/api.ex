@@ -397,11 +397,13 @@ defmodule Remedy.API do
   @doc """
   Retrieves a channel's messages.
 
+  > Note: Be sure to check out the `Snowflake` documentation for more information on casting snowflakes -  tldr: Any pseudo-timestamp can be cast to this value. Has a very small chance of producing undesirable results.
+
   ## Options
 
-  - `:before` - `t:Remedy.Snowflake.c/0` - Retrieve messages before this message.
-  - `:after` - `t:Remedy.Snowflake.c/0` - Retrieve messages after this message.
-  - `:around` - `t:Remedy.Snowflake.c/0` - Retrieve messages around this message.
+  - `:before` - `t:Remedy.Snowflake.c/0`
+  - `:after` - `t:Remedy.Snowflake.c/0`
+  - `:around` - `t:Remedy.Snowflake.c/0`
   - `:limit` - `t:integer/0` - `min: 1, max: 100` - The maximum number of messages to retrieve.
 
   > Only one of `:before``:after`or `:around` may be specified.
@@ -543,15 +545,15 @@ defmodule Remedy.API do
   ## Options
 
   - `:content` - `t:String.t/0` - `max: 2000`
-  - `:tts` - `:boolean`
-  - `:embeds` - `{:array, Embed | :map}`
-  - `:allowed_mentions` - `AllowedMentions | :map`
-  - `:message_reference` - `MessageReference | :map`
-  - `:components` - `{:array, Component | :map}`
-  - `:sticker_ids` - `{:array, Snowflake}`
-  - `:attachments` - `{:array, Attachment}`
+  - `:tts` - `t:boolean/0`
+  - `:embeds` - [`t:Remedy.Schema.Embed.c/0`] - `max: 10`
+  - `:allowed_mentions` - `t:Remedy.Schema.AllowedMentions.c/0`
+  - `:message_reference` - `t:Remedy.Schema.MessageReference.c/0`
+  - `:components` - [`t:Remedy.Schema.Component.c/0`]
+  - `:sticker_ids` - [`t:Snowflake.c/0`]
+  - `:attachments` - [`t:Remedy.Schema.Attachment.c/0`]
 
-  > Note: At least one of the following is required: `:content``:file``:embed`.
+  > Note: At least one of the following is required: `:content`, `:file`, `:embeds`.
 
   ## Examples
 
@@ -823,8 +825,8 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:content` (string) - the message contents (up to 2000 characters)
-    - `:embed` (`t:Remedy.Schema.Embed.t/0`) - embedded rich content
+    - `:content` - `t:String.t/0`
+    - `:embed` - `t:Remedy.Schema.Embed.c/0`
 
   ## Examples
 
@@ -899,7 +901,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:messages` - `{:array, Snowflake}` - the messages to delete
+  - `:messages` - [`t:Remedy.Schema.Snowflake.c/0`]
 
   ## Examples
 
@@ -952,9 +954,9 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:type` - `t:integer/0` - `role: 0, member: 1`
-    - `:allow` - `t:integer/0` - ` | Permission`
-    - `:deny` - `t:integer/0` - ` | Permission`
+    - `:type` - `t:Remedy.Schema.PermissionOverwriteType.c/0`
+    - `:allow` - `t:Permission.c/0`
+    - `:deny` - `t:Permission.c/0`
 
   > note: If `:allow`or `:deny` are not explicitly set they will be set to 0.
 
@@ -1738,8 +1740,7 @@ defmodule Remedy.API do
   ## Options
 
     - `:name` - `t:String.t/0`
-    - `:roles` - `[:role]`
-    - `:reason` - `t:String.t/0`
+    - `:roles` - [`t:Remedy.Schema.Role.c/0`]
 
   ## Examples
 
@@ -1821,14 +1822,11 @@ defmodule Remedy.API do
     - `3` - `:high` - must be a member of the server for longer than 10 minutes
     - `4` - `:very_high` - must have a verified phone number
   - `:default_message_notifications` - `t:integer/0`
-  - `:explicit_content_filter` - `t:integer/0`
-    - `0` - `:disabled`
-    - `1` - `:members_without_roles`
-    - `2` - `:all_members`
-  - `:roles` - `{:array, :role}`
-  - `:channels` - `{:array, :channel}`
-  - `:afl_channel_id` - `t:Remedy.Snowflake.c/0`
-  - `:afk_timeout` - `t:integer/0` - `:seconds`
+  - `:explicit_content_filter` - `t:Remedy.Schema.GuildExplicitContentFilter.c/0`
+  - `:roles` - [`t:Remedy.Schema.Role.c/0]
+  - `:channels` - [`t:Remedy.Schema.Channel.c/0`]
+  - `:afk_channel_id` - `t:Remedy.Snowflake.c/0`
+  - `:afk_timeout` - `t:integer/0` - seconds
   - `:template` - `t:String.t/0`
 
   > If `:template` is provided, the following. All options except `:name`and `:icon` are ignored.
@@ -1917,21 +1915,11 @@ defmodule Remedy.API do
 
   - `:name` - `t:String.t/0` - `min: 2, max: 100`
   - `:icon` - `:image_data`
-  - `:verification_level` - `t:integer/0`
-    - `0` - `:none` - unrestricted
-    - `1` - `:low` - must have verified email on account
-    - `2` - `:medium` - must be registered on Discord for longer than 5 minutes
-    - `3` - `:high` - must be a member of the server for longer than 10 minutes
-    - `4` - `:very_high` - must have a verified phone number
-  - `:default_message_notifications` - `t:integer/0`
-    - `0` - `:all_messages` - members will receive notifications for all messages by default
-    - `1` - `:only_mentions` - members will receive notifications only for mentions by default
-  - `:explicit_content_filter` - `t:integer/0`
-    - `0` - `:disabled`
-    - `1` - `:members_without_roles`
-    - `2` - `:all_members`
-  - `:roles` - `{:array, :role}`
-  - `:channels` - `{:array, :channel}`
+  - `:verification_level` - `t:Remedy.Schema.GuildVerificationLevel.c/0`
+  - `:default_message_notifications` - `t:Remedy.Schema.GuildDefaultMessageNotifications/0`
+  - `:explicit_content_filter` - `t:GuildExplicitContentFilter.c/0`
+  - `:roles` - [`t:Remedy.Schema.Role.c/0`]
+  - `:channels` - [`t:Remedy.Schema.Channel.c/0`]
   - `:afk_channel_id` - `t:Remedy.Snowflake.c/0`
   - `:afk_timeout` - `t:integer/0` - `:seconds`
   - `:icon` - `t:String.t/0`
@@ -2050,7 +2038,7 @@ defmodule Remedy.API do
   - `:user_limit` - `t:integer/0` - `min: 1, max: 99, unlimited: 0`
   - `:permission_overwrites`  - [`t:Remedy.Schema.PermissionOverwrite.t/0`]
   - `:parent_id` - `t:Remedy.Snowflake.c/0` - Category to place the channel under.
-  - `:nsfw` - `:boolean`
+  - `:nsfw` - `t:boolean/0`
 
   ## Examples
 
@@ -2155,7 +2143,7 @@ defmodule Remedy.API do
   ## Options
 
     - `:limit` - `t:integer/0` - `min: 1, max: 1000, default: 1`
-    - `:after` - `t:Remedy.Snowflake.c/0` - `default: 0` - get members after this user ID
+    - `:after` - `t:Remedy.Snowflake.c/0`
 
   ## Examples
 
@@ -2285,11 +2273,11 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:nick` - `t:String.t/0` - value to set users nickname to
-  - `:roles` - `{:array, Snowflake}` - of role ids the member is assigned
-  - `:mute`  -  `:boolean` - if the user is muted
-  - `:deaf` - `:boolean` - if the user is deafened
-  - `:channel_id` - `t:Remedy.Snowflake.c/0` - id of channel to move user to (if they are connected to voice)
+  - `:nick` - `t:String.t/0`
+  - `:roles` - [`t:Remedy.Snowflake.c/0`]
+  - `:mute`  -  `t:boolean/0`
+  - `:deaf` - `t:boolean/0`
+  - `:channel_id` - `t:Remedy.Snowflake.c/0`
 
   ## Examples
 
@@ -2583,10 +2571,10 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:name` (string) - name of the role (default: "new role")
-    - `:permissions` (integer) - bitwise of the enabled/disabled permissions (default: @everyone perms)
-    - `:color` (integer) - RGB color value (default: 0)
-    - `:hoist` (boolean) - whether the role should be displayed separately in the sidebar (default: false)
+    - `:name` - `t:String.t/0` - `default: "New Role"`
+    - `:permissions` - `t:Remedy.Schema.Permission.c/0`
+    - `:color` - `t:Remedy.Schema.Color.c/0`
+    - `:hoist` - `t:boolean/0` - `default: false`
     - `:mentionable` (boolean) - whether the role should be mentionable (default: false)
 
   ## Examples
@@ -2624,7 +2612,7 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.modify_role_positions(41771983423143937, [%{id: 41771983423143936, position: 2}])
+      iex> Remedy.API.modify_roles(41771983423143937, [%{id: 41771983423143936, position: 2}])
       {:ok, [%Remedy.Schema.Role{}]}
 
   """
@@ -2633,9 +2621,9 @@ defmodule Remedy.API do
   @doc audit_log: true
   @doc method: :patch
   @doc route: "guilds/:guild_id/roles"
-  @unsafe {:modify_role_positions, [:guild_id, :opts]}
-  @spec modify_role_positions(Snowflake.c(), opts) :: {:ok, [Role.t()]} | {:error, reason}
-  def modify_role_positions(guild_id, opts \\ []) do
+  @unsafe {:modify_roles, [:guild_id, :opts]}
+  @spec modify_roles(Snowflake.c(), opts) :: {:ok, [Role.t()]} | {:error, reason}
+  def modify_roles(guild_id, opts \\ []) do
     data = %{}
     types = %{positions: [%{id: Snowflake, position: :integer}]}
     keys = Map.keys(types)
@@ -2645,7 +2633,6 @@ defmodule Remedy.API do
     body =
       {data, types}
       |> cast(params, keys)
-      |> validate_number(:color, less_than_or_equal_to: 16_777_215, greater_than_or_equal_to: 0)
 
     {:patch, "/guilds/#{guild_id}/roles", nil, reason, body}
     |> request()
@@ -2657,11 +2644,11 @@ defmodule Remedy.API do
 
   ## Options
 
-    - `:name` (string) - name of the role
-    - `:permissions` (integer) - bitwise of the enabled/disabled permissions
-    - `:color` (integer) - RGB color value (default: 0)
-    - `:hoist` (boolean) - whether the role should be displayed separately in the sidebar
-    - `:mentionable` (boolean) - whether the role should be mentionable
+    - `:name` - `t:String.t/0`
+    - `:permissions` - `t:Remedy.Schema.Permission.c/0`
+    - `:color` - `t:Remedy.Colour.c/0`
+    - `:hoist` - `t:boolean/0` - Display Seperately in Sidebar
+    - `:mentionable` - `t:boolean/0`
 
   ## Examples
 
@@ -2723,7 +2710,7 @@ defmodule Remedy.API do
   ## Options
 
   - `:days` - `t:integer/0` - `min: 1, max: 30`
-  - `:include_roles` - `t:String.t/0` - comma delimited list of role IDs to include in the count
+  - `:include_roles` - [`t:Remedy.Snowflake.c/0`]
 
   ## Examples
 
@@ -2759,8 +2746,8 @@ defmodule Remedy.API do
   ## Options
 
   - `:days` - `t:integer/0` - `min: 1, max: 30`
-  - `:include_roles` - `{:array, Snowflake}` - array of role IDs to include in the count
-  - `:compute_prune_count` - `:boolean` - whether to compute the prune count
+  - `:include_roles` - [`t:Remedy.Snowflake.c/0`]
+  - `:compute_prune_count` - `t:boolean/0` - whether to compute the prune count
 
   ## Examples
 
@@ -2800,11 +2787,8 @@ defmodule Remedy.API do
   ## Examples
 
       iex> Remedy.API.get_guild_voice_regions(81384788765712384)
-      {:ok, [
-        %{id: "vip-us-east", name: "VIP US East", vip: true},
-        %{id: "vip-us-west", name: "VIP US West", vip: true}
-        ]
-      }
+      {:ok, [%VoiceRegion{}]}
+
 
   """
   @doc since: "0.6.8"
@@ -2815,7 +2799,7 @@ defmodule Remedy.API do
   def list_voice_regions(guild_id) do
     {:get, "/guilds/#{guild_id}/regions", nil, nil, nil}
     |> request()
-    |> shape()
+    |> shape(VoiceRegion)
   end
 
   @doc """
@@ -2981,6 +2965,7 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "guilds/:guild_id/widget.png"
   @unsafe {:get_widget_image, [:guild_id, :opts]}
+  @spec get_widget_image(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def get_widget_image(guild_id, opts \\ []) do
     data = %{}
     types = %{style: :string}
@@ -3021,8 +3006,8 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:enabled` - `:boolean` - Whether the welcome screen is enabled.
-  - `:welcome_channels` - `{:array, %WelcomeScreenChannel{}}` - 	channels linked in the welcome screen and their display options.
+  - `:enabled` - `t:boolean/0` - Whether the welcome screen is enabled.
+  - `:welcome_channels` - [`t:WelcomeScreenChannel.c/0`]
   - `:description` - `t:String.t/0` - The server description to show in the welcome screen.
 
   ## Examples
@@ -3033,7 +3018,7 @@ defmodule Remedy.API do
       ...> welcome_channels: [
       ...> {channel_id: 81384788765712384, message: "Welcome to the server!", enabled: true}],
       ...> description: "This is a test server")
-      {:ok, %Remedy.Schema.GuildWelcomeScreen{}}
+      {:ok, %Remedy.Schema.WelcomeScreen{}}
 
   """
   @doc since: "0.6.8"
@@ -3042,6 +3027,7 @@ defmodule Remedy.API do
   @doc method: :patch
   @doc route: "guilds/:guild_id/welcome-screen"
   @unsafe {:modify_welcome, [:guild_id, :opts]}
+  @spec modify_welcome(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_welcome(guild_id, opts \\ []) do
     data = %{}
     types = %{enabled: :boolean, welcome_channels: {:array, WelcomeScreenChannel}, description: :string}
@@ -3055,6 +3041,7 @@ defmodule Remedy.API do
 
     {:patch, "/guilds/#{guild_id}/welcome-screen", nil, reason, body}
     |> request()
+    |> shape(WelcomeScreen)
   end
 
   @doc """
@@ -3114,7 +3101,7 @@ defmodule Remedy.API do
   ## Options
 
   - `:channel_id` - `t:Remedy.Snowflake.c/0` - The id of the channel the user is currently in.
-  - `:suppress` - `:boolean` - Toggles the user's suppress state
+  - `:suppress` - `t:boolean/0` - Toggles the user's suppress state
 
   > `:channel_id` must currently point to a stage channel.
   > User must already have joined `:channel_id`.
@@ -3159,8 +3146,11 @@ defmodule Remedy.API do
 
   ## Examples
 
-      iex> Remedy.API.get_guild_template(https://discord.new/2KAaMpa22ea6)
-      {:ok, %Remedy.Schema.GuildTemplate{}}
+      iex> Remedy.API.get_guild_template("https://discord.new/2KAaMpa22ea6")
+      {:ok, %Remedy.Schema.Template{}}
+
+      iex> Remedy.API.get_guild_template("2KAaMpa22ea6")
+      {:ok, %Remedy.Schema.Template{}}
 
   """
   @doc since: "0.6.8"
@@ -3251,7 +3241,7 @@ defmodule Remedy.API do
   @doc method: :put
   @doc route: "/guilds/:guild_id/templates/:template_id"
   @unsafe {:sync_template, [:guild_id, :template_id]}
-  @spec sync_template(Snowflake.c(), Snowflake.c()) :: {:ok, any} | {:error, reason}
+  @spec sync_template(Snowflake.c(), String.t()) :: {:ok, any} | {:error, reason}
   def sync_template(guild_id, template_code) do
     {:put, "/guilds/#{guild_id}/templates/#{template_code}", nil, nil, nil}
     |> request()
@@ -3278,7 +3268,7 @@ defmodule Remedy.API do
   @doc method: :patch
   @doc route: "/guilds/:guild_id/templates/:template_id"
   @unsafe {:modify_template, [:guild_id, :template_id, :opts]}
-  @spec modify_template(Snowflake.c(), Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
+  @spec modify_template(Snowflake.c(), String.t(), opts) :: {:ok, any} | {:error, reason}
   def modify_template(guild_id, template_code, opts \\ []) do
     data = %{}
     types = %{name: :string, description: :string}
@@ -3330,13 +3320,10 @@ defmodule Remedy.API do
   @doc """
   Gets an invite by its `invite_code`.
 
-  If successful, returns `{:ok, invite}`. Otherwise, returns a
-  {:error, reason}.
-
   ## Options
 
-    - `:with_counts` - `:boolean` - Whether to include the approximate member counts.
-    - `:with_expiration` - `:boolean` - Whether to include the expiration date.
+    - `:with_counts` - `t:boolean/0` - `default: true` - Whether to include the count of members and online members for the invite.
+    - `:with_expiration` - `t:boolean/0` - Whether to include the expiration date.
     - `:guild_scheduled_event_id` - `t:Remedy.Snowflake.c/0` - The ID of the guild scheduled event to include with the invite.
 
   ## Examples
@@ -3354,7 +3341,7 @@ defmodule Remedy.API do
   @unsafe {:get_invite, [:invite_code, :opts]}
   @spec get_invite(any, opts) :: {:ok, any} | {:error, reason}
   def get_invite(invite_code, opts \\ []) do
-    data = %{}
+    data = %{with_counts: true, with_expiration: true}
     types = %{with_counts: :boolean, with_expiration: :boolean, guild_scheduled_event_id: Snowflake}
     params = Enum.into(opts, %{})
     keys = Map.keys(types)
@@ -4539,7 +4526,7 @@ defmodule Remedy.API do
 
   - `:name` - `t:String.t/0` - `min: 1, max: 32`
   - `:description` - `t:String.t/0` - `min: 1, max: 100`
-  - `:options` - [`t:/Remedy.Schema.CommandOption.c/0`]
+  - `:options` - [`t:Remedy.Schema.CommandOption.c/0`]
   - `:default_permission` - `t:boolean/0` - `default: true` - whether the command is enabled by default when the app is added to a guild
 
   ## Examples
@@ -4597,7 +4584,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:commands` - `{:array, Command}`
+  - `:commands` - [`t:Remedy.Schema.Command.c/0`]
 
   ## Examples
 
@@ -4661,8 +4648,8 @@ defmodule Remedy.API do
   - `:name` - `t:String.t/0` - `min: 1, max: 32`
   - `:description` - `t:String.t/0` - `min: 1, max: 100`
   - `:options` - [`t:Remedy.Schema.CommandOption.c/0`]
-  - `:default_permission` - `:boolean, default: true` - whether the command is enabled by default
-  - `:type` - `t:Remedy.Schema.CommandType/0`
+  - `:default_permission` - `t:boolean/0` - `default: true` - whether the command is enabled by default
+  - `:type` - `t:Remedy.Schema.CommandType.c/0`
 
     ## Examples
 
@@ -4732,8 +4719,8 @@ defmodule Remedy.API do
 
   - `:name` - `t:String.t/0` - `min: 1, max: 32`
   - `:description` - `t:String.t/0` - `min: 1, max: 100`
-  - `:options` - `{:array, CommandOption}`
-  - `:default_permission` - `:boolean, default: true` - whether the command is enabled by default when the app is added to a guild
+  - `:options` - [`t:Remedy.Schema.CommandOption.c`]
+  - `:default_permission` - `t:boolean/0` - `default: true` - whether the command is enabled by default when the app is added to a guild
 
   ## Examples
 
@@ -4806,7 +4793,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:commands` - `{:array, Command}`
+  - `:commands` - [`t:Remedy.Schema.Command.c/0`]
 
   ## Examples
 
@@ -4874,6 +4861,10 @@ defmodule Remedy.API do
   """
   @doc section: :commands
   @doc since: "0.6.0"
+  @doc method: :get
+  @doc route: "/applications/:application_id/guilds/:guild_id/commands/:command_id/permissions"
+  @unsafe {:list_command_permission, [:guild_id, :command_id]}
+  @spec list_command_permissions(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, CommandPermission.t()}
   def list_command_permissions(guild_id, command_id) do
     {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}/permissions", nil, nil, nil}
     |> request()
@@ -4885,7 +4876,7 @@ defmodule Remedy.API do
 
   ## Options
 
-  - `:permissions` - `[[t:Remedy.Schema.CommandPermission/0]](#CommandPermission)`
+  - `:permissions` - [`t:Remedy.Schema.CommandPermission.c/0`]
 
   ## Examples
 
@@ -5220,13 +5211,13 @@ defmodule Remedy.API do
   ## Options
 
   - `:channel_id` - `t:Remedy.Snowflake.c/0`
-  - `:entity_metadata` - `t:Remedy.Schema.EventEntityMetadata.t/0` | `t:map/0`
+  - `:entity_metadata` - `t:Remedy.Schema.EventEntityMetadata.c/0`
   - `:name` - `t:String.t/0`
-  - `:privacy_level` - `t:Remedy.Schema.EventPrivacyLevel.t/0`
-  - `:scheduled_start_time` - `t:Remedy.ISO8601.t/0`
-  - `:scheduled_end_time` - `t:Remedy.ISO8601.t/0`
+  - `:privacy_level` - `t:Remedy.Schema.EventPrivacyLevel.c/0`
+  - `:scheduled_start_time` - `t:Remedy.ISO8601.c/0`
+  - `:scheduled_end_time` - `t:Remedy.ISO8601.c/0`
   - `:description` - `t:String.t/0`
-  - `:entity_type` - `t:Remedy.Schema.EventEntityType.t/0`
+  - `:entity_type` - `t:Remedy.Schema.EventEntityType.c/0`
 
   """
   @doc since: "0.6.9"
@@ -5300,7 +5291,7 @@ defmodule Remedy.API do
   - `:scheduled_end_time` - `t:Remedy.ISO8601.c/0`
   - `:description` - `t:String.t/0`
   - `:entity_type` - `t:Remedy.Schema.EventEntityType.c/0`
-  - `:status` - `EventStatus`
+  - `:status` - `t:EventStatus.c/0`
 
   ## Examples
 
@@ -5396,6 +5387,8 @@ defmodule Remedy.API do
     return_errors(bad_changeset)
   end
 
+  alias Remedy.API.{RestRequest, Rest, RestResponse}
+
   defp request({method, route, params, reason, body}) do
     RestRequest.new(method, route, params, reason, body)
     |> Rest.request()
@@ -5426,7 +5419,7 @@ defmodule Remedy.API do
     schema
     |> EctoMorph.deep_filter_by_schema_fields(schema[:__struct__], filter_not_loaded: true)
     |> Morphix.compactiform!()
-    |> Keyword.new(fn {k, v} -> {String.to_atom(k), v} end)
+    |> Keyword.new(fn {k, v} -> {String.to_existing_atom(k), v} end)
   end
 
   ############################################################################
@@ -5443,6 +5436,9 @@ defmodule Remedy.API do
     Morphix.stringmorphiform!(params)
     |> module.changeset()
     |> Ecto.Changeset.apply_changes()
+
+    # |> EctoMorph.deep_filter_by_schema_fields(module, filter_not_loaded: true)
+    # |> Morphix.compactiform!()
   end
 
   defp shape(params, fields) do

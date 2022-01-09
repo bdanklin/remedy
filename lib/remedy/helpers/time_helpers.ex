@@ -246,5 +246,9 @@ defmodule Remedy.TimeHelpers do
     end
   end
 
+  def to_snowflake(value) when is_snowflake(value) do
+    value
+  end
+
   def to_snowflake(_value), do: :error
 end

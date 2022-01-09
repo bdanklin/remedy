@@ -31,7 +31,7 @@ defmodule Remedy.MixProject do
   def application do
     [
       extra_applications: [:logger, :inets, :jason],
-      mod: {Remedy.Application, []}
+      mod: {Remedy, []}
     ]
   end
 
@@ -65,9 +65,12 @@ defmodule Remedy.MixProject do
 
   def groups_for_modules do
     [
-      #      API: [Remedy.API],
-      #     CDN: [Remedy.CDN],
-      Events: [
+      # CDN: [Remedy.CDN],
+      # "REST API": [Remedy.API],
+      Constructors: [
+        Remedy.Embed
+      ],
+      Gateway: [
         Remedy.Consumer,
         Remedy.Gateway,
         Remedy.Gateway.Intents
@@ -77,7 +80,8 @@ defmodule Remedy.MixProject do
         Remedy.ISO8601,
         Remedy.Colour,
         Remedy.Snowflake,
-        Remedy.Flag
+        Remedy.Flag,
+        Remedy.Timestamp
       ],
       Helpers: [
         Remedy.TimeHelpers,

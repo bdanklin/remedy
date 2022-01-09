@@ -10,7 +10,7 @@ defmodule Remedy.Schema.Embed do
           description: String.t(),
           url: String.t(),
           timestamp: ISO8601.t(),
-          color: integer(),
+          color: Colour.t(),
           fields: [EmbedField.t()],
           author: EmbedAuthor.t(),
           footer: EmbedFooter.t(),
@@ -42,8 +42,8 @@ defmodule Remedy.Schema.Embed do
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:title, :type, :description, :url, :timestamp, :color])
-    |> validate_required(:description)
-    |> validate_exclusion(:description, [""])
+    #   |> validate_required(:description)
+    #   |> validate_exclusion(:description, [""])
     |> validate_length(:title, max: 256)
     |> validate_length(:description, max: 4096)
     |> cast_embed(:fields)

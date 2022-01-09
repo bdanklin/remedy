@@ -15,14 +15,8 @@ defmodule Remedy.Schema.Emoji do
           managed: boolean() | nil,
           animated: boolean() | nil,
           available: boolean() | nil,
-          user: User.t() | nil,
-          guild: Guild.t() | nil
+          user: User.t() | nil
         }
-
-  @typedoc """
-  Castable to Emoji.
-  """
-  @type c :: params() | t()
 
   @typedoc """
   Emoji Params Type
@@ -34,9 +28,13 @@ defmodule Remedy.Schema.Emoji do
           optional(:managed) => boolean(),
           optional(:animated) => boolean(),
           optional(:available) => boolean(),
-          optional(:user) => User.t(),
-          optional(:guild) => Guild.t()
+          optional(:user) => User.t()
         }
+
+  @typedoc """
+  Castable to Emoji.
+  """
+  @type c :: params() | t()
 
   @primary_key {:id, Snowflake, autogenerate: false}
   schema "emojis" do
@@ -45,8 +43,7 @@ defmodule Remedy.Schema.Emoji do
     field :managed, :boolean
     field :animated, :boolean, default: false
     field :available, :boolean
-    belongs_to :user, User
-    belongs_to :guild, Guild
+    embeds_one :user, User
   end
 
   def changeset(model \\ %__MODULE__{}, params) do

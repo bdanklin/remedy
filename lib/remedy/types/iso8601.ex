@@ -62,13 +62,12 @@ defmodule Remedy.ISO8601 do
   @impl true
   @spec dump(any) :: :error | {:ok, nil | binary}
   def dump(nil), do: {:ok, nil}
-
-  def dump(_value), do: :error
+  def dump(value), do: {:ok, value}
 
   @doc false
   @impl true
   @spec load(any) :: {:ok, t() | nil}
-  def load(value), do: {:ok, value}
+  def load(value), do: {:ok, to_iso8601(value)}
 
   @doc false
   @impl true

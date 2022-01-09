@@ -3,19 +3,6 @@ defmodule Remedy.Schema.ComponentOption do
   Component Options
   """
   use Remedy.Schema
-  @type label :: Component.label()
-  @type value :: String.t()
-  @type description :: String.t()
-  @type emoji :: Component.emoji()
-  @type default :: boolean
-
-  @type t :: %__MODULE__{
-          default: default,
-          description: description,
-          emoji: emoji,
-          label: label,
-          value: value
-        }
 
   embedded_schema do
     field :label, :string

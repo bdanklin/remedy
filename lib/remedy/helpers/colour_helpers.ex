@@ -89,6 +89,10 @@ defmodule Remedy.ColourHelpers do
     end
   end
 
+  def to_integer(nil) do
+    nil
+  end
+
   #### Private
 
   defp valid_hex?(hex) when is_binary(hex) and byte_size(hex) in [3, 4, 6, 7] do

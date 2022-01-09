@@ -21,5 +21,10 @@ defmodule Remedy.Schema.GuildFeatures do
             VANITY_URL: 1 <<< 17,
             VERIFIED: 1 <<< 18,
             VIP_REGIONS: 1 <<< 19,
-            WELCOME_SCREEN_ENABLED: 1 <<< 20
+            WELCOME_SCREEN_ENABLED: 1 <<< 20,
+            NEW_THREAD_PERMISSIONS: 1 <<< 21,
+            MEMBER_PROFILES: 1 <<< 22,
+            THREADS_ENABLED: 1 <<< 23,
+            CHANNEL_BANNER: 1 <<< 24,
+            ANIMATED_BANNER: 1 <<< 25
 end

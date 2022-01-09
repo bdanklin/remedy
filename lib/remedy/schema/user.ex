@@ -65,4 +65,16 @@ defmodule Remedy.Schema.User do
   @spec mention(Remedy.Schema.User.t()) :: String.t()
   def mention(user)
   def mention(%__MODULE__{id: id}), do: "<@#{to_string(id)}>"
+
+  alias Remedy.CDN
+  def avatar(user, size \\ nil)
+  def avatar(%User{avatar: nil}, _size), do: nil
+
+  def avatar(%User{id: user_id, avatar: user_avatar}, size) do
+    CDN.user_avatar(user_id, user_avatar, size)
+  end
+
+  def avatar(%User{avatar: nil, discriminator: discriminator}, size) do
+    CDN.default_user_avatar(discriminator, size)
+  end
 end

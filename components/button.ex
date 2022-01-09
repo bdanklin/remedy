@@ -4,25 +4,27 @@ defmodule Remedy.Component.Button do
   """
   use Remedy.Schema.Component
 
-  @type link_button :: %{
-          type: Component.type(),
-          style: Component.style(),
-          label: Component.label(),
-          emoji: Component.emoji(),
-          url: Component.url(),
-          disabled: Component.disabled()
-        }
+  @type link :: %__MODULE__{
+    type: Component.type(),
+    style: Component.style(),
+    custom_id: nil,
+    label: Component.label(),
+    emoji: Component.emoji(),
+    url: Component.url(),
+    disabled: Component.disabled()
+  }
 
-  @type interaction_button :: %{
-          type: Component.type(),
-          style: Component.style(),
-          label: Component.label(),
-          emoji: Component.emoji(),
-          custom_id: Component.custom_id(),
-          disabled: Component.disabled()
-        }
+@type interaction :: %{
+    type: Component.type(),
+    style: Component.style(),
+    label: Component.label(),
+    emoji: Component.emoji(),
+    url: nil,
+    custom_id: Component.custom_id(),
+    disabled: Component.disabled()
+  }
 
-  @type t :: link_button | interaction_button
+@type t :: link_button | interaction_button
 
   @type opt ::
           {:style, Component.style()}

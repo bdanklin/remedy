@@ -36,7 +36,7 @@ defmodule Remedy.Timestamp do
   use Unsafe.Generator, handler: :unwrap, docs: false
 
   @typedoc "A Discord Timestamp."
-  @type t :: 0x400000..0xFFFFFFFFFFFFFFFF
+  @type t :: 1_420_034_400_000..4_102_408_800_000
   use Unsafe.Generator, handler: :unwrap, docs: false
 
   @typedoc "Castable to Discord Timestamp."
@@ -67,7 +67,7 @@ defmodule Remedy.Timestamp do
 
   @doc false
   @impl true
-  def load(value), do: {:ok, value}
+  def load(value), do: {:ok, to_iso8601(value)}
 
   @doc false
   @impl true

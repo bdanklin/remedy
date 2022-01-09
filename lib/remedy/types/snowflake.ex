@@ -40,10 +40,6 @@ defmodule Remedy.Snowflake do
   use Ecto.Type
   use Unsafe.Generator, handler: :unwrap, docs: false
 
-  @doc false
-
-  def factory, do: Faker.random_between(0x400000, 0xFFFFFFFFFFFFFFFF)
-
   @typedoc """
   A Discord Snowflake Type.
   """

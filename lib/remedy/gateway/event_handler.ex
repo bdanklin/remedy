@@ -3,60 +3,6 @@ defmodule Remedy.Gateway.EventHandler do
 
   alias Remedy.Gateway.EventCache
 
-  @dispatch_events [
-    :CHANNEL_CREATE,
-    :CHANNEL_UPDATE,
-    :CHANNEL_PINTS_UPDATE,
-    :CHANNEL_DELETE,
-    :GUILD_BAN_ADD,
-    :GUILD_BAN_REMOVE,
-    :GUILD_CREATE,
-    :GUILD_DELETE,
-    :GUILD_UPDATE,
-    :GUILD_INTEGRATIONS_UPDATE,
-    :GUILD_EMOJIS_UPDATE,
-    :GUILD_MEMBER_REMOVE,
-    :GUILD_MEMBER_UPDATE,
-    :GUILD_MEMBERS_CHUNK,
-    :GUILD_MEMBER_ADD,
-    :GUILD_ROLE_CREATE,
-    :GUILD_ROLE_DELETE,
-    :GUILD_ROLE_UPDATE,
-    :GUILD_STICKERS_UPDATE,
-    :INTEGRATION_CREATE,
-    :INTEGRATION_DELETE,
-    :INTEGRATION_UPDATE,
-    :INTERACTION_CREATE,
-    :INVITE_CREATE,
-    :INVITE_DELETE,
-    :MESSAGE_CREATE,
-    :MESSAGE_DELETE_BULK,
-    :MESSAGE_DELETE,
-    :MESSAGE_UPDATE,
-    :MESSAGE_REACTION_ADD,
-    :MESSAGE_REACTION_REMOVE_ALL,
-    :MESSAGE_REACTION_REMOVE_EMOJI,
-    :MESSAGE_REACTION_REMOVE,
-    :PRESENCE_UPDATE,
-    :READY,
-    :RESUMED,
-    :SPEAKING_UPDATE,
-    :STAGE_INSTANCE_CREATE,
-    :STAGE_INSTANCE_DELETE,
-    :STAGE_INSTANCE_UPDATE,
-    :THREAD_CREATE,
-    :THREAD_DELETE,
-    :THREAD_UPDATE,
-    :THREAD_LIST_SYNC,
-    :THREAD_MEMBER_UPDATE,
-    :THREAD_MEMBERS_UPDATE,
-    :TYPING_START,
-    :USER_UPDATE,
-    :VOICE_SERVER_UPDATE,
-    :VOICE_STATE_UPDATE,
-    :WEBHOOKS_UPDATE
-  ]
-
   require Logger
 
   def handle({event, payload, socket}) do
@@ -66,14 +12,7 @@ defmodule Remedy.Gateway.EventHandler do
     #  do: Logger.debug("#{inspect(event)}, #{inspect(payload, pretty: true, limit: :infinity)}")
     #  do: Logger.debug("#{inspect(event)}")
 
-    case event in @dispatch_events do
-      true ->
-        handle(event, payload, socket)
-
-      false ->
-        Logger.warn("UNHANDLED GATEWAY DISPATCH EVENT TYPE: #{event}, #{inspect(payload)}")
-        {event, payload, socket}
-    end
+    handle(event, payload, socket)
   end
 
   ## Event Handlers
@@ -542,6 +481,11 @@ defmodule Remedy.Gateway.EventHandler do
 
   def handle(:WEBHOOKS_UPDATE, payload, socket) do
     {:WEBHOOKS_UPDATE, payload, socket}
+  end
+
+  def handle(unhandled_event, payload, socket) do
+    Logger.warn("UNHANDLED GATEWAY DISPATCH EVENT TYPE: #{unhandled_event}, #{inspect(payload)}")
+    {unhandled_event, payload, socket}
   end
 
   defp form(attrs, module) do

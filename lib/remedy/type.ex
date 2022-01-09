@@ -91,7 +91,10 @@ defmodule Remedy.TypeBeforeCompile do
       @doc false
       @impl true
       def to_integer(type)
-      def to_integer(atom) when is_atom(atom), do: %__MODULE__{}[atom]
+
+      def to_integer(atom) when is_atom(atom) do
+        Map.get(%__MODULE__{} |> Map.from_struct(), atom)
+      end
 
       def to_integer(integer) when is_integer(integer),
         do: if(integer in vals(), do: integer, else: :error)
@@ -136,14 +139,12 @@ defmodule Remedy.TypeBeforeCompile do
 
       @doc false
       @unsafe {:dump, [:value]}
-      def dump(value) when is_integer(value), do: {:ok, value |> to_integer()}
-      def dump(value) when is_binary(value), do: {:ok, value |> to_integer()}
-      def dump(value) when is_atom(value), do: {:ok, value |> to_integer()}
+      def dump(value), do: {:ok, value |> to_integer()}
       def dump(_value), do: :error
 
       @doc false
       @unsafe {:load, [:value]}
-      def load(value) when is_integer(value), do: {:ok, value |> to_atom_key()}
+      def load(value) when is_integer(value), do: {:ok, key_for(value)}
 
       @doc false
       def type, do: :integer

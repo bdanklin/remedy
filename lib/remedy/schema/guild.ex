@@ -62,11 +62,11 @@ defmodule Remedy.Schema.Guild do
     field :approximate_member_count, :integer
     field :approximate_presence_count, :integer
     field :banner, :string
-    field :default_message_notifications, :integer
+    field :default_message_notifications, GuildDefaultMessageNotification
     field :description
     field :discovery_splash
-    field :explicit_content_filter, :integer
-    field :features, {:array, :string}
+    field :explicit_content_filter, GuildExplicitContentFilter
+    field :features, GuildFeatures
     field :icon, :string
     field :icon_hash, :string
     field :joined_at, ISO8601
@@ -75,18 +75,18 @@ defmodule Remedy.Schema.Guild do
     field :max_presences, :integer
     field :max_video_channel_users, :integer
     field :member_count, :integer
-    field :mfa_level, :integer
+    field :mfa_level, GuildMfaLevel
     field :name, :string
-    field :nsfw_level, :integer
+    field :nsfw_level, GuildNsfwLevel
     field :preferred_locale, :string
     field :premium_subscription_count, :integer
-    field :premium_tier, :integer
+    field :premium_tier, GuildPremiumTier
     #   field :region, :string
     field :splash, :string
     field :unavailable, :boolean
     field :system_channel_flags, GuildSystemChannelFlags
     field :vanity_url_code, :string
-    field :verification_level, :integer
+    field :verification_level, GuildVerificationLevel
     field :widget_enabled, :boolean
 
     #  field :permissions, :string
@@ -96,15 +96,17 @@ defmodule Remedy.Schema.Guild do
 
     embeds_one :welcome_screen, WelcomeScreen
 
-    has_many :channels, Channel, on_delete: :nilify_all
-    has_many :emojis, Emoji, on_delete: :nilify_all
-    # has_many :presences, Presence
-    has_many :roles, Role, on_delete: :nilify_all
-    has_many :stage_instances, Stage, on_delete: :nilify_all
-    has_many :stickers, Sticker, on_delete: :nilify_all
-    has_many :threads, Thread, on_delete: :nilify_all
-    has_many :members, Member, on_delete: :nilify_all
-    has_many :voice_states, VoiceState, on_delete: :nilify_all
+    embeds_many :channels, Channel
+    embeds_many :emojis, Emoji
+    embeds_many :presences, Presence
+    embeds_many :roles, Role
+    embeds_many :stage_instances, Stage
+    embeds_many :stickers, Sticker
+    embeds_many :threads, Thread
+    embeds_many :members, Member
+    embeds_many :voice_states, VoiceState
+
+    embeds_many :bans, Ban
 
     field :afk_channel_id, Snowflake
     field :public_updates_channel_id, Snowflake
@@ -114,7 +116,6 @@ defmodule Remedy.Schema.Guild do
 
     ## Custom
     field :shard, :integer
-    has_many :bans, Ban
 
     timestamps()
   end

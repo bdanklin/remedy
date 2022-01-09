@@ -55,6 +55,7 @@ defmodule Remedy.Schema.Message do
     embeds_one :author, User
 
     belongs_to :thread, Channel
+
     embeds_one :webhook, Webhook
 
     field :content, :string

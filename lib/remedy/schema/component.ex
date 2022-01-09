@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.Component do
+  @moduledoc """
+  Component Object
+  """
   use Remedy.Schema
 
   embedded_schema do

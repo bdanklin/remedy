@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.Event do
+  @moduledoc """
+  Event Object
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.Button do
+  @moduledoc """
+  This module contains the Buttons
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

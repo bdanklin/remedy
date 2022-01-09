@@ -1,10 +1,12 @@
-defmodule Remedy.EmojiImage do
-  @max_size 256
+defmodule Remedy.ImageData do
+  @max_size 256_000
   @max_width 128
   @max_height 128
 
   @moduledoc """
-  Ecto.Type implementation of Images.
+  Ecto.Type implementation of Image Data.
+
+  This allows a URL or path to be provided and the image data will be constructed from the linked image.
 
   This is only used with certain API endpoints and should not be used as a general purpose type for storing images in Ecto.
 
@@ -12,28 +14,16 @@ defmodule Remedy.EmojiImage do
 
   The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an `t:binary/0` value for storage.
 
-  #### Hex Code as a string
+  #### Image Data
 
-      "#FF0000"
+      "data:image/jpeg;base64,BASE64_ENCODED_JPEG_IMAGE_DATA"
 
+  #### Image URL
 
-  #### Hex Code as a string.
+      "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
 
-      "#F00"
-
-
-  #### Hex code as an integer
-
-      0xFF0000
-
-
-  #### Decimal representation
-
-      16711680
 
   """
-
-  ## Public API
 
   def info(_), do: nil
 
@@ -48,7 +38,7 @@ defmodule Remedy.EmojiImage do
   @typedoc """
   Castable to Image.
   """
-  @type c :: URI.t() | String.t()
+  @type c :: Path.t() | URI.t() | String.t()
 
   @doc false
   @impl true
@@ -91,6 +81,26 @@ defmodule Remedy.EmojiImage do
   @impl true
   def embed_as(_value), do: :dump
 
+  defp parse_data("http://" <> url) do
+    url = :erlang.binary_to_list("http://" <> url)
+
+    {:ok, {_resp, _headers, body}} = :httpc.request(url)
+
+    body
+    |> :erlang.list_to_binary()
+    |> parse_data()
+  end
+
+  defp parse_data("https://" <> url) do
+    url = :erlang.binary_to_list("https://" <> url)
+
+    {:ok, {_resp, _headers, body}} = :httpc.request(url)
+
+    body
+    |> :erlang.list_to_binary()
+    |> parse_data()
+  end
+
   defp parse_data(<<"data:image/png;base64,", _data::size(64)>> = valid_image)
        when byte_size(valid_image) >= @max_size do
     valid_image
@@ -101,13 +111,11 @@ defmodule Remedy.EmojiImage do
     valid_image
   end
 
-  ## When data presents as PNG and respects the size concerns
   defp parse_data(<<137, "PNG", 13, 10, 26, 10, _::32, "IHDR", width::32, height::32, _rest::binary>> = data)
        when width <= @max_width and height <= @max_height and byte_size(data) <= @max_size do
     "data:image/png;base64," <> Base.encode64(data)
   end
 
-  ## When data presents as JPG and respects the size concerns
   defp parse_data(<<255, 216, _::size(16), rest::binary>> = data) do
     case parse_jpeg(rest) do
       nil ->
@@ -115,8 +123,27 @@ defmodule Remedy.EmojiImage do
 
       {width, height, _ftype} when height <= @max_height and width <= @max_width ->
         "data:image/jpg;base64," <> Base.encode64(data)
+
+      _ ->
+        :error
     end
   end
+
+  defp parse_data(path) when is_binary(path) do
+    path
+    |> Path.expand()
+    |> File.read()
+    |> case do
+      {:ok, data} ->
+        IO.inspect(data)
+        parse_data(data)
+
+      _ ->
+        :error
+    end
+  end
+
+  defp parse_data(_value), do: :error
 
   defp parse_jpeg(<<block_len::size(16), rest::binary>>), do: parse_jpeg_block(block_len, rest)
 

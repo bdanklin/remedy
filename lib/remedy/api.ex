@@ -1719,7 +1719,7 @@ defmodule Remedy.API do
   @spec create_emoji(Snowflake.c(), opts) :: {:ok, Emoji.t()} | {:error, reason}
   def create_emoji(guild_id, opts) do
     data = %{}
-    types = %{name: :string, image: :string, roles: {:array, Snowflake}, reason: :string}
+    types = %{name: :string, image: ImageData, roles: {:array, Snowflake}, reason: :string}
     keys = Map.keys(types)
     params = Enum.into(opts, %{})
     reason = opts[:reason]

@@ -50,6 +50,10 @@ defmodule Remedy.ColourHelpers do
     |> to_string()
   end
 
+  def to_hex(0) do
+    "000000"
+  end
+
   def to_hex(integer) when is_integer(integer) and integer in 0..0xFFFFFF do
     Integer.to_string(integer, 16)
   end

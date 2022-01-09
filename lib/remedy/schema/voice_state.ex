@@ -4,7 +4,6 @@ defmodule Remedy.Schema.VoiceState do
   """
 
   use Remedy.Schema
-  alias Remedy.ISO8601
   @typedoc "Time at which the user requested to speak, if applicable"
 
   @type t :: %__MODULE__{
@@ -40,32 +39,9 @@ defmodule Remedy.Schema.VoiceState do
     embeds_one :member, Member
   end
 
-  @doc false
-  def form(params) do
-    params |> changeset() |> validate() |> apply_changes()
-  end
-
-  @doc false
-  def shape(model, params) do
-    model |> changeset(params) |> validate() |> apply_changes()
-  end
-
-  @doc false
-  def validate(changeset), do: changeset
-  @doc false
-  def changeset(params), do: changeset(%__MODULE__{}, params)
-  def changeset(nil, params), do: changeset(%__MODULE__{}, params)
-
-  def changeset(%__MODULE__{} = model, params) do
-    cast(model, params, castable())
-    |> cast_embeds()
-  end
-
-  defp cast_embeds(cast_model) do
-    Enum.reduce(__MODULE__.__schema__(:embeds), cast_model, &cast_embed(&1, &2))
-  end
-
-  defp castable do
-    __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds)
+  def changeset(model \\ %__MODULE__{}, params) do
+    model
+    |> cast(params, __MODULE__.__schema__(:fields) -- __MODULE__.__schema__(:embeds))
+    |> cast_embed(:member)
   end
 end

@@ -1,4 +1,8 @@
 defmodule Remedy.Schema.VoiceServerUpdate do
+  @moduledoc """
+  Voice Server Update Event Object
+  """
+
   use Remedy.Schema
 
   embedded_schema do

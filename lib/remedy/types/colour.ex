@@ -53,7 +53,7 @@ defmodule Remedy.Colour do
   @spec cast(any) :: :error | {:ok, nil | binary}
   def cast(value)
   def cast(nil), do: {:ok, nil}
-  def cast(value), do: {:ok, "#" <> to_hex(value)}
+  def cast(value), do: {:ok, to_hex(value)}
 
   @doc false
   @impl true
@@ -66,7 +66,7 @@ defmodule Remedy.Colour do
   @impl true
   @unsafe {:load, [:value]}
   @spec load(any) :: {:ok, String.t()}
-  def load(value), do: {:ok, "#" <> to_hex(value)}
+  def load(value), do: {:ok, to_hex(value)}
 
   @doc false
   @impl true

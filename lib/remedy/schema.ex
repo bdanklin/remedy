@@ -119,10 +119,11 @@ defmodule Remedy.Schema do
       }
 
       alias Remedy.{
+        Colour,
+        ImageData,
         ISO8601,
         Snowflake,
-        Timestamp,
-        Colour
+        Timestamp
       }
     end
   end

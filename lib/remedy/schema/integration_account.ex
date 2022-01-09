@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.IntegrationAccount do
+  @moduledoc """
+  Integration Account Object
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

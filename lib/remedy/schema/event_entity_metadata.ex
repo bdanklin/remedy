@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.EventEntityMetadata do
+  @moduledoc """
+  Event Entity Metadata Object
+  """
   use Remedy.Schema
 
   @type t :: %__MODULE__{

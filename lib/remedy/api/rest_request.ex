@@ -25,13 +25,19 @@ defmodule Remedy.API.RestRequest do
     reason: nil,
     headers: [
       {"Authorization", "Bot #{Application.get_env(:remedy, :token)}"},
-      {"User-Agent", "DiscordBot (https://github.com/bdanklin/remedy, 0.6.8)"}
+      {"User-Agent", "DiscordBot (https://github.com/bdanklin/remedy, 0.6.9)"}
     ]
   ]
 
   @spec new(any, binary, any, any, any) :: RestRequest.t()
   def new(method, route, params, reason, body) do
-    %__MODULE__{method: method, route: route, params: params, reason: reason, body: body}
+    %__MODULE__{
+      method: method,
+      route: route,
+      params: params,
+      reason: reason,
+      body: body
+    }
     |> IO.inspect()
     |> add_query_params()
     |> add_audit_log_reason()
@@ -68,9 +74,7 @@ defmodule Remedy.API.RestRequest do
       {:file, file, {"form-data", [{"filename", body[:content]}]}, [{"tts", body[:tts]}]}
     ]
 
-    headers = [{"content-type", "multipart/form-data"}] ++ headers
-
-    %__MODULE__{request | body: body, headers: headers}
+    %__MODULE__{request | body: body, headers: [{"content-type", "multipart/form-data"}] ++ headers}
   end
 
   ## JSON

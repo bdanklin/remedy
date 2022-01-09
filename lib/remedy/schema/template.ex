@@ -1,4 +1,7 @@
 defmodule Remedy.Schema.Template do
+  @moduledoc """
+  Template Object
+  """
   use Remedy.Schema
 
   @primary_key {:code, :string, autogenerate: false}

@@ -10,7 +10,7 @@
     <title>Remedy.CDN — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-7d61f27e70.js"></script>
+    <script src="dist/sidebar_items-876991b0e6.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -150,16 +150,6 @@ Remedy
         </div>
 
           <div class="summary-synopsis"><p>The images size.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:snowflake/0" translate="no">snowflake()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>The snowflake id of the resource.</p></div>
 
       </div>
 
@@ -332,7 +322,7 @@ Types
     <h1 class="signature" translate="no">discriminator()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L32" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L29" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -345,7 +335,7 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">discriminator() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+          <pre translate="no">discriminator() :: 0..9999</pre>
 
       </div>
 
@@ -365,7 +355,7 @@ Types
     <h1 class="signature" translate="no">hash()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L29" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L26" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -419,39 +409,6 @@ Types
 
 
 <p>The images size.</p>
-  </section>
-</section>
-<section class="detail" id="t:snowflake/0">
-
-  <div class="detail-header">
-    <a href="#t:snowflake/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">snowflake()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L26" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">snowflake() :: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>()</pre>
-
-      </div>
-
-
-
-
-<p>The snowflake id of the resource.</p>
   </section>
 </section>
 <section class="detail" id="t:uri/0">
@@ -512,7 +469,7 @@ Functions
     <h1 class="signature" translate="no">achievement_icon(application_id, achievement_id, icon_hash, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L220" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L217" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -525,7 +482,8 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">achievement_icon(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">achievement_icon(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) ::
+  <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -536,7 +494,7 @@ Functions
   <a href="#achievement_icon/4-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">achievement_icon</span><span class="p" data-group-id="8850122405-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="8850122405-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">achievement_icon</span><span class="p" data-group-id="4672559227-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="4672559227-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/achievement-icons/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -552,7 +510,7 @@ Functions
     <h1 class="signature" translate="no">application_asset(application_id, asset_id, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L204" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L201" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -565,7 +523,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">application_asset(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">application_asset(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -576,7 +534,7 @@ Functions
   <a href="#application_asset/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_asset</span><span class="p" data-group-id="2397015286-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="2397015286-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_asset</span><span class="p" data-group-id="8848417809-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="8848417809-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/app-assets/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -592,7 +550,7 @@ Functions
     <h1 class="signature" translate="no">application_cover(application_id, cover_image, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L189" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L186" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -605,7 +563,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">application_cover(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">application_cover(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -616,7 +574,7 @@ Functions
   <a href="#application_cover/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_cover</span><span class="p" data-group-id="7664300810-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="7664300810-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_cover</span><span class="p" data-group-id="5925958366-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="5925958366-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/app-cover-images/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -632,7 +590,7 @@ Functions
     <h1 class="signature" translate="no">application_icon(application_id, icon, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L174" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L171" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -645,7 +603,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">application_icon(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">application_icon(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -656,7 +614,7 @@ Functions
   <a href="#application_icon/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_icon</span><span class="p" data-group-id="6306543957-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="6306543957-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_icon</span><span class="p" data-group-id="7233783909-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="7233783909-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/app-icons/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -672,7 +630,7 @@ Functions
     <h1 class="signature" translate="no">custom_emoji(id, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L44" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L41" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -685,7 +643,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">custom_emoji(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:size/0">size</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+          <pre translate="no">custom_emoji(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:size/0">size</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
 
       </div>
 
@@ -696,7 +654,7 @@ Functions
   <a href="#custom_emoji/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">emoji</span><span class="p" data-group-id="5925900331-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="5925900331-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">emoji</span><span class="p" data-group-id="1356409185-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="1356409185-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/emojis/12345678901234567890123456789012.png?size=128&quot;</span></code></pre>
   </section>
 </section>
@@ -712,7 +670,7 @@ Functions
     <h1 class="signature" translate="no">default_user_avatar(discriminator, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L142" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L139" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -736,7 +694,7 @@ Functions
   <a href="#default_user_avatar/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">default_user_avatar</span><span class="p" data-group-id="7674903078-1">(</span><span class="mi">3</span><span class="p" data-group-id="7674903078-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">default_user_avatar</span><span class="p" data-group-id="1130602970-1">(</span><span class="mi">3</span><span class="p" data-group-id="1130602970-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/embed/avatars/3.png&quot;</span></code></pre>
   </section>
 </section>
@@ -750,7 +708,7 @@ Functions
     <h1 class="signature" translate="no">guild_banner(guild_id, guild_banner, size)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L107" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L104" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -763,7 +721,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_banner(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">guild_banner(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -774,7 +732,7 @@ Functions
   <a href="#guild_banner/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_banner</span><span class="p" data-group-id="5551908417-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="5551908417-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_banner</span><span class="p" data-group-id="0717194705-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="0717194705-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/banners/848619361782726696/&quot;</span><span class="mi">7</span><span class="n">ed6ea26b7a5e64f78ca5df202cf4d13</span><span class="err">&quot;</span></code></pre>
   </section>
 </section>
@@ -790,7 +748,7 @@ Functions
     <h1 class="signature" translate="no">guild_discovery_splash(guild_id, guild_discovery_splash, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L91" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L88" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -803,7 +761,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_discovery_splash(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">guild_discovery_splash(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -814,7 +772,7 @@ Functions
   <a href="#guild_discovery_splash/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_discovery_splash</span><span class="p" data-group-id="4380976777-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="4380976777-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_discovery_splash</span><span class="p" data-group-id="4315621430-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="4315621430-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png&quot;</span></code></pre>
   </section>
 </section>
@@ -830,7 +788,7 @@ Functions
     <h1 class="signature" translate="no">guild_icon(id, guild_icon, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L60" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L57" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -843,7 +801,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_icon(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">guild_icon(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -854,7 +812,7 @@ Functions
   <a href="#guild_icon/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_icon</span><span class="p" data-group-id="5741007150-1">(</span><span class="mi">872417560094732328</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="5741007150-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_icon</span><span class="p" data-group-id="2810376117-1">(</span><span class="mi">872417560094732328</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="2810376117-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -870,7 +828,7 @@ Functions
     <h1 class="signature" translate="no">guild_splash(id, splash, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L76" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L73" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -883,7 +841,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_splash(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">guild_splash(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -894,7 +852,7 @@ Functions
   <a href="#guild_splash/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_splash</span><span class="p" data-group-id="1468359883-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="1468359883-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_splash</span><span class="p" data-group-id="2133248057-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="2133248057-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png&quot;</span></code></pre>
   </section>
 </section>
@@ -908,7 +866,7 @@ Functions
     <h1 class="signature" translate="no">sticker_pack_banner(banner_asset_id, size)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L230" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L227" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -921,7 +879,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">sticker_pack_banner(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">sticker_pack_banner(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -943,7 +901,7 @@ Functions
     <h1 class="signature" translate="no">user_avatar(id, user_avatar, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L158" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L155" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -956,7 +914,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">user_avatar(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">user_avatar(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -967,7 +925,7 @@ Functions
   <a href="#user_avatar/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_avatar</span><span class="p" data-group-id="8925846037-1">(</span><span class="mi">707047919332884520</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1df05ae0f21a24c377e9a1051c2b6035&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="8925846037-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_avatar</span><span class="p" data-group-id="5280112771-1">(</span><span class="mi">707047919332884520</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1df05ae0f21a24c377e9a1051c2b6035&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="5280112771-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/avatars/707047919332884520/1df05ae0f21a24c377e9a1051c2b6035.png?size=128&quot;</span></code></pre>
   </section>
 </section>
@@ -983,7 +941,7 @@ Functions
     <h1 class="signature" translate="no">user_banner(user_id, user_banner, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L123" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L120" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -996,7 +954,7 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">user_banner(<a href="#t:snowflake/0">snowflake</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
+          <pre translate="no">user_banner(<a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(), <a href="#t:hash/0">hash</a>(), <a href="#t:size/0">size</a>()) :: <a href="#t:uri/0">uri</a>()</pre>
 
       </div>
 
@@ -1007,7 +965,7 @@ Functions
   <a href="#user_banner/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_banner</span><span class="p" data-group-id="1092362491-1">(</span><span class="mi">179255727561375744</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e625e858e48602248a69bcfdfa886ab4&quot;</span><span class="p" data-group-id="1092362491-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_banner</span><span class="p" data-group-id="8601486741-1">(</span><span class="mi">179255727561375744</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e625e858e48602248a69bcfdfa886ab4&quot;</span><span class="p" data-group-id="8601486741-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/banners/179255727561375744/e625e858e48602248a69bcfdfa886ab4.png&quot;</span></code></pre>
   </section>
 </section>

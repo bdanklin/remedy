@@ -7,10 +7,10 @@
     <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Schema.GuildDefaultMessageNotificationLevel — Remedy v0.6.9</title>
+    <title>Remedy.Schema.Button — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-7d61f27e70.js"></script>
+    <script src="dist/sidebar_items-876991b0e6.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -84,10 +84,10 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Schema.GuildDefaultMessageNotificationLevel</span> 
+  <span translate="no">Remedy.Schema.Button</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/button.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -95,14 +95,6 @@ Remedy
 
 </h1>
 
-
-  <section id="moduledoc">
-<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p><table><thead><tr><th style="text-align: right;">Value</th><th style="text-align: left;">Type</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">0</code></td><td style="text-align: left;"><code class="inline">:ALL_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1</code></td><td style="text-align: left;"><code class="inline">:ONLY_MENTIONS</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
-  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Casting
-</h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;ONLY_MENTIONS&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:ALL_MESSAGES</span></code></pre>
-  </section>
 
 
   <section id="summary" class="details-list">
@@ -121,31 +113,17 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:c/0" translate="no">c()</a>
+          <a href="#t:interaction/0" translate="no">interaction()</a>
 
         </div>
-
-          <div class="summary-synopsis"><p>Castable to Guild Default Message Notification Level Type</p></div>
 
       </div>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:f/0" translate="no">f()</a>
+          <a href="#t:link/0" translate="no">link()</a>
 
         </div>
-
-          <div class="summary-synopsis"><p>Guild Default Message Notification Level Values</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:load/0" translate="no">load()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Loaded Guild Default Message Notification Level</p></div>
 
       </div>
 
@@ -155,7 +133,20 @@ Remedy
 
         </div>
 
-          <div class="summary-synopsis"><p>Guild Default Message Notification Level Type</p></div>
+      </div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#changeset/2" translate="no">changeset(model \\ %__MODULE__{}, params)</a>
+
+        </div>
 
       </div>
 
@@ -173,17 +164,17 @@ Remedy
 Types
     </h1>
     <div class="types-list">
-<section class="detail" id="t:c/0">
+<section class="detail" id="t:interaction/0">
 
   <div class="detail-header">
-    <a href="#t:c/0" class="detail-link" title="Link to this type">
+    <a href="#t:interaction/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">c()</h1>
+    <h1 class="signature" translate="no">interaction()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/button.ex#L25" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -196,27 +187,35 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | <a href="#t:f/0">f</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre translate="no">interaction() :: %{
+  type: 2,
+  style: Remedy.Schema.Component.style(),
+  label: Remedy.Schema.Component.label(),
+  emoji: Remedy.Schema.Component.emoji() | nil,
+  url: nil,
+  custom_id: Remedy.Schema.Component.custom_id(),
+  disabled: Remedy.Schema.Component.disabled()
+}</pre>
 
       </div>
 
 
 
 
-<p>Castable to Guild Default Message Notification Level Type</p><p>See <a href="#module-casting">Casting</a> for more information.</p>
+
   </section>
 </section>
-<section class="detail" id="t:f/0">
+<section class="detail" id="t:link/0">
 
   <div class="detail-header">
-    <a href="#t:f/0" class="detail-link" title="Link to this type">
+    <a href="#t:link/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">f()</h1>
+    <h1 class="signature" translate="no">link()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/button.ex#L14" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -229,47 +228,23 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">f() :: :ALL_MESSAGES | :ONLY_MENTIONS</pre>
+          <pre translate="no">link() :: %Remedy.Schema.Button{
+  custom_id: nil,
+  disabled: Remedy.Schema.Component.disabled(),
+  emoji: Remedy.Schema.Component.emoji() | nil,
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  label: Remedy.Schema.Component.label() | nil,
+  style: Remedy.Schema.Component.style(),
+  type: 2,
+  url: Remedy.Schema.Component.url()
+}</pre>
 
       </div>
 
 
 
 
-<p>Guild Default Message Notification Level Values</p>
-  </section>
-</section>
-<section class="detail" id="t:load/0">
 
-  <div class="detail-header">
-    <a href="#t:load/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">load()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">load() :: <a href="#t:f/0">f</a>()</pre>
-
-      </div>
-
-
-
-
-<p>Loaded Guild Default Message Notification Level</p>
   </section>
 </section>
 <section class="detail" id="t:t/0">
@@ -282,7 +257,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/button.ex#L4" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -295,14 +270,64 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">t() :: 0..1</pre>
+          <pre translate="no">t() :: %Remedy.Schema.Button{
+  custom_id: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  disabled: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil,
+  emoji: <a href="Remedy.Schema.Emoji.html#t:t/0">Remedy.Schema.Emoji.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  label: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  style: <a href="Remedy.Schema.ButtonStyle.html#t:t/0">Remedy.Schema.ButtonStyle.t</a>(),
+  type: 2,
+  url: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil
+}</pre>
 
       </div>
 
 
 
 
-<p>Guild Default Message Notification Level Type</p>
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="changeset/2">
+
+    <span id="changeset/1"></span>
+
+  <div class="detail-header">
+    <a href="#changeset/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">changeset(model \\ %__MODULE__{}, params)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/button.ex#L45" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+
   </section>
 </section>
 
@@ -316,7 +341,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/guild_default_message_notification.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/button.ex">(current file)</a>
 
         </p>
 

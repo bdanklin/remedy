@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Schema.ApplicationFlags — Remedy v0.6.9</title>
+    <title>Remedy.Schema.GuildDefaultMessageNotification — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
     <script src="dist/sidebar_items-876991b0e6.js"></script>
@@ -84,10 +84,10 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Schema.ApplicationFlags</span> 
+  <span translate="no">Remedy.Schema.GuildDefaultMessageNotification</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application_flags.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,12 +97,11 @@ Remedy
 
 
   <section id="moduledoc">
-<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_PRESENCE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 13</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_PRESENCE_LIMITED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_GUILD_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 15</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_GUILD_MEMBERS_LIMITED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 16</code></td><td style="text-align: left;"><code class="inline">:VERIFICATION_PENDING_GUILD_LIMIT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 17</code></td><td style="text-align: left;"><code class="inline">:EMBEDDED</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 18</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_MESSAGE_CONTENT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 19</code></td><td style="text-align: left;"><code class="inline">:GATEWAY_MESSAGE_CONTENT_LIMITED</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p><table><thead><tr><th style="text-align: right;">Value</th><th style="text-align: left;">Type</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">0</code></td><td style="text-align: left;"><code class="inline">:ALL_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1</code></td><td style="text-align: left;"><code class="inline">:ONLY_MENTIONS</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
   <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">274432</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11100011000000000000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0254697725-1">[</span><span class="s">&quot;VERIFICATION_PENDING_GUILD_LIMIT&quot;</span><span class="p" data-group-id="0254697725-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9056259014-1">[</span><span class="ss">:EMBEDDED</span><span class="p">,</span><span class="w"> </span><span class="ss">:GATEWAY_GUILD_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GATEWAY_MESSAGE_CONTENT</span><span class="p">,</span><span class="w"> </span><span class="ss">:GATEWAY_PRESENCE</span><span class="p">,</span><span class="w">
- </span><span class="ss">:VERIFICATION_PENDING_GUILD_LIMIT</span><span class="p" data-group-id="9056259014-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="1693270775-1">%{</span><span class="ss">GATEWAY_GUILD_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">GATEWAY_MESSAGE_CONTENT_LIMITED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="1693270775-1">}</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">0</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;ONLY_MENTIONS&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:ONLY_MENTIONS</span></code></pre>
   </section>
 
 
@@ -126,7 +125,7 @@ Remedy
 
         </div>
 
-          <div class="summary-synopsis"><p>Castable to Application Flags Type</p></div>
+          <div class="summary-synopsis"><p>Castable to Guild Default Message Notification Type</p></div>
 
       </div>
 
@@ -136,7 +135,7 @@ Remedy
 
         </div>
 
-          <div class="summary-synopsis"><p>Application Flags Flags</p></div>
+          <div class="summary-synopsis"><p>Guild Default Message Notification Values</p></div>
 
       </div>
 
@@ -146,7 +145,7 @@ Remedy
 
         </div>
 
-          <div class="summary-synopsis"><p>Loaded Application Flags Flags</p></div>
+          <div class="summary-synopsis"><p>Loaded Guild Default Message Notification</p></div>
 
       </div>
 
@@ -156,7 +155,7 @@ Remedy
 
         </div>
 
-          <div class="summary-synopsis"><p>Application Flags Type</p></div>
+          <div class="summary-synopsis"><p>Guild Default Message Notification Type</p></div>
 
       </div>
 
@@ -184,7 +183,7 @@ Types
     <h1 class="signature" translate="no">c()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -197,14 +196,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | [<a href="#t:f/0">f</a>()] | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]</pre>
+          <pre translate="no">c() :: <a href="#t:t/0">t</a>() | <a href="#t:f/0">f</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
 
       </div>
 
 
 
 
-<p>Castable to Application Flags Type</p>
+<p>Castable to Guild Default Message Notification Type</p><p>See <a href="#module-casting">Casting</a> for more information.</p>
   </section>
 </section>
 <section class="detail" id="t:f/0">
@@ -217,7 +216,7 @@ Types
     <h1 class="signature" translate="no">f()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -230,22 +229,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">f() ::
-  :EMBEDDED
-  | :GATEWAY_GUILD_MEMBERS
-  | :GATEWAY_GUILD_MEMBERS_LIMITED
-  | :GATEWAY_MESSAGE_CONTENT
-  | :GATEWAY_MESSAGE_CONTENT_LIMITED
-  | :GATEWAY_PRESENCE
-  | :GATEWAY_PRESENCE_LIMITED
-  | :VERIFICATION_PENDING_GUILD_LIMIT</pre>
+          <pre translate="no">f() :: :ALL_MESSAGES | :ONLY_MENTIONS</pre>
 
       </div>
 
 
 
 
-<p>Application Flags Flags</p>
+<p>Guild Default Message Notification Values</p>
   </section>
 </section>
 <section class="detail" id="t:load/0">
@@ -258,7 +249,7 @@ Types
     <h1 class="signature" translate="no">load()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -271,14 +262,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">load() :: [<a href="#t:f/0">f</a>()]</pre>
+          <pre translate="no">load() :: <a href="#t:f/0">f</a>()</pre>
 
       </div>
 
 
 
 
-<p>Loaded Application Flags Flags</p>
+<p>Loaded Guild Default Message Notification</p>
   </section>
 </section>
 <section class="detail" id="t:t/0">
@@ -291,7 +282,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/application_flags.ex#L1" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild_default_message_notification.ex#L1" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -304,14 +295,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">t() :: 0..1_044_480</pre>
+          <pre translate="no">t() :: 0..1</pre>
 
       </div>
 
 
 
 
-<p>Application Flags Type</p>
+<p>Guild Default Message Notification Type</p>
   </section>
 </section>
 
@@ -325,7 +316,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/application_flags.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/guild_default_message_notification.ex">(current file)</a>
 
         </p>
 

@@ -10,7 +10,7 @@
     <title>API Reference — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-876991b0e6.js"></script>
+    <script src="dist/sidebar_items-09e42d4fa5.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -161,15 +161,6 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.EmojiImage.html" translate="no">Remedy.EmojiImage</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Ecto.Type implementation of Images.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="Remedy.Gateway.Intents.html" translate="no">Remedy.Gateway.Intents</a>
 
   </div>
@@ -188,6 +179,15 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="Remedy.ImageData.html" translate="no">Remedy.ImageData</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Ecto.Type implementation of Image Data.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="Remedy.Schema.html" translate="no">Remedy.Schema</a>
 
   </div>
@@ -200,6 +200,24 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
     <a href="Remedy.Schema.Activity.html" translate="no">Remedy.Schema.Activity</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>embedded_schema do
+  field :name, :string
+  field :type, ActivityType
+  field :url, :string
+  field :created_at, Timestamp
+  field :application_id, Snowflake
+  field :details, :string
+  field :state, :string
+  field :instance, :boolean
+  field :flags, ActivityFlags
+  embeds_one :timestamps, ActivityTimestamps
+  embeds_one :emoji, Emoji
+  embeds_one :party, ActivityParty
+  embeds_one :assets, ActivityAssets
+  embeds_one :secrets, ActivitySecrets
+  embeds_many :buttons, ActivityButton
+end</p></div>
 
 </div>
 <div class="summary-row">
@@ -334,6 +352,8 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 
   </div>
 
+    <div class="summary-synopsis"><p>This module contains the Buttons</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -349,6 +369,8 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
     <a href="Remedy.Schema.Callback.html" translate="no">Remedy.Schema.Callback</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Interaction Callback</p></div>
 
 </div>
 <div class="summary-row">
@@ -474,6 +496,8 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 
   </div>
 
+    <div class="summary-synopsis"><p>Component Object</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -580,12 +604,16 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 
   </div>
 
+    <div class="summary-synopsis"><p>Event Object</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="Remedy.Schema.EventEntityMetadata.html" translate="no">Remedy.Schema.EventEntityMetadata</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Event Entity Metadata Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -710,6 +738,8 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
     <a href="Remedy.Schema.IntegrationAccount.html" translate="no">Remedy.Schema.IntegrationAccount</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Integration Account Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -988,6 +1018,8 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 
   </div>
 
+    <div class="summary-synopsis"><p>Template Object</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -1075,6 +1107,8 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
     <a href="Remedy.Schema.VoiceServerUpdate.html" translate="no">Remedy.Schema.VoiceServerUpdate</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Voice Server Update Event Object</p></div>
 
 </div>
 <div class="summary-row">

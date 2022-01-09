@@ -5,9 +5,9 @@ Remedy.Colour.html
 Remedy.ColourHelpers.html
 Remedy.Consumer.html
 Remedy.Embed.html
-Remedy.EmojiImage.html
 Remedy.Gateway.Intents.html
 Remedy.ISO8601.html
+Remedy.ImageData.html
 Remedy.Schema.Activity.html
 Remedy.Schema.ActivityButton.html
 Remedy.Schema.ActivityFlags.html
@@ -126,8 +126,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-55e78d36b2.js
-dist/sidebar_items-876991b0e6.js
+dist/search_items-1ccb8ed49f.js
+dist/sidebar_items-09e42d4fa5.js
 getting_started.html
 index.html
 introduction.html

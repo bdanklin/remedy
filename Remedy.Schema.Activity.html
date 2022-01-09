@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Activity — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-876991b0e6.js"></script>
+    <script src="dist/sidebar_items-09e42d4fa5.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -95,6 +95,26 @@ Remedy
 
 </h1>
 
+
+  <section id="moduledoc">
+<p>embedded_schema do
+  field :name, :string
+  field :type, ActivityType
+  field :url, :string
+  field :created_at, Timestamp
+  field :application_id, Snowflake
+  field :details, :string
+  field :state, :string
+  field :instance, :boolean
+  field :flags, ActivityFlags
+  embeds_one :timestamps, ActivityTimestamps
+  embeds_one :emoji, Emoji
+  embeds_one :party, ActivityParty
+  embeds_one :assets, ActivityAssets
+  embeds_one :secrets, ActivitySecrets
+  embeds_many :buttons, ActivityButton
+end</p>
+  </section>
 
 
 

@@ -129,12 +129,7 @@ Remedy.Snowflake.html
 Remedy.TimeHelpers.html
 Remedy.Timestamp.html
 Remedy.URL.html
-Remedy.Voice.Commands.Resume.html
-Remedy.Voice.Commands.SelectProtocol.html
-Remedy.Voice.Events.SessionDescription.html
 Remedy.Voice.OPCode.html
-Remedy.Voice.Session.State.html
-Remedy.Voice.Stagehand.html
 Remedy.Voice.html
 Remedy.html
 api-reference.html
@@ -145,8 +140,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-f40bf6b07b.js
-dist/sidebar_items-6464bcd436.js
+dist/search_items-30347605e0.js
+dist/sidebar_items-f34676b5ff.js
 getting_started.html
 index.html
 introduction.html

@@ -1,4 +1,6 @@
 defmodule Remedy.Voice.Session.State do
+  @moduledoc false
+
   defstruct conn: nil,
             mod: Voice,
             ## Establishing a connection

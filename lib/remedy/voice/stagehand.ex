@@ -1,4 +1,6 @@
 defmodule Remedy.Voice.Stagehand do
+  @moduledoc false
+
   # Ensure each guild has a session waiting for voice connections
   use GenServer
 

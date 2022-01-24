@@ -1,4 +1,5 @@
 defmodule Remedy.Voice.OPCode do
+  @moduledoc false
   use Remedy.Type
 
   @doc false

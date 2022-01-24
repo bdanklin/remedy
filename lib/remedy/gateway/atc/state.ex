@@ -1,4 +1,5 @@
 defmodule Remedy.Gateway.ATC.State do
+  @moduledoc false
   defstruct bucket: :atc,
             concurrency: 1
 

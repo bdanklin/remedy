@@ -1,6 +1,6 @@
 defmodule Remedy.Voice.OPCode do
   @moduledoc false
-  use Remedy.Type
+  use Remedy.Type, docs: false
 
   @doc false
   defstruct IDENTIFY: 0,

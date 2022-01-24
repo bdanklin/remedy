@@ -1,4 +1,5 @@
 defmodule Remedy.Gateway.Commands.PresenceUpdate do
+  @moduledoc false
   defstruct since: 91_879_201,
             status: "online",
             afk: false,

@@ -1,5 +1,44 @@
 defmodule Remedy.Type do
-  @moduledoc false
+  @moduledoc """
+  `Ecto.Type` implementation of types.
+
+  Simply put, types are magic numbers for pre agreed values. Convenience does not lend itself to looking up the numbers when one of the fields needs to be used. The behaviour provides simplicity for these fields. Modules implementing this behaviour generally end with "Type". The complete list of Type types is:
+
+  - `Remedy.Schema.ActivityType`
+  - `Remedy.Schema.AuditLogActionType`
+  - `Remedy.Schema.AuditLogOptionType`
+  - `Remedy.Schema.ButtonStyle`
+  - `Remedy.Schema.CallbackType`
+  - `Remedy.Schema.ChannelType`
+  - `Remedy.Schema.CommandOptionType`
+  - `Remedy.Schema.CommandPermissionType`
+  - `Remedy.Schema.CommandType`
+  - `Remedy.Schema.ComponentType`
+  - `Remedy.Schema.EventEntityType`
+  - `Remedy.Schema.EventPrivacyLevel`
+  - `Remedy.Schema.EventStatus`
+  - `Remedy.Schema.GuildDefaultMessageNotification`
+  - `Remedy.Schema.GuildExplicitContentFilter`
+  - `Remedy.Schema.GuildMfaLevel`
+  - `Remedy.Schema.GuildNsfwLevel`
+  - `Remedy.Schema.GuildPremiumTier`
+  - `Remedy.Schema.GuildVerificationLevel`
+  - `Remedy.Schema.IntegrationExpireType`
+  - `Remedy.Schema.IntegrationType`
+  - `Remedy.Schema.MessageActivityType`
+  - `Remedy.Schema.MessageType`
+  - `Remedy.Schema.PermissionOverwriteType`
+  - `Remedy.Schema.ResponseType`
+  - `Remedy.Schema.StagePrivacyLevel`
+  - `Remedy.Schema.StickerFormatType`
+  - `Remedy.Schema.StickerType`
+  - `Remedy.Schema.ThreadType`
+  - `Remedy.Schema.WebhookType`
+
+  Documentation for these types including how to cast them are available within the individual modules.
+
+  """
+
   ##  Type behaviour is concerned with type / radio types
   ##
   ##  Various fields within discord display data as a type represented by an integer
@@ -46,12 +85,14 @@ defmodule Remedy.Type do
   @doc false
   @callback to_integer(any) :: any
 
-  defmacro __using__(_env) do
+  defmacro __using__(opts) do
+    docs = Keyword.get(opts, :docs, true)
+
     quote do
       @behaviour Remedy.Type
       alias __MODULE__
       use Ecto.Type
-
+      @docs unquote(docs)
       @before_compile Remedy.TypeBeforeCompile
     end
   end
@@ -62,6 +103,7 @@ defmodule Remedy.TypeBeforeCompile do
   defmacro __before_compile__(_env) do
     quote do
       use Remedy.TypeType,
+        docs: @docs,
         module_doc: Remedy.TypeType.module_doc(%__MODULE__{}),
         type_spec: Remedy.TypeType.type_spec(%__MODULE__{}),
         type_doc: Remedy.TypeType.type_doc(%__MODULE__{}),
@@ -163,6 +205,7 @@ end
 defmodule Remedy.TypeType do
   @moduledoc false
   defmacro __using__(
+             docs: docs,
              module_doc: module_doc,
              type_spec: type_spec,
              type_doc: type_doc,
@@ -174,6 +217,7 @@ defmodule Remedy.TypeType do
              load_spec: load_spec
            ) do
     quote bind_quoted: [
+            docs: docs,
             module_doc: module_doc,
             type_spec: type_spec,
             type_doc: type_doc,
@@ -184,7 +228,7 @@ defmodule Remedy.TypeType do
             load_doc: load_doc,
             load_spec: load_spec
           ] do
-      @moduledoc module_doc
+      @moduledoc docs && module_doc
 
       @typedoc type_doc
       @type unquote({:t, [], Elixir}) :: unquote(type_spec)

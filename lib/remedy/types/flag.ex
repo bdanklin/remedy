@@ -1,5 +1,23 @@
 defmodule Remedy.Flag do
-  @moduledoc false
+  @moduledoc """
+  `Ecto.Type` implementation of flag types.
+
+  Simply put, flag types are bitfields. Modules implementing this behaviour generally end with "Flags". The complete list of Flag types is:
+
+  - `Remedy.Gateway.Intents`
+  - `Remedy.Schema.ActivityFlags`
+  - `Remedy.Schema.CallbackDataFlags`
+  - `Remedy.Schema.GuildFeatures`
+  - `Remedy.Schema.GuildSystemChannelFlags`
+  - `Remedy.Schema.MessageFlags`
+  - `Remedy.Schema.Permission`
+  - `Remedy.Schema.ThreadMemberFlags`
+  - `Remedy.Schema.UserFlags`
+
+  Documentation for these types including how to cast them are available within the individual modules.
+
+  """
+
   ##  Flag behaviour is concerned with bit flags / checkox types
   ##
   ##  Various fields within discord display data as flags of bits, their sum,

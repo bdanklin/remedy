@@ -1,5 +1,5 @@
 defmodule Remedy.Gateway.OPCode do
-  use Remedy.Type
+  use Remedy.Type, docs: false
 
   defstruct DISPATCH: 0,
             HEARTBEAT: 1,

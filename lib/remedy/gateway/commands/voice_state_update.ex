@@ -1,4 +1,5 @@
 defmodule Remedy.Gateway.Commands.VoiceStateUpdate do
+  @moduledoc false
   defstruct guild_id: 0,
             channel_id: 0,
             self_mute: false,

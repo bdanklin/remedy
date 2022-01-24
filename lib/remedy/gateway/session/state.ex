@@ -1,4 +1,7 @@
 defmodule Remedy.Gateway.Session.State do
+  @moduledoc false
+  @opaque t :: %{}
+
   defstruct conn: nil,
             mod: Gateway,
             url: 'gateway.discord.gg',

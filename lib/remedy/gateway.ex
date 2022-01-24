@@ -1,5 +1,7 @@
 defmodule Remedy.Gateway do
-  @moduledoc false
+  @moduledoc """
+  Gateway Documentation
+  """
   use Supervisor
   alias Remedy.Gateway.{ATC, Buffer, Pool, Producer}
   require Logger

@@ -21,7 +21,7 @@ defmodule Remedy.MixProject do
       source_url: @scm_url,
       homepage_url: @doc_url,
       description: @description,
-      deps: deps(),
+      deps: deps() ++ dev_deps(),
       dialyzer: [plt_add_deps: :app_tree, plt_add_apps: [:mix]],
       docs: docs(),
       package: package()
@@ -65,23 +65,32 @@ defmodule Remedy.MixProject do
 
   def groups_for_modules do
     [
-      # CDN: [Remedy.CDN],
-      # "REST API": [Remedy.API],
-      Constructors: [
-        Remedy.Embed
-      ],
+      # Remedy
+      # Remedy.API
+      # Remedy.CDN
+      # Remedy.Cache
       Gateway: [
         Remedy.Consumer,
         Remedy.Gateway,
         Remedy.Gateway.Intents
       ],
-      Schema: [~r/Remedy.Schema/],
+      Constructors: [
+        Remedy.Embed,
+        Remedy.AllowedMentions,
+        Remedy.Content
+      ],
+      "Schema & Fields": [
+        ~r/Remedy.Schema/
+      ],
       Types: [
-        Remedy.ISO8601,
         Remedy.Colour,
-        Remedy.Snowflake,
         Remedy.Flag,
-        Remedy.Timestamp
+        Remedy.ImageData,
+        Remedy.ISO8601,
+        Remedy.Snowflake,
+        Remedy.Timestamp,
+        Remedy.Type,
+        Remedy.URL
       ],
       Helpers: [
         Remedy.TimeHelpers,
@@ -99,6 +108,7 @@ defmodule Remedy.MixProject do
       #      Stickers: &(&1[:section] == :stickers),
       #      Emojis: &(&1[:section] == :emojis),
       #      Reactions: &(&1[:section] == :reactions),
+      Schema: &(&1[:section] == :schema),
       Guards: &(&1[:section] == :guards)
     ]
   end
@@ -117,7 +127,31 @@ defmodule Remedy.MixProject do
 
   defp deps do
     [
-      ## Dev / Test Only
+      ## Web
+      {:gun, "2.0.1", hex: :remedy_gun},
+      {:certifi, "~> 2.8"},
+      ## Data Processing
+      {:gen_stage, "~> 1.0"},
+      ## DB & Parsing
+      {:jason, "~> 1.2"},
+      {:ecto, "~> 3.7"},
+      {:etso, "~> 0.1.6"},
+      ## Voice
+      {:kcl, "~> 1.4"},
+      {:porcelain, "~> 2.0"},
+      {:mime, "~> 1.6"},
+      # TODO: Take what we need and remove
+      {:unsafe, "~> 1.0"},
+      {:ex_rated, "~> 2.0"},
+      {:ecto_morph, "~> 0.1.25"},
+      {:morphix, "~> 0.8.1"},
+      {:recase, "~> 0.7.0"}
+    ]
+  end
+
+  defp dev_deps do
+    ## Dev / Test Only
+    [
       {:ex_doc, "~> 0.27.4", only: [:dev], hex: :remedy_exdoc, runtime: false},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
       {:mix_unused, "~> 0.2.0", only: [:dev]},
@@ -125,27 +159,7 @@ defmodule Remedy.MixProject do
       {:credo, "~> 1.5.6", only: [:dev], runtime: false},
       {:doctor, "~> 0.18.0", only: [:dev]},
       {:faker, "~> 0.17", only: [:test, :dev]},
-      ## Web
-      {:gun, "2.0.1", hex: :remedy_gun},
-      ## Unsafe Function Bindings !
-      {:unsafe, "~> 1.0"},
-      ## Rate Limiter
-      {:ex_rated, "~> 2.0"},
-      ## CLI
-      {:progress_bar, "~> 2.0"},
-      ## Data Processing
-      {:gen_stage, "~> 1.0"},
-      ## DB, Casting & Parsing
-      {:jason, "~> 1.2"},
-      {:ecto, "~> 3.7"},
-      {:ecto_morph, "~> 0.1.25"},
-      {:etso, "~> 0.1.6"},
-      {:morphix, "~> 0.8.1"},
-      {:mime, "~> 2.0"},
-      {:exmoji, "~> 0.3.0"},
-      {:recase, "~> 0.7.0"},
-      ## Timezone
-      {:tz, "~> 0.20.1"}
+      {:benchee, "~> 1.0", only: :dev}
     ]
   end
 end

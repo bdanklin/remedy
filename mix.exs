@@ -66,13 +66,22 @@ defmodule Remedy.MixProject do
   def groups_for_modules do
     [
       # Remedy
-      # Remedy.API
-      # Remedy.CDN
-      # Remedy.Cache
+      REST: [
+        Remedy.API,
+        Remedy.CDN
+      ],
+      Cache: [
+        Remedy.Cache
+      ],
       Gateway: [
         Remedy.Consumer,
+        Remedy.Dispatch,
         Remedy.Gateway,
+        Remedy.Gateway.Session,
         Remedy.Gateway.Intents
+      ],
+      Voice: [
+        Remedy.Voice
       ],
       Constructors: [
         Remedy.Embed,
@@ -131,18 +140,20 @@ defmodule Remedy.MixProject do
       {:gun, "2.0.1", hex: :remedy_gun},
       {:certifi, "~> 2.8"},
       ## Data Processing
-      {:gen_stage, "~> 1.0"},
+      {:broadway, "~> 1.0.2"},
       ## DB & Parsing
       {:jason, "~> 1.2"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
+      {:mime, "~> 1.6"},
       ## Voice
       {:kcl, "~> 1.4"},
       {:porcelain, "~> 2.0"},
-      {:mime, "~> 1.6"},
-      # TODO: Take what we need and remove
+      ## Unsafe Binding Generator
       {:unsafe, "~> 1.0"},
+      ## Rate Limiter
       {:ex_rated, "~> 2.0"},
+      # TODO: Take what we need and remove
       {:ecto_morph, "~> 0.1.25"},
       {:morphix, "~> 0.8.1"},
       {:recase, "~> 0.7.0"}

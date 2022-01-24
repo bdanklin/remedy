@@ -7,10 +7,10 @@
     <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Gateway.ATC.State — Remedy v0.6.9</title>
+    <title>Remedy.Flag — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-f34676b5ff.js"></script>
+    <script src="dist/sidebar_items-3a5b72b29f.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -84,10 +84,10 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Gateway.ATC.State</span> 
+  <span translate="no">Remedy.Flag</span> <small>behaviour</small>
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/atc/state.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/flag.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -95,6 +95,10 @@ Remedy
 
 </h1>
 
+
+  <section id="moduledoc">
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> implementation of flag types.</p><p>Simply put, flag types are bitfields. Modules implementing this behaviour generally end with &quot;Flags&quot;. The complete list of Flag types is:</p><ul><li><a href="Remedy.Gateway.Intents.html"><code class="inline">Remedy.Gateway.Intents</code></a></li><li><a href="Remedy.Schema.ActivityFlags.html"><code class="inline">Remedy.Schema.ActivityFlags</code></a></li><li><a href="Remedy.Schema.CallbackDataFlags.html"><code class="inline">Remedy.Schema.CallbackDataFlags</code></a></li><li><a href="Remedy.Schema.GuildFeatures.html"><code class="inline">Remedy.Schema.GuildFeatures</code></a></li><li><a href="Remedy.Schema.GuildSystemChannelFlags.html"><code class="inline">Remedy.Schema.GuildSystemChannelFlags</code></a></li><li><a href="Remedy.Schema.MessageFlags.html"><code class="inline">Remedy.Schema.MessageFlags</code></a></li><li><a href="Remedy.Schema.Permission.html"><code class="inline">Remedy.Schema.Permission</code></a></li><li><a href="Remedy.Schema.ThreadMemberFlags.html"><code class="inline">Remedy.Schema.ThreadMemberFlags</code></a></li><li><a href="Remedy.Schema.UserFlags.html"><code class="inline">Remedy.Schema.UserFlags</code></a></li></ul><p>Documentation for these types including how to cast them are available within the individual modules.</p>
+  </section>
 
 
   <section id="summary" class="details-list">
@@ -106,14 +110,14 @@ Remedy
       Summary
     </h1>
 
-  <div class="summary-functions summary">
+  <div class="summary-callbacks summary">
     <h2>
-      <a href="#functions">Functions</a>
+      <a href="#callbacks">Callbacks</a>
     </h2>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#check_rate_limit/1" translate="no">check_rate_limit(state)</a>
+          <a href="#c:to_integer/1" translate="no">to_integer(any)</a>
 
         </div>
 
@@ -121,7 +125,7 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#increment_rate_limit/1" translate="no">increment_rate_limit(state)</a>
+          <a href="#c:to_list/1" translate="no">to_list(any)</a>
 
         </div>
 
@@ -129,7 +133,7 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#new/1" translate="no">new(args)</a>
+          <a href="#c:to_map/1" translate="no">to_map(any)</a>
 
         </div>
 
@@ -140,26 +144,26 @@ Remedy
   </section>
 
 
-  <section id="functions" class="details-list">
+  <section id="callbacks" class="details-list">
     <h1 class="section-heading">
-      <a class="hover-link" href="#functions">
+      <a class="hover-link" href="#callbacks">
         <span class="icon-link" aria-hidden="true"></span>
         <span class="sr-only">Link to this section</span>
       </a>
-Functions
+Callbacks
     </h1>
-    <div class="functions-list">
-<section class="detail" id="check_rate_limit/1">
+    <div class="callbacks-list">
+<section class="detail" id="c:to_integer/1">
 
   <div class="detail-header">
-    <a href="#check_rate_limit/1" class="detail-link" title="Link to this function">
+    <a href="#c:to_integer/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">check_rate_limit(state)</h1>
+    <h1 class="signature" translate="no">to_integer(any)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/atc/state.ex#L11" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/flag.ex#L75" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -168,6 +172,13 @@ Functions
   </div>
 
   <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_integer(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
 
 
 
@@ -175,17 +186,17 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="increment_rate_limit/1">
+<section class="detail" id="c:to_list/1">
 
   <div class="detail-header">
-    <a href="#increment_rate_limit/1" class="detail-link" title="Link to this function">
+    <a href="#c:to_list/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">increment_rate_limit(state)</h1>
+    <h1 class="signature" translate="no">to_list(any)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/atc/state.ex#L21" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/flag.ex#L78" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -194,6 +205,13 @@ Functions
   </div>
 
   <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_list(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
 
 
 
@@ -201,17 +219,17 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="new/1">
+<section class="detail" id="c:to_map/1">
 
   <div class="detail-header">
-    <a href="#new/1" class="detail-link" title="Link to this function">
+    <a href="#c:to_map/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">new(args)</h1>
+    <h1 class="signature" translate="no">to_map(any)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/gateway/atc/state.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/flag.ex#L72" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -220,6 +238,13 @@ Functions
   </div>
 
   <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_map(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
 
 
 
@@ -238,7 +263,7 @@ Functions
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/gateway/atc/state.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/types/flag.ex">(current file)</a>
 
         </p>
 

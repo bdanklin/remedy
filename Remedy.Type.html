@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.27.4">
+    <meta name="project" content="Remedy v0.6.9">
+
+    <title>Remedy.Type — Remedy v0.6.9</title>
+    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+
+    <script src="dist/sidebar_items-3a5b72b29f.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
+Remedy
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.6.9
+      </strong>
+    </div>
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+  <span translate="no">Remedy.Type</span> <small>behaviour</small>
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/type.ex#L1" title="View Source" class="view-source" rel="help">
+      <span class="icon-code" aria-hidden="true"></span>
+      <span class="sr-only">View Source</span>
+    </a>
+
+
+</h1>
+
+
+  <section id="moduledoc">
+<p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> implementation of types.</p><p>Simply put, types are magic numbers for pre agreed values. Convenience does not lend itself to looking up the numbers when one of the fields needs to be used. The behaviour provides simplicity for these fields. Modules implementing this behaviour generally end with &quot;Type&quot;. The complete list of Type types is:</p><ul><li><a href="Remedy.Schema.ActivityType.html"><code class="inline">Remedy.Schema.ActivityType</code></a></li><li><a href="Remedy.Schema.AuditLogActionType.html"><code class="inline">Remedy.Schema.AuditLogActionType</code></a></li><li><a href="Remedy.Schema.AuditLogOptionType.html"><code class="inline">Remedy.Schema.AuditLogOptionType</code></a></li><li><a href="Remedy.Schema.ButtonStyle.html"><code class="inline">Remedy.Schema.ButtonStyle</code></a></li><li><a href="Remedy.Schema.CallbackType.html"><code class="inline">Remedy.Schema.CallbackType</code></a></li><li><a href="Remedy.Schema.ChannelType.html"><code class="inline">Remedy.Schema.ChannelType</code></a></li><li><a href="Remedy.Schema.CommandOptionType.html"><code class="inline">Remedy.Schema.CommandOptionType</code></a></li><li><a href="Remedy.Schema.CommandPermissionType.html"><code class="inline">Remedy.Schema.CommandPermissionType</code></a></li><li><a href="Remedy.Schema.CommandType.html"><code class="inline">Remedy.Schema.CommandType</code></a></li><li><a href="Remedy.Schema.ComponentType.html"><code class="inline">Remedy.Schema.ComponentType</code></a></li><li><a href="Remedy.Schema.EventEntityType.html"><code class="inline">Remedy.Schema.EventEntityType</code></a></li><li><a href="Remedy.Schema.EventPrivacyLevel.html"><code class="inline">Remedy.Schema.EventPrivacyLevel</code></a></li><li><a href="Remedy.Schema.EventStatus.html"><code class="inline">Remedy.Schema.EventStatus</code></a></li><li><a href="Remedy.Schema.GuildDefaultMessageNotification.html"><code class="inline">Remedy.Schema.GuildDefaultMessageNotification</code></a></li><li><a href="Remedy.Schema.GuildExplicitContentFilter.html"><code class="inline">Remedy.Schema.GuildExplicitContentFilter</code></a></li><li><a href="Remedy.Schema.GuildMfaLevel.html"><code class="inline">Remedy.Schema.GuildMfaLevel</code></a></li><li><a href="Remedy.Schema.GuildNsfwLevel.html"><code class="inline">Remedy.Schema.GuildNsfwLevel</code></a></li><li><a href="Remedy.Schema.GuildPremiumTier.html"><code class="inline">Remedy.Schema.GuildPremiumTier</code></a></li><li><a href="Remedy.Schema.GuildVerificationLevel.html"><code class="inline">Remedy.Schema.GuildVerificationLevel</code></a></li><li><a href="Remedy.Schema.IntegrationExpireType.html"><code class="inline">Remedy.Schema.IntegrationExpireType</code></a></li><li><a href="Remedy.Schema.IntegrationType.html"><code class="inline">Remedy.Schema.IntegrationType</code></a></li><li><a href="Remedy.Schema.MessageActivityType.html"><code class="inline">Remedy.Schema.MessageActivityType</code></a></li><li><a href="Remedy.Schema.MessageType.html"><code class="inline">Remedy.Schema.MessageType</code></a></li><li><a href="Remedy.Schema.PermissionOverwriteType.html"><code class="inline">Remedy.Schema.PermissionOverwriteType</code></a></li><li><a href="Remedy.Schema.ResponseType.html"><code class="inline">Remedy.Schema.ResponseType</code></a></li><li><a href="Remedy.Schema.StagePrivacyLevel.html"><code class="inline">Remedy.Schema.StagePrivacyLevel</code></a></li><li><a href="Remedy.Schema.StickerFormatType.html"><code class="inline">Remedy.Schema.StickerFormatType</code></a></li><li><a href="Remedy.Schema.StickerType.html"><code class="inline">Remedy.Schema.StickerType</code></a></li><li><a href="Remedy.Schema.ThreadType.html"><code class="inline">Remedy.Schema.ThreadType</code></a></li><li><a href="Remedy.Schema.WebhookType.html"><code class="inline">Remedy.Schema.WebhookType</code></a></li></ul><p>Documentation for these types including how to cast them are available within the individual modules.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-callbacks summary">
+    <h2>
+      <a href="#callbacks">Callbacks</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#c:to_binary/1" translate="no">to_binary(any)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#c:to_integer/1" translate="no">to_integer(any)</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Callbacks
+    </h1>
+    <div class="callbacks-list">
+<section class="detail" id="c:to_binary/1">
+
+  <div class="detail-header">
+    <a href="#c:to_binary/1" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">to_binary(any)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/type.ex#L83" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_binary(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+
+
+
+
+  </section>
+</section>
+<section class="detail" id="c:to_integer/1">
+
+  <div class="detail-header">
+    <a href="#c:to_integer/1" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">to_integer(any)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/type.ex#L86" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">to_integer(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+
+
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Find it on Hex:
+          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/types/type.ex">(current file)</a>
+
+        </p>
+
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button display-settings">
+            Settings
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

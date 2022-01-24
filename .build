@@ -117,6 +117,13 @@ Remedy.Schema.html
 Remedy.Snowflake.html
 Remedy.TimeHelpers.html
 Remedy.Timestamp.html
+Remedy.Voice.Commands.Resume.html
+Remedy.Voice.Commands.SelectProtocol.html
+Remedy.Voice.Events.SessionDescription.html
+Remedy.Voice.OPCode.html
+Remedy.Voice.Session.State.html
+Remedy.Voice.Stagehand.html
+Remedy.Voice.html
 Remedy.html
 api-reference.html
 assets/logo.png
@@ -126,8 +133,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-1ccb8ed49f.js
-dist/sidebar_items-09e42d4fa5.js
+dist/search_items-b248c67f13.js
+dist/sidebar_items-fb4a4914c4.js
 getting_started.html
 index.html
 introduction.html

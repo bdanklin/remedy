@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Activity — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,26 +97,98 @@ Remedy
 
 
   <section id="moduledoc">
-<p>embedded_schema do
-  field :name, :string
-  field :type, ActivityType
-  field :url, :string
-  field :created_at, Timestamp
-  field :application_id, Snowflake
-  field :details, :string
-  field :state, :string
-  field :instance, :boolean
-  field :flags, ActivityFlags
-  embeds_one :timestamps, ActivityTimestamps
-  embeds_one :emoji, Emoji
-  embeds_one :party, ActivityParty
-  embeds_one :assets, ActivityAssets
-  embeds_one :secrets, ActivitySecrets
-  embeds_many :buttons, ActivityButton
-end</p>
+<p>Activity Object</p>
   </section>
 
 
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:t/0" translate="no">t()</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/activity.ex#L7" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">t() :: %Remedy.Schema.Activity{
+  application_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>() | nil,
+  assets: ActivityAssets.t() | nil,
+  buttons: [ActivityButton.t()] | nil,
+  created_at: <a href="Remedy.Timestamp.html#t:t/0">Remedy.Timestamp.t</a>(),
+  details: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  emoji: <a href="Remedy.Schema.Emoji.html#t:t/0">Remedy.Schema.Emoji.t</a>() | nil,
+  flags: <a href="Remedy.Schema.ActivityFlags.html#t:t/0">Remedy.Schema.ActivityFlags.t</a>() | nil,
+  instance: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil,
+  name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  party: ActivityParty.t() | nil,
+  secrets: <a href="Remedy.Schema.ActivitySecrets.html#t:t/0">Remedy.Schema.ActivitySecrets.t</a>() | nil,
+  state: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  timestamps: ActivityTimestamps.t() | nil,
+  type: <a href="Remedy.Schema.ActivityType.html#t:t/0">Remedy.Schema.ActivityType.t</a>(),
+  url: <a href="Remedy.URL.html#t:t/0">Remedy.URL.t</a>() | nil
+}</pre>
+
+      </div>
+
+
+
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
 
       <footer class="footer">
 

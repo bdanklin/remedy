@@ -10,7 +10,7 @@
     <title>Remedy.Schema.GuildFeatures — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -101,18 +101,19 @@ Remedy
   <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">2100224</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1000000000000000000000000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0223996897-1">[</span><span class="s">&quot;ANIMATED_ICON&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;INVITE_SPLASH&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MEMBER_PROFILES&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;SEVEN_DAY_THREAD_ARCHIVE&quot;</span><span class="p" data-group-id="0223996897-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3440617118-1">[</span><span class="ss">:COMMERCE</span><span class="p">,</span><span class="w"> </span><span class="ss">:MEMBER_VERIFICATION_GATE_ENABLED</span><span class="p">,</span><span class="w"> </span><span class="ss">:MONETIZATION_ENABLED</span><span class="p">,</span><span class="w">
- </span><span class="ss">:ROLE_ICONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:THREE_DAY_THREAD_ARCHIVE</span><span class="p" data-group-id="3440617118-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6041507123-1">%{</span><span class="w">
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">65381577</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b110001110000000010011100</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="7812396064-1">[</span><span class="s">&quot;ANIMATED_ICON&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BANNER&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;COMMERCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;FEATURABLE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;INVITE_SPLASH&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MEMBER_PROFILES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MORE_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;NEWS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;NEW_THREAD_PERMISSIONS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;PARTNERED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PRIVATE_THREADS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;THREE_DAY_THREAD_ARCHIVE&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;WELCOME_SCREEN_ENABLED&quot;</span><span class="p" data-group-id="7812396064-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="1405401391-1">[</span><span class="ss">:FEATURABLE</span><span class="p">,</span><span class="w"> </span><span class="ss">:INVITE_SPLASH</span><span class="p">,</span><span class="w"> </span><span class="ss">:PREVIEW_ENABLED</span><span class="p">,</span><span class="w"> </span><span class="ss">:THREADS_ENABLED</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:THREE_DAY_THREAD_ARCHIVE</span><span class="p" data-group-id="1405401391-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0297405242-1">%{</span><span class="w">
   </span><span class="ss">BANNER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">COMMUNITY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">INVITE_SPLASH</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">MONETIZATION_ENABLED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">NEWS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">NEW_THREAD_PERMISSIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">PARTNERED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">ROLE_ICONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">THREADS_ENABLED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="6041507123-1">}</span></code></pre>
+  </span><span class="ss">THREE_DAY_THREAD_ARCHIVE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VIP_REGIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="0297405242-1">}</span></code></pre>
   </section>
 
 

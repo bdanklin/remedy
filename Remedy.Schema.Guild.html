@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Guild — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -221,12 +221,11 @@ Types
   description: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   discovery_splash: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   emojis: [<a href="Remedy.Schema.Emoji.html#t:t/0">Remedy.Schema.Emoji.t</a>()],
-  explicit_content_filter: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  features: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()],
+  explicit_content_filter: <a href="Remedy.Schema.GuildExplicitContentFilter.html#t:t/0">Remedy.Schema.GuildExplicitContentFilter.t</a>(),
+  features: <a href="Remedy.Schema.GuildFeatures.html#t:t/0">Remedy.Schema.GuildFeatures.t</a>(),
   icon: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   icon_hash: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  inserted_at: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   joined_at: <a href="Remedy.ISO8601.html#t:t/0">Remedy.ISO8601.t</a>(),
   large: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
   max_members: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
@@ -234,15 +233,17 @@ Types
   max_video_channel_users: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   member_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
   members: [<a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>()],
-  mfa_level: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  mfa_level: <a href="Remedy.Schema.GuildMfaLevel.html#t:t/0">Remedy.Schema.GuildMfaLevel.t</a>(),
   name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  nsfw_level: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  nsfw_level: <a href="Remedy.Schema.GuildNsfwLevel.html#t:t/0">Remedy.Schema.GuildNsfwLevel.t</a>(),
   owner_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
+  permissions: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   preferred_locale: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   premium_subscription_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  premium_tier: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  presences: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  premium_tier: <a href="Remedy.Schema.GuildPremiumTier.html#t:t/0">Remedy.Schema.GuildPremiumTier.t</a>(),
+  presences: [<a href="Remedy.Schema.Presence.html#t:t/0">Remedy.Schema.Presence.t</a>()],
   public_updates_channel_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
+  region: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   roles: [<a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>()],
   rules_channel_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
   shard: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
@@ -253,9 +254,8 @@ Types
   system_channel_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
   threads: [<a href="Remedy.Schema.Thread.html#t:t/0">Remedy.Schema.Thread.t</a>()],
   unavailable: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  updated_at: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   vanity_url_code: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  verification_level: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  verification_level: <a href="Remedy.Schema.GuildVerificationLevel.html#t:t/0">Remedy.Schema.GuildVerificationLevel.t</a>(),
   voice_states: [<a href="Remedy.Schema.VoiceState.html#t:t/0">Remedy.Schema.VoiceState.t</a>()],
   welcome_screen: <a href="Remedy.Schema.WelcomeScreen.html#t:t/0">Remedy.Schema.WelcomeScreen.t</a>(),
   widget_channel_id: <a href="Remedy.Snowflake.html#t:t/0">Remedy.Snowflake.t</a>(),
@@ -295,7 +295,7 @@ Functions
     <h1 class="signature" translate="no">banner(guild, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L183" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L180" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -330,7 +330,7 @@ Functions
     <h1 class="signature" translate="no">discovery_splash(guild, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L173" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L170" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -365,7 +365,7 @@ Functions
     <h1 class="signature" translate="no">icon(guild, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L153" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L150" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -400,7 +400,7 @@ Functions
     <h1 class="signature" translate="no">splash(guild, size \\ nil)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L163" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/guild.ex#L160" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

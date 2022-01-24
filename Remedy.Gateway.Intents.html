@@ -10,7 +10,7 @@
     <title>Remedy.Gateway.Intents — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -101,18 +101,16 @@ Remedy
   <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">44868</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b100010110111100</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8113744169-1">[</span><span class="s">&quot;GUILDS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_BANS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_EMOJIS_AND_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MEMBERS&quot;</span><span class="p" data-group-id="8113744169-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9762304676-1">[</span><span class="ss">:DIRECT_MESSAGES</span><span class="p">,</span><span class="w"> </span><span class="ss">:DIRECT_MESSAGE_TYPING</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_BANS</span><span class="p">,</span><span class="w">
- </span><span class="ss">:GUILD_EMOJIS_AND_STICKERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_INTEGRATIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_MEMBERS</span><span class="p">,</span><span class="w">
- </span><span class="ss">:GUILD_MESSAGE_REACTIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_MESSAGE_TYPING</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_PRESENCES</span><span class="p" data-group-id="9762304676-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9014454049-1">%{</span><span class="w">
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">31049</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1000000000001000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="1323487637-1">[</span><span class="s">&quot;GUILDS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_INVITES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MESSAGE_TYPING&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;GUILD_PRESENCES&quot;</span><span class="p" data-group-id="1323487637-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9035953799-1">[</span><span class="ss">:DIRECT_MESSAGE_REACTIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_BANS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_EMOJIS_AND_STICKERS</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:GUILD_MESSAGE_REACTIONS</span><span class="p" data-group-id="9035953799-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3106319157-1">%{</span><span class="w">
   </span><span class="ss">DIRECT_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">DIRECT_MESSAGE_TYPING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_EMOJIS_AND_STICKERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MESSAGE_TYPING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">DIRECT_MESSAGE_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GUILD_INTEGRATIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">GUILD_MESSAGE_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">GUILD_PRESENCES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">GUILD_VOICE_STATES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="9014454049-1">}</span></code></pre>
+</span><span class="p" data-group-id="3106319157-1">}</span></code></pre>
   </section>
 
 

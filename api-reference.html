@@ -10,7 +10,7 @@
     <title>API Reference — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -116,11 +116,29 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="Remedy.AllowedMentions.html" translate="no">Remedy.AllowedMentions</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Functions to assist with creating <code class="inline">AllowedMentions</code> objects.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="Remedy.CDN.html" translate="no">Remedy.CDN</a>
 
   </div>
 
     <div class="summary-synopsis"><p>Discord CDN interface.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Cache.html" translate="no">Remedy.Cache</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Functions for interacting with the Cache.</p></div>
 
 </div>
 <div class="summary-row">
@@ -152,6 +170,15 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="Remedy.Content.html" translate="no">Remedy.Content</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Functions for assisting with message content.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="Remedy.Embed.html" translate="no">Remedy.Embed</a>
 
   </div>
@@ -161,11 +188,62 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="Remedy.Gateway.ATC.State.html" translate="no">Remedy.Gateway.ATC.State</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Gateway.Commands.Heartbeat.html" translate="no">Remedy.Gateway.Commands.Heartbeat</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Gateway.Commands.PresenceUpdate.html" translate="no">Remedy.Gateway.Commands.PresenceUpdate</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Gateway.Commands.Resume.html" translate="no">Remedy.Gateway.Commands.Resume</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Gateway.Commands.VoiceStateUpdate.html" translate="no">Remedy.Gateway.Commands.VoiceStateUpdate</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="Remedy.Gateway.Intents.html" translate="no">Remedy.Gateway.Intents</a>
 
   </div>
 
     <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Gateway.OPCode.html" translate="no">Remedy.Gateway.OPCode</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Opcode.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Gateway.Session.State.html" translate="no">Remedy.Gateway.Session.State</a>
+
+  </div>
 
 </div>
 <div class="summary-row">
@@ -188,36 +266,20 @@ API Reference <small class="app-vsn">Remedy v0.6.9</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Remedy.Schema.html" translate="no">Remedy.Schema</a>
-
-  </div>
-
-    <div class="summary-synopsis"><p>Schema sets out all of the objects and types used within the Discord API.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="Remedy.Schema.Activity.html" translate="no">Remedy.Schema.Activity</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>embedded_schema do
-  field :name, :string
-  field :type, ActivityType
-  field :url, :string
-  field :created_at, Timestamp
-  field :application_id, Snowflake
-  field :details, :string
-  field :state, :string
-  field :instance, :boolean
-  field :flags, ActivityFlags
-  embeds_one :timestamps, ActivityTimestamps
-  embeds_one :emoji, Emoji
-  embeds_one :party, ActivityParty
-  embeds_one :assets, ActivityAssets
-  embeds_one :secrets, ActivitySecrets
-  embeds_many :buttons, ActivityButton
-end</p></div>
+    <div class="summary-synopsis"><p>Activity Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Remedy.Schema.ActivityAssets.html" translate="no">Remedy.Schema.ActivityAssets</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Activity Assets Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -226,7 +288,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Activity Button Schema</p></div>
+    <div class="summary-synopsis"><p>Activity Button Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -249,11 +311,20 @@ end</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="Remedy.Schema.ActivityTimestamps.html" translate="no">Remedy.Schema.ActivityTimestamps</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Activity Timestamps Object</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="Remedy.Schema.ActivityType.html" translate="no">Remedy.Schema.ActivityType</a>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Activity Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -262,7 +333,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Allowed Mentions Object</p></div>
+    <div class="summary-synopsis"><p>Allowed Mentions Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -271,7 +342,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Application Object</p></div>
+    <div class="summary-synopsis"><p>Application Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -298,7 +369,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Audit Log Object</p></div>
+    <div class="summary-synopsis"><p>Audit Log Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -307,7 +378,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Audit Log Action Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -316,7 +387,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Audit Log Event Object</p></div>
+    <div class="summary-synopsis"><p>Audit Log Entry Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -334,7 +405,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Audit Log Option Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -343,7 +414,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Ban Object</p></div>
+    <div class="summary-synopsis"><p>Ban Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -361,7 +432,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Button Style.</p></div>
 
 </div>
 <div class="summary-row">
@@ -370,7 +441,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Interaction Callback</p></div>
+    <div class="summary-synopsis"><p>Callback Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -379,7 +450,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Interaction Callback Data Object</p></div>
+    <div class="summary-synopsis"><p>Callback Data Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -397,7 +468,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Callback Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -406,7 +477,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Channel Object</p></div>
+    <div class="summary-synopsis"><p>Channel Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -415,7 +486,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Channel Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -424,7 +495,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Presence Client Status Object</p></div>
+    <div class="summary-synopsis"><p>Client Status Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -451,7 +522,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Command Option Choice</p></div>
+    <div class="summary-synopsis"><p>Command Option Choice Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -460,7 +531,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Command Option Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -478,7 +549,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Command Permission Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -487,7 +558,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Command Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -514,7 +585,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Component Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -532,7 +603,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Embed Author Object</p></div>
+    <div class="summary-synopsis"><p>Embed Author Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -541,7 +612,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Embed Field Object</p></div>
+    <div class="summary-synopsis"><p>Embed Field Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -550,7 +621,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Embed Footer Object</p></div>
+    <div class="summary-synopsis"><p>Embed Footer Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -559,7 +630,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Embed Image Object</p></div>
+    <div class="summary-synopsis"><p>Embed Image Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -568,7 +639,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Embed Provider Object</p></div>
+    <div class="summary-synopsis"><p>Embed Provider Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -577,7 +648,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Embed Thumbnail Object</p></div>
+    <div class="summary-synopsis"><p>Embed Thumbnail Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -595,7 +666,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p>Discord Emoji Object</p></div>
+    <div class="summary-synopsis"><p>Emoji Object</p></div>
 
 </div>
 <div class="summary-row">
@@ -622,7 +693,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Event Entity Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -631,7 +702,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Event Privacy Level.</p></div>
 
 </div>
 <div class="summary-row">
@@ -640,7 +711,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Event Status.</p></div>
 
 </div>
 <div class="summary-row">
@@ -658,7 +729,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Guild Default Message Notification.</p></div>
 
 </div>
 <div class="summary-row">
@@ -667,7 +738,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Guild Explicit Content Filter.</p></div>
 
 </div>
 <div class="summary-row">
@@ -685,7 +756,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Guild Mfa Level.</p></div>
 
 </div>
 <div class="summary-row">
@@ -694,7 +765,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Guild Nsfw Level.</p></div>
 
 </div>
 <div class="summary-row">
@@ -703,7 +774,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Guild Premium Tier.</p></div>
 
 </div>
 <div class="summary-row">
@@ -721,7 +792,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Guild Verification Level.</p></div>
 
 </div>
 <div class="summary-row">
@@ -748,7 +819,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Integration Expire Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -757,7 +828,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Integration Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -802,7 +873,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Interaction Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -847,7 +918,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Message Activity Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -874,7 +945,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Message Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -901,7 +972,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Permission Overwrite Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -928,7 +999,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Response Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -955,7 +1026,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Stage Privacy Level.</p></div>
 
 </div>
 <div class="summary-row">
@@ -973,7 +1044,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Sticker Format Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -991,7 +1062,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Sticker Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -1063,7 +1134,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Thread Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -1135,7 +1206,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Webhook Type.</p></div>
 
 </div>
 <div class="summary-row">
@@ -1185,6 +1256,15 @@ end</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="Remedy.URL.html" translate="no">Remedy.URL</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> implementation for URLs.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="Remedy.Voice.html" translate="no">Remedy.Voice</a>
 
   </div>
@@ -1219,7 +1299,7 @@ end</p></div>
 
   </div>
 
-    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Type type type? ¿ǝdʎʇ.</p></div>
+    <div class="summary-synopsis"><p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Opcode.</p></div>
 
 </div>
 <div class="summary-row">

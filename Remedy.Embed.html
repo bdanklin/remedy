@@ -10,7 +10,7 @@
     <title>Remedy.Embed — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.Embed</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/embed.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,15 +97,15 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Convenience functions for working with embeds.</p><p>Using the helpers in this module you can coneniently convert various objects into fields within an embed, allowing easier manipulation and more consistent embeds with less boilerplate.</p><p>Consider you wish to create an embed regarding an action that a user took. We can use pre established objects to populate the embed fields. For example:</p><pre><code class="makeup elixir" translate="no"><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2081119980-1">%</span><span class="nc" data-group-id="2081119980-1">User</span><span class="p" data-group-id="2081119980-1">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;John Doe&quot;</span><span class="p" data-group-id="2081119980-1">}</span><span class="w">
-</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2081119980-2">%</span><span class="nc" data-group-id="2081119980-2">Message</span><span class="p" data-group-id="2081119980-2">{</span><span class="ss">text</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">timestamp</span><span class="p">:</span><span class="w"> </span><span class="n">timestamp</span><span class="p" data-group-id="2081119980-2">}</span><span class="w">
+<p>Convenience functions for working with embeds.</p><p>Using the helpers in this module you can coneniently convert various objects into fields within an embed, allowing easier manipulation and more consistent embeds with less boilerplate.</p><p>Consider you wish to create an embed regarding an action that a user took. We can use pre established objects to populate the embed fields. For example:</p><pre><code class="makeup elixir" translate="no"><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6026158955-1">%</span><span class="nc" data-group-id="6026158955-1">User</span><span class="p" data-group-id="6026158955-1">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;John Doe&quot;</span><span class="p" data-group-id="6026158955-1">}</span><span class="w">
+</span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6026158955-2">%</span><span class="nc" data-group-id="6026158955-2">Message</span><span class="p" data-group-id="6026158955-2">{</span><span class="ss">text</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">timestamp</span><span class="p">:</span><span class="w"> </span><span class="n">timestamp</span><span class="p" data-group-id="6026158955-2">}</span><span class="w">
 
-</span><span class="p" data-group-id="2081119980-3">%</span><span class="nc" data-group-id="2081119980-3">Embed</span><span class="p" data-group-id="2081119980-3">{</span><span class="p" data-group-id="2081119980-3">}</span><span class="w">
-</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_author</span><span class="p" data-group-id="2081119980-4">(</span><span class="n">user</span><span class="p" data-group-id="2081119980-4">)</span><span class="w">
-</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_timestamp</span><span class="p" data-group-id="2081119980-5">(</span><span class="n">timestamp</span><span class="p" data-group-id="2081119980-5">)</span><span class="w">
-</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_colour</span><span class="p" data-group-id="2081119980-6">(</span><span class="s">&quot;#F34AC3&quot;</span><span class="p" data-group-id="2081119980-6">)</span><span class="w">
-</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_title</span><span class="p" data-group-id="2081119980-7">(</span><span class="s">&quot;User Silenced&quot;</span><span class="p" data-group-id="2081119980-7">)</span><span class="w">
-</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_description</span><span class="p" data-group-id="2081119980-8">(</span><span class="s">&quot;User was silenced for breaking the rules.&quot;</span><span class="p" data-group-id="2081119980-8">)</span></code></pre><p>It is recommended</p>
+</span><span class="p" data-group-id="6026158955-3">%</span><span class="nc" data-group-id="6026158955-3">Embed</span><span class="p" data-group-id="6026158955-3">{</span><span class="p" data-group-id="6026158955-3">}</span><span class="w">
+</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_author</span><span class="p" data-group-id="6026158955-4">(</span><span class="n">user</span><span class="p" data-group-id="6026158955-4">)</span><span class="w">
+</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_timestamp</span><span class="p" data-group-id="6026158955-5">(</span><span class="n">timestamp</span><span class="p" data-group-id="6026158955-5">)</span><span class="w">
+</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_colour</span><span class="p" data-group-id="6026158955-6">(</span><span class="s">&quot;#F34AC3&quot;</span><span class="p" data-group-id="6026158955-6">)</span><span class="w">
+</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_title</span><span class="p" data-group-id="6026158955-7">(</span><span class="s">&quot;User Silenced&quot;</span><span class="p" data-group-id="6026158955-7">)</span><span class="w">
+</span><span class="o">|&gt;</span><span class="w"> </span><span class="n">put_description</span><span class="p" data-group-id="6026158955-8">(</span><span class="s">&quot;User was silenced for breaking the rules.&quot;</span><span class="p" data-group-id="6026158955-8">)</span></code></pre>
   </section>
 
 
@@ -122,6 +122,26 @@ Remedy
     <h2>
       <a href="#functions">Functions</a>
     </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#append_field/4" translate="no">append_field(embed, name, value, inline \\ true)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>append a field to the embed.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#prepend_field/4" translate="no">prepend_field(embed, name, value, inline \\ true)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>append a field to the embed.</p></div>
+
+      </div>
 
       <div class="summary-row">
         <div class="summary-signature">
@@ -165,16 +185,6 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#put_field/4" translate="no">put_field(embed, name, value, inline \\ true)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Adds a field to the embed.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#put_timestamp/2" translate="no">put_timestamp(embed, timestamp)</a>
 
         </div>
@@ -197,6 +207,78 @@ Remedy
 Functions
     </h1>
     <div class="functions-list">
+<section class="detail" id="append_field/4">
+
+    <span id="append_field/3"></span>
+
+  <div class="detail-header">
+    <a href="#append_field/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">append_field(embed, name, value, inline \\ true)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L59" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">append_field(<a href="Remedy.Schema.Embed.html#t:t/0">Remedy.Schema.Embed.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil) ::
+  <a href="Remedy.Schema.Embed.html#t:t/0">Remedy.Schema.Embed.t</a>()</pre>
+
+      </div>
+
+
+
+
+<p>append a field to the embed.</p>
+  </section>
+</section>
+<section class="detail" id="prepend_field/4">
+
+    <span id="prepend_field/3"></span>
+
+  <div class="detail-header">
+    <a href="#prepend_field/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">prepend_field(embed, name, value, inline \\ true)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L71" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">prepend_field(<a href="Remedy.Schema.Embed.html#t:t/0">Remedy.Schema.Embed.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil) ::
+  <a href="Remedy.Schema.Embed.html#t:t/0">Remedy.Schema.Embed.t</a>()</pre>
+
+      </div>
+
+
+
+
+<p>append a field to the embed.</p>
+  </section>
+</section>
 <section class="detail" id="put_author/1">
 
   <div class="detail-header">
@@ -207,7 +289,7 @@ Functions
     <h1 class="signature" translate="no">put_author(embed)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/embed.ex#L36" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L35" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -240,7 +322,7 @@ Functions
     <h1 class="signature" translate="no">put_author(embed, member)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/embed.ex#L28" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L27" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -276,7 +358,7 @@ Functions
     <h1 class="signature" translate="no">put_colour(embed, color)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/embed.ex#L44" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L43" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -310,7 +392,7 @@ Functions
     <h1 class="signature" translate="no">put_description(embed, description)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/embed.ex#L52" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L51" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -333,42 +415,6 @@ Functions
 <p>Update the embed description.</p>
   </section>
 </section>
-<section class="detail" id="put_field/4">
-
-    <span id="put_field/3"></span>
-
-  <div class="detail-header">
-    <a href="#put_field/4" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">put_field(embed, name, value, inline \\ true)</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/embed.ex#L60" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">put_field(<a href="Remedy.Schema.Embed.html#t:t/0">Remedy.Schema.Embed.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil) ::
-  <a href="Remedy.Schema.Embed.html#t:t/0">Remedy.Schema.Embed.t</a>()</pre>
-
-      </div>
-
-
-
-
-<p>Adds a field to the embed.</p>
-  </section>
-</section>
 <section class="detail" id="put_timestamp/2">
 
   <div class="detail-header">
@@ -379,7 +425,7 @@ Functions
     <h1 class="signature" translate="no">put_timestamp(embed, timestamp)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/embed.ex#L68" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/constructors/embed.ex#L81" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -414,7 +460,7 @@ Functions
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/embed.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/constructors/embed.ex">(current file)</a>
 
         </p>
 

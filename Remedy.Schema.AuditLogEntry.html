@@ -10,7 +10,7 @@
     <title>Remedy.Schema.AuditLogEntry — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,7 +87,7 @@ Remedy
   <span translate="no">Remedy.Schema.AuditLogEntry</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_event.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_entry.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,7 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Discord Audit Log Event Object</p>
+<p>Audit Log Entry Object</p>
   </section>
 
 
@@ -147,7 +147,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_event.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_entry.ex#L7" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -162,7 +162,7 @@ Types
 
           <pre translate="no">t() :: %Remedy.Schema.AuditLogEntry{
   action_type: <a href="Remedy.Schema.AuditLogActionType.html#t:t/0">Remedy.Schema.AuditLogActionType.t</a>(),
-  changes: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()],
+  changes: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()] | nil,
   id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   options: [<a href="Remedy.Schema.AuditLogOption.html#t:t/0">Remedy.Schema.AuditLogOption.t</a>()],
   reason: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
@@ -190,7 +190,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/audit_log_event.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/audit_log_entry.ex">(current file)</a>
 
         </p>
 

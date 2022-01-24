@@ -10,7 +10,7 @@
     <title>Remedy — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,7 +97,31 @@ Remedy
 
 
   <section id="moduledoc">
-<p>This is the documentation for the Remedy library.</p>
+<p>This is the documentation for the Remedy library.</p><h2 id="module-configuration" class="section-heading">
+  <a href="#module-configuration" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Configuration
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="n">config</span><span class="w"> </span><span class="ss">:remedy</span><span class="w">
+  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="nc">System</span><span class="o">.</span><span class="n">get_env</span><span class="p" data-group-id="6997568390-1">(</span><span class="s">&quot;REMEDY_TOKEN&quot;</span><span class="p" data-group-id="6997568390-1">)</span><span class="w">
+  </span><span class="ss">intents</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+  </span><span class="ss">shards</span><span class="p">:</span><span class="w"> </span><span class="ss">:auto</span><span class="p">,</span></code></pre><p>Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.</p><ul><li><p><code class="inline">:token</code> (required)
+Your bots token, available from your <a href="https://discord.com/developers/applications">Application Dashboard</a></p></li><li><p><code class="inline">:shards</code>
+Number of shards to use.</p></li><li><p><code class="inline">:intents</code>
+See <a href="Remedy.Gateway.Intents.html"><code class="inline">Remedy.Gateway.Intents</code></a> for more information</p></li><li><p><code class="inline">:min_workers</code>
+The minimum number of HTTP2 connections to keep open. Defaults to 1, cannot be zero.</p></li><li><p><code class="inline">:max_workers</code>
+The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be zero.</p></li></ul><h3 id="module-environment-variables" class="section-heading">
+  <a href="#module-environment-variables" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Environment Variables
+</h3>
+<p>It is recommended to use environment variables to store sensitive configuration. So that they are not exposed if you should upload your project to GitHub etc. If a token is uploded to a public repo, Discord will notice and invalidate it.</p><h2 id="module-connection-limits" class="section-heading">
+  <a href="#module-connection-limits" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Connection Limits
+</h2>
+<p>Some hosting platforms will limit the number of connections you are allowed to keep active at any one time.</p><p>Each shard and HTTP2 worker will count for an individual connection. In addition to any other connections required for your application. Phoenix will establish 10 connections to the database by default. If you are using Heroku free tier (20 connection limit) you could run out of connections for users visiting your web application. In those cases you should consider limiting the number of shards and HTTP2 workers.</p><p>We recommend using <a href="https://www.gigalixir.com/">Gigalixir</a> or <a href="https://fly.io/">Fly.io</a> for your hosting platform. The gigalixir free tier has unlimited connections and will allow your bot to run automatically configured shards without issues.</p><h2 id="module-ffmpeg" class="section-heading">
+  <a href="#module-ffmpeg" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  FFmpeg
+</h2>
+
   </section>
 
 
@@ -117,29 +141,39 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#extra_children/0" translate="no">extra_children()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#intents/0" translate="no">intents()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Retreive the configured gateway intents for the bot.</p></div>
+          <div class="summary-synopsis"><p>Retreive the configured gateway intents.</p></div>
 
       </div>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#link/2" translate="no">link(type, format)</a>
+          <a href="#max_workers/0" translate="no">max_workers()</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>Retreive the configured max HTTP worker count.</p></div>
 
       </div>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#mention/2" translate="no">mention(type, format \\ nil)</a>
+          <a href="#min_workers/0" translate="no">min_workers()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Format various types to a &quot;mention&quot;</p></div>
+          <div class="summary-synopsis"><p>Retreive the configured minimum HTTP worker count.</p></div>
 
       </div>
 
@@ -187,6 +221,32 @@ Remedy
 Functions
     </h1>
     <div class="functions-list">
+<section class="detail" id="extra_children/0">
+
+  <div class="detail-header">
+    <a href="#extra_children/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">extra_children()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L97" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+
+  </section>
+</section>
 <section class="detail" id="intents/0">
 
   <div class="detail-header">
@@ -197,7 +257,7 @@ Functions
     <h1 class="signature" translate="no">intents()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L153" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L142" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -210,27 +270,27 @@ Functions
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">intents() :: <a href="Remedy.Gateway.Intents.html#t:t/0">Remedy.Gateway.Intents.t</a>()</pre>
+          <pre translate="no">intents() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
 
       </div>
 
 
 
 
-<p>Retreive the configured gateway intents for the bot.</p>
+<p>Retreive the configured gateway intents.</p>
   </section>
 </section>
-<section class="detail" id="link/2">
+<section class="detail" id="max_workers/0">
 
   <div class="detail-header">
-    <a href="#link/2" class="detail-link" title="Link to this function">
+    <a href="#max_workers/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">link(type, format)</h1>
+    <h1 class="signature" translate="no">max_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L214" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L181" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -240,25 +300,30 @@ Functions
 
   <section class="docstring">
 
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">max_workers() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
 
 
 
 
+<p>Retreive the configured max HTTP worker count.</p>
   </section>
 </section>
-<section class="detail" id="mention/2">
-
-    <span id="mention/1"></span>
+<section class="detail" id="min_workers/0">
 
   <div class="detail-header">
-    <a href="#mention/2" class="detail-link" title="Link to this function">
+    <a href="#min_workers/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">mention(type, format \\ nil)</h1>
+    <h1 class="signature" translate="no">min_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L184" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L173" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -268,10 +333,17 @@ Functions
 
   <section class="docstring">
 
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">min_workers() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
 
 
 
-<p>Format various types to a &quot;mention&quot;</p>
+
+<p>Retreive the configured minimum HTTP worker count.</p>
   </section>
 </section>
 <section class="detail" id="shards/0">
@@ -284,7 +356,7 @@ Functions
     <h1 class="signature" translate="no">shards()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L74" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L115" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -304,12 +376,7 @@ Functions
 
 
 
-<p>Retreive the configured shard count</p><h2 id="shards/0-examples" class="section-heading">
-  <a href="#shards/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy</span><span class="o">.</span><span class="n">shard_count</span><span class="w">
-</span><span class="mi">3</span></code></pre>
+<p>Retreive the configured shard count</p>
   </section>
 </section>
 <section class="detail" id="system_architecture/0">
@@ -322,7 +389,7 @@ Functions
     <h1 class="signature" translate="no">system_architecture()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L104" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L189" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -342,12 +409,7 @@ Functions
 
 
 
-<p>Retreive the current system architecture.</p><p>This is used to report to Discord the architecture of the system as required when establishing gateway connections.</p><h2 id="system_architecture/0-examples" class="section-heading">
-  <a href="#system_architecture/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy</span><span class="o">.</span><span class="n">get_system_architecture</span><span class="p" data-group-id="5817303772-1">(</span><span class="p" data-group-id="5817303772-1">)</span><span class="w">
-</span><span class="s">&quot;x86_64-redhat-linux-gnu&quot;</span></code></pre>
+<p>Retreive the current system architecture.</p>
   </section>
 </section>
 <section class="detail" id="token/0">
@@ -360,7 +422,7 @@ Functions
     <h1 class="signature" translate="no">token()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L111" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L103" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -369,6 +431,13 @@ Functions
   </div>
 
   <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">token() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
 
 
 

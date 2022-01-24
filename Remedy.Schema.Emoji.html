@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Emoji — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-fb4a4914c4.js"></script>
+    <script src="dist/sidebar_items-6464bcd436.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,7 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Discord Emoji Object</p>
+<p>Emoji Object</p>
   </section>
 
 
@@ -131,7 +131,7 @@ Remedy
 
         </div>
 
-          <div class="summary-synopsis"><p>Emoji Params Type</p></div>
+          <div class="summary-synopsis"><p>Emoji Params</p></div>
 
       </div>
 
@@ -140,8 +140,6 @@ Remedy
           <a href="#t:t/0" translate="no">t()</a>
 
         </div>
-
-          <div class="summary-synopsis"><p>Emoji Type.</p></div>
 
       </div>
 
@@ -215,7 +213,7 @@ Types
     <h1 class="signature" translate="no">c()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L37" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L34" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -248,7 +246,7 @@ Types
     <h1 class="signature" translate="no">params()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L24" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L21" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -276,7 +274,7 @@ Types
 
 
 
-<p>Emoji Params Type</p>
+<p>Emoji Params</p>
   </section>
 </section>
 <section class="detail" id="t:t/0">
@@ -289,7 +287,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L11" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L8" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -318,7 +316,7 @@ Types
 
 
 
-<p>Emoji Type.</p>
+
   </section>
 </section>
 
@@ -344,7 +342,7 @@ Functions
     <h1 class="signature" translate="no">api_name(emoji)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L102" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L99" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -368,12 +366,12 @@ Functions
   <a href="#api_name/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0173221404-1">%</span><span class="nc" data-group-id="0173221404-1">Remedy.Struct.Emoji</span><span class="p" data-group-id="0173221404-1">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Γ¡É&quot;</span><span class="p" data-group-id="0173221404-1">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">api_name</span><span class="p" data-group-id="0173221404-2">(</span><span class="n">emoji</span><span class="p" data-group-id="0173221404-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4945242073-1">%</span><span class="nc" data-group-id="4945242073-1">Remedy.Struct.Emoji</span><span class="p" data-group-id="4945242073-1">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Γ¡É&quot;</span><span class="p" data-group-id="4945242073-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">api_name</span><span class="p" data-group-id="4945242073-2">(</span><span class="n">emoji</span><span class="p" data-group-id="4945242073-2">)</span><span class="w">
 </span><span class="s">&quot;Γ¡É&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0173221404-3">%</span><span class="nc" data-group-id="0173221404-3">Remedy.Struct.Emoji</span><span class="p" data-group-id="0173221404-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">437093487582642177</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;foxbot&quot;</span><span class="p" data-group-id="0173221404-3">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">api_name</span><span class="p" data-group-id="0173221404-4">(</span><span class="n">emoji</span><span class="p" data-group-id="0173221404-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4945242073-3">%</span><span class="nc" data-group-id="4945242073-3">Remedy.Struct.Emoji</span><span class="p" data-group-id="4945242073-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">437093487582642177</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;foxbot&quot;</span><span class="p" data-group-id="4945242073-3">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">api_name</span><span class="p" data-group-id="4945242073-4">(</span><span class="n">emoji</span><span class="p" data-group-id="4945242073-4">)</span><span class="w">
 </span><span class="s">&quot;foxbot:437093487582642177&quot;</span></code></pre>
   </section>
 </section>
@@ -389,7 +387,7 @@ Functions
     <h1 class="signature" translate="no">changeset(model \\ %__MODULE__{}, params)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L49" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L46" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -415,7 +413,7 @@ Functions
     <h1 class="signature" translate="no">image_url(emoji)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L126" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L123" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -440,16 +438,16 @@ returns <code class="inline">nil</code>.</p><h2 id="image_url/1-examples" class=
   <a href="#image_url/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9531615781-1">%</span><span class="nc" data-group-id="9531615781-1">Remedy.Struct.Emoji</span><span class="p" data-group-id="9531615781-1">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">450225070569291776</span><span class="p" data-group-id="9531615781-1">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">image_url</span><span class="p" data-group-id="9531615781-2">(</span><span class="n">emoji</span><span class="p" data-group-id="9531615781-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3073353059-1">%</span><span class="nc" data-group-id="3073353059-1">Remedy.Struct.Emoji</span><span class="p" data-group-id="3073353059-1">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">450225070569291776</span><span class="p" data-group-id="3073353059-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">image_url</span><span class="p" data-group-id="3073353059-2">(</span><span class="n">emoji</span><span class="p" data-group-id="3073353059-2">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/emojis/450225070569291776.png&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9531615781-3">%</span><span class="nc" data-group-id="9531615781-3">Remedy.Struct.Emoji</span><span class="p" data-group-id="9531615781-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">406140226998894614</span><span class="p">,</span><span class="w"> </span><span class="ss">animated</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="9531615781-3">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">image_url</span><span class="p" data-group-id="9531615781-4">(</span><span class="n">emoji</span><span class="p" data-group-id="9531615781-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3073353059-3">%</span><span class="nc" data-group-id="3073353059-3">Remedy.Struct.Emoji</span><span class="p" data-group-id="3073353059-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">406140226998894614</span><span class="p">,</span><span class="w"> </span><span class="ss">animated</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="3073353059-3">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">image_url</span><span class="p" data-group-id="3073353059-4">(</span><span class="n">emoji</span><span class="p" data-group-id="3073353059-4">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/emojis/406140226998894614.gif&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9531615781-5">%</span><span class="nc" data-group-id="9531615781-5">Remedy.Struct.Emoji</span><span class="p" data-group-id="9531615781-5">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Γ¡É&quot;</span><span class="p" data-group-id="9531615781-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">image_url</span><span class="p" data-group-id="9531615781-6">(</span><span class="n">emoji</span><span class="p" data-group-id="9531615781-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3073353059-5">%</span><span class="nc" data-group-id="3073353059-5">Remedy.Struct.Emoji</span><span class="p" data-group-id="3073353059-5">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Γ¡É&quot;</span><span class="p" data-group-id="3073353059-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">image_url</span><span class="p" data-group-id="3073353059-6">(</span><span class="n">emoji</span><span class="p" data-group-id="3073353059-6">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -463,7 +461,7 @@ returns <code class="inline">nil</code>.</p><h2 id="image_url/1-examples" class=
     <h1 class="signature" translate="no">mention(emoji)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L81" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/emoji.ex#L78" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -487,16 +485,16 @@ returns <code class="inline">nil</code>.</p><h2 id="image_url/1-examples" class=
   <a href="#mention/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5956914476-1">%</span><span class="nc" data-group-id="5956914476-1">Remedy.Struct.Emoji</span><span class="p" data-group-id="5956914476-1">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;≡ƒæì&quot;</span><span class="p" data-group-id="5956914476-1">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">mention</span><span class="p" data-group-id="5956914476-2">(</span><span class="n">emoji</span><span class="p" data-group-id="5956914476-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6111358359-1">%</span><span class="nc" data-group-id="6111358359-1">Remedy.Struct.Emoji</span><span class="p" data-group-id="6111358359-1">{</span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;≡ƒæì&quot;</span><span class="p" data-group-id="6111358359-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">mention</span><span class="p" data-group-id="6111358359-2">(</span><span class="n">emoji</span><span class="p" data-group-id="6111358359-2">)</span><span class="w">
 </span><span class="s">&quot;≡ƒæì&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5956914476-3">%</span><span class="nc" data-group-id="5956914476-3">Remedy.Struct.Emoji</span><span class="p" data-group-id="5956914476-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">436885297037312001</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tealixir&quot;</span><span class="p" data-group-id="5956914476-3">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">mention</span><span class="p" data-group-id="5956914476-4">(</span><span class="n">emoji</span><span class="p" data-group-id="5956914476-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6111358359-3">%</span><span class="nc" data-group-id="6111358359-3">Remedy.Struct.Emoji</span><span class="p" data-group-id="6111358359-3">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">436885297037312001</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tealixir&quot;</span><span class="p" data-group-id="6111358359-3">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">mention</span><span class="p" data-group-id="6111358359-4">(</span><span class="n">emoji</span><span class="p" data-group-id="6111358359-4">)</span><span class="w">
 </span><span class="s">&quot;&lt;:tealixir:436885297037312001&gt;&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5956914476-5">%</span><span class="nc" data-group-id="5956914476-5">Remedy.Struct.Emoji</span><span class="p" data-group-id="5956914476-5">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">437016804309860372</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;blobseizure&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">animated</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="5956914476-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">mention</span><span class="p" data-group-id="5956914476-6">(</span><span class="n">emoji</span><span class="p" data-group-id="5956914476-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6111358359-5">%</span><span class="nc" data-group-id="6111358359-5">Remedy.Struct.Emoji</span><span class="p" data-group-id="6111358359-5">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="mi">437016804309860372</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;blobseizure&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">animated</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="6111358359-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.Struct.Emoji</span><span class="o">.</span><span class="n">mention</span><span class="p" data-group-id="6111358359-6">(</span><span class="n">emoji</span><span class="p" data-group-id="6111358359-6">)</span><span class="w">
 </span><span class="s">&quot;&lt;a:blobseizure:437016804309860372&gt;&quot;</span></code></pre>
   </section>
 </section>

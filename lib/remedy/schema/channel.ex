@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.Channel do
   @moduledoc """
-  Discord Channel Object
+  Channel Object
   """
   use Remedy.Schema
 

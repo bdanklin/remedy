@@ -1,8 +1,7 @@
 defmodule Remedy.Schema do
-  @moduledoc """
-  Schema sets out all of the objects and types used within the Discord API.
+  @moduledoc false
 
-  """
+  @doc false
   def schema_alias do
     quote do
       alias Remedy.Schema.{
@@ -123,7 +122,8 @@ defmodule Remedy.Schema do
         ImageData,
         ISO8601,
         Snowflake,
-        Timestamp
+        Timestamp,
+        URL
       }
     end
   end
@@ -140,6 +140,7 @@ defmodule Remedy.Schema do
 
       use Ecto.Schema
       import Ecto.Changeset
+      @derive {Jason.Encoder, []}
       unquote(schema_alias())
     end
   end

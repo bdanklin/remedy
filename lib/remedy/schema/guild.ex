@@ -13,8 +13,8 @@ defmodule Remedy.Schema.Guild do
           default_message_notifications: integer(),
           description: String.t(),
           discovery_splash: String.t(),
-          explicit_content_filter: integer(),
-          features: [String.t()],
+          explicit_content_filter: GuildExplicitContentFilter.t(),
+          features: GuildFeatures.t(),
           icon: String.t(),
           icon_hash: String.t(),
           joined_at: ISO8601.t(),
@@ -23,17 +23,17 @@ defmodule Remedy.Schema.Guild do
           max_presences: integer(),
           max_video_channel_users: integer(),
           member_count: integer(),
-          mfa_level: integer(),
+          mfa_level: GuildMfaLevel.t(),
           name: String.t(),
-          nsfw_level: integer(),
+          nsfw_level: GuildNsfwLevel.t(),
           preferred_locale: String.t(),
           premium_subscription_count: integer(),
-          premium_tier: integer(),
-          #       region: String.t(),
+          premium_tier: GuildPremiumTier.t(),
+          region: String.t(),
           splash: String.t(),
           system_channel_flags: GuildSystemChannelFlags.t(),
           vanity_url_code: String.t(),
-          verification_level: integer(),
+          verification_level: GuildVerificationLevel.t(),
           widget_enabled: boolean(),
           shard: integer(),
           application_id: Snowflake.t(),
@@ -42,7 +42,7 @@ defmodule Remedy.Schema.Guild do
           channels: [Remedy.Schema.Channel.t()],
           emojis: [Remedy.Schema.Emoji.t()],
           members: [Remedy.Schema.Member.t()],
-          #       presences: [Presence.t()],
+          presences: [Presence.t()],
           roles: [Role.t()],
           stage_instances: [Stage.t()],
           stickers: [Sticker.t()],
@@ -81,7 +81,7 @@ defmodule Remedy.Schema.Guild do
     field :preferred_locale, :string
     field :premium_subscription_count, :integer
     field :premium_tier, GuildPremiumTier
-    #   field :region, :string
+    field :region, :string
     field :splash, :string
     field :unavailable, :boolean
     field :system_channel_flags, GuildSystemChannelFlags
@@ -89,7 +89,7 @@ defmodule Remedy.Schema.Guild do
     field :verification_level, GuildVerificationLevel
     field :widget_enabled, :boolean
 
-    #  field :permissions, :string
+    field :permissions, :string
 
     field :application_id, Snowflake
     field :owner_id, Snowflake
@@ -116,8 +116,6 @@ defmodule Remedy.Schema.Guild do
 
     ## Custom
     field :shard, :integer
-
-    timestamps()
   end
 
   @doc false
@@ -131,7 +129,6 @@ defmodule Remedy.Schema.Guild do
   end
 
   @doc false
-  # Provided for the :GUILD_EMOJIS_UPDATE gateway event
   def update_emojis_changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [])

@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.EmbedAuthor do
   @moduledoc """
-  Discord Embed Author Object
+  Embed Author Object
   """
   use Remedy.Schema
 

@@ -1,7 +1,6 @@
 defmodule Remedy.Schema.Callback do
   @moduledoc """
-
-  Interaction Callback
+  Callback Object
   """
   use Remedy.Schema
 
@@ -16,6 +15,7 @@ defmodule Remedy.Schema.Callback do
     embeds_one :data, CallbackData
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:type])

@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.AllowedMentions do
   @moduledoc """
-  Discord Allowed Mentions Object
+  Allowed Mentions Object
   """
   use Remedy.Schema
 
@@ -11,15 +11,15 @@ defmodule Remedy.Schema.AllowedMentions do
           users: [Snowflake.t()]
         }
 
-  @type c :: t | %{}
-
+  @primary_key false
   embedded_schema do
-    field :parse, Ecto.Enum, values: [:roles, :users, :everyone]
-    field :replied_user, :boolean
-    field :roles, {:array, Snowflake}
-    field :users, {:array, Snowflake}
+    field :parse, {:array, :string}, default: nil
+    field :replied_user, :boolean, default: nil
+    field :roles, {:array, Snowflake}, default: nil
+    field :users, {:array, Snowflake}, default: nil
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:replied_user, :parse, :roles, :users])

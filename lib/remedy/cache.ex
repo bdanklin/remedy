@@ -1,12 +1,20 @@
 defmodule Remedy.Cache do
-  @moduledoc false
+  @moduledoc """
+  Functions for interacting with the Cache.
+
+  The Cache is implemented in ETS.
+
+  ## Bang!
+
+  While undocumented to reduce clutter, all functions can be banged to return or raise.
+  """
 
   import Remedy.TimeHelpers, only: [is_snowflake: 1]
   import Ecto.Query, warn: false
 
   alias Remedy.Repo
   alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Member, Role, User}
-  use Unsafe.Generator, handler: :unwrap, docs: true
+  use Unsafe.Generator, handler: :unwrap, docs: false
 
   @type snowflake :: Snowflake.t()
   @type reason :: String.t()

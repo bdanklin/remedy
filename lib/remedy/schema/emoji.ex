@@ -1,13 +1,10 @@
 defmodule Remedy.Schema.Emoji do
   @moduledoc """
-  Discord Emoji Object
+  Emoji Object
   """
   use Remedy.Schema
   alias Remedy.CDN
 
-  @typedoc """
-  Emoji Type.
-  """
   @type t :: %__MODULE__{
           id: Snowflake.t() | nil,
           name: String.t(),
@@ -19,7 +16,7 @@ defmodule Remedy.Schema.Emoji do
         }
 
   @typedoc """
-  Emoji Params Type
+  Emoji Params
   """
   @type params :: %{
           required(:name) => String.t(),

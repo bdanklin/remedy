@@ -4,15 +4,7 @@ defmodule Remedy.Schema.Button do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          type: 2,
-          custom_id: String.t() | nil,
-          disabled: boolean() | nil,
-          style: ButtonStyle.t(),
-          label: String.t() | nil,
-          emoji: Emoji.t() | nil,
-          url: String.t() | nil
-        }
+  @type t :: link | interaction
 
   @type link :: %__MODULE__{
           type: 2,
@@ -25,7 +17,7 @@ defmodule Remedy.Schema.Button do
           disabled: Component.disabled()
         }
 
-  @type interaction :: %{
+  @type interaction :: %__MODULE__{
           type: 2,
           style: Component.style(),
           label: Component.label(),
@@ -45,6 +37,7 @@ defmodule Remedy.Schema.Button do
     field :url, :string
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:style, :custom_id, :label, :emoji, :url, :disabled])

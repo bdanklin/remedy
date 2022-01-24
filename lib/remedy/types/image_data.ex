@@ -135,7 +135,6 @@ defmodule Remedy.ImageData do
     |> File.read()
     |> case do
       {:ok, data} ->
-        IO.inspect(data)
         parse_data(data)
 
       _ ->

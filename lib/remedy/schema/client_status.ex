@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.ClientStatus do
   @moduledoc """
-  Discord Presence Client Status Object
+  Client Status Object
   """
   use Remedy.Schema
   @primary_key false
@@ -13,14 +13,12 @@ defmodule Remedy.Schema.ClientStatus do
 
   @primary_key false
   embedded_schema do
-    field :desktop, :string
-    field :mobile, :string
-    field :web, :string
+    field :desktop, Ecto.Enum, values: [:online, :idle, :dnd]
+    field :mobile, Ecto.Enum, values: [:online, :idle, :dnd]
+    field :web, Ecto.Enum, values: [:online, :idle, :dnd]
   end
 
   def changeset(model \\ %__MODULE__{}, params) do
-    params = for {k, v} <- params, into: %{}, do: {k, to_string(v)}
-
     model
     |> cast(params, [:desktop, :mobile, :web])
   end

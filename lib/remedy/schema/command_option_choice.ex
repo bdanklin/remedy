@@ -1,18 +1,18 @@
 defmodule Remedy.Schema.CommandOptionChoice do
   @moduledoc """
-  Command Option Choice
+  Command Option Choice Object
   """
   use Remedy.Schema
 
   @type t :: %__MODULE__{
           name: String.t(),
-          value: String.t() | :integer
+          value: String.t()
         }
 
   @primary_key false
   embedded_schema do
     field :name, :string
-    field :value, :any, virtual: true
+    field :value, :string
   end
 
   @doc false

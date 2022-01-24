@@ -2,7 +2,7 @@ defmodule Remedy.Consumer do
   @moduledoc """
   Consumer process for gateway event handling.
 
-  ## Consuming Dispatch Events
+  ## Consuming Events
   To handle events, Remedy uses a GenStage implementation.
 
   Remedy defines the `producer` and `producer_consumer` in the GenStage design.
@@ -20,27 +20,27 @@ defmodule Remedy.Consumer do
 
   It is recommended that you supervise your consumers. First we set up a supervisor module for our consumers.
 
-  ```elixir
-  #example_supervisor.ex
-  defmodule MyApp.ExampleSupervisor do
-    use Supervisor
 
-    def start_link(args) do
-      Supervisor.start_link(__MODULE__, args, name: __MODULE__)
-    end
+        #example_supervisor.ex
+        defmodule MyApp.ExampleSupervisor do
+          use Supervisor
 
-    @impl true
-    def init(_init_arg) do
-      children = [ExampleConsumer]
+          def start_link(args) do
+            Supervisor.start_link(__MODULE__, args, name: __MODULE__)
+          end
 
-      Supervisor.init(children, strategy: :one_for_one)
-    end
-  end
-  ```
+          @impl true
+          def init(_init_arg) do
+            children = [ExampleConsumer]
+
+            Supervisor.init(children, strategy: :one_for_one)
+          end
+        end
+
 
   You can then set up your consumer module.
 
-  ```elixir
+
   #example_consumer.ex
   defmodule ExampleConsumer do
     use Remedy.Consumer
@@ -69,13 +69,14 @@ defmodule Remedy.Consumer do
       :noop
     end
   end
-  ```
+
 
   """
 
   use ConsumerSupervisor
 
-  alias Remedy.Gateway.{EventBuffer, WSState}
+  alias Remedy.Gateway.EventBuffer
+  alias Remedy.Gateway.Session.State
 
   alias Remedy.Schema.{
     Channel,
@@ -151,7 +152,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#channel-create)
   """
   @type channel_create ::
-          {:CHANNEL_CREATE, Channel.t(), WSState.t()}
+          {:CHANNEL_CREATE, Channel.t(), State.t()}
 
   @typedoc """
   Sent when a channel is updated.
@@ -161,7 +162,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#channel-update)
   """
   @type channel_update ::
-          {:CHANNEL_UPDATE, Channel.t(), WSState.t()}
+          {:CHANNEL_UPDATE, Channel.t(), State.t()}
 
   @typedoc """
   Sent when a channel relevant to the current user is deleted.
@@ -169,7 +170,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#channel-delete)
   """
   @type channel_delete ::
-          {:CHANNEL_DELETE, Channel.t(), WSState.t()}
+          {:CHANNEL_DELETE, Channel.t(), State.t()}
 
   @typedoc """
   Sent when a message is pinned or unpinned in a text channel.
@@ -179,11 +180,11 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#channel-pins-update)
   """
   @type channel_pins_update ::
-          {:CHANNEL_UPDATE, Channel.t(), WSState.t()}
+          {:CHANNEL_UPDATE, Channel.t(), State.t()}
 
   ## Is this real?
   @typep guild_available ::
-           {:GUILD_AVAILABLE, Guild.t(), WSState.t()}
+           {:GUILD_AVAILABLE, Guild.t(), State.t()}
 
   @typedoc """
   Sent when a user is banned from a guild.
@@ -191,7 +192,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-ban-add)
   """
   @type guild_ban_add ::
-          {:GUILD_BAN_ADD, Ban.t(), WSState.t()}
+          {:GUILD_BAN_ADD, Ban.t(), State.t()}
 
   @typedoc """
   Sent when a user is unbanned from a guild.
@@ -199,7 +200,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-ban-remove)
   """
   @type guild_ban_remove ::
-          {:GUILD_BAN_REMOVE, Ban.t(), WSState.t()}
+          {:GUILD_BAN_REMOVE, Ban.t(), State.t()}
 
   @typedoc """
   This event can be sent in three different scenarios:
@@ -214,7 +215,7 @@ defmodule Remedy.Consumer do
 
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-create)
   """
-  @type guild_create :: {:GUILD_CREATE, Guild.t(), WSState.t()}
+  @type guild_create :: {:GUILD_CREATE, Guild.t(), State.t()}
 
   @typedoc """
 
@@ -227,14 +228,14 @@ defmodule Remedy.Consumer do
 
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-delete)
   """
-  @type guild_delete :: {:GUILD_DELETE, Guild.t(), WSState.t()}
+  @type guild_delete :: {:GUILD_DELETE, Guild.t(), State.t()}
 
   @typedoc """
   Sent when a guild's emojis have been updated.
 
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-emojis-update)
   """
-  @type guild_emojis_update :: {:GUILD_EMOJIS_UPDATE, Guild.t(), WSState.t()}
+  @type guild_emojis_update :: {:GUILD_EMOJIS_UPDATE, Guild.t(), State.t()}
 
   @typedoc """
   Sent when a guild integration is updated.
@@ -243,7 +244,7 @@ defmodule Remedy.Consumer do
 
   """
   @type guild_integrations_update ::
-          {:GUILD_INTEGRATIONS_UPDATE, Guild.t(), WSState.t()}
+          {:GUILD_INTEGRATIONS_UPDATE, Guild.t(), State.t()}
 
   @typedoc """
   Sent when a new user joins a guild.
@@ -257,7 +258,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-member-add)
   """
   @type guild_member_add ::
-          {:GUILD_MEMBER_ADD, Member.t(), WSState.t()}
+          {:GUILD_MEMBER_ADD, Member.t(), State.t()}
 
   @typedoc """
   Sent when a used is removed from a guild.
@@ -269,7 +270,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-member-remove)
   """
   @type guild_member_remove ::
-          {:GUILD_MEMBER_REMOVE, Member.t(), WSState.t()}
+          {:GUILD_MEMBER_REMOVE, Member.t(), State.t()}
 
   @typedoc """
   Sent when a guild member is updated.
@@ -283,7 +284,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-member-update)
   """
   @type guild_member_update ::
-          {:GUILD_MEMBER_UPDATE, Member.t(), Member.t(), WSState.t()}
+          {:GUILD_MEMBER_UPDATE, Member.t(), State.t()}
 
   @typedoc """
   Sent in response to Guild Request Members.
@@ -293,7 +294,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-members-chunk)
   """
   @type guild_members_chunk ::
-          {:GUILD_MEMBERS_CHUNK, GuildMembersChunk.t(), WSState.t()}
+          {:GUILD_MEMBERS_CHUNK, GuildMembersChunk.t(), State.t()}
 
   @typedoc """
   Sent when a guild role is created.
@@ -301,7 +302,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-role-create)
   """
   @type guild_role_create ::
-          {:GUILD_ROLE_CREATE, Role.t(), WSState.t()}
+          {:GUILD_ROLE_CREATE, Role.t(), State.t()}
 
   @typedoc """
   Sent when a guild role is deleted.
@@ -309,7 +310,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-role-delete)
   """
   @type guild_role_delete ::
-          {:GUILD_ROLE_DELETE, Role.t(), WSState.t()}
+          {:GUILD_ROLE_DELETE, Role.t(), State.t()}
 
   @typedoc """
   Sent when a guild role is updated.
@@ -317,11 +318,11 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-role-update)
   """
   @type guild_role_update ::
-          {:GUILD_ROLE_UPDATE, Role.t(), WSState.t()}
+          {:GUILD_ROLE_UPDATE, Role.t(), State.t()}
 
   ## does this exist?
   @typep guild_unavailable ::
-           {:GUILD_UNAVAILABLE, Guild.t(), WSState.t()}
+           {:GUILD_UNAVAILABLE, Guild.t(), State.t()}
 
   @typedoc """
   Sent when a guild is updated.
@@ -331,7 +332,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#guild-update)
   """
   @type guild_update ::
-          {:GUILD_UPDATE, Guild.t(), WSState.t()}
+          {:GUILD_UPDATE, Guild.t(), State.t()}
 
   @typedoc """
   Sent when an integration is created.
@@ -339,7 +340,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#integration-create)
   """
   @type integration_create ::
-          {:INTEGRATION_CREATE, Integration.t(), WSState.t()}
+          {:INTEGRATION_CREATE, Integration.t(), State.t()}
 
   @typedoc """
   Sent when an integration is updated.
@@ -347,7 +348,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#integration-update)
   """
   @type integration_update ::
-          {:INTEGRATION_UPDATE, Integration.t(), WSState.t()}
+          {:INTEGRATION_UPDATE, Integration.t(), State.t()}
 
   @typedoc """
   Sent when an integration is deleted.
@@ -356,7 +357,7 @@ defmodule Remedy.Consumer do
 
   """
   @type integration_delete ::
-          {:INTEGRATION_DELETE, Integration.t(), WSState.t()}
+          {:INTEGRATION_DELETE, Integration.t(), State.t()}
 
   @typedoc """
   Sent when a user triggers an `Application Command`
@@ -366,7 +367,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#interaction-create)
   """
   @type interaction_create ::
-          {:INTERACTION_CREATE, Interaction.t(), WSState.t()}
+          {:INTERACTION_CREATE, Interaction.t(), State.t()}
 
   @typedoc """
   Sent when a message is created.
@@ -376,7 +377,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-create)
   """
   @type message_create ::
-          {:MESSAGE_CREATE, Message.t(), WSState.t()}
+          {:MESSAGE_CREATE, Message.t(), State.t()}
 
   @typedoc """
   Sent when multiple messages are deleted at once.
@@ -384,7 +385,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-delete-bulk)
   """
   @type message_delete_bulk ::
-          {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), WSState.t()}
+          {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), State.t()}
 
   @typedoc """
   Sent when a messgae is deleted.
@@ -392,7 +393,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-delete)
   """
   @type message_delete ::
-          {:MESSAGE_DELETE, Message.t(), WSState.t()}
+          {:MESSAGE_DELETE, Message.t(), State.t()}
 
   @typedoc """
   Sent when a user adds a reaction to a message.
@@ -400,7 +401,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-reaction-add)
   """
   @type message_reaction_add ::
-          {:MESSAGE_REACTION_ADD, Reaction.t(), WSState.t()}
+          {:MESSAGE_REACTION_ADD, Reaction.t(), State.t()}
 
   @typedoc """
   Sent when a user removes a reaction from a message.
@@ -408,7 +409,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-reaction-remove)
   """
   @type message_reaction_remove_all ::
-          {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(), WSState.t()}
+          {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t(), State.t()}
 
   @typedoc """
   Sent when a bot removes all instances of a given emoji from the reactions of a message.
@@ -416,7 +417,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji)
   """
   @type message_reaction_remove_emoji ::
-          {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(), WSState.t()}
+          {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t(), State.t()}
 
   @typedoc """
   Sent when a user removes a reaction from a message.
@@ -424,7 +425,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-reaction-remove)
   """
   @type message_reaction_remove ::
-          {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), WSState.t()}
+          {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(), State.t()}
 
   @typedoc """
   Sent when a message is updated.
@@ -434,7 +435,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#message-update)
   """
   @type message_update ::
-          {:MESSAGE_UPDATE, Message.t(), WSState.t()}
+          {:MESSAGE_UPDATE, Message.t(), State.t()}
 
   @typedoc """
   This event is sent when a user's presence or info, such as name or avatar, is updated.
@@ -445,8 +446,8 @@ defmodule Remedy.Consumer do
 
   > Note: The user object within this event can be partial, the only field which must be sent is the id field, everything else is optional. Along with this limitation, no fields are required, and the types of the fields are not validated. Your client should expect any combination of fields and types within this event.
   """
-  @type presence_update :: {:PRESENCE_UPDATE, User.t(), WSState.t()}
-  @type ready :: {:READY, Ready.t(), WSState.t()}
+  @type presence_update :: {:PRESENCE_UPDATE, User.t(), State.t()}
+  @type ready :: {:READY, Ready.t(), State.t()}
 
   @typedoc """
   Sent when a thread is created or when the user is added to a thread.
@@ -455,7 +456,7 @@ defmodule Remedy.Consumer do
 
   [Read More](https://discord.com/developers/docs/topics/gateway#channel-delete)
   """
-  @type thread_create :: {:THREAD_CREATE, Thread.t(), WSState.t()}
+  @type thread_create :: {:THREAD_CREATE, Thread.t(), State.t()}
 
   @typedoc """
   Sent when a thread relevant to the current user is deleted.
@@ -465,7 +466,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#thread-delete)
   """
   @type thread_delete ::
-          {:THREAD_DELETE, Thread.t(), WSState.t()}
+          {:THREAD_DELETE, Thread.t(), State.t()}
 
   @typedoc """
   Sent when the current user gains access to a channel.
@@ -473,7 +474,7 @@ defmodule Remedy.Consumer do
   [Read More](https://discord.com/developers/docs/topics/gateway#thread-list-sync-thread-list-sync-event-fields)
   """
   @type thread_list_sync ::
-          {:THREAD_LIST_SYNC, ThreadListSync.t(), WSState.t()}
+          {:THREAD_LIST_SYNC, ThreadListSync.t(), State.t()}
 
   @typedoc """
   Sent when the thread member object for the current user is updated.
@@ -481,7 +482,7 @@ defmodule Remedy.Consumer do
   The inner payload is a thread member object. This event is documented for completeness, but unlikely to be used by most bots. For bots, this event largely is just a signal that you are a member of the thread. See the threads docs for more details.
   """
   @type thread_member_update ::
-          {:THREAD_MEMBER_UPDATE, ThreadMember.t(), WSState.t()}
+          {:THREAD_MEMBER_UPDATE, ThreadMember.t(), State.t()}
 
   @typedoc """
   Sent when anyone is added to or removed from a thread.
@@ -489,7 +490,7 @@ defmodule Remedy.Consumer do
   If the current user does not have the `GUILD_MEMBERS` Gateway Intent, then this event will only be sent if the current user was added to or removed from the thread.
   """
   @type thread_members_update ::
-          {:THREAD_MEMBERS_UPDATE, ThreadMember.t(), WSState.t()}
+          {:THREAD_MEMBERS_UPDATE, ThreadMember.t(), State.t()}
 
   @typedoc """
   Sent when a thread is updated.
@@ -498,33 +499,33 @@ defmodule Remedy.Consumer do
   """
 
   @type thread_update ::
-          {:THREAD_UPDATE, Thread.t(), WSState.t()}
+          {:THREAD_UPDATE, Thread.t(), State.t()}
 
   @typedoc """
   Sent when a user begins typing in a channel.
   """
   @type typing_start ::
-          {:TYPING_START, TypingStart.t(), WSState.t()}
+          {:TYPING_START, TypingStart.t(), State.t()}
 
   @typedoc """
   Sent when a user is updated.
   """
   @type user_update ::
-          {:USER_UPDATE, User.t(), WSState.t()}
+          {:USER_UPDATE, User.t(), State.t()}
 
   @typedoc """
   Sent when a user's voice state is updated.
   """
   @type voice_state_update ::
-          {:VOICE_STATE_UPDATE, VoiceState.t(), WSState.t()}
+          {:VOICE_STATE_UPDATE, VoiceState.t(), State.t()}
 
   @typedoc """
   Sent when a webhook is updated.
   """
   @type webhooks_update ::
-          {:WEBHOOKS_UPDATE, WebhooksUpdate.t(), WSState.t()}
+          {:WEBHOOKS_UPDATE, WebhooksUpdate.t(), State.t()}
 
-  @type voice_server_update :: {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), WSState.t()}
+  @type voice_server_update :: {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), State.t()}
   @type voice_ready :: {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}
   @type voice_speaking_update :: {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}
 

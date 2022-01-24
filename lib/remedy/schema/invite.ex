@@ -16,7 +16,7 @@ defmodule Remedy.Schema.Invite do
           created_at: ISO8601.t(),
           target_user: User.t(),
           channel: Channel.t() | nil,
-          guild: Guild.t(),
+          guild: Guild.t() | nil,
           inviter: User.t()
         }
 

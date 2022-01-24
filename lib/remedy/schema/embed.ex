@@ -20,7 +20,6 @@ defmodule Remedy.Schema.Embed do
           video: EmbedVideo.t()
         }
 
-  @derive {Jason.Encoder, []}
   @primary_key false
   embedded_schema do
     field :title, :string
@@ -42,8 +41,6 @@ defmodule Remedy.Schema.Embed do
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:title, :type, :description, :url, :timestamp, :color])
-    #   |> validate_required(:description)
-    #   |> validate_exclusion(:description, [""])
     |> validate_length(:title, max: 256)
     |> validate_length(:description, max: 4096)
     |> cast_embed(:fields)

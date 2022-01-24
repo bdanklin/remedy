@@ -5,14 +5,15 @@ defmodule Remedy.Schema.Attachment do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
+          id: Snowflake.t(),
           filename: String.t(),
-          content_type: String.t(),
+          content_type: String.t() | nil,
           size: integer(),
-          url: String.t(),
+          url: URL.t(),
           proxy_url: String.t(),
-          height: integer(),
-          width: integer(),
-          ephemeral: boolean()
+          height: integer() | nil,
+          width: integer() | nil,
+          ephemeral: boolean() | nil
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
@@ -20,7 +21,7 @@ defmodule Remedy.Schema.Attachment do
     field :filename, :string
     field :content_type, :string
     field :size, :integer
-    field :url, :string
+    field :url, URL
     field :proxy_url, :string
     field :height, :integer
     field :width, :integer
@@ -30,6 +31,5 @@ defmodule Remedy.Schema.Attachment do
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:filename, :content_type, :size, :url, :proxy_url, :height, :width, :ephemeral])
-    |> validate_required([:id, :filename, :content_type, :size, :url])
   end
 end

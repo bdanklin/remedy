@@ -13,4 +13,10 @@ defmodule Remedy.Schema.IntegrationAccount do
   embedded_schema do
     field :name, :string
   end
+
+  @doc false
+  def changeset(model \\ %__MODULE__{}, params) do
+    model
+    |> cast(params, [:id, :name])
+  end
 end

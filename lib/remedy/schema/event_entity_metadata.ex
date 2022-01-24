@@ -13,6 +13,7 @@ defmodule Remedy.Schema.EventEntityMetadata do
     field :location, :string
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:location])

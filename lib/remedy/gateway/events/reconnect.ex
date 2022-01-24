@@ -1,9 +1,9 @@
 defmodule Remedy.Gateway.Events.Reconnect do
   @moduledoc false
-  use Remedy.Gateway.Payload
+  alias Remedy.Websocket.Command
 
-  def digest(%WSState{} = socket, _payload) do
+  def digest(socket, _payload) do
     socket
-    |> Payload.send(:RESUME)
+    |> Command.send(:RESUME)
   end
 end

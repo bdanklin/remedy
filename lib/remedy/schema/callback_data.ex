@@ -1,9 +1,8 @@
 defmodule Remedy.Schema.CallbackData do
   @moduledoc """
-  Discord Interaction Callback Data Object
+  Callback Data Object
   """
   use Remedy.Schema
-  alias Remedy.Schema.CallbackDataFlags
 
   @type t :: %__MODULE__{
           tts: :boolean,
@@ -26,6 +25,7 @@ defmodule Remedy.Schema.CallbackData do
     embeds_many :attachments, Attachment
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:tts, :content, :flags])

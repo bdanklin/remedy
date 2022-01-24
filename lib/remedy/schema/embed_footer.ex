@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.EmbedFooter do
   @moduledoc """
-  Discord Embed Footer Object
+  Embed Footer Object
   """
   use Remedy.Schema
 
@@ -17,6 +17,7 @@ defmodule Remedy.Schema.EmbedFooter do
     field :proxy_icon_url, :string
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:text, :icon_url, :proxy_icon_url])

@@ -2,71 +2,43 @@ defmodule Remedy.API do
   @moduledoc """
   Standard interface for the Discord API.
 
-  The majority of the functions within this module are pulled directly from the Discord API. Some custom implementations are included.
 
-  Some functions are useless in the scope of a bot and are intentionally omitted.
+
+  > The majority of the functions within this module are pulled directly from the Discord API. Some custom implementations are included. Some functions are useless in the scope of a bot and are intentionally omitted.
+
+  ## Bang!
+
+  While undocumented to reduce clutter, all functions can be banged to return or raise.
 
   ## Ratelimits
 
   Discord imposes rate limits in various capacities. The functions in this module will respect those rate limits where possible. In certain circumstances, discord will impose hidden rate limits to avoid abuse, which you can still hit.
 
-  ## Bang!
-
-  While intentionally undocumented to reduce clutter, all functions can be banged to return or raise.
-
   ## Audit Log Reason
 
-  Many endpoints accept the `X-Audit-Log-Reason` header to provide a reason for the action. This is a string that is displayed in the audit log, limited to 512 characters.
+  Many endpoints accept the `X-Audit-Log-Reason` header to provide a reason for the action. This is a string that is displayed in the audit log, limited to 512 characters. Routes that are known to accept this header are marked with the 📒 symbol.
 
-  Due to Discords API documentation being sketchy, this header is not always accurately documented where it is accepted.
+  Due to Discords API documentation being sketch af, this header is not always accurately documented where it is accepted. If an endpoint accepts a reason and you wish to provide one, pass the following as one of the `opts`.
 
-  Reasons for the audit log can be passed to discord via the `reason: "Some Audit Log Reason"` option. Routes that are known to accept this header are marked with the 📒 symbol.
+      reason: "Some Audit Log Reason"
 
   ## Casting vs Modifying
 
-  Modifying an object will only change the given fields. Whereas casting will overwrite the entire array of objects.
-
-  For example, if you have the following guild:
+  Modifying an object will only change the given fields. Whereas casting will overwrite the entire array of objects. The terminology is mirrored from Ecto, particularly in regards to casting embeds. Consider the following example where a single parameter of the guild is updated.
 
       iex> Remedy.API.get_guild!(81384788765712384)
-      %Remedy.Schema.Guild{
-        id: 81384788765712384,
-        name: "Remedy",
-        icon: "f817c5adaf96672c94a17de8e944f427",
-        ...
-      }
-
-  Calling `modify_guild(81384788765712384, name: "New Remedy Server")` will change the name to "New Remedy Server", but will not change the icon.
+      %Remedy.Schema.Guild{id: 81384788765712384, name: "Remedy", icon: "f817c5adaf96672c94a17de8e944f427"}
 
       iex> Remedy.API.modify_guild!(81384788765712384, name: "New Remedy Server")
-      %Remedy.Schema.Guild{
-        id: 81384788765712384,
-        name: "New Remedy Server",
-        icon: "f817c5adaf96672c94a17de8e944f427",
-        ...
-      }
+      %Remedy.Schema.Guild{id: 81384788765712384, name: "New Remedy Server", icon: "f817c5adaf96672c94a17de8e944f427"}
 
-
-  Conversely for casting functions, it will perform a create, update, delete in one operation, and then read the resultant. For example, if your guild is set up with the following application commands:
+  Conversely, casting will perform a create, update, delete in one operation, and then read the resultant. For example:
 
       iex> Remedy.API.list_commands!(81384788765712384)
-      [
-        %{name: "foo", description: "Foo the bot"},
-        %{name: "bar", description: "Bar the bot"},
-        %{name: "ping", description: "Ping the bot"}
-      ]
+      [%{name: "foo", description: "Foo the bot"}, %{name: "bar", description: "Bar the bot"}, %{name: "ping", description: "Ping the bot"}]
 
-  Casting the below will overwrite, update, and replace the entire array of commands.
-
-      iex> commands = [
-                        %{name: "foo", description: "Bar the bot"},
-                        %{name: "baz", description: "baz the bot"}
-      ]
-      ...> Remedy.API.cast_commands!(81384788765712384, commands)
-      [
-        %{name: "foo", description: "Bar the bot"},
-        %{name: "baz", description: "baz the bot"}
-      ]
+      iex> Remedy.API.cast_commands!(81384788765712384, [%{name: "foo", description: "Bar the bot"}, %{name: "baz", description: "baz the bot"}])
+      [%{name: "foo", description: "Bar the bot"}, %{name: "baz", description: "baz the bot"}]
 
   Matching on the name, commands with a name that already exists will be updated. Names that are not provided will be deleted, and new commands will be created.
 
@@ -80,12 +52,6 @@ defmodule Remedy.API do
     warn: false
 
   use Remedy.Schema, :schema_alias
-
-  alias Remedy.API.{
-    Rest,
-    RestRequest,
-    RestResponse
-  }
 
   use Unsafe.Generator,
     handler: :unwrap,
@@ -5387,12 +5353,10 @@ defmodule Remedy.API do
     return_errors(bad_changeset)
   end
 
-  alias Remedy.API.{RestRequest, Rest, RestResponse}
+  alias Remedy.Rest
 
   defp request({method, route, params, reason, body}) do
-    RestRequest.new(method, route, params, reason, body)
-    |> Rest.request()
-    |> RestResponse.decode()
+    Rest.request(method, route, params, reason, body)
   end
 
   ## Early return changeset errors.

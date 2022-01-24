@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.EmbedProvider do
   @moduledoc """
-  Discord Embed Provider Object
+  Embed Provider Object
   """
   use Remedy.Schema
 
@@ -15,6 +15,7 @@ defmodule Remedy.Schema.EmbedProvider do
     field :url, :string
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:provider, :url])

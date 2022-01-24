@@ -12,6 +12,7 @@ defmodule Remedy.Schema.ComponentOption do
     embeds_one :emoji, Emoji
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     fields = __MODULE__.__schema__(:fields)
     embeds = __MODULE__.__schema__(:embeds)

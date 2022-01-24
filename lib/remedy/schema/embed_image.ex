@@ -1,6 +1,6 @@
 defmodule Remedy.Schema.EmbedImage do
   @moduledoc """
-  Discord Embed Image Object
+  Embed Image Object
   """
   use Remedy.Schema
 
@@ -19,6 +19,7 @@ defmodule Remedy.Schema.EmbedImage do
     field :width, :integer
   end
 
+  @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
     |> cast(params, [:url, :proxy_url, :height, :width])

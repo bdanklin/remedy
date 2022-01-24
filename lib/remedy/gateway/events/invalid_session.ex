@@ -1,14 +1,14 @@
 defmodule Remedy.Gateway.Events.InvalidSession do
   @moduledoc false
-  use Remedy.Gateway.Payload
+  alias Remedy.Websocket.Command
 
   def digest(socket, true) do
     socket
-    |> Payload.send(:RESUME)
+    |> Command.send(:RESUME)
   end
 
   def digest(socket, false) do
     socket
-    |> Payload.send(:IDENTIFY)
+    |> Command.send(:IDENTIFY)
   end
 end

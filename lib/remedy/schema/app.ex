@@ -1,6 +1,9 @@
 defmodule Remedy.Schema.App do
   @moduledoc """
-  Discord Application Object
+  Application Object
+
+  > Called `App` due to conflicts with Elixirs `Application` module.
+
   """
   use Remedy.Schema
 
@@ -36,7 +39,7 @@ defmodule Remedy.Schema.App do
     field :summary, :string
 
     embeds_one :owner, User
-    field :remedy_system, :boolean, default: false, redact: true
+    field :remedy_system, :boolean, default: false
   end
 
   @doc false

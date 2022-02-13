@@ -1,24 +1,17 @@
-defmodule Remedy.Gateway.EventHandler do
+defmodule Remedy.Dispatch.EventHandler do
   @moduledoc false
 
-  alias Remedy.Gateway.EventCache
+  alias Remedy.Dispatch.EventCache
 
   require Logger
 
   def handle({event, payload, socket}) do
-    payload = payload |> Morphix.atomorphiform!()
-
     if Application.get_env(:remedy, :log_everything, true), do: nil
     #  do: Logger.debug("#{inspect(event)}, #{inspect(payload, pretty: true, limit: :infinity)}")
     #  do: Logger.debug("#{inspect(event)}")
 
     handle(event, payload, socket)
   end
-
-  ## Event Handlers
-  ##
-  ## Perform all caching operations here.
-  ## They will be performed immediately before they are sent to the Consumer
 
   def handle(:CHANNEL_CREATE, payload, socket) do
     payload

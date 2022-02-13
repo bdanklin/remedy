@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Session do
   @moduledoc false
   alias Remedy.Gateway.ATC
-  alias Remedy.Gateway.Session.State
+  alias Remedy.Gateway.Session.WSState
   alias Remedy.Websocket.Pacemaker
   alias Remedy.Websocket.Event
   alias Remedy.Websocket.Command
@@ -17,15 +17,15 @@ defmodule Remedy.Gateway.Session do
 
     {:ok,
      opts
-     |> State.new(), {:continue, :establish_connection}}
+     |> WSState.new(), {:continue, :establish_connection}}
   end
 
   def handle_continue(:establish_connection, socket) do
     with :ok <- ATC.request_connection(socket) do
       {:noreply,
        socket
-       |> State.open_websocket()
-       |> State.init_zlib()}
+       |> WSState.open_websocket()
+       |> WSState.init_zlib()}
     end
   end
 
@@ -48,12 +48,12 @@ defmodule Remedy.Gateway.Session do
   end
 
   ## Internal Heartbeat Timer Finished before Gateway ACK / RECONNECT
-  def handle_info(:heartbeat, %State{heartbeat_ack: false} = socket) do
+  def handle_info(:heartbeat, %WSState{heartbeat_ack: false} = socket) do
     Logger.warn("NO RESPONSE TO HEARTBEAT")
 
     {:noreply,
      socket
-     |> State.close_websocket()
+     |> WSState.close_websocket()
      |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
 
@@ -115,7 +115,7 @@ defmodule Remedy.Gateway.Session do
   def handle_info({:gun_up, _worker, _proto}, socket) do
     {:noreply,
      socket
-     |> State.close_websocket()
+     |> WSState.close_websocket()
      |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
 end

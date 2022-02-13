@@ -1,4 +1,4 @@
-defmodule Remedy.Gateway.Session.State do
+defmodule Remedy.Gateway.Session.WSState do
   @moduledoc false
   @opaque t :: %{}
 
@@ -20,11 +20,14 @@ defmodule Remedy.Gateway.Session.State do
             data_stream: nil,
             zlib: nil,
             token: nil,
+            ## Heartbeat
+            heartbeat: 0,
             heartbeat_timer: nil,
             heartbeat_ack: nil,
             heartbeat_interval: nil,
             heartbeat_last_ack: nil,
             heartbeat_last_send: nil,
+            ## Payload
             payload_dispatch_event: nil,
             payload_op_code: nil,
             payload_sequence: nil,

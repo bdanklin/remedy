@@ -1,7 +1,7 @@
 defmodule Remedy.Gateway.Commands.Identify do
   @moduledoc false
   import Remedy, only: [intents: 0, system_architecture: 0]
-  alias Remedy.Gateway.Session.State
+  alias Remedy.Gateway.Session.WSState
 
   defstruct token: "",
             properties: %{
@@ -14,7 +14,7 @@ defmodule Remedy.Gateway.Commands.Identify do
             shard: [],
             intents: 0
 
-  def send(%State{shard: shard, shards: shards, token: token}, opts) do
+  def send(%WSState{shard: shard, shards: shards, token: token}, opts) do
     payload = %{
       token: token,
       shard: [shard, shards],

@@ -13,40 +13,38 @@ defmodule Remedy.Cache do
   import Ecto.Query, warn: false
 
   alias Remedy.Repo
-  alias Remedy.Schema.{App, Ban, Channel, Emoji, Guild, Member, Role, User}
+
+  use Remedy.Schema, :schema_alias
   use Unsafe.Generator, handler: :unwrap, docs: false
 
-  @type snowflake :: Snowflake.t()
   @type reason :: String.t()
-  @type attrs :: map()
-  @type changeset :: Ecto.Changeset.t()
-
-  @not_found :not_found
 
   @doc """
   Fetch a channel from the cache.
 
   """
+
   @unsafe {:fetch_channel, [:id]}
-  @spec fetch_channel(snowflake) :: {:error, reason} | {:ok, Remedy.Schema.Channel.t()}
+  @spec fetch_channel(Snowflake.c()) :: {:error, reason} | {:ok, Channel.t()}
   def fetch_channel(id) when is_snowflake(id) do
-    case Repo.get(Channel, id) do
-      nil -> {:error, @not_found}
-      %Channel{} = channel -> {:ok, channel}
-    end
+    Repo.get(Channel, id)
+    |> wrap()
   end
+
+  @spec list_channels() :: {:error, term} | {:ok, [Channel.t()]}
+  def list_channels, do: Repo.all(Channel) |> wrap()
 
   @doc """
   List channels from the cache.
 
   """
   @unsafe {:list_channels, [:guild_id]}
-  @spec list_channels(snowflake) :: {:error, term} | {:ok, [Remedy.Schema.Channel.t()]}
-  def list_channels(guild_id \\ nil)
-  def list_channels(nil), do: Repo.all(Channel) |> wrap_list()
+  @spec list_channels(Snowflake.c()) :: {:error, term} | {:ok, [Channel.t()]}
+  def list_channels(guild_id)
 
   def list_channels(guild_id) do
-    Repo.all(where(Channel, guild_id: ^guild_id)) |> wrap_list()
+    Repo.all(where(Channel, guild_id: ^guild_id))
+    |> wrap()
   end
 
   @doc """
@@ -54,29 +52,22 @@ defmodule Remedy.Cache do
 
   """
 
-  @spec fetch_ban(snowflake, snowflake) :: {:error, reason} | {:ok, Ban.t()}
+  @spec fetch_ban(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Ban.t()}
   @unsafe {:fetch_ban, [:guild_id, :user_id]}
   def fetch_ban(guild_id, user_id) do
-    case get_ban(guild_id, user_id) do
-      nil ->
-        {:error, @not_found}
-
-      %Ban{} = ban ->
-        {:ok,
-         ban
-         |> Repo.preload(:guild)
-         |> Repo.preload(:user)}
-    end
+    get_ban(guild_id, user_id)
+    |> wrap()
   end
 
   @doc """
   Returns True/False to the user being banned from a guild.
   """
-  @spec user_banned?(any, any) :: true | false
+  @spec user_banned?(Snowflake.c(), Snowflake.c()) :: true | false
   def user_banned?(guild_id, user_id) do
-    case get_ban(guild_id, user_id) do
+    get_ban(guild_id, user_id)
+    |> case do
       nil -> false
-      %Ban{} -> true
+      _ -> true
     end
   end
 
@@ -85,27 +76,27 @@ defmodule Remedy.Cache do
   """
   @spec list_bans :: {:error, reason} | {:ok, [Ban.t()]}
   @unsafe {:list_bans, []}
-  def list_bans, do: Repo.all(Ban) |> wrap_list()
+  def list_bans, do: Repo.all(Ban) |> wrap()
 
   @doc """
   List all bans associated with a guild.
   """
-  @spec list_guild_bans(snowflake) :: {:error, reason} | {:ok, [Ban.t()]}
+  @spec list_guild_bans(Snowflake.c()) :: {:error, reason} | {:ok, [Ban.t()]}
   @unsafe {:list_guild_bans, [:guild_id]}
   def list_guild_bans(guild_id) do
-    Repo.all(where(Ban, guild_id: ^guild_id)) |> wrap_list()
+    Repo.all(where(Ban, guild_id: ^guild_id)) |> wrap()
   end
 
   @doc """
   List all bans associated with a user.
   """
-  @spec list_user_bans(snowflake) :: {:error, reason} | {:ok, [Ban.t()]}
+  @spec list_user_bans(Snowflake.c()) :: {:error, reason} | {:ok, [Ban.t()]}
   @unsafe {:list_user_bans, [:user_id]}
   def list_user_bans(user_id) do
-    Repo.all(where(User, user_id: ^user_id)) |> wrap_list()
+    Repo.all(where(User, user_id: ^user_id)) |> wrap()
   end
 
-  @spec get_ban(snowflake, snowflake) :: nil | Ban.t()
+  @spec get_ban(Snowflake.c(), Snowflake.c()) :: nil | Ban.t()
   def get_ban(guild_id, user_id), do: Repo.get_by(Ban, %{guild_id: guild_id, user_id: user_id})
 
   @doc """
@@ -145,24 +136,8 @@ defmodule Remedy.Cache do
   """
   @unsafe {:fetch_guild, [:id]}
   def fetch_guild(id) do
-    case Repo.get(Guild, id) do
-      nil -> {:error, @not_found}
-      %Guild{} = guild -> {:ok, guild |> guild_preloaders() |> drop_unloaded_assoc() |> drop_metadata()}
-    end
-  end
-
-  defp guild_preloaders(guild) do
-    guild
-    |> Repo.preload(:members)
-    |> Repo.preload(:channels)
-    |> Repo.preload(:emojis)
-    |> Repo.preload(:presences)
-    |> Repo.preload(:roles)
-    |> Repo.preload(:stage_instances)
-    |> Repo.preload(:stickers)
-    |> Repo.preload(:threads)
-    |> Repo.preload(:voice_states)
-    |> Repo.preload(:bans)
+    Repo.get(Guild, id)
+    |> wrap()
   end
 
   def list_guilds do
@@ -174,10 +149,8 @@ defmodule Remedy.Cache do
   """
   @unsafe {:fetch_emoji, [:id]}
   def fetch_emoji(id) do
-    case Repo.get(Emoji, id) do
-      nil -> {:error, @not_found}
-      %Emoji{} = emoji -> {:ok, emoji}
-    end
+    Repo.get(Emoji, id)
+    |> wrap()
   end
 
   @doc """
@@ -246,12 +219,11 @@ defmodule Remedy.Cache do
     end)
   end
 
-  defp wrap_list({:error, _reason} = error), do: error
-  defp wrap_list([]), do: {:ok, []}
-  defp wrap_list([_ | _] = list), do: {:ok, list}
-
+  defp wrap(nil), do: {:error, :not_found}
+  defp wrap({:error, _reason} = error), do: error
+  defp wrap([]), do: {:ok, []}
+  defp wrap([_ | _] = list), do: {:ok, list}
   defp wrap(%{} = struct), do: {:ok, struct}
-  defp wrap(nil), do: {:error, @not_found}
 
   defp unwrap({:ok, body}), do: body
   defp unwrap({:error, _}), do: raise("Cache Error")

@@ -1,7 +1,7 @@
 [
   line_length: 120,
   import_deps: [:ecto],
-  plugins: [MixMarkdownFormatter],
+  plugins: [],
   inputs: [
     "*.{ex,exs}",
     "{config,lib,test}/**/*.{ex,exs}",

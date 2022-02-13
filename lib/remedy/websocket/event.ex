@@ -1,13 +1,32 @@
 defmodule Remedy.Websocket.Event do
   @moduledoc false
   defstruct op_code: nil, sequence: nil, dispatch_event: nil, payload: nil
+  require Logger
 
-  def handle_frame(%{zlib: zlib} = socket, frame) do
-    with payload <-
+  def handle_frame(%{zlib: zlib, shard: shard} = socket, frame) do
+    with unzipped_frame <-
            :zlib.inflate(zlib, frame)
-           |> :erlang.iolist_to_binary()
-           |> :erlang.binary_to_term() do
-      payload
+           |> :erlang.iolist_to_binary() do
+      try do
+        :erlang.binary_to_term(unzipped_frame, [:safe])
+      rescue
+        ArgumentError ->
+          with pre_atoms <- :erlang.system_info(:atom_count),
+               payload <- :erlang.binary_to_term(unzipped_frame),
+               post_atoms <- :erlang.system_info(:atom_count),
+               new_atoms <- post_atoms - pre_atoms do
+            if post_atoms > pre_atoms do
+              atoms = for i <- pre_atoms..(post_atoms - 1), do: :erlang.binary_to_term(<<131, 75, i::24>>)
+
+              Logger.warn(
+                "Shard: #{shard} created #{new_atoms} new atoms while unpacking frame. OP:#{payload[:op]}, SEQ: #{payload[:s]}, DISPATCH: #{payload[:t]}\n
+#{inspect(atoms)}"
+              )
+            end
+
+            payload
+          end
+      end
       |> new()
       |> handle_event(socket)
     end

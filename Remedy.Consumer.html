@@ -10,7 +10,7 @@
     <title>Remedy.Consumer — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-3a5b72b29f.js"></script>
+    <script src="dist/sidebar_items-ea5d1a30c1.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,44 +97,74 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Consumer process for gateway event handling.</p><h2 id="module-consuming-events" class="section-heading">
-  <a href="#module-consuming-events" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Consuming Events
+<p>Consumer process for gateway event handling.</p><p>You have two options for handling events. You can create a consumer module through the behaviour described in this module, which implements <a href="#c:handle_event/1"><code class="inline">handle_event/1</code></a>. Or you can create your own GenStage or Broadway pipeline to process the events. Details of each of these methods are described below. Events will be buffered up to 10,000 inside the <a href="Remedy.Consumer.Producer.html"><code class="inline">Remedy.Consumer.Producer</code></a> process waiting for a subscriber to connect. If you are using the Consumer Module method, you will subscribe immediately. If you are implementing your own GenStage or Broadway pipeline, you will have to start your module and subscribe yourself.</p><h2 id="module-consumer-module" class="section-heading">
+  <a href="#module-consumer-module" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Consumer Module
 </h2>
-<p>To handle events, Remedy uses a GenStage implementation.</p><p>Remedy defines the <code class="inline">producer</code> and <code class="inline">producer_consumer</code> in the GenStage design.
-To consume the events you must create at least one <code class="inline">consumer</code> process.</p><p>Remedy uses a ConsumerSupervisor to dispatch events, meaning your handlers
-will each be ran in their own seperate task.</p><p>The full list of dispatch events and their inner payload is described in the type specs within this module.</p><ul><li>Regular payloads are delivered after casting to their schema and ratified against the cache.</li><li>Irregular payloads are classified as those which do not directly map to a standard discord object. They undergo extensive manipulation prior to updating the cache. They are described under the <code class="inline">DISPATCH</code> section of the documentation.</li></ul><h2 id="module-example" class="section-heading">
-  <a href="#module-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Example
+<p>The simplest consumer implementation is to use the Consumer behaviour by adding <code class="inline">use Remedy.Consumer</code> to your module.</p><p>This will handle all of the supervision and set up for you. all you need to implement is the <a href="#c:handle_event/1"><code class="inline">handle_event/1</code></a> callback for all the events you wish to consume. Using this method will start your consumer under the Remedy supervision tree and you are not required to start it yourself.</p><p>This method is used to implement the standard event logging module, which looks something like this internally.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Remedy.Consumer.LumberJack</span><span class="w"> </span><span class="k" data-group-id="7819221924-1">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">Remedy.Consumer</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="7819221924-2">(</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="c">_meta</span><span class="p" data-group-id="7819221924-2">)</span><span class="w"> </span><span class="k" data-group-id="7819221924-3">do</span><span class="w">
+    </span><span class="nc">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p" data-group-id="7819221924-4">(</span><span class="s">&quot;</span><span class="si" data-group-id="7819221924-5">#{</span><span class="n">inspect</span><span class="p" data-group-id="7819221924-6">(</span><span class="n">event</span><span class="p" data-group-id="7819221924-6">)</span><span class="si" data-group-id="7819221924-5">}</span><span class="s"> </span><span class="si" data-group-id="7819221924-7">#{</span><span class="n">inspect</span><span class="p" data-group-id="7819221924-8">(</span><span class="n">payload</span><span class="p" data-group-id="7819221924-8">)</span><span class="si" data-group-id="7819221924-7">}</span><span class="s">&quot;</span><span class="p" data-group-id="7819221924-4">)</span><span class="w">
+  </span><span class="k" data-group-id="7819221924-3">end</span><span class="w">
+
+</span><span class="k" data-group-id="7819221924-1">end</span></code></pre><p>Internally, the events are run in a <a href="https://hexdocs.pm/gen_stage/1.1.2/ConsumerSupervisor.html"><code class="inline">ConsumerSupervisor</code></a> which is configured to run <a href="https://hexdocs.pm/elixir/System.html#schedulers/0"><code class="inline">System.schedulers/0</code></a> number of tasks concurrently. The tasks are wrapped in a <code class="inline">try rescue</code> block to ensure the consumer will never be taken down. If you start seeing <code class="inline">CONSUMER_ERROR</code> in your logs it means there is an error with your callback implementation and your callbacks are being rescued. There is no retry logic while using this method and the event is lost.</p><h2 id="module-genstage" class="section-heading">
+  <a href="#module-genstage" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Genstage
 </h2>
-<p>It is recommended that you supervise your consumers. First we set up a supervisor module for our consumers.</p><pre><code class="makeup elixir" translate="no"><span class="w">  </span><span class="c1">#example_supervisor.ex</span><span class="w">
-  </span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.ExampleSupervisor</span><span class="w"> </span><span class="k" data-group-id="1804657054-1">do</span><span class="w">
-    </span><span class="kn">use</span><span class="w"> </span><span class="nc">Supervisor</span><span class="w">
+<p>If you wish to implement a custom <a href="https://hexdocs.pm/gen_stage/1.1.2/GenStage.html"><code class="inline">GenStage</code></a> pipeline you can simply subscribe to <a href="Remedy.Consumer.Producer.html"><code class="inline">Remedy.Consumer.Producer</code></a> inside your init callback. The other implementation details are the concern of the readers individual situation, such as how the module will be started and supervised.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.PipelineProducer</span><span class="w"> </span><span class="k" data-group-id="9800144655-1">do</span><span class="w">
+  </span><span class="na">@moduledoc</span><span class="w"> </span><span class="no">false</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
 
-    </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="1804657054-2">(</span><span class="n">args</span><span class="p" data-group-id="1804657054-2">)</span><span class="w"> </span><span class="k" data-group-id="1804657054-3">do</span><span class="w">
-      </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="1804657054-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p" data-group-id="1804657054-4">)</span><span class="w">
-    </span><span class="k" data-group-id="1804657054-3">end</span><span class="w">
+  </span><span class="na">@impl</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="9800144655-2">(</span><span class="c">_opts</span><span class="p" data-group-id="9800144655-2">)</span><span class="w"> </span><span class="k" data-group-id="9800144655-3">do</span><span class="w">
+    </span><span class="n">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9800144655-4">[</span><span class="w">
+      </span><span class="ss">dispatcher</span><span class="p">:</span><span class="w"> </span><span class="nc">GenStage.DemandDispatcher</span><span class="p">,</span><span class="w">
+      </span><span class="ss">subscribe_to</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9800144655-5">[</span><span class="nc">Remedy.Consumer.Producer</span><span class="p" data-group-id="9800144655-5">]</span><span class="w">
+    </span><span class="p" data-group-id="9800144655-4">]</span><span class="w">
+    </span><span class="p" data-group-id="9800144655-6">{</span><span class="ss">:producer_consumer</span><span class="p">,</span><span class="w"> </span><span class="ss">:state</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p" data-group-id="9800144655-6">}</span><span class="w">
+  </span><span class="k" data-group-id="9800144655-3">end</span><span class="w">
 
-    </span><span class="na">@impl</span><span class="w"> </span><span class="no">true</span><span class="w">
-    </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="1804657054-5">(</span><span class="c">_init_arg</span><span class="p" data-group-id="1804657054-5">)</span><span class="w"> </span><span class="k" data-group-id="1804657054-6">do</span><span class="w">
-      </span><span class="n">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1804657054-7">[</span><span class="nc">ExampleConsumer</span><span class="p" data-group-id="1804657054-7">]</span><span class="w">
+  </span><span class="na">@impl</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_events</span><span class="p" data-group-id="9800144655-7">(</span><span class="n">events</span><span class="p">,</span><span class="w"> </span><span class="c">_from</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="9800144655-7">)</span><span class="w"> </span><span class="k" data-group-id="9800144655-8">do</span><span class="w">
+    </span><span class="p" data-group-id="9800144655-9">{</span><span class="ss">:noreply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9800144655-10">[</span><span class="n">events</span><span class="p" data-group-id="9800144655-10">]</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">:hibernate</span><span class="p" data-group-id="9800144655-9">}</span><span class="w">
+  </span><span class="k" data-group-id="9800144655-8">end</span><span class="w">
 
-      </span><span class="nc">Supervisor</span><span class="o">.</span><span class="n">init</span><span class="p" data-group-id="1804657054-8">(</span><span class="n">children</span><span class="p">,</span><span class="w"> </span><span class="ss">strategy</span><span class="p">:</span><span class="w"> </span><span class="ss">:one_for_one</span><span class="p" data-group-id="1804657054-8">)</span><span class="w">
-    </span><span class="k" data-group-id="1804657054-6">end</span><span class="w">
-  </span><span class="k" data-group-id="1804657054-1">end</span></code></pre><p>You can then set up your consumer module.</p><p>#example_consumer.ex
-defmodule ExampleConsumer do
-  use Remedy.Consumer</p><p>  alias Remedy.Api</p><p>  def start_link do</p><pre><code class="makeup elixir" translate="no"><span class="nc">Consumer</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="4148993433-1">(</span><span class="bp">__MODULE__</span><span class="p" data-group-id="4148993433-1">)</span></code></pre><p>  end</p><p>  def handle_event({:MESSAGE_CREATE, %Message{content: content}, _ws_state}) do</p><pre><code class="makeup elixir" translate="no"><span class="k">case</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k" data-group-id="9990235640-1">do</span><span class="w">
-  </span><span class="s">&quot;!sleep&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
-    </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="9990235640-2">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Going to sleep...&quot;</span><span class="p" data-group-id="9990235640-2">)</span><span class="w">
-    </span><span class="nc">Process</span><span class="o">.</span><span class="n">sleep</span><span class="p" data-group-id="9990235640-3">(</span><span class="mi">3000</span><span class="p" data-group-id="9990235640-3">)</span><span class="w">
+  </span><span class="na">@impl</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_demand</span><span class="p" data-group-id="9800144655-11">(</span><span class="c">_incoming_demand</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="9800144655-11">)</span><span class="w"> </span><span class="k" data-group-id="9800144655-12">do</span><span class="w">
+    </span><span class="p" data-group-id="9800144655-13">{</span><span class="ss">:noreply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9800144655-14">[</span><span class="p" data-group-id="9800144655-14">]</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">:hibernate</span><span class="p" data-group-id="9800144655-13">}</span><span class="w">
+  </span><span class="k" data-group-id="9800144655-12">end</span><span class="w">
+</span><span class="k" data-group-id="9800144655-1">end</span></code></pre><h2 id="module-broadway" class="section-heading">
+  <a href="#module-broadway" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Broadway
+</h2>
+<p>To implement a <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> pipeline you should first create a <code class="inline">:producer_consumer</code> per the example above. You can then use that producer as your as your <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> producer. Following that you just need to implement the callbacks specific to your pipeline. Note that because Remedy uses <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> internally, there is no need to include it as a dependency.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.Pipeline</span><span class="w"> </span><span class="k" data-group-id="5784501781-1">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">Broadway</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="5784501781-2">(</span><span class="c">_opts</span><span class="p" data-group-id="5784501781-2">)</span><span class="w"> </span><span class="k" data-group-id="5784501781-3">do</span><span class="w">
+    </span><span class="nc">Broadway</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="5784501781-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w">
+      </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w">
+      </span><span class="ss">producer</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-5">[</span><span class="w">
+        </span><span class="ss">module</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-6">{</span><span class="nc">PipelineProducer</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5784501781-7">[</span><span class="p" data-group-id="5784501781-7">]</span><span class="p" data-group-id="5784501781-6">}</span><span class="p">,</span><span class="w">
+        </span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p" data-group-id="5784501781-5">]</span><span class="p">,</span><span class="w">
+      </span><span class="ss">processors</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-8">[</span><span class="w">
+        </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-9">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5784501781-9">]</span><span class="w">
+      </span><span class="p" data-group-id="5784501781-8">]</span><span class="p">,</span><span class="w">
+      </span><span class="ss">batchers</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-10">[</span><span class="w">
+        </span><span class="ss">channel_create</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-11">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p" data-group-id="5784501781-11">]</span><span class="p">,</span><span class="w">
+        </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-12">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5784501781-12">]</span><span class="p">,</span><span class="w">
+        </span><span class="ss">unhandled</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-13">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5784501781-13">]</span><span class="w">
+      </span><span class="p" data-group-id="5784501781-10">]</span><span class="w">
+    </span><span class="p" data-group-id="5784501781-4">)</span><span class="w">
+  </span><span class="k" data-group-id="5784501781-3">end</span><span class="w">
 
-  </span><span class="s">&quot;!ping&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
-    </span><span class="nc">Api</span><span class="o">.</span><span class="n">create_message</span><span class="p" data-group-id="9990235640-4">(</span><span class="n">msg</span><span class="o">.</span><span class="n">channel_id</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pyongyang!&quot;</span><span class="p" data-group-id="9990235640-4">)</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_message</span><span class="p" data-group-id="5784501781-14">(</span><span class="bp">_</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5784501781-15">%{</span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5784501781-16">%{</span><span class="ss">event</span><span class="p">:</span><span class="w"> </span><span class="ss">:CHANNEL_CREATE</span><span class="p" data-group-id="5784501781-16">}</span><span class="p" data-group-id="5784501781-15">}</span><span class="err">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="5784501781-14">)</span><span class="w"> </span><span class="k" data-group-id="5784501781-17">do</span><span class="w">
+    </span><span class="n">message</span><span class="w">
+    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Broadway.Message</span><span class="o">.</span><span class="n">put_batcher</span><span class="p" data-group-id="5784501781-18">(</span><span class="ss">:CHANNEL_CREATE</span><span class="p" data-group-id="5784501781-18">)</span><span class="w">
+  </span><span class="k" data-group-id="5784501781-17">end</span><span class="w">
 
-  </span><span class="s">&quot;!raise&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w">
-    </span><span class="k">raise</span><span class="w"> </span><span class="s">&quot;No problems here!&quot;</span><span class="w">
-</span><span class="k" data-group-id="9990235640-1">end</span></code></pre><p>  end</p><p>  def handle_event(_event) do</p><pre><code class="makeup elixir" translate="no"><span class="ss">:noop</span></code></pre><p>  end
-end</p>
+  </span><span class="c1"># Other Callbacks</span><span class="w">
+</span><span class="k" data-group-id="5784501781-1">end</span></code></pre>
   </section>
 
 
@@ -158,7 +188,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a new channel is created.</p></div>
+          <div class="summary-synopsis"><p>Received when a channel is created.</p></div>
 
       </div>
 
@@ -168,7 +198,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a channel relevant to the current user is deleted.</p></div>
+          <div class="summary-synopsis"><p>Received when a channel is deleted.</p></div>
 
       </div>
 
@@ -178,7 +208,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a message is pinned or unpinned in a text channel.</p></div>
+          <div class="summary-synopsis"><p>Received when a message is pinned or unpinned.</p></div>
 
       </div>
 
@@ -188,13 +218,13 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a channel is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a channel is updated.</p></div>
 
       </div>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:event/0" translate="no">event()</a>
+          <a href="#t:guild_available/0" translate="no">guild_available()</a>
 
         </div>
 
@@ -206,7 +236,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a user is banned from a guild.</p></div>
+          <div class="summary-synopsis"><p>Received when a user is banned from a guild.</p></div>
 
       </div>
 
@@ -216,7 +246,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a user is unbanned from a guild.</p></div>
+          <div class="summary-synopsis"><p>Received when a user is unbanned from a guild.</p></div>
 
       </div>
 
@@ -226,7 +256,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>This event can be sent in three different scenarios</p></div>
+          <div class="summary-synopsis"><p>Received when joining a new guild.</p></div>
 
       </div>
 
@@ -236,8 +266,6 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild becomes or was already unavailable due to</p></div>
-
       </div>
 
       <div class="summary-row">
@@ -246,7 +274,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild's emojis have been updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a guild's emojis have been updated.</p></div>
 
       </div>
 
@@ -256,7 +284,27 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild integration is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a guild integration is updated.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:guild_kicked/0" translate="no">guild_kicked()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Recieved when the bot is kicked from a guild.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:guild_leave/0" translate="no">guild_leave()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Received when the bot leaves a guild.</p></div>
 
       </div>
 
@@ -266,17 +314,17 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a new user joins a guild.</p></div>
+          <div class="summary-synopsis"><p>Received when a new user joins a guild.</p></div>
 
       </div>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:guild_member_remove/0" translate="no">guild_member_remove()</a>
+          <a href="#t:guild_member_kicked/0" translate="no">guild_member_kicked()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a used is removed from a guild.</p></div>
+          <div class="summary-synopsis"><p>Received when a used is removed from a guild.</p></div>
 
       </div>
 
@@ -286,17 +334,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild member is updated.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:guild_members_chunk/0" translate="no">guild_members_chunk()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Sent in response to Guild Request Members.</p></div>
+          <div class="summary-synopsis"><p>Received when a guild member is updated.</p></div>
 
       </div>
 
@@ -306,7 +344,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild role is created.</p></div>
+          <div class="summary-synopsis"><p>Received when a guild role is created.</p></div>
 
       </div>
 
@@ -316,7 +354,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild role is deleted.</p></div>
+          <div class="summary-synopsis"><p>Received when a guild role is deleted.</p></div>
 
       </div>
 
@@ -326,7 +364,17 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild role is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a guild role is updated.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:guild_unavailable/0" translate="no">guild_unavailable()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Received when a guild is unavailable due to an outage.</p></div>
 
       </div>
 
@@ -336,7 +384,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a guild is updated.</p></div>
+          <div class="summary-synopsis"><p>Receivedent when a guild is updated.</p></div>
 
       </div>
 
@@ -346,7 +394,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when an integration is created.</p></div>
+          <div class="summary-synopsis"><p>Received when an integration is created.</p></div>
 
       </div>
 
@@ -356,7 +404,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when an integration is deleted.</p></div>
+          <div class="summary-synopsis"><p>Received when an integration is deleted.</p></div>
 
       </div>
 
@@ -366,7 +414,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when an integration is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when an integration is updated.</p></div>
 
       </div>
 
@@ -376,7 +424,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a user triggers an <code class="inline">Application Command</code></p></div>
+          <div class="summary-synopsis"><p>Received when a user triggers an <code class="inline">Application Command</code></p></div>
 
       </div>
 
@@ -386,7 +434,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a message is created.</p></div>
+          <div class="summary-synopsis"><p>Received when a message is created.</p></div>
 
       </div>
 
@@ -396,7 +444,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a messgae is deleted.</p></div>
+          <div class="summary-synopsis"><p>Received when a messgae is deleted.</p></div>
 
       </div>
 
@@ -406,47 +454,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when multiple messages are deleted at once.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:message_reaction_add/0" translate="no">message_reaction_add()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Sent when a user adds a reaction to a message.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:message_reaction_remove/0" translate="no">message_reaction_remove()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Sent when a user removes a reaction from a message.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:message_reaction_remove_all/0" translate="no">message_reaction_remove_all()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Sent when a user removes a reaction from a message.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:message_reaction_remove_emoji/0" translate="no">message_reaction_remove_emoji()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Sent when a bot removes all instances of a given emoji from the reactions of a message.</p></div>
+          <div class="summary-synopsis"><p>Received when multiple messages are deleted at once.</p></div>
 
       </div>
 
@@ -466,7 +474,27 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>This event is sent when a user's presence or info, such as name or avatar, is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a user's presence or info is updated.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:reaction_add/0" translate="no">reaction_add()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Received when a user adds a reaction to a message.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:reaction_remove/0" translate="no">reaction_remove()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Received when a user removes a reaction from a message.</p></div>
 
       </div>
 
@@ -475,6 +503,8 @@ end</p>
           <a href="#t:ready/0" translate="no">ready()</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>Received when the bot is online.</p></div>
 
       </div>
 
@@ -500,21 +530,11 @@ end</p>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:thread_list_sync/0" translate="no">thread_list_sync()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Sent when the current user gains access to a channel.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#t:thread_member_update/0" translate="no">thread_member_update()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when the thread member object for the current user is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when the thread member object for the current user is updated.</p></div>
 
       </div>
 
@@ -524,7 +544,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when anyone is added to or removed from a thread.</p></div>
+          <div class="summary-synopsis"><p>Received when anyone is added to or removed from a thread.</p></div>
 
       </div>
 
@@ -534,7 +554,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a thread is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a thread is updated.</p></div>
 
       </div>
 
@@ -544,7 +564,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a user begins typing in a channel.</p></div>
+          <div class="summary-synopsis"><p>Received when a user begins typing in a channel.</p></div>
 
       </div>
 
@@ -554,7 +574,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a user is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a user is updated.</p></div>
 
       </div>
 
@@ -564,6 +584,8 @@ end</p>
 
         </div>
 
+          <div class="summary-synopsis"><p>Received when a webhook is updated.</p></div>
+
       </div>
 
       <div class="summary-row">
@@ -571,6 +593,8 @@ end</p>
           <a href="#t:voice_server_update/0" translate="no">voice_server_update()</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>Received when a webhook is updated.</p></div>
 
       </div>
 
@@ -580,6 +604,8 @@ end</p>
 
         </div>
 
+          <div class="summary-synopsis"><p>Received when a webhook is updated.</p></div>
+
       </div>
 
       <div class="summary-row">
@@ -588,7 +614,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a user's voice state is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a user's voice state is updated.</p></div>
 
       </div>
 
@@ -598,7 +624,7 @@ end</p>
 
         </div>
 
-          <div class="summary-synopsis"><p>Sent when a webhook is updated.</p></div>
+          <div class="summary-synopsis"><p>Received when a webhook is updated.</p></div>
 
       </div>
 
@@ -611,9 +637,11 @@ end</p>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#c:handle_event/1" translate="no">handle_event(event)</a>
+          <a href="#c:handle_event/1" translate="no">handle_event(term)</a>
 
         </div>
+
+          <div class="summary-synopsis"></div>
 
       </div>
 
@@ -641,7 +669,7 @@ Types
     <h1 class="signature" translate="no">channel_create()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L154" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L101" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -655,14 +683,14 @@ Types
       <div class="specs">
 
           <pre translate="no">channel_create() ::
-  {:CHANNEL_CREATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
+  {:CHANNEL_CREATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a new channel is created.</p><p><a href="https://discord.com/developers/docs/topics/gateway#channel-create">Read More</a></p>
+<p>Received when a channel is created.</p>
   </section>
 </section>
 <section class="detail" id="t:channel_delete/0">
@@ -675,7 +703,7 @@ Types
     <h1 class="signature" translate="no">channel_delete()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L172" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L113" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -689,14 +717,14 @@ Types
       <div class="specs">
 
           <pre translate="no">channel_delete() ::
-  {:CHANNEL_DELETE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
+  {:CHANNEL_DELETE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a channel relevant to the current user is deleted.</p><p><a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Read More</a></p>
+<p>Received when a channel is deleted.</p>
   </section>
 </section>
 <section class="detail" id="t:channel_pins_update/0">
@@ -709,7 +737,7 @@ Types
     <h1 class="signature" translate="no">channel_pins_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L182" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L119" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -723,14 +751,14 @@ Types
       <div class="specs">
 
           <pre translate="no">channel_pins_update() ::
-  {:CHANNEL_UPDATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
+  {:CHANNEL_UPDATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a message is pinned or unpinned in a text channel.</p><p>This is not sent when a pinned message is deleted.</p><p><a href="https://discord.com/developers/docs/topics/gateway#channel-pins-update">Read More</a></p>
+<p>Received when a message is pinned or unpinned.</p>
   </section>
 </section>
 <section class="detail" id="t:channel_update/0">
@@ -743,7 +771,7 @@ Types
     <h1 class="signature" translate="no">channel_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L164" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L107" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -757,27 +785,27 @@ Types
       <div class="specs">
 
           <pre translate="no">channel_update() ::
-  {:CHANNEL_UPDATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
+  {:CHANNEL_UPDATE, <a href="Remedy.Schema.Channel.html#t:t/0">Remedy.Schema.Channel.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a channel is updated.</p><p>This is not sent when the field <code class="inline">:last_message_id</code> is altered. To keep track of the <code class="inline">:last_message_id</code> changes, you must listen for <a href="#t:message_create/0"><code class="inline">message_create/0</code></a> events.</p><p><a href="https://discord.com/developers/docs/topics/gateway#channel-update">Read More</a></p>
+<p>Received when a channel is updated.</p>
   </section>
 </section>
-<section class="detail" id="t:event/0">
+<section class="detail" id="t:guild_available/0">
 
   <div class="detail-header">
-    <a href="#t:event/0" class="detail-link" title="Link to this type">
+    <a href="#t:guild_available/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">event()</h1>
+    <h1 class="signature" translate="no">guild_available()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L104" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L122" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -790,50 +818,8 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">event() ::
-  <a href="#t:channel_create/0">channel_create</a>()
-  | <a href="#t:channel_delete/0">channel_delete</a>()
-  | <a href="#t:channel_pins_update/0">channel_pins_update</a>()
-  | <a href="#t:channel_update/0">channel_update</a>()
-  | guild_available()
-  | <a href="#t:guild_ban_add/0">guild_ban_add</a>()
-  | <a href="#t:guild_ban_remove/0">guild_ban_remove</a>()
-  | <a href="#t:guild_create/0">guild_create</a>()
-  | <a href="#t:guild_delete/0">guild_delete</a>()
-  | <a href="#t:guild_emojis_update/0">guild_emojis_update</a>()
-  | <a href="#t:guild_integrations_update/0">guild_integrations_update</a>()
-  | <a href="#t:guild_member_add/0">guild_member_add</a>()
-  | <a href="#t:guild_member_remove/0">guild_member_remove</a>()
-  | <a href="#t:guild_member_update/0">guild_member_update</a>()
-  | <a href="#t:guild_members_chunk/0">guild_members_chunk</a>()
-  | <a href="#t:guild_role_create/0">guild_role_create</a>()
-  | <a href="#t:guild_role_delete/0">guild_role_delete</a>()
-  | <a href="#t:guild_role_update/0">guild_role_update</a>()
-  | guild_unavailable()
-  | <a href="#t:guild_update/0">guild_update</a>()
-  | <a href="#t:integration_create/0">integration_create</a>()
-  | <a href="#t:integration_update/0">integration_update</a>()
-  | <a href="#t:integration_delete/0">integration_delete</a>()
-  | <a href="#t:interaction_create/0">interaction_create</a>()
-  | <a href="#t:message_create/0">message_create</a>()
-  | <a href="#t:message_delete_bulk/0">message_delete_bulk</a>()
-  | <a href="#t:message_delete/0">message_delete</a>()
-  | <a href="#t:message_reaction_add/0">message_reaction_add</a>()
-  | <a href="#t:message_reaction_remove_all/0">message_reaction_remove_all</a>()
-  | <a href="#t:message_reaction_remove_emoji/0">message_reaction_remove_emoji</a>()
-  | <a href="#t:message_reaction_remove/0">message_reaction_remove</a>()
-  | <a href="#t:message_update/0">message_update</a>()
-  | <a href="#t:presence_update/0">presence_update</a>()
-  | <a href="#t:ready/0">ready</a>()
-  | <a href="#t:thread_create/0">thread_create</a>()
-  | <a href="#t:thread_delete/0">thread_delete</a>()
-  | <a href="#t:thread_list_sync/0">thread_list_sync</a>()
-  | <a href="#t:thread_member_update/0">thread_member_update</a>()
-  | <a href="#t:thread_members_update/0">thread_members_update</a>()
-  | <a href="#t:thread_update/0">thread_update</a>()
-  | <a href="#t:typing_start/0">typing_start</a>()
-  | <a href="#t:user_update/0">user_update</a>()
-  | <a href="#t:webhooks_update/0">webhooks_update</a>()</pre>
+          <pre translate="no">guild_available() ::
+  {:GUILD_AVAILABLE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
@@ -853,7 +839,7 @@ Types
     <h1 class="signature" translate="no">guild_ban_add()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L194" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L128" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -866,14 +852,15 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_ban_add() :: {:GUILD_BAN_ADD, Ban.t(), Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">guild_ban_add() ::
+  {:GUILD_BAN_ADD, <a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a user is banned from a guild.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-ban-add">Read More</a></p>
+<p>Received when a user is banned from a guild.</p>
   </section>
 </section>
 <section class="detail" id="t:guild_ban_remove/0">
@@ -886,7 +873,7 @@ Types
     <h1 class="signature" translate="no">guild_ban_remove()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L202" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L134" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -900,14 +887,14 @@ Types
       <div class="specs">
 
           <pre translate="no">guild_ban_remove() ::
-  {:GUILD_BAN_REMOVE, Ban.t(), Remedy.Gateway.Session.State.t()}</pre>
+  {:GUILD_BAN_REMOVE, <a href="Remedy.Schema.Ban.html#t:t/0">Remedy.Schema.Ban.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a user is unbanned from a guild.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-ban-remove">Read More</a></p>
+<p>Received when a user is unbanned from a guild.</p>
   </section>
 </section>
 <section class="detail" id="t:guild_create/0">
@@ -918,6 +905,483 @@ Types
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_create()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L140" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_create() ::
+  {:GUILD_CREATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when joining a new guild.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_delete/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_delete/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_delete()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L143" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_delete() ::
+  {:GUILD_DELETE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+
+  </section>
+</section>
+<section class="detail" id="t:guild_emojis_update/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_emojis_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_emojis_update()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L164" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_emojis_update() ::
+  {:GUILD_EMOJIS_UPDATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a guild's emojis have been updated.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_integrations_update/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_integrations_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_integrations_update()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L170" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_integrations_update() ::
+  {:GUILD_INTEGRATIONS_UPDATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(),
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a guild integration is updated.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_kicked/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_kicked/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_kicked()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L158" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_kicked() ::
+  {:GUILD_KICKED, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Recieved when the bot is kicked from a guild.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_leave/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_leave/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_leave()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L153" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_leave() ::
+  {:GUILD_LEAVE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when the bot leaves a guild.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_member_add/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_member_add/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_member_add()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L176" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_member_add() ::
+  {:GUILD_MEMBER_ADD, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a new user joins a guild.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_member_kicked/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_member_kicked/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_member_kicked()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L182" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_member_kicked() ::
+  {:GUILD_MEMBER_REMOVE, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a used is removed from a guild.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_member_update/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_member_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_member_update()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L188" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_member_update() ::
+  {:GUILD_MEMBER_UPDATE, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a guild member is updated.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_role_create/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_role_create/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_role_create()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L194" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_role_create() ::
+  {:GUILD_ROLE_CREATE, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a guild role is created.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_role_delete/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_role_delete/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_role_delete()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L200" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_role_delete() ::
+  {:GUILD_ROLE_DELETE, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a guild role is deleted.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_role_update/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_role_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_role_update()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L206" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_role_update() ::
+  {:GUILD_ROLE_UPDATE, <a href="Remedy.Schema.Role.html#t:t/0">Remedy.Schema.Role.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a guild role is updated.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_unavailable/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_unavailable/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_unavailable()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L148" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_unavailable() ::
+  {:GUILD_UNAVAILABLE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a guild is unavailable due to an outage.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_update/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">guild_update()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L212" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">guild_update() ::
+  {:GUILD_UPDATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Receivedent when a guild is updated.</p>
+  </section>
+</section>
+<section class="detail" id="t:integration_create/0">
+
+  <div class="detail-header">
+    <a href="#t:integration_create/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">integration_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L218" class="view-source" rel="help" title="View Source">
@@ -933,28 +1397,29 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_create() ::
-  {:GUILD_CREATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">integration_create() ::
+  {:INTEGRATION_CREATE, <a href="Remedy.Schema.Integration.html#t:t/0">Remedy.Schema.Integration.t</a>(),
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>This event can be sent in three different scenarios:</p><ol><li>When a user is initially connecting, to lazily load and backfill information for all unavailable guilds sent in the Ready event. Guilds that are unavailable due to an outage will send a Guild Delete event.</li><li>When a Guild becomes available again to the client.</li><li>When the current user joins a new Guild.</li></ol><p>The inner payload is a guild object, with all the extra fields specified.</p><blockquote><p>Note: If your bot does not have the <code class="inline">:GUILD_PRESENCES</code> Gateway Intent, or if the guild has over 75k members, members and presences returned in this event will only contain your bot and users in voice channels.</p></blockquote><p><a href="https://discord.com/developers/docs/topics/gateway#guild-create">Read More</a></p>
+<p>Received when an integration is created.</p>
   </section>
 </section>
-<section class="detail" id="t:guild_delete/0">
+<section class="detail" id="t:integration_delete/0">
 
   <div class="detail-header">
-    <a href="#t:guild_delete/0" class="detail-link" title="Link to this type">
+    <a href="#t:integration_delete/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">guild_delete()</h1>
+    <h1 class="signature" translate="no">integration_delete()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L231" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L230" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -967,28 +1432,29 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_delete() ::
-  {:GUILD_DELETE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">integration_delete() ::
+  {:INTEGRATION_DELETE, <a href="Remedy.Schema.Integration.html#t:t/0">Remedy.Schema.Integration.t</a>(),
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a guild becomes or was already unavailable due to:</p><ol><li>An outage</li><li>The user leaves or is removed from a guild.</li></ol><p>The inner payload is an unavailable guild object. If the unavailable field is not set, the user was removed from the guild.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-delete">Read More</a></p>
+<p>Received when an integration is deleted.</p>
   </section>
 </section>
-<section class="detail" id="t:guild_emojis_update/0">
+<section class="detail" id="t:integration_update/0">
 
   <div class="detail-header">
-    <a href="#t:guild_emojis_update/0" class="detail-link" title="Link to this type">
+    <a href="#t:integration_update/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">guild_emojis_update()</h1>
+    <h1 class="signature" translate="no">integration_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L238" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L224" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1001,29 +1467,29 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_emojis_update() ::
-  {:GUILD_EMOJIS_UPDATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">integration_update() ::
+  {:INTEGRATION_UPDATE, <a href="Remedy.Schema.Integration.html#t:t/0">Remedy.Schema.Integration.t</a>(),
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a guild's emojis have been updated.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-emojis-update">Read More</a></p>
+<p>Received when an integration is updated.</p>
   </section>
 </section>
-<section class="detail" id="t:guild_integrations_update/0">
+<section class="detail" id="t:interaction_create/0">
 
   <div class="detail-header">
-    <a href="#t:guild_integrations_update/0" class="detail-link" title="Link to this type">
+    <a href="#t:interaction_create/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">guild_integrations_update()</h1>
+    <h1 class="signature" translate="no">interaction_create()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L246" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L236" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1036,26 +1502,196 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_integrations_update() ::
-  {:GUILD_INTEGRATIONS_UPDATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">interaction_create() ::
+  {:INTERACTION_CREATE, <a href="Remedy.Schema.Interaction.html#t:t/0">Remedy.Schema.Interaction.t</a>(),
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a guild integration is updated.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-integrations-update">Read More</a></p>
+<p>Received when a user triggers an <code class="inline">Application Command</code></p>
   </section>
 </section>
-<section class="detail" id="t:guild_member_add/0">
+<section class="detail" id="t:message_create/0">
 
   <div class="detail-header">
-    <a href="#t:guild_member_add/0" class="detail-link" title="Link to this type">
+    <a href="#t:message_create/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">guild_member_add()</h1>
+    <h1 class="signature" translate="no">message_create()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L242" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">message_create() ::
+  {:MESSAGE_CREATE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a message is created.</p>
+  </section>
+</section>
+<section class="detail" id="t:message_delete/0">
+
+  <div class="detail-header">
+    <a href="#t:message_delete/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">message_delete()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L254" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">message_delete() ::
+  {:MESSAGE_DELETE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a messgae is deleted.</p>
+  </section>
+</section>
+<section class="detail" id="t:message_delete_bulk/0">
+
+  <div class="detail-header">
+    <a href="#t:message_delete_bulk/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">message_delete_bulk()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L248" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">message_delete_bulk() ::
+  {:MESSAGE_DELETE_BULK, MessageDeleteBulk.t(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when multiple messages are deleted at once.</p>
+  </section>
+</section>
+<section class="detail" id="t:message_update/0">
+
+  <div class="detail-header">
+    <a href="#t:message_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">message_update()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L280" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">message_update() ::
+  {:MESSAGE_UPDATE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Sent when a message is updated.</p>
+  </section>
+</section>
+<section class="detail" id="t:presence_update/0">
+
+  <div class="detail-header">
+    <a href="#t:presence_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">presence_update()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L285" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">presence_update() ::
+  {:PRESENCE_UPDATE, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
+
+      </div>
+
+
+
+
+<p>Received when a user's presence or info is updated.</p>
+  </section>
+</section>
+<section class="detail" id="t:reaction_add/0">
+
+  <div class="detail-header">
+    <a href="#t:reaction_add/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">reaction_add()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L260" class="view-source" rel="help" title="View Source">
@@ -1071,33 +1707,28 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_member_add() ::
-  {:GUILD_MEMBER_ADD, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">reaction_add() ::
+  {:REACTION_ADD, <a href="Remedy.Schema.Reaction.html#t:t/0">Remedy.Schema.Reaction.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a new user joins a guild.</p><h2 id="t:guild_member_add/0-intents" class="section-heading">
-  <a href="#t:guild_member_add/0-intents" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Intents
-</h2>
-<ul><li><code class="inline">:GUILD_MEMBERS</code></li></ul><p>The inner payload is a guild member object with an extra guild_id.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-member-add">Read More</a></p>
+<p>Received when a user adds a reaction to a message.</p>
   </section>
 </section>
-<section class="detail" id="t:guild_member_remove/0">
+<section class="detail" id="t:reaction_remove/0">
 
   <div class="detail-header">
-    <a href="#t:guild_member_remove/0" class="detail-link" title="Link to this type">
+    <a href="#t:reaction_remove/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">guild_member_remove()</h1>
+    <h1 class="signature" translate="no">reaction_remove()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L272" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L274" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1110,33 +1741,28 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_member_remove() ::
-  {:GUILD_MEMBER_REMOVE, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">reaction_remove() ::
+  {:REACTION_REMOVE, <a href="Remedy.Schema.Reaction.html#t:t/0">Remedy.Schema.Reaction.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a used is removed from a guild.</p><h2 id="t:guild_member_remove/0-intents" class="section-heading">
-  <a href="#t:guild_member_remove/0-intents" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Intents
-</h2>
-<ul><li><code class="inline">:GUILD_MEMBERS</code></li></ul><p><a href="https://discord.com/developers/docs/topics/gateway#guild-member-remove">Read More</a></p>
+<p>Received when a user removes a reaction from a message.</p>
   </section>
 </section>
-<section class="detail" id="t:guild_member_update/0">
+<section class="detail" id="t:ready/0">
 
   <div class="detail-header">
-    <a href="#t:guild_member_update/0" class="detail-link" title="Link to this type">
+    <a href="#t:ready/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">guild_member_update()</h1>
+    <h1 class="signature" translate="no">ready()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L286" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L290" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1149,30 +1775,24 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_member_update() ::
-  {:GUILD_MEMBER_UPDATE, <a href="Remedy.Schema.Member.html#t:t/0">Remedy.Schema.Member.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">ready() :: {:READY, Ready.t(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a guild member is updated.</p><h2 id="t:guild_member_update/0-intents" class="section-heading">
-  <a href="#t:guild_member_update/0-intents" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Intents
-</h2>
-<ul><li><code class="inline">:GUILD_MEMBERS</code></li></ul><p>This will also fire when the user object of a guild member changes.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-member-update">Read More</a></p>
+<p>Received when the bot is online.</p>
   </section>
 </section>
-<section class="detail" id="t:guild_members_chunk/0">
+<section class="detail" id="t:thread_create/0">
 
   <div class="detail-header">
-    <a href="#t:guild_members_chunk/0" class="detail-link" title="Link to this type">
+    <a href="#t:thread_create/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">guild_members_chunk()</h1>
+    <h1 class="signature" translate="no">thread_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L296" class="view-source" rel="help" title="View Source">
@@ -1188,673 +1808,15 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">guild_members_chunk() ::
-  {:GUILD_MEMBERS_CHUNK, GuildMembersChunk.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent in response to Guild Request Members.</p><blockquote><p>Note: While this event <em>can</em> be consumed if you so desire, it is kind of pointles, and used internally for the cache.</p></blockquote><p><a href="https://discord.com/developers/docs/topics/gateway#guild-members-chunk">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:guild_role_create/0">
-
-  <div class="detail-header">
-    <a href="#t:guild_role_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">guild_role_create()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L304" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">guild_role_create() ::
-  {:GUILD_ROLE_CREATE, Role.t(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a guild role is created.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-role-create">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:guild_role_delete/0">
-
-  <div class="detail-header">
-    <a href="#t:guild_role_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">guild_role_delete()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L312" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">guild_role_delete() ::
-  {:GUILD_ROLE_DELETE, Role.t(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a guild role is deleted.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-role-delete">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:guild_role_update/0">
-
-  <div class="detail-header">
-    <a href="#t:guild_role_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">guild_role_update()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L320" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">guild_role_update() ::
-  {:GUILD_ROLE_UPDATE, Role.t(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a guild role is updated.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-role-update">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:guild_update/0">
-
-  <div class="detail-header">
-    <a href="#t:guild_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">guild_update()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L334" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">guild_update() ::
-  {:GUILD_UPDATE, <a href="Remedy.Schema.Guild.html#t:t/0">Remedy.Schema.Guild.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a guild is updated.</p><p>The inner payload is a guild object.</p><p><a href="https://discord.com/developers/docs/topics/gateway#guild-update">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:integration_create/0">
-
-  <div class="detail-header">
-    <a href="#t:integration_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">integration_create()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L342" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">integration_create() ::
-  {:INTEGRATION_CREATE, <a href="Remedy.Schema.Integration.html#t:t/0">Remedy.Schema.Integration.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when an integration is created.</p><p><a href="https://discord.com/developers/docs/topics/gateway#integration-create">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:integration_delete/0">
-
-  <div class="detail-header">
-    <a href="#t:integration_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">integration_delete()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L359" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">integration_delete() ::
-  {:INTEGRATION_DELETE, <a href="Remedy.Schema.Integration.html#t:t/0">Remedy.Schema.Integration.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when an integration is deleted.</p><p><a href="https://discord.com/developers/docs/topics/gateway#integration-delete">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:integration_update/0">
-
-  <div class="detail-header">
-    <a href="#t:integration_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">integration_update()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L350" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">integration_update() ::
-  {:INTEGRATION_UPDATE, <a href="Remedy.Schema.Integration.html#t:t/0">Remedy.Schema.Integration.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when an integration is updated.</p><p><a href="https://discord.com/developers/docs/topics/gateway#integration-update">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:interaction_create/0">
-
-  <div class="detail-header">
-    <a href="#t:interaction_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">interaction_create()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L369" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">interaction_create() ::
-  {:INTERACTION_CREATE, <a href="Remedy.Schema.Interaction.html#t:t/0">Remedy.Schema.Interaction.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a user triggers an <code class="inline">Application Command</code></p><p>Inner payload is an Interaction.</p><p><a href="https://discord.com/developers/docs/topics/gateway#interaction-create">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_create/0">
-
-  <div class="detail-header">
-    <a href="#t:message_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_create()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L379" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_create() ::
-  {:MESSAGE_CREATE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a message is created.</p><p>The inner payload is a message object.</p><p><a href="https://discord.com/developers/docs/topics/gateway#message-create">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_delete/0">
-
-  <div class="detail-header">
-    <a href="#t:message_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_delete()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L395" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_delete() ::
-  {:MESSAGE_DELETE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a messgae is deleted.</p><p><a href="https://discord.com/developers/docs/topics/gateway#message-delete">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_delete_bulk/0">
-
-  <div class="detail-header">
-    <a href="#t:message_delete_bulk/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_delete_bulk()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L387" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_delete_bulk() ::
-  {:MESSAGE_DELETE_BULK, Remedy.Schema.MessageDeleteBulk.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when multiple messages are deleted at once.</p><p><a href="https://discord.com/developers/docs/topics/gateway#message-delete-bulk">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_reaction_add/0">
-
-  <div class="detail-header">
-    <a href="#t:message_reaction_add/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_reaction_add()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L403" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_reaction_add() ::
-  {:MESSAGE_REACTION_ADD, Reaction.t(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a user adds a reaction to a message.</p><p><a href="https://discord.com/developers/docs/topics/gateway#message-reaction-add">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_reaction_remove/0">
-
-  <div class="detail-header">
-    <a href="#t:message_reaction_remove/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_reaction_remove()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L427" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_reaction_remove() ::
-  {:MESSAGE_REACTION_REMOVE, MessageReactionRemove.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a user removes a reaction from a message.</p><p><a href="https://discord.com/developers/docs/topics/gateway#message-reaction-remove">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_reaction_remove_all/0">
-
-  <div class="detail-header">
-    <a href="#t:message_reaction_remove_all/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_reaction_remove_all()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L411" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_reaction_remove_all() ::
-  {:MESSAGE_REACTION_REMOVE_ALL, Remedy.Schema.MessageReactionRemoveAll.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a user removes a reaction from a message.</p><p><a href="https://discord.com/developers/docs/topics/gateway#message-reaction-remove">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_reaction_remove_emoji/0">
-
-  <div class="detail-header">
-    <a href="#t:message_reaction_remove_emoji/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_reaction_remove_emoji()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L419" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_reaction_remove_emoji() ::
-  {:MESSAGE_REACTION_REMOVE_EMOJI, Remedy.Schema.MessageReactionRemoveEmoji.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a bot removes all instances of a given emoji from the reactions of a message.</p><p><a href="https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:message_update/0">
-
-  <div class="detail-header">
-    <a href="#t:message_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">message_update()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L437" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">message_update() ::
-  {:MESSAGE_UPDATE, <a href="Remedy.Schema.Message.html#t:t/0">Remedy.Schema.Message.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when a message is updated.</p><blockquote><p>Note: Unlike creates, message updates may contain only a subset of the full message object payload (but will always contain an id and channel_id).</p></blockquote><p><a href="https://discord.com/developers/docs/topics/gateway#message-update">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:presence_update/0">
-
-  <div class="detail-header">
-    <a href="#t:presence_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">presence_update()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L449" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">presence_update() ::
-  {:PRESENCE_UPDATE, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>This event is sent when a user's presence or info, such as name or avatar, is updated.</p><h2 id="t:presence_update/0-intents" class="section-heading">
-  <a href="#t:presence_update/0-intents" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Intents
-</h2>
-<ul><li><code class="inline">:GUILD_PRESENCES</code></li></ul><blockquote><p>Note: The user object within this event can be partial, the only field which must be sent is the id field, everything else is optional. Along with this limitation, no fields are required, and the types of the fields are not validated. Your client should expect any combination of fields and types within this event.</p></blockquote>
-  </section>
-</section>
-<section class="detail" id="t:ready/0">
-
-  <div class="detail-header">
-    <a href="#t:ready/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">ready()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L450" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">ready() :: {:READY, Remedy.Schema.Ready.t(), Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-
-  </section>
-</section>
-<section class="detail" id="t:thread_create/0">
-
-  <div class="detail-header">
-    <a href="#t:thread_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">thread_create()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L459" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
           <pre translate="no">thread_create() ::
-  {:THREAD_CREATE, Thread.t(), Remedy.Gateway.Session.State.t()}</pre>
+  {:THREAD_CREATE, <a href="Remedy.Schema.Thread.html#t:t/0">Remedy.Schema.Thread.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a thread is created or when the user is added to a thread.</p><p>When being added to an existing private thread, includes a thread member object.</p><p><a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Read More</a></p>
+<p>Sent when a thread is created or when the user is added to a thread.</p>
   </section>
 </section>
 <section class="detail" id="t:thread_delete/0">
@@ -1867,7 +1829,7 @@ Types
     <h1 class="signature" translate="no">thread_delete()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L468" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L302" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1881,49 +1843,14 @@ Types
       <div class="specs">
 
           <pre translate="no">thread_delete() ::
-  {:THREAD_DELETE, Thread.t(), Remedy.Gateway.Session.State.t()}</pre>
+  {:THREAD_DELETE, <a href="Remedy.Schema.Thread.html#t:t/0">Remedy.Schema.Thread.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a thread relevant to the current user is deleted.</p><p>The inner payload is a subset of the channel object, containing just the id, guild_id, parent_id, and type fields.</p><p><a href="https://discord.com/developers/docs/topics/gateway#thread-delete">Read More</a></p>
-  </section>
-</section>
-<section class="detail" id="t:thread_list_sync/0">
-
-  <div class="detail-header">
-    <a href="#t:thread_list_sync/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">thread_list_sync()</h1>
-
-
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L476" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">thread_list_sync() ::
-  {:THREAD_LIST_SYNC, Remedy.Schema.ThreadListSync.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
-
-      </div>
-
-
-
-
-<p>Sent when the current user gains access to a channel.</p><p><a href="https://discord.com/developers/docs/topics/gateway#thread-list-sync-thread-list-sync-event-fields">Read More</a></p>
+<p>Sent when a thread relevant to the current user is deleted.</p>
   </section>
 </section>
 <section class="detail" id="t:thread_member_update/0">
@@ -1936,7 +1863,7 @@ Types
     <h1 class="signature" translate="no">thread_member_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L484" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L311" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1951,14 +1878,14 @@ Types
 
           <pre translate="no">thread_member_update() ::
   {:THREAD_MEMBER_UPDATE, <a href="Remedy.Schema.ThreadMember.html#t:t/0">Remedy.Schema.ThreadMember.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when the thread member object for the current user is updated.</p><p>The inner payload is a thread member object. This event is documented for completeness, but unlikely to be used by most bots. For bots, this event largely is just a signal that you are a member of the thread. See the threads docs for more details.</p>
+<p>Received when the thread member object for the current user is updated.</p>
   </section>
 </section>
 <section class="detail" id="t:thread_members_update/0">
@@ -1971,7 +1898,7 @@ Types
     <h1 class="signature" translate="no">thread_members_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L492" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L316" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1986,14 +1913,14 @@ Types
 
           <pre translate="no">thread_members_update() ::
   {:THREAD_MEMBERS_UPDATE, <a href="Remedy.Schema.ThreadMember.html#t:t/0">Remedy.Schema.ThreadMember.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when anyone is added to or removed from a thread.</p><p>If the current user does not have the <code class="inline">GUILD_MEMBERS</code> Gateway Intent, then this event will only be sent if the current user was added to or removed from the thread.</p>
+<p>Received when anyone is added to or removed from a thread.</p>
   </section>
 </section>
 <section class="detail" id="t:thread_update/0">
@@ -2006,7 +1933,7 @@ Types
     <h1 class="signature" translate="no">thread_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L501" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L321" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2020,14 +1947,14 @@ Types
       <div class="specs">
 
           <pre translate="no">thread_update() ::
-  {:THREAD_UPDATE, Thread.t(), Remedy.Gateway.Session.State.t()}</pre>
+  {:THREAD_UPDATE, <a href="Remedy.Schema.Thread.html#t:t/0">Remedy.Schema.Thread.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a thread is updated.</p><p>The inner payload is a channel object. This is not sent when the field <code class="inline">:last_message_id</code> is altered. To keep track of the <code class="inline">:last_message_id</code> changes, you must listen for <a href="#t:message_create/0"><code class="inline">message_create/0</code></a> events.</p>
+<p>Received when a thread is updated.</p>
   </section>
 </section>
 <section class="detail" id="t:typing_start/0">
@@ -2040,7 +1967,7 @@ Types
     <h1 class="signature" translate="no">typing_start()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L507" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L326" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2053,16 +1980,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">typing_start() ::
-  {:TYPING_START, <a href="Remedy.Schema.TypingStart.html#t:t/0">Remedy.Schema.TypingStart.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+          <pre translate="no">typing_start() :: {:TYPING_START, TypingStart.t(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a user begins typing in a channel.</p>
+<p>Received when a user begins typing in a channel.</p>
   </section>
 </section>
 <section class="detail" id="t:user_update/0">
@@ -2075,7 +2000,7 @@ Types
     <h1 class="signature" translate="no">user_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L513" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L331" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2089,14 +2014,14 @@ Types
       <div class="specs">
 
           <pre translate="no">user_update() ::
-  {:USER_UPDATE, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(), Remedy.Gateway.Session.State.t()}</pre>
+  {:USER_UPDATE, <a href="Remedy.Schema.User.html#t:t/0">Remedy.Schema.User.t</a>(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a user is updated.</p>
+<p>Received when a user is updated.</p>
   </section>
 </section>
 <section class="detail" id="t:voice_ready/0">
@@ -2109,7 +2034,7 @@ Types
     <h1 class="signature" translate="no">voice_ready()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L529" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L351" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2122,14 +2047,14 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">voice_ready() :: {:VOICE_READY, VoiceReady.t(), VoiceWSState.t()}</pre>
+          <pre translate="no">voice_ready() :: {:VOICE_READY, VoiceReady.t(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-
+<p>Received when a webhook is updated.</p>
   </section>
 </section>
 <section class="detail" id="t:voice_server_update/0">
@@ -2142,7 +2067,7 @@ Types
     <h1 class="signature" translate="no">voice_server_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L528" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L346" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2156,15 +2081,14 @@ Types
       <div class="specs">
 
           <pre translate="no">voice_server_update() ::
-  {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
+  {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-
+<p>Received when a webhook is updated.</p>
   </section>
 </section>
 <section class="detail" id="t:voice_speaking_update/0">
@@ -2177,7 +2101,7 @@ Types
     <h1 class="signature" translate="no">voice_speaking_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L530" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L356" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2191,14 +2115,14 @@ Types
       <div class="specs">
 
           <pre translate="no">voice_speaking_update() ::
-  {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), VoiceWSState.t()}</pre>
+  {:VOICE_SPEAKING_UPDATE, SpeakingUpdate.t(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-
+<p>Received when a webhook is updated.</p>
   </section>
 </section>
 <section class="detail" id="t:voice_state_update/0">
@@ -2211,7 +2135,7 @@ Types
     <h1 class="signature" translate="no">voice_state_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L519" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L341" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2226,14 +2150,14 @@ Types
 
           <pre translate="no">voice_state_update() ::
   {:VOICE_STATE_UPDATE, <a href="Remedy.Schema.VoiceState.html#t:t/0">Remedy.Schema.VoiceState.t</a>(),
-   Remedy.Gateway.Session.State.t()}</pre>
+   <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a user's voice state is updated.</p>
+<p>Received when a user's voice state is updated.</p>
   </section>
 </section>
 <section class="detail" id="t:webhooks_update/0">
@@ -2246,7 +2170,7 @@ Types
     <h1 class="signature" translate="no">webhooks_update()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L525" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L336" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -2260,15 +2184,14 @@ Types
       <div class="specs">
 
           <pre translate="no">webhooks_update() ::
-  {:WEBHOOKS_UPDATE, Remedy.Schema.WebhooksUpdate.t(),
-   Remedy.Gateway.Session.State.t()}</pre>
+  {:WEBHOOKS_UPDATE, WebhooksUpdate.t(), <a href="Remedy.Consumer.Metadata.html#t:t/0">Remedy.Consumer.Metadata.t</a>()}</pre>
 
       </div>
 
 
 
 
-<p>Sent when a webhook is updated.</p>
+<p>Received when a webhook is updated.</p>
   </section>
 </section>
 
@@ -2291,14 +2214,16 @@ Callbacks
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature" translate="no">handle_event(event)</h1>
+    <h1 class="signature" translate="no">handle_event(term)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L100" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L95" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
 
+
+      <span class="note">(optional)</span>
 
   </div>
 
@@ -2307,9 +2232,7 @@ Callbacks
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">handle_event(<a href="#t:event/0">event</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
-
-          <pre translate="no">handle_event(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: :noop</pre>
+          <pre translate="no">handle_event(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>() | :ok | :noop</pre>
 
       </div>
 

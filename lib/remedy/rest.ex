@@ -19,11 +19,11 @@ defmodule Remedy.Rest do
     Supervisor.init(children, strategy: :rest_for_one)
   end
 
-  def request(method, route, params, reason, body) do
-    request = Request.new(method, route, params, reason, body)
+  def request(method, route, params, query, reason, body) do
+    request = Request.new(method, route, params, query, reason, body)
 
     with worker <- Lifeguard.assign_worker(),
-         response <- GenServer.call(:"CONNECTION_#{worker}", {:request, request}) do
+         {:ok, response} <- GenServer.call(:"CONNECTION_#{worker}", {:request, request}) do
       Lifeguard.return_to_pool(worker)
       Response.decode(response)
     end

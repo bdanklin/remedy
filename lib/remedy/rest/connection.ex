@@ -79,9 +79,7 @@ defmodule Remedy.Rest.Connection do
         {:gun_error, _conn, _stream, {what, why, reason}},
         %State{connection: connection} = state
       ) do
-    Logger.warn(
-      " HTTP/2 CONNECTION #{connection} ERROR: #{what}, #{why} #{reason}. COMMITTING SEPPUKU (◑_◑)"
-    )
+    Logger.warn(" HTTP/2 CONNECTION #{connection} ERROR: #{what}, #{why} #{reason}. COMMITTING SEPPUKU (◑_◑)")
 
     {:noreply, state}
   end

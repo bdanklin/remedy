@@ -1,8 +1,8 @@
 defmodule Remedy.API do
+  @dialyzer :no_match
+
   @moduledoc """
   Standard interface for the Discord API.
-
-
 
   > The majority of the functions within this module are pulled directly from the Discord API. Some custom implementations are included. Some functions are useless in the scope of a bot and are intentionally omitted.
 
@@ -48,39 +48,33 @@ defmodule Remedy.API do
   alias Remedy.Snowflake
 
   import Remedy.TimeHelpers,
-    only: [is_snowflake: 1],
-    warn: false
-
-  use Remedy.Schema, :schema_alias
+    only: [is_snowflake: 1]
 
   use Unsafe.Generator,
     handler: :unwrap,
     docs: false
 
-  @typedoc """
-  HTTP Response Code
-  """
-  @type code :: integer()
+  use Remedy.Schema,
+      :schema_alias
 
-  @typedoc """
-  Options to be passed to a function
-  """
-  @type opts :: keyword() | map() | nil
-
-  @typedoc """
-  Error returned from the HTTP Adapter
-  """
+  @typedoc false
+  @type opts :: keyword() | map()
+  @typedoc false
   @type error :: any()
-
-  @typedoc """
-  Reason for an error
-  """
-  @type reason :: String.t() | nil
-
-  @typedoc """
-  A String Token
-  """
+  @typedoc false
   @type token :: String.t()
+  @typedoc false
+  @type method :: :get | :post | :put | :delete | :patch
+  @typedoc false
+  @type route :: String.t()
+  @typedoc false
+  @type params :: %{}
+  @typedoc false
+  @type query :: Ecto.Changeset.t() | nil | %{}
+  @typedoc false
+  @type reason :: any
+  @typedoc false
+  @type body :: Ecto.Changeset.t() | nil | %{}
 
   ### Discord API Proper
   ###
@@ -123,7 +117,7 @@ defmodule Remedy.API do
   @unsafe {:get_application, []}
   @spec get_application() :: {:error, any} | {:ok, map}
   def get_application do
-    {:get, "/oauth2/applications/@me", nil, nil, nil}
+    {:get, "/oauth2/applications/@me", nil, nil, nil, nil}
     |> request()
     |> shape(App)
   end
@@ -134,10 +128,9 @@ defmodule Remedy.API do
   @doc since: "0.6.8"
   @doc method: :get
   @doc route: "/oauth2/@me"
-  @spec get_current_authorization_information() :: {:error, reason} | {:ok, map()}
   @unsafe {:get_current_authorization_information, []}
   def get_current_authorization_information do
-    {:get, "/oauth2/@me", nil, nil, nil}
+    {:get, "/oauth2/@me", nil, nil, nil, nil}
     |> request()
   end
 
@@ -178,29 +171,41 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/guilds/:guild_id/audit-logs"
   @unsafe {:get_audit_log, [:guild_id, :opts]}
-  @spec get_audit_log(Snowflake.c() | Guild.t(), opts) :: {:error, any} | {:ok, AuditLog.t()}
+  @spec get_audit_log(Guild.t(), opts) :: {:error, any} | {:ok, AuditLog.t()}
+  @spec get_audit_log(Snowflake.c(), opts) :: {:error, any} | {:ok, AuditLog.t()}
   def get_audit_log(guild_id, opts \\ [])
   def get_audit_log(%Guild{id: id}, opts), do: get_audit_log(id, opts)
 
   def get_audit_log(guild_id, opts) when is_snowflake(guild_id) do
-    data = %{limit: 50}
-    types = %{action_type: :integer, before: Snowflake, limit: :integer}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{limit: 50}
+    query_types = %{action_type: :integer, before: Snowflake, limit: :integer}
+    query_keys = Map.keys(query_types)
+    query_attrs = Enum.into(opts, %{})
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
       |> validate_number(:limit, greater_than: 1, less_than_or_equal_to: 100)
 
-    {:get, "/guilds/#{guild_id}/audit-logs", params, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_keys = Map.keys(params_types)
+    params_attrs = %{guild_id: guild_id}
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/audit-logs", params, query, nil, nil}
     |> request()
     |> add_guild_id_to_audit_log(guild_id)
     |> shape(AuditLog)
   end
 
   defp add_guild_id_to_audit_log({:error, _reason} = error, _guild_id), do: error
-  defp add_guild_id_to_audit_log({:ok, response}, guild_id), do: {:ok, Map.put_new(response, :guild_id, guild_id)}
+
+  defp add_guild_id_to_audit_log({:ok, response}, guild_id),
+    do: {:ok, Map.put_new(response, :guild_id, guild_id)}
 
   ###################################################################################
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
@@ -227,14 +232,10 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/channels/:channel_id"
   @unsafe {:get_channel, [:channel_id]}
-  @spec get_channel(Snowflake.c() | Channel.t() | Message.t()) :: {:error, any} | {:ok, Channel.t()}
+  @spec get_channel(Channel.t()) :: {:error, any} | {:ok, Channel.t()}
+  @spec get_channel(Message.t()) :: {:error, any} | {:ok, Channel.t()}
+  @spec get_channel(Snowflake.c()) :: {:error, any} | {:ok, Channel.t()}
   def get_channel(channel_id)
-
-  def get_channel(channel_id) when is_snowflake(channel_id) do
-    {:get, "/channels/#{channel_id}", nil, nil, nil}
-    |> request()
-    |> shape(Channel)
-  end
 
   def get_channel(%Channel{id: channel_id}) do
     get_channel(channel_id)
@@ -242,6 +243,21 @@ defmodule Remedy.API do
 
   def get_channel(%Message{channel_id: channel_id}) do
     get_channel(channel_id)
+  end
+
+  def get_channel(channel_id) when is_snowflake(channel_id) do
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+    params_attrs = %{channel_id: channel_id}
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id", params, nil, nil, nil}
+    |> request()
+    |> shape(Channel)
   end
 
   @doc """
@@ -274,38 +290,9 @@ defmodule Remedy.API do
   @doc method: :patch
   @doc route: "/channels/:channel_id"
   @unsafe {:modify_channel, [:channel_id, :opts]}
-  @spec modify_channel(Snowflake.c() | Channel.t(), opts) :: {:error, any} | {:ok, Channel.t()}
+  @spec modify_channel(Channel.t(), opts) :: {:error, any} | {:ok, Channel.t()}
+  @spec modify_channel(Snowflake.c(), opts) :: {:error, any} | {:ok, Channel.t()}
   def modify_channel(channel, opts \\ [])
-
-  def modify_channel(channel_id, opts) when is_snowflake(channel_id) do
-    data = %{}
-
-    types = %{
-      name: :string,
-      position: :integer,
-      topic: :string,
-      nsfw: :boolean,
-      bitrate: :integer,
-      user_limit: :integer,
-      permission_overwrites: {:array, :map},
-      parent_id: Snowflake
-    }
-
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-
-    body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_length(:name, min: 2, max: 100)
-      |> validate_length(:topic, min: 2, max: 100)
-      |> validate_number(:bitrate, min: 8000, max: 128_000)
-      |> validate_number(:user_limit, min: 0, max: 99)
-
-    {:patch, "/channels/#{channel_id}", nil, opts[:reason], body}
-    |> request()
-    |> shape(Channel)
-  end
 
   def modify_channel(%Channel{id: id} = channel, []) when is_struct(channel) do
     opts = filter_schema_into_opts(channel)
@@ -322,6 +309,45 @@ defmodule Remedy.API do
       |> Keyword.put_new(:reason, reason)
 
     modify_channel(id, opts)
+  end
+
+  def modify_channel(channel_id, opts) when is_snowflake(channel_id) do
+    body_data = %{}
+
+    body_types = %{
+      name: :string,
+      position: :integer,
+      topic: :string,
+      nsfw: :boolean,
+      bitrate: :integer,
+      user_limit: :integer,
+      permission_overwrites: {:array, :map},
+      parent_id: Snowflake
+    }
+
+    body_keys = Map.keys(body_types)
+    body_attrs = Enum.into(opts, %{})
+
+    body =
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
+      |> validate_length(:name, min: 2, max: 100)
+      |> validate_length(:topic, min: 2, max: 100)
+      |> validate_number(:bitrate, min: 8000, max: 128_000)
+      |> validate_number(:user_limit, min: 0, max: 99)
+
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+    params_attrs = %{channel_id: channel_id}
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/channels/:channel_id", params, nil, opts[:reason], body}
+    |> request()
+    |> shape(Channel)
   end
 
   @doc """
@@ -347,7 +373,16 @@ defmodule Remedy.API do
   def delete_channel(channel, opts \\ [])
 
   def delete_channel(channel_id, opts) when is_snowflake(channel_id) do
-    {:delete, "/channels/#{channel_id}", nil, opts[:reason], nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+    params_attrs = %{channel_id: channel_id}
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape(Channel)
   end
@@ -393,25 +428,41 @@ defmodule Remedy.API do
   @unsafe {:list_messages, [:channel_id, :params]}
   @spec list_messages(Snowflake.c(), opts) :: {:error, any} | {:ok, [Remedy.Schema.Channel.t()]}
   def list_messages(channel_id, opts \\ []) do
-    data = %{limit: 50}
-    types = %{before: Snowflake, after: Snowflake, around: Snowflake, limit: :integer}
-    keys = Map.keys(types)
+    query_data = %{limit: 50}
+    query_types = %{before: Snowflake, after: Snowflake, around: Snowflake, limit: :integer}
+    query_keys = Map.keys(query_types)
 
-    params =
+    query_attrs =
       cond do
-        Keyword.has_key?(opts, :before) -> Keyword.take(opts, [:before, :limit])
-        Keyword.has_key?(opts, :after) -> Keyword.take(opts, [:after, :limit])
-        Keyword.has_key?(opts, :around) -> Keyword.take(opts, [:around, :limit])
-        true -> Keyword.take(opts, [:limit])
+        Keyword.has_key?(opts, :before) ->
+          Keyword.take(opts, [:before, :limit])
+
+        Keyword.has_key?(opts, :after) ->
+          Keyword.take(opts, [:after, :limit])
+
+        Keyword.has_key?(opts, :around) ->
+          Keyword.take(opts, [:around, :limit])
+
+        true ->
+          Keyword.take(opts, [:limit])
       end
       |> Enum.into(%{})
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
       |> validate_number(:limit, min: 1, max: 100)
 
-    {:get, "/channels/#{channel_id}/messages", params, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+    params_attrs = %{channel_id: channel_id}
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id/messages", params, query, nil, nil}
     |> request()
   end
 
@@ -429,7 +480,6 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/channels/:channel_id/messages"
   @unsafe {:list_messages_before, [:message, :limit]}
-  @spec list_messages_before(Message.t(), 1..50) :: {:error, any} | {:ok, list}
   def list_messages_before(%{id: message_id, channel_id: channel_id} = message, limit \\ 50)
       when is_map(message) do
     list_messages(channel_id, [{:before, message_id}, {:limit, limit}])
@@ -445,12 +495,12 @@ defmodule Remedy.API do
 
 
   """
+
   @doc since: "0.6.0"
   @doc permissions: [:VIEW_CHANNEL, :READ_MESSAGE_HISTORY]
   @doc method: :get
   @doc route: "/channels/:channel_id/messages"
   @unsafe {:list_messages_after, [:message, :limit]}
-  @spec list_messages_after(Message.t(), 1..50) :: {:error, any} | {:ok, list}
   def list_messages_after(message, limit \\ 50)
 
   def list_messages_after(%Message{id: message_id, channel_id: channel_id} = message, limit)
@@ -496,7 +546,17 @@ defmodule Remedy.API do
   @unsafe {:get_message, [:channel_id, :message_id]}
   @spec get_message(Snowflake.c(), Snowflake.c()) :: {:error, any} | {:ok, Message.t()}
   def get_message(channel_id, message_id) do
-    {:get, "/channels/#{channel_id}/messages/#{message_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, message_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, message_id: message_id}
+    params_keys = Map.keys(params_attrs)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+      |> validate_required([:channel_id, :message_id])
+
+    {:get, "/channels/:channel_id/messages/:message_id", params, nil, nil, nil}
     |> request()
     |> shape(Message)
   end
@@ -547,9 +607,10 @@ defmodule Remedy.API do
   end
 
   def create_message(channel_id, opts) do
-    data = %{}
+    body_data = %{}
+    body_attrs = Enum.into(opts, %{})
 
-    types = %{
+    body_types = %{
       content: :string,
       tts: :boolean,
       embeds: {:array, :map},
@@ -560,17 +621,24 @@ defmodule Remedy.API do
       attachments: {:array, Attachment}
     }
 
-    keys = Map.keys(types)
-
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_at_least_one([:content, :embeds, :sticker_ids, :attachments])
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
+      |> validate_at_least([:content, :embeds, :sticker_ids, :attachments], 1)
       |> validate_length(:content, max: 2000)
 
-    {:post, "/channels/#{channel_id}/messages", nil, opts[:reason], body}
+    params_data = %{}
+    params_attrs = %{channel_id: channel_id}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_data)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/messages", params, nil, nil, body}
     |> request()
     |> shape(Message)
   end
@@ -614,7 +682,16 @@ defmodule Remedy.API do
   @spec publish_message(Snowflake.c(), Snowflake.c()) :: {:error, any} | {:ok, map}
   @unsafe {:publish_message, [:channel_id, :message_id]}
   def publish_message(channel_id, message_id) do
-    {:post, "/channels/#{channel_id}/messages/#{message_id}/crosspost", nil, nil, nil}
+    params_data = %{}
+    params_attrs = %{channel_id: channel_id, message_id: message_id}
+    params_types = %{channel_id: Snowflake, message_id: Snowflake}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/messages/:message_id/crosspost", params, nil, nil, nil}
     |> request()
     |> shape(Message)
   end
@@ -638,16 +715,31 @@ defmodule Remedy.API do
   @doc method: :put
   @doc route: "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me"
   @unsafe {:add_reaction, [:channel_id, :message_id, :emoji]}
-  @spec add_reaction(Snowflake.c(), Snowflake.c(), String.t()) :: :ok | {:error, reason}
-  def add_reaction(channel_id, message_id, emoji) when is_binary(emoji) do
-    {:put, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me", nil, nil, nil}
+  @spec add_reaction(Snowflake.c(), Snowflake.c(), Emoji.t()) :: :ok | {:error, reason}
+  def add_reaction(channel_id, message_id, emoji) do
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id,
+      emoji: emoji
+    }
+
+    params_data = %{}
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake,
+      emoji: Emoji
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil, nil}
     |> request()
     |> shape()
-  end
-
-  @spec add_reaction(Snowflake.c(), Snowflake.c(), Emoji.c()) :: :ok | {:error, reason}
-  def add_reaction(channel_id, message_id, %{name: name, id: id} = emoji) when is_map(emoji) do
-    add_reaction(channel_id, message_id, "#{name}:#{id}")
   end
 
   @doc """
@@ -695,7 +787,27 @@ defmodule Remedy.API do
   @unsafe {:remove_reaction, [:channel_id, :message_id, :emoji]}
   @spec remove_reaction(Snowflake.c(), Snowflake.c(), term) :: :ok | {:error, reason}
   def remove_reaction(channel_id, message_id, emoji) do
-    {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me", nil, nil, nil}
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id,
+      emoji: emoji
+    }
+
+    params_data = %{}
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake,
+      emoji: Emoji
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -715,10 +827,33 @@ defmodule Remedy.API do
   @doc events: :MESSAGE_REACTION_REMOVE
   @doc method: :delete
   @doc route: "/channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id"
-  @spec remove_reaction(Snowflake.c(), Snowflake.c(), Snowflake.c(), any) :: {:error, any} | {:ok, any}
+  @spec remove_reaction(Snowflake.c(), Snowflake.c(), Snowflake.c(), any) ::
+          {:error, any} | {:ok, any}
   @unsafe {:remove_reaction, [:channel_id, :message_id, :emoji, :user_id]}
   def remove_reaction(channel_id, message_id, emoji, user_id) do
-    {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/#{user_id}", nil, nil, nil}
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id,
+      emoji: emoji,
+      user_id: user_id
+    }
+
+    params_data = %{}
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake,
+      emoji: Emoji,
+      user_id: user_id
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -736,7 +871,27 @@ defmodule Remedy.API do
   @unsafe {:list_reactions, [:channel_id, :message_id, :emoji]}
   @spec list_reactions(Snowflake.c(), Snowflake.c(), any) :: {:ok, [User.t()]}
   def list_reactions(channel_id, message_id, emoji) do
-    {:get, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}", nil, nil, nil}
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id,
+      emoji: emoji
+    }
+
+    params_data = %{}
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake,
+      emoji: Emoji
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id/messages/:message_id/reactions/:emoji", params, nil, nil, nil}
     |> request()
     |> shape(User)
   end
@@ -759,7 +914,25 @@ defmodule Remedy.API do
   @spec clear_reactions(Snowflake.c(), Snowflake.c()) :: {:error, reason} | :ok
   @unsafe {:clear_reactions, [:channel_id, :message_id]}
   def clear_reactions(channel_id, message_id) do
-    {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions", nil, nil, nil}
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id
+    }
+
+    params_data = %{}
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -782,7 +955,27 @@ defmodule Remedy.API do
   @unsafe {:clear_reactions, [:channel_id, :message_id, :emoji]}
   @spec clear_reactions(Snowflake.c(), Snowflake.c(), any) :: {:error, reason} | :ok
   def clear_reactions(channel_id, message_id, emoji) do
-    {:delete, "/channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}", nil, nil, nil}
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id,
+      emoji: emoji
+    }
+
+    params_data = %{}
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake,
+      emoji: Emoji
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji", params, nil, nil, nil}
     |> request()
   end
 
@@ -818,16 +1011,34 @@ defmodule Remedy.API do
   end
 
   def modify_message(channel_id, message_id, opts) do
-    data = %{}
-    types = %{content: :string, embed: Embed}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{content: :string, embed: Embed}
+    body_keys = Map.keys(body_types)
+    body_attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
 
-    {:patch, "/channels/#{channel_id}/messages/#{message_id}", nil, nil, body}
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id
+    }
+
+    params_data = %{}
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/channels/:channel_id/messages/:message_id", params, nil, nil, body}
     |> request()
   end
 
@@ -854,9 +1065,25 @@ defmodule Remedy.API do
   end
 
   def delete_message(channel_id, message_id, opts) do
-    reason = opts[:reason]
+    params_data = %{}
 
-    {:delete, "/channels/#{channel_id}/messages/#{message_id}", nil, reason, nil}
+    params_attrs = %{
+      channel_id: channel_id,
+      message_id: message_id
+    }
+
+    params_types = %{
+      channel_id: Snowflake,
+      message_id: Snowflake
+    }
+
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/messages/:message_id", params, nil, opts[:reason], nil}
     |> request()
   end
 
@@ -886,29 +1113,39 @@ defmodule Remedy.API do
   def delete_messages(channel_id, opts \\ [])
 
   def delete_messages(channel_id, opts) when is_snowflake(channel_id) do
-    data = %{}
-    reason = to_string(opts[:reason])
-    types = %{messages: {:array, Snowflake}}
-    keys = Map.keys(types)
-
-    messages =
-      opts[:messages]
-      |> MapSet.new()
-      |> MapSet.to_list()
-      |> Enum.reject(&less_than_two_weeks_old?(&1))
-
-    params = %{messages: messages}
+    body_data = %{}
+    body_types = %{messages: {:array, Snowflake}}
+    body_keys = Map.keys(body_types)
+    body_attrs = %{messages: get_messages_from_opts(opts)}
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
 
-    {:post, "/channels/#{channel_id}/messages/bulk-delete", nil, reason, body}
+    params_data = %{}
+    params_attrs = %{channel_id: channel_id}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/messages/bulk-delete", params, nil, opts[:reason], body}
     |> request()
   end
 
+  defp get_messages_from_opts(opts) do
+    opts[:messages]
+    |> MapSet.new()
+    |> MapSet.to_list()
+    |> Enum.reject(&less_than_two_weeks_old?(&1))
+  end
+
+  alias Remedy.TimeHelpers
+
   defp less_than_two_weeks_old?(snowflake) do
-    this_snowflake = Remedy.TimeHelpers.to_unixtime(snowflake)
+    this_snowflake = TimeHelpers.to_unixtime(snowflake)
     two_weeks = 1000 * 60 * 60 * 24 * 14
     two_weeks_ago = System.os_time(:millisecond) - two_weeks
 
@@ -941,29 +1178,28 @@ defmodule Remedy.API do
   @unsafe {:modify_channel_permissions, [:channel_id, :overwrite_id]}
   @spec modify_channel_permissions(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def modify_channel_permissions(channel_id, overwrite_id, opts) do
-    data = %{allow: 0, deny: 0}
-    types = %{type: :integer, allow: Permission, deny: Permission}
-    keys = Map.keys(types)
-
-    params =
-      Enum.into(opts, %{})
-      |> Map.put(:type, parse_role_type(opts[:type]))
-
-    reason = opts[:reason]
+    body_data = %{allow: 0, deny: 0}
+    body_types = %{type: RoleType, allow: Permission, deny: Permission}
+    body_keys = Map.keys(body_types)
+    body_attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
 
-    {:put, "/channels/#{channel_id}/permissions/#{overwrite_id}", nil, reason, body}
+    params_data = %{}
+    params_attrs = %{channel_id: channel_id, overwrite_id: overwrite_id}
+    params_types = %{channel_id: Snowflake, overwrite_id: Snowflake}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/channels/:channel_id/permissions/:overwrite_id", params, nil, opts[:reason], body}
     |> request()
     |> shape()
   end
-
-  defp parse_role_type(nil), do: nil
-  defp parse_role_type(:role), do: 0
-  defp parse_role_type(:member), do: 1
-  defp parse_role_type(type) when type in [0, 1], do: type
 
   @doc """
   Gets a list of invites for a channel.
@@ -981,7 +1217,16 @@ defmodule Remedy.API do
   @unsafe {:list_channel_invites, [:channel_id]}
   @spec list_channel_invites(Snowflake.c()) :: {:ok, [Invite.t()]} | {:error, reason}
   def list_channel_invites(channel_id) do
-    {:get, "/channels/#{channel_id}/invites", nil, nil, nil}
+    params_data = %{}
+    params_attrs = %{channel_id: channel_id}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id/invites", params, nil, nil, nil}
     |> request()
     |> shape(Invite)
   end
@@ -1022,29 +1267,42 @@ defmodule Remedy.API do
   @unsafe {:create_channel_invite, [:channel_id]}
   @spec create_invite(Snowflake.c(), opts) :: {:ok, Invite.t()} | {:error, reason}
   def create_invite(channel_id, opts) do
-    data = %{max_age: 86400, max_uses: 0, temporary: false, unique: false}
+    query_data = %{
+      max_age: 86400,
+      max_uses: 0,
+      temporary: false,
+      unique: false
+    }
 
-    types = %{
+    query_types = %{
       max_age: :integer,
       max_uses: :integer,
       temporary: :boolean,
       unique: :boolean,
-      target_type: :integer,
+      target_type: InviteTargetType,
       target_user_id: Snowflake,
       target_application_id: Snowflake
     }
 
-    params = Enum.into(opts, %{})
-    keys = Map.keys(types)
+    query_attrs = Enum.into(opts, %{})
+    query_keys = Map.keys(query_types)
 
-    body =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
       |> validate_number(:max_age, greater_than_or_equal_to: 0, less_than_or_equal_to: 604_800)
       |> validate_number(:max_uses, greater_than_or_equal_to: 0, less_than_or_equal_to: 100)
-      |> validate_inclusion(:target_type, [1, 2])
 
-    {:post, "/channels/#{channel_id}/invites", nil, nil, body}
+    params_data = %{}
+    params_attrs = %{channel_id: channel_id}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/invites", params, query, nil, nil}
     |> request()
     |> shape(Invite)
   end
@@ -1066,9 +1324,16 @@ defmodule Remedy.API do
   @spec delete_channel_permission(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   @unsafe {:delete_channel_permissions, [:channel_id, :overwrite_id, :reason]}
   def delete_channel_permission(channel_id, overwrite_id, opts) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, overwrite_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, overwrite_id: overwrite_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/channels/#{channel_id}/permissions/#{overwrite_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/permissions/:overwrite_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -1091,9 +1356,28 @@ defmodule Remedy.API do
   @unsafe {:follow_news_channel, [:channel_id, :webhook_channel_id]}
   @spec follow_news_channel(Snowflake.c(), Snowflake.c()) :: {:ok, Channel.t()} | {:error, reason}
   def follow_news_channel(channel_id, webhook_channel_id) do
-    body = %{webhook_channel_id: webhook_channel_id}
+    body_data = %{}
+    body_types = %{webhook_channel_id: Snowflake}
+    body_keys = Map.keys(body_types)
 
-    {:post, "/channels/#{channel_id}/followers", nil, nil, body}
+    body_attrs = %{
+      webhook_channel_id: webhook_channel_id
+    }
+
+    body =
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
+
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_keys = Map.keys(params_types)
+    params_attrs = %{channel_id: channel_id}
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/followers", params, nil, nil, body}
     |> request()
     |> case do
       {:ok, _body} -> :ok
@@ -1121,7 +1405,16 @@ defmodule Remedy.API do
   @unsafe {:start_typing, [:channel_id]}
   @spec start_typing(Snowflake.c()) :: :ok | {:error, reason}
   def start_typing(channel_id) do
-    {:post, "/channels/#{channel_id}/typing", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/typing", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1143,7 +1436,16 @@ defmodule Remedy.API do
   @unsafe {:list_pinned_messages, [:channel_id]}
   @spec list_pinned_messages(Snowflake.c()) :: {:ok, Message.t()} | {:error, reason}
   def list_pinned_messages(channel_id) do
-    {:get, "/channels/#{channel_id}/pins", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id/pins", params, nil, nil, nil}
     |> request()
     |> shape(Message)
   end
@@ -1169,10 +1471,18 @@ defmodule Remedy.API do
   @spec pin_message(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, any}
   def pin_message(channel_id, message_id, opts \\ [])
 
-  def pin_message(channel_id, message_id, opts) when is_snowflake(channel_id) and is_snowflake(message_id) do
-    reason = opts[:reason]
+  def pin_message(channel_id, message_id, opts)
+      when is_snowflake(channel_id) and is_snowflake(message_id) do
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, message_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, message_id: message_id}
+    params_keys = Map.keys(params_types)
 
-    {:put, "/channels/#{channel_id}/pins/#{message_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/channels/:channel_id/pins/:message_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -1195,9 +1505,16 @@ defmodule Remedy.API do
   @unsafe {:unpin_message, [:channel_id, :message_id, :opts]}
   @spec unpin_message(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def unpin_message(channel_id, message_id, opts \\ []) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, message_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, message_id: message_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/channels/#{channel_id}/pins/#{message_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/pins/:message_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -1206,10 +1523,18 @@ defmodule Remedy.API do
   ##  Cannot be used by bots. Can only be used by GameSDK
   ##  since: "0.6.0"
   @doc false
-  @spec group_dm_add_recipient(Snowflake.c(), Snowflake.c()) :: :ok | {:error, any}
   @unsafe {:group_dm_add_recipient, [:channel_id, :user_id]}
   def group_dm_add_recipient(channel_id, user_id) do
-    {:put, "/channels/#{channel_id}/recipients/#{user_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/channels/:channel_id/recipients/:user_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1218,10 +1543,18 @@ defmodule Remedy.API do
   ##  Cannot be used by bots. Can only be used by GameSDK
   ##  since: "0.6.0"
   @doc false
-  @spec group_dm_remove_recipient(Snowflake.c(), Snowflake.c()) :: :ok | {:error, any}
   @unsafe {:group_dm_remove_recipient, [:channel_id, :user_id]}
   def group_dm_remove_recipient(channel_id, user_id) do
-    {:delete, "/channels/#{channel_id}/recipients/#{user_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/recipients/:user_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1251,16 +1584,16 @@ defmodule Remedy.API do
   @unsafe {:create_thread, [:channel_id, :message_id, :opts]}
   @spec create_thread(Snowflake.c(), Snowflake.c(), opts) :: {:ok, Message.t()} | {:error, reason}
 
-  def create_thread(channel_id, message_id, opts) when is_snowflake(channel_id) and is_snowflake(message_id) do
-    data = %{}
-    types = %{name: :string, auto_archive_duration: :integer, rate_limit_per_user: :integer}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+  def create_thread(channel_id, message_id, opts)
+      when is_snowflake(channel_id) and is_snowflake(message_id) do
+    body_data = %{}
+    body_types = %{name: :string, auto_archive_duration: :integer, rate_limit_per_user: :integer}
+    body_keys = Map.keys(body_types)
+    body_attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
       |> validate_length(:name, min: 1, max: 100)
       |> validate_inclusion(:auto_archive_duration, [60, 1440, 4320, 10080])
       |> validate_number(:rate_limit_per_user,
@@ -1268,7 +1601,16 @@ defmodule Remedy.API do
         less_than_or_equal_to: 21600
       )
 
-    {:post, "/channels/#{channel_id}/messages/#{message_id}/threads", nil, reason, body}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, message_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, message_id: message_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/messages/:message_id/threads", params, nil, opts[:reason], body}
     |> request()
     |> shape(Thread)
   end
@@ -1301,14 +1643,20 @@ defmodule Remedy.API do
   @spec create_thread(Snowflake.c(), opts) :: {:error, reason} | {:ok, Thread.t()}
   def create_thread(channel_id, opts) do
     data = %{}
-    types = %{name: :string, auto_archive_duration: :integer, rate_limit_per_user: :integer}
+
+    types = %{
+      name: :string,
+      auto_archive_duration: :integer,
+      rate_limit_per_user: :integer
+    }
+
     keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    attrs = Enum.into(opts, %{})
     reason = opts[:reason]
 
     body =
       {data, types}
-      |> cast(params, keys)
+      |> cast(attrs, keys)
       |> validate_length(:name, min: 1, max: 100)
       |> validate_inclusion(:auto_archive_duration, [60, 1440, 4320, 10080])
       |> validate_number(:rate_limit_per_user,
@@ -1316,7 +1664,16 @@ defmodule Remedy.API do
         less_than_or_equal_to: 21600
       )
 
-    {:post, "/channels/#{channel_id}/threads", nil, reason, body}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/threads", params, nil, reason, body}
     |> request()
     |> shape(Thread)
   end
@@ -1344,7 +1701,16 @@ defmodule Remedy.API do
   @unsafe {:join_thread, [:channel_id]}
   @spec join_thread(Snowflake.c()) :: :ok | {:error, any}
   def join_thread(channel_id) do
-    {:put, "/channels/#{channel_id}/thread-members/@me", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/channels/:channel_id/thread-members/@me", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1369,7 +1735,16 @@ defmodule Remedy.API do
   @unsafe {:add_thread_member, [:channel_id, :user_id]}
   @spec add_thread_member(Snowflake.c(), Snowflake.c()) :: {:error, any} | :ok
   def add_thread_member(channel_id, user_id) do
-    {:put, "/channels/#{channel_id}/thread-members/#{user_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/channels/:channel_id/thread-members/:user_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1392,7 +1767,16 @@ defmodule Remedy.API do
   @unsafe {:leave_thread, [:channel_id]}
   @spec leave_thread(Snowflake.c()) :: :ok
   def leave_thread(channel_id) do
-    {:delete, "/channels/#{channel_id}/thread-members/@me", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/thread-members/@me", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1417,7 +1801,16 @@ defmodule Remedy.API do
   @unsafe {:remove_thread_member, [:channel_id, :user_id]}
   @spec remove_thread_member(Snowflake.c(), Snowflake.c()) :: :ok | {:error, any}
   def remove_thread_member(channel_id, user_id) do
-    {:delete, "/channels/#{channel_id}/thread-members/#{user_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{channel_id: channel_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/channels/:channel_id/thread-members/:user_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1438,7 +1831,16 @@ defmodule Remedy.API do
   @unsafe {:list_thread_members, [:channel_id]}
   @spec list_thread_members(Snowflake.c()) :: {:error, reason} | {:ok, [User.t()]}
   def list_thread_members(channel_id) do
-    {:get, "/channels/#{channel_id}/thread-members", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id/thread-members", params, nil, nil, nil}
     |> request()
     |> shape(User)
   end
@@ -1448,8 +1850,6 @@ defmodule Remedy.API do
   @doc false
   @doc since: "0.6.0"
   @unsafe {:list_active_threads, 1}
-  @spec list_active_threads(Remedy.Schema.Channel.t() | Remedy.Schema.Guild.t()) ::
-          {:error, reason} | {:ok, [Thread.t()]}
   def list_active_threads(%Guild{id: guild_id}) do
     list_active_guild_threads(guild_id)
   end
@@ -1463,10 +1863,17 @@ defmodule Remedy.API do
   @doc false
   @doc since: "0.6.8"
   @unsafe {:list_active_channel_threads, [:channel_id]}
-  @spec list_active_channel_threads(Remedy.Schema.Channel.t()) ::
-          {:error, reason} | {:ok, [Thread.t()]}
   def list_active_channel_threads(channel_id) do
-    {:get, "/channels/#{channel_id}/threads/active", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id/threads/active", params, nil, nil, nil}
     |> request()
     |> shape(Thread)
   end
@@ -1485,9 +1892,19 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/guilds/:guild_id/threads/active"
   @unsafe {:list_active_guild_threads, [:guild_id]}
-  @spec list_active_guild_threads(Remedy.Schema.Guild.t()) :: {:error, reason} | {:ok, [Thread.t()]}
+  @spec list_active_guild_threads(Remedy.Schema.Guild.t()) ::
+          {:error, reason} | {:ok, [Thread.t()]}
   def list_active_guild_threads(guild_id) do
-    {:get, "/guilds/#{guild_id}/threads/active", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/threads/active", params, nil, nil, nil}
     |> request()
     |> shape(Thread)
   end
@@ -1513,16 +1930,26 @@ defmodule Remedy.API do
   @unsafe {:list_public_archived_threads, [:channel_id]}
   @spec list_public_archived_threads(Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def list_public_archived_threads(channel_id, opts \\ []) do
-    data = %{}
-    types = %{before: ISO8601, limit: :integer}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{}
+    query_types = %{before: ISO8601, limit: :integer}
+    query_attrs = Enum.into(opts, %{})
+    query_keys = Map.keys(query_types)
+
+    query =
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
+
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
 
     params =
-      {data, types}
-      |> cast(params, keys)
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+      |> validate_required([:channel_id])
 
-    {:get, "/channels/#{channel_id}/threads/archived/public", params, nil, nil}
+    {:get, "/channels/:channel_id/threads/archived/public", params, query, nil, nil}
     |> request()
     |> shape(Thread)
   end
@@ -1546,18 +1973,29 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/channels/:channel_id/threads/archived/private"
   @unsafe {:list_private_archived_threads, [:channel_id]}
-  @spec list_private_archived_threads(Snowflake.c(), opts) :: {:ok, [Thread.t()]} | {:error, reason}
+  @spec list_private_archived_threads(Snowflake.c(), opts) ::
+          {:ok, [Thread.t()]} | {:error, reason}
   def list_private_archived_threads(channel_id, opts \\ []) do
-    data = %{}
-    types = %{before: ISO8601, limit: :integer}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
 
     params =
-      {data, types}
-      |> cast(params, keys)
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+      |> validate_required([:channel_id])
 
-    {:get, "/channels/#{channel_id}/threads/archived/private", params, nil, nil}
+    query_data = %{}
+    query_types = %{before: ISO8601, limit: :integer}
+    query_keys = Map.keys(query_types)
+    query_attrs = Enum.into(opts, %{})
+
+    query =
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
+
+    {:get, "/channels/:channel_id/threads/archived/private", params, query, nil, nil}
     |> request()
     |> shape(Thread)
   end
@@ -1581,18 +2019,28 @@ defmodule Remedy.API do
   @doc permissions: [:READ_MESSAGE_HISTORY]
   @doc method: :get
   @doc route: "/channels/:channel_id/users/@me/threads/archived/private"
-  @spec list_joined_private_archived_threads(Snowflake.c(), opts) :: {:ok, [Thread.t()]} | {:error, reason}
+  @spec list_joined_private_archived_threads(Snowflake.c(), opts) ::
+          {:ok, [Thread.t()]} | {:error, reason}
   def list_joined_private_archived_threads(channel_id, opts \\ []) do
-    data = %{}
-    types = %{before: ISO8601, limit: :integer}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{}
+    query_types = %{before: ISO8601, limit: :integer}
+    query_keys = Map.keys(query_types)
+    query_params = Enum.into(opts, %{})
+
+    query =
+      {query_data, query_types}
+      |> cast(query_params, query_keys)
+
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
 
     params =
-      {data, types}
-      |> cast(params, keys)
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
 
-    {:get, "/channels/#{channel_id}/users/@me/threads/archived/private", params, nil, nil}
+    {:get, "/channels/:channel_id/users/@me/threads/archived/private", params, query, nil, nil}
     |> request()
     |> shape(Thread)
   end
@@ -1627,7 +2075,16 @@ defmodule Remedy.API do
   @unsafe {:list_emojis, [:guild_id]}
   @spec list_emojis(Snowflake.c()) :: {:error, reason} | {:ok, [Emoji.t()]}
   def list_emojis(guild_id) do
-    {:get, "/guilds/#{guild_id}/emojis", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/emojis", params, nil, nil, nil}
     |> request()
     |> shape(Emoji)
   end
@@ -1652,7 +2109,16 @@ defmodule Remedy.API do
   @unsafe {:get_emoji, [:guild_id, :emoji_id]}
   @spec get_emoji(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Emoji.t()}
   def get_emoji(guild_id, emoji_id) do
-    {:get, "/guilds/#{guild_id}/emojis/#{emoji_id}", nil, nil, nil}
+    params_data = %{emoji_id: emoji_id}
+    params_types = %{guild_id: Snowflake, emoji_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/emojis/:emoji_id", params, nil, nil, nil}
     |> request()
     |> shape(Emoji)
   end
@@ -1684,18 +2150,26 @@ defmodule Remedy.API do
   @unsafe {:create_emoji, [:guild_id, :opts]}
   @spec create_emoji(Snowflake.c(), opts) :: {:ok, Emoji.t()} | {:error, reason}
   def create_emoji(guild_id, opts) do
-    data = %{}
-    types = %{name: :string, image: ImageData, roles: {:array, Snowflake}, reason: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+    body_data = %{}
+    body_types = %{name: :string, image: ImageData, roles: {:array, Snowflake}, reason: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_required([:name, :image])
 
-    {:post, "/guilds/#{guild_id}/emojis", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/emojis", params, nil, opts[:reason], body}
     |> request()
     |> shape(Emoji)
   end
@@ -1723,15 +2197,25 @@ defmodule Remedy.API do
   @unsafe {:modify_emoji, [:guild_id, :emoji_id, :opts]}
   @spec modify_emoji(Snowflake.c(), Snowflake.c(), opts) :: {:ok, Emoji.t()}
   def modify_emoji(guild_id, emoji_id, opts \\ []) do
-    data = %{}
-    types = %{name: :string, roles: {:array, Snowflake}}
-    params = Enum.into(opts, %{})
-    keys = Map.keys(types)
-    reason = opts[:reason]
+    body_data = %{}
+    body_types = %{name: :string, roles: {:array, Snowflake}}
+    body_params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
 
-    body = {data, types} |> cast(params, keys)
+    body =
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/guilds/#{guild_id}/emojis/#{emoji_id}", nil, reason, body}
+    params_data = %{emoji_id: emoji_id}
+    params_types = %{guild_id: Snowflake, emoji_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/emojis/:emoji_id", params, nil, opts[:reason], body}
     |> request()
   end
 
@@ -1754,9 +2238,16 @@ defmodule Remedy.API do
   @spec delete_emoji(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, any}
   @unsafe {:delete_emoji, [:guild_id, :emoji_id, :opts]}
   def delete_emoji(guild_id, emoji_id, opts \\ []) do
-    reason = Keyword.take(opts, [:reason])
+    params_data = %{emoji_id: emoji_id}
+    params_types = %{guild_id: Snowflake, emoji_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/guilds/#{guild_id}/emojis/#{emoji_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/emojis/:emoji_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -1818,40 +2309,42 @@ defmodule Remedy.API do
   @unsafe {:create_guild, [:opts]}
   @spec create_guild(opts) :: {:error, reason} | {:ok, Guild.t()}
   def create_guild(opts) do
-    params = Enum.into(opts, %{})
-    data = %{}
+    case opts[:template] do
+      nil ->
+        body_params = Enum.into(opts, %{})
+        body_data = %{}
 
-    types = %{
-      name: :string,
-      region: :string,
-      verification_level: :integer,
-      default_message_notificat: :integer,
-      explicit_content_filter: :integer,
-      afk_channel_id: Snowflake,
-      afk_timeoujt: :integer,
-      icon: :string,
-      owner_id: Snowflake,
-      splash: :string,
-      system_channel_id: Snowflake,
-      rules_channel_id: Snowflake,
-      public_updates_channel_id: Snowflake,
-      template: :string
-    }
+        body_types = %{
+          name: :string,
+          region: :string,
+          verification_level: GuildVerificationLevel,
+          default_message_notificat: GuildExplicitContentFilter,
+          explicit_content_filter: GuildExplicitContentFilter,
+          afk_channel_id: Snowflake,
+          afk_timeoujt: :integer,
+          icon: :string,
+          owner_id: Snowflake,
+          splash: :string,
+          system_channel_id: Snowflake,
+          rules_channel_id: Snowflake,
+          public_updates_channel_id: Snowflake,
+          template: :string
+        }
 
-    body =
-      {data, types}
-      |> cast(params, Map.keys(types))
-      |> validate_required([:name])
-      |> validate_length(:name, min: 2, max: 100)
+        body_keys = Map.keys(body_types)
 
-    case Map.has_key?(params, :template) do
-      true ->
-        create_guild_from_template(params.template, name: params.name, icon: params.icon)
+        body =
+          {body_data, body_types}
+          |> cast(body_params, body_keys)
+          |> validate_required([:name])
+          |> validate_length(:name, min: 2, max: 100)
 
-      false ->
-        {:post, "/guilds", nil, nil, body}
+        {:post, "/guilds", nil, nil, nil, body}
         |> request()
         |> shape(Guild)
+
+      template ->
+        create_guild_from_template(template, name: opts[:name], icon: opts[:icon])
     end
   end
 
@@ -1870,8 +2363,18 @@ defmodule Remedy.API do
   @unsafe {:get_guild, [:guild_id]}
   @spec get_guild(Snowflake.c()) :: {:error, reason} | {:ok, Guild.t()}
   def get_guild(guild_id) do
-    {:get, "/guilds/#{guild_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id", params, nil, nil, nil}
     |> request()
+    |> shape(Guild)
   end
 
   @doc """
@@ -1910,17 +2413,17 @@ defmodule Remedy.API do
   @unsafe {:modify_guild, [:guild_id, :opts]}
   @spec modify_guild(Snowflake.c(), opts) :: {:error, reason} | {:ok, Guild.t()}
   def modify_guild(guild_id, opts \\ []) do
-    reason = opts[:reason]
-    data = %{}
+    body_data = %{}
+    body_params = Enum.into(opts, %{})
 
-    types = %{
+    body_types = %{
       name: :string,
       icon: :string,
-      verification_level: :integer,
-      default_message_notificat: :integer,
-      explicit_content_filter: :integer,
+      verification_level: GuildVerificationLevel,
+      default_message_notification_level: GuildDefaultMessageNotificationLevel,
+      explicit_content_filter: GuildExplicitContentFilter,
       afk_channel_id: Snowflake,
-      afk_timeoujt: :integer,
+      afk_timeout: :integer,
       owner_id: Snowflake,
       splash: :string,
       system_channel_id: Snowflake,
@@ -1928,18 +2431,24 @@ defmodule Remedy.API do
       public_updates_channel_id: Snowflake
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_length(:name, min: 2, max: 100)
       |> validate_inclusion(:verification_level, [0, 1, 2, 3, 4])
-      |> validate_inclusion(:default_message_notifications, [0, 1])
-      |> validate_inclusion(:explicit_content_filter, [0, 1, 2])
 
-    {:patch, "/guilds/#{guild_id}", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id", params, nil, opts[:reason], body}
     |> request()
     |> shape(Guild)
   end
@@ -1965,7 +2474,16 @@ defmodule Remedy.API do
   @unsafe {:delete_guild, [:guild_id]}
   @spec delete_guild(Snowflake.c()) :: {:error, reason} | :ok
   def delete_guild(guild_id) do
-    {:delete, "/guilds/#{guild_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -1987,7 +2505,16 @@ defmodule Remedy.API do
   @unsafe {:list_channels, [:guild_id]}
   @spec list_channels(Snowflake.c()) :: {:error, reason} | {:ok, [Channel.t()]}
   def list_channels(guild_id) do
-    {:get, "/guilds/#{guild_id}/channels", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/channels", params, nil, nil, nil}
     |> request()
     |> shape(Channel)
   end
@@ -2020,9 +2547,9 @@ defmodule Remedy.API do
   @unsafe {:create_channel, [:guild_id, :opts]}
   @spec create_channel(Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def create_channel(guild_id, opts) do
-    data = %{name: "", nsfw: false, user_limit: 0}
+    body_data = %{name: "", nsfw: false, user_limit: 0}
 
-    types = %{
+    body_types = %{
       name: :string,
       type: :integer,
       topic: :string,
@@ -2033,18 +2560,27 @@ defmodule Remedy.API do
       nsfw: :boolean
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
+    body_attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
       |> validate_length(:name, min: 2, max: 100)
       |> validate_length(:topic, min: 2, max: 100)
       |> validate_number(:bitrate, min: 8000, max: 128_000)
       |> validate_number(:user_limit, min: 0, max: 99)
 
-    {:post, "/guilds/#{guild_id}/channels", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/channels", params, nil, nil, body}
     |> request()
   end
 
@@ -2069,17 +2605,25 @@ defmodule Remedy.API do
   @unsafe {:modify_channel_positions, [:guild_id, :opts]}
   @spec modify_channel_positions(Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def modify_channel_positions(guild_id, opts) do
-    data = %{}
-    types = %{positions: {:array, :map}}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+    body_data = %{}
+    body_types = %{positions: {:array, :map}}
+    body_keys = Map.keys(body_types)
+    body_attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
 
-    {:patch, "/guilds/#{guild_id}/channels", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/channels", params, nil, opts[:reason], body}
     |> request()
   end
 
@@ -2098,7 +2642,16 @@ defmodule Remedy.API do
   @unsafe {:get_member, [:guild_id, :user_id]}
   @spec get_member(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Member.t()}
   def get_member(guild_id, user_id) do
-    {:get, "/guilds/#{guild_id}/members/#{user_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/members/:user_id", params, nil, nil, nil}
     |> request()
     |> shape(Member)
   end
@@ -2123,17 +2676,26 @@ defmodule Remedy.API do
   @unsafe {:list_members, [:guild_id, :opts]}
   @spec list_members(Snowflake.c(), opts) :: {:error, reason} | {:ok, [Member.t()]}
   def list_members(guild_id, opts) do
-    data = %{limit: 1, after: 0}
-    types = %{limit: :integer, after: Snowflake}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{limit: 1, after: 0}
+    query_types = %{limit: :integer, after: Snowflake}
+    query_keys = Map.keys(query_types)
+    query_attrs = Enum.into(opts, %{})
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
       |> validate_number(:limit, greater_than: 0, less_than_or_equal_to: 1000)
 
-    {:get, "/guilds/#{guild_id}/members", params, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/members", params, query, nil, nil}
     |> request()
     |> shape(Member)
   end
@@ -2157,19 +2719,28 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/guilds/:guild_id/members/search"
   @unsafe {:search_members, [:guild_id, :opts]}
-  @spec search_members(Snowflake.c(), opts) :: {:error, reason} | {:ok, [GuildMember.t()]}
+  @spec search_members(Snowflake.c(), opts) :: {:error, reason} | {:ok, [Member.t()]}
   def search_members(guild_id, opts) do
-    data = %{limit: 1}
-    types = %{limit: :integer, query: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{limit: 1}
+    query_types = %{limit: :integer, query: :string}
+    query_keys = Map.keys(query_types)
+    query_attrs = Enum.into(opts, %{})
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
       |> validate_number(:limit, greater_than: 0, less_than_or_equal_to: 1000)
 
-    {:get, "/guilds/#{guild_id}/members/search", params, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/members/search", params, query, nil, nil}
     |> request()
   end
 
@@ -2211,11 +2782,10 @@ defmodule Remedy.API do
   ## """
   @doc false
   @unsafe {:add_member, [:guild_id, :user_id, :opts]}
-  @spec add_member(Snowflake.c(), Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def add_member(guild_id, user_id, opts) do
-    data = %{}
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       access_token: :string,
       nick: :string,
       roles: {:array, Snowflake},
@@ -2223,14 +2793,23 @@ defmodule Remedy.API do
       deaf: :boolean
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:put, "/guilds/#{guild_id}/members/#{user_id}", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/guilds/:guild_id/members/:user_id", params, nil, nil, body}
     |> request()
   end
 
@@ -2253,16 +2832,22 @@ defmodule Remedy.API do
   """
   @doc since: "0.6.0"
   @doc audit_log: true
-  @doc permissions: [:MANAGE_NICKNAMES, :MANAGE_ROLES, :MUTE_MEMBERS, :DEAFEN_MEMBERS, :MOVE_MEMBERS]
+  @doc permissions: [
+         :MANAGE_NICKNAMES,
+         :MANAGE_ROLES,
+         :MUTE_MEMBERS,
+         :DEAFEN_MEMBERS,
+         :MOVE_MEMBERS
+       ]
   @doc events: :MEMBER_UPDATE
   @doc method: :patch
   @doc route: "/guilds/:guild_id/members/:user_id"
   @unsafe {:modify_member, [:guild_id, :user_id, :opts]}
   @spec modify_member(Snowflake.c(), Snowflake.c(), opts) :: {:error, any} | {:ok, any}
   def modify_member(guild_id, user_id, opts) do
-    data = %{}
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       nick: :string,
       roles: {:array, Snowflake},
       mute: :boolean,
@@ -2271,15 +2856,23 @@ defmodule Remedy.API do
       reason: :string
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/guilds/#{guild_id}/members/#{user_id}", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/members/:user_id", params, nil, opts[:reason], body}
     |> request()
     |> shape(Member)
   end
@@ -2305,17 +2898,25 @@ defmodule Remedy.API do
   @unsafe {:modify_bot, [:guild_id, :opts]}
   @spec modify_bot(Snowflake.c(), opts) :: {:error, reason} | {:ok, Member.t()}
   def modify_bot(guild_id, opts) do
-    data = %{}
-    types = %{nick: :string}
-    reason = opts[:reason]
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{nick: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/guilds/#{guild_id}/members/@me", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/members/@me", params, nil, opts[:reason], body}
     |> request()
     |> shape(Member)
   end
@@ -2338,9 +2939,16 @@ defmodule Remedy.API do
   @unsafe {:add_role, [:guild_id, :user_id, :role_id, :opts]}
   @spec add_role(Snowflake.c(), Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Member.t()}
   def add_role(guild_id, user_id, role_id, opts) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake, role_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id, role_id: role_id}
+    params_keys = Map.keys(params_types)
 
-    {:put, "/guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/guilds/:guild_id/members/:user_id/roles/:role_id", params, nil, opts[:reason], nil}
     |> request()
   end
 
@@ -2362,9 +2970,16 @@ defmodule Remedy.API do
   @unsafe {:remove_role, [:guild_id, :user_id, :role_id, :opts]}
   @spec remove_role(Snowflake.c(), Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def remove_role(guild_id, user_id, role_id, opts \\ []) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake, role_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id, role_id: role_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/members/:user_id/roles/:role_id", params, nil, opts[:reason], nil}
     |> request()
   end
 
@@ -2386,9 +3001,16 @@ defmodule Remedy.API do
   @unsafe {:remove_member, [:guild_id, :user_id, :opts]}
   @spec remove_member(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def remove_member(guild_id, user_id, opts \\ []) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/guilds/#{guild_id}/members/#{user_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/members/:user_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -2418,7 +3040,16 @@ defmodule Remedy.API do
   @unsafe {:list_bans, [:guild_id]}
   @spec list_bans(Snowflake.c()) :: {:error, reason} | {:ok, [Ban.t()]}
   def list_bans(guild_id) do
-    {:get, "/guilds/#{guild_id}/bans", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/bans", params, nil, nil, nil}
     |> request()
     |> shape(Ban)
   end
@@ -2448,7 +3079,16 @@ defmodule Remedy.API do
   @unsafe {:get_ban, [:guild_id, :user_id]}
   @spec get_ban(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Ban.t()}
   def get_ban(guild_id, user_id) do
-    {:get, "/guilds/#{guild_id}/bans/#{user_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/bans/:user_id", params, nil, nil, nil}
     |> request()
     |> shape(Ban)
   end
@@ -2471,18 +3111,26 @@ defmodule Remedy.API do
   @unsafe {:ban_user, [:guild_id, :user_id, :opts]}
   @spec ban_user(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def ban_user(guild_id, user_id, opts \\ []) do
-    data = %{}
-    types = %{delete_message_days: :integer}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+    query_data = %{}
+    query_types = %{delete_message_days: :integer}
+    query_keys = Map.keys(query_types)
+    query_params = Enum.into(opts, %{})
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_params, query_keys)
       |> validate_number(:delete_message_days, less_than_or_equal_to: 7, greater_than_or_equal_to: 0)
 
-    {:put, "/guilds/#{guild_id}/bans/#{user_id}", params, reason, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/guilds/:guild_id/bans/:user_id", params, query, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -2505,9 +3153,16 @@ defmodule Remedy.API do
   @unsafe {:unban_user, [:guild_id, :user_id, :opts]}
   @spec unban_user(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def unban_user(guild_id, user_id, opts \\ []) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/guilds/#{guild_id}/bans/#{user_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/bans/:user_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -2527,7 +3182,16 @@ defmodule Remedy.API do
   @unsafe {:list_roles, [:guild_id]}
   @spec list_roles(Snowflake.c()) :: {:ok, [Role.t()]} | {:error, reason}
   def list_roles(guild_id) do
-    {:get, "/guilds/#{guild_id}/roles", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/roles", params, nil, nil, nil}
     |> request()
     |> shape(Role)
   end
@@ -2557,18 +3221,33 @@ defmodule Remedy.API do
   @unsafe {:create_role, [:guild_id, :opts]}
   @spec create_role(Snowflake.c(), opts) :: {:ok, Role.t()} | {:error, reason}
   def create_role(guild_id, opts \\ []) do
-    data = %{name: "new role", permissions: 0, color: 0, hoist: false, mentionable: false}
-    types = %{name: :string, permissions: Permission, color: :integer, hoist: :boolean, mentionable: :boolean}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+    body_data = %{name: "new role", permissions: 0, color: 0, hoist: false, mentionable: false}
+
+    body_types = %{
+      name: :string,
+      permissions: Permission,
+      color: Colour,
+      hoist: :boolean,
+      mentionable: :boolean
+    }
+
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_number(:color, less_than_or_equal_to: 16_777_215, greater_than_or_equal_to: 0)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:post, "/guilds/#{guild_id}/roles", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/roles", params, nil, opts[:reason], body}
     |> request()
     |> shape(Role)
   end
@@ -2590,17 +3269,25 @@ defmodule Remedy.API do
   @unsafe {:modify_roles, [:guild_id, :opts]}
   @spec modify_roles(Snowflake.c(), opts) :: {:ok, [Role.t()]} | {:error, reason}
   def modify_roles(guild_id, opts \\ []) do
-    data = %{}
-    types = %{positions: [%{id: Snowflake, position: :integer}]}
-    keys = Map.keys(types)
-    params = Enum.into(data, %{})
-    reason = opts[:reason]
+    body_data = %{}
+    body_types = %{positions: [%{id: Snowflake, position: :integer}]}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/guilds/#{guild_id}/roles", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/roles", params, nil, opts[:reason], body}
     |> request()
     |> shape(Role)
   end
@@ -2630,18 +3317,33 @@ defmodule Remedy.API do
   @unsafe {:modify_role, [:guild_id, :role_id, :opts]}
   @spec modify_role(Snowflake.c(), Snowflake.c(), opts) :: {:ok, Role.t()} | {:error, reason}
   def modify_role(guild_id, role_id, opts \\ []) do
-    data = %{}
-    types = %{name: :string, permissions: Permission, color: :integer, hoist: :boolean, mentionable: :boolean}
-    keys = Map.keys(types)
-    params = Enum.into(data, %{})
-    reason = opts[:reason]
+    body_data = %{}
+
+    body_types = %{
+      name: :string,
+      permissions: Permission,
+      color: Colour,
+      hoist: :boolean,
+      mentionable: :boolean
+    }
+
+    body_keys = Map.keys(body_types)
+    body_attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_number(:color, less_than_or_equal_to: 16_777_215, greater_than_or_equal_to: 0)
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
 
-    {:patch, "/guilds/#{guild_id}/roles/#{role_id}", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, role_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, role_id: role_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/roles/:role_id", params, nil, opts[:reason], body}
     |> request()
     |> shape(Role)
   end
@@ -2663,9 +3365,16 @@ defmodule Remedy.API do
   @unsafe {:delete_role, [:guild_id, :role_id, :opts]}
   @spec delete_role(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def delete_role(guild_id, role_id, opts \\ []) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, role_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, role_id: role_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/guilds/#{guild_id}/roles/#{role_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/roles/:role_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -2692,17 +3401,26 @@ defmodule Remedy.API do
   @unsafe {:get_prune_count, [:guild_id, :opts]}
   @spec get_prune_count(Snowflake.c(), opts) :: {:ok, %{pruned: integer}} | {:error, reason}
   def get_prune_count(guild_id, opts \\ []) do
-    data = %{}
-    types = %{days: :integer, include_roles: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{}
+    query_types = %{days: :integer, include_roles: :string}
+    query_keys = Map.keys(query_types)
+    query_params = Enum.into(opts, %{})
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_params, query_keys)
       |> validate_number(:days, less_than_or_equal_to: 30, greater_than_or_equal_to: 1)
 
-    {:get, "/guilds/#{guild_id}/prune", params, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/prune", params, query, nil, nil}
     |> request()
   end
 
@@ -2729,18 +3447,26 @@ defmodule Remedy.API do
   @unsafe {:prune_guild, [:guild_id, :opts]}
   @spec prune_guild(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def prune_guild(guild_id, opts \\ []) do
-    data = %{}
-    types = %{days: :integer, include_roles: {:array, Snowflake}, compute_prune_count: :boolean}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+    body_data = %{}
+    body_types = %{days: :integer, include_roles: {:array, Snowflake}, compute_prune_count: :boolean}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_number(:days, less_than_or_equal_to: 30, greater_than_or_equal_to: 1)
 
-    {:post, "/guilds/#{guild_id}/prune", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/prune", params, nil, opts[:reason], body}
     |> request()
     |> shape()
   end
@@ -2763,7 +3489,16 @@ defmodule Remedy.API do
   @unsafe {:list_voice_regions, [:guild_id]}
   @spec list_voice_regions(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def list_voice_regions(guild_id) do
-    {:get, "/guilds/#{guild_id}/regions", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/regions", params, nil, nil, nil}
     |> request()
     |> shape(VoiceRegion)
   end
@@ -2784,7 +3519,16 @@ defmodule Remedy.API do
   @unsafe {:list_guild_invites, [:guild_id]}
   @spec list_guild_invites(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def list_guild_invites(guild_id) do
-    {:get, "/guilds/#{guild_id}/invites", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/invites", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -2804,7 +3548,16 @@ defmodule Remedy.API do
   @unsafe {:list_integrations, [:guild_id]}
   @spec list_integrations(Snowflake.c()) :: {:ok, [Integration.t()]} | {:error, reason}
   def list_integrations(guild_id) do
-    {:get, "/guilds/#{guild_id}/integrations", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/integrations", params, nil, nil, nil}
     |> request()
     |> shape(Integration)
   end
@@ -2828,9 +3581,16 @@ defmodule Remedy.API do
   @unsafe {:remove_integration, [:guild_id, :integration_id, :opts]}
   @spec remove_integration(Snowflake.c(), Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def remove_integration(guild_id, integration_id, opts) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, integration_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, integration_id: integration_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/guilds/#{guild_id}/integrations/#{integration_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/integrations/:integration_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -2851,7 +3611,16 @@ defmodule Remedy.API do
   @unsafe {:get_guild_widget_settings, [:guild_id]}
   @spec get_widget_settings(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_widget_settings(guild_id) do
-    {:get, "/guilds/#{guild_id}/widget", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/widget", params, nil, nil, nil}
     |> request()
   end
 
@@ -2871,7 +3640,16 @@ defmodule Remedy.API do
   @unsafe {:get_widget, [:guild_id]}
   @spec get_widget(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_widget(guild_id) do
-    {:get, "/guilds/#{guild_id}/widget.json", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/widget.json", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -2892,7 +3670,16 @@ defmodule Remedy.API do
   @unsafe {:get_guild_vanity_url, [:guild_id]}
   @spec get_url(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_url(guild_id) do
-    {:get, "/guilds/#{guild_id}/vanity-url", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/vanity-url", params, nil, nil, nil}
     |> request()
   end
 
@@ -2933,17 +3720,26 @@ defmodule Remedy.API do
   @unsafe {:get_widget_image, [:guild_id, :opts]}
   @spec get_widget_image(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def get_widget_image(guild_id, opts \\ []) do
-    data = %{}
-    types = %{style: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{}
+    query_types = %{style: :string}
+    query_keys = Map.keys(query_types)
+    query_params = Enum.into(opts, %{})
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(query_params, query_keys)
       |> validate_inclusion(:style, ["shield", "banner1", "banner2", "banner3", "banner4"])
 
-    {:get, "/guilds/#{guild_id}/widget.png", params, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/widget.png", params, query, nil, nil}
     |> request()
   end
 
@@ -2963,7 +3759,16 @@ defmodule Remedy.API do
   @unsafe {:get_welcome, [:guild_id]}
   @spec get_welcome(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_welcome(guild_id) do
-    {:get, "/guilds/#{guild_id}/welcome-screen", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/welcome-screen", params, nil, nil, nil}
     |> request()
   end
 
@@ -2995,17 +3800,31 @@ defmodule Remedy.API do
   @unsafe {:modify_welcome, [:guild_id, :opts]}
   @spec modify_welcome(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_welcome(guild_id, opts \\ []) do
-    data = %{}
-    types = %{enabled: :boolean, welcome_channels: {:array, WelcomeScreenChannel}, description: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    reason = opts[:reason]
+    body_data = %{}
+
+    body_types = %{
+      enabled: :boolean,
+      welcome_channels: {:array, WelcomeScreenChannel},
+      description: :string
+    }
+
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/guilds/#{guild_id}/welcome-screen", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/welcome-screen", params, nil, opts[:reason], body}
     |> request()
     |> shape(WelcomeScreen)
   end
@@ -3046,17 +3865,26 @@ defmodule Remedy.API do
   @unsafe {:modify_bot_voice, [:guild_id, :opts]}
   @spec modify_bot_voice(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_bot_voice(guild_id, opts \\ []) do
-    data = %{}
-    types = %{channel_id: Snowflake, suppress: :boolean, request_to_speak_timestamp: ISO8601}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{channel_id: Snowflake, suppress: :boolean, request_to_speak_timestamp: ISO8601}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_required([:channel_id])
 
-    {:patch, "/guilds/#{guild_id}/voice-states/@me", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/voice-states/@me", params, nil, nil, body}
     |> request()
   end
 
@@ -3090,17 +3918,26 @@ defmodule Remedy.API do
   @unsafe {:modify_user_voice, [:guild_id, :user_id, :opts]}
   @spec modify_user_voice(Snowflake.c(), Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_user_voice(guild_id, user_id, opts \\ []) do
-    data = %{}
-    types = %{channel_id: Snowflake, suppress: :boolean}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{channel_id: Snowflake, suppress: :boolean}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_required([:channel_id])
 
-    {:patch, "/guilds/#{guild_id}/voice-states/#{user_id}", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, user_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/voice-states/:user_id", params, nil, nil, body}
     |> request()
   end
 
@@ -3128,7 +3965,16 @@ defmodule Remedy.API do
     do: get_guild_template(template_code)
 
   def get_guild_template(template_code) do
-    {:get, "/guilds/templates/#{template_code}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{template_code: :string}
+    params_attrs = %{template_code: template_code}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/templates/:template_code", params, nil, nil, nil}
     |> request()
   end
 
@@ -3140,17 +3986,26 @@ defmodule Remedy.API do
   @unsafe {:create_guild_from_template, [:template_id, :opts]}
   @spec create_guild_from_template(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   defp create_guild_from_template(template_code, opts) when not is_list(template_code) do
-    data = %{}
-    types = %{name: :string, icon: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{name: :string, icon: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_required([:name])
 
-    {:post, "/guilds/templates/#{template_code}", nil, nil, body}
+    params_data = %{}
+    params_types = %{template_code: :string}
+    params_attrs = %{template_code: template_code}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/templates/:template_code", params, nil, nil, body}
     |> request()
   end
 
@@ -3176,19 +4031,28 @@ defmodule Remedy.API do
   @unsafe {:create_template, [:guild_id, :opts]}
   @spec create_template(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def create_template(guild_id, opts \\ []) do
-    data = %{}
-    types = %{name: :string, description: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{name: :string, description: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_required([:name])
       |> validate_length(:name, min: 2, max: 100)
       |> validate_length(:description, min: 0, max: 120)
 
-    {:post, "/guilds/#{guild_id}/templates", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/templates", params, nil, nil, body}
     |> request()
     |> shape()
   end
@@ -3209,7 +4073,16 @@ defmodule Remedy.API do
   @unsafe {:sync_template, [:guild_id, :template_id]}
   @spec sync_template(Snowflake.c(), String.t()) :: {:ok, any} | {:error, reason}
   def sync_template(guild_id, template_code) do
-    {:put, "/guilds/#{guild_id}/templates/#{template_code}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{template_code: :string, guild_id: Snowflake}
+    params_attrs = %{template_code: template_code, guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/guilds/:guild_id/templates/:template_code", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -3247,7 +4120,16 @@ defmodule Remedy.API do
       |> validate_length(:name, min: 1, max: 100)
       |> validate_length(:description, min: 0, max: 120)
 
-    {:patch, "/guilds/#{guild_id}/templates/#{template_code}", nil, nil, body}
+    params_data = %{}
+    params_types = %{template_code: :string, guild_id: Snowflake}
+    params_attrs = %{template_code: template_code, guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/templates/:template_code", params, nil, nil, body}
     |> request()
     |> shape()
   end
@@ -3268,7 +4150,16 @@ defmodule Remedy.API do
   @unsafe {:delete_template, [:guild_id, :template_id]}
   @spec delete_template(Snowflake.c(), Snowflake.c()) :: {:ok, any} | {:error, reason}
   def delete_template(guild_id, template_code) do
-    {:delete, "/guilds/#{guild_id}/templates/#{template_code}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{template_code: :string, guild_id: Snowflake}
+    params_attrs = %{template_code: template_code, guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/templates/:template_code", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -3307,16 +4198,31 @@ defmodule Remedy.API do
   @unsafe {:get_invite, [:invite_code, :opts]}
   @spec get_invite(any, opts) :: {:ok, any} | {:error, reason}
   def get_invite(invite_code, opts \\ []) do
-    data = %{with_counts: true, with_expiration: true}
-    types = %{with_counts: :boolean, with_expiration: :boolean, guild_scheduled_event_id: Snowflake}
-    params = Enum.into(opts, %{})
-    keys = Map.keys(types)
+    query_data = %{with_counts: true, with_expiration: true}
+
+    query_types = %{
+      with_counts: :boolean,
+      with_expiration: :boolean,
+      guild_scheduled_event_id: Snowflake
+    }
+
+    query_params = Enum.into(opts, %{})
+    query_keys = Map.keys(query_types)
+
+    query =
+      {query_data, query_types}
+      |> cast(query_params, query_keys)
+
+    params_data = %{}
+    params_types = %{invite_code: :string}
+    params_attrs = %{invite_code: invite_code}
+    params_keys = Map.keys(params_types)
 
     params =
-      {data, types}
-      |> cast(params, keys)
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
 
-    {:get, "/invites/#{invite_code}", params, nil, nil}
+    {:get, "/invites/:invite_code", params, query, nil, nil}
     |> request()
   end
 
@@ -3337,9 +4243,16 @@ defmodule Remedy.API do
   @unsafe {:delete_invite, [:invite_code]}
   @spec delete_invite(any, opts) :: {:ok, any} | {:error, reason}
   def delete_invite(invite_code, opts \\ []) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{invite_code: :string}
+    params_attrs = %{invite_code: invite_code}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/invites/#{invite_code}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/invites/:invite_code", params, nil, opts[:reason], nil}
     |> request()
     |> shape(Invite)
   end
@@ -3382,18 +4295,16 @@ defmodule Remedy.API do
   @unsafe {:create_stage, [:opts]}
   @spec create_stage(opts) :: {:ok, any} | {:error, reason}
   def create_stage(opts) do
-    data = %{}
-    types = %{channel_id: Snowflake, name: :string, privacy_level: :integer}
-    params = Enum.into(opts, %{})
-    keys = Map.keys(types)
-    reason = opts[:reason]
+    body_data = %{}
+    body_types = %{channel_id: Snowflake, name: :string, privacy_level: StagePrivacyLevel}
+    body_params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_inclusion(:privacy_level, [1, 2])
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:post, "/stage-instances", nil, reason, body}
+    {:post, "/stage-instances", nil, nil, opts[:reason], body}
     |> request()
     |> shape(Stage)
   end
@@ -3413,7 +4324,16 @@ defmodule Remedy.API do
   @unsafe {:get_stage, [:channel_id]}
   @spec get_stage(Snowflake.c()) :: {:ok, any} | {:error, reason}
   def get_stage(channel_id) do
-    {:get, "/stage-instances/#{channel_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/stage-instances/:channel_id", params, nil, nil, nil}
     |> request()
     |> shape(Stage)
   end
@@ -3442,18 +4362,25 @@ defmodule Remedy.API do
   @unsafe {:modify_stage, [:channel_id, :opts]}
   @spec modify_stage(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def modify_stage(channel_id, opts \\ []) do
-    data = %{}
-    types = %{topic: :string, privacy_level: :integer}
-    keys = Map.keys(types)
-    reason = opts[:reason]
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{topic: :string, privacy_level: StageInstancePrivacyLevel}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_inclusion(:privacy_level, [1, 2])
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/stage-instances/#{channel_id}", nil, reason, body}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/stage-instances/:channel_id", params, nil, opts[:reason], body}
     |> request()
     |> shape(Stage)
   end
@@ -3475,9 +4402,16 @@ defmodule Remedy.API do
   @unsafe {:delete_stage, [:channel_id]}
   @spec delete_stage(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def delete_stage(channel_id, opts) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/stage-instances/#{channel_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/stage-instances/:channel_id", params, nil, opts[:reason], nil}
     |> request()
   end
 
@@ -3511,7 +4445,16 @@ defmodule Remedy.API do
   @unsafe {:get_sticker, [:sticker_id]}
   @spec get_sticker(Snowflake.c()) :: {:error, any} | {:ok, Sticker.t()}
   def get_sticker(sticker_id) do
-    {:get, "/stickers/#{sticker_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{sticker_id: Snowflake}
+    params_attrs = %{sticker_id: sticker_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/stickers/:sticker_id", params, nil, nil, nil}
     |> request()
     |> shape(Sticker)
   end
@@ -3523,9 +4466,8 @@ defmodule Remedy.API do
   @doc false
   @doc since: "0.6.0"
   @unsafe {:list_nitro_sticker_packs, []}
-  @spec list_nitro_sticker_packs() :: {:error, reason} | {:ok, [Sticker.t()]}
   def list_nitro_sticker_packs do
-    {:get, "/sticker-packs", nil, nil, nil} |> request() |> shape(StickerPack)
+    {:get, "/sticker-packs", nil, nil, nil, nil} |> request() |> shape(StickerPack)
   end
 
   @doc """
@@ -3547,7 +4489,16 @@ defmodule Remedy.API do
   @unsafe {:list_stickers, [:guild_id]}
   @spec list_stickers(Snowflake.c()) :: {:error, reason} | {:ok, [Sticker.t()]}
   def list_stickers(guild_id) do
-    {:get, "/guilds/#{guild_id}/stickers", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/stickers", params, nil, nil, nil}
     |> request()
     |> shape(Sticker)
   end
@@ -3574,7 +4525,16 @@ defmodule Remedy.API do
   @unsafe {:get_sticker, [:guild_id, :sticker_id]}
   @spec get_sticker(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, Sticker.t()}
   def get_sticker(guild_id, sticker_id) do
-    {:get, "/guilds/#{guild_id}/stickers/#{sticker_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, sticker_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, sticker_id: sticker_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/stickers/:sticker_id", params, nil, nil, nil}
     |> request()
     |> shape(Sticker)
   end
@@ -3608,17 +4568,25 @@ defmodule Remedy.API do
   @unsafe {:create_sticker, [:guild_id, :sticker_id, :opts]}
   @spec create_sticker(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Sticker.t()}
   def create_sticker(guild_id, sticker_id, opts \\ []) do
-    data = %{}
-    types = %{name: :string, description: :string, tags: :string, file: :string}
-    keys = Map.keys(types)
-    reason = opts[:reason]
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{name: :string, description: :string, tags: :string, file: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:post, "/guilds/#{guild_id}/stickers/#{sticker_id}", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, sticker_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, sticker_id: sticker_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/stickers/:sticker_id", params, nil, opts[:reason], body}
     |> request()
     |> shape(Sticker)
   end
@@ -3649,19 +4617,28 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/stickers/:sticker_id"
   @doc audit_log: true
   @unsafe {:modify_sticker, [:guild_id, :sticker_id, :opts]}
-  @spec modify_sticker(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Sticker.t()}
+  @spec modify_sticker(Snowflake.c(), Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, Sticker.t()}
   def modify_sticker(guild_id, sticker_id, opts \\ []) do
-    data = %{}
-    types = %{name: :string, description: :string, tags: :string}
-    keys = Map.keys(types)
-    reason = opts[:reason]
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{name: :string, description: :string, tags: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:post, "/guilds/#{guild_id}/stickers/#{sticker_id}", nil, reason, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, sticker_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, sticker_id: sticker_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/stickers/:sticker_id", params, nil, opts[:reason], body}
     |> request()
   end
 
@@ -3690,7 +4667,16 @@ defmodule Remedy.API do
   @unsafe {:delete_sticker, [:guild_id, :sticker_id]}
   @spec delete_sticker(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | :ok
   def delete_sticker(guild_id, sticker_id, opts \\ []) do
-    {:delete, "/guilds/#{guild_id}/stickers/#{sticker_id}", nil, opts[:reason], nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, sticker_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, sticker_id: sticker_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/stickers/:sticker_id", params, nil, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -3721,7 +4707,7 @@ defmodule Remedy.API do
   @unsafe {:get_bot, []}
   @spec get_bot :: {:error, reason} | {:ok, User.t()}
   def get_bot do
-    {:get, "/users/@me", nil, nil, nil}
+    {:get, "/users/@me", nil, nil, nil, nil}
     |> request()
     |> shape(User)
   end
@@ -3749,7 +4735,16 @@ defmodule Remedy.API do
   @unsafe {:get_user, [:user_id]}
   @spec get_user(Snowflake.c()) :: {:error, reason} | {:ok, User.t()}
   def get_user(user_id) do
-    {:get, "/users/#{user_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{user_id: Snowflake}
+    params_attrs = %{user_id: user_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/users/:user_id", params, nil, nil, nil}
     |> request()
     |> shape(User)
   end
@@ -3774,16 +4769,16 @@ defmodule Remedy.API do
   @unsafe {:modify_bot, [:opts]}
   @spec modify_bot(opts) :: {:error, reason} | {:ok, User.t()}
   def modify_bot(opts) do
-    data = %{}
-    types = %{avatar: :string, username: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{avatar: :string, username: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/users/@me", nil, opts[:reason], body}
+    {:patch, "/users/@me", nil, nil, opts[:reason], body}
     |> request()
   end
 
@@ -3808,17 +4803,18 @@ defmodule Remedy.API do
   @unsafe {:list_guilds, [:opts]}
   @spec list_guilds(opts) :: {:error, reason} | {:ok, [Guild.t()]}
   def list_guilds(opts) do
-    data = %{limit: 50}
-    types = %{before: Snowflake, after: Snowflake, limit: :integer}
-    keys = Map.keys(types)
-    reason = opts[:reason]
-    params = Enum.into(opts, %{})
+    query_data = %{limit: 50}
+    query_types = %{before: Snowflake, after: Snowflake, limit: :integer}
+    query_keys = Map.keys(query_types)
 
-    params =
-      {data, types}
-      |> cast(params, keys)
+    attrs = Enum.into(opts, %{})
 
-    {:get, "/users/@me/guilds", params, reason, nil}
+    query =
+      {query_data, query_types}
+      |> cast(attrs, query_keys)
+      |> validate_number(:limit, greater_than_or_equal_to: 1, less_than_or_equal_to: 100)
+
+    {:get, "/users/@me/guilds", nil, query, opts[:reason], nil}
     |> request()
   end
 
@@ -3840,7 +4836,16 @@ defmodule Remedy.API do
   @unsafe {:leave_guild, [:guild_id]}
   @spec leave_guild(Snowflake.c()) :: {:error, reason} | :ok
   def leave_guild(guild_id) do
-    {:delete, "/users/@me/guilds/#{guild_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/users/@me/guilds/:guild_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -3860,9 +4865,16 @@ defmodule Remedy.API do
   @unsafe {:create_dm, [:user_id]}
   @spec create_dm(Snowflake.c()) :: {:error, reason} | {:ok, Channel.t()}
   def create_dm(user_id) do
-    body = %{recipient_id: user_id}
+    body_data = %{}
+    body_types = %{recipient_id: Snowflake}
+    body_attrs = %{recipient_id: user_id}
+    body_keys = Map.keys(body_types)
 
-    {:post, "/users/@me/channels", nil, nil, body}
+    body =
+      {body_data, body_types}
+      |> cast(body_attrs, body_keys)
+
+    {:post, "/users/@me/channels", nil, nil, nil, body}
     |> request()
     |> shape(Channel)
   end
@@ -3870,23 +4882,22 @@ defmodule Remedy.API do
   ###########################################################################
   ## Create a group dm
   ##
-  ## Only for GameSDK. Not for us
+  ## Only for GameBridge SDK. Not for us
   ## @doc since: "0.6.8"
   @doc false
   @unsafe {:create_group_dm, [:opts]}
-  @spec create_group_dm(any) :: {:error, reason} | {:ok, Channel.t()}
-  def create_group_dm(opts), do: {:post, "/users/@me/channels", nil, nil, opts} |> request()
+  def create_group_dm(opts), do: {:post, "/users/@me/channels", nil, nil, nil, opts} |> request()
 
   ###########################################################################
   ## Get a list of the bot's user connections
   ##
   ## Useless, bots have no friends :(
+  ## Requires connections scope for use with oauth2
   ## @doc since("0.6.8")
   @doc false
   @unsafe {:list_bot_connections, []}
-  @spec list_bot_connections() :: {:error, any} | {:ok, any}
   def list_bot_connections do
-    {:get, "/users/@me/connections", nil, nil, nil}
+    {:get, "/users/@me/connections", nil, nil, nil, nil}
     |> request()
   end
 
@@ -3914,7 +4925,7 @@ defmodule Remedy.API do
   @unsafe {:list_voice_regions, []}
   @spec list_voice_regions() :: {:error, reason} | {:ok, [VoiceRegion.t()]}
   def list_voice_regions do
-    {:get, "/voice/regions", nil, nil, nil}
+    {:get, "/voice/regions", nil, nil, nil, nil}
     |> request()
   end
 
@@ -3951,18 +4962,27 @@ defmodule Remedy.API do
   @unsafe {:create_webhook, [:channel_id, :opts]}
   @spec create_webhook(Snowflake.c(), opts) :: {:error, reason} | {:ok, Webhook.t()}
   def create_webhook(channel_id, opts \\ []) do
-    data = %{}
-    types = %{name: :string, avatar: :string}
-    params = Enum.into(opts, %{})
-    keys = Map.keys(types)
+    body_data = %{}
+    body_types = %{name: :string, avatar: :string}
+    body_params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
       |> validate_exclusion(:name, ["Clyde"])
       |> validate_length(:name, min: 1, max: 80)
 
-    {:post, "/channels/#{channel_id}/webhooks", nil, nil, body}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/channels/:channel_id/webhooks", params, nil, nil, body}
     |> request()
   end
 
@@ -3982,7 +5002,16 @@ defmodule Remedy.API do
   @unsafe {:list_channel_webhooks, [:channel_id]}
   @spec list_channel_webhooks(Snowflake.c()) :: {:error, reason} | {:ok, [Webhook.t()]}
   def list_channel_webhooks(channel_id) do
-    {:get, "/channels/#{channel_id}/webhooks", nil, nil, nil}
+    params_data = %{}
+    params_types = %{channel_id: Snowflake}
+    params_attrs = %{channel_id: channel_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/channels/:channel_id/webhooks", params, nil, nil, nil}
     |> request()
   end
 
@@ -4002,7 +5031,16 @@ defmodule Remedy.API do
   @unsafe {:list_guild_webhooks, [:guild_id]}
   @spec list_guild_webhooks(Snowflake.c()) :: {:error, reason} | {:ok, [Webhook.t()]}
   def list_guild_webhooks(guild_id) do
-    {:get, "/guilds/#{guild_id}/webhooks", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/webhooks", params, nil, nil, nil}
     |> request()
   end
 
@@ -4021,10 +5059,20 @@ defmodule Remedy.API do
   @unsafe {:get_webhook, [:webhook_id]}
   @spec get_webhook(Snowflake.c()) :: {:error, reason} | {:ok, Webhook.t()}
   def get_webhook(webhook_id) do
-    {:get, "/webhooks/#{webhook_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake}
+    params_attrs = %{webhook_id: webhook_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/webhooks/:webhook_id", params, nil, nil, nil}
     |> request()
   end
 
+  @spec get_webhook(any, any) :: {:error, any} | {:ok, any}
   @doc """
   Gets a webhook by id and token.
 
@@ -4039,7 +5087,16 @@ defmodule Remedy.API do
   @doc route: "/webhooks/:webhook_id/:webhook_token"
   @unsafe {:get_webhook_with_token, [:webhook_id, :webhook_token]}
   def get_webhook(webhook_id, webhook_token) do
-    {:get, "/webhooks/#{webhook_id}/#{webhook_token}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/webhooks/:webhook_id/:webhook_token", params, nil, nil, nil}
     |> request()
   end
 
@@ -4074,7 +5131,16 @@ defmodule Remedy.API do
       {data, types}
       |> cast(params, keys)
 
-    {:patch, "/webhooks/#{webhook_id}", nil, nil, body}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake}
+    params_attrs = %{webhook_id: webhook_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/webhooks/:webhook_id", params, nil, nil, body}
     |> request()
   end
 
@@ -4100,16 +5166,25 @@ defmodule Remedy.API do
   @doc route: "/webhooks/:webhook_id/:webhook_token"
   @unsafe {:modify_webhook_with_token, [:webhook_id, :webhook_token, :opts]}
   def modify_webhook(webhook_id, webhook_token, opts) do
-    data = %{}
-    types = %{name: :string, avatar: :string}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{name: :string, avatar: :string}
+    body_keys = Map.keys(body_types)
+    body_params = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(body_params, body_keys)
 
-    {:patch, "/webhooks/#{webhook_id}/#{webhook_token}", nil, nil, body}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/webhooks/:webhook_id/:webhook_token", params, nil, nil, body}
     |> request()
   end
 
@@ -4129,7 +5204,16 @@ defmodule Remedy.API do
   @unsafe {:delete_webhook, [:webhook_id]}
   @spec delete_webhook(Snowflake.c()) :: {:error, reason} | :ok
   def delete_webhook(webhook_id) do
-    {:delete, "/webhooks/#{webhook_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake}
+    params_attrs = %{webhook_id: webhook_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/webhooks/:webhook_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -4149,7 +5233,16 @@ defmodule Remedy.API do
   @unsafe {:delete_webhook_with_token, [:webhook_id, :webhook_token]}
   @spec delete_webhook(Snowflake.c(), any) :: {:error, any} | {:ok, any}
   def delete_webhook(webhook_id, webhook_token) do
-    {:delete, "/webhooks/#{webhook_id}/#{webhook_token}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/webhooks/:webhook_id/:webhook_token", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -4166,7 +5259,7 @@ defmodule Remedy.API do
   - `:avatar_url` - `t:String.t/0` - Override the avatar of the webhook message.
   - `:tts` - `:boolean` - Whether the message should be read aloud by Discord.
   - `:embeds` - `{:array, Embed}` - An array of up to 10 embed objects.
-  - `:allowed_mentions` - `AllowedMention` - allowed mention object.
+  - `:allowed_mentions` - `AllowedMentions` - allowed mention object.
   - `:components` - `{:array, Component}` - An array of component objects.
   - `:attachments` - `{:array, Attachment}` - An array of attachment objects.
 
@@ -4184,37 +5277,45 @@ defmodule Remedy.API do
   @unsafe {:execute_webhook, [:webhook_id, :webhook_token, :opts]}
   @spec execute_webhook(Snowflake.c(), any, opts) :: {:error, reason} | {:ok, Message.t()}
   def execute_webhook(webhook_id, webhook_token, opts) do
+    attrs = Enum.into(opts, %{})
+
     query_data = %{wait: false}
     query_types = %{wait: :boolean, thread_id: Snowflake}
     query_keys = Map.keys(query_types)
-    params = Enum.into(opts, %{})
 
-    query_params =
+    query =
       {query_data, query_types}
-      |> cast(params, query_keys)
+      |> cast(attrs, query_keys)
 
-    types = %{
+    body_types = %{
       content: :string,
       username: :string,
       avatar_url: :string,
       tts: :boolean,
       embeds: {:array, Embed},
-      allowed_mentions: AllowedMention,
+      allowed_mentions: AllowedMentions,
       components: {:array, Component},
       attachments: {:array, Attachment}
     }
 
-    data = %{}
-    keys = Map.keys(types)
+    body_data = %{}
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_at_least_one([:content, :embeds, :attachments])
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
+      |> validate_at_least([:content, :embeds, :attachments], 1)
 
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token}
+    params_keys = Map.keys(params_types)
 
-    {:post, "/webhooks/#{webhook_id}/#{webhook_token}", query_params, reason, body}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/webhooks/:webhook_id/:webhook_token", params, query, opts[:reason], body}
     |> request()
   end
 
@@ -4225,9 +5326,17 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/webhooks/:webhook_id/:webhook_token/slack"
   @unsafe {:execute_slack_webhook, [:webhook_id, :webhook_token]}
-  @spec execute_slack_webhook(Snowflake.c(), any) :: {:error, reason} | :ok
   def execute_slack_webhook(webhook_id, webhook_token) do
-    {:post, "/webhooks/#{webhook_id}/#{webhook_token}/slack", nil, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/webhooks/:webhook_id/:webhook_token/slack", params, nil, nil, nil}
     |> request()
   end
 
@@ -4238,9 +5347,17 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/webhooks/:webhook_id/:webhook_token/github"
   @unsafe {:execute_github_webhook, [:webhook_id, :webhook_token]}
-  @spec execute_github_webhook(Snowflake.c(), token) :: {:error, reason} | :ok
   def execute_github_webhook(webhook_id, webhook_token) do
-    {:post, "/webhooks/#{webhook_id}/#{webhook_token}/github", nil, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/webhooks/:webhook_id/:webhook_token/github", params, nil, nil, nil}
     |> request()
   end
 
@@ -4261,18 +5378,28 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/webhooks/:webhook_id/:webhook_token/messages/:message_id"
   @unsafe {:get_message, [:webhook_id, :webhook_token, :message_id, :opts]}
-  @spec get_message(Snowflake.c(), any, Snowflake.c(), opts) :: {:error, reason} | {:ok, Message.t()}
+  @spec get_message(Snowflake.c(), any, Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, Message.t()}
   def get_message(webhook_id, webhook_token, message_id, opts \\ []) do
-    data = %{}
-    types = %{thread_id: Snowflake}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{}
+    query_types = %{thread_id: Snowflake}
+    query_keys = Map.keys(query_types)
+    attrs = Enum.into(opts, %{})
 
     query =
-      {data, types}
-      |> cast(params, keys)
+      {query_data, query_types}
+      |> cast(attrs, query_keys)
 
-    {:get, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}", query, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string, message_id: Snowflake}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token, message_id: message_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query, nil, nil}
     |> request()
     |> shape(Message)
   end
@@ -4287,7 +5414,7 @@ defmodule Remedy.API do
   - `:avatar_url` - `t:String.t/0` - Override the avatar of the webhook message.
   - `:tts` - `:boolean` - Whether the message should be read aloud by Discord.
   - `:embeds` - `{:array, Embed}` - An array of up to 10 embed objects.
-  - `:allowed_mentions` - `AllowedMention` - allowed mention object.
+  - `:allowed_mentions` - `AllowedMentions` - allowed mention object.
   - `:components` - `{:array, Component}` - An array of component objects.
   - `:attachments` - `{:array, Attachment}` - An array of attachment objects.
 
@@ -4304,39 +5431,49 @@ defmodule Remedy.API do
   @doc method: :patch
   @doc route: "/webhooks/:webhook_id/:webhook_token/messages/:message_id"
   @unsafe {:modify_message, [:webhook_id, :webhook_token, :message_id, :opts]}
-  @spec modify_message(Snowflake.c(), any, Snowflake.c(), opts) :: {:error, reason} | {:ok, Message.t()}
+  @spec modify_message(Snowflake.c(), any, Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, Message.t()}
   def modify_message(webhook_id, webhook_token, message_id, opts) do
+    attrs = Enum.into(opts, %{})
+
     query_data = %{wait: false}
     query_types = %{wait: :boolean, thread_id: Snowflake}
     query_keys = Map.keys(query_types)
-    params = Enum.into(opts, %{})
 
-    query_params =
+    query =
       {query_data, query_types}
-      |> cast(params, query_keys)
+      |> cast(attrs, query_keys)
 
-    types = %{
+    body_data = %{}
+
+    body_types = %{
       content: :string,
       username: :string,
       avatar_url: :string,
       tts: :boolean,
       embeds: {:array, Embed},
-      allowed_mentions: AllowedMention,
+      allowed_mentions: AllowedMentions,
       components: {:array, Component},
       attachments: {:array, Attachment}
     }
 
-    data = %{}
-    keys = Map.keys(types)
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
-      |> validate_at_least_one([:content, :embeds, :attachments])
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
+      |> validate_at_least([:content, :embeds, :attachments], 1)
 
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string, message_id: Snowflake}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token, message_id: message_id}
+    params_keys = Map.keys(params_types)
 
-    {:patch, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}", query_params, reason, body}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query, opts[:reason], body}
     |> request()
   end
 
@@ -4355,16 +5492,26 @@ defmodule Remedy.API do
   @unsafe {:delete_message, [:webhook_id, :webhook_token, :message_id, :opts]}
   @spec delete_message(Snowflake.c(), any, Snowflake.c(), opts) :: {:error, reason} | {:ok, Message.t()}
   def delete_message(webhook_id, webhook_token, message_id, opts) do
-    data = %{}
-    types = %{thread_id: Snowflake}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_attrs = Enum.into(opts, %{})
+
+    query_data = %{}
+    query_types = %{thread_id: Snowflake}
+    query_keys = Map.keys(query_types)
 
     query =
-      {data, types}
-      |> cast(params, keys)
+      {query_data, query_types}
+      |> cast(query_attrs, query_keys)
 
-    {:delete, "/webhooks/#{webhook_id}/#{webhook_token}/messages/#{message_id}", query, nil, nil}
+    params_data = %{}
+    params_types = %{webhook_id: Snowflake, webhook_token: :string, message_id: Snowflake}
+    params_attrs = %{webhook_id: webhook_id, webhook_token: webhook_token, message_id: message_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -4403,7 +5550,7 @@ defmodule Remedy.API do
   @unsafe {:list_commands, []}
   @spec list_commands() :: {:error, reason} | {:ok, [Command.t()]}
   def list_commands do
-    {:get, "/applications/#{bot_id()}/commands", nil, nil, nil}
+    {:get, "/applications/#{application_id()}/commands", nil, nil, nil, nil}
     |> request()
   end
 
@@ -4435,24 +5582,24 @@ defmodule Remedy.API do
   @unsafe {:create_command, [:opts]}
   @spec create_command(opts) :: {:error, reason} | {:ok, Command.t()}
   def create_command(opts) do
-    data = %{default_permission: true}
+    attrs = Enum.into(opts, %{})
+    body_data = %{default_permission: true}
 
-    types = %{
+    body_types = %{
       name: :string,
       description: :string,
       options: {:array, CommandOption},
       default_permission: :boolean,
-      type: :integer
+      type: CommandType
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:post, "/applications/#{bot_id()}/commands", nil, nil, body}
+    {:post, "/applications/#{application_id()}/commands", nil, nil, nil, body}
     |> request()
     |> shape(Command)
   end
@@ -4478,7 +5625,16 @@ defmodule Remedy.API do
   @unsafe {:get_command, [:command_id]}
   @spec get_command(Snowflake.c()) :: {:error, reason} | {:ok, Command.t()}
   def get_command(command_id) do
-    {:get, "/applications/#{bot_id()}/commands/#{command_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{command_id: Snowflake}
+    params_attrs = %{command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/applications/#{application_id()}/commands/:command_id", params, nil, nil, nil}
     |> request()
     |> shape(Command)
   end
@@ -4507,16 +5663,32 @@ defmodule Remedy.API do
   @unsafe {:modify_command, [:command_id, :opts]}
   @spec modify_command(Snowflake.c(), opts) :: {:error, reason} | {:ok, Command.t()}
   def modify_command(command_id, opts) do
-    data = %{}
-    types = %{name: :string, description: :string, options: {:array, CommandOption}, default_permission: :boolean}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+
+    body_types = %{
+      name: :string,
+      description: :string,
+      options: {:array, CommandOption},
+      default_permission: :boolean
+    }
+
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:patch, "/applications/#{bot_id()}/commands/#{command_id}", nil, nil, body}
+    params_data = %{}
+    params_types = %{command_id: Snowflake}
+    params_attrs = %{command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/applications/#{application_id()}/commands/:command_id", params, nil, nil, body}
     |> request()
   end
 
@@ -4533,7 +5705,16 @@ defmodule Remedy.API do
   @unsafe {:delete_command, [:command_id]}
   @spec delete_command(Snowflake.c()) :: {:error, reason} | :ok
   def delete_command(command_id) do
-    {:delete, "/applications/#{bot_id()}/commands/#{command_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{command_id: Snowflake}
+    params_attrs = %{command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/applications/#{application_id()}/commands/:command_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -4567,20 +5748,20 @@ defmodule Remedy.API do
   def cast_commands(opts)
 
   def cast_commands(opts) do
-    body = %{}
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       commands: {:array, Command}
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
     body =
-      {body, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:put, "/applications/#{bot_id()}/commands", nil, nil, body}
+    {:put, "/applications/#{application_id()}/commands", nil, nil, nil, body}
     |> request()
     |> shape(Command)
   end
@@ -4601,7 +5782,16 @@ defmodule Remedy.API do
   @unsafe {:list_commands, [:guild_id]}
   @spec list_commands(Snowflake.c()) :: {:error, reason} | {:ok, [Command.t()]}
   def list_commands(guild_id) do
-    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands", params, nil, nil, nil}
     |> request()
     |> shape(Command)
   end
@@ -4630,9 +5820,9 @@ defmodule Remedy.API do
   @unsafe {:create_command, [:guild_id, :opts]}
   @spec create_command(Snowflake.c(), opts) :: {:error, reason} | {:ok, Command.t()}
   def create_command(guild_id, opts) do
-    body = %{}
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       name: :string,
       description: :string,
       options: {:array, CommandOption},
@@ -4640,14 +5830,23 @@ defmodule Remedy.API do
       type: :integer
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
     body =
-      {body, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:post, "/applications/#{bot_id()}/guilds/#{guild_id}/commands", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/applications/#{application_id()}/guilds/:guild_id/commands", params, nil, nil, body}
     |> request()
     |> shape(Command)
   end
@@ -4671,7 +5870,16 @@ defmodule Remedy.API do
   @unsafe {:get_command, [:guild_id, :command_id]}
   @spec get_command(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, [Command.t()]}
   def get_command(guild_id, command_id) do
-    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, command_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, nil}
     |> request()
     |> shape(Command)
   end
@@ -4702,25 +5910,35 @@ defmodule Remedy.API do
   @doc method: :patch
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/:command_id"
   @unsafe {:modify_command, [:guild_id, :command_id, :opts]}
-  @spec modify_command(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Command.t()}
+  @spec modify_command(Snowflake.c(), Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, Command.t()}
   def modify_command(guild_id, command_id, opts) do
-    data = %{}
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       name: :string,
       description: :string,
       options: {:array, CommandOption},
       default_permission: :boolean
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:patch, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, command_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, body}
     |> request()
     |> shape(Command)
   end
@@ -4744,7 +5962,16 @@ defmodule Remedy.API do
   @unsafe {:delete_command, [:guild_id, :command_id]}
   @spec delete_command(Snowflake.c(), Snowflake.c()) :: {:error, reason} | :ok
   def delete_command(guild_id, command_id) do
-    {:delete, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, command_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -4774,20 +6001,29 @@ defmodule Remedy.API do
   @unsafe {:cast_commands, [:guild_id, :opts]}
   @spec cast_commands(Snowflake.c(), opts) :: {:error, reason} | :ok
   def cast_commands(guild_id, opts) do
-    body = %{}
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       commands: {:array, Command}
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
     body =
-      {body, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:put, "/applications/#{bot_id()}/guilds/#{guild_id}/commands", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands", params, nil, nil, body}
     |> request()
     |> shape(Command)
   end
@@ -4808,7 +6044,16 @@ defmodule Remedy.API do
   @unsafe {:list_command_permissions, [:guild_id]}
   @spec list_command_permissions(Snowflake.c()) :: {:error, reason} | {:ok, [CommandPermission.t()]}
   def list_command_permissions(guild_id) do
-    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/permissions", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil, nil, nil}
     |> request()
     |> shape(CommandPermission)
   end
@@ -4830,9 +6075,19 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/:command_id/permissions"
   @unsafe {:list_command_permission, [:guild_id, :command_id]}
-  @spec list_command_permissions(Snowflake.c(), Snowflake.c()) :: {:error, reason} | {:ok, CommandPermission.t()}
+  @spec list_command_permissions(Snowflake.c(), Snowflake.c()) ::
+          {:error, reason} | {:ok, CommandPermission.t()}
   def list_command_permissions(guild_id, command_id) do
-    {:get, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}/permissions", nil, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, command_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions", params, nil, nil, nil}
     |> request()
     |> shape(CommandPermission)
   end
@@ -4860,16 +6115,26 @@ defmodule Remedy.API do
   @spec cast_command_permissions(Snowflake.c(), Snowflake.c(), opts) ::
           {:error, reason} | {:ok, [CommandPermission.t()]}
   def cast_command_permissions(guild_id, command_id, opts) do
-    data = %{}
-    types = %{permissions: {:array, CommandPermission}}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{permissions: {:array, CommandPermission}}
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:put, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/#{command_id}/permissions", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, command_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, command_id: command_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions", params, nil, nil,
+     body}
     |> request()
     |> shape(CommandPermission)
   end
@@ -4896,16 +6161,25 @@ defmodule Remedy.API do
   @unsafe {:cast_command_permissions, [:guild_id, :opts]}
   @spec cast_command_permissions(Snowflake.c(), opts) :: {:error, reason} | {:ok, [CommandPermission.t()]}
   def cast_command_permissions(guild_id, opts) do
-    data = %{}
-    types = %{permissions: {:array, CommandPermission}}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    attrs = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{permissions: {:array, CommandPermission}}
+    body_keys = Map.keys(body_types)
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:put, "/applications/#{bot_id()}/guilds/#{guild_id}/commands/permissions", nil, nil, body}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil, nil, body}
     |> request()
     |> shape(CommandPermission)
   end
@@ -4942,16 +6216,25 @@ defmodule Remedy.API do
   @unsafe {:create_response, [:interaction_id, :interaction_token, :type, :data]}
   @spec create_response(Snowflake.c(), token, opts) :: {:error, reason} | {:ok, [Callback.t()]}
   def create_response(interaction_id, interaction_token, opts) do
-    data = %{}
-    types = %{type: :integer, data: CallbackData}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    body_data = %{}
+    body_types = %{type: :integer, data: CallbackData}
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
     body =
-      {data, types}
-      |> cast(params, keys)
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
 
-    {:post, "/interactions/#{interaction_id}/#{interaction_token}/callback", nil, nil, body}
+    params_data = %{}
+    params_types = %{interaction_id: Snowflake, interaction_token: :string}
+    params_attrs = %{interaction_id: interaction_id, interaction_token: interaction_token}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/interactions/:interaction_id/:interaction_token/callback", params, nil, nil, body}
     |> request()
   end
 
@@ -4961,8 +6244,6 @@ defmodule Remedy.API do
   See `get_message/4` for more information.
   """
 
-  ## {:get, "/webhooks/#{bot_id()}/#{interaction_token}/messages/@original", nil, nil, body}
-
   @doc section: :interactions
   @doc since: "0.6.0"
   @doc method: :get
@@ -4970,7 +6251,7 @@ defmodule Remedy.API do
   @unsafe {:get_response, [:interaction_token]}
   @spec get_response(token, opts) :: {:error, reason} | {:ok, [Callback.t()]}
   def get_response(interaction_token, opts \\ []) do
-    get_message(bot_id(), interaction_token, "@original", opts)
+    get_message(application_id(), interaction_token, "@original", opts)
   end
 
   @doc """
@@ -4979,8 +6260,6 @@ defmodule Remedy.API do
   See `modify_message/4` for more information.
   """
 
-  ## {:patch, "/webhooks/#{bot_id()}/#{interaction_token}/messages/@original", nil, nil, nil}
-
   @doc section: :interactions
   @doc since: "0.6.0"
   @doc method: :patch
@@ -4988,7 +6267,7 @@ defmodule Remedy.API do
   @unsafe {:modify_response, [:interaction_token, :opts]}
   @spec modify_response(token, opts) :: {:error, reason} | {:ok, [Callback.t()]}
   def modify_response(interaction_token, opts) do
-    modify_message(bot_id(), interaction_token, "@original", opts)
+    modify_message(application_id(), interaction_token, "@original", opts)
   end
 
   @doc """
@@ -5002,8 +6281,6 @@ defmodule Remedy.API do
 
   """
 
-  ## {:delete, "/webhooks/#{bot_id()}/#{interaction_token}/messages/@original"}
-
   @doc section: :interactions
   @doc since: "0.6.0"
   @doc method: :delete
@@ -5011,7 +6288,7 @@ defmodule Remedy.API do
   @unsafe {:delete_response, [:interaction_token, :opts]}
   @spec delete_response(token, opts) :: {:error, reason} | {:ok, [Message.t()]}
   def delete_response(interaction_token, opts) do
-    delete_message(bot_id(), interaction_token, "@original", opts)
+    delete_message(application_id(), interaction_token, "@original", opts)
   end
 
   @doc """
@@ -5021,8 +6298,6 @@ defmodule Remedy.API do
 
   """
 
-  ## {:post, "/webhooks/#{bot_id()}/#{interaction_token}"}
-
   @doc section: :interactions
   @doc since: "0.6.0"
   @doc method: :post
@@ -5030,7 +6305,7 @@ defmodule Remedy.API do
   @unsafe {:create_followup, [:interaction_token, :opts]}
   @spec create_followup(token, opts) :: {:error, reason} | {:ok, [Message.t()]}
   def create_followup(interaction_token, opts) do
-    execute_webhook(bot_id(), interaction_token, opts)
+    execute_webhook(application_id(), interaction_token, opts)
   end
 
   @doc """
@@ -5042,8 +6317,6 @@ defmodule Remedy.API do
 
   """
 
-  ## {:get, "/webhooks/#{bot_id()}/#{interaction_token}/messsages/#{message_id}"}
-
   @doc section: :interactions
   @doc since: "0.6.0"
   @doc method: :get
@@ -5051,7 +6324,7 @@ defmodule Remedy.API do
   @unsafe {:get_followup, [:interaction_token, :message_id]}
   @spec get_followup(token, Snowflake.c()) :: {:error, reason} | {:ok, [Message.t()]}
   def get_followup(interaction_token, message_id) do
-    get_message(bot_id(), interaction_token, message_id)
+    get_message(application_id(), interaction_token, message_id)
   end
 
   @doc """
@@ -5061,8 +6334,6 @@ defmodule Remedy.API do
 
   """
 
-  ## {:patch, "/webhooks/#{bot_id()}/#{interaction_token}/messsages/#{message_id}", nil, nil, body}
-
   @doc section: :interactions
   @doc since: "0.6.0"
   @doc method: :patch
@@ -5070,7 +6341,7 @@ defmodule Remedy.API do
   @unsafe {:modify_followup, [:interaction_token, :message_id, :opts]}
   @spec modify_followup(token, Snowflake.c(), opts) :: {:error, reason} | {:ok, [Message.t()]}
   def modify_followup(interaction_token, message_id, opts) do
-    modify_message(bot_id(), interaction_token, message_id, opts)
+    modify_message(application_id(), interaction_token, message_id, opts)
   end
 
   @doc """
@@ -5080,8 +6351,6 @@ defmodule Remedy.API do
 
   """
 
-  ## {:delete, "/webhooks/#{bot_id()}/#{interaction_token}/messsages/#{message_id}", nil, nil, nil}
-
   @doc section: :interactions
   @doc since: "0.6.0"
   @doc method: :delete
@@ -5089,7 +6358,7 @@ defmodule Remedy.API do
   @unsafe {:delete_followup, [:interaction_token, :message_id]}
   @spec delete_followup(token, Snowflake.c(), opts) :: :ok | {:error, reason}
   def delete_followup(interaction_token, message_id, opts) do
-    delete_message(bot_id(), interaction_token, message_id, opts)
+    delete_message(application_id(), interaction_token, message_id, opts)
   end
 
   #################################################################################
@@ -5110,9 +6379,8 @@ defmodule Remedy.API do
   ##  since: "0.6.0"
   @doc false
   @unsafe {:get_gateway, []}
-  @spec get_gateway :: {:error, reason} | {:ok, String.t()}
   def get_gateway do
-    {:get, "/gateway", nil, nil, nil}
+    {:get, "/gateway", nil, nil, nil, nil}
     |> request()
     |> case do
       {:ok, %{url: url}} -> {:ok, url}
@@ -5127,9 +6395,8 @@ defmodule Remedy.API do
   ##  since: "0.6.0"
   @doc false
   @unsafe {:get_gateway_bot, []}
-  @spec get_gateway_bot :: {:error, reason} | {:ok, map}
   def get_gateway_bot do
-    {:get, "/gateway/bot", nil, nil, nil}
+    {:get, "/gateway/bot", nil, nil, nil, nil}
     |> request()
   end
 
@@ -5159,14 +6426,25 @@ defmodule Remedy.API do
   @unsafe {:list_events, [:guild_id, :opts]}
   @spec list_events(Snowflake.c(), opts) :: [Event.t()]
   def list_events(guild_id, opts) do
-    data = %{with_user_count: true}
-    types = %{with_user_count: :boolean}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{with_user_count: true}
+    query_types = %{with_user_count: :boolean}
+    query_keys = Map.keys(query_types)
+    attrs = Enum.into(opts, %{})
 
-    params = {data, types} |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(attrs, query_keys)
 
-    {:get, "/guilds/#{guild_id}/scheduled_events", params, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/scheduled_events", params, query, nil, nil}
     |> request()
     |> shape(Event)
   end
@@ -5194,9 +6472,9 @@ defmodule Remedy.API do
   @unsafe {:create_event, [:guild_id, :opts]}
   @spec create_event(Snowflake.c(), opts) :: Event.t()
   def create_event(guild_id, opts) do
-    data = %{}
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       channel_id: Snowflake,
       entity_metadata: EventEntityMetadata,
       name: :string,
@@ -5207,12 +6485,23 @@ defmodule Remedy.API do
       entity_type: EventEntityType
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    body = {data, types} |> cast(params, keys)
-    reason = opts[:reason]
+    body_keys = Map.keys(body_types)
+    attrs = Enum.into(opts, %{})
 
-    {:post, "/guilds/#{guild_id}/scheduled_events", nil, reason, body}
+    body =
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
+
+    params_data = %{}
+    params_types = %{guild_id: Snowflake}
+    params_attrs = %{guild_id: guild_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:post, "/guilds/:guild_id/scheduled_events", params, nil, opts[:reason], body}
     |> request()
     |> shape(Event)
   end
@@ -5232,14 +6521,25 @@ defmodule Remedy.API do
   @unsafe {:get_event, [:guild_id, :event_id, :opts]}
   @spec get_event(Snowflake.c(), Snowflake.c(), opts) :: Event.t()
   def get_event(guild_id, event_id, opts) do
-    data = %{}
-    types = %{with_user_count: :boolean}
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
+    query_data = %{}
+    query_types = %{with_user_count: :boolean}
+    query_keys = Map.keys(query_types)
+    attrs = Enum.into(opts, %{})
 
-    params = {data, types} |> cast(params, keys)
+    query =
+      {query_data, query_types}
+      |> cast(attrs, query_keys)
 
-    {:get, "/guilds/#{guild_id}/scheduled_events/#{event_id}", params, nil, nil}
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, event_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, event_id: event_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:get, "/guilds/:guild_id/scheduled_events/:event_id", params, query, nil, nil}
     |> request()
     |> shape(Event)
   end
@@ -5272,9 +6572,10 @@ defmodule Remedy.API do
   @unsafe {:modify_event, [:guild_id, :event_id, :opts]}
   @spec modify_event(Snowflake.c(), Snowflake.c(), opts) :: Event.t()
   def modify_event(guild_id, event_id, opts) do
-    data = %{}
+    attrs = Enum.into(opts, %{})
+    body_data = %{}
 
-    types = %{
+    body_types = %{
       channel_id: Snowflake,
       entity_metadata: EntityMetadata,
       name: :string,
@@ -5285,12 +6586,22 @@ defmodule Remedy.API do
       entity_type: Snowflake
     }
 
-    keys = Map.keys(types)
-    params = Enum.into(opts, %{})
-    body = {data, types} |> cast(params, keys)
-    reason = opts[:reason]
+    body_keys = Map.keys(body_types)
 
-    {:patch, "/guilds/#{guild_id}/scheduled_events/#{event_id}", nil, reason, body}
+    body =
+      {body_data, body_types}
+      |> cast(attrs, body_keys)
+
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, event_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, event_id: event_id}
+    params_keys = Map.keys(params_types)
+
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:patch, "/guilds/:guild_id/scheduled_events/:event_id", params, nil, opts[:reason], body}
     |> request()
     |> shape(Event)
   end
@@ -5312,9 +6623,16 @@ defmodule Remedy.API do
   @unsafe {:delete_event, [:guild_id, :event_id, :opts]}
   @spec delete_event(Snowflake.c(), Snowflake.c(), opts) :: :ok | {:error, reason}
   def delete_event(guild_id, event_id, opts \\ []) do
-    reason = opts[:reason]
+    params_data = %{}
+    params_types = %{guild_id: Snowflake, event_id: Snowflake}
+    params_attrs = %{guild_id: guild_id, event_id: event_id}
+    params_keys = Map.keys(params_types)
 
-    {:delete, "/guilds/#{guild_id}/scheduled_events/#{event_id}", nil, reason, nil}
+    params =
+      {params_data, params_types}
+      |> cast(params_attrs, params_keys)
+
+    {:delete, "/guilds/:guild_id/scheduled_events/:event_id", params, nil, opts[:reason], nil}
     |> request()
   end
 
@@ -5327,40 +6645,63 @@ defmodule Remedy.API do
   ##
   ## This is automatically applied to all applicable functions.
   @doc false
-  @spec bot_id :: Snowflake.t()
   alias Remedy.Cache
-  def bot_id, do: Cache.app().id()
+  def application_id, do: Cache.app().id() |> to_string()
 
   #############################################################################
   ## Build a request
   ##
-  ## request({method, route, params, reason, body})
+  ## request({method, route, params, query, reason, body})
   ## since: "0.6.0"
-  @spec request({any, any, any, any, any}) :: {:error, any} | {:ok, any}
-  defp request({method, route, params, reason, %{valid?: true} = body}) do
-    request({method, route, params, reason, apply_changes(body)})
-  end
 
-  defp request({method, route, %Changeset{valid?: true} = params, reason, body}) do
-    request({method, route, apply_changes(params), reason, body})
-  end
+  defp request({method, route, %Changeset{valid?: true} = params, query, reason, body}),
+    do: request({method, route, apply_changes(params), query, reason, body})
 
-  defp request({_method, _route, _params, _reason, %Changeset{valid?: false} = bad_changeset}) do
-    return_errors(bad_changeset)
-  end
+  defp request({method, route, params, %Changeset{valid?: true} = query, reason, body}),
+    do: request({method, route, params, apply_changes(query), reason, body})
 
-  defp request({_method, _route, %Changeset{valid?: false} = bad_changeset, _reason, _body}) do
-    return_errors(bad_changeset)
-  end
+  defp request({method, route, params, query, %Changeset{valid?: true} = reason, body}),
+    do: request({method, route, params, query, apply_changes(reason), body})
+
+  defp request({method, route, params, query, reason, %Changeset{valid?: true} = body}),
+    do: request({method, route, params, query, reason, apply_changes(body)})
+
+  defp request({_method, _route, %Changeset{valid?: false} = params, _query, _reason, _body}),
+    do: return_errors(params)
+
+  defp request({_method, _route, _params, %Changeset{valid?: false} = query, _reason, _body}),
+    do: return_errors(query)
+
+  defp request({_method, _route, _params, _query, %Changeset{valid?: false} = reason, _body}),
+    do: return_errors(reason)
+
+  defp request({_method, _route, _params, _query, _reason, %Changeset{valid?: false} = body}),
+    do: return_errors(body)
 
   alias Remedy.Rest
 
-  defp request({method, route, params, reason, body}) do
-    Rest.request(method, route, params, reason, body)
+  defp request({method, route, params, query, reason, body}) when is_nil(reason) when is_binary(reason) do
+    Rest.request(method, route, params, query, reason, body)
   end
 
+  defp request({method, route, params, query, reason, body}),
+    do: request({method, route, params, query, parse(reason), body})
+
+  ############################################################################
+  ## Parse Audit Log Reason
+
+  defp parse(nil), do: nil
+
+  defp parse(reason) do
+    {%{}, %{reason: :string}}
+    |> cast(%{reason: reason}, [:reason])
+    |> validate_length(:reason, max: 512)
+    |> apply_changes()
+  end
+
+  ############################################################################
   ## Early return changeset errors.
-  ##
+
   defp return_errors(bad_changeset) do
     reason =
       traverse_errors(bad_changeset, fn {msg, opts} ->
@@ -5377,7 +6718,7 @@ defmodule Remedy.API do
   ##
   ## Example: You are editing a channel and have a modified channel schema
   ## from elsewhere in the application. Passing it here would change the schema
-  ## into a keyword list of options.
+  ## into a keyword list of options. Deleting the nils and not loaded
   ##
   defp filter_schema_into_opts(schema) when is_struct(schema) do
     schema
@@ -5393,16 +6734,17 @@ defmodule Remedy.API do
   defp shape({:ok, ""}), do: :ok
   defp shape({:error, _return} = error), do: error
   defp shape({:error, _return} = error, _module), do: error
-  defp shape({:ok, returns}, module) when is_list(returns), do: {:ok, for(r <- returns, into: [], do: shape(r, module))}
-  defp shape({:ok, return}, module), do: {:ok, shape(return, module)}
+
+  defp shape({:ok, returns}, module) when is_list(returns),
+    do: {:ok, for(r <- returns, into: [], do: shape(r, module))}
+
+  defp shape({:ok, return}, module),
+    do: {:ok, shape(return, module)}
 
   defp shape(%{} = params, module) when is_atom(module) do
     Morphix.stringmorphiform!(params)
     |> module.changeset()
     |> Ecto.Changeset.apply_changes()
-
-    # |> EctoMorph.deep_filter_by_schema_fields(module, filter_not_loaded: true)
-    # |> Morphix.compactiform!()
   end
 
   defp shape(params, fields) do
@@ -5423,32 +6765,36 @@ defmodule Remedy.API do
 
   ## Validate at least one of the parameters is present.
   ##
-  defp validate_at_least_one(changeset, fields, opts \\ [])
+  defp validate_at_least(changeset, fields, at_least, opts \\ [])
 
-  defp validate_at_least_one(%{params: params} = changeset, fields, opts) when is_map(params) when is_list(fields) do
-    presence_map =
-      for field <- fields,
-          into: %{},
-          do: {to_string(field), to_string(field) in Map.keys(params)}
+  defp validate_at_least(changeset, fields, at_least, opts)
+       when is_list(fields) and is_integer(at_least) do
+    present_keys = for field <- fields, into: [], do: get_field(changeset, field)
 
     validations =
       for field <- fields,
           into: [],
-          do: {field, {:at_least_one, opts}}
+          do: {field, {:at_least, opts}}
 
-    msg = String.trim_trailing("At least one of #{inspect(fields)} is required.")
+    is_are = if at_least == 1, do: "is", else: "are"
+    error_msg = String.trim_trailing("At least #{at_least} of: #{inspect(fields)} #{is_are} required.")
+
+    field_presence =
+      for field <- fields,
+          into: %{},
+          do: {to_string(field), to_string(field) in present_keys}
 
     errors =
-      presence_map
-      |> has_one_of?()
+      field_presence
+      |> Enum.filter(fn {_k, v} -> v == true end)
       |> case do
-        true ->
+        list_of_present_fields when length(list_of_present_fields) >= at_least ->
           []
 
-        false ->
-          for {k, _v} <- presence_map,
+        _ ->
+          for {k, _v} <- field_presence,
               into: [],
-              do: {String.to_atom(k), {message(opts, msg), validation: :at_least_one}}
+              do: {String.to_existing_atom(k), {message(opts, error_msg), validation: :at_least}}
       end
 
     %{
@@ -5457,13 +6803,6 @@ defmodule Remedy.API do
         errors: errors ++ changeset.errors,
         valid?: changeset.valid? and errors == []
     }
-  end
-
-  defp has_one_of?(presence_map) do
-    case Enum.filter(presence_map, fn {_k, v} -> v == true end) do
-      [] -> false
-      [_ | _] -> true
-    end
   end
 
   defp message(opts, key \\ :message, default) do

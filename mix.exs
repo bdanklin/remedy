@@ -22,7 +22,7 @@ defmodule Remedy.MixProject do
       homepage_url: @doc_url,
       description: @description,
       deps: deps() ++ dev_deps(),
-      dialyzer: [plt_add_deps: :app_tree, plt_add_apps: [:mix]],
+      dialyzer: [plt_add_deps: :app_tree, plt_add_apps: [:mix], list_unused_filters: true],
       docs: docs(),
       package: package()
     ]
@@ -30,7 +30,11 @@ defmodule Remedy.MixProject do
 
   def application do
     [
-      extra_applications: [:logger, :inets, :jason],
+      extra_applications: [
+        :logger,
+        :inets,
+        :jason
+      ],
       mod: {Remedy, []}
     ]
   end
@@ -66,30 +70,28 @@ defmodule Remedy.MixProject do
   def groups_for_modules do
     [
       # Remedy
-      REST: [
-        Remedy.API,
-        Remedy.CDN
+      # Remedy.API,
+      # Remedy.Cache
+      # Remedy.CDN
+      # Remedy.Consumer,
+      # Remedy.Dispatch,
+      Constructors: [
+        Remedy.Embed,
+        Remedy.AllowedMentions,
+        Remedy.Content,
+        Remedy.Attachment
       ],
-      Cache: [
-        Remedy.Cache
+      "Consuming Events": [
+        Remedy.Consumer,
+        Remedy.Consumer.Metadata,
+        Remedy.Consumer.Producer
       ],
       Gateway: [
-        Remedy.Consumer,
-        Remedy.Dispatch,
         Remedy.Gateway,
-        Remedy.Gateway.Session,
         Remedy.Gateway.Intents
       ],
       Voice: [
         Remedy.Voice
-      ],
-      Constructors: [
-        Remedy.Embed,
-        Remedy.AllowedMentions,
-        Remedy.Content
-      ],
-      "Schema & Fields": [
-        ~r/Remedy.Schema/
       ],
       Types: [
         Remedy.Colour,
@@ -99,13 +101,16 @@ defmodule Remedy.MixProject do
         Remedy.Snowflake,
         Remedy.Timestamp,
         Remedy.Type,
-        Remedy.URL
+        Remedy.URL,
+        Remedy.Locale
+      ],
+      "Schema & Fields": [
+        ~r/Remedy.Schema/
       ],
       Helpers: [
         Remedy.TimeHelpers,
-        Remedy.OpcodeHelpers,
-        Remedy.DateHelpers,
-        Remedy.ColourHelpers
+        Remedy.ColourHelpers,
+        Remedy.ResourceHelpers
       ]
     ]
   end
@@ -142,7 +147,7 @@ defmodule Remedy.MixProject do
       ## Data Processing
       {:broadway, "~> 1.0.2"},
       ## DB & Parsing
-      {:jason, "~> 1.2"},
+      {:jason, "~> 1.3"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
       {:mime, "~> 1.6"},
@@ -167,7 +172,7 @@ defmodule Remedy.MixProject do
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
       {:mix_unused, "~> 0.2.0", only: [:dev]},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
-      {:credo, "~> 1.5.6", only: [:dev], runtime: false},
+      {:credo, "~> 1.6.2", only: [:dev], runtime: false},
       {:doctor, "~> 0.18.0", only: [:dev]},
       {:faker, "~> 0.17", only: [:test, :dev]},
       {:benchee, "~> 1.0", only: :dev}

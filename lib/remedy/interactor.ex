@@ -1,5 +1,6 @@
 defmodule Remedy.Interactor do
   @moduledoc false
+
   ## Interactions are the method of communication between user actions and your application.
   ##
   ## This module provides conveniences around generating and matching interactions.
@@ -36,5 +37,9 @@ defmodule Remedy.Interactor do
 
   schema "interactors" do
     embeds_one :component, Component
+  end
+
+  def ingest(_interaction) do
+    :ok
   end
 end

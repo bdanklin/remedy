@@ -40,7 +40,7 @@ defmodule Remedy.Timestamp do
   use Unsafe.Generator, handler: :unwrap, docs: false
 
   @typedoc "Castable to Discord Timestamp."
-  @type c() :: t() | ISO8601.t() | DateTime.t() | integer() | String.t()
+  @type c() :: t() | DateTime.t() | integer() | String.t()
 
   @doc false
   @impl true

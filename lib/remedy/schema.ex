@@ -1,15 +1,22 @@
 defmodule Remedy.Schema do
-  @moduledoc false
+  @moduledoc """
+  The Remedy Schema are the standard objects that define the data structures and fields you expect to receive from the Discord API.
+
+  Remedy performs a number of operations on the data received from the Discord API to ensure you have the data you expect.
+  """
 
   @doc false
   def schema_alias do
     quote do
       alias Remedy.Schema.{
         Activity,
-        ActivityButtons,
+        ActivityAssets,
+        ActivityButton,
         ActivityType,
         ActivityFlags,
         ActivitySecrets,
+        ActivityTimestamps,
+        AllowedMentions,
         App,
         ApplicationFlags,
         ApplicationOwner,
@@ -61,9 +68,9 @@ defmodule Remedy.Schema do
         GuildMemberRemove,
         GuildMembersChunk,
         GuildMemberUpdate,
-        GuildMfaLevel,
+        GuildMFALevel,
         GuildFeatures,
-        GuildNsfwLevel,
+        GuildNSFWLevel,
         GuildPremiumTier,
         GuildRoleCreate,
         GuildRoleUpdate,
@@ -73,10 +80,13 @@ defmodule Remedy.Schema do
         IntegrationExpireType,
         IntegrationType,
         Interaction,
+        IntegrationAccount,
         InteractionData,
         InteractionDataOption,
         InteractionDataResolved,
         InteractionType,
+        Invite,
+        InviteTargetType,
         Member,
         Message,
         MessageActivity,
@@ -111,6 +121,7 @@ defmodule Remedy.Schema do
         UserFlags,
         Voice,
         VoiceState,
+        VoiceRegion,
         Webhook,
         WebhookType,
         WelcomeScreen,
@@ -128,8 +139,22 @@ defmodule Remedy.Schema do
     end
   end
 
-  defmacro __using__(which) when which in [:schema_alias] do
-    apply(__MODULE__, which, [])
+  defmacro __using__(:schema_alias) do
+    apply(__MODULE__, :schema_alias, [])
+  end
+
+  defmacro __using__(:cache_write_access) do
+    parent = __MODULE__
+
+    quote do
+      alias unquote(parent)
+
+      use Ecto.Schema
+      import Ecto.Changeset
+      import Ecto.Query, warn: false
+      alias Remedy.Repo
+      unquote(schema_alias())
+    end
   end
 
   defmacro __using__(_options) do
@@ -140,7 +165,7 @@ defmodule Remedy.Schema do
 
       use Ecto.Schema
       import Ecto.Changeset
-      @derive {Jason.Encoder, []}
+      #    @derive {Jason.Encoder, []}
       unquote(schema_alias())
     end
   end

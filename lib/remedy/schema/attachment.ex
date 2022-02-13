@@ -7,6 +7,7 @@ defmodule Remedy.Schema.Attachment do
   @type t :: %__MODULE__{
           id: Snowflake.t(),
           filename: String.t(),
+          description: String.t() | nil,
           content_type: String.t() | nil,
           size: integer(),
           url: URL.t(),
@@ -19,6 +20,7 @@ defmodule Remedy.Schema.Attachment do
   @primary_key {:id, Snowflake, autogenerate: false}
   embedded_schema do
     field :filename, :string
+    field :description, :string
     field :content_type, :string
     field :size, :integer
     field :url, URL
@@ -30,6 +32,6 @@ defmodule Remedy.Schema.Attachment do
 
   def changeset(model \\ %__MODULE__{}, params) do
     model
-    |> cast(params, [:filename, :content_type, :size, :url, :proxy_url, :height, :width, :ephemeral])
+    |> cast(params, [:filename, :description, :content_type, :size, :url, :proxy_url, :height, :width, :ephemeral])
   end
 end

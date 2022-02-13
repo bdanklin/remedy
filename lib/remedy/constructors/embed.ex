@@ -23,14 +23,20 @@ defmodule Remedy.Embed do
   @doc """
   Update the Author to a user or member.
   """
-  @spec put_author(Embed.t(), Member.c() | User.c()) :: Embed.t()
-  def put_author(embed, %{nick: nickname, user: user} = member) do
-    update(embed, author: %{icon_url: Member.avatar(member) || User.avatar(user), name: nickname})
+  @spec put_author(Embed.t(), Member.t()) :: Embed.t()
+  def put_author(embed, %Member{nick: nickname} = member) do
+    update(embed, author: %{icon_url: Member.avatar(member), name: nickname})
+  end
+
+  @spec put_author(Embed.t(), User.t()) :: Embed.t()
+  def put_author(embed, %User{username: nickname} = user) do
+    update(embed, author: %{icon_url: User.avatar(user), name: nickname})
   end
 
   @doc """
   Add the bot as the author.
   """
+  # Todo: Get from cache
   @spec put_author(Embed.t()) :: Embed.t()
   def put_author(embed) do
     update(embed, author: %{name: "Remedy", icon_url: "https://cdn.discordapp.com/embed/avatars/0.png"})
@@ -55,7 +61,6 @@ defmodule Remedy.Embed do
   @doc """
   append a field to the embed.
   """
-  @spec append_field(Embed.t(), String.t(), String.t(), boolean() | nil) :: Embed.t()
   def append_field(%{fields: fields} = embed, name, value, inline \\ true) do
     with %EmbedField{} = new_field <- update(%{}, %{name: name, value: value, inline: inline}, EmbedField) do
       update(embed, fields: fields ++ [new_field])
@@ -67,7 +72,6 @@ defmodule Remedy.Embed do
   @doc """
   append a field to the embed.
   """
-  @spec prepend_field(Embed.t(), String.t(), String.t(), boolean() | nil) :: Embed.t()
   def prepend_field(%{fields: fields} = embed, name, value, inline \\ true) do
     new_field = update(%{}, %{name: name, value: value, inline: inline}, EmbedField)
 
@@ -77,7 +81,6 @@ defmodule Remedy.Embed do
   @doc """
   Update the embeds timestamp.
   """
-  @spec put_timestamp(Embed.t(), ISO8601.c()) :: Embed.t()
   def put_timestamp(embed, timestamp) do
     update(embed, timestamp: timestamp)
   end

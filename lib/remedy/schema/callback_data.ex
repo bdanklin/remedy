@@ -8,7 +8,7 @@ defmodule Remedy.Schema.CallbackData do
           tts: :boolean,
           content: String.t(),
           flags: CallbackDataFlags.t(),
-          allowed_mentions: [AllowedMention.t()],
+          allowed_mentions: AllowedMentions.t(),
           embeds: [Embed.t()],
           attachments: [Attachment.t()],
           components: [Component.t()]

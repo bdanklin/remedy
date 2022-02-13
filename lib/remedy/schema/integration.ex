@@ -15,7 +15,7 @@ defmodule Remedy.Schema.Integration do
           expire_behavior: IntegrationExpireType.t(),
           expire_grace_period: integer(),
           user: User.t(),
-          account: Account.t(),
+          account: IntegrationAccount.t(),
           synced_at: ISO8601.t(),
           subscriber_count: integer(),
           revoked: boolean(),
@@ -36,7 +36,7 @@ defmodule Remedy.Schema.Integration do
     field :subscriber_count, :integer
     field :revoked, :boolean
 
-    embeds_one :account, Account
+    embeds_one :account, IntegrationAccount
     embeds_one :user, User
     embeds_one :application, App
   end

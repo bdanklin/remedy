@@ -4,6 +4,14 @@ defmodule Remedy.Schema.ComponentOption do
   """
   use Remedy.Schema
 
+  @type t :: %__MODULE__{
+          label: String.t(),
+          value: String.t(),
+          description: String.t(),
+          default: boolean(),
+          emoji: Emoji.t()
+        }
+
   embedded_schema do
     field :label, :string
     field :value, :string

@@ -13,7 +13,7 @@ defmodule Remedy.Schema.User do
           system: boolean(),
           mfa_enabled: boolean(),
           banner: String.t(),
-          accent_color: integer(),
+          accent_color: Colour.t(),
           locale: String.t(),
           verified: boolean(),
           email: String.t(),

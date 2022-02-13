@@ -3,8 +3,11 @@ defmodule Remedy.Gateway do
   Gateway Documentation
   """
   use Supervisor
-  alias Remedy.Gateway.{ATC, Buffer, Pool, Producer}
+
   require Logger
+
+  alias Remedy.Gateway.ATC
+  alias Remedy.Gateway.Pool
 
   @doc false
   def start_link(args) do
@@ -14,8 +17,6 @@ defmodule Remedy.Gateway do
   @doc false
   def init(args) do
     children = [
-      {Producer, []},
-      {Buffer, []},
       {Pool, []},
       {ATC, []},
       {Task, fn -> start_shards(args) end}

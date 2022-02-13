@@ -3,6 +3,8 @@ defmodule Remedy.ImageData do
   @max_width 128
   @max_height 128
 
+  import Remedy.ResourceHelpers
+
   @moduledoc """
   Ecto.Type implementation of Image Data.
 
@@ -21,6 +23,8 @@ defmodule Remedy.ImageData do
   #### Image URL
 
       "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+
+  > Note: Using this type with a URL will use external connections outside of the http worker pool. See the documentation on Connection limits for considerations.
 
 
   """
@@ -53,7 +57,13 @@ defmodule Remedy.ImageData do
   def cast(nil), do: {:ok, nil}
 
   def cast(value) do
-    parse_data(value)
+    cond do
+      is_url?(value) -> data_from_url(value)
+      is_path?(value) -> data_from_path(value)
+      is_imagedata?(value) -> data_from_imagedata(value)
+      true -> :error
+    end
+    |> parse_data()
     |> case do
       :error -> :error
       value -> {:ok, value}
@@ -81,26 +91,6 @@ defmodule Remedy.ImageData do
   @impl true
   def embed_as(_value), do: :dump
 
-  defp parse_data("http://" <> url) do
-    url = :erlang.binary_to_list("http://" <> url)
-
-    {:ok, {_resp, _headers, body}} = :httpc.request(url)
-
-    body
-    |> :erlang.list_to_binary()
-    |> parse_data()
-  end
-
-  defp parse_data("https://" <> url) do
-    url = :erlang.binary_to_list("https://" <> url)
-
-    {:ok, {_resp, _headers, body}} = :httpc.request(url)
-
-    body
-    |> :erlang.list_to_binary()
-    |> parse_data()
-  end
-
   defp parse_data(<<"data:image/png;base64,", _data::size(64)>> = valid_image)
        when byte_size(valid_image) >= @max_size do
     valid_image
@@ -123,19 +113,6 @@ defmodule Remedy.ImageData do
 
       {width, height, _ftype} when height <= @max_height and width <= @max_width ->
         "data:image/jpg;base64," <> Base.encode64(data)
-
-      _ ->
-        :error
-    end
-  end
-
-  defp parse_data(path) when is_binary(path) do
-    path
-    |> Path.expand()
-    |> File.read()
-    |> case do
-      {:ok, data} ->
-        parse_data(data)
 
       _ ->
         :error

@@ -12,7 +12,6 @@ defmodule Remedy.TimeHelpers do
   """
   use Unsafe.Generator, handler: :unwrap, docs: false
   use Bitwise
-  alias Remedy.{Snowflake, ISO8601}
 
   @iso8601_regex ~r/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/
 
@@ -150,7 +149,6 @@ defmodule Remedy.TimeHelpers do
 
   """
   @doc since: "0.6.8"
-  @spec to_iso8601(any) :: ISO8601.t() | nil | :error
 
   def to_iso8601(value)
   def to_iso8601(nil), do: nil
@@ -211,7 +209,6 @@ defmodule Remedy.TimeHelpers do
       :error
 
   """
-  @spec to_unixtime(any) :: Timestamp.t() | nil | :error
   def to_unixtime(nil), do: nil
 
   def to_unixtime(value) do
@@ -234,7 +231,6 @@ defmodule Remedy.TimeHelpers do
   #############################################################################
   ####### Snowflake ## Snowflake ## Snowflake ## Snowflake ## Snowflake ####### #############################################################################
 
-  @spec to_snowflake(any) :: Snowflake.t() | :error
   def to_snowflake(value) when is_datetime(value) do
     (DateTime.to_unix(value, :millisecond) - discord_epoch()) <<< 22
   end

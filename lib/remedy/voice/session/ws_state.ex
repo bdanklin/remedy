@@ -1,4 +1,4 @@
-defmodule Remedy.Voice.Session.State do
+defmodule Remedy.Voice.Session.WSState do
   @moduledoc false
 
   defstruct conn: nil,
@@ -19,6 +19,7 @@ defmodule Remedy.Voice.Session.State do
             deaf: nil,
             speaking: nil,
             ## Heartbeat
+            heartbeat: 0,
             heartbeat_timer: nil,
             heartbeat_ack: nil,
             heartbeat_interval: nil,

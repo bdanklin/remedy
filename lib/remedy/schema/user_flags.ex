@@ -15,5 +15,7 @@ defmodule Remedy.Schema.UserFlags do
             VERIFIED_BOT: 1 <<< 16,
             VERIFIED_DEVELOPER: 1 <<< 17,
             CERTIFIED_MODERATOR: 1 <<< 18,
-            BOT_HTTP_INTERACTIONS: 1 <<< 19
+            BOT_HTTP_INTERACTIONS: 1 <<< 19,
+            # SPAMMER UNDOCUMENTED: https://discord.com/channels/81384788765712384/381887113391505410/936018294916399134
+            SPAMMER: 1 <<< 20
 end

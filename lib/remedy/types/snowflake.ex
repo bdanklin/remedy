@@ -40,6 +40,8 @@ defmodule Remedy.Snowflake do
   use Ecto.Type
   use Unsafe.Generator, handler: :unwrap, docs: false
 
+  alias Remedy.ISO8601
+
   @typedoc """
   A Discord Snowflake Type.
   """
@@ -61,6 +63,9 @@ defmodule Remedy.Snowflake do
   @unsafe {:cast, [:value]}
   def cast(value)
   def cast(nil), do: {:ok, nil}
+  ## @me and @original are special cases for the API module.
+  def cast("@me"), do: {:ok, "@me"}
+  def cast("@original"), do: {:ok, "@original"}
   def cast(value), do: to_snowflake(value) |> casted()
 
   defp casted(:error), do: :error

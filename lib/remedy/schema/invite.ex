@@ -5,7 +5,7 @@ defmodule Remedy.Schema.Invite do
   use Remedy.Schema
 
   @type t :: %__MODULE__{
-          target_type: integer(),
+          target_type: InviteTargetType.t(),
           approximate_presence_count: integer(),
           approximate_member_count: integer(),
           expires_at: ISO8601.t(),
@@ -22,7 +22,7 @@ defmodule Remedy.Schema.Invite do
 
   @primary_key {:code, :string, autogenerate: false}
   schema "invites" do
-    field :target_type, :integer
+    field :target_type, InviteTargetType
     field :approximate_presence_count, :integer
     field :approximate_member_count, :integer
     field :expires_at, ISO8601

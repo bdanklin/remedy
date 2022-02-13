@@ -23,9 +23,9 @@ defmodule Remedy.Schema.Guild do
           max_presences: integer(),
           max_video_channel_users: integer(),
           member_count: integer(),
-          mfa_level: GuildMfaLevel.t(),
+          mfa_level: GuildMFALevel.t(),
           name: String.t(),
-          nsfw_level: GuildNsfwLevel.t(),
+          nsfw_level: GuildNSFWLevel.t(),
           preferred_locale: String.t(),
           premium_subscription_count: integer(),
           premium_tier: GuildPremiumTier.t(),
@@ -75,9 +75,9 @@ defmodule Remedy.Schema.Guild do
     field :max_presences, :integer
     field :max_video_channel_users, :integer
     field :member_count, :integer
-    field :mfa_level, GuildMfaLevel
+    field :mfa_level, GuildMFALevel
     field :name, :string
-    field :nsfw_level, GuildNsfwLevel
+    field :nsfw_level, GuildNSFWLevel
     field :preferred_locale, :string
     field :premium_subscription_count, :integer
     field :premium_tier, GuildPremiumTier

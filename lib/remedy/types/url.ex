@@ -1,8 +1,8 @@
 defmodule Remedy.URL do
+  import Remedy.ResourceHelpers, only: [is_url?: 1]
+
   @moduledoc """
   `Ecto.Type` implementation for URLs.
-
-  Validates every url using regex.
   """
   use Ecto.Type
 
@@ -27,29 +27,21 @@ defmodule Remedy.URL do
   def cast(value)
 
   def cast(value) do
-    value
-    |> validate_url()
-    |> case do
-      true -> {:ok, clean_string(value)}
-      false -> :error
+    if is_url?(value) do
+      {:ok, String.trim(value)}
+    else
+      :error
     end
   end
 
-  @spec dump(any) :: {:ok, t}
   @doc false
   @impl true
   def dump(nil), do: {:ok, nil}
+  def dump(value), do: {:ok, value}
 
-  def dump(value) do
-    {:ok, clean_string(value)}
-  end
-
-  @spec load(any) :: {:ok, t}
   @doc false
   @impl true
-  def load(value) do
-    {:ok, value}
-  end
+  def load(value), do: {:ok, value}
 
   @doc false
   @impl true
@@ -58,15 +50,4 @@ defmodule Remedy.URL do
   @doc false
   @impl true
   def equal?(term1, term2), do: term1 == term2
-
-  defp validate_url(url) do
-    regex =
-      ~r/(?:https?|ftp):\/\/(www\\.)?[-a-zA-Z0-9@:%._\+~#=]{2,255}\.[a-z]{2,9}\b([-a-zA-Z0-9@:%_+.,~#?!&>\/\/=]*)$/
-
-    Regex.match?(regex, url)
-  end
-
-  defp clean_string(value) do
-    value |> to_string() |> String.trim()
-  end
 end

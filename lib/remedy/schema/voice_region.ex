@@ -7,7 +7,6 @@ defmodule Remedy.Schema.VoiceRegion do
   @type t :: %__MODULE__{
           id: Snowflake.t(),
           name: String.t(),
-          vip: boolean(),
           optimal: boolean(),
           deprecated: boolean(),
           custom: boolean()
@@ -16,7 +15,6 @@ defmodule Remedy.Schema.VoiceRegion do
   @primary_key {:id, :string, autogenerate: false}
   embedded_schema do
     field :name, :string
-    field :vip, :boolean
     field :optimal, :boolean
     field :deprecated, :boolean
     field :custom, :boolean

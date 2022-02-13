@@ -1,7 +1,7 @@
 defmodule Remedy do
   ## FFMPEG
-  @ffmpeg_url "https://github.com/FFmpeg/FFmpeg/releases/download/:version/ffmpeg-3.0.tar.gz"
-  @ffmpeg_ver "n3.0"
+  # @ffmpeg_url "https://github.com/FFmpeg/FFmpeg/releases/download/:version/ffmpeg-3.0.tar.gz"
+  # @ffmpeg_ver "n3.0"
 
   @moduledoc """
   This is the documentation for the Remedy library.
@@ -50,40 +50,26 @@ defmodule Remedy do
   use Application
   require Logger
 
-  alias Remedy.{Rest, Repo, Gateway}
-  alias Remedy.Gateway.Intents
+  alias Remedy.{
+    Buffer,
+    Consumer,
+    Gateway,
+    Rest,
+    Repo,
+    Voice
+  }
 
   @env Mix.env()
-
-  @args [
-    :token,
-    :min_workers,
-    :max_workers,
-    :shards,
-    :intents
-  ]
-
+  @args [:token, :min_workers, :max_workers, :shards, :intents, :env]
   @doc false
   def start(_type, args) do
-    with :ok <- check_token(),
-         :ok <- check_shards(),
-         :ok <- check_intents() do
-      args = determine(args, @args)
+    with :ok <- check_token(), :ok <- check_shards(), :ok <- check_intents() do
+      args = for key <- @args, into: [], do: {key, determine(args, key)}
 
-      children =
-        [
-          {Rest, args},
-          {Repo, []},
-          {Gateway, args}
-          #       {Voice, []}
-        ] ++ extra_children()
-
-      Supervisor.start_link(children, strategy: :one_for_one)
+      [Rest, Repo, Buffer, Consumer, Gateway, Voice]
+      |> Enum.reduce([], fn module, acc -> [{module, args} | acc] end)
+      |> Supervisor.start_link(strategy: :one_for_one)
     end
-  end
-
-  defp determine(args, keys) when is_list(keys) do
-    for key <- keys, into: [], do: {key, determine(args, key)}
   end
 
   defp determine(args, key) do
@@ -93,10 +79,8 @@ defmodule Remedy do
     end
   end
 
-  @dialyzer {:no_match, {:extra_children, 1}}
-  def extra_children, do: extra_children(@env)
-  defp extra_children(:dev), do: []
-  defp extra_children(_), do: []
+  @doc false
+  def env, do: @env
 
   @doc "Retreive the bot token."
   @spec token :: any
@@ -129,13 +113,10 @@ defmodule Remedy do
   defp check_shards("auto"), do: :ok
   defp check_shards(:auto), do: :ok
   defp check_shards(nil), do: Logger.warn("SHARDS NOT CONFIGURED, USING FALLBACK: :auto")
+  defp check_shards(shards) when is_integer(shards), do: Logger.warn("USING CONFIGURED SHARDS: #{shards}")
+  defp check_shards(_invalid), do: Logger.warn("INVALID SHARD CONFIGURATION, USING FALLBACK: :auto")
 
-  defp check_shards(shards) when is_integer(shards),
-    do: Logger.warn("USING CONFIGURED SHARDS: #{shards}")
-
-  defp check_shards(_invalid),
-    do: Logger.warn("INVALID SHARD CONFIGURATION, USING FALLBACK: :auto")
-
+  alias Remedy.Gateway.Intents
   @doc "Retreive the configured gateway intents."
   @dialyzer {:no_match, {:intents, 1}}
   @spec intents :: integer()
@@ -154,15 +135,9 @@ defmodule Remedy do
   @dialyzer {:no_match, {:check_intents, 1}}
   defp check_intents, do: check_intents(@env)
   defp check_intents(:dev), do: check_intents(System.get_env("REMEDY_GATEWAY_INTENTS"))
-
-  defp check_intents(:prod),
-    do: check_intents(Application.get_env(:remedy, :gateway_intents, false))
-
+  defp check_intents(:prod), do: check_intents(Application.get_env(:remedy, :gateway_intents, false))
   defp check_intents(false), do: Logger.warn("INTENTS NOT CONFIGURED, USING FALLBACK: :auto")
-
-  defp check_intents(:error),
-    do: Logger.warn("INVALID INTENTS CONFIGURATION, USING FALLBACK: :auto")
-
+  defp check_intents(:error), do: Logger.warn("INVALID INTENTS CONFIGURATION, USING FALLBACK: :auto")
   defp check_intents("auto"), do: :ok
   defp check_intents(:auto), do: :ok
   defp check_intents({:ok, _intents}), do: :ok
@@ -186,7 +161,8 @@ defmodule Remedy do
 
   @doc "Retreive the current system architecture."
   @spec system_architecture :: binary
-  def system_architecture, do: "#{:erlang.system_info(:system_architecture)}"
+  def system_architecture,
+    do: "#{:erlang.system_info(:system_architecture)}"
 
   defp default_intents do
     [
@@ -207,8 +183,5 @@ defmodule Remedy do
       :GUILD_SCHEDULED_EVENTS
     ]
     |> Intents.to_integer()
-  end
-
-  defp install_ffmpeg do
   end
 end

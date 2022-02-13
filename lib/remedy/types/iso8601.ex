@@ -38,7 +38,7 @@ defmodule Remedy.ISO8601 do
   @type t() :: String.t()
 
   @typedoc "Castable to ISO8601 Type."
-  @type c() :: DateTime.t() | String.t() | ISO8601.t() | nil
+  @type c() :: DateTime.t() | String.t() | t() | nil
 
   @doc false
   @impl true

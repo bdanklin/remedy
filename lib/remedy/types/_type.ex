@@ -19,8 +19,8 @@ defmodule Remedy.Type do
   - `Remedy.Schema.EventStatus`
   - `Remedy.Schema.GuildDefaultMessageNotification`
   - `Remedy.Schema.GuildExplicitContentFilter`
-  - `Remedy.Schema.GuildMfaLevel`
-  - `Remedy.Schema.GuildNsfwLevel`
+  - `Remedy.Schema.GuildMFALevel`
+  - `Remedy.Schema.GuildNSFWLevel`
   - `Remedy.Schema.GuildPremiumTier`
   - `Remedy.Schema.GuildVerificationLevel`
   - `Remedy.Schema.IntegrationExpireType`

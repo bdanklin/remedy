@@ -6,7 +6,7 @@ defmodule Remedy.Voice.Session do
   alias Remedy.Websocket.Command
   alias Remedy.Websocket.Event
   alias Remedy.Websocket.Pacemaker
-  alias Remedy.Voice.Session.State
+  alias Remedy.Voice.Session.WSState
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts, name: :"SHARD_#{opts[:shard]}")
@@ -17,22 +17,22 @@ defmodule Remedy.Voice.Session do
 
     {:ok,
      opts
-     |> State.new(), {:continue, :establish_connection}}
+     |> WSState.new(), {:continue, :establish_connection}}
   end
 
   def handle_continue(:establish_connection, socket) do
     {:noreply,
      socket
-     |> State.open_websocket()}
+     |> WSState.open_websocket()}
   end
 
   ## Internal Heartbeat Timer Finished before Gateway ACK / RECONNECT
-  def handle_info(:heartbeat, %State{heartbeat_ack: false} = socket) do
+  def handle_info(:heartbeat, %WSState{heartbeat_ack: false} = socket) do
     Logger.warn("NO RESPONSE TO HEARTBEAT")
 
     {:noreply,
      socket
-     |> State.close_websocket()
+     |> WSState.close_websocket()
      |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
 
@@ -94,7 +94,7 @@ defmodule Remedy.Voice.Session do
   def handle_info({:gun_up, _worker, _proto}, socket) do
     {:noreply,
      socket
-     |> State.close_websocket()
+     |> WSState.close_websocket()
      |> Pacemaker.stop(), {:continue, :establish_connection}}
   end
 end

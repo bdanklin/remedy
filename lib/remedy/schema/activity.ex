@@ -14,7 +14,7 @@ defmodule Remedy.Schema.Activity do
           details: String.t() | nil,
           state: String.t() | nil,
           emoji: Emoji.t() | nil,
-          party: ActivityParty.t() | nil,
+          #  party: ActivityParty.t() | nil,
           assets: ActivityAssets.t() | nil,
           secrets: ActivitySecrets.t() | nil,
           instance: boolean() | nil,
@@ -35,7 +35,7 @@ defmodule Remedy.Schema.Activity do
     field :flags, ActivityFlags
     embeds_one :timestamps, ActivityTimestamps
     embeds_one :emoji, Emoji
-    embeds_one :party, ActivityParty
+    #   embeds_one :party, ActivityParty
     embeds_one :assets, ActivityAssets
     embeds_one :secrets, ActivitySecrets
     embeds_many :buttons, ActivityButton

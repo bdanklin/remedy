@@ -1,6 +1,6 @@
 defmodule Remedy.ColourHelpers do
   @moduledoc """
-  This module provides a number of helper functions for working with colours.
+  Colour Helper Functions.
 
   """
 

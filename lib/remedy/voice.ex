@@ -1,7 +1,6 @@
 defmodule Remedy.Voice do
   @moduledoc """
   Voice entry point.
-
   """
   use Supervisor
   alias Remedy.Voice.{Pool, Stagehand}

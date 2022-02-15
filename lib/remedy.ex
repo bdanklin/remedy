@@ -49,26 +49,28 @@ defmodule Remedy do
   """
   use Application
   require Logger
-
-  alias Remedy.{
-    Buffer,
-    Consumer,
-    Gateway,
-    Rest,
-    Repo,
-    Voice
-  }
+  alias Remedy.{Consumer, Dispatch, Gateway, Rest, Repo, Voice}
 
   @env Mix.env()
   @args [:token, :min_workers, :max_workers, :shards, :intents, :env]
+
   @doc false
   def start(_type, args) do
-    with :ok <- check_token(), :ok <- check_shards(), :ok <- check_intents() do
+    with :ok <- check_token(),
+         :ok <- check_shards(),
+         :ok <- check_intents() do
       args = for key <- @args, into: [], do: {key, determine(args, key)}
 
-      [Rest, Repo, Buffer, Consumer, Gateway, Voice]
-      |> Enum.reduce([], fn module, acc -> [{module, args} | acc] end)
-      |> Supervisor.start_link(strategy: :one_for_one)
+      children = [
+        {Rest, args},
+        {Repo, args},
+        {Consumer, args},
+        {Dispatch, args},
+        {Gateway, args},
+        {Voice, args}
+      ]
+
+      Supervisor.start_link(children, strategy: :one_for_one)
     end
   end
 
@@ -174,6 +176,7 @@ defmodule Remedy do
       :GUILD_WEBHOOKS,
       :GUILD_INVITES,
       :GUILD_VOICE_STATES,
+      :GUILD_PRESENCES,
       :GUILD_MESSAGES,
       :GUILD_MESSAGE_REACTIONS,
       :GUILD_MESSAGE_TYPING,

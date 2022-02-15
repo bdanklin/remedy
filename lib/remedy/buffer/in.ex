@@ -1,6 +1,5 @@
-defmodule Remedy.Buffer.Producer do
+defmodule Remedy.Buffer do
   @moduledoc false
-  require Logger
   ## The buffer will store events from all gateway shards with the ability to
   ## resend events that are not ack'd for any reason.
   ##
@@ -9,14 +8,9 @@ defmodule Remedy.Buffer.Producer do
   ## rebuilds. Allowing the pipelines to be rebuilt while the application is
   ## running without loss of data.
 
-  @behaviour Broadway.Acknowledger
-  @impl Broadway.Acknowledger
-  def ack(ack_ref, successful, failed) do
-    GenStage.cast(__MODULE__, {ack_ref, successful, failed})
-  end
-
+  require Logger
   use GenStage
-  alias Remedy.Buffer.Producer.State
+  alias Remedy.Dispatch.Buffer.State
 
   @doc false
   def ingest(event) do
@@ -33,27 +27,31 @@ defmodule Remedy.Buffer.Producer do
   end
 
   @impl GenStage
-  @spec handle_cast({:ingest, {any, any, any}}, %State{}) :: {:noreply, list, %State{}, :hibernate}
+
   def handle_cast({:ingest, event}, state) do
+    Logger.warn("BUFFERING EVENT #{inspect(event)}")
+
     state
     |> State.handle_ingest(event)
   end
 
-  @spec handle_cast({any, any, any}, %State{}) :: {:noreply, list, %State{}, :hibernate}
   def handle_cast({_ack_ref, _successful, _failed} = ack, state) do
     state
     |> State.handle_ack(ack)
   end
 
   @impl GenStage
-  @spec handle_demand(any, %State{}) :: {:noreply, list, %State{}, :hibernate}
   def handle_demand(incoming_demand, state) do
+    Logger.error("INCOMING_DEMAND_TO_BUFFER #{incoming_demand}")
+
     state
     |> State.handle_demand(incoming_demand)
   end
 
-  # @impl GenStage
-  # def handle_info({:retry, hash}, state) do
-  #   State.handle_retry(state, hash)
-  # end
+  alias Broadway.Acknowledger
+  @behaviour Acknowledger
+  @impl Acknowledger
+  def ack(ack_ref, successful, failed) do
+    GenStage.cast(__MODULE__, {ack_ref, successful, failed})
+  end
 end

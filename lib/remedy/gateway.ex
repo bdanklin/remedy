@@ -1,6 +1,7 @@
 defmodule Remedy.Gateway do
   @moduledoc """
   Gateway Documentation
+
   """
   use Supervisor
 
@@ -12,6 +13,12 @@ defmodule Remedy.Gateway do
   @doc false
   def start_link(args) do
     Supervisor.start_link(__MODULE__, args, name: __MODULE__)
+  end
+
+  @doc false
+  def child_spec(init_arg) do
+    default = %{id: __MODULE__, start: {__MODULE__, :start_link, [init_arg]}, type: :supervisor}
+    Supervisor.child_spec(default, [])
   end
 
   @doc false

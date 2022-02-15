@@ -1,6 +1,6 @@
-defmodule Remedy.Buffer.Producer.State do
+defmodule Remedy.Dispatch.Buffer.State do
   @moduledoc false
-  ##
+  #############################################################################
   ## events: any events to be re sent
   ## demand: any pending demand (probably always zero)
   ## hash: a hash array mapped trie (probably) that has keys of
@@ -10,28 +10,25 @@ defmodule Remedy.Buffer.Producer.State do
   ## Events that arrive are checked against the hash to see if they are already
   ## in the pipeline. This stops us from processing the same event twice in the
   ## case of starting overlapping shards before the old shards are closed.
-  defstruct queue: :queue.new(), hash: %{}
+  defstruct queue: :queue.new(),
+            hash: %{},
+            demand: 0
 
   def handle_ingest(%__MODULE__{hash: hash, queue: queue} = state, {event, payload, socket}) do
-    key = :erlang.term_to_binary({event, payload})
+    if Map.has_key?(hash, {event, payload}) do
+      state
+    else
+      message = %Broadway.Message{
+        acknowledger: {
+          Remedy.Buffer.Producer,
+          {socket.shard, socket.heartbeat, socket.payload_sequence},
+          data: payload
+        },
+        metadata: %{event: event, socket: socket},
+        data: payload
+      }
 
-    Map.has_key?(hash, key)
-    |> case do
-      true ->
-        state
-
-      false ->
-        message = %Broadway.Message{
-          acknowledger: {Buffer, ack_ref: {socket.shard, socket.heartbeat, socket.payload_sequence}, data: payload},
-          data: %{
-            hash_key: key,
-            incoming: {event, payload, socket},
-            payload: payload,
-            outgoing: []
-          }
-        }
-
-        %__MODULE__{state | hash: Map.put_new(hash, key, message), queue: :queue.in(message, queue)}
+      %__MODULE__{state | hash: Map.put_new(hash, {event, payload}, socket), queue: :queue.in(message, queue)}
     end
     |> dispatch_events()
   end
@@ -71,17 +68,17 @@ defmodule Remedy.Buffer.Producer.State do
 
   defp dispatch_events(state, events \\ [])
 
-  defp dispatch_events(%__MODULE__{queue: {[], []}} = state, events) do
-    {:noreply, Enum.reverse(events), state, :hibernate}
+  defp dispatch_events(%__MODULE__{demand: 0} = state, events) do
+    {:noreply, Enum.reverse(events), state}
   end
 
-  defp dispatch_events(%__MODULE__{queue: queue} = state, events) do
+  defp dispatch_events(%__MODULE__{queue: queue, demand: demand} = state, events) do
     case :queue.out(queue) do
       {{:value, event}, queue} ->
-        %__MODULE__{state | queue: queue}
+        %__MODULE__{state | queue: queue, demand: demand - 1}
         |> dispatch_events([event | events])
 
-      _ ->
+      {:empty, _queue} ->
         state
         |> dispatch_events(events)
     end

@@ -89,7 +89,7 @@ defmodule Remedy.API do
   ###
   ### Permissions / Events / Options / Examples / Helpers
   ###
-  #################################################################
+  #############################################################################
 
   #################################################################
   ### ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ###
@@ -397,8 +397,6 @@ defmodule Remedy.API do
 
   @doc """
   Retrieves a channel's messages.
-
-  > Note: Be sure to check out the `Snowflake` documentation for more information on casting snowflakes -  tldr: Any pseudo-timestamp can be cast to this value. Has a very small chance of producing undesirable results.
 
   ## Options
 
@@ -6678,14 +6676,16 @@ defmodule Remedy.API do
   defp request({_method, _route, _params, _query, _reason, %Changeset{valid?: false} = body}),
     do: return_errors(body)
 
-  alias Remedy.Rest
-
-  defp request({method, route, params, query, reason, body}) when is_nil(reason) when is_binary(reason) do
-    Rest.request(method, route, params, query, reason, body)
+  defp request({method, route, params, query, reason, body})
+       when not is_nil(reason)
+       when not is_binary(reason) do
+    request({method, route, params, query, parse(reason), body})
   end
 
+  alias Remedy.Rest
+
   defp request({method, route, params, query, reason, body}),
-    do: request({method, route, params, query, parse(reason), body})
+    do: Rest.request(method, route, params, query, reason, body)
 
   ############################################################################
   ## Parse Audit Log Reason
@@ -6754,15 +6754,13 @@ defmodule Remedy.API do
   end
 
   #############################################################################
-  ## Unwraps the return tuple
-  ##
-  ## For @unsafe {:func, [args]} to be delegated to
+  ## For @unsafe {:func, [args]}
   defp unwrap({:ok, body}), do: body
   defp unwrap({:error, reason}), do: raise("#{inspect(reason)}")
 
   #############################################################################
   ## Custom Ecto Validation
-
+  ##
   ## Validate at least one of the parameters is present.
   ##
   defp validate_at_least(changeset, fields, at_least, opts \\ [])

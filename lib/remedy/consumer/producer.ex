@@ -27,6 +27,7 @@ defmodule Remedy.Consumer.Producer do
   @impl GenStage
   @spec handle_cast({:ingest, any}, any) :: {:noreply, [...], any, :hibernate}
   def handle_cast({:ingest, event}, state) do
+    Logger.error("CONSUMER_PRODUCER_INGESTED_EVENT")
     {:noreply, [event], state, :hibernate}
   end
 

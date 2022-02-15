@@ -11,7 +11,7 @@ defmodule Remedy.Rest.Request do
   #   "/gateway",
   #   "/applications/detectable"
   # ]
-  @api_version "/api/v9"
+  @api_version "/api/v10"
 
   @type method :: :get | :post | :put | :patch | :delete
   @type route :: String.t()

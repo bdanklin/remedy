@@ -1,6 +1,6 @@
 defmodule Remedy.Dispatch do
   @moduledoc false
-  alias Remedy.Dispatch.Processor
+  alias Remedy.Dispatch.{Buffer, BufferOut, Pipeline}
 
   use Supervisor
 
@@ -10,9 +10,11 @@ defmodule Remedy.Dispatch do
 
   def init(_args) do
     children = [
-      {Processor, []}
+      {Buffer, []},
+      {Pipeline, []},
+      {BufferOut, []}
     ]
 
-    Supervisor.init(children, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :one_for_one, max_restarts: 1000, max_seconds: 60)
   end
 end

@@ -373,9 +373,12 @@ defmodule Remedy.Consumer do
   end
 
   @doc false
-  def init(args) do
-    lumberjack = if Keyword.get(args, :env) == :dev, do: [{LumberJack, []}], else: []
-    children = [Producer] ++ lumberjack
+  def init(_args) do
+    children = [
+      {Producer, []},
+      {LumberJack, []}
+    ]
+
     Supervisor.init(children, strategy: :one_for_one)
   end
 

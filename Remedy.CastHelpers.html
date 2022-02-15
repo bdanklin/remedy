@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Schema.EventEntityMetadata — Remedy v0.6.9</title>
+    <title>Remedy.CastHelpers — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
     <script src="dist/sidebar_items-521ea1c43d.js"></script>
@@ -84,10 +84,10 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Schema.EventEntityMetadata</span> 
+  <span translate="no">Remedy.CastHelpers</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/event_entity_metadata.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,7 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Event Entity Metadata Object</p>
+<p>Functions for helping with struct casting etc.</p>
   </section>
 
 
@@ -110,16 +110,26 @@ Remedy
       Summary
     </h1>
 
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:t/0" translate="no">t()</a>
+          <a href="#deep_string_key/1" translate="no">deep_string_key(item)</a>
 
         </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#deep_struct_blaster/1" translate="no">deep_struct_blaster(map)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Blast a term to prepare for sending over websocket.</p></div>
 
       </div>
 
@@ -128,26 +138,26 @@ Remedy
   </section>
 
 
-  <section id="types" class="details-list">
+  <section id="functions" class="details-list">
     <h1 class="section-heading">
-      <a class="hover-link" href="#types">
+      <a class="hover-link" href="#functions">
         <span class="icon-link" aria-hidden="true"></span>
         <span class="sr-only">Link to this section</span>
       </a>
-Types
+Functions
     </h1>
-    <div class="types-list">
-<section class="detail" id="t:t/0">
+    <div class="functions-list">
+<section class="detail" id="deep_string_key/1">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#deep_string_key/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <h1 class="signature" translate="no">deep_string_key(item)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/event_entity_metadata.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L17" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -157,17 +167,36 @@ Types
 
   <section class="docstring">
 
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">t() :: %Remedy.Schema.EventEntityMetadata{location: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
-
-      </div>
 
 
 
 
+  </section>
+</section>
+<section class="detail" id="deep_struct_blaster/1">
 
+  <div class="detail-header">
+    <a href="#deep_struct_blaster/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">deep_struct_blaster(map)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L13" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+<p>Blast a term to prepare for sending over websocket.</p><ol><li>All structs will be converted to maps</li><li>All keys for Maps or Structs will be converted to strings.</li></ol>
   </section>
 </section>
 
@@ -181,7 +210,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/event_entity_metadata.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/helpers/cast_helpers.ex">(current file)</a>
 
         </p>
 

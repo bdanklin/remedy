@@ -4,6 +4,7 @@ Remedy.AllowedMentions.html
 Remedy.Attachment.html
 Remedy.CDN.html
 Remedy.Cache.html
+Remedy.CastHelpers.html
 Remedy.Colour.html
 Remedy.ColourHelpers.html
 Remedy.Consumer.Metadata.html
@@ -142,8 +143,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-d67bec16fc.js
-dist/sidebar_items-ea5d1a30c1.js
+dist/search_items-e16b83f4b0.js
+dist/sidebar_items-521ea1c43d.js
 getting_started.html
 index.html
 introduction.html

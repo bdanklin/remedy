@@ -10,7 +10,7 @@
     <title>Remedy.Schema.Permission — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-ea5d1a30c1.js"></script>
+    <script src="dist/sidebar_items-521ea1c43d.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -101,13 +101,26 @@ Remedy
   <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">189389735984</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b110100100100100000101001100000101</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6103989303-1">[</span><span class="s">&quot;MANAGE_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_ROLES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MOVE_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PRIORITY_SPEAKER&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;SEND_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;STREAM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_EXTERNAL_STICKERS&quot;</span><span class="p" data-group-id="6103989303-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="7458719670-1">[</span><span class="ss">:BAN_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:DEAFEN_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:MANAGE_ROLES</span><span class="p" data-group-id="7458719670-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2454239579-1">%{</span><span class="w">
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">34096384</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1100010001100010000000100000001000100</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5103193497-1">[</span><span class="s">&quot;ADMINISTRATOR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ATTACH_FILES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CONNECT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CREATE_INSTANT_INVITE&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MANAGE_NICKNAMES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_THREADS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;REQUEST_TO_SPEAK&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SPEAK&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;STREAM&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;USE_APPLICATION_COMMANDS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_EXTERNAL_EMOJIS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_EXTERNAL_STICKERS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;USE_PRIVATE_THREADS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIEW_GUILD_INSIGHTS&quot;</span><span class="p" data-group-id="5103193497-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2599820545-1">[</span><span class="ss">:ADD_REACTIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:DEAFEN_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:KICK_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:MENTION_EVERYONE</span><span class="p">,</span><span class="w"> </span><span class="ss">:USE_VAD</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:VIEW_GUILD_INSIGHTS</span><span class="p" data-group-id="2599820545-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2478929618-1">%{</span><span class="w">
+  </span><span class="ss">ATTACH_FILES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">CHANGE_NICKNAME</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">CONNECT</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">DEAFEN_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">EMBED_LINKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">MANAGE_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">MENTION_EVERYONE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">VIEW_AUDIT_LOG</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">VIEW_GUILD_INSIGHTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="2454239579-1">}</span></code></pre>
+  </span><span class="ss">MANAGE_THREADS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_WEBHOOKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">READ_MESSAGE_HISTORY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">REQUEST_TO_SPEAK</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SPEAK</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_EXTERNAL_EMOJIS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_PUBLIC_THREADS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VIEW_AUDIT_LOG</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="2478929618-1">}</span></code></pre>
   </section>
 
 
@@ -236,43 +249,43 @@ Types
       <div class="specs">
 
           <pre translate="no">f() ::
-  :STREAM
-  | :USE_EXTERNAL_STICKERS
-  | :MOVE_MEMBERS
-  | :ADMINISTRATOR
-  | :MANAGE_GUILD
-  | :CONNECT
-  | :SEND_TTS_MESSAGES
-  | :SPEAK
-  | :MANAGE_THREADS
-  | :VIEW_AUDIT_LOG
-  | :MUTE_MEMBERS
-  | :MANAGE_NICKNAMES
-  | :MANAGE_WEBHOOKS
-  | :PRIORITY_SPEAKER
-  | :CHANGE_NICKNAME
-  | :USE_EXTERNAL_EMOJIS
-  | :USE_PUBLIC_THREADS
-  | :ADD_REACTIONS
-  | :USE_VAD
-  | :EMBED_LINKS
-  | :ATTACH_FILES
-  | :BAN_MEMBERS
-  | :MANAGE_MESSAGES
+  :SEND_TTS_MESSAGES
   | :MENTION_EVERYONE
-  | :USE_APPLICATION_COMMANDS
-  | :DEAFEN_MEMBERS
-  | :REQUEST_TO_SPEAK
-  | :MANAGE_EMOJIS_AND_STICKERS
-  | :MANAGE_CHANNELS
-  | :SEND_MESSAGES
-  | :READ_MESSAGE_HISTORY
-  | :VIEW_CHANNEL
-  | :CREATE_INSTANT_INVITE
-  | :USE_PRIVATE_THREADS
-  | :VIEW_GUILD_INSIGHTS
+  | :MANAGE_WEBHOOKS
   | :KICK_MEMBERS
-  | :MANAGE_ROLES</pre>
+  | :CONNECT
+  | :USE_APPLICATION_COMMANDS
+  | :USE_EXTERNAL_EMOJIS
+  | :USE_PRIVATE_THREADS
+  | :MANAGE_EMOJIS_AND_STICKERS
+  | :MANAGE_ROLES
+  | :PRIORITY_SPEAKER
+  | :VIEW_GUILD_INSIGHTS
+  | :MANAGE_GUILD
+  | :DEAFEN_MEMBERS
+  | :READ_MESSAGE_HISTORY
+  | :SPEAK
+  | :SEND_MESSAGES
+  | :USE_PUBLIC_THREADS
+  | :ATTACH_FILES
+  | :MANAGE_MESSAGES
+  | :EMBED_LINKS
+  | :VIEW_CHANNEL
+  | :MANAGE_NICKNAMES
+  | :CREATE_INSTANT_INVITE
+  | :USE_VAD
+  | :STREAM
+  | :MUTE_MEMBERS
+  | :ADD_REACTIONS
+  | :BAN_MEMBERS
+  | :MANAGE_THREADS
+  | :MANAGE_CHANNELS
+  | :CHANGE_NICKNAME
+  | :USE_EXTERNAL_STICKERS
+  | :VIEW_AUDIT_LOG
+  | :ADMINISTRATOR
+  | :REQUEST_TO_SPEAK
+  | :MOVE_MEMBERS</pre>
 
       </div>
 

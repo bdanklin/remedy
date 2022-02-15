@@ -7,6 +7,7 @@ defmodule Remedy.Dispatch.Producer do
 
   @doc false
   def ingest(event) do
+    Logger.warn("RECEIVED #{inspect(event)}")
     GenStage.cast(__MODULE__, {:ingest, event})
   end
 

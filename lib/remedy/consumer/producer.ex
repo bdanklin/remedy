@@ -8,6 +8,7 @@ defmodule Remedy.Consumer.Producer do
   @spec ingest(any) :: :ok
   @doc false
   def ingest(event) do
+    Logger.debug("#{inspect(event)}")
     GenStage.cast(__MODULE__, {:ingest, event})
   end
 

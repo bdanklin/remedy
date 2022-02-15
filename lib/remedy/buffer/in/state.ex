@@ -11,8 +11,7 @@ defmodule Remedy.Dispatch.Buffer.State do
   ## in the pipeline. This stops us from processing the same event twice in the
   ## case of starting overlapping shards before the old shards are closed.
   defstruct queue: :queue.new(),
-            hash: %{},
-            demand: 0
+            hash: %{}
 
   def handle_ingest(%__MODULE__{hash: hash, queue: queue} = state, {event, payload, socket}) do
     if Map.has_key?(hash, {event, payload}) do
@@ -68,14 +67,14 @@ defmodule Remedy.Dispatch.Buffer.State do
 
   defp dispatch_events(state, events \\ [])
 
-  defp dispatch_events(%__MODULE__{demand: 0} = state, events) do
+  defp dispatch_events(%__MODULE__{queue: {[], []}} = state, events) do
     {:noreply, Enum.reverse(events), state}
   end
 
-  defp dispatch_events(%__MODULE__{queue: queue, demand: demand} = state, events) do
+  defp dispatch_events(%__MODULE__{queue: queue} = state, events) do
     case :queue.out(queue) do
       {{:value, event}, queue} ->
-        %__MODULE__{state | queue: queue, demand: demand - 1}
+        %__MODULE__{state | queue: queue}
         |> dispatch_events([event | events])
 
       {:empty, _queue} ->

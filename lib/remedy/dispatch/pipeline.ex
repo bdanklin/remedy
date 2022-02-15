@@ -13,25 +13,21 @@ defmodule Remedy.Dispatch.Pipeline do
         concurrency: 1
       ],
       processors: [
-        default: [concurrency: 10, min_demand: 1, max_demand: 2]
+        default: [concurrency: 1]
       ]
     )
   end
 
   @impl Broadway
-  @spec handle_message(any, Message.t(), any) :: Message.t()
-  def handle_message(
-        _processor,
-        %Message{} = message,
-        _context
-      ) do
-    Logger.error("""
+  def handle_message(_processor, message, _context) do
+    IO.inspect("""
     MADE IT TO BROADWAY PIPELINE
     MADE IT TO BROADWAY PIPELINE
     MADE IT TO BROADWAY PIPELINE
     MADE IT TO BROADWAY PIPELINE
     """)
 
+    Remedy.Consumer.Producer.ingest(message)
     message
   end
 

@@ -410,7 +410,7 @@ defmodule Remedy.Consumer do
       @behaviour Consumer
 
       def start_link(arg) do
-        ConsumerSupervisor.start_link(__MODULE__, arg)
+        ConsumerSupervisor.start_link(__MODULE__, arg, name: __MODULE__)
       end
 
       def init(_arg) do

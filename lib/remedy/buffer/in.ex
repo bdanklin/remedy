@@ -29,7 +29,7 @@ defmodule Remedy.Buffer do
   @impl GenStage
 
   def handle_cast({:ingest, event}, state) do
-    Logger.warn("BUFFERING EVENT #{inspect(event)}")
+    # Logger.warn("BUFFERING EVENT #{inspect(event)}")
 
     state
     |> State.handle_ingest(event)

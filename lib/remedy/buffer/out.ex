@@ -9,7 +9,7 @@ defmodule Remedy.Buffer.Out do
   end
 
   def init(_opts) do
-    {:consumer, [], subscribe_to: [Remedy.Buffer.In]}
+    {:consumer, [], subscribe_to: [Remedy.Buffer]}
   end
 
   def handle_events(events, _from, state) do
@@ -18,6 +18,6 @@ defmodule Remedy.Buffer.Out do
       |> Remedy.Dispatch.Producer.ingest()
     end
 
-    {:noreply, [], state, :hibernate}
+    {:noreply, [], state}
   end
 end

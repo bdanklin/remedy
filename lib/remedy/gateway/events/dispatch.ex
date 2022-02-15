@@ -21,7 +21,7 @@ defmodule Remedy.Gateway.Events.Dispatch do
     |> broadcast_to_event_buffer(payload)
   end
 
-  alias Remedy.Dispatch.Buffer
+  alias Remedy.Buffer
 
   defp broadcast_to_event_buffer(%WSState{payload_dispatch_event: event} = socket, payload) do
     with :ok <- Buffer.ingest({event, payload, socket}) do

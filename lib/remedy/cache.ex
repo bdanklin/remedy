@@ -15,7 +15,7 @@ defmodule Remedy.Cache do
   alias Remedy.Repo
 
   use Remedy.Schema, :schema_alias
-  use Unsafe.Generator, handler: :unwrap, docs: false
+  use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
 
   @type reason :: String.t()
 

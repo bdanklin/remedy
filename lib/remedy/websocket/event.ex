@@ -1,7 +1,20 @@
 defmodule Remedy.Websocket.Event do
   @moduledoc false
-  defstruct op_code: nil, sequence: nil, dispatch_event: nil, payload: nil
+  defstruct op_code: nil,
+            sequence: nil,
+            dispatch_event: nil,
+            payload: nil
+
   require Logger
+
+  defp new(payload) do
+    %__MODULE__{
+      op_code: payload[:op],
+      sequence: payload[:s],
+      dispatch_event: payload[:t],
+      payload: payload[:d]
+    }
+  end
 
   def handle_frame(%{zlib: zlib, shard: shard} = socket, frame) do
     with unzipped_frame <-
@@ -43,15 +56,6 @@ defmodule Remedy.Websocket.Event do
     end
   end
 
-  defp new(payload) do
-    %__MODULE__{
-      op_code: payload[:op],
-      sequence: payload[:s],
-      dispatch_event: payload[:t],
-      payload: payload[:d]
-    }
-  end
-
   defp handle_event(event, socket) do
     socket
     |> put_event_data(event)
@@ -75,7 +79,7 @@ defmodule Remedy.Websocket.Event do
     handler =
       op_code
       |> op_code_mod.to_binary()
-      |> Recase.to_pascal()
+      |> Remedy.CaseHelpers.to_pascal()
       |> String.to_atom()
 
     module =

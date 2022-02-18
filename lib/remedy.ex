@@ -49,7 +49,16 @@ defmodule Remedy do
   """
   use Application
   require Logger
-  alias Remedy.{Consumer, Dispatch, Gateway, Rest, Repo, Voice}
+
+  alias Remedy.{
+    Buffer,
+    Consumer,
+    Dispatch,
+    Gateway,
+    Rest,
+    Repo,
+    Voice
+  }
 
   @env Mix.env()
   @args [:token, :min_workers, :max_workers, :shards, :intents, :env]
@@ -65,6 +74,7 @@ defmodule Remedy do
         {Rest, args},
         {Repo, args},
         {Consumer, args},
+        {Buffer, args},
         {Dispatch, args},
         {Gateway, args},
         {Voice, args}
@@ -83,6 +93,13 @@ defmodule Remedy do
 
   @doc false
   def env, do: @env
+
+  @doc "Retreive the configured API version"
+  @spec discord_api_version() :: integer
+  def discord_api_version do
+    (System.get_env("API_VERSION") || Application.get_env(:remedy, :discord_api_version, 10))
+    |> String.to_integer()
+  end
 
   @doc "Retreive the bot token."
   @spec token :: any

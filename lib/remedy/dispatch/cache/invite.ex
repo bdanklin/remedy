@@ -20,5 +20,17 @@ defmodule Remedy.Dispatch.Cache.Invite do
   end
 
   def changeset(model \\ %__MODULE__{}, attrs) do
+    model
+    |> cast(attrs, [
+      :target_type,
+      :approximate_presence_count,
+      :approximate_member_count,
+      :expires_at,
+      :uses,
+      :max_uses,
+      :max_age,
+      :temporary,
+      :created_at
+    ])
   end
 end

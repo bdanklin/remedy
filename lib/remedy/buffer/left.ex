@@ -1,4 +1,4 @@
-defmodule Remedy.Buffer do
+defmodule Remedy.Buffer.Left do
   @moduledoc false
   ## The buffer will store events from all gateway shards with the ability to
   ## resend events that are not ack'd for any reason.
@@ -10,7 +10,7 @@ defmodule Remedy.Buffer do
 
   require Logger
   use GenStage
-  alias Remedy.Dispatch.Buffer.State
+  alias Remedy.Buffer.Left.State
 
   @doc false
   def ingest(event) do

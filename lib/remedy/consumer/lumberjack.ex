@@ -4,8 +4,8 @@ defmodule Remedy.Consumer.LumberJack do
   require Logger
 
   @doc false
-  @spec handle_event({any, any, any}) :: :ok
-  def handle_event({event, payload, _meta}) do
-    Logger.debug("#{inspect(event)} #{inspect(payload)}")
+  @spec handle_event({any, any}, any) :: :ok
+  def handle_event({event, _payload}, _meta) do
+    Logger.debug("#{inspect(event)} ")
   end
 end

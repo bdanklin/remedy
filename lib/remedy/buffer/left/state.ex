@@ -1,4 +1,4 @@
-defmodule Remedy.Dispatch.Buffer.State do
+defmodule Remedy.Buffer.Left.State do
   @moduledoc false
   #############################################################################
   ## events: any events to be re sent
@@ -11,7 +11,8 @@ defmodule Remedy.Dispatch.Buffer.State do
   ## in the pipeline. This stops us from processing the same event twice in the
   ## case of starting overlapping shards before the old shards are closed.
   defstruct queue: :queue.new(),
-            hash: %{}
+            hash: %{},
+            demand: 0
 
   def handle_ingest(%__MODULE__{hash: hash, queue: queue} = state, {event, payload, socket}) do
     if Map.has_key?(hash, {event, payload}) do
@@ -19,11 +20,11 @@ defmodule Remedy.Dispatch.Buffer.State do
     else
       message = %Broadway.Message{
         acknowledger: {
-          Remedy.Buffer.Producer,
+          Remedy.Buffer.Left,
           {socket.shard, socket.heartbeat, socket.payload_sequence},
           data: payload
         },
-        metadata: %{event: event, socket: socket},
+        metadata: %{event: event, payload: payload, socket: socket},
         data: payload
       }
 
@@ -33,13 +34,13 @@ defmodule Remedy.Dispatch.Buffer.State do
   end
 
   def handle_ack(%__MODULE__{hash: hash, queue: queue} = state, {_ack_ref, successful, failed}) do
-    state =
-      successful
-      |> case do
-        [] -> []
-        successful -> Enum.map(successful, fn message -> message.data.hash_key end)
+    hash =
+      unless successful == [] do
+        Enum.map(successful, fn message -> {message.metadata.event, message.metadata.payload} end)
+        |> then(&Map.drop(state, &1))
+      else
+        hash
       end
-      |> then(&Map.drop(state, &1))
 
     case failed do
       [] ->

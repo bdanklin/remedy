@@ -382,27 +382,9 @@ defmodule Remedy.Consumer do
     Supervisor.init(children, strategy: :one_for_one)
   end
 
-  @doc false
-  def start_link(mod, {event, payload, socket}) do
-    Task.start_link(fn ->
-      try do
-        mod.handle_event({event, payload}, handle_socket(socket))
-      rescue
-        _ -> Logger.error("CONSUMER CRASHED WHEN HANDLING #{inspect(event)} #{inspect(payload)}")
-      end
-    end)
-  end
-
-  # TODO: impl
-  @doc false
-  def handle_socket(%Remedy.Gateway.Session.WSState{}) do
-    & &1
-  end
-
-  def handle_socket(%Remedy.Voice.Session.WSState{}) do
-    & &1
-  end
-
+  ############################################################################
+  ## use Remedy.Consumer
+  ############################################################################
   defmacro __using__(_opts) do
     quote do
       use ConsumerSupervisor
@@ -417,7 +399,7 @@ defmodule Remedy.Consumer do
         ConsumerSupervisor.init(
           [%{id: Consumer, start: {Consumer, :start_link, [__MODULE__]}, restart: :transient}],
           strategy: :one_for_one,
-          subscribe_to: [{Producer, max_demand: System.schedulers() * 4}]
+          subscribe_to: [{Producer, max_demand: System.schedulers()}]
         )
       end
 
@@ -427,9 +409,35 @@ defmodule Remedy.Consumer do
 
   defmacro __before_compile__(_) do
     quote do
-      def handle_event({_event, _payload}, _meta) do
-        :noop
+      def handle_event({event, _payload}, _meta) do
+        Logger.warn("UNHANDLED_EVENT #{inspect(event)} ")
       end
     end
+  end
+
+  ############################################################################
+  ## Start a task to run each event that arrives in the Consumer module.
+  ##
+  ## Convert the socket data to a %Metadata{} immediately prior to starting the
+  ## consumer task.
+  @doc false
+  def start_link(mod, {event, payload, meta}) do
+    Task.start_link(fn ->
+      try do
+        mod.handle_event({event, payload}, handle_socket(meta))
+      rescue
+        _ -> Logger.error("CONSUMER CRASHED WHILE HANDLING #{inspect(event)} #{inspect(payload)}")
+      end
+    end)
+  end
+
+  # TODO: impl
+  @doc false
+  def handle_socket(%Remedy.Gateway.Session.WSState{} = state) do
+    state
+  end
+
+  def handle_socket(%Remedy.Voice.Session.WSState{} = state) do
+    state
   end
 end

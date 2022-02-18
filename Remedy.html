@@ -10,7 +10,7 @@
     <title>Remedy — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-521ea1c43d.js"></script>
+    <script src="dist/sidebar_items-2ac7dfdde7.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -102,7 +102,7 @@ Remedy
   Configuration
 </h2>
 <pre><code class="makeup elixir" translate="no"><span class="n">config</span><span class="w"> </span><span class="ss">:remedy</span><span class="w">
-  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="nc">System</span><span class="o">.</span><span class="n">get_env</span><span class="p" data-group-id="9365696625-1">(</span><span class="s">&quot;REMEDY_TOKEN&quot;</span><span class="p" data-group-id="9365696625-1">)</span><span class="w">
+  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="nc">System</span><span class="o">.</span><span class="n">get_env</span><span class="p" data-group-id="2991584816-1">(</span><span class="s">&quot;REMEDY_TOKEN&quot;</span><span class="p" data-group-id="2991584816-1">)</span><span class="w">
   </span><span class="ss">intents</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
   </span><span class="ss">shards</span><span class="p">:</span><span class="w"> </span><span class="ss">:auto</span><span class="p">,</span></code></pre><p>Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.</p><ul><li><p><code class="inline">:token</code> (required)
 Your bots token, available from your <a href="https://discord.com/developers/applications">Application Dashboard</a></p></li><li><p><code class="inline">:shards</code>
@@ -138,6 +138,16 @@ The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be 
     <h2>
       <a href="#functions">Functions</a>
     </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#discord_api_version/0" translate="no">discord_api_version()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retreive the configured API version</p></div>
+
+      </div>
 
       <div class="summary-row">
         <div class="summary-signature">
@@ -213,6 +223,39 @@ The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be 
 Functions
     </h1>
     <div class="functions-list">
+<section class="detail" id="discord_api_version/0">
+
+  <div class="detail-header">
+    <a href="#discord_api_version/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">discord_api_version()</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L99" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">discord_api_version() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()</pre>
+
+      </div>
+
+
+
+
+<p>Retreive the configured API version</p>
+  </section>
+</section>
 <section class="detail" id="intents/0">
 
   <div class="detail-header">
@@ -223,7 +266,7 @@ Functions
     <h1 class="signature" translate="no">intents()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L125" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L142" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -256,7 +299,7 @@ Functions
     <h1 class="signature" translate="no">max_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L158" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L175" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -289,7 +332,7 @@ Functions
     <h1 class="signature" translate="no">min_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L150" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L167" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -322,7 +365,7 @@ Functions
     <h1 class="signature" translate="no">shards()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L101" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L118" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -355,7 +398,7 @@ Functions
     <h1 class="signature" translate="no">system_architecture()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L166" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L183" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -388,7 +431,7 @@ Functions
     <h1 class="signature" translate="no">token()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L89" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L106" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>

@@ -10,7 +10,7 @@
     <title>Remedy.Consumer.Metadata — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-521ea1c43d.js"></script>
+    <script src="dist/sidebar_items-2ac7dfdde7.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -96,6 +96,10 @@ Remedy
 </h1>
 
 
+  <section id="moduledoc">
+<p>Contains information about the gateway event.</p><p>Immediately prior to the event being processed in your consumer the %WSState{} struct that was passed along with it through the pipeline will be converted into a <code class="inline">%Metadata{}</code> struct. This will convert the data into something more palatable. Such as how long the request took to process, which shard it came from, etc.</p>
+  </section>
+
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -143,7 +147,7 @@ Types
     <h1 class="signature" translate="no">t()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer/metadata.ex#L2" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer/metadata.ex#L7" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -156,7 +160,13 @@ Types
       <h3>Specs</h3>
       <div class="specs">
 
-          <pre translate="no">t() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()</pre>
+          <pre translate="no">t() :: %Remedy.Consumer.Metadata{
+  dx_dt: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  gateway: :voice | :gateway,
+  shard: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  shard_latency: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  time_in_pipeline: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+}</pre>
 
       </div>
 

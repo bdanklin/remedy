@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.27.4">
     <meta name="project" content="Remedy v0.6.9">
 
-    <title>Remedy.Schema.EmbedField — Remedy v0.6.9</title>
+    <title>Remedy.CaseHelpers — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
     <script src="dist/sidebar_items-2ac7dfdde7.js"></script>
@@ -84,10 +84,10 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Schema.EmbedField</span> 
+  <span translate="no">Remedy.CaseHelpers</span> 
   <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
-    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/embed_field.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/case_helpers.ex#L1" title="View Source" class="view-source" rel="help">
       <span class="icon-code" aria-hidden="true"></span>
       <span class="sr-only">View Source</span>
     </a>
@@ -97,7 +97,7 @@ Remedy
 
 
   <section id="moduledoc">
-<p>Embed Field Object</p>
+<p>Functions within this module take heavy inspiration from the <a href="https://hexdocs.pm/recase/Recase.html#content"><code class="inline">Recase</code></a> library with dead weight that we do not require cut out.</p>
   </section>
 
 
@@ -110,16 +110,36 @@ Remedy
       Summary
     </h1>
 
-  <div class="summary-types summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
     </h2>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#t:t/0" translate="no">t()</a>
+          <a href="#to_pascal/1" translate="no">to_pascal(value)</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>converts a string or atom to pascal case.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#to_sentence/1" translate="no">to_sentence(value)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#to_title/1" translate="no">to_title(value)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Convert a string to title case.</p></div>
 
       </div>
 
@@ -128,26 +148,26 @@ Remedy
   </section>
 
 
-  <section id="types" class="details-list">
+  <section id="functions" class="details-list">
     <h1 class="section-heading">
-      <a class="hover-link" href="#types">
+      <a class="hover-link" href="#functions">
         <span class="icon-link" aria-hidden="true"></span>
         <span class="sr-only">Link to this section</span>
       </a>
-Types
+Functions
     </h1>
-    <div class="types-list">
-<section class="detail" id="t:t/0">
+    <div class="functions-list">
+<section class="detail" id="to_pascal/1">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#to_pascal/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <h1 class="signature" translate="no">to_pascal(value)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/embed_field.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/case_helpers.ex#L19" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -157,21 +177,70 @@ Types
 
   <section class="docstring">
 
-      <h3>Specs</h3>
-      <div class="specs">
-
-          <pre translate="no">t() :: %Remedy.Schema.EmbedField{
-  inline: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  value: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
-}</pre>
-
-      </div>
 
 
 
+<p>converts a string or atom to pascal case.</p><h2 id="to_pascal/1-examples" class="section-heading">
+  <a href="#to_pascal/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CaseHelpers</span><span class="o">.</span><span class="n">to_pascal</span><span class="p" data-group-id="8849587929-1">(</span><span class="s">&quot;hello world&quot;</span><span class="p" data-group-id="8849587929-1">)</span><span class="w">
+</span><span class="s">&quot;HelloWorld&quot;</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CaseHelpers</span><span class="o">.</span><span class="n">to_pascal</span><span class="p" data-group-id="8849587929-2">(</span><span class="n">case_helpers</span><span class="p" data-group-id="8849587929-2">)</span><span class="w">
+</span><span class="nc">CaseHelpers</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="to_sentence/1">
+
+  <div class="detail-header">
+    <a href="#to_sentence/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">to_sentence(value)</h1>
 
 
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/case_helpers.ex#L35" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+
+  </section>
+</section>
+<section class="detail" id="to_title/1">
+
+  <div class="detail-header">
+    <a href="#to_title/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">to_title(value)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/case_helpers.ex#L32" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+<p>Convert a string to title case.</p>
   </section>
 </section>
 
@@ -185,7 +254,7 @@ Types
           <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
           <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
 
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/embed_field.ex">(current file)</a>
+            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/helpers/case_helpers.ex">(current file)</a>
 
         </p>
 

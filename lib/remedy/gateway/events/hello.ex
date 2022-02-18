@@ -11,7 +11,7 @@ defmodule Remedy.Gateway.Events.Hello do
     |> Pacemaker.start()
   end
 
-  def digest(%WSState{session_id: _session_id} = socket, %{heartbeat_interval: heartbeat_interval}) do
+  def digest(%WSState{} = socket, %{heartbeat_interval: heartbeat_interval}) do
     socket
     |> WSState.put_heartbeat_interval(heartbeat_interval)
     |> Command.send(:RESUME)

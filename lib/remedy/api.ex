@@ -4,27 +4,41 @@ defmodule Remedy.API do
   @moduledoc """
   Standard interface for the Discord API.
 
-  > The majority of the functions within this module are pulled directly from the Discord API. Some custom implementations are included. Some functions are useless in the scope of a bot and are intentionally omitted.
+  The majority of the functions within this module are pulled directly from the
+  Discord API. Some custom implementations are included. Some functions are
+  useless in the scope of a bot and are intentionally omitted.
 
   ## Bang!
 
-  While undocumented to reduce clutter, all functions can be banged to return or raise.
+  While undocumented to reduce clutter, all functions can be banged to return
+  or raise.
 
   ## Ratelimits
 
-  Discord imposes rate limits in various capacities. The functions in this module will respect those rate limits where possible. In certain circumstances, discord will impose hidden rate limits to avoid abuse, which you can still hit.
+  Discord imposes rate limits in various capacities. The functions in this
+  module will respect those rate limits where possible. In certain
+  circumstances, discord will impose hidden rate limits to avoid abuse, which
+  you can still hit.
 
   ## Audit Log Reason
 
-  Many endpoints accept the `X-Audit-Log-Reason` header to provide a reason for the action. This is a string that is displayed in the audit log, limited to 512 characters. Routes that are known to accept this header are marked with the 📒 symbol.
+  Many endpoints accept the `X-Audit-Log-Reason` header to provide a reason for
+  the action. This is a string that is displayed in the audit log, limited to
+  512 characters. Routes that are known to accept this header are marked with
+  the 📒 symbol.
 
-  Due to Discords API documentation being sketch af, this header is not always accurately documented where it is accepted. If an endpoint accepts a reason and you wish to provide one, pass the following as one of the `opts`.
+  Due to Discords API documentation being sketch af, this header is not always
+  accurately documented where it is accepted. If an endpoint accepts a reason
+  and you wish to provide one, pass the following as one of the `opts`.
 
       reason: "Some Audit Log Reason"
 
   ## Casting vs Modifying
 
-  Modifying an object will only change the given fields. Whereas casting will overwrite the entire array of objects. The terminology is mirrored from Ecto, particularly in regards to casting embeds. Consider the following example where a single parameter of the guild is updated.
+  Modifying an object will only change the given fields. Whereas casting will
+  overwrite the entire array of objects. The terminology is mirrored from Ecto,
+  particularly in regards to casting embeds. Consider the following example
+  where a single parameter of the guild is updated.
 
       iex> Remedy.API.get_guild!(81384788765712384)
       %Remedy.Schema.Guild{id: 81384788765712384, name: "Remedy", icon: "f817c5adaf96672c94a17de8e944f427"}
@@ -32,7 +46,8 @@ defmodule Remedy.API do
       iex> Remedy.API.modify_guild!(81384788765712384, name: "New Remedy Server")
       %Remedy.Schema.Guild{id: 81384788765712384, name: "New Remedy Server", icon: "f817c5adaf96672c94a17de8e944f427"}
 
-  Conversely, casting will perform a create, update, delete in one operation, and then read the resultant. For example:
+  Conversely, casting will perform a create, update, delete in one operation,
+  and then read the resultant. For example:
 
       iex> Remedy.API.list_commands!(81384788765712384)
       [%{name: "foo", description: "Foo the bot"}, %{name: "bar", description: "Bar the bot"}, %{name: "ping", description: "Ping the bot"}]
@@ -40,7 +55,9 @@ defmodule Remedy.API do
       iex> Remedy.API.cast_commands!(81384788765712384, [%{name: "foo", description: "Bar the bot"}, %{name: "baz", description: "baz the bot"}])
       [%{name: "foo", description: "Bar the bot"}, %{name: "baz", description: "baz the bot"}]
 
-  Matching on the name, commands with a name that already exists will be updated. Names that are not provided will be deleted, and new commands will be created.
+  Matching on the name, commands with a name that already exists will be
+  updated. Names that are not provided will be deleted, and new commands will
+  be created.
 
   """
   import Ecto.Changeset
@@ -50,9 +67,9 @@ defmodule Remedy.API do
   import Remedy.TimeHelpers,
     only: [is_snowflake: 1]
 
-  use Unsafe.Generator,
+  use Remedy.UnsafeHelpers,
     handler: :unwrap,
-    docs: false
+    docs: true
 
   use Remedy.Schema,
       :schema_alias
@@ -735,7 +752,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:put, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil, nil}
+    {:put, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil,
+     nil}
     |> request()
     |> shape()
   end
@@ -805,7 +823,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil, nil}
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil,
+     nil}
     |> request()
     |> shape()
   end
@@ -851,7 +870,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id", params, nil, nil, nil}
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id", params, nil,
+     nil, nil}
     |> request()
     |> shape()
   end
@@ -973,7 +993,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji", params, nil, nil, nil}
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji", params, nil, nil,
+     nil}
     |> request()
   end
 
@@ -1608,7 +1629,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:post, "/channels/:channel_id/messages/:message_id/threads", params, nil, opts[:reason], body}
+    {:post, "/channels/:channel_id/messages/:message_id/threads", params, nil, opts[:reason],
+     body}
     |> request()
     |> shape(Thread)
   end
@@ -2935,7 +2957,8 @@ defmodule Remedy.API do
   @doc method: :put
   @doc route: "guilds/:guild_id/members/:user_id/roles/:role_id"
   @unsafe {:add_role, [:guild_id, :user_id, :role_id, :opts]}
-  @spec add_role(Snowflake.c(), Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Member.t()}
+  @spec add_role(Snowflake.c(), Snowflake.c(), Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, Member.t()}
   def add_role(guild_id, user_id, role_id, opts) do
     params_data = %{}
     params_types = %{guild_id: Snowflake, user_id: Snowflake, role_id: Snowflake}
@@ -2977,7 +3000,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/guilds/:guild_id/members/:user_id/roles/:role_id", params, nil, opts[:reason], nil}
+    {:delete, "/guilds/:guild_id/members/:user_id/roles/:role_id", params, nil, opts[:reason],
+     nil}
     |> request()
   end
 
@@ -3117,7 +3141,10 @@ defmodule Remedy.API do
     query =
       {query_data, query_types}
       |> cast(query_params, query_keys)
-      |> validate_number(:delete_message_days, less_than_or_equal_to: 7, greater_than_or_equal_to: 0)
+      |> validate_number(:delete_message_days,
+        less_than_or_equal_to: 7,
+        greater_than_or_equal_to: 0
+      )
 
     params_data = %{}
     params_types = %{guild_id: Snowflake, user_id: Snowflake}
@@ -3446,7 +3473,13 @@ defmodule Remedy.API do
   @spec prune_guild(Snowflake.c(), opts) :: {:ok, any} | {:error, reason}
   def prune_guild(guild_id, opts \\ []) do
     body_data = %{}
-    body_types = %{days: :integer, include_roles: {:array, Snowflake}, compute_prune_count: :boolean}
+
+    body_types = %{
+      days: :integer,
+      include_roles: {:array, Snowflake},
+      compute_prune_count: :boolean
+    }
+
     body_keys = Map.keys(body_types)
     body_params = Enum.into(opts, %{})
 
@@ -4564,7 +4597,8 @@ defmodule Remedy.API do
   @doc route: "/guilds/:guild_id/stickers"
   @doc audit_log: true
   @unsafe {:create_sticker, [:guild_id, :sticker_id, :opts]}
-  @spec create_sticker(Snowflake.c(), Snowflake.c(), opts) :: {:error, reason} | {:ok, Sticker.t()}
+  @spec create_sticker(Snowflake.c(), Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, Sticker.t()}
   def create_sticker(guild_id, sticker_id, opts \\ []) do
     body_data = %{}
     body_types = %{name: :string, description: :string, tags: :string, file: :string}
@@ -5471,7 +5505,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:patch, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query, opts[:reason], body}
+    {:patch, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query,
+     opts[:reason], body}
     |> request()
   end
 
@@ -5488,7 +5523,8 @@ defmodule Remedy.API do
   @doc method: :delete
   @doc route: "/webhooks/:webhook_id/:webhook_token/messages/:message_id"
   @unsafe {:delete_message, [:webhook_id, :webhook_token, :message_id, :opts]}
-  @spec delete_message(Snowflake.c(), any, Snowflake.c(), opts) :: {:error, reason} | {:ok, Message.t()}
+  @spec delete_message(Snowflake.c(), any, Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, Message.t()}
   def delete_message(webhook_id, webhook_token, message_id, opts) do
     query_attrs = Enum.into(opts, %{})
 
@@ -5509,7 +5545,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query, opts[:reason], nil}
+    {:delete, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query,
+     opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -5877,7 +5914,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, nil}
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil,
+     nil, nil}
     |> request()
     |> shape(Command)
   end
@@ -5936,7 +5974,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:patch, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, body}
+    {:patch, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params,
+     nil, nil, body}
     |> request()
     |> shape(Command)
   end
@@ -5969,7 +6008,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, nil}
+    {:delete, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params,
+     nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -6040,7 +6080,8 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/permissions"
   @unsafe {:list_command_permissions, [:guild_id]}
-  @spec list_command_permissions(Snowflake.c()) :: {:error, reason} | {:ok, [CommandPermission.t()]}
+  @spec list_command_permissions(Snowflake.c()) ::
+          {:error, reason} | {:ok, [CommandPermission.t()]}
   def list_command_permissions(guild_id) do
     params_data = %{}
     params_types = %{guild_id: Snowflake}
@@ -6051,7 +6092,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil, nil, nil}
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil,
+     nil, nil}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6085,7 +6127,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions", params, nil, nil, nil}
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions",
+     params, nil, nil, nil}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6131,8 +6174,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions", params, nil, nil,
-     body}
+    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions",
+     params, nil, nil, body}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6157,7 +6200,8 @@ defmodule Remedy.API do
   @doc method: :put
   @doc route: "/applications/:application_id/guilds/:guild_id/commands/permissions"
   @unsafe {:cast_command_permissions, [:guild_id, :opts]}
-  @spec cast_command_permissions(Snowflake.c(), opts) :: {:error, reason} | {:ok, [CommandPermission.t()]}
+  @spec cast_command_permissions(Snowflake.c(), opts) ::
+          {:error, reason} | {:ok, [CommandPermission.t()]}
   def cast_command_permissions(guild_id, opts) do
     attrs = Enum.into(opts, %{})
     body_data = %{}
@@ -6177,7 +6221,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil, nil, body}
+    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil,
+     nil, body}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6775,7 +6820,9 @@ defmodule Remedy.API do
           do: {field, {:at_least, opts}}
 
     is_are = if at_least == 1, do: "is", else: "are"
-    error_msg = String.trim_trailing("At least #{at_least} of: #{inspect(fields)} #{is_are} required.")
+
+    error_msg =
+      String.trim_trailing("At least #{at_least} of: #{inspect(fields)} #{is_are} required.")
 
     field_presence =
       for field <- fields,

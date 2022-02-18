@@ -114,9 +114,7 @@ defmodule Remedy.TypeBeforeCompile do
         load_doc: Remedy.TypeType.load_doc(%__MODULE__{}),
         load_spec: Remedy.TypeType.load_spec(%__MODULE__{})
 
-      use Unsafe.Generator,
-        handler: :unwrap,
-        docs: false
+      use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
 
       defp keys_vals, do: %__MODULE__{} |> Map.from_struct()
       defp keys, do: keys_vals() |> Map.keys()
@@ -312,7 +310,7 @@ See [Casting](#module-casting\) for more information.)
   end
 
   def name(%name{} = struct) when is_struct(struct) do
-    name |> Module.split() |> List.last() |> Recase.to_title()
+    name |> Module.split() |> List.last() |> Remedy.CaseHelpers.to_title()
   end
 
   defp pipe_spec([item]), do: item

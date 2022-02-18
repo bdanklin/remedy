@@ -31,7 +31,7 @@ defmodule Remedy.ImageData do
 
   def info(_), do: nil
 
-  use Unsafe.Generator, handler: :unwrap, docs: false
+  use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
   use Ecto.Type
 
   @typedoc """

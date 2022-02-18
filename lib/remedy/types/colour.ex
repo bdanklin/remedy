@@ -29,7 +29,7 @@ defmodule Remedy.Colour do
 
   """
   import Remedy.ColourHelpers
-  use Unsafe.Generator, handler: :unwrap, docs: false
+  use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
   use Ecto.Type
 
   @typedoc """

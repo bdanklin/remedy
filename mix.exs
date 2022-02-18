@@ -67,6 +67,7 @@ defmodule Remedy.MixProject do
     [
       # Remedy
       # Remedy.API,
+      # Remedy.Buffer,
       # Remedy.Cache
       # Remedy.CDN
       # Remedy.Consumer,
@@ -106,7 +107,8 @@ defmodule Remedy.MixProject do
       Helpers: [
         Remedy.TimeHelpers,
         Remedy.ColourHelpers,
-        Remedy.ResourceHelpers
+        Remedy.ResourceHelpers,
+        Remedy.CastHelpers
       ]
     ]
   end
@@ -146,18 +148,14 @@ defmodule Remedy.MixProject do
       {:jason, "~> 1.3"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
-      {:mime, "~> 1.6"},
+      {:mime, "~> 2.0"},
       ## Voice
       {:kcl, "~> 1.4"},
-      {:porcelain, "~> 2.0"},
-      ## Unsafe Binding Generator
-      {:unsafe, "~> 1.0"},
       ## Rate Limiter
       {:ex_rated, "~> 2.0"},
       # TODO: Take what we need and remove
       {:ecto_morph, "~> 0.1.25"},
-      {:morphix, "~> 0.8.1"},
-      {:recase, "~> 0.7.0"}
+      {:morphix, "~> 0.8.1"}
     ]
   end
 

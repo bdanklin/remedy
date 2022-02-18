@@ -104,7 +104,7 @@ defmodule Remedy.FlagBeforeCompile do
         load_doc: Remedy.FlagType.load_doc(%__MODULE__{}),
         load_spec: Remedy.FlagType.load_spec(%__MODULE__{})
 
-      use Unsafe.Generator, docs: true
+      use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
 
       @impl true
       def to_map(flags)
@@ -357,7 +357,7 @@ The following are examples of valid inputs for casting. Regardless of the format
   end
 
   def name(%name{} = struct) when is_struct(struct) do
-    name |> Module.split() |> List.last() |> Recase.to_title()
+    name |> Module.split() |> List.last() |> Remedy.CaseHelpers.to_title()
   end
 
   defp random_set(struct) do

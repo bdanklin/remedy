@@ -38,7 +38,7 @@ defmodule Remedy.Snowflake do
   """
   import Remedy.TimeHelpers
   use Ecto.Type
-  use Unsafe.Generator, handler: :unwrap, docs: false
+  use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
 
   alias Remedy.ISO8601
 

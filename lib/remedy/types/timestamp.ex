@@ -33,11 +33,10 @@ defmodule Remedy.Timestamp do
 
   import Remedy.TimeHelpers
   use Ecto.Type
-  use Unsafe.Generator, handler: :unwrap, docs: false
+  use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
 
   @typedoc "A Discord Timestamp."
   @type t :: 1_420_034_400_000..4_102_408_800_000
-  use Unsafe.Generator, handler: :unwrap, docs: false
 
   @typedoc "Castable to Discord Timestamp."
   @type c() :: t() | DateTime.t() | integer() | String.t()

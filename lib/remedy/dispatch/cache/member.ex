@@ -38,7 +38,7 @@ defmodule Remedy.Dispatch.Cache.Member do
   @doc false
   def changeset(model \\ %__MODULE__{}, params) do
     model
-    |> cast(params, @to_cast)
+    |> cast(params, @cast)
     |> validate_required([:guild_id, :user_id])
   end
 end

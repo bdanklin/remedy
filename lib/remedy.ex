@@ -17,7 +17,8 @@ defmodule Remedy do
   Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.
 
   - `:token` (required)
-  Your bots token, available from your [Application Dashboard](https://discord.com/developers/applications)
+  Your bots token, available from your
+  [Application Dashboard](https://discord.com/developers/applications)
 
   - `:shards`
   Number of shards to use.
@@ -49,42 +50,57 @@ defmodule Remedy do
   """
   use Application
   require Logger
-
-  alias Remedy.{
-    Buffer,
-    Consumer,
-    Dispatch,
-    Gateway,
-    Rest,
-    Repo,
-    Voice
-  }
+  alias Remedy.{Buffer, Consumer, Dispatch, Gateway, Rest, Repo, Voice}
 
   @env Mix.env()
-  @args [:token, :min_workers, :max_workers, :shards, :intents, :env]
+  @args [:token, :min_workers, :max_workers, :shards, :intents, :env, :embedded]
 
   @doc false
   def start(_type, args) do
     with :ok <- check_token(),
          :ok <- check_shards(),
          :ok <- check_intents() do
-      args = for key <- @args, into: [], do: {key, determine(args, key)}
+      args = build_args(args)
 
-      children = [
-        {Rest, args},
-        {Repo, args},
-        {Consumer, args},
-        {Buffer, args},
-        {Dispatch, args},
-        {Gateway, args},
-        {Voice, args}
-      ]
-
-      Supervisor.start_link(children, strategy: :one_for_one)
+      args
+      |> Keyword.get(:embedded, false)
+      |> case do
+        false -> build_children(args)
+        true -> []
+      end
+      |> start()
     end
   end
 
-  defp determine(args, key) do
+  def start_link(args) do
+    build_args(args)
+    |> build_children()
+    |> start()
+  end
+
+  defp start(children) do
+    Supervisor.start_link(children, strategy: :one_for_one)
+  end
+
+  defp build_children(args) do
+    [
+      {Rest, args},
+      {Repo, args},
+      {Consumer, args},
+      {Buffer, args},
+      {Dispatch, args},
+      {Gateway, args},
+      {Voice, args}
+    ]
+  end
+
+  defp build_args(args) do
+    for key <- @args, into: [] do
+      {key, determine_arg(args, key)}
+    end
+  end
+
+  defp determine_arg(args, key) do
     case Keyword.get(args, key, :from_config) do
       :from_config -> apply(__MODULE__, key, [])
       val -> val
@@ -94,12 +110,16 @@ defmodule Remedy do
   @doc false
   def env, do: @env
 
-  @doc "Retreive the configured API version"
-  @spec discord_api_version() :: integer
-  def discord_api_version do
-    (System.get_env("API_VERSION") || Application.get_env(:remedy, :discord_api_version, 10))
-    |> String.to_integer()
+  @doc ""
+  def embedded, do: embedded(System.get_env("REMEDY_EMBEDDED") || Application.get_env(:remedy, :embedded, false))
+
+  defp embedded(str)
+       when str in ["true", "TRUE", "false", "FALSE"] do
+    String.downcase(str) |> String.to_atom()
   end
+
+  defp embedded(atm) when atm in [true, false], do: atm
+  defp embedded(_str), do: false
 
   @doc "Retreive the bot token."
   @spec token :: any

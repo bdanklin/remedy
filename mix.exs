@@ -24,6 +24,7 @@ defmodule Remedy.MixProject do
       deps: deps() ++ dev_deps(),
       dialyzer: [plt_add_deps: :app_tree, plt_add_apps: [:mix], list_unused_filters: true],
       docs: docs(),
+      aliases: aliases(),
       package: package()
     ]
   end
@@ -171,4 +172,10 @@ defmodule Remedy.MixProject do
       {:benchee, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
+
+  defp aliases do
+    [
+    ]
+  end
+
 end

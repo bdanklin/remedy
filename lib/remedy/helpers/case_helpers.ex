@@ -11,7 +11,7 @@ defmodule Remedy.CaseHelpers do
       iex> Remedy.CaseHelpers.to_pascal("hello world")
       "HelloWorld"
 
-      iex> Remedy.CaseHelpers.to_pascal(case_helpers)
+      iex> Remedy.CaseHelpers.to_pascal(:case_helpers)
       CaseHelpers
 
   """

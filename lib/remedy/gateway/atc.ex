@@ -7,7 +7,7 @@ defmodule Remedy.Gateway.ATC do
 
   def request_connection(%{shard: shard}) do
     Logger.info("Trying to connect shard #{shard}")
-    GenServer.call(__MODULE__, :request_connect, :infinity)
+    GenServer.call(__MODULE__, :request_connection, :infinity)
   end
 
   def start_link(args) do
@@ -20,9 +20,8 @@ defmodule Remedy.Gateway.ATC do
      |> State.new()}
   end
 
-  def handle_call(:request_connect, _from, state) do
-    with :ok <- State.check_rate_limit(state),
-         :ok <- State.increment_rate_limit(state) do
+  def handle_call(:request_connection, _from, state) do
+    with :ok <- State.handle_request_connection(state) do
       {:reply, :ok, state}
     end
   end

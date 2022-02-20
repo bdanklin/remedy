@@ -10,7 +10,7 @@
     <title>Remedy.CastHelpers — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
 
-    <script src="dist/sidebar_items-2ac7dfdde7.js"></script>
+    <script src="dist/sidebar_items-2092f44021.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -117,7 +117,17 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#deep_string_key/1" translate="no">deep_string_key(item)</a>
+          <a href="#deep_blast/1" translate="no">deep_blast(item)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Deep blast a term</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#deep_compactor/1" translate="no">deep_compactor(map)</a>
 
         </div>
 
@@ -125,11 +135,9 @@ Remedy
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#deep_struct_blaster/1" translate="no">deep_struct_blaster(item)</a>
+          <a href="#deep_string_key/1" translate="no">deep_string_key(item)</a>
 
         </div>
-
-          <div class="summary-synopsis"><p>Blast a term to prepare for sending over websocket.</p></div>
 
       </div>
 
@@ -147,17 +155,43 @@ Remedy
 Functions
     </h1>
     <div class="functions-list">
-<section class="detail" id="deep_string_key/1">
+<section class="detail" id="deep_blast/1">
 
   <div class="detail-header">
-    <a href="#deep_string_key/1" class="detail-link" title="Link to this function">
+    <a href="#deep_blast/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">deep_string_key(item)</h1>
+    <h1 class="signature" translate="no">deep_blast(item)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L18" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L14" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+
+
+<p>Deep blast a term</p><ol><li>All structs will be converted to maps</li><li>All tuples will be converted to lists</li></ol>
+  </section>
+</section>
+<section class="detail" id="deep_compactor/1">
+
+  <div class="detail-header">
+    <a href="#deep_compactor/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">deep_compactor(map)</h1>
+
+
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L71" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -173,17 +207,17 @@ Functions
 
   </section>
 </section>
-<section class="detail" id="deep_struct_blaster/1">
+<section class="detail" id="deep_string_key/1">
 
   <div class="detail-header">
-    <a href="#deep_struct_blaster/1" class="detail-link" title="Link to this function">
+    <a href="#deep_string_key/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">deep_struct_blaster(item)</h1>
+    <h1 class="signature" translate="no">deep_string_key(item)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/helpers/cast_helpers.ex#L49" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -193,10 +227,17 @@ Functions
 
   <section class="docstring">
 
+      <h3>Specs</h3>
+      <div class="specs">
+
+          <pre translate="no">deep_string_key(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
 
 
 
-<p>Blast a term to prepare for sending over websocket.</p><ol><li>All structs will be converted to maps</li><li>All keys for Maps or Structs will be converted to strings.</li></ol>
+
+
   </section>
 </section>
 

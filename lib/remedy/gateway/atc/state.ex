@@ -8,12 +8,15 @@ defmodule Remedy.Gateway.ATC.State do
             concurrency: 1
 
   @connection_time 5000
+  require Logger
 
   def new(args) do
     %__MODULE__{concurrency: args[:concurrency] || 1}
   end
 
   def handle_request_connection(%__MODULE__{bucket: bucket, concurrency: concurrency} = state) do
+    Logger.info("Received request to connect to ATC")
+
     with {_count, 0, ms_to_next_bucket, _created_at, _updated_at} <-
            ExRated.inspect_bucket(bucket, @connection_time, concurrency) do
       try_again_in(ms_to_next_bucket, state)

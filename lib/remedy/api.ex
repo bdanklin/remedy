@@ -752,8 +752,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:put, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil,
-     nil}
+    {:put, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -823,8 +822,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil,
-     nil}
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/@me", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -870,8 +868,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id", params, nil,
-     nil, nil}
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji/:user_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -993,8 +990,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji", params, nil, nil,
-     nil}
+    {:delete, "/channels/:channel_id/messages/:message_id/reactions/:emoji", params, nil, nil, nil}
     |> request()
   end
 
@@ -1629,8 +1625,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:post, "/channels/:channel_id/messages/:message_id/threads", params, nil, opts[:reason],
-     body}
+    {:post, "/channels/:channel_id/messages/:message_id/threads", params, nil, opts[:reason], body}
     |> request()
     |> shape(Thread)
   end
@@ -3000,8 +2995,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/guilds/:guild_id/members/:user_id/roles/:role_id", params, nil, opts[:reason],
-     nil}
+    {:delete, "/guilds/:guild_id/members/:user_id/roles/:role_id", params, nil, opts[:reason], nil}
     |> request()
   end
 
@@ -5505,8 +5499,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:patch, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query,
-     opts[:reason], body}
+    {:patch, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query, opts[:reason], body}
     |> request()
   end
 
@@ -5545,8 +5538,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query,
-     opts[:reason], nil}
+    {:delete, "/webhooks/:webhook_id/:webhook_token/messages/:message_id", params, query, opts[:reason], nil}
     |> request()
     |> shape()
   end
@@ -5914,8 +5906,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil,
-     nil, nil}
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, nil}
     |> request()
     |> shape(Command)
   end
@@ -5974,8 +5965,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:patch, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params,
-     nil, nil, body}
+    {:patch, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, body}
     |> request()
     |> shape(Command)
   end
@@ -6008,8 +5998,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:delete, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params,
-     nil, nil, nil}
+    {:delete, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id", params, nil, nil, nil}
     |> request()
     |> shape()
   end
@@ -6092,8 +6081,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil,
-     nil, nil}
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil, nil, nil}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6127,8 +6115,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions",
-     params, nil, nil, nil}
+    {:get, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions", params, nil, nil, nil}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6174,8 +6161,8 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions",
-     params, nil, nil, body}
+    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/:command_id/permissions", params, nil, nil,
+     body}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6221,8 +6208,7 @@ defmodule Remedy.API do
       {params_data, params_types}
       |> cast(params_attrs, params_keys)
 
-    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil,
-     nil, body}
+    {:put, "/applications/#{application_id()}/guilds/:guild_id/commands/permissions", params, nil, nil, body}
     |> request()
     |> shape(CommandPermission)
   end
@@ -6765,10 +6751,12 @@ defmodule Remedy.API do
   ## from elsewhere in the application. Passing it here would change the schema
   ## into a keyword list of options. Deleting the nils and not loaded
   ##
+  import Remedy.CastHelpers, only: [deep_compactor: 1, deep_string_key: 1]
+
   defp filter_schema_into_opts(schema) when is_struct(schema) do
     schema
     |> EctoMorph.deep_filter_by_schema_fields(schema[:__struct__], filter_not_loaded: true)
-    |> Morphix.compactiform!()
+    |> deep_compactor()
     |> Keyword.new(fn {k, v} -> {String.to_existing_atom(k), v} end)
   end
 
@@ -6787,7 +6775,7 @@ defmodule Remedy.API do
     do: {:ok, shape(return, module)}
 
   defp shape(%{} = params, module) when is_atom(module) do
-    Morphix.stringmorphiform!(params)
+    deep_string_key(params)
     |> module.changeset()
     |> Ecto.Changeset.apply_changes()
   end
@@ -6795,7 +6783,7 @@ defmodule Remedy.API do
   defp shape(params, fields) do
     Enum.filter(params, fn {k, _v} -> k in fields end)
     |> Enum.into(for(d <- fields, into: %{}, do: {d, nil}))
-    |> Morphix.compactiform!()
+    |> deep_string_key()
   end
 
   #############################################################################
@@ -6821,8 +6809,7 @@ defmodule Remedy.API do
 
     is_are = if at_least == 1, do: "is", else: "are"
 
-    error_msg =
-      String.trim_trailing("At least #{at_least} of: #{inspect(fields)} #{is_are} required.")
+    error_msg = String.trim_trailing("At least #{at_least} of: #{inspect(fields)} #{is_are} required.")
 
     field_presence =
       for field <- fields,

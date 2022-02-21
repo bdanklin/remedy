@@ -155,8 +155,7 @@ defmodule Remedy.MixProject do
       ## Rate Limiter
       {:ex_rated, "~> 2.0"},
       # TODO: Take what we need and remove
-      {:ecto_morph, "~> 0.1.25"},
-      {:morphix, "~> 0.8.1"}
+      {:ecto_morph, "~> 0.1.25"}
     ]
   end
 
@@ -174,8 +173,6 @@ defmodule Remedy.MixProject do
   end
 
   defp aliases do
-    [
-    ]
+    []
   end
-
 end

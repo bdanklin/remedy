@@ -3,7 +3,7 @@ defmodule Remedy.Rest do
 
   use Supervisor
   alias Remedy.Rest.{Request, Response, Lifeguard, Pool}
-
+  require Logger
   @spec start_link(any) :: {:ok, pid}
   def start_link(args) do
     Supervisor.start_link(__MODULE__, args, name: __MODULE__)
@@ -21,8 +21,8 @@ defmodule Remedy.Rest do
 
   def request(method, route, params, query, reason, body) do
     with %Request{} = request <- Request.new(method, route, params, query, reason, body),
+         :ok <- Logger.info("built_request"),
          worker <- Lifeguard.assign_worker(),
-         # TODO: make less shit
          {:ok, response} <- GenServer.call(:"CONNECTION_#{worker}", {:request, request}) do
       Lifeguard.return_to_pool(worker)
       Response.decode(response)

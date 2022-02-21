@@ -7,9 +7,22 @@ defmodule Remedy.Gateway.Session.WSState do
             mod: Gateway,
             data_stream: nil,
             zlib: nil,
+            port: 443,
+            url: 'gateway.discord.gg',
+            gateway_opts: %{
+              compress: :"zlib-stream",
+              encoding: :etf,
+              v: 9
+            },
+            conn_opts: %{
+              protocols: [:http],
+              retry: 3,
+              ws_opts: %{keepalive: 5000},
+              tls_opts: []
+            },
             token: nil,
             session_id: nil,
-            v: nil,
+            v: 9,
             ## Shard
             shard: nil,
             shards: nil,
@@ -33,10 +46,28 @@ defmodule Remedy.Gateway.Session.WSState do
     }
   end
 
-  def open_websocket(%__MODULE__{} = socket) do
-    with {:ok, conn} <- :gun.open(url(), port(), conn_opts()),
+  def open_websocket(%__MODULE__{gateway_opts: gateway_opts, conn_opts: conn_opts, port: port, url: url} = socket) do
+    gateway_opts =
+      gateway_opts
+      |> URI.encode_query(:rfc3986)
+      |> then(&Kernel.<>("/?", &1))
+      |> :erlang.binary_to_list()
+
+    conn_opts = %{
+      conn_opts
+      | tls_opts: [
+          verify: :verify_peer,
+          cacerts: :certifi.cacerts(),
+          depth: 3,
+          customize_hostname_check: [
+            match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+          ]
+        ]
+    }
+
+    with {:ok, conn} <- :gun.open(url, port, conn_opts),
          {:ok, :http} <- :gun.await_up(conn, 10_000),
-         data_stream <- :gun.ws_upgrade(conn, gateway_opts()),
+         data_stream <- :gun.ws_upgrade(conn, gateway_opts),
          {:upgrade, ["websocket"], _} <- :gun.await(conn, data_stream, 10_000) do
       %__MODULE__{socket | conn: conn, data_stream: data_stream}
     end
@@ -60,44 +91,4 @@ defmodule Remedy.Gateway.Session.WSState do
 
   ############################################################################
   ## Configuration
-
-  @doc false
-  def port do
-    443
-  end
-
-  @doc false
-  def url do
-    "gateway.discord.gg"
-    |> :erlang.binary_to_list()
-  end
-
-  @doc false
-  def gateway_opts do
-    %{
-      compress: :"zlib-stream",
-      encoding: :etf,
-      v: 10
-    }
-    |> URI.encode_query(:rfc3986)
-    |> then(&Kernel.<>("/?", &1))
-    |> :erlang.binary_to_list()
-  end
-
-  @doc false
-  def conn_opts do
-    %{
-      protocols: [:http],
-      retry: 3,
-      ws_opts: %{keepalive: 5000},
-      tls_opts: [
-        verify: :verify_peer,
-        cacerts: :certifi.cacerts(),
-        depth: 3,
-        customize_hostname_check: [
-          match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-        ]
-      ]
-    }
-  end
 end

@@ -1,6 +1,6 @@
 defmodule Remedy.Rest.Connection.State do
   @moduledoc false
-
+  require Logger
   ## conn:          HTTP CONNECTION PID
   ## url:           HTTP URL
   ## port:          HTTP PORT
@@ -29,9 +29,12 @@ defmodule Remedy.Rest.Connection.State do
     %__MODULE__{connection: number, alive_since: System.os_time(1000)}
   end
 
-  def open_http2(%__MODULE__{url: url, port: port} = state) do
-    with {:ok, conn} <- :gun.open(url, port, opts()),
-         {:ok, :http2} <- :gun.await_up(conn, 10_000) do
+  def open_http2(%__MODULE__{connection: connection, url: url, port: port} = state) do
+    with :ok <- Logger.info("HTTP Worker #{connection} Connecting..."),
+         {:ok, conn} <- :gun.open(url, port, opts()),
+         :ok <- Logger.info("HTTP Worker #{connection} Connected..."),
+         {:ok, :http2} <- :gun.await_up(conn, 10_000),
+         :ok <- Logger.info("HTTP Worker #{connection} Ready") do
       %__MODULE__{state | conn: conn}
     end
   end

@@ -11,7 +11,7 @@ defmodule Remedy.Rest.Request do
   #   "/gateway",
   #   "/applications/detectable"
   # ]
-  @api_version "/api/v10"
+  @api_version "/api/v9"
 
   @type method :: :get | :post | :put | :patch | :delete
   @type route :: String.t()
@@ -48,8 +48,11 @@ defmodule Remedy.Rest.Request do
             __discord_bucket__: nil,
             __raw__: nil
 
+  require Logger
   @spec new(method, route, params, query, reason, body) :: t()
   def new(method, route, params, query, reason, body) do
+    Logger.debug("Building Request")
+
     %__MODULE__{__raw__: %{method: method, route: route, params: params, query: query, reason: reason, body: body}}
     |> put_method()
     |> build_rate_limiter_info()

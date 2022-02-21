@@ -11,37 +11,31 @@ defmodule Remedy.CastHelpers do
 
   """
 
-  def deep_blast(item)
-      when is_struct(item) do
+  def deep_blast(item) when is_struct(item) do
     item
     |> Map.from_struct()
     |> deep_blast()
   end
 
-  def deep_blast(item)
-      when is_map(item) do
+  def deep_blast(item) when is_map(item) do
     for {k, v} <- item, into: %{} do
       {k, deep_blast(v)}
     end
   end
 
-  def deep_blast(item)
-      when is_list(item) do
+  def deep_blast(item) when is_list(item) do
     for k <- item, into: [] do
       deep_blast(k)
     end
   end
 
-  def deep_blast(item)
-      when is_tuple(item) do
+  def deep_blast(item) when is_tuple(item) do
     item
     |> Tuple.to_list()
     |> deep_blast()
   end
 
-  def deep_blast(item)
-      when is_binary(item)
-      when is_integer(item) do
+  def deep_blast(item) when is_binary(item) when is_integer(item) do
     item
   end
 
@@ -68,6 +62,8 @@ defmodule Remedy.CastHelpers do
   defp list_item(item) when is_list(item), do: for(k <- item, into: [], do: list_item(k))
   defp list_item(item), do: item
 
+  @spec deep_compactor(map) :: map
+  @spec deep_compactor(list) :: list
   def deep_compactor(map) when is_map(map) do
     map
     |> Enum.reduce(%{}, fn {k, v}, acc ->
@@ -79,23 +75,18 @@ defmodule Remedy.CastHelpers do
         true -> Map.put_new(acc, k, v)
       end
     end)
-    |> deep_compactor()
   end
 
   def deep_compactor(list) when is_list(list) do
     list
-    |> Enum.reduce([], fn elem, acc ->
-      cond do
-        is_list(elem) and Enum.empty?(elem) -> acc
-        is_list(elem) or is_map(elem) -> acc ++ [deep_compactor(elem)]
-        is_nil(elem) -> acc
-        true -> acc ++ [elem]
-      end
+    |> Enum.reduce([], fn
+      elem, acc ->
+        cond do
+          is_list(elem) and Enum.empty?(elem) -> acc
+          is_list(elem) or is_map(elem) -> acc ++ [deep_compactor(elem)]
+          is_nil(elem) -> acc
+          true -> acc ++ [elem]
+        end
     end)
-    |> deep_compactor()
-  end
-
-  def deep_compactor(not_map_or_list) do
-    raise(ArgumentError, message: "expecting a map or a list, got: #{inspect(not_map_or_list)}")
   end
 end

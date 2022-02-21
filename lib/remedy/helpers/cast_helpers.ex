@@ -39,6 +39,8 @@ defmodule Remedy.CastHelpers do
     item
   end
 
+  def deep_blast(nil), do: nil
+
   @spec deep_string_key(map) :: map
   def deep_string_key(item) when is_struct(item) do
     item

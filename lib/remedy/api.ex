@@ -69,7 +69,7 @@ defmodule Remedy.API do
 
   use Remedy.UnsafeHelpers,
     handler: :unwrap,
-    docs: true
+    docs: false
 
   use Remedy.Schema,
       :schema_alias

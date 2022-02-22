@@ -162,7 +162,8 @@ defmodule Remedy.MixProject do
   defp dev_deps do
     ## Dev / Test Only
     [
-      {:ex_doc, "~> 0.27.4", only: [:dev], hex: :remedy_exdoc, runtime: false},
+      # {:ex_doc, "~> 0.27.4", only: [:dev], hex: :remedy_exdoc, runtime: false},
+      {:ex_doc, "~> 0.27.4", only: [:dev], github: "/bdanklin/ex_doc", runtime: false},
       {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
       {:mix_unused, "~> 0.2.0", only: [:dev], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},

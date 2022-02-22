@@ -8,11 +8,17 @@ defmodule Remedy do
 
   ## Configuration
 
+  Configuration in Remedy can be provided as either environment variables or using `Config`
+
       config :remedy
         token: System.get_env("REMEDY_TOKEN")
         intents: 12,
         shards: :auto,
 
+
+  > #### Error {: .error}
+  >
+  > This syntax will render an error block
 
   Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.
 
@@ -111,7 +117,8 @@ defmodule Remedy do
   def env, do: @env
 
   @doc ""
-  def embedded, do: embedded(System.get_env("REMEDY_EMBEDDED") || Application.get_env(:remedy, :embedded, false))
+  def embedded,
+    do: embedded(System.get_env("REMEDY_EMBEDDED") || Application.get_env(:remedy, :embedded, false))
 
   defp embedded(str)
        when str in ["true", "TRUE", "false", "FALSE"] do
@@ -152,8 +159,12 @@ defmodule Remedy do
   defp check_shards("auto"), do: :ok
   defp check_shards(:auto), do: :ok
   defp check_shards(nil), do: Logger.warn("SHARDS NOT CONFIGURED, USING FALLBACK: :auto")
-  defp check_shards(shards) when is_integer(shards), do: Logger.warn("USING CONFIGURED SHARDS: #{shards}")
-  defp check_shards(_invalid), do: Logger.warn("INVALID SHARD CONFIGURATION, USING FALLBACK: :auto")
+
+  defp check_shards(shards) when is_integer(shards),
+    do: Logger.warn("USING CONFIGURED SHARDS: #{shards}")
+
+  defp check_shards(_invalid),
+    do: Logger.warn("INVALID SHARD CONFIGURATION, USING FALLBACK: :auto")
 
   alias Remedy.Gateway.Intents
   @doc "Retreive the configured gateway intents."
@@ -174,9 +185,15 @@ defmodule Remedy do
   @dialyzer {:no_match, {:check_intents, 1}}
   defp check_intents, do: check_intents(@env)
   defp check_intents(:dev), do: check_intents(System.get_env("REMEDY_GATEWAY_INTENTS"))
-  defp check_intents(:prod), do: check_intents(Application.get_env(:remedy, :gateway_intents, false))
+
+  defp check_intents(:prod),
+    do: check_intents(Application.get_env(:remedy, :gateway_intents, false))
+
   defp check_intents(false), do: Logger.warn("INTENTS NOT CONFIGURED, USING FALLBACK: :auto")
-  defp check_intents(:error), do: Logger.warn("INVALID INTENTS CONFIGURATION, USING FALLBACK: :auto")
+
+  defp check_intents(:error),
+    do: Logger.warn("INVALID INTENTS CONFIGURATION, USING FALLBACK: :auto")
+
   defp check_intents("auto"), do: :ok
   defp check_intents(:auto), do: :ok
   defp check_intents({:ok, _intents}), do: :ok

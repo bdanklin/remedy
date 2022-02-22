@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.27.4">
+    <meta name="generator" content="ExDoc v0.28.2">
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Gateway.Intents — Remedy v0.6.9</title>
@@ -110,18 +110,7 @@ Remedy
   </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">7221</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1011011100100100</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8023434328-1">[</span><span class="s">&quot;DIRECT_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DIRECT_MESSAGE_REACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILDS&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GUILD_EMOJIS_AND_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_INVITES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MESSAGES&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;GUILD_MESSAGE_REACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GUILD_MESSAGE_TYPING&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MESSAGE_CONTENT&quot;</span><span class="p" data-group-id="8023434328-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8723322685-1">[</span><span class="ss">:DIRECT_MESSAGE_REACTIONS</span><span class="p" data-group-id="8723322685-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8448041854-1">%{</span><span class="w">
-  </span><span class="ss">DIRECT_MESSAGE_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_EMOJIS_AND_STICKERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_INVITES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MESSAGE_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_MESSAGE_TYPING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_SCHEDULED_EVENTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">GUILD_WEBHOOKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="8448041854-1">}</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">104996</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1101100000100000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="7134715615-1">[</span><span class="s">&quot;GUILD_INVITES&quot;</span><span class="p" data-group-id="7134715615-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2027672494-1">[</span><span class="ss">:GUILD_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:GUILD_MESSAGE_TYPING</span><span class="p" data-group-id="2027672494-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5778523048-1">%{</span><span class="ss">DIRECT_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">GUILD_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">GUILD_VOICE_STATES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="5778523048-1">}</span></code></pre>
   </section>
 
 
@@ -366,7 +355,7 @@ Types
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.2) for the
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>

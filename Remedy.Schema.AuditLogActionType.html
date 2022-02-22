@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.27.4">
+    <meta name="generator" content="ExDoc v0.28.2">
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Schema.AuditLogActionType — Remedy v0.6.9</title>
@@ -110,7 +110,7 @@ Remedy
   </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">14</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;INTEGRATION_DELETE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:INVITE_UPDATE</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">91</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;EMOJI_DELETE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:WEBHOOK_DELETE</span></code></pre>
   </section>
 
 
@@ -239,53 +239,53 @@ Types
       <div class="specs">
 
           <pre translate="no">f() ::
-  :EMOJI_UPDATE
-  | :MEMBER_DISCONNECT
-  | :GUILD_SCHEDULED_EVENT_UPDATE
-  | :MESSAGE_DELETE
-  | :EMOJI_CREATE
-  | :STICKER_DELETE
-  | :MESSAGE_UNPIN
-  | :STAGE_INSTANCE_CREATE
-  | :GUILD_UPDATE
-  | :CHANNEL_UPDATE
-  | :ROLE_CREATE
-  | :GUILD_SCHEDULED_EVENT_CREATE
-  | :MEMBER_BAN_REMOVE
-  | :CHANNEL_OVERWRITE_UPDATE
-  | :THREAD_CREATE
-  | :MEMBER_PRUNE
-  | :WEBHOOK_DELETE
-  | :ROLE_DELETE
-  | :INVITE_DELETE
+  :CHANNEL_OVERWRITE_DELETE
   | :MEMBER_ROLE_UPDATE
-  | :EMOJI_DELETE
-  | :MEMBER_MOVE
-  | :GUILD_SCHEDULED_EVENT_DELETE
-  | :MESSAGE_PIN
-  | :STICKER_CREATE
-  | :THREAD_UPDATE
-  | :INTEGRATION_UPDATE
-  | :INTEGRATION_DELETE
-  | :STAGE_INSTANCE_UPDATE
-  | :ROLE_UPDATE
-  | :CHANNEL_OVERWRITE_DELETE
-  | :CHANNEL_DELETE
-  | :STICKER_UPDATE
-  | :CHANNEL_OVERWRITE_CREATE
-  | :MEMBER_UPDATE
-  | :CHANNEL_CREATE
-  | :MESSAGE_BULK_DELETE
-  | :STAGE_INSTANCE_DELETE
-  | :MEMBER_BAN_ADD
-  | :WEBHOOK_CREATE
-  | :BOT_ADD
-  | :INVITE_CREATE
-  | :INTEGRATION_CREATE
-  | :MEMBER_KICK
   | :THREAD_DELETE
+  | :CHANNEL_CREATE
+  | :MESSAGE_DELETE
+  | :MEMBER_MOVE
+  | :CHANNEL_UPDATE
+  | :MEMBER_BAN_ADD
+  | :STAGE_INSTANCE_DELETE
+  | :INVITE_CREATE
+  | :ROLE_CREATE
+  | :GUILD_SCHEDULED_EVENT_UPDATE
+  | :MEMBER_BAN_REMOVE
+  | :MEMBER_UPDATE
   | :INVITE_UPDATE
-  | :WEBHOOK_UPDATE</pre>
+  | :STICKER_UPDATE
+  | :STAGE_INSTANCE_UPDATE
+  | :STICKER_DELETE
+  | :ROLE_UPDATE
+  | :ROLE_DELETE
+  | :EMOJI_CREATE
+  | :INTEGRATION_DELETE
+  | :THREAD_CREATE
+  | :CHANNEL_OVERWRITE_CREATE
+  | :INVITE_DELETE
+  | :EMOJI_UPDATE
+  | :MEMBER_DISCONNECT
+  | :WEBHOOK_CREATE
+  | :WEBHOOK_DELETE
+  | :MESSAGE_PIN
+  | :GUILD_SCHEDULED_EVENT_CREATE
+  | :MESSAGE_BULK_DELETE
+  | :WEBHOOK_UPDATE
+  | :MEMBER_PRUNE
+  | :STAGE_INSTANCE_CREATE
+  | :BOT_ADD
+  | :STICKER_CREATE
+  | :MEMBER_KICK
+  | :EMOJI_DELETE
+  | :INTEGRATION_UPDATE
+  | :GUILD_UPDATE
+  | :CHANNEL_DELETE
+  | :GUILD_SCHEDULED_EVENT_DELETE
+  | :INTEGRATION_CREATE
+  | :CHANNEL_OVERWRITE_UPDATE
+  | :MESSAGE_UNPIN
+  | :THREAD_UPDATE</pre>
 
       </div>
 
@@ -385,7 +385,7 @@ Types
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.2) for the
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>

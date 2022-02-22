@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.27.4">
+    <meta name="generator" content="ExDoc v0.28.2">
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Schema.ActivityFlags — Remedy v0.6.9</title>
@@ -110,7 +110,12 @@ Remedy
   </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">354</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b110000011</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8909343095-1">[</span><span class="s">&quot;PARTY_PRIVACY_FRIENDS&quot;</span><span class="p" data-group-id="8909343095-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2875315427-1">[</span><span class="ss">:PARTY_PRIVACY_VOICE_CHANNEL</span><span class="p" data-group-id="2875315427-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5089146625-1">%{</span><span class="ss">PLAY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="5089146625-1">}</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">77</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b110010</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5790368399-1">[</span><span class="s">&quot;JOIN_REQUEST&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PARTY_PRIVACY_VOICE_CHANNEL&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SPECTATE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SYNC&quot;</span><span class="p" data-group-id="5790368399-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="7292354672-1">[</span><span class="ss">:INSTANCE</span><span class="p">,</span><span class="w"> </span><span class="ss">:JOIN_REQUEST</span><span class="p">,</span><span class="w"> </span><span class="ss">:PARTY_PRIVACY_FRIENDS</span><span class="p">,</span><span class="w"> </span><span class="ss">:PLAY</span><span class="p">,</span><span class="w"> </span><span class="ss">:SYNC</span><span class="p" data-group-id="7292354672-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8343842767-1">%{</span><span class="w">
+  </span><span class="ss">EMBEDDED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">JOIN_REQUEST</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">PARTY_PRIVACY_VOICE_CHANNEL</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SYNC</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="8343842767-1">}</span></code></pre>
   </section>
 
 
@@ -347,7 +352,7 @@ Types
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.2) for the
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>

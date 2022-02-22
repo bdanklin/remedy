@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.27.4">
+    <meta name="generator" content="ExDoc v0.28.2">
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Schema.GuildFeatures — Remedy v0.6.9</title>
@@ -110,21 +110,20 @@ Remedy
   </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">15893803</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b10000000000000000000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5547036788-1">[</span><span class="s">&quot;INVITE_SPLASH&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MEMBER_VERIFICATION_GATE_ENABLED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MONETIZATION_ENABLED&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;MORE_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;THREADS_ENABLED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;THREE_DAY_THREAD_ARCHIVE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIP_REGIONS&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;WELCOME_SCREEN_ENABLED&quot;</span><span class="p" data-group-id="5547036788-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="4398860302-1">[</span><span class="ss">:MORE_STICKERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:WELCOME_SCREEN_ENABLED</span><span class="p" data-group-id="4398860302-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="4058849531-1">%{</span><span class="w">
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">16</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b10001001001001011111001101</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2072305870-1">[</span><span class="s">&quot;ANIMATED_BANNER&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DISCOVERABLE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MORE_STICKERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;NEWS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;NEW_THREAD_PERMISSIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PARTNERED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PRIVATE_THREADS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;THREADS_ENABLED&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;VERIFIED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIP_REGIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;WELCOME_SCREEN_ENABLED&quot;</span><span class="p" data-group-id="2072305870-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5112118296-1">[</span><span class="ss">:CHANNEL_BANNER</span><span class="p">,</span><span class="w"> </span><span class="ss">:FEATURABLE</span><span class="p">,</span><span class="w"> </span><span class="ss">:INVITE_SPLASH</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:MEMBER_VERIFICATION_GATE_ENABLED</span><span class="p">,</span><span class="w"> </span><span class="ss">:MORE_STICKERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:PARTNERED</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:PREVIEW_ENABLED</span><span class="p">,</span><span class="w"> </span><span class="ss">:SEVEN_DAY_THREAD_ARCHIVE</span><span class="p" data-group-id="5112118296-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3701335929-1">%{</span><span class="w">
   </span><span class="ss">ANIMATED_BANNER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">ANIMATED_ICON</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">BANNER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">CHANNEL_BANNER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">COMMERCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">COMMUNITY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">FEATURABLE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">MONETIZATION_ENABLED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">MORE_STICKERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">PARTNERED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">THREADS_ENABLED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">WELCOME_SCREEN_ENABLED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="4058849531-1">}</span></code></pre>
+  </span><span class="ss">INVITE_SPLASH</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MEMBER_PROFILES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">NEW_THREAD_PERMISSIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="3701335929-1">}</span></code></pre>
   </section>
 
 
@@ -378,7 +377,7 @@ Types
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.2) for the
           <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>

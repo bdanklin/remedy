@@ -52,6 +52,7 @@ defmodule Remedy.MixProject do
 
   def extras do
     [
+      "README.md",
       "hello/introduction.md",
       "hello/getting_started.md"
     ]
@@ -134,7 +135,7 @@ defmodule Remedy.MixProject do
       links: %{
         "GitHub" => @scm_url
       },
-      files: ~w(lib mix.exs README.md .formatter.exs remedy.png)
+      files: ~w(lib mix.exs README.md .formatter.exs remedy.png remedy_banner.png)
     ]
   end
 

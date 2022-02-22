@@ -10,7 +10,7 @@
     <title>Remedy.TimeHelpers — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-4991850494.js"></script>
+    <script src="dist/sidebar_items-8ff26ccba9.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -367,11 +367,11 @@ Functions
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">date_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">DateTime</span><span class="o">.</span><span class="n">now!</span><span class="p" data-group-id="1510000852-1">(</span><span class="s">&quot;Etc/UTC&quot;</span><span class="p" data-group-id="1510000852-1">)</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">is_datetime?</span><span class="p" data-group-id="1510000852-2">(</span><span class="n">date_time</span><span class="p" data-group-id="1510000852-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">date_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">DateTime</span><span class="o">.</span><span class="n">now!</span><span class="p" data-group-id="0033680629-1">(</span><span class="s">&quot;Etc/UTC&quot;</span><span class="p" data-group-id="0033680629-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">is_datetime?</span><span class="p" data-group-id="0033680629-2">(</span><span class="n">date_time</span><span class="p" data-group-id="0033680629-2">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;2020-01-01T00:00:00Z&quot;</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">is_datetime?</span><span class="p" data-group-id="1510000852-3">(</span><span class="p" data-group-id="1510000852-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="s">&quot;2020-01-01T00:00:00Z&quot;</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">is_datetime?</span><span class="p" data-group-id="0033680629-3">(</span><span class="p" data-group-id="0033680629-3">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
@@ -598,19 +598,19 @@ nil</p><p>iex&gt; Remedy.TimeHelpers.to_datetime(15824000000000)
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="1841785713-1">(</span><span class="no">nil</span><span class="p" data-group-id="1841785713-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="5038853248-1">(</span><span class="no">nil</span><span class="p" data-group-id="5038853248-1">)</span><span class="w">
 </span><span class="no">nil</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="1841785713-2">(</span><span class="mi">15824000000000</span><span class="p" data-group-id="1841785713-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="5038853248-2">(</span><span class="mi">15824000000000</span><span class="p" data-group-id="5038853248-2">)</span><span class="w">
 </span><span class="s">&quot;2015-01-01T01:02:52.735Z&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="1841785713-3">(</span><span class="mi">919970797920067654</span><span class="p" data-group-id="1841785713-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="5038853248-3">(</span><span class="mi">919970797920067654</span><span class="p" data-group-id="5038853248-3">)</span><span class="w">
 </span><span class="s">&quot;2021-12-13T15:15:30.455Z&quot;</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="1841785713-4">(</span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="p" data-group-id="1841785713-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="5038853248-4">(</span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="p" data-group-id="5038853248-4">)</span><span class="w">
 </span><span class="s">&quot;2021-12-13T15:13:33.774426Z&quot;</span><span class="w">
 
-</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="1841785713-5">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="1841785713-5">)</span><span class="w">
+</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="5038853248-5">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="5038853248-5">)</span><span class="w">
 </span><span class="ss">:error</span></code></pre>
   </section>
 </section>
@@ -669,19 +669,19 @@ nil</p><p>iex&gt; Remedy.TimeHelpers.to_datetime(15824000000000)
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="5494479093-1">(</span><span class="no">nil</span><span class="p" data-group-id="5494479093-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6107777354-1">(</span><span class="no">nil</span><span class="p" data-group-id="6107777354-1">)</span><span class="w">
 </span><span class="no">nil</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="5494479093-2">(</span><span class="mi">797634639408530455</span><span class="p" data-group-id="5494479093-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6107777354-2">(</span><span class="mi">797634639408530455</span><span class="p" data-group-id="6107777354-2">)</span><span class="w">
 </span><span class="mi">1610241317369</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="5494479093-3">(</span><span class="s">&quot;2021-01-10T01:15:17.369Z&quot;</span><span class="p" data-group-id="5494479093-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6107777354-3">(</span><span class="s">&quot;2021-01-10T01:15:17.369Z&quot;</span><span class="p" data-group-id="6107777354-3">)</span><span class="w">
 </span><span class="mi">1610241317369</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="n">date_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">DateTime</span><span class="o">.</span><span class="n">now!</span><span class="p" data-group-id="5494479093-4">(</span><span class="s">&quot;Etc/UTC&quot;</span><span class="p" data-group-id="5494479093-4">)</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="5494479093-5">(</span><span class="n">date_time</span><span class="p" data-group-id="5494479093-5">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">date_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">DateTime</span><span class="o">.</span><span class="n">now!</span><span class="p" data-group-id="6107777354-4">(</span><span class="s">&quot;Etc/UTC&quot;</span><span class="p" data-group-id="6107777354-4">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6107777354-5">(</span><span class="n">date_time</span><span class="p" data-group-id="6107777354-5">)</span><span class="w">
 
-</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="5494479093-6">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="5494479093-6">)</span><span class="w">
+</span><span class="n">iex</span><span class="w"> </span><span class="nc">Remedy.TimeHelpers</span><span class="o">.</span><span class="n">to_unixtime</span><span class="p" data-group-id="6107777354-6">(</span><span class="ss">:some_atom</span><span class="p" data-group-id="6107777354-6">)</span><span class="w">
 </span><span class="ss">:error</span></code></pre>
   </section>
 </section>

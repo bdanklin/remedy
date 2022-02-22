@@ -110,7 +110,7 @@ Remedy
   </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">72</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;INTEGRATION_CREATE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:MESSAGE_DELETE</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">83</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;WEBHOOK_DELETE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:GUILD_SCHEDULED_EVENT_CREATE</span></code></pre>
   </section>
 
 
@@ -239,53 +239,53 @@ Types
       <div class="specs">
 
           <pre translate="no">f() ::
-  :CHANNEL_OVERWRITE_UPDATE
-  | :MEMBER_UPDATE
-  | :THREAD_UPDATE
-  | :GUILD_UPDATE
-  | :EMOJI_DELETE
+  :CHANNEL_OVERWRITE_DELETE
   | :MEMBER_ROLE_UPDATE
-  | :CHANNEL_CREATE
-  | :MEMBER_PRUNE
-  | :STAGE_INSTANCE_UPDATE
-  | :ROLE_DELETE
-  | :BOT_ADD
-  | :GUILD_SCHEDULED_EVENT_CREATE
-  | :MEMBER_BAN_ADD
-  | :MEMBER_BAN_REMOVE
-  | :INVITE_CREATE
-  | :STICKER_CREATE
-  | :STAGE_INSTANCE_CREATE
-  | :STICKER_UPDATE
-  | :ROLE_CREATE
-  | :ROLE_UPDATE
-  | :WEBHOOK_DELETE
-  | :INTEGRATION_UPDATE
-  | :GUILD_SCHEDULED_EVENT_DELETE
-  | :CHANNEL_DELETE
-  | :INVITE_UPDATE
-  | :EMOJI_CREATE
-  | :MEMBER_MOVE
   | :THREAD_DELETE
-  | :INVITE_DELETE
-  | :WEBHOOK_UPDATE
-  | :MESSAGE_BULK_DELETE
-  | :STICKER_DELETE
+  | :CHANNEL_CREATE
   | :MESSAGE_DELETE
-  | :WEBHOOK_CREATE
-  | :MEMBER_KICK
-  | :INTEGRATION_DELETE
-  | :MEMBER_DISCONNECT
-  | :STAGE_INSTANCE_DELETE
-  | :CHANNEL_OVERWRITE_DELETE
-  | :EMOJI_UPDATE
-  | :INTEGRATION_CREATE
+  | :MEMBER_MOVE
   | :CHANNEL_UPDATE
+  | :MEMBER_BAN_ADD
+  | :STAGE_INSTANCE_DELETE
+  | :INVITE_CREATE
+  | :ROLE_CREATE
   | :GUILD_SCHEDULED_EVENT_UPDATE
-  | :MESSAGE_UNPIN
+  | :MEMBER_BAN_REMOVE
+  | :MEMBER_UPDATE
+  | :INVITE_UPDATE
+  | :STICKER_UPDATE
+  | :STAGE_INSTANCE_UPDATE
+  | :STICKER_DELETE
+  | :ROLE_UPDATE
+  | :ROLE_DELETE
+  | :EMOJI_CREATE
+  | :INTEGRATION_DELETE
+  | :THREAD_CREATE
   | :CHANNEL_OVERWRITE_CREATE
+  | :INVITE_DELETE
+  | :EMOJI_UPDATE
+  | :MEMBER_DISCONNECT
+  | :WEBHOOK_CREATE
+  | :WEBHOOK_DELETE
   | :MESSAGE_PIN
-  | :THREAD_CREATE</pre>
+  | :GUILD_SCHEDULED_EVENT_CREATE
+  | :MESSAGE_BULK_DELETE
+  | :WEBHOOK_UPDATE
+  | :MEMBER_PRUNE
+  | :STAGE_INSTANCE_CREATE
+  | :BOT_ADD
+  | :STICKER_CREATE
+  | :MEMBER_KICK
+  | :EMOJI_DELETE
+  | :INTEGRATION_UPDATE
+  | :GUILD_UPDATE
+  | :CHANNEL_DELETE
+  | :GUILD_SCHEDULED_EVENT_DELETE
+  | :INTEGRATION_CREATE
+  | :CHANNEL_OVERWRITE_UPDATE
+  | :MESSAGE_UNPIN
+  | :THREAD_UPDATE</pre>
 
       </div>
 

@@ -5,7 +5,7 @@ defmodule Remedy.Websocket.Command do
     only: [to_pascal: 1]
 
   import Remedy.CastHelpers,
-    only: [deep_blast: 1, deep_string_key: 1]
+    only: [deep_destructor: 1, deep_string_key: 1]
 
   def send(%{mod: mod, conn: conn, data_stream: data_stream} = socket, command, opts \\ []) do
     op_code_mod =
@@ -23,14 +23,16 @@ defmodule Remedy.Websocket.Command do
       [Remedy, mod, Commands, handler]
       |> Module.concat()
 
-    payload = module.send(socket, opts)
+    payload =
+      socket
+      |> module.send(opts)
 
     payload =
       %{
         "d" => payload,
         "op" => op_code_mod.to_integer(command)
       }
-      |> deep_blast()
+      |> deep_destructor()
       |> deep_string_key()
       |> :erlang.term_to_binary()
 

@@ -11,35 +11,29 @@ defmodule Remedy.CastHelpers do
 
   """
 
-  def deep_blast(item) when is_struct(item) do
+  def deep_destructor(item) when is_map(item) do
+    if(is_struct(item), do: Map.from_struct(item), else: item)
+    |> Enum.reduce(%{}, fn
+      {k, v}, acc when is_map(v) -> Map.put_new(acc, k, deep_destructor(v))
+      {k, v}, acc when is_list(v) -> Map.put_new(acc, k, inner_list_destructor(v))
+      {k, v}, acc when is_tuple(v) -> Map.put_new(acc, k, Tuple.to_list(v) |> inner_list_destructor())
+      {k, v}, acc when is_integer(v) when is_binary(v) -> Map.put_new(acc, k, v)
+      {k, v}, acc when is_nil(v) -> Map.put_new(acc, k, v)
+      _, acc -> acc
+    end)
+  end
+
+  defp inner_list_destructor(item) when is_list(item) do
     item
-    |> Map.from_struct()
-    |> deep_blast()
+    |> Enum.reduce([], fn
+      v, acc when is_map(v) -> [deep_destructor(v) | acc]
+      v, acc when is_list(v) -> [inner_list_destructor(v) | acc]
+      v, acc when is_tuple(v) -> [Tuple.to_list(v) |> inner_list_destructor() | acc]
+      v, acc when is_integer(v) when is_binary(v) -> [v | acc]
+      v, acc when is_nil(v) -> [v | acc]
+    end)
+    |> Enum.reverse()
   end
-
-  def deep_blast(item) when is_map(item) do
-    for {k, v} <- item, into: %{} do
-      {k, deep_blast(v)}
-    end
-  end
-
-  def deep_blast(item) when is_list(item) do
-    for k <- item, into: [] do
-      deep_blast(k)
-    end
-  end
-
-  def deep_blast(item) when is_tuple(item) do
-    item
-    |> Tuple.to_list()
-    |> deep_blast()
-  end
-
-  def deep_blast(item) when is_binary(item) when is_integer(item) do
-    item
-  end
-
-  def deep_blast(nil), do: nil
 
   @spec deep_string_key(map) :: map
   def deep_string_key(item) when is_struct(item) do

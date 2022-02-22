@@ -32,3 +32,4 @@ doc
 # ignore environment variables
 .env
 guides
+.vscode

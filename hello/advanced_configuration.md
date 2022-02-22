@@ -1,13 +1,14 @@
 # Advanced Configuration
 
-Remedy provides a felxible system for configuration. You can provide secrets as either environment variables, using `Config`, or by providing the values when starting the supervision tree manually.
+Remedy provides a felxible system for configuration. You can provide secrets as
+either environment variables, using `Config`, or by providing the values when
+starting the supervision tree manually.
 
 The heirarchy of configuration values is
 
     Arguments   >  Config   >  Environment Variables
 
-That is if you set a config value and an environment variable, the environment
-variable will be ignored. The available configuration are
+That is if you set a config value and an environment variable, the environment variable will be ignored. The available configuration are
 
 | env                           | config             | args               |
 | ----                          | ----               | ----               |
@@ -30,9 +31,8 @@ export REMEDY_MAX_WORKERS="2"
 export REMEDY_GATEWAY_SHARDS="1"
 ```
 
-Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.
 
-- `:token` (required)
+- `:token`
 Your bots token, available from your
 [Application Dashboard](https://discord.com/developers/applications)
 - `:shards`

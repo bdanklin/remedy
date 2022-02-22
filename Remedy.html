@@ -8,13 +8,13 @@
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy — Remedy v0.6.9</title>
-    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+    <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-2092f44021.js"></script>
+    <script src="dist/sidebar_items-4991850494.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
 
 
   </head>
@@ -30,19 +30,21 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle">
-  <span class="icon-menu" title="Collapse/expand sidebar"></span>
-</button>
 
 <section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
-      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
     <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
     </button>
     <label class="search-label">
+      <p class="sr-only">Search</p>
       <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
     </label>
   </form>
@@ -53,6 +55,11 @@
   </div>
 
   <div class="sidebar-header">
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
     <div class="sidebar-projectDetails">
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
@@ -61,20 +68,15 @@ Remedy
         v0.6.9
       </strong>
     </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
-      <a href="https://bdanklin.github.io/remedy/">
-        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
-      </a>
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
+
+    </ul>
   </div>
 
-  <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
-
-      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
-
-
-  </ul>
   <div class="gradient"></div>
   <ul id="full-list" class="sidebar-fullList"></ul>
 </section>
@@ -84,42 +86,55 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy</span> 
-  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
 
     <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L1" title="View Source" class="view-source" rel="help">
-      <span class="icon-code" aria-hidden="true"></span>
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
+  <span translate="no">Remedy</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
 </h1>
 
 
   <section id="moduledoc">
 <p>This is the documentation for the Remedy library.</p><h2 id="module-configuration" class="section-heading">
-  <a href="#module-configuration" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-configuration" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">configuration</p>
+  </a>
   Configuration
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="n">config</span><span class="w"> </span><span class="ss">:remedy</span><span class="w">
-  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="nc">System</span><span class="o">.</span><span class="n">get_env</span><span class="p" data-group-id="5297817942-1">(</span><span class="s">&quot;REMEDY_TOKEN&quot;</span><span class="p" data-group-id="5297817942-1">)</span><span class="w">
+<p>Configuration in Remedy can be provided as either environment variables or using <a href="https://hexdocs.pm/elixir/Config.html"><code class="inline">Config</code></a></p><pre><code class="makeup elixir" translate="no"><span class="n">config</span><span class="w"> </span><span class="ss">:remedy</span><span class="w">
+  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="nc">System</span><span class="o">.</span><span class="n">get_env</span><span class="p" data-group-id="2469569757-1">(</span><span class="s">&quot;REMEDY_TOKEN&quot;</span><span class="p" data-group-id="2469569757-1">)</span><span class="w">
   </span><span class="ss">intents</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
-  </span><span class="ss">shards</span><span class="p">:</span><span class="w"> </span><span class="ss">:auto</span><span class="p">,</span></code></pre><p>Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.</p><ul><li><p><code class="inline">:token</code> (required)
+  </span><span class="ss">shards</span><span class="p">:</span><span class="w"> </span><span class="ss">:auto</span><span class="p">,</span></code></pre><blockquote><h4 class="error">Error</h4><p>This syntax will render an error block</p></blockquote><p>Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.</p><ul><li><p><code class="inline">:token</code> (required)
 Your bots token, available from your
 <a href="https://discord.com/developers/applications">Application Dashboard</a></p></li><li><p><code class="inline">:shards</code>
 Number of shards to use.</p></li><li><p><code class="inline">:intents</code>
 See <a href="Remedy.Gateway.Intents.html"><code class="inline">Remedy.Gateway.Intents</code></a> for more information</p></li><li><p><code class="inline">:min_workers</code>
 The minimum number of HTTP2 connections to keep open. Defaults to 1, cannot be zero.</p></li><li><p><code class="inline">:max_workers</code>
 The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be zero.</p></li></ul><h3 id="module-environment-variables" class="section-heading">
-  <a href="#module-environment-variables" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-environment-variables" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">environment-variables</p>
+  </a>
   Environment Variables
 </h3>
 <p>It is recommended to use environment variables to store sensitive configuration. So that they are not exposed if you should upload your project to GitHub etc. If a token is uploded to a public repo, Discord will notice and invalidate it.</p><h2 id="module-connection-limits" class="section-heading">
-  <a href="#module-connection-limits" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-connection-limits" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">connection-limits</p>
+  </a>
   Connection Limits
 </h2>
 <p>Some hosting platforms will limit the number of connections you are allowed to keep active at any one time.</p><p>Each shard and HTTP2 worker will count for an individual connection. In addition to any other connections required for your application. Phoenix will establish 10 connections to the database by default. If you are using Heroku free tier (20 connection limit) you could run out of connections for users visiting your web application. In those cases you should consider limiting the number of shards and HTTP2 workers.</p><p>We recommend using <a href="https://www.gigalixir.com/">Gigalixir</a> or <a href="https://fly.io/">Fly.io</a> for your hosting platform. The gigalixir free tier has unlimited connections and will allow your bot to run automatically configured shards without issues.</p><h2 id="module-ffmpeg" class="section-heading">
-  <a href="#module-ffmpeg" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-ffmpeg" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">ffmpeg</p>
+  </a>
   FFmpeg
 </h2>
 
@@ -129,7 +144,7 @@ The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
       Summary
@@ -226,7 +241,7 @@ The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be 
   <section id="functions" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Functions
@@ -236,14 +251,14 @@ Functions
 
   <div class="detail-header">
     <a href="#embedded/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">embedded()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L114" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L120" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -262,14 +277,14 @@ Functions
 
   <div class="detail-header">
     <a href="#intents/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">intents()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L162" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L173" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -295,14 +310,14 @@ Functions
 
   <div class="detail-header">
     <a href="#max_workers/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">max_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L195" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L212" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -328,14 +343,14 @@ Functions
 
   <div class="detail-header">
     <a href="#min_workers/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">min_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L187" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L204" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -361,14 +376,14 @@ Functions
 
   <div class="detail-header">
     <a href="#shards/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">shards()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L138" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L145" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -394,14 +409,14 @@ Functions
 
   <div class="detail-header">
     <a href="#start_link/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">start_link(args)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L75" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L81" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -420,14 +435,14 @@ Functions
 
   <div class="detail-header">
     <a href="#system_architecture/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">system_architecture()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L203" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L220" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -453,14 +468,14 @@ Functions
 
   <div class="detail-header">
     <a href="#token/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">token()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L126" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L133" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -488,39 +503,26 @@ Functions
 
       <footer class="footer">
 
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
         <p>
-          Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
-
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy.ex">(current file)</a>
-
-        </p>
-
-        <p>
-          <span class="line">
-            Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
-          </span>
-          <span class="line">
-            Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
-          </span>
-        </p>
-        <p>
-
-            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
-
-          <button class="line footer-button display-shortcuts-help">
-            Display keyboard shortcuts
-          </button>
-          <button class="line footer-button display-quick-switch">
-            Go to a HexDocs package
-          </button>
-          <button class="line footer-button display-settings">
-            Settings
-          </button>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>
     </div>

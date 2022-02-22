@@ -8,13 +8,13 @@
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Schema.Permission — Remedy v0.6.9</title>
-    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+    <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-2092f44021.js"></script>
+    <script src="dist/sidebar_items-4991850494.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
 
 
   </head>
@@ -30,19 +30,21 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle">
-  <span class="icon-menu" title="Collapse/expand sidebar"></span>
-</button>
 
 <section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
-      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
     <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
     </button>
     <label class="search-label">
+      <p class="sr-only">Search</p>
       <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
     </label>
   </form>
@@ -53,6 +55,11 @@
   </div>
 
   <div class="sidebar-header">
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
     <div class="sidebar-projectDetails">
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
@@ -61,20 +68,15 @@ Remedy
         v0.6.9
       </strong>
     </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
-      <a href="https://bdanklin.github.io/remedy/">
-        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
-      </a>
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
+
+    </ul>
   </div>
 
-  <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
-
-      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
-
-
-  </ul>
   <div class="gradient"></div>
   <ul id="full-list" class="sidebar-fullList"></ul>
 </section>
@@ -84,49 +86,60 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Schema.Permission</span> 
-  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
 
     <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" title="View Source" class="view-source" rel="help">
-      <span class="icon-code" aria-hidden="true"></span>
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
+  <span translate="no">Remedy.Schema.Permission</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
 </h1>
 
 
   <section id="moduledoc">
 <p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible bit flag type.</p><table><thead><tr><th style="text-align: right;">Bit</th><th style="text-align: left;">Flag</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 0</code></td><td style="text-align: left;"><code class="inline">:CREATE_INSTANT_INVITE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 1</code></td><td style="text-align: left;"><code class="inline">:KICK_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 2</code></td><td style="text-align: left;"><code class="inline">:BAN_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 3</code></td><td style="text-align: left;"><code class="inline">:ADMINISTRATOR</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 4</code></td><td style="text-align: left;"><code class="inline">:MANAGE_CHANNELS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 5</code></td><td style="text-align: left;"><code class="inline">:MANAGE_GUILD</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 6</code></td><td style="text-align: left;"><code class="inline">:ADD_REACTIONS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 7</code></td><td style="text-align: left;"><code class="inline">:VIEW_AUDIT_LOG</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 8</code></td><td style="text-align: left;"><code class="inline">:PRIORITY_SPEAKER</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 9</code></td><td style="text-align: left;"><code class="inline">:STREAM</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 10</code></td><td style="text-align: left;"><code class="inline">:VIEW_CHANNEL</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 11</code></td><td style="text-align: left;"><code class="inline">:SEND_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 12</code></td><td style="text-align: left;"><code class="inline">:SEND_TTS_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 13</code></td><td style="text-align: left;"><code class="inline">:MANAGE_MESSAGES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 14</code></td><td style="text-align: left;"><code class="inline">:EMBED_LINKS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 15</code></td><td style="text-align: left;"><code class="inline">:ATTACH_FILES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 16</code></td><td style="text-align: left;"><code class="inline">:READ_MESSAGE_HISTORY</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 17</code></td><td style="text-align: left;"><code class="inline">:MENTION_EVERYONE</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 18</code></td><td style="text-align: left;"><code class="inline">:USE_EXTERNAL_EMOJIS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 19</code></td><td style="text-align: left;"><code class="inline">:VIEW_GUILD_INSIGHTS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 20</code></td><td style="text-align: left;"><code class="inline">:CONNECT</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 21</code></td><td style="text-align: left;"><code class="inline">:SPEAK</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 22</code></td><td style="text-align: left;"><code class="inline">:MUTE_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 23</code></td><td style="text-align: left;"><code class="inline">:DEAFEN_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 24</code></td><td style="text-align: left;"><code class="inline">:MOVE_MEMBERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 25</code></td><td style="text-align: left;"><code class="inline">:USE_VAD</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 26</code></td><td style="text-align: left;"><code class="inline">:CHANGE_NICKNAME</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 27</code></td><td style="text-align: left;"><code class="inline">:MANAGE_NICKNAMES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 28</code></td><td style="text-align: left;"><code class="inline">:MANAGE_ROLES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 29</code></td><td style="text-align: left;"><code class="inline">:MANAGE_WEBHOOKS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 30</code></td><td style="text-align: left;"><code class="inline">:MANAGE_EMOJIS_AND_STICKERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 31</code></td><td style="text-align: left;"><code class="inline">:USE_APPLICATION_COMMANDS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 32</code></td><td style="text-align: left;"><code class="inline">:REQUEST_TO_SPEAK</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 33</code></td><td style="text-align: left;"><code class="inline">:MANAGE_EVENTS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 34</code></td><td style="text-align: left;"><code class="inline">:MANAGE_THREADS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 35</code></td><td style="text-align: left;"><code class="inline">:USE_PUBLIC_THREADS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 36</code></td><td style="text-align: left;"><code class="inline">:USE_PRIVATE_THREADS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 37</code></td><td style="text-align: left;"><code class="inline">:USE_EXTERNAL_STICKERS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 38</code></td><td style="text-align: left;"><code class="inline">:SEND_MESSAGES_IN_THREADS</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 39</code></td><td style="text-align: left;"><code class="inline">:START_EMBEDDED_ACTIVITIES</code></td></tr><tr><td style="text-align: right;"><code class="inline">1 &lt;&lt; 40</code></td><td style="text-align: left;"><code class="inline">:MODERATE_MEMBERS</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
-  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-casting" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">casting</p>
+  </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">225419101456</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11101010001001110011010000000100000010110</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="4439497618-1">[</span><span class="s">&quot;ATTACH_FILES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;BAN_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CONNECT&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CREATE_INSTANT_INVITE&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;EMBED_LINKS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;KICK_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_GUILD&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_MESSAGES&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;MANAGE_NICKNAMES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_ROLES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_THREADS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MODERATE_MEMBERS&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;MOVE_MEMBERS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PRIORITY_SPEAKER&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;READ_MESSAGE_HISTORY&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;REQUEST_TO_SPEAK&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;STREAM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;USE_EXTERNAL_EMOJIS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIEW_CHANNEL&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VIEW_GUILD_INSIGHTS&quot;</span><span class="p" data-group-id="4439497618-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5269930778-1">[</span><span class="ss">:ADMINISTRATOR</span><span class="p">,</span><span class="w"> </span><span class="ss">:DEAFEN_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:EMBED_LINKS</span><span class="p">,</span><span class="w"> </span><span class="ss">:MANAGE_EMOJIS_AND_STICKERS</span><span class="p">,</span><span class="w">
- </span><span class="ss">:MANAGE_GUILD</span><span class="p">,</span><span class="w"> </span><span class="ss">:MANAGE_ROLES</span><span class="p">,</span><span class="w"> </span><span class="ss">:MANAGE_THREADS</span><span class="p">,</span><span class="w"> </span><span class="ss">:MENTION_EVERYONE</span><span class="p">,</span><span class="w">
- </span><span class="ss">:MUTE_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:PRIORITY_SPEAKER</span><span class="p">,</span><span class="w"> </span><span class="ss">:READ_MESSAGE_HISTORY</span><span class="p">,</span><span class="w">
- </span><span class="ss">:SEND_MESSAGES_IN_THREADS</span><span class="p">,</span><span class="w"> </span><span class="ss">:SPEAK</span><span class="p">,</span><span class="w"> </span><span class="ss">:USE_APPLICATION_COMMANDS</span><span class="p">,</span><span class="w">
- </span><span class="ss">:USE_EXTERNAL_EMOJIS</span><span class="p">,</span><span class="w"> </span><span class="ss">:VIEW_GUILD_INSIGHTS</span><span class="p" data-group-id="5269930778-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8140734209-1">%{</span><span class="w">
-  </span><span class="ss">ADMINISTRATOR</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">EMBED_LINKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">KICK_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">MANAGE_EVENTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">586716586575</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1101000010000000000000100000000000000000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5056104333-1">[</span><span class="s">&quot;ADD_REACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ATTACH_FILES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CREATE_INSTANT_INVITE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;DEAFEN_MEMBERS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MANAGE_EVENTS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_MESSAGES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_ROLES&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MANAGE_THREADS&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;MANAGE_WEBHOOKS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MENTION_EVERYONE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;REQUEST_TO_SPEAK&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SPEAK&quot;</span><span class="p" data-group-id="5056104333-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6440150523-1">[</span><span class="ss">:ADMINISTRATOR</span><span class="p">,</span><span class="w"> </span><span class="ss">:MOVE_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:MUTE_MEMBERS</span><span class="p">,</span><span class="w"> </span><span class="ss">:USE_PRIVATE_THREADS</span><span class="p">,</span><span class="w">
+ </span><span class="ss">:USE_PUBLIC_THREADS</span><span class="p" data-group-id="6440150523-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="4863207041-1">%{</span><span class="w">
+  </span><span class="ss">ADD_REACTIONS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">ATTACH_FILES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">CREATE_INSTANT_INVITE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_CHANNELS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_EMOJIS_AND_STICKERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">MANAGE_NICKNAMES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">MANAGE_ROLES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MANAGE_WEBHOOKS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MENTION_EVERYONE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MODERATE_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">MOVE_MEMBERS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">READ_MESSAGE_HISTORY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">REQUEST_TO_SPEAK</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">SPEAK</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="8140734209-1">}</span></code></pre>
+  </span><span class="ss">SEND_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SEND_MESSAGES_IN_THREADS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SEND_TTS_MESSAGES</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">STREAM</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">USE_PUBLIC_THREADS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VIEW_CHANNEL</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">VIEW_GUILD_INSIGHTS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="4863207041-1">}</span></code></pre>
   </section>
 
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
       Summary
@@ -185,7 +198,7 @@ Remedy
   <section id="types" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Types
@@ -195,14 +208,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:c/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">c()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -228,14 +241,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:f/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">f()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -248,47 +261,47 @@ Types
       <div class="specs">
 
           <pre translate="no">f() ::
-  :MOVE_MEMBERS
-  | :USE_EXTERNAL_STICKERS
-  | :START_EMBEDDED_ACTIVITIES
-  | :VIEW_CHANNEL
-  | :REQUEST_TO_SPEAK
-  | :MENTION_EVERYONE
-  | :DEAFEN_MEMBERS
+  :USE_PUBLIC_THREADS
   | :READ_MESSAGE_HISTORY
-  | :ATTACH_FILES
-  | :CHANGE_NICKNAME
-  | :VIEW_GUILD_INSIGHTS
-  | :USE_VAD
-  | :MANAGE_WEBHOOKS
-  | :MANAGE_CHANNELS
-  | :USE_PUBLIC_THREADS
-  | :VIEW_AUDIT_LOG
-  | :MANAGE_MESSAGES
-  | :USE_PRIVATE_THREADS
-  | :SEND_MESSAGES_IN_THREADS
-  | :SPEAK
-  | :MUTE_MEMBERS
-  | :SEND_TTS_MESSAGES
-  | :MANAGE_NICKNAMES
+  | :START_EMBEDDED_ACTIVITIES
   | :USE_EXTERNAL_EMOJIS
   | :MODERATE_MEMBERS
-  | :MANAGE_ROLES
-  | :MANAGE_THREADS
   | :CONNECT
-  | :ADD_REACTIONS
-  | :PRIORITY_SPEAKER
-  | :KICK_MEMBERS
-  | :SEND_MESSAGES
   | :ADMINISTRATOR
-  | :MANAGE_GUILD
-  | :MANAGE_EMOJIS_AND_STICKERS
-  | :MANAGE_EVENTS
-  | :BAN_MEMBERS
+  | :SPEAK
+  | :SEND_MESSAGES
+  | :VIEW_CHANNEL
+  | :VIEW_GUILD_INSIGHTS
+  | :USE_PRIVATE_THREADS
+  | :SEND_TTS_MESSAGES
+  | :MANAGE_THREADS
+  | :SEND_MESSAGES_IN_THREADS
+  | :MUTE_MEMBERS
+  | :DEAFEN_MEMBERS
+  | :CREATE_INSTANT_INVITE
+  | :ADD_REACTIONS
+  | :MOVE_MEMBERS
   | :STREAM
+  | :MANAGE_GUILD
   | :USE_APPLICATION_COMMANDS
+  | :MANAGE_WEBHOOKS
+  | :MANAGE_ROLES
+  | :PRIORITY_SPEAKER
   | :EMBED_LINKS
-  | :CREATE_INSTANT_INVITE</pre>
+  | :USE_EXTERNAL_STICKERS
+  | :MANAGE_EMOJIS_AND_STICKERS
+  | :MANAGE_CHANNELS
+  | :CHANGE_NICKNAME
+  | :MANAGE_NICKNAMES
+  | :KICK_MEMBERS
+  | :MANAGE_EVENTS
+  | :VIEW_AUDIT_LOG
+  | :BAN_MEMBERS
+  | :MENTION_EVERYONE
+  | :REQUEST_TO_SPEAK
+  | :MANAGE_MESSAGES
+  | :USE_VAD
+  | :ATTACH_FILES</pre>
 
       </div>
 
@@ -302,14 +315,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:load/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">load()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -335,14 +348,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">t()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/permission.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -370,39 +383,26 @@ Types
 
       <footer class="footer">
 
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/permission.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
         <p>
-          Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
-
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/permission.ex">(current file)</a>
-
-        </p>
-
-        <p>
-          <span class="line">
-            Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
-          </span>
-          <span class="line">
-            Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
-          </span>
-        </p>
-        <p>
-
-            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
-
-          <button class="line footer-button display-shortcuts-help">
-            Display keyboard shortcuts
-          </button>
-          <button class="line footer-button display-quick-switch">
-            Go to a HexDocs package
-          </button>
-          <button class="line footer-button display-settings">
-            Settings
-          </button>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>
     </div>

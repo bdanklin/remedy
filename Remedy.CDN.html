@@ -8,13 +8,13 @@
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.CDN — Remedy v0.6.9</title>
-    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+    <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-2092f44021.js"></script>
+    <script src="dist/sidebar_items-4991850494.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
 
 
   </head>
@@ -30,19 +30,21 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle">
-  <span class="icon-menu" title="Collapse/expand sidebar"></span>
-</button>
 
 <section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
-      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
     <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
     </button>
     <label class="search-label">
+      <p class="sr-only">Search</p>
       <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
     </label>
   </form>
@@ -53,6 +55,11 @@
   </div>
 
   <div class="sidebar-header">
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
     <div class="sidebar-projectDetails">
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
@@ -61,20 +68,15 @@ Remedy
         v0.6.9
       </strong>
     </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
-      <a href="https://bdanklin.github.io/remedy/">
-        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
-      </a>
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
+
+    </ul>
   </div>
 
-  <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
-
-      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
-
-
-  </ul>
   <div class="gradient"></div>
   <ul id="full-list" class="sidebar-fullList"></ul>
 </section>
@@ -84,25 +86,34 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.CDN</span> 
-  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
 
     <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L1" title="View Source" class="view-source" rel="help">
-      <span class="icon-code" aria-hidden="true"></span>
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
+  <span translate="no">Remedy.CDN</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
 </h1>
 
 
   <section id="moduledoc">
 <p>Discord CDN interface.</p><h2 id="module-format" class="section-heading">
-  <a href="#module-format" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-format" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">format</p>
+  </a>
   Format
 </h2>
 <p>All images are returned as either a <code class="inline">.png</code> or a <code class="inline">.gif</code> if the asset is animated. This is done automatically where possible.</p><h2 id="module-size" class="section-heading">
-  <a href="#module-size" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-size" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">size</p>
+  </a>
   Size
 </h2>
 <p>Images can be requested of a size in <code class="inline">[16, 32, 64, 128, 256, 512, 1024, 2048, 4096]</code>. This is given as an optional final argument to any of the functions in this module. Arguments given will be rounded to the next largest, or the largest size if you try to go over.</p><p>Unless specified, discord will deliver the smallest size available. ( Potato )</p>
@@ -112,7 +123,7 @@ Remedy
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
       Summary
@@ -306,7 +317,7 @@ Remedy
   <section id="types" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Types
@@ -316,14 +327,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:discriminator/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">discriminator()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L29" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -349,14 +360,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:hash/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">hash()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L26" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -382,14 +393,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:size/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">size()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L23" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -415,14 +426,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:uri/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">uri()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L4" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -451,7 +462,7 @@ Types
   <section id="functions" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Functions
@@ -463,14 +474,14 @@ Functions
 
   <div class="detail-header">
     <a href="#achievement_icon/4" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">achievement_icon(application_id, achievement_id, icon_hash, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L217" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -491,10 +502,12 @@ Functions
 
 
 <p>Returns an achievement icon url.</p><h2 id="achievement_icon/4-examples" class="section-heading">
-  <a href="#achievement_icon/4-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#achievement_icon/4-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">achievement_icon</span><span class="p" data-group-id="0952116019-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="0952116019-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">achievement_icon</span><span class="p" data-group-id="9328230580-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="9328230580-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/achievement-icons/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -504,14 +517,14 @@ Functions
 
   <div class="detail-header">
     <a href="#application_asset/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">application_asset(application_id, asset_id, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L201" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -531,10 +544,12 @@ Functions
 
 
 <p>Returns an application asset url.</p><h2 id="application_asset/3-examples" class="section-heading">
-  <a href="#application_asset/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#application_asset/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_asset</span><span class="p" data-group-id="9517843302-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="9517843302-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_asset</span><span class="p" data-group-id="4919649788-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="4919649788-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/app-assets/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -544,14 +559,14 @@ Functions
 
   <div class="detail-header">
     <a href="#application_cover/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">application_cover(application_id, cover_image, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L186" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -571,10 +586,12 @@ Functions
 
 
 <p>Returns an application cover url.</p><h2 id="application_cover/3-examples" class="section-heading">
-  <a href="#application_cover/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#application_cover/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_cover</span><span class="p" data-group-id="4698813808-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="4698813808-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_cover</span><span class="p" data-group-id="5172742376-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="5172742376-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/app-cover-images/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -584,14 +601,14 @@ Functions
 
   <div class="detail-header">
     <a href="#application_icon/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">application_icon(application_id, icon, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L171" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -611,10 +628,12 @@ Functions
 
 
 <p>Returns the url for the applications icon.</p><h2 id="application_icon/3-examples" class="section-heading">
-  <a href="#application_icon/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#application_icon/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_icon</span><span class="p" data-group-id="3643554708-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="3643554708-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">application_icon</span><span class="p" data-group-id="8343602353-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="8343602353-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/app-icons/12345678901234567890123456789012/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -624,14 +643,14 @@ Functions
 
   <div class="detail-header">
     <a href="#custom_emoji/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">custom_emoji(id, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L41" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -651,10 +670,12 @@ Functions
 
 
 <p>Returns the url for a custom emoji.</p><h2 id="custom_emoji/2-examples" class="section-heading">
-  <a href="#custom_emoji/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#custom_emoji/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">emoji</span><span class="p" data-group-id="6022139719-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="6022139719-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">emoji</span><span class="p" data-group-id="3949379064-1">(</span><span class="mi">12345678901234567890123456789012</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="3949379064-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/emojis/12345678901234567890123456789012.png?size=128&quot;</span></code></pre>
   </section>
 </section>
@@ -664,14 +685,14 @@ Functions
 
   <div class="detail-header">
     <a href="#default_user_avatar/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">default_user_avatar(discriminator, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L139" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -691,10 +712,12 @@ Functions
 
 
 <p>Returns the url for the default avatar of a user.</p><p>That is, their avatar if they do not have one set, based on their discriminator. It can also take just the discriminator if you wish to do so.</p><h2 id="default_user_avatar/2-examples" class="section-heading">
-  <a href="#default_user_avatar/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#default_user_avatar/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">default_user_avatar</span><span class="p" data-group-id="1748995874-1">(</span><span class="mi">3</span><span class="p" data-group-id="1748995874-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">default_user_avatar</span><span class="p" data-group-id="4136991396-1">(</span><span class="mi">3</span><span class="p" data-group-id="4136991396-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/embed/avatars/3.png&quot;</span></code></pre>
   </section>
 </section>
@@ -702,14 +725,14 @@ Functions
 
   <div class="detail-header">
     <a href="#guild_banner/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">guild_banner(guild_id, guild_banner, size)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L104" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -729,10 +752,12 @@ Functions
 
 
 <p>Returns the url for a guilds banner.</p><h2 id="guild_banner/3-examples" class="section-heading">
-  <a href="#guild_banner/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#guild_banner/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_banner</span><span class="p" data-group-id="9565308253-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="9565308253-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_banner</span><span class="p" data-group-id="3051761479-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="3051761479-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/banners/848619361782726696/&quot;</span><span class="mi">7</span><span class="n">ed6ea26b7a5e64f78ca5df202cf4d13</span><span class="err">&quot;</span></code></pre>
   </section>
 </section>
@@ -742,14 +767,14 @@ Functions
 
   <div class="detail-header">
     <a href="#guild_discovery_splash/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">guild_discovery_splash(guild_id, guild_discovery_splash, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L88" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -769,10 +794,12 @@ Functions
 
 
 <p>Returns the url for a guilds discovery splash.</p><h2 id="guild_discovery_splash/3-examples" class="section-heading">
-  <a href="#guild_discovery_splash/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#guild_discovery_splash/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_discovery_splash</span><span class="p" data-group-id="9191649541-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="9191649541-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_discovery_splash</span><span class="p" data-group-id="3038324000-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="3038324000-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png&quot;</span></code></pre>
   </section>
 </section>
@@ -782,14 +809,14 @@ Functions
 
   <div class="detail-header">
     <a href="#guild_icon/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">guild_icon(id, guild_icon, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L57" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -809,10 +836,12 @@ Functions
 
 
 <p>Returns the url for a guilds icon.</p><h2 id="guild_icon/3-examples" class="section-heading">
-  <a href="#guild_icon/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#guild_icon/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_icon</span><span class="p" data-group-id="4723459526-1">(</span><span class="mi">872417560094732328</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="4723459526-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_icon</span><span class="p" data-group-id="0321785958-1">(</span><span class="mi">872417560094732328</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;f817c5adaf96672c94a17de8e944f427&quot;</span><span class="p" data-group-id="0321785958-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/icons/872417560094732328/f817c5adaf96672c94a17de8e944f427.png&quot;</span></code></pre>
   </section>
 </section>
@@ -822,14 +851,14 @@ Functions
 
   <div class="detail-header">
     <a href="#guild_splash/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">guild_splash(id, splash, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L73" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -849,10 +878,12 @@ Functions
 
 
 <p>Returns the url for a guilds splash.</p><h2 id="guild_splash/3-examples" class="section-heading">
-  <a href="#guild_splash/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#guild_splash/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_splash</span><span class="p" data-group-id="7566634994-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="7566634994-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">guild_splash</span><span class="p" data-group-id="7837607408-1">(</span><span class="mi">848619361782726696</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7ed6ea26b7a5e64f78ca5df202cf4d13&quot;</span><span class="p" data-group-id="7837607408-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/splashes/848619361782726696/7ed6ea26b7a5e64f78ca5df202cf4d13.png&quot;</span></code></pre>
   </section>
 </section>
@@ -860,14 +891,14 @@ Functions
 
   <div class="detail-header">
     <a href="#sticker_pack_banner/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">sticker_pack_banner(banner_asset_id, size)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L227" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -895,14 +926,14 @@ Functions
 
   <div class="detail-header">
     <a href="#user_avatar/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">user_avatar(id, user_avatar, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L155" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -922,10 +953,12 @@ Functions
 
 
 <p>Returns the url for the users avatar.</p><h2 id="user_avatar/3-examples" class="section-heading">
-  <a href="#user_avatar/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#user_avatar/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_avatar</span><span class="p" data-group-id="4186528547-1">(</span><span class="mi">707047919332884520</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1df05ae0f21a24c377e9a1051c2b6035&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="4186528547-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_avatar</span><span class="p" data-group-id="9911259893-1">(</span><span class="mi">707047919332884520</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1df05ae0f21a24c377e9a1051c2b6035&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="9911259893-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/avatars/707047919332884520/1df05ae0f21a24c377e9a1051c2b6035.png?size=128&quot;</span></code></pre>
   </section>
 </section>
@@ -935,14 +968,14 @@ Functions
 
   <div class="detail-header">
     <a href="#user_banner/3" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">user_banner(user_id, user_banner, size \\ nil)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cdn.ex#L120" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -962,10 +995,12 @@ Functions
 
 
 <p>Returns the url for a users banner.</p><h2 id="user_banner/3-examples" class="section-heading">
-  <a href="#user_banner/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#user_banner/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_banner</span><span class="p" data-group-id="9117061642-1">(</span><span class="mi">179255727561375744</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e625e858e48602248a69bcfdfa886ab4&quot;</span><span class="p" data-group-id="9117061642-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">Remedy.CDN</span><span class="o">.</span><span class="n">user_banner</span><span class="p" data-group-id="9671782480-1">(</span><span class="mi">179255727561375744</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e625e858e48602248a69bcfdfa886ab4&quot;</span><span class="p" data-group-id="9671782480-1">)</span><span class="w">
 </span><span class="s">&quot;https://cdn.discordapp.com/banners/179255727561375744/e625e858e48602248a69bcfdfa886ab4.png&quot;</span></code></pre>
   </section>
 </section>
@@ -975,39 +1010,26 @@ Functions
 
       <footer class="footer">
 
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/cdn.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
         <p>
-          Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
-
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/cdn.ex">(current file)</a>
-
-        </p>
-
-        <p>
-          <span class="line">
-            Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
-          </span>
-          <span class="line">
-            Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
-          </span>
-        </p>
-        <p>
-
-            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
-
-          <button class="line footer-button display-shortcuts-help">
-            Display keyboard shortcuts
-          </button>
-          <button class="line footer-button display-quick-switch">
-            Go to a HexDocs package
-          </button>
-          <button class="line footer-button display-settings">
-            Settings
-          </button>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>
     </div>

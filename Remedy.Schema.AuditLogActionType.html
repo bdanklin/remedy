@@ -8,13 +8,13 @@
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Schema.AuditLogActionType — Remedy v0.6.9</title>
-    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+    <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-2092f44021.js"></script>
+    <script src="dist/sidebar_items-4991850494.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
 
 
   </head>
@@ -30,19 +30,21 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle">
-  <span class="icon-menu" title="Collapse/expand sidebar"></span>
-</button>
 
 <section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
-      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
     <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
     </button>
     <label class="search-label">
+      <p class="sr-only">Search</p>
       <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
     </label>
   </form>
@@ -53,6 +55,11 @@
   </div>
 
   <div class="sidebar-header">
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
     <div class="sidebar-projectDetails">
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
@@ -61,20 +68,15 @@ Remedy
         v0.6.9
       </strong>
     </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
-      <a href="https://bdanklin.github.io/remedy/">
-        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
-      </a>
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
+
+    </ul>
   </div>
 
-  <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
-
-      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
-
-
-  </ul>
   <div class="gradient"></div>
   <ul id="full-list" class="sidebar-fullList"></ul>
 </section>
@@ -84,31 +86,38 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Schema.AuditLogActionType</span> 
-  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
 
     <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_action_type.ex#L1" title="View Source" class="view-source" rel="help">
-      <span class="icon-code" aria-hidden="true"></span>
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
+  <span translate="no">Remedy.Schema.AuditLogActionType</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
 </h1>
 
 
   <section id="moduledoc">
 <p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Audit Log Action Type.</p><table><thead><tr><th style="text-align: right;">Value</th><th style="text-align: left;">Type</th></tr></thead><tbody><tr><td style="text-align: right;"><code class="inline">1</code></td><td style="text-align: left;"><code class="inline">:GUILD_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">10</code></td><td style="text-align: left;"><code class="inline">:CHANNEL_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">11</code></td><td style="text-align: left;"><code class="inline">:CHANNEL_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">12</code></td><td style="text-align: left;"><code class="inline">:CHANNEL_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">13</code></td><td style="text-align: left;"><code class="inline">:CHANNEL_OVERWRITE_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">14</code></td><td style="text-align: left;"><code class="inline">:CHANNEL_OVERWRITE_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">15</code></td><td style="text-align: left;"><code class="inline">:CHANNEL_OVERWRITE_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">20</code></td><td style="text-align: left;"><code class="inline">:MEMBER_KICK</code></td></tr><tr><td style="text-align: right;"><code class="inline">21</code></td><td style="text-align: left;"><code class="inline">:MEMBER_PRUNE</code></td></tr><tr><td style="text-align: right;"><code class="inline">22</code></td><td style="text-align: left;"><code class="inline">:MEMBER_BAN_ADD</code></td></tr><tr><td style="text-align: right;"><code class="inline">23</code></td><td style="text-align: left;"><code class="inline">:MEMBER_BAN_REMOVE</code></td></tr><tr><td style="text-align: right;"><code class="inline">24</code></td><td style="text-align: left;"><code class="inline">:MEMBER_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">25</code></td><td style="text-align: left;"><code class="inline">:MEMBER_ROLE_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">26</code></td><td style="text-align: left;"><code class="inline">:MEMBER_MOVE</code></td></tr><tr><td style="text-align: right;"><code class="inline">27</code></td><td style="text-align: left;"><code class="inline">:MEMBER_DISCONNECT</code></td></tr><tr><td style="text-align: right;"><code class="inline">28</code></td><td style="text-align: left;"><code class="inline">:BOT_ADD</code></td></tr><tr><td style="text-align: right;"><code class="inline">30</code></td><td style="text-align: left;"><code class="inline">:ROLE_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">31</code></td><td style="text-align: left;"><code class="inline">:ROLE_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">32</code></td><td style="text-align: left;"><code class="inline">:ROLE_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">40</code></td><td style="text-align: left;"><code class="inline">:INVITE_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">41</code></td><td style="text-align: left;"><code class="inline">:INVITE_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">42</code></td><td style="text-align: left;"><code class="inline">:INVITE_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">50</code></td><td style="text-align: left;"><code class="inline">:WEBHOOK_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">51</code></td><td style="text-align: left;"><code class="inline">:WEBHOOK_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">52</code></td><td style="text-align: left;"><code class="inline">:WEBHOOK_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">60</code></td><td style="text-align: left;"><code class="inline">:EMOJI_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">61</code></td><td style="text-align: left;"><code class="inline">:EMOJI_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">62</code></td><td style="text-align: left;"><code class="inline">:EMOJI_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">72</code></td><td style="text-align: left;"><code class="inline">:MESSAGE_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">73</code></td><td style="text-align: left;"><code class="inline">:MESSAGE_BULK_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">74</code></td><td style="text-align: left;"><code class="inline">:MESSAGE_PIN</code></td></tr><tr><td style="text-align: right;"><code class="inline">75</code></td><td style="text-align: left;"><code class="inline">:MESSAGE_UNPIN</code></td></tr><tr><td style="text-align: right;"><code class="inline">80</code></td><td style="text-align: left;"><code class="inline">:INTEGRATION_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">81</code></td><td style="text-align: left;"><code class="inline">:INTEGRATION_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">82</code></td><td style="text-align: left;"><code class="inline">:INTEGRATION_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">83</code></td><td style="text-align: left;"><code class="inline">:STAGE_INSTANCE_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">84</code></td><td style="text-align: left;"><code class="inline">:STAGE_INSTANCE_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">85</code></td><td style="text-align: left;"><code class="inline">:STAGE_INSTANCE_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">90</code></td><td style="text-align: left;"><code class="inline">:STICKER_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">91</code></td><td style="text-align: left;"><code class="inline">:STICKER_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">92</code></td><td style="text-align: left;"><code class="inline">:STICKER_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">100</code></td><td style="text-align: left;"><code class="inline">:GUILD_SCHEDULED_EVENT_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">101</code></td><td style="text-align: left;"><code class="inline">:GUILD_SCHEDULED_EVENT_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">102</code></td><td style="text-align: left;"><code class="inline">:GUILD_SCHEDULED_EVENT_DELETE</code></td></tr><tr><td style="text-align: right;"><code class="inline">110</code></td><td style="text-align: left;"><code class="inline">:THREAD_CREATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">111</code></td><td style="text-align: left;"><code class="inline">:THREAD_UPDATE</code></td></tr><tr><td style="text-align: right;"><code class="inline">112</code></td><td style="text-align: left;"><code class="inline">:THREAD_DELETE</code></td></tr></tbody></table><h2 id="module-casting" class="section-heading">
-  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-casting" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">casting</p>
+  </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">112</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;CHANNEL_OVERWRITE_DELETE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:CHANNEL_OVERWRITE_CREATE</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Integer Type</h4><pre><code class="makeup elixir" translate="no"><span class="mi">14</span></code></pre><h4>String Type</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;INTEGRATION_DELETE&quot;</span></code></pre><h4>Atom Type</h4><pre><code class="makeup elixir" translate="no"><span class="ss">:INVITE_UPDATE</span></code></pre>
   </section>
 
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
       Summary
@@ -167,7 +176,7 @@ Remedy
   <section id="types" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Types
@@ -177,14 +186,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:c/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">c()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_action_type.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -210,14 +219,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:f/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">f()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_action_type.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -230,53 +239,53 @@ Types
       <div class="specs">
 
           <pre translate="no">f() ::
-  :ROLE_UPDATE
-  | :STAGE_INSTANCE_CREATE
-  | :WEBHOOK_CREATE
-  | :MEMBER_MOVE
-  | :THREAD_CREATE
-  | :MEMBER_ROLE_UPDATE
-  | :STICKER_UPDATE
-  | :STAGE_INSTANCE_DELETE
-  | :CHANNEL_DELETE
+  :EMOJI_UPDATE
+  | :MEMBER_DISCONNECT
+  | :GUILD_SCHEDULED_EVENT_UPDATE
+  | :MESSAGE_DELETE
+  | :EMOJI_CREATE
+  | :STICKER_DELETE
   | :MESSAGE_UNPIN
-  | :GUILD_SCHEDULED_EVENT_DELETE
-  | :CHANNEL_OVERWRITE_CREATE
-  | :WEBHOOK_UPDATE
-  | :INVITE_UPDATE
-  | :BOT_ADD
-  | :EMOJI_DELETE
-  | :MEMBER_UPDATE
-  | :MEMBER_BAN_REMOVE
-  | :MESSAGE_PIN
+  | :STAGE_INSTANCE_CREATE
+  | :GUILD_UPDATE
   | :CHANNEL_UPDATE
   | :ROLE_CREATE
-  | :MEMBER_BAN_ADD
-  | :CHANNEL_CREATE
+  | :GUILD_SCHEDULED_EVENT_CREATE
+  | :MEMBER_BAN_REMOVE
+  | :CHANNEL_OVERWRITE_UPDATE
+  | :THREAD_CREATE
+  | :MEMBER_PRUNE
+  | :WEBHOOK_DELETE
+  | :ROLE_DELETE
   | :INVITE_DELETE
-  | :MESSAGE_BULK_DELETE
+  | :MEMBER_ROLE_UPDATE
+  | :EMOJI_DELETE
+  | :MEMBER_MOVE
+  | :GUILD_SCHEDULED_EVENT_DELETE
+  | :MESSAGE_PIN
   | :STICKER_CREATE
   | :THREAD_UPDATE
-  | :INTEGRATION_CREATE
-  | :STAGE_INSTANCE_UPDATE
-  | :GUILD_SCHEDULED_EVENT_CREATE
-  | :WEBHOOK_DELETE
   | :INTEGRATION_UPDATE
-  | :INVITE_CREATE
-  | :MEMBER_DISCONNECT
-  | :CHANNEL_OVERWRITE_DELETE
   | :INTEGRATION_DELETE
-  | :GUILD_UPDATE
-  | :EMOJI_UPDATE
-  | :ROLE_DELETE
-  | :CHANNEL_OVERWRITE_UPDATE
-  | :MESSAGE_DELETE
-  | :MEMBER_PRUNE
+  | :STAGE_INSTANCE_UPDATE
+  | :ROLE_UPDATE
+  | :CHANNEL_OVERWRITE_DELETE
+  | :CHANNEL_DELETE
+  | :STICKER_UPDATE
+  | :CHANNEL_OVERWRITE_CREATE
+  | :MEMBER_UPDATE
+  | :CHANNEL_CREATE
+  | :MESSAGE_BULK_DELETE
+  | :STAGE_INSTANCE_DELETE
+  | :MEMBER_BAN_ADD
+  | :WEBHOOK_CREATE
+  | :BOT_ADD
+  | :INVITE_CREATE
+  | :INTEGRATION_CREATE
   | :MEMBER_KICK
-  | :GUILD_SCHEDULED_EVENT_UPDATE
   | :THREAD_DELETE
-  | :EMOJI_CREATE
-  | :STICKER_DELETE</pre>
+  | :INVITE_UPDATE
+  | :WEBHOOK_UPDATE</pre>
 
       </div>
 
@@ -290,14 +299,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:load/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">load()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_action_type.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -323,14 +332,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">t()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/schema/audit_log_action_type.ex#L1" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -358,39 +367,26 @@ Types
 
       <footer class="footer">
 
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/audit_log_action_type.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
         <p>
-          Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
-
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/schema/audit_log_action_type.ex">(current file)</a>
-
-        </p>
-
-        <p>
-          <span class="line">
-            Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
-          </span>
-          <span class="line">
-            Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
-          </span>
-        </p>
-        <p>
-
-            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
-
-          <button class="line footer-button display-shortcuts-help">
-            Display keyboard shortcuts
-          </button>
-          <button class="line footer-button display-quick-switch">
-            Go to a HexDocs package
-          </button>
-          <button class="line footer-button display-settings">
-            Settings
-          </button>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>
     </div>

@@ -8,13 +8,13 @@
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Consumer — Remedy v0.6.9</title>
-    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+    <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-2092f44021.js"></script>
+    <script src="dist/sidebar_items-4991850494.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
 
 
   </head>
@@ -30,19 +30,21 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle">
-  <span class="icon-menu" title="Collapse/expand sidebar"></span>
-</button>
 
 <section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
-      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
     <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
     </button>
     <label class="search-label">
+      <p class="sr-only">Search</p>
       <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
     </label>
   </form>
@@ -53,6 +55,11 @@
   </div>
 
   <div class="sidebar-header">
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
     <div class="sidebar-projectDetails">
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
@@ -61,20 +68,15 @@ Remedy
         v0.6.9
       </strong>
     </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
-      <a href="https://bdanklin.github.io/remedy/">
-        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
-      </a>
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
+
+    </ul>
   </div>
 
-  <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
-
-      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
-
-
-  </ul>
   <div class="gradient"></div>
   <ul id="full-list" class="sidebar-fullList"></ul>
 </section>
@@ -84,94 +86,105 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Consumer</span> <small>behaviour</small>
-  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
 
     <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L1" title="View Source" class="view-source" rel="help">
-      <span class="icon-code" aria-hidden="true"></span>
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
+  <span translate="no">Remedy.Consumer</span> <small>behaviour</small>
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
 </h1>
 
 
   <section id="moduledoc">
 <p>Consumer process for gateway event handling.</p><p>You have two options for handling events. You can create a consumer module through the behaviour described in this module, which implements <a href="#c:handle_event/1"><code class="inline">handle_event/1</code></a>. Or you can create your own GenStage or Broadway pipeline to process the events. Details of each of these methods are described below. Events will be buffered up to 10,000 inside the <code class="inline">Remedy.Consumer.Producer</code> process waiting for a subscriber to connect. If you are using the Consumer Module method, you will subscribe immediately. If you are implementing your own GenStage or Broadway pipeline, you will have to start your module and subscribe yourself.</p><h2 id="module-consumer-module" class="section-heading">
-  <a href="#module-consumer-module" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-consumer-module" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">consumer-module</p>
+  </a>
   Consumer Module
 </h2>
-<p>The simplest consumer implementation is to use the Consumer behaviour by adding <code class="inline">use Remedy.Consumer</code> to your module.</p><p>This will handle all of the supervision and set up for you. all you need to implement is the <a href="#c:handle_event/1"><code class="inline">handle_event/1</code></a> callback for all the events you wish to consume. Using this method will start your consumer under the Remedy supervision tree and you are not required to start it yourself.</p><p>This method is used to implement the standard event logging module, which looks something like this internally.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Remedy.Consumer.LumberJack</span><span class="w"> </span><span class="k" data-group-id="5483677497-1">do</span><span class="w">
+<p>The simplest consumer implementation is to use the Consumer behaviour by adding <code class="inline">use Remedy.Consumer</code> to your module.</p><p>This will handle all of the supervision and set up for you. all you need to implement is the <a href="#c:handle_event/1"><code class="inline">handle_event/1</code></a> callback for all the events you wish to consume. Using this method will start your consumer under the Remedy supervision tree and you are not required to start it yourself.</p><p>This method is used to implement the standard event logging module, which looks something like this internally.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Remedy.Consumer.LumberJack</span><span class="w"> </span><span class="k" data-group-id="1332036709-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Remedy.Consumer</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="5483677497-2">(</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="c">_meta</span><span class="p" data-group-id="5483677497-2">)</span><span class="w"> </span><span class="k" data-group-id="5483677497-3">do</span><span class="w">
-    </span><span class="nc">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p" data-group-id="5483677497-4">(</span><span class="s">&quot;</span><span class="si" data-group-id="5483677497-5">#{</span><span class="n">inspect</span><span class="p" data-group-id="5483677497-6">(</span><span class="n">event</span><span class="p" data-group-id="5483677497-6">)</span><span class="si" data-group-id="5483677497-5">}</span><span class="s"> </span><span class="si" data-group-id="5483677497-7">#{</span><span class="n">inspect</span><span class="p" data-group-id="5483677497-8">(</span><span class="n">payload</span><span class="p" data-group-id="5483677497-8">)</span><span class="si" data-group-id="5483677497-7">}</span><span class="s">&quot;</span><span class="p" data-group-id="5483677497-4">)</span><span class="w">
-  </span><span class="k" data-group-id="5483677497-3">end</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="1332036709-2">(</span><span class="n">event</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="c">_meta</span><span class="p" data-group-id="1332036709-2">)</span><span class="w"> </span><span class="k" data-group-id="1332036709-3">do</span><span class="w">
+    </span><span class="nc">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p" data-group-id="1332036709-4">(</span><span class="s">&quot;</span><span class="si" data-group-id="1332036709-5">#{</span><span class="n">inspect</span><span class="p" data-group-id="1332036709-6">(</span><span class="n">event</span><span class="p" data-group-id="1332036709-6">)</span><span class="si" data-group-id="1332036709-5">}</span><span class="s"> </span><span class="si" data-group-id="1332036709-7">#{</span><span class="n">inspect</span><span class="p" data-group-id="1332036709-8">(</span><span class="n">payload</span><span class="p" data-group-id="1332036709-8">)</span><span class="si" data-group-id="1332036709-7">}</span><span class="s">&quot;</span><span class="p" data-group-id="1332036709-4">)</span><span class="w">
+  </span><span class="k" data-group-id="1332036709-3">end</span><span class="w">
 
-</span><span class="k" data-group-id="5483677497-1">end</span></code></pre><p>Internally, the events are run in a <a href="https://hexdocs.pm/gen_stage/1.1.2/ConsumerSupervisor.html"><code class="inline">ConsumerSupervisor</code></a> which is configured to run <a href="https://hexdocs.pm/elixir/System.html#schedulers/0"><code class="inline">System.schedulers/0</code></a> number of tasks concurrently. The tasks are wrapped in a <code class="inline">try rescue</code> block to ensure the consumer will never be taken down. If you start seeing <code class="inline">CONSUMER_ERROR</code> in your logs it means there is an error with your callback implementation and your callbacks are being rescued. There is no retry logic while using this method and the event is lost.</p><h2 id="module-genstage" class="section-heading">
-  <a href="#module-genstage" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+</span><span class="k" data-group-id="1332036709-1">end</span></code></pre><p>Internally, the events are run in a <a href="https://hexdocs.pm/gen_stage/1.1.2/ConsumerSupervisor.html"><code class="inline">ConsumerSupervisor</code></a> which is configured to run <a href="https://hexdocs.pm/elixir/System.html#schedulers/0"><code class="inline">System.schedulers/0</code></a> number of tasks concurrently. The tasks are wrapped in a <code class="inline">try rescue</code> block to ensure the consumer will never be taken down. If you start seeing <code class="inline">CONSUMER_ERROR</code> in your logs it means there is an error with your callback implementation and your callbacks are being rescued. There is no retry logic while using this method and the event is lost.</p><h2 id="module-genstage" class="section-heading">
+  <a href="#module-genstage" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">genstage</p>
+  </a>
   Genstage
 </h2>
-<p>If you wish to implement a custom <a href="https://hexdocs.pm/gen_stage/1.1.2/GenStage.html"><code class="inline">GenStage</code></a> pipeline you can simply subscribe to <code class="inline">Remedy.Consumer.Producer</code> inside your init callback. The other implementation details are the concern of the readers individual situation, such as how the module will be started and supervised.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.PipelineProducer</span><span class="w"> </span><span class="k" data-group-id="5852089069-1">do</span><span class="w">
+<p>If you wish to implement a custom <a href="https://hexdocs.pm/gen_stage/1.1.2/GenStage.html"><code class="inline">GenStage</code></a> pipeline you can simply subscribe to <code class="inline">Remedy.Consumer.Producer</code> inside your init callback. The other implementation details are the concern of the readers individual situation, such as how the module will be started and supervised.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.PipelineProducer</span><span class="w"> </span><span class="k" data-group-id="2813585758-1">do</span><span class="w">
   </span><span class="na">@moduledoc</span><span class="w"> </span><span class="no">false</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
 
   </span><span class="na">@impl</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="5852089069-2">(</span><span class="c">_opts</span><span class="p" data-group-id="5852089069-2">)</span><span class="w"> </span><span class="k" data-group-id="5852089069-3">do</span><span class="w">
-    </span><span class="n">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5852089069-4">[</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">init</span><span class="p" data-group-id="2813585758-2">(</span><span class="c">_opts</span><span class="p" data-group-id="2813585758-2">)</span><span class="w"> </span><span class="k" data-group-id="2813585758-3">do</span><span class="w">
+    </span><span class="n">opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2813585758-4">[</span><span class="w">
       </span><span class="ss">dispatcher</span><span class="p">:</span><span class="w"> </span><span class="nc">GenStage.DemandDispatcher</span><span class="p">,</span><span class="w">
-      </span><span class="ss">subscribe_to</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5852089069-5">[</span><span class="nc">Remedy.Consumer.Producer</span><span class="p" data-group-id="5852089069-5">]</span><span class="w">
-    </span><span class="p" data-group-id="5852089069-4">]</span><span class="w">
-    </span><span class="p" data-group-id="5852089069-6">{</span><span class="ss">:producer_consumer</span><span class="p">,</span><span class="w"> </span><span class="ss">:state</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p" data-group-id="5852089069-6">}</span><span class="w">
-  </span><span class="k" data-group-id="5852089069-3">end</span><span class="w">
+      </span><span class="ss">subscribe_to</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2813585758-5">[</span><span class="nc">Remedy.Consumer.Producer</span><span class="p" data-group-id="2813585758-5">]</span><span class="w">
+    </span><span class="p" data-group-id="2813585758-4">]</span><span class="w">
+    </span><span class="p" data-group-id="2813585758-6">{</span><span class="ss">:producer_consumer</span><span class="p">,</span><span class="w"> </span><span class="ss">:state</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p" data-group-id="2813585758-6">}</span><span class="w">
+  </span><span class="k" data-group-id="2813585758-3">end</span><span class="w">
 
   </span><span class="na">@impl</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_events</span><span class="p" data-group-id="5852089069-7">(</span><span class="n">events</span><span class="p">,</span><span class="w"> </span><span class="c">_from</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="5852089069-7">)</span><span class="w"> </span><span class="k" data-group-id="5852089069-8">do</span><span class="w">
-    </span><span class="p" data-group-id="5852089069-9">{</span><span class="ss">:noreply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5852089069-10">[</span><span class="n">events</span><span class="p" data-group-id="5852089069-10">]</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">:hibernate</span><span class="p" data-group-id="5852089069-9">}</span><span class="w">
-  </span><span class="k" data-group-id="5852089069-8">end</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_events</span><span class="p" data-group-id="2813585758-7">(</span><span class="n">events</span><span class="p">,</span><span class="w"> </span><span class="c">_from</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2813585758-7">)</span><span class="w"> </span><span class="k" data-group-id="2813585758-8">do</span><span class="w">
+    </span><span class="p" data-group-id="2813585758-9">{</span><span class="ss">:noreply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2813585758-10">[</span><span class="n">events</span><span class="p" data-group-id="2813585758-10">]</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">:hibernate</span><span class="p" data-group-id="2813585758-9">}</span><span class="w">
+  </span><span class="k" data-group-id="2813585758-8">end</span><span class="w">
 
   </span><span class="na">@impl</span><span class="w"> </span><span class="nc">GenStage</span><span class="w">
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_demand</span><span class="p" data-group-id="5852089069-11">(</span><span class="c">_incoming_demand</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="5852089069-11">)</span><span class="w"> </span><span class="k" data-group-id="5852089069-12">do</span><span class="w">
-    </span><span class="p" data-group-id="5852089069-13">{</span><span class="ss">:noreply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5852089069-14">[</span><span class="p" data-group-id="5852089069-14">]</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">:hibernate</span><span class="p" data-group-id="5852089069-13">}</span><span class="w">
-  </span><span class="k" data-group-id="5852089069-12">end</span><span class="w">
-</span><span class="k" data-group-id="5852089069-1">end</span></code></pre><h2 id="module-broadway" class="section-heading">
-  <a href="#module-broadway" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_demand</span><span class="p" data-group-id="2813585758-11">(</span><span class="c">_incoming_demand</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p" data-group-id="2813585758-11">)</span><span class="w"> </span><span class="k" data-group-id="2813585758-12">do</span><span class="w">
+    </span><span class="p" data-group-id="2813585758-13">{</span><span class="ss">:noreply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2813585758-14">[</span><span class="p" data-group-id="2813585758-14">]</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">:hibernate</span><span class="p" data-group-id="2813585758-13">}</span><span class="w">
+  </span><span class="k" data-group-id="2813585758-12">end</span><span class="w">
+</span><span class="k" data-group-id="2813585758-1">end</span></code></pre><h2 id="module-broadway" class="section-heading">
+  <a href="#module-broadway" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">broadway</p>
+  </a>
   Broadway
 </h2>
-<p>To implement a <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> pipeline you should first create a <code class="inline">:producer_consumer</code> per the example above. You can then use that producer as your as your <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> producer. Following that you just need to implement the callbacks specific to your pipeline. Note that because Remedy uses <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> internally, there is no need to include it as a dependency.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.Pipeline</span><span class="w"> </span><span class="k" data-group-id="7888514145-1">do</span><span class="w">
+<p>To implement a <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> pipeline you should first create a <code class="inline">:producer_consumer</code> per the example above. You can then use that producer as your as your <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> producer. Following that you just need to implement the callbacks specific to your pipeline. Note that because Remedy uses <a href="https://hexdocs.pm/broadway/1.0.2/Broadway.html"><code class="inline">Broadway</code></a> internally, there is no need to include it as a dependency.</p><pre><code class="makeup elixir" translate="no"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">MyApp.Pipeline</span><span class="w"> </span><span class="k" data-group-id="9629682658-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Broadway</span><span class="w">
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="7888514145-2">(</span><span class="c">_opts</span><span class="p" data-group-id="7888514145-2">)</span><span class="w"> </span><span class="k" data-group-id="7888514145-3">do</span><span class="w">
-    </span><span class="nc">Broadway</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="7888514145-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">start_link</span><span class="p" data-group-id="9629682658-2">(</span><span class="c">_opts</span><span class="p" data-group-id="9629682658-2">)</span><span class="w"> </span><span class="k" data-group-id="9629682658-3">do</span><span class="w">
+    </span><span class="nc">Broadway</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="9629682658-4">(</span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w">
       </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="p">,</span><span class="w">
-      </span><span class="ss">producer</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-5">[</span><span class="w">
-        </span><span class="ss">module</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-6">{</span><span class="nc">PipelineProducer</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7888514145-7">[</span><span class="p" data-group-id="7888514145-7">]</span><span class="p" data-group-id="7888514145-6">}</span><span class="p">,</span><span class="w">
+      </span><span class="ss">producer</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-5">[</span><span class="w">
+        </span><span class="ss">module</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-6">{</span><span class="nc">PipelineProducer</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9629682658-7">[</span><span class="p" data-group-id="9629682658-7">]</span><span class="p" data-group-id="9629682658-6">}</span><span class="p">,</span><span class="w">
         </span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-      </span><span class="p" data-group-id="7888514145-5">]</span><span class="p">,</span><span class="w">
-      </span><span class="ss">processors</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-8">[</span><span class="w">
-        </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-9">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="7888514145-9">]</span><span class="w">
-      </span><span class="p" data-group-id="7888514145-8">]</span><span class="p">,</span><span class="w">
-      </span><span class="ss">batchers</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-10">[</span><span class="w">
-        </span><span class="ss">channel_create</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-11">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p" data-group-id="7888514145-11">]</span><span class="p">,</span><span class="w">
-        </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-12">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="7888514145-12">]</span><span class="p">,</span><span class="w">
-        </span><span class="ss">unhandled</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-13">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7888514145-13">]</span><span class="w">
-      </span><span class="p" data-group-id="7888514145-10">]</span><span class="w">
-    </span><span class="p" data-group-id="7888514145-4">)</span><span class="w">
-  </span><span class="k" data-group-id="7888514145-3">end</span><span class="w">
+      </span><span class="p" data-group-id="9629682658-5">]</span><span class="p">,</span><span class="w">
+      </span><span class="ss">processors</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-8">[</span><span class="w">
+        </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-9">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="9629682658-9">]</span><span class="w">
+      </span><span class="p" data-group-id="9629682658-8">]</span><span class="p">,</span><span class="w">
+      </span><span class="ss">batchers</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-10">[</span><span class="w">
+        </span><span class="ss">channel_create</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-11">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p" data-group-id="9629682658-11">]</span><span class="p">,</span><span class="w">
+        </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-12">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="9629682658-12">]</span><span class="p">,</span><span class="w">
+        </span><span class="ss">unhandled</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-13">[</span><span class="ss">concurrency</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9629682658-13">]</span><span class="w">
+      </span><span class="p" data-group-id="9629682658-10">]</span><span class="w">
+    </span><span class="p" data-group-id="9629682658-4">)</span><span class="w">
+  </span><span class="k" data-group-id="9629682658-3">end</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_message</span><span class="p" data-group-id="7888514145-14">(</span><span class="bp">_</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7888514145-15">%{</span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7888514145-16">%{</span><span class="ss">event</span><span class="p">:</span><span class="w"> </span><span class="ss">:CHANNEL_CREATE</span><span class="p" data-group-id="7888514145-16">}</span><span class="p" data-group-id="7888514145-15">}</span><span class="err">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="7888514145-14">)</span><span class="w"> </span><span class="k" data-group-id="7888514145-17">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_message</span><span class="p" data-group-id="9629682658-14">(</span><span class="bp">_</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9629682658-15">%{</span><span class="ss">data</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9629682658-16">%{</span><span class="ss">event</span><span class="p">:</span><span class="w"> </span><span class="ss">:CHANNEL_CREATE</span><span class="p" data-group-id="9629682658-16">}</span><span class="p" data-group-id="9629682658-15">}</span><span class="err">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="9629682658-14">)</span><span class="w"> </span><span class="k" data-group-id="9629682658-17">do</span><span class="w">
     </span><span class="n">message</span><span class="w">
-    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Broadway.Message</span><span class="o">.</span><span class="n">put_batcher</span><span class="p" data-group-id="7888514145-18">(</span><span class="ss">:CHANNEL_CREATE</span><span class="p" data-group-id="7888514145-18">)</span><span class="w">
-  </span><span class="k" data-group-id="7888514145-17">end</span><span class="w">
+    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Broadway.Message</span><span class="o">.</span><span class="n">put_batcher</span><span class="p" data-group-id="9629682658-18">(</span><span class="ss">:CHANNEL_CREATE</span><span class="p" data-group-id="9629682658-18">)</span><span class="w">
+  </span><span class="k" data-group-id="9629682658-17">end</span><span class="w">
 
   </span><span class="c1"># Other Callbacks</span><span class="w">
-</span><span class="k" data-group-id="7888514145-1">end</span></code></pre>
+</span><span class="k" data-group-id="9629682658-1">end</span></code></pre>
   </section>
 
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
       Summary
@@ -653,7 +666,7 @@ Remedy
   <section id="types" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Types
@@ -663,14 +676,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:channel_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">channel_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L101" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -697,14 +710,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:channel_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">channel_delete()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L113" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -731,14 +744,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:channel_pins_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">channel_pins_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L119" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -765,14 +778,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:channel_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">channel_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L107" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -799,14 +812,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_available/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_available()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L122" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -833,14 +846,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_ban_add/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_ban_add()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L128" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -867,14 +880,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_ban_remove/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_ban_remove()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L134" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -901,14 +914,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L140" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -935,14 +948,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_delete()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L143" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -969,14 +982,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_emojis_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_emojis_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L164" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1003,14 +1016,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_integrations_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_integrations_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L170" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1038,14 +1051,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_kicked/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_kicked()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L158" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1072,14 +1085,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_leave/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_leave()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L153" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1106,14 +1119,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_member_add/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_member_add()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L176" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1140,14 +1153,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_member_kicked/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_member_kicked()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L182" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1174,14 +1187,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_member_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_member_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L188" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1208,14 +1221,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_role_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_role_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L194" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1242,14 +1255,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_role_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_role_delete()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L200" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1276,14 +1289,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_role_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_role_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L206" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1310,14 +1323,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_unavailable/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_unavailable()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L148" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1344,14 +1357,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:guild_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">guild_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L212" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1378,14 +1391,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:integration_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">integration_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L218" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1413,14 +1426,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:integration_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">integration_delete()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L230" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1448,14 +1461,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:integration_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">integration_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L224" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1483,14 +1496,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:interaction_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">interaction_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L236" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1518,14 +1531,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:message_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">message_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L242" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1552,14 +1565,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:message_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">message_delete()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L254" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1586,14 +1599,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:message_delete_bulk/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">message_delete_bulk()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L248" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1620,14 +1633,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:message_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">message_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L280" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1654,14 +1667,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:presence_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">presence_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L285" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1688,14 +1701,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:reaction_add/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">reaction_add()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L260" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1722,14 +1735,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:reaction_remove/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">reaction_remove()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L274" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1756,14 +1769,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:ready/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">ready()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L290" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1789,14 +1802,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:thread_create/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">thread_create()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L296" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1823,14 +1836,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:thread_delete/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">thread_delete()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L302" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1857,14 +1870,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:thread_member_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">thread_member_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L311" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1892,14 +1905,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:thread_members_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">thread_members_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L316" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1927,14 +1940,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:thread_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">thread_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L321" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1961,14 +1974,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:typing_start/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">typing_start()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L326" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1994,14 +2007,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:user_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">user_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L331" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -2028,14 +2041,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:voice_ready/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">voice_ready()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L351" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -2061,14 +2074,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:voice_server_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">voice_server_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L346" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -2095,14 +2108,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:voice_speaking_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">voice_speaking_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L356" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -2129,14 +2142,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:voice_state_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">voice_state_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L341" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -2164,14 +2177,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:webhooks_update/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">webhooks_update()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L336" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -2201,7 +2214,7 @@ Types
   <section id="callbacks" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#callbacks">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Callbacks
@@ -2211,14 +2224,14 @@ Callbacks
 
   <div class="detail-header">
     <a href="#c:handle_event/1" class="detail-link" title="Link to this callback">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature" translate="no">handle_event(term)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/consumer.ex#L95" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -2248,39 +2261,26 @@ Callbacks
 
       <footer class="footer">
 
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/consumer.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
         <p>
-          Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
-
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/consumer.ex">(current file)</a>
-
-        </p>
-
-        <p>
-          <span class="line">
-            Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
-          </span>
-          <span class="line">
-            Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
-          </span>
-        </p>
-        <p>
-
-            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
-
-          <button class="line footer-button display-shortcuts-help">
-            Display keyboard shortcuts
-          </button>
-          <button class="line footer-button display-quick-switch">
-            Go to a HexDocs package
-          </button>
-          <button class="line footer-button display-settings">
-            Settings
-          </button>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>
     </div>

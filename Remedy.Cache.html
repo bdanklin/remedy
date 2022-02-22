@@ -8,13 +8,13 @@
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Cache — Remedy v0.6.9</title>
-    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+    <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-2092f44021.js"></script>
+    <script src="dist/sidebar_items-4991850494.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
 
 
   </head>
@@ -30,19 +30,21 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle">
-  <span class="icon-menu" title="Collapse/expand sidebar"></span>
-</button>
 
 <section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
-      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
     <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
     </button>
     <label class="search-label">
+      <p class="sr-only">Search</p>
       <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
     </label>
   </form>
@@ -53,6 +55,11 @@
   </div>
 
   <div class="sidebar-header">
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
     <div class="sidebar-projectDetails">
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
@@ -61,20 +68,15 @@ Remedy
         v0.6.9
       </strong>
     </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
-      <a href="https://bdanklin.github.io/remedy/">
-        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
-      </a>
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
+
+    </ul>
   </div>
 
-  <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
-
-      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
-
-
-  </ul>
   <div class="gradient"></div>
   <ul id="full-list" class="sidebar-fullList"></ul>
 </section>
@@ -84,21 +86,28 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Cache</span> 
-  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
 
     <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L1" title="View Source" class="view-source" rel="help">
-      <span class="icon-code" aria-hidden="true"></span>
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
+  <span translate="no">Remedy.Cache</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
 </h1>
 
 
   <section id="moduledoc">
 <p>Functions for interacting with the Cache.</p><p>The Cache is implemented in ETS.</p><h2 id="module-bang" class="section-heading">
-  <a href="#module-bang" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-bang" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">bang</p>
+  </a>
   Bang!
 </h2>
 <p>While undocumented to reduce clutter, all functions can be banged to return or raise.</p>
@@ -108,7 +117,7 @@ Remedy
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
       Summary
@@ -334,7 +343,7 @@ Remedy
   <section id="types" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Types
@@ -344,14 +353,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:reason/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">reason()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L20" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -380,7 +389,7 @@ Types
   <section id="functions" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Functions
@@ -390,14 +399,14 @@ Functions
 
   <div class="detail-header">
     <a href="#app/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">app()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L190" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -416,14 +425,14 @@ Functions
 
   <div class="detail-header">
     <a href="#bot/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">bot()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L173" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -442,14 +451,14 @@ Functions
 
   <div class="detail-header">
     <a href="#drop_metadata/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">drop_metadata(map)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L205" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -475,14 +484,14 @@ Functions
 
   <div class="detail-header">
     <a href="#drop_unloaded_assoc/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">drop_unloaded_assoc(map)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L202" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -508,14 +517,14 @@ Functions
 
   <div class="detail-header">
     <a href="#fetch_ban/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">fetch_ban(guild_id, user_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L57" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -542,14 +551,14 @@ Functions
 
   <div class="detail-header">
     <a href="#fetch_channel/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">fetch_channel(id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L29" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -576,14 +585,14 @@ Functions
 
   <div class="detail-header">
     <a href="#fetch_emoji/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">fetch_emoji(id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L151" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -602,14 +611,14 @@ Functions
 
   <div class="detail-header">
     <a href="#fetch_guild/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">fetch_guild(id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L138" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -628,14 +637,14 @@ Functions
 
   <div class="detail-header">
     <a href="#fetch_role/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">fetch_role(role_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L163" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -661,14 +670,14 @@ Functions
 
   <div class="detail-header">
     <a href="#fetch_user/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">fetch_user(user_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L108" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -687,14 +696,14 @@ Functions
 
   <div class="detail-header">
     <a href="#get_ban/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">get_ban(guild_id, user_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L100" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -721,14 +730,14 @@ Functions
 
   <div class="detail-header">
     <a href="#get_member/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">get_member(guild_id, user_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L121" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -747,14 +756,14 @@ Functions
 
   <div class="detail-header">
     <a href="#list_bans/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">list_bans()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L79" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -780,14 +789,14 @@ Functions
 
   <div class="detail-header">
     <a href="#list_channels/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">list_channels()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L35" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -813,14 +822,14 @@ Functions
 
   <div class="detail-header">
     <a href="#list_channels/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">list_channels(guild_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L43" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -847,14 +856,14 @@ Functions
 
   <div class="detail-header">
     <a href="#list_guild_bans/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">list_guild_bans(guild_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L86" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -881,14 +890,14 @@ Functions
 
   <div class="detail-header">
     <a href="#list_guilds/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">list_guilds()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L143" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -907,14 +916,14 @@ Functions
 
   <div class="detail-header">
     <a href="#list_members/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">list_members()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L117" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -933,14 +942,14 @@ Functions
 
   <div class="detail-header">
     <a href="#list_user_bans/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">list_user_bans(user_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L95" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -967,14 +976,14 @@ Functions
 
   <div class="detail-header">
     <a href="#update_member/1" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">update_member(attrs)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L123" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -993,14 +1002,14 @@ Functions
 
   <div class="detail-header">
     <a href="#user_banned?/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature" translate="no">user_banned?(guild_id, user_id)</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/cache.ex#L66" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -1028,39 +1037,26 @@ Functions
 
       <footer class="footer">
 
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/cache.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
         <p>
-          Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
-
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/cache.ex">(current file)</a>
-
-        </p>
-
-        <p>
-          <span class="line">
-            Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
-          </span>
-          <span class="line">
-            Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
-          </span>
-        </p>
-        <p>
-
-            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
-
-          <button class="line footer-button display-shortcuts-help">
-            Display keyboard shortcuts
-          </button>
-          <button class="line footer-button display-quick-switch">
-            Go to a HexDocs package
-          </button>
-          <button class="line footer-button display-settings">
-            Settings
-          </button>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>
     </div>

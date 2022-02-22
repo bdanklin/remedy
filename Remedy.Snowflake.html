@@ -8,13 +8,13 @@
     <meta name="project" content="Remedy v0.6.9">
 
     <title>Remedy.Snowflake — Remedy v0.6.9</title>
-    <link rel="stylesheet" href="dist/elixir-4a33a99d0bf2560a814f.css" />
+    <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-2092f44021.js"></script>
+    <script src="dist/sidebar_items-4991850494.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-68b26e75fcd91b8a764c.js"></script>
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
 
 
   </head>
@@ -30,19 +30,21 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle">
-  <span class="icon-menu" title="Collapse/expand sidebar"></span>
-</button>
 
 <section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
-      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
     <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
     </button>
     <label class="search-label">
+      <p class="sr-only">Search</p>
       <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
     </label>
   </form>
@@ -53,6 +55,11 @@
   </div>
 
   <div class="sidebar-header">
+
+      <a href="https://bdanklin.github.io/remedy/">
+        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
+      </a>
+
     <div class="sidebar-projectDetails">
       <a href="https://bdanklin.github.io/remedy/" class="sidebar-projectName" translate="no">
 Remedy
@@ -61,20 +68,15 @@ Remedy
         v0.6.9
       </strong>
     </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
 
-      <a href="https://bdanklin.github.io/remedy/">
-        <img src="assets/logo.png" alt="Remedy" class="sidebar-projectImage">
-      </a>
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
 
+
+    </ul>
   </div>
 
-  <ul class="sidebar-listNav">
-    <li><a id="extras-list-link" href="#full-list">HELLO</a></li>
-
-      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
-
-
-  </ul>
   <div class="gradient"></div>
   <ul id="full-list" class="sidebar-fullList"></ul>
 </section>
@@ -84,28 +86,37 @@ Remedy
     <div id="content" class="content-inner">
 
 <h1>
-  <span translate="no">Remedy.Snowflake</span> 
-  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
 
     <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/snowflake.ex#L1" title="View Source" class="view-source" rel="help">
-      <span class="icon-code" aria-hidden="true"></span>
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
+  <span translate="no">Remedy.Snowflake</span> 
+  <small class="app-vsn" translate="no">(Remedy v0.6.9)</small>
 
 </h1>
 
 
   <section id="moduledoc">
 <p><a href="https://hexdocs.pm/ecto/3.7.1/Ecto.Type.html"><code class="inline">Ecto.Type</code></a> compatible Discord Snowflake type.</p><p>Discord utilizes Twitter's snowflake format for uniquely identifiable descriptors (IDs). These IDs are guaranteed to be unique across all of Discord, except in some unique scenarios in which child objects share their parent's ID.</p><p>Snowflakes consist of a timestamp as well as metadata. Converting to another timestamp method will produce a valid and accurate timestamp. However, converting a value from a snowflake is a destructive operation and cannot be reversed.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">snowflake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">927056337051992064</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="n">butchered_snowflake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">snowflake</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Remedy.ISO8601</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="3950033621-1">(</span><span class="p" data-group-id="3950033621-1">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Remedy.Snowflake</span><span class="o">.</span><span class="n">to_snowflake</span><span class="p" data-group-id="3950033621-2">(</span><span class="p" data-group-id="3950033621-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="n">butchered_snowflake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">snowflake</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Remedy.ISO8601</span><span class="o">.</span><span class="n">to_iso8601</span><span class="p" data-group-id="2842226198-1">(</span><span class="p" data-group-id="2842226198-1">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Remedy.Snowflake</span><span class="o">.</span><span class="n">to_snowflake</span><span class="p" data-group-id="2842226198-2">(</span><span class="p" data-group-id="2842226198-2">)</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="n">butchered_snowflake</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">snowflake</span><span class="w">
 </span><span class="no">false</span></code></pre><p>While the utilities exist to execute such functionality, care should be taken.</p><p>For example:</p><ul><li>Converting an ISO8601 string to a snowflake for the purpose of pagination is reasonably safe to do.</li><li>Using a message's snowflake ID in a filtering operation is also safe.</li><li>Converting a DateTime struct to a snowflake to attempt to get a message's ID is not.</li></ul><h2 id="module-pagination" class="section-heading">
-  <a href="#module-pagination" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-pagination" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">pagination</p>
+  </a>
   Pagination
 </h2>
 <p>Discord typically uses snowflake IDs in many of the API routes for pagination. The standardized pagination paradigm utilized is one in which you can specify IDs before and after in combination with limit to retrieve a desired page of results. You will want to refer to the specific endpoint documentation for details.</p><h2 id="module-casting" class="section-heading">
-  <a href="#module-casting" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  <a href="#module-casting" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">casting</p>
+  </a>
   Casting
 </h2>
 <p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">927056337051992064</span></code></pre><h4>ISO8601 String</h4><pre><code class="makeup elixir" translate="no"><span class="s">&quot;2019-01-01T00:00:00Z&quot;</span></code></pre>
@@ -115,7 +126,7 @@ Remedy
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
       Summary
@@ -154,7 +165,7 @@ Remedy
   <section id="types" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
-        <span class="icon-link" aria-hidden="true"></span>
+        <i class="ri-link-m" aria-hidden="true"></i>
         <span class="sr-only">Link to this section</span>
       </a>
 Types
@@ -164,14 +175,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:c/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">c()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/snowflake.ex#L53" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -197,14 +208,14 @@ Types
 
   <div class="detail-header">
     <a href="#t:t/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
+      <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature" translate="no">t()</h1>
 
 
       <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy/types/snowflake.ex#L48" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
 
@@ -232,39 +243,26 @@ Types
 
       <footer class="footer">
 
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/types/snowflake.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
         <p>
-          Find it on Hex:
-          <a href="https://hex.pm/packages/remedy/0.6.9" class="line footer-hex-package">Package</a>
-          <a href="https://preview.hex.pm/preview/remedy/0.6.9" class="line">Preview</a>
-
-            <a href="https://preview.hex.pm/preview/remedy/0.6.9/show/lib/remedy/types/snowflake.ex">(current file)</a>
-
-        </p>
-
-        <p>
-          <span class="line">
-            Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
-            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
-          </span>
-          <span class="line">
-            Designed by
-            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
-          </span>
-        </p>
-        <p>
-
-            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
-
-          <button class="line footer-button display-shortcuts-help">
-            Display keyboard shortcuts
-          </button>
-          <button class="line footer-button display-quick-switch">
-            Go to a HexDocs package
-          </button>
-          <button class="line footer-button display-settings">
-            Settings
-          </button>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.4) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
         </p>
       </footer>
     </div>

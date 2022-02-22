@@ -10,7 +10,7 @@
     <title>Remedy — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-8ff26ccba9.js"></script>
+    <script src="dist/sidebar_items-e24ad4d1fd.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -104,34 +104,16 @@ Remedy
 
 
   <section id="moduledoc">
-<p>This is the documentation for the Remedy library.</p><h2 id="module-configuration" class="section-heading">
-  <a href="#module-configuration" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">configuration</p>
+<p>This is the documentation for the Remedy library.</p><h2 id="module-basic-configuration" class="section-heading">
+  <a href="#module-basic-configuration" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">basic-configuration</p>
   </a>
-  Configuration
+  Basic Configuration
 </h2>
-<p>Configuration in Remedy can be provided as either environment variables or using <a href="https://hexdocs.pm/elixir/Config.html"><code class="inline">Config</code></a></p><pre><code class="makeup elixir" translate="no"><span class="n">config</span><span class="w"> </span><span class="ss">:remedy</span><span class="w">
-  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="nc">System</span><span class="o">.</span><span class="n">get_env</span><span class="p" data-group-id="2511664050-1">(</span><span class="s">&quot;REMEDY_TOKEN&quot;</span><span class="p" data-group-id="2511664050-1">)</span><span class="w">
-  </span><span class="ss">intents</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
-  </span><span class="ss">shards</span><span class="p">:</span><span class="w"> </span><span class="ss">:auto</span><span class="p">,</span></code></pre><blockquote><h4 class="error">Error</h4><p>This syntax will render an error block</p></blockquote><p>Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.</p><ul><li><p><code class="inline">:token</code> (required)
-Your bots token, available from your
-<a href="https://discord.com/developers/applications">Application Dashboard</a></p></li><li><p><code class="inline">:shards</code>
-Number of shards to use.</p></li><li><p><code class="inline">:intents</code>
-See <a href="Remedy.Gateway.Intents.html"><code class="inline">Remedy.Gateway.Intents</code></a> for more information</p></li><li><p><code class="inline">:min_workers</code>
-The minimum number of HTTP2 connections to keep open. Defaults to 1, cannot be zero.</p></li><li><p><code class="inline">:max_workers</code>
-The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be zero.</p></li></ul><h3 id="module-environment-variables" class="section-heading">
-  <a href="#module-environment-variables" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">environment-variables</p>
-  </a>
-  Environment Variables
-</h3>
-<p>It is recommended to use environment variables to store sensitive configuration. So that they are not exposed if you should upload your project to GitHub etc. If a token is uploded to a public repo, Discord will notice and invalidate it.</p><h2 id="module-connection-limits" class="section-heading">
-  <a href="#module-connection-limits" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">connection-limits</p>
-  </a>
-  Connection Limits
-</h2>
-<p>Some hosting platforms will limit the number of connections you are allowed to keep active at any one time.</p><p>Each shard and HTTP2 worker will count for an individual connection. In addition to any other connections required for your application. Phoenix will establish 10 connections to the database by default. If you are using Heroku free tier (20 connection limit) you could run out of connections for users visiting your web application. In those cases you should consider limiting the number of shards and HTTP2 workers.</p><p>We recommend using <a href="https://www.gigalixir.com/">Gigalixir</a> or <a href="https://fly.io/">Fly.io</a> for your hosting platform. The gigalixir free tier has unlimited connections and will allow your bot to run automatically configured shards without issues.</p><h2 id="module-ffmpeg" class="section-heading">
+<p>To configure your application using <code class="inline">config.exs</code> place it inside the config folder. By default, Remedy will handle sharding, intents, HTTP connection pool automatically, Only your token is a required value, your config file will look something like this:</p><pre><code class="makeup elixir" translate="no"><span class="kn">import</span><span class="w"> </span><span class="nc">Config</span><span class="w">
+
+</span><span class="n">config</span><span class="w"> </span><span class="ss">:remedy</span><span class="w">
+  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Nzg2NTkzNjUyMzAxMzY1MjQ5.X9IqbA.1sMfTqLa0C2fnWBcKNF865lsGpA&quot;</span></code></pre><h2 id="module-ffmpeg" class="section-heading">
   <a href="#module-ffmpeg" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">ffmpeg</p>
   </a>
@@ -257,7 +239,7 @@ Functions
     <h1 class="signature" translate="no">embedded()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L120" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L86" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -283,7 +265,7 @@ Functions
     <h1 class="signature" translate="no">intents()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L173" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L139" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -316,7 +298,7 @@ Functions
     <h1 class="signature" translate="no">max_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L212" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L178" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -349,7 +331,7 @@ Functions
     <h1 class="signature" translate="no">min_workers()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L204" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L170" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -382,7 +364,7 @@ Functions
     <h1 class="signature" translate="no">shards()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L145" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L111" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -415,7 +397,7 @@ Functions
     <h1 class="signature" translate="no">start_link(args)</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L81" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L47" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -441,7 +423,7 @@ Functions
     <h1 class="signature" translate="no">system_architecture()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L220" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L186" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -474,7 +456,7 @@ Functions
     <h1 class="signature" translate="no">token()</h1>
 
 
-      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L133" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/bdanklin/remedy/blob/master/lib/remedy.ex#L99" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>

@@ -10,7 +10,7 @@
     <title>Remedy.Schema.MessageFlags — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-8ff26ccba9.js"></script>
+    <script src="dist/sidebar_items-e24ad4d1fd.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -110,7 +110,12 @@ Remedy
   </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">1</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b11101000</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3709254173-1">[</span><span class="s">&quot;HAS_THREAD&quot;</span><span class="p" data-group-id="3709254173-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="1890821326-1">[</span><span class="ss">:EPHEMERAL</span><span class="p">,</span><span class="w"> </span><span class="ss">:HAS_THREAD</span><span class="p">,</span><span class="w"> </span><span class="ss">:URGENT</span><span class="p" data-group-id="1890821326-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2772004950-1">%{</span><span class="ss">CROSSPOSTED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">SUPPRESS_EMBEDS</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="2772004950-1">}</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">41</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1000100</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6424753390-1">[</span><span class="s">&quot;SOURCE_MESSAGE_DELETED&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;URGENT&quot;</span><span class="p" data-group-id="6424753390-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6532847983-1">[</span><span class="ss">:LOADING</span><span class="p">,</span><span class="w"> </span><span class="ss">:SOURCE_MESSAGE_DELETED</span><span class="p">,</span><span class="w"> </span><span class="ss">:SUPPRESS_EMBEDS</span><span class="p">,</span><span class="w"> </span><span class="ss">:URGENT</span><span class="p" data-group-id="6532847983-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="4451807364-1">%{</span><span class="w">
+  </span><span class="ss">CROSSPOSTED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">EPHEMERAL</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">LOADING</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">SOURCE_MESSAGE_DELETED</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="p" data-group-id="4451807364-1">}</span></code></pre>
   </section>
 
 

@@ -6,49 +6,15 @@ defmodule Remedy do
   @moduledoc """
   This is the documentation for the Remedy library.
 
-  ## Configuration
+  ## Basic Configuration
 
-  Configuration in Remedy can be provided as either environment variables or using `Config`
+  To configure your application using `config.exs` place it inside the config folder. By default, Remedy will handle sharding, intents, HTTP connection pool automatically, Only your token is a required value, your config file will look something like this:
+
+      import Config
 
       config :remedy
-        token: System.get_env("REMEDY_TOKEN")
-        intents: 12,
-        shards: :auto,
+        token: "Nzg2NTkzNjUyMzAxMzY1MjQ5.X9IqbA.1sMfTqLa0C2fnWBcKNF865lsGpA"
 
-
-  > #### Error {: .error}
-  >
-  > This syntax will render an error block
-
-  Configuration can be provided as starting arguments or inside your config.exs file. The configurable terms are as follows.
-
-  - `:token` (required)
-  Your bots token, available from your
-  [Application Dashboard](https://discord.com/developers/applications)
-
-  - `:shards`
-  Number of shards to use.
-
-  - `:intents`
-  See `Remedy.Gateway.Intents` for more information
-
-  - `:min_workers`
-  The minimum number of HTTP2 connections to keep open. Defaults to 1, cannot be zero.
-
-  - `:max_workers`
-  The maximum number of HTTP2 connections to keep open. Defaults to 10, cannot be zero.
-
-  ### Environment Variables
-
-  It is recommended to use environment variables to store sensitive configuration. So that they are not exposed if you should upload your project to GitHub etc. If a token is uploded to a public repo, Discord will notice and invalidate it.
-
-  ## Connection Limits
-
-  Some hosting platforms will limit the number of connections you are allowed to keep active at any one time.
-
-  Each shard and HTTP2 worker will count for an individual connection. In addition to any other connections required for your application. Phoenix will establish 10 connections to the database by default. If you are using Heroku free tier (20 connection limit) you could run out of connections for users visiting your web application. In those cases you should consider limiting the number of shards and HTTP2 workers.
-
-  We recommend using [Gigalixir](https://www.gigalixir.com/) or [Fly.io](https://fly.io/) for your hosting platform. The gigalixir free tier has unlimited connections and will allow your bot to run automatically configured shards without issues.
 
   ## FFmpeg
 

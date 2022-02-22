@@ -40,7 +40,7 @@ defmodule Remedy.MixProject do
     [
       source_ref: "master",
       logo: "remedy.png",
-      assets: "guides/assets",
+      assets: "hello/images",
       extras: extras(),
       main: "introduction",
       extra_section: "HELLO",
@@ -52,8 +52,8 @@ defmodule Remedy.MixProject do
 
   def extras do
     [
-      "README.md",
       "hello/introduction.md",
+      "hello/advanced_configuration.md",
       "hello/getting_started.md"
     ]
   end

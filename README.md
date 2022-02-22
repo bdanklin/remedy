@@ -1,4 +1,4 @@
-<img align="center" src="./remedy_banner.png">
+<img align="center" src="remedy_banner.png">
 
 ---
 \

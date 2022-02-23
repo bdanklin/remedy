@@ -6453,7 +6453,7 @@ defmodule Remedy.API do
   @doc method: :get
   @doc route: "/guilds/:guild_id/scheduled_events"
   @unsafe {:list_events, [:guild_id, :opts]}
-  @spec list_events(Snowflake.c(), opts) :: [Event.t()]
+  @spec list_events(Snowflake.c(), opts) :: {:ok, [Event.t()]}
   def list_events(guild_id, opts) do
     query_data = %{with_user_count: true}
     query_types = %{with_user_count: :boolean}

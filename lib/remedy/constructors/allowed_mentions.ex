@@ -39,12 +39,14 @@ defmodule Remedy.AllowedMentions do
     end
   end
 
+  import Remedy.CastHelpers, only: [deep_compactor: 1]
+
   defp mapify(%AllowedMentions{} = a_m), do: Map.from_struct(a_m)
   defp mapify(a_m) when is_map(a_m), do: a_m
 
   def strip(model) do
     model
     |> Map.from_struct()
-    |> Morphix.compactiform!()
+    |> deep_compactor()
   end
 end

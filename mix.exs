@@ -42,6 +42,7 @@ defmodule Remedy.MixProject do
       logo: "remedy.png",
       assets: "hello/images",
       extras: extras(),
+      groups_for_extras: groups_for_extras(),
       main: "introduction",
       extra_section: "HELLO",
       nest_modules_by_prefix: nest_for_modules(),
@@ -50,11 +51,22 @@ defmodule Remedy.MixProject do
     ]
   end
 
+  def groups_for_extras() do
+    [
+      Introduction: ~r/hello\/introduction\/.?/,
+      #  Guides: ~r/hello\/[^\/]+\.md/,
+      Authentication: ~r/hello\/authentication\/.?/,
+      "Real-time": ~r/hello\/real_time\/.?/,
+      Testing: ~r/hello\/testing\/.?/,
+      Deployment: ~r/hello\/deployment\/.?/,
+      "How-to's": ~r/hello\/howto\/.?/
+    ]
+  end
+
   def extras do
     [
-      "hello/introduction.md",
-      "hello/advanced_configuration.md",
-      "hello/getting_started.md"
+      "hello/introduction/configuration.md",
+      "hello/introduction/getting_started.md"
     ]
   end
 
@@ -107,10 +119,11 @@ defmodule Remedy.MixProject do
         ~r/Remedy.Schema/
       ],
       Helpers: [
-        Remedy.TimeHelpers,
+        Remedy.CaseHelpers,
+        Remedy.CastHelpers,
         Remedy.ColourHelpers,
         Remedy.ResourceHelpers,
-        Remedy.CastHelpers
+        Remedy.TimeHelpers
       ]
     ]
   end

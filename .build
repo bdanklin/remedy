@@ -136,9 +136,9 @@ Remedy.Type.html
 Remedy.URL.html
 Remedy.Voice.html
 Remedy.html
-advanced_configuration.html
 api-reference.html
 assets/logo.png
+configuration.html
 dist/app-073abeeda7b7e6d5d7e9.js
 dist/elixir-9c72061341c71d26e0ce.css
 dist/html/fonts/remixicon.eot
@@ -146,9 +146,8 @@ dist/html/fonts/remixicon.svg
 dist/html/fonts/remixicon.ttf
 dist/html/fonts/remixicon.woff
 dist/html/fonts/remixicon.woff2
-dist/search_items-51d5d4cf8f.js
-dist/sidebar_items-e24ad4d1fd.js
+dist/search_items-7f003adf6b.js
+dist/sidebar_items-9fe1d55a18.js
 getting_started.html
 index.html
-introduction.html
 search.html

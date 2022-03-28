@@ -10,7 +10,7 @@
     <title>Remedy.Schema.UserFlags — Remedy v0.6.9</title>
     <link rel="stylesheet" href="dist/elixir-9c72061341c71d26e0ce.css" />
 
-    <script src="dist/sidebar_items-e24ad4d1fd.js"></script>
+    <script src="dist/sidebar_items-9fe1d55a18.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -110,18 +110,9 @@ Remedy
   </a>
   Casting
 </h2>
-<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">2</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b1010101011000000010</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="3367005655-1">[</span><span class="s">&quot;BOT_HTTP_INTERACTIONS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CERTIFIED_MODERATOR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HYPESQUAD_BALANCE&quot;</span><span class="p">,</span><span class="w">
- </span><span class="s">&quot;HYPESQUAD_BRAVERY&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HYPESQUAD_EVENTS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;VERIFIED_DEVELOPER&quot;</span><span class="p" data-group-id="3367005655-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0190216801-1">[</span><span class="ss">:BOT_HTTP_INTERACTIONS</span><span class="p">,</span><span class="w"> </span><span class="ss">:HYPESQUAD_BRILLIANCE</span><span class="p">,</span><span class="w"> </span><span class="ss">:SPAMMER</span><span class="p" data-group-id="0190216801-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0859784711-1">%{</span><span class="w">
-  </span><span class="ss">BUG_HUNTER_LEVEL_1</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">DISCORD_EMPLOYEE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">EARLY_NITRO_SUPPORTER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">HYPESQUAD_BRAVERY</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">HYPESQUAD_BRILLIANCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">PARTNERED_SERVER_OWNER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">SPAMMER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">SYSTEM</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">VERIFIED_DEVELOPER</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="p" data-group-id="0859784711-1">}</span></code></pre>
+<p>The following are examples of valid inputs for casting. Regardless of the format provided, values will be cast to an <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">integer/0</code></a> value for storage.</p><h4>Decimal Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mi">595139</span></code></pre><h4>Binary Integer</h4><pre><code class="makeup elixir" translate="no"><span class="mb">0b10010100011100001110</span></code></pre><h4>String List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="5560910896-1">[</span><span class="s">&quot;BUG_HUNTER_LEVEL_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CERTIFIED_MODERATOR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HYPESQUAD_BRILLIANCE&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;HYPESQUAD_EVENTS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PARTNERED_SERVER_OWNER&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TEAM_PSEUDO_USER&quot;</span><span class="p">,</span><span class="w">
+ </span><span class="s">&quot;VERIFIED_BOT&quot;</span><span class="p" data-group-id="5560910896-1">]</span></code></pre><h4>Atom List</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9877401763-1">[</span><span class="ss">:BUG_HUNTER_LEVEL_1</span><span class="p">,</span><span class="w"> </span><span class="ss">:VERIFIED_BOT</span><span class="p" data-group-id="9877401763-1">]</span></code></pre><h4>Boolean Map</h4><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9412531103-1">%{</span><span class="ss">DISCORD_EMPLOYEE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="ss">HYPESQUAD_BALANCE</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="9412531103-1">}</span></code></pre>
   </section>
 
 

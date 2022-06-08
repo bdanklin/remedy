@@ -3,5 +3,6 @@ defmodule Remedy.Schema.ComponentType do
 
   defstruct ACTION_ROW: 1,
             BUTTON: 2,
-            SELECT_MENU: 3
+            SELECT_MENU: 3,
+            TEXT_INPUT: 4
 end

@@ -8,7 +8,10 @@ defmodule Remedy.Schema do
   @doc false
   def schema_alias do
     quote do
+      alias Remedy.Gateway.Intents
+
       alias Remedy.Schema.{
+        BotActivity,
         Activity,
         ActivityAssets,
         ActivityButton,
@@ -110,8 +113,11 @@ defmodule Remedy.Schema do
         StickerFormatType,
         StickerPack,
         StickerType,
+        SessionStartLimit,
         Team,
         TeamMember,
+        TextInput,
+        TextInputStyle,
         Thread,
         ThreadMember,
         ThreadMemberFlags,
@@ -134,7 +140,8 @@ defmodule Remedy.Schema do
         ISO8601,
         Snowflake,
         Timestamp,
-        URL
+        URL,
+        Locale
       }
     end
   end

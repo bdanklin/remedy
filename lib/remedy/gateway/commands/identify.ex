@@ -1,29 +1,45 @@
 defmodule Remedy.Gateway.Commands.Identify do
   @moduledoc false
-  import Remedy, only: [intents: 0, system_architecture: 0]
+  #############################################################################
+  ## 2
+  ## Identify
+  ## Send
+  ## Starts a new session during the initial handshake.
+
+  use Remedy.Schema
   alias Remedy.Gateway.Session.WSState
 
-  defstruct token: "",
-            properties: %{
-              "$os" => system_architecture(),
-              "$browser" => "Remedy",
-              "$device" => "Remedy"
-            },
-            compress: true,
-            large_threshold: 250,
-            shard: [],
-            intents: 0
+  embedded_schema do
+    field :token, :string
 
-  def send(%WSState{shard: shard, shards: shards, token: token}, opts) do
+    field :properties, :map,
+      default: %{
+        "$os" => "#{:erlang.system_info(:system_architecture)}",
+        "$browser" => "Remedy",
+        "$device" => "Remedy"
+      }
+
+    field :compress, :boolean, default: true
+    field :large_threshold, :integer, default: 250
+    field :shard, {:array, :integer}, default: []
+    field :intents, Intents
+    embeds_one :presence, Remedy.Gateway.Commands.PresenceUpdate
+  end
+
+  def changeset(model \\ %__MODULE__{}, attrs) do
+    model
+    |> cast(attrs, [])
+  end
+
+  def send(%WSState{shard: shard, shards: shards, token: token, intents: intents}, opts) do
     payload = %{
       token: token,
       shard: [shard, shards],
-      intents: intents()
+      intents: intents
     }
 
-    opts =
-      %{large_threshold: opts[:large_threshold], compress: opts[:compress]}
-      |> Enum.reject(fn x -> x == nil end)
+    attrs =
+      opts
       |> Enum.into(%{})
       |> Map.merge(payload)
 

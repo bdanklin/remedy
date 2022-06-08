@@ -4,21 +4,6 @@ defmodule Remedy.Schema.Component do
   """
   use Remedy.Schema
 
-  @type t :: %__MODULE__{
-          type: ComponentType.t(),
-          custom_id: String.t(),
-          disabled: boolean(),
-          style: ButtonStyle.t(),
-          label: String.t(),
-          url: URL.t(),
-          placeholder: String.t(),
-          min_values: integer(),
-          max_values: integer(),
-          emoji: Emoji.t(),
-          options: [ComponentOption.t()],
-          components: [__MODULE__.t()]
-        }
-
   embedded_schema do
     field :type, ComponentType
     field :custom_id, :string

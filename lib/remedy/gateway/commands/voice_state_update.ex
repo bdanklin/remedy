@@ -1,5 +1,11 @@
 defmodule Remedy.Gateway.Commands.VoiceStateUpdate do
   @moduledoc false
+  ############################################################################
+  ## 4
+  ## Voice State Update
+  ## Send
+  ## Used to join/leave or move between voice channels.
+
   defstruct guild_id: 0,
             channel_id: 0,
             self_mute: false,

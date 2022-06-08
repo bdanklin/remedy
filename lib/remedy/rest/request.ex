@@ -11,7 +11,7 @@ defmodule Remedy.Rest.Request do
   #   "/gateway",
   #   "/applications/detectable"
   # ]
-  @api_version "/api/v9"
+  @api_version "/api/v10"
 
   @type method :: :get | :post | :put | :patch | :delete
   @type route :: String.t()
@@ -41,8 +41,7 @@ defmodule Remedy.Rest.Request do
             route: nil,
             body: %{},
             headers: [
-              {"Authorization", "Bot #{Remedy.token()}"},
-              {"User-Agent", "DiscordBot (https://github.com/bdanklin/remedy, 0.6.9)"}
+              {"User-Agent", "DiscordBot (#{Remedy.scm_url()}, #{Remedy.version()})"}
             ],
             __rate_limit__: %{},
             __discord_bucket__: nil,
@@ -55,7 +54,7 @@ defmodule Remedy.Rest.Request do
 
     %__MODULE__{__raw__: %{method: method, route: route, params: params, query: query, reason: reason, body: body}}
     |> put_method()
-    |> build_rate_limiter_info()
+    #   |> build_rate_limiter_info()
     |> build_route()
     |> build_query_params()
     |> build_audit_log_reason_header()
@@ -64,33 +63,6 @@ defmodule Remedy.Rest.Request do
 
   defp put_method(%{__raw__: %{method: method}} = request) do
     %__MODULE__{request | method: method}
-  end
-
-  # TODO: move to rate limiter?
-  defp build_rate_limiter_info(%__MODULE__{__raw__: raw} = request) do
-    major_param =
-      cond do
-        String.contains?(raw.route, "/:webhook_id/:webhook_token") ->
-          "#{raw.params.webhook_id} <> #{raw.params.webhook_token}"
-
-        true ->
-          raw.route
-          |> String.split("/")
-          |> Enum.filter(&String.contains?(&1, ":"))
-          |> Enum.reduce_while(nil, fn
-            ":guild_id", nil -> {:halt, ":guild_id"}
-            ":channel_id", nil -> {:halt, ":channel_id"}
-            _param, _acc -> {:cont, nil}
-          end)
-      end
-      |> Base.encode64()
-
-    route =
-      raw.route
-      |> :zlib.zip()
-      |> Base.encode64()
-
-    %__MODULE__{request | __rate_limit__: {raw.method, major_param, route}}
   end
 
   defp build_route(%__MODULE__{__raw__: %{route: route, params: nil}} = request) do

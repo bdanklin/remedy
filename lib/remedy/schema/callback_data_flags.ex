@@ -1,5 +1,6 @@
 defmodule Remedy.Schema.CallbackDataFlags do
   use Remedy.Flag
 
-  defstruct EPHEMERAL: 1 <<< 6
+  defstruct SUPPRESS_EMBEDS: 1 <<< 2,
+            EPHEMERAL: 1 <<< 6
 end

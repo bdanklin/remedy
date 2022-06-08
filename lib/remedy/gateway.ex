@@ -1,6 +1,6 @@
 defmodule Remedy.Gateway do
   @moduledoc """
-  Gateway Documentation
+  The Gateway provides real time events to your application as they occur on Discord.
 
   """
   use Supervisor
@@ -24,12 +24,13 @@ defmodule Remedy.Gateway do
   @doc false
   def init(args) do
     children = [
-      {Pool, []},
+      {Registry, keys: :unique, name: Remedy.GatewayRegistry},
       {ATC, []},
+      {Pool, []},
       {Task, fn -> start_shards(args) end}
     ]
 
-    Supervisor.init(children, strategy: :one_for_one, max_restarts: 3, max_seconds: 60)
+    Supervisor.init(children, strategy: :rest_for_one, max_restarts: 3, max_seconds: 60)
   end
 
   defp start_shards(args) do

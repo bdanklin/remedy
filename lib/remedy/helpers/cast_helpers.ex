@@ -24,8 +24,7 @@ defmodule Remedy.CastHelpers do
   end
 
   defp inner_list_destructor(item) when is_list(item) do
-    item
-    |> Enum.reduce([], fn
+    Enum.reduce(item, [], fn
       v, acc when is_map(v) -> [deep_destructor(v) | acc]
       v, acc when is_list(v) -> [inner_list_destructor(v) | acc]
       v, acc when is_tuple(v) -> [Tuple.to_list(v) |> inner_list_destructor() | acc]
@@ -35,6 +34,10 @@ defmodule Remedy.CastHelpers do
     |> Enum.reverse()
   end
 
+  @doc """
+  Replacement for `stringimorphiform`
+
+  """
   @spec deep_string_key(map) :: map
   def deep_string_key(item) when is_struct(item) do
     item
@@ -53,26 +56,26 @@ defmodule Remedy.CastHelpers do
 
   def deep_string_key(item) when is_list(item), do: for(k <- item, into: [], do: deep_string_key(k))
 
-  defp list_item(item) when is_struct(item), do: &deep_string_key/1
-  defp list_item(item) when is_map(item), do: &deep_string_key/1
+  defp list_item(item) when is_struct(item), do: deep_string_key(item)
+  defp list_item(item) when is_map(item), do: deep_string_key(item)
   defp list_item(item) when is_list(item), do: for(k <- item, into: [], do: list_item(k))
   defp list_item(item), do: item
 
   @spec deep_compactor(map) :: map
   @spec deep_compactor(list) :: list
   def deep_compactor(map) when is_map(map) do
-    map
-    |> Enum.reduce(%{}, fn {k, v}, acc ->
-      cond do
-        is_struct(v) -> Map.put_new(acc, k, v)
-        is_map(v) and Enum.empty?(v) -> acc
-        is_map(v) or is_list(v) -> Map.put_new(acc, k, deep_compactor(v))
-        is_nil(v) -> acc
-        true -> Map.put_new(acc, k, v)
-      end
+    Enum.reduce(map, %{}, fn
+      {k, v}, acc when is_struct(v) -> Map.put_new(acc, k, v)
+      {_k, v}, acc when is_map(v) and map_size(v) == 0 -> acc
+      {k, v}, acc when is_map(v) or is_list(v) -> Map.put_new(acc, k, deep_compactor(v))
+      {_k, v}, acc when is_nil(v) -> acc
+      {k, v}, acc when is_binary(v) when is_integer(v) -> Map.put_new(acc, k, v)
     end)
   end
 
+  @doc """
+  Replacement for `compactiform`
+  """
   def deep_compactor(list) when is_list(list) do
     list
     |> Enum.reduce([], fn

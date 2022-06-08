@@ -47,7 +47,15 @@ defmodule Remedy.MixProject do
       extra_section: "HELLO",
       nest_modules_by_prefix: nest_for_modules(),
       groups_for_modules: groups_for_modules(),
-      groups_for_functions: groups_for_functions()
+      groups_for_functions: groups_for_functions(),
+      before_closing_body_tag: &before_closing_body_tag/1
+    ]
+  end
+
+  def extras do
+    [
+      "hello/introduction/configuration.md",
+      "hello/introduction/getting_started.md"
     ]
   end
 
@@ -60,13 +68,6 @@ defmodule Remedy.MixProject do
       Testing: ~r/hello\/testing\/.?/,
       Deployment: ~r/hello\/deployment\/.?/,
       "How-to's": ~r/hello\/howto\/.?/
-    ]
-  end
-
-  def extras do
-    [
-      "hello/introduction/configuration.md",
-      "hello/introduction/getting_started.md"
     ]
   end
 
@@ -112,8 +113,7 @@ defmodule Remedy.MixProject do
         Remedy.Snowflake,
         Remedy.Timestamp,
         Remedy.Type,
-        Remedy.URL,
-        Remedy.Locale
+        Remedy.URL
       ],
       "Schema & Fields": [
         ~r/Remedy.Schema/
@@ -122,6 +122,8 @@ defmodule Remedy.MixProject do
         Remedy.CaseHelpers,
         Remedy.CastHelpers,
         Remedy.ColourHelpers,
+        Remedy.ColourHelpers.Palette,
+        Remedy.EctoHelpers,
         Remedy.ResourceHelpers,
         Remedy.TimeHelpers
       ]
@@ -140,6 +142,15 @@ defmodule Remedy.MixProject do
     ]
   end
 
+  defp before_closing_body_tag(:html) do
+    """
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad: true})</script>
+    """
+  end
+
+  defp before_closing_body_tag(_), do: ""
+
   def package do
     [
       name: @app,
@@ -154,21 +165,16 @@ defmodule Remedy.MixProject do
 
   defp deps do
     [
-      ## Web
       {:gun, "2.0.1", hex: :remedy_gun},
       {:certifi, "~> 2.8"},
-      ## Data Processing
       {:broadway, "~> 1.0.2"},
-      ## DB & Parsing
       {:jason, "~> 1.3"},
       {:ecto, "~> 3.7"},
       {:etso, "~> 0.1.6"},
-      {:mime, "~> 2.0"},
-      ## Voice
-      {:kcl, "~> 1.4"},
-      ## Rate Limiter
+      {:phoenix_pubsub, "~> 2.0"},
       {:ex_rated, "~> 2.0"},
       # TODO: Take what we need and remove
+      {:mime, "~> 2.0"},
       {:ecto_morph, "~> 0.1.25"}
     ]
   end

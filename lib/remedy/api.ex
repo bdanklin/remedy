@@ -64,6 +64,9 @@ defmodule Remedy.API do
   alias Ecto.Changeset
   alias Remedy.Snowflake
 
+  import Remedy.EctoHelpers,
+    only: [validate_at_least: 3]
+
   import Remedy.TimeHelpers,
     only: [is_snowflake: 1]
 
@@ -6412,11 +6415,12 @@ defmodule Remedy.API do
     {:get, "/gateway", nil, nil, nil, nil}
     |> request()
     |> case do
-      {:ok, %{url: url}} -> {:ok, url}
+      {:ok, %{"url" => url}} -> {:ok, url}
       _ -> {:error, "Malformed Payload"}
     end
   end
 
+  alias Remedy.Schema.BotGateway
   #############################################################################
   ##  Gets a gateway connection object.
   ##
@@ -6427,6 +6431,7 @@ defmodule Remedy.API do
   def get_gateway_bot do
     {:get, "/gateway/bot", nil, nil, nil, nil}
     |> request()
+    |> shape(BotGateway)
   end
 
   ##################################################################
@@ -6707,16 +6712,15 @@ defmodule Remedy.API do
   defp request({_method, _route, _params, _query, _reason, %Changeset{valid?: false} = body}),
     do: return_errors(body)
 
-  defp request({method, route, params, query, reason, body})
-       when not is_nil(reason)
-       when not is_binary(reason) do
-    request({method, route, params, query, parse(reason), body})
-  end
-
   alias Remedy.Rest
 
+  defp request({method, route, params, query, reason, body})
+       when is_nil(reason)
+       when is_binary(reason),
+       do: Rest.request(method, route, params, query, reason, body)
+
   defp request({method, route, params, query, reason, body}),
-    do: Rest.request(method, route, params, query, reason, body)
+    do: request({method, route, params, query, parse(reason), body})
 
   ############################################################################
   ## Parse Audit Log Reason
@@ -6790,54 +6794,4 @@ defmodule Remedy.API do
   ## For @unsafe {:func, [args]}
   defp unwrap({:ok, body}), do: body
   defp unwrap({:error, reason}), do: raise("#{inspect(reason)}")
-
-  #############################################################################
-  ## Custom Ecto Validation
-  ##
-  ## Validate at least one of the parameters is present.
-  ##
-  defp validate_at_least(changeset, fields, at_least, opts \\ [])
-
-  defp validate_at_least(changeset, fields, at_least, opts)
-       when is_list(fields) and is_integer(at_least) do
-    present_keys = for field <- fields, into: [], do: get_field(changeset, field)
-
-    validations =
-      for field <- fields,
-          into: [],
-          do: {field, {:at_least, opts}}
-
-    is_are = if at_least == 1, do: "is", else: "are"
-
-    error_msg = String.trim_trailing("At least #{at_least} of: #{inspect(fields)} #{is_are} required.")
-
-    field_presence =
-      for field <- fields,
-          into: %{},
-          do: {to_string(field), to_string(field) in present_keys}
-
-    errors =
-      field_presence
-      |> Enum.filter(fn {_k, v} -> v == true end)
-      |> case do
-        list_of_present_fields when length(list_of_present_fields) >= at_least ->
-          []
-
-        _ ->
-          for {k, _v} <- field_presence,
-              into: [],
-              do: {String.to_existing_atom(k), {message(opts, error_msg), validation: :at_least}}
-      end
-
-    %{
-      changeset
-      | validations: validations ++ changeset.validations,
-        errors: errors ++ changeset.errors,
-        valid?: changeset.valid? and errors == []
-    }
-  end
-
-  defp message(opts, key \\ :message, default) do
-    Keyword.get(opts, key, default)
-  end
 end

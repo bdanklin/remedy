@@ -1,210 +1,251 @@
 defmodule Remedy do
-  ## FFMPEG
-  # @ffmpeg_url "https://github.com/FFmpeg/FFmpeg/releases/download/:version/ffmpeg-3.0.tar.gz"
-  # @ffmpeg_ver "n3.0"
-
-  @moduledoc """
-  This is the documentation for the Remedy library.
-
-  ## Basic Configuration
-
-  To configure your application using `config.exs` place it inside the config folder. By default, Remedy will handle sharding, intents, HTTP connection pool automatically, Only your token is a required value, your config file will look something like this:
-
-      import Config
-
-      config :remedy
-        token: "Nzg2NTkzNjUyMzAxMzY1MjQ5.X9IqbA.1sMfTqLa0C2fnWBcKNF865lsGpA"
-
-
-  ## FFmpeg
-
-
-  """
-  use Application
   require Logger
-  alias Remedy.{Buffer, Consumer, Dispatch, Gateway, Rest, Repo, Voice}
 
-  @env Mix.env()
-  @args [:token, :min_workers, :max_workers, :shards, :intents, :env, :embedded]
+  @dialyzer :no_match
+
+  @external_resource readme = Path.join([__DIR__, "../README.md"])
+  @moduledoc readme
+             |> File.read!()
+             |> String.split("<!-- MDOC -->")
+             |> Enum.fetch!(1)
+
+  alias Remedy.Buffer
+  alias Remedy.Consumer
+  alias Remedy.Dispatch
+  alias Remedy.Gateway
+  alias Remedy.Rest
+  alias Remedy.Repo
+  alias Remedy.Voice
+
+  @doc """
+  Returns the current version of Remedy.
+  """
+  def version do
+    Keyword.get(Remedy.MixProject.project(), :version)
+  end
+
+  @doc """
+  Returns the current repo URL of Remedy.
+  """
+  def scm_url do
+    Keyword.get(Remedy.MixProject.project(), :source_url)
+  end
+
+  ############################################################################
+  ## Start Application
+  ##
+  use Application
 
   @doc false
-  def start(_type, args) do
-    with :ok <- check_token(),
-         :ok <- check_shards(),
-         :ok <- check_intents() do
-      args = build_args(args)
-
-      args
-      |> Keyword.get(:embedded, false)
-      |> case do
-        false -> build_children(args)
-        true -> []
-      end
-      |> start()
+  @spec start(any, any) :: {:error, any} | {:ok, pid}
+  def start(_type, _args) do
+    with args <- build_args(),
+         kids <- build_children(args) do
+      validate_token(args)
+      Supervisor.start_link(kids, restart: :permenant, strategy: :one_for_one)
     end
   end
 
+  defp build_children(%{embedded: false}), do: []
+  defp build_children(%{embedded: true} = args), do: children(args)
+
+  defp validate_token(%{embedded: true, token: <<_::192, 46, _::48, 46, _::216>>}), do: :ok
+  defp validate_token(%{embedded: true, token: _}), do: raise("INVALID TOKEN CONFIGURATION")
+  defp validate_token(%{embedded: false}), do: :ok
+
+  ############################################################################
+  ## Start Supervised
+  ##
+  use Supervisor
+
+  @doc "Starts an instance of `Remedy` supervised by the current process."
+  @spec start_link(any) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(args) do
-    build_args(args)
-    |> build_children()
-    |> start()
+    Supervisor.start_link(__MODULE__, args, name: __MODULE__)
   end
 
-  defp start(children) do
-    Supervisor.start_link(children, strategy: :one_for_one)
+  @doc false
+  def init(args) do
+    with args <- build_args(args),
+         children <- children(args) do
+      Supervisor.init(children, strategy: :one_for_one)
+    end
   end
 
-  defp build_children(args) do
+  def child_spec(arg) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [arg]}
+    }
+  end
+
+  ############################################################################
+  ## Configuration
+  ##
+  @doc false
+  @env Mix.env()
+  def env, do: @env
+
+  @rest_v 10
+  @gateway_v 9
+  @voice_v 6
+
+  @defaults %{
+    embedded: true,
+    token: nil,
+    secret: nil,
+    intents: :auto,
+    shards: :auto,
+    workers: :auto,
+    cache: :auto,
+    debug: false,
+    id: __MODULE__,
+    env: :dev,
+    rest_v: @rest_v,
+    gateway_v: @gateway_v,
+    voice_v: @voice_v
+  }
+
+  defp build_args(args \\ %{}) do
+    dotenv_args()
+    |> Map.merge(env_args())
+    |> Map.merge(config_args())
+    |> Map.merge(args)
+    |> Map.put_new(:env, @env)
+    |> filter_nils()
+    |> Enum.into(@defaults)
+    |> Map.take(Map.keys(@defaults))
+  end
+
+  defp children(args) do
+    keys = Map.keys(@defaults)
+
+    args =
+      args
+      |> Map.take(keys)
+      |> Enum.into([])
+
     [
+      ## RESTful API
       {Rest, args},
+      ## Cache
       {Repo, args},
+      ## Event Processing
       {Consumer, args},
       {Buffer, args},
       {Dispatch, args},
+      ## Gateway
       {Gateway, args},
       {Voice, args}
     ]
   end
 
-  defp build_args(args) do
-    for key <- @args, into: [] do
-      {key, determine_arg(args, key)}
-    end
-  end
-
-  defp determine_arg(args, key) do
-    case Keyword.get(args, key, :from_config) do
-      :from_config -> apply(__MODULE__, key, [])
-      val -> val
-    end
-  end
-
+  #############################################################################
+  ## .env File
+  ##
+  @dotenv_args [
+    embedded: "REMEDY_EMBEDDED",
+    token: "REMEDY_TOKEN",
+    secret: "REMEDY_SECRET",
+    intents: "REMEDY_INTENTS",
+    shards: "REMEDY_SHARDS",
+    workers: "REMEDY_WORKERS"
+  ]
+  @dotenv_vars Keyword.values(@dotenv_args)
   @doc false
-  def env, do: @env
-
-  @doc ""
-  def embedded,
-    do: embedded(System.get_env("REMEDY_EMBEDDED") || Application.get_env(:remedy, :embedded, false))
-
-  defp embedded(str)
-       when str in ["true", "TRUE", "false", "FALSE"] do
-    String.downcase(str) |> String.to_atom()
+  defp dotenv_args do
+    try do
+      File.read!("./.env")
+      |> String.split("\n")
+      |> Enum.filter(&String.starts_with?(&1, "export "))
+      |> Enum.map(&String.trim_leading(&1, "export "))
+      |> Enum.filter(&String.starts_with?(&1, @dotenv_vars))
+      |> Enum.map(&String.split(&1, "="))
+      |> Enum.reduce(%{}, fn
+        [k, v], acc ->
+          Map.put_new(acc, atomize_env_key(k), v)
+      end)
+      |> Enum.map(&clean_arg/1)
+      |> Enum.into(%{})
+    rescue
+      File.Error -> %{}
+    end
+    |> filter_nils()
   end
 
-  defp embedded(atm) when atm in [true, false], do: atm
-  defp embedded(_str), do: false
-
-  @doc "Retreive the bot token."
-  @spec token :: any
-  def token, do: System.get_env("REMEDY_BOT_TOKEN") || Application.get_env(:remedy, :token, false)
-
-  @spec check_token :: :ok
-  @dialyzer {:no_match, {:check_token, 1}}
-  defp check_token, do: token() |> check_token()
-  defp check_token(<<_::192, 46, _::48, 46, _::216>>), do: :ok
-  defp check_token(false), do: raise("INVALID TOKEN CONFIGURATION")
-  defp check_token(_invalid), do: raise("INVALID TOKEN CONFIGURATION")
-
-  @doc "Retreive the configured shard count"
-  @dialyzer {:no_match, {:shards, 1}}
-  @spec shards :: integer()
-  def shards, do: shards(@env)
-  defp shards(:dev), do: System.get_env("REMEDY_GATEWAY_SHARDS") |> shards()
-  defp shards(:prod), do: Application.get_env(:remedy, :shards, :auto) |> shards()
-  defp shards("auto"), do: shards(:auto)
-  defp shards(string) when is_binary(string), do: String.to_integer(string) |> shards()
-  defp shards(config) when config in [nil, :auto], do: :auto
-  defp shards(shards) when is_integer(shards), do: shards
-  defp shards(_invalid), do: raise("INVALID SHARD CONFIGURATION")
-
-  @spec check_shards :: :ok
-  @dialyzer {:no_match, {:check_shards, 1}}
-  defp check_shards, do: check_shards(@env)
-  defp check_shards(:dev), do: System.get_env("REMEDY_GATEWAY_SHARDS") |> check_shards()
-  defp check_shards(:prod), do: Application.get_env(:remedy, :shards) |> check_shards()
-  defp check_shards("auto"), do: :ok
-  defp check_shards(:auto), do: :ok
-  defp check_shards(nil), do: Logger.warn("SHARDS NOT CONFIGURED, USING FALLBACK: :auto")
-
-  defp check_shards(shards) when is_integer(shards),
-    do: Logger.warn("USING CONFIGURED SHARDS: #{shards}")
-
-  defp check_shards(_invalid),
-    do: Logger.warn("INVALID SHARD CONFIGURATION, USING FALLBACK: :auto")
-
-  alias Remedy.Gateway.Intents
-  @doc "Retreive the configured gateway intents."
-  @dialyzer {:no_match, {:intents, 1}}
-  @spec intents :: integer()
-  def intents, do: intents(@env)
-  defp intents(:dev), do: intents(System.get_env("REMEDY_GATEWAY_INTENTS"))
-  defp intents(:prod), do: intents(Application.get_env(:remedy, :gateway_intents, nil))
-  defp intents(:error), do: default_intents()
-  defp intents(nil), do: default_intents()
-  defp intents("auto"), do: default_intents()
-  defp intents(:auto), do: default_intents()
-  defp intents(false), do: default_intents()
-  defp intents({:ok, intents}), do: intents
-  defp intents(intents), do: intents |> Intents.cast() |> intents()
-
-  @spec check_intents :: :ok
-  @dialyzer {:no_match, {:check_intents, 1}}
-  defp check_intents, do: check_intents(@env)
-  defp check_intents(:dev), do: check_intents(System.get_env("REMEDY_GATEWAY_INTENTS"))
-
-  defp check_intents(:prod),
-    do: check_intents(Application.get_env(:remedy, :gateway_intents, false))
-
-  defp check_intents(false), do: Logger.warn("INTENTS NOT CONFIGURED, USING FALLBACK: :auto")
-
-  defp check_intents(:error),
-    do: Logger.warn("INVALID INTENTS CONFIGURATION, USING FALLBACK: :auto")
-
-  defp check_intents("auto"), do: :ok
-  defp check_intents(:auto), do: :ok
-  defp check_intents({:ok, _intents}), do: :ok
-  defp check_intents(intents), do: Intents.cast(intents) |> check_intents()
-
-  @doc "Retreive the configured minimum HTTP worker count."
-  @spec min_workers :: integer()
-  def min_workers do
-    (System.get_env("REMEDY_MIN_WORKERS") ||
-       Application.get_env(:remedy, :min_workers, 10))
-    |> String.to_integer()
+  defp atomize_env_key(arg) when arg in @dotenv_vars do
+    arg
+    |> String.downcase()
+    |> String.split("_")
+    |> List.last()
+    |> String.to_atom()
   end
 
-  @doc "Retreive the configured max HTTP worker count."
-  @spec max_workers :: integer()
-  def max_workers do
-    (System.get_env("REMEDY_MAX_WORKERS") ||
-       Application.get_env(:remedy, :max_workers, 10))
-    |> String.to_integer()
+  #############################################################################
+  ## Environment Variables
+  ##
+  @env_args [
+    embedded: "REMEDY_EMBEDDED",
+    token: "REMEDY_TOKEN",
+    secret: "REMEDY_SECRET",
+    intents: "REMEDY_INTENTS",
+    shards: "REMEDY_SHARDS",
+    workers: "REMEDY_WORKERS"
+  ]
+  @doc false
+  defp env_args do
+    for {key, env} <- @env_args, into: [] do
+      {key, System.get_env(env)}
+    end
+    |> Enum.map(&clean_arg/1)
+    |> filter_nils()
   end
 
-  @doc "Retreive the current system architecture."
-  @spec system_architecture :: binary
-  def system_architecture,
-    do: "#{:erlang.system_info(:system_architecture)}"
-
-  defp default_intents do
-    [
-      :GUILDS,
-      :GUILD_MEMBERS,
-      :GUILD_BANS,
-      :GUILD_EMOJIS_AND_STICKERS,
-      :GUILD_INTEGRATIONS,
-      :GUILD_WEBHOOKS,
-      :GUILD_INVITES,
-      :GUILD_VOICE_STATES,
-      :GUILD_PRESENCES,
-      :GUILD_MESSAGES,
-      :GUILD_MESSAGE_REACTIONS,
-      :GUILD_MESSAGE_TYPING,
-      :DIRECT_MESSAGES,
-      :DIRECT_MESSAGE_REACTIONS,
-      :DIRECT_MESSAGE_TYPING,
-      :GUILD_SCHEDULED_EVENTS
-    ]
-    |> Intents.to_integer()
+  #############################################################################
+  ## Config
+  ##
+  @config_args [
+    :embedded,
+    :token,
+    :secret,
+    :intents,
+    :shards,
+    :workers,
+    :cache,
+    :debug,
+    :id
+  ]
+  @doc false
+  defp config_args do
+    for key <- @config_args, into: [] do
+      {key, Application.get_env(:remedy, key, nil)}
+    end
+    |> Enum.map(&clean_arg/1)
+    |> filter_nils()
   end
+
+  #############################################################################
+  ## Parser
+  ##
+  defp clean_arg({arg, nil}), do: {arg, nil}
+  defp clean_arg({:embedded, value}), do: {:embedded, value |> String.trim("\"") |> parse_bool()}
+  defp clean_arg({:token, value}), do: {:token, value |> String.trim("\"")}
+  defp clean_arg({:secret, value}), do: {:secret, value |> String.trim("\"")}
+  defp clean_arg({:intents, value}), do: {:intents, value |> String.trim("\"") |> parse_auto_or_int()}
+  defp clean_arg({:workers, value}), do: {:workers, value |> String.trim("\"") |> parse_auto_or_int()}
+  defp clean_arg({:shards, value}), do: {:shards, value |> String.trim("\"") |> parse_auto_or_int()}
+
+  defp filter_nils(map) do
+    Enum.reduce(map, %{}, fn
+      {_k, nil}, acc -> acc
+      {k, v}, acc -> Map.put_new(acc, k, v)
+    end)
+  end
+
+  defp parse_bool(bool) when bool in ['true', 'TRUE', "true", "TRUE", 1, "1", true], do: true
+  defp parse_bool(bool) when bool in ['false', 'FALSE', "false", "FALSE", 0, "0", false], do: false
+
+  defp parse_auto_or_int(arg) when arg in ["auto", "AUTO", 'auto', 'AUTO', :auto], do: :auto
+  defp parse_auto_or_int(arg) when is_binary(arg), do: String.to_integer(arg)
+  defp parse_auto_or_int(arg), do: arg
 end

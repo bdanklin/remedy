@@ -117,10 +117,10 @@ defmodule Remedy.TypeBeforeCompile do
       use Remedy.UnsafeHelpers, handler: :unwrap, docs: false
 
       defp keys_vals, do: %__MODULE__{} |> Map.from_struct()
-      defp keys, do: keys_vals() |> Map.keys()
-      defp vals, do: keys_vals() |> Map.values()
+      @keys %__MODULE__{} |> Map.from_struct() |> Map.keys()
+      @vals %__MODULE__{} |> Map.from_struct() |> Map.values()
 
-      defp key_for(val) when is_integer(val) do
+      defp key_for(val) when is_integer(val) and val in @vals do
         %__MODULE__{}
         |> Map.from_struct()
         |> Enum.filter(fn {k, v} -> v == val end)
@@ -132,12 +132,13 @@ defmodule Remedy.TypeBeforeCompile do
       @impl true
       def to_integer(type)
 
+      def to_integer(integer) when is_integer(integer),
+        do: if(integer in @vals, do: integer, else: :error)
+
       def to_integer(atom) when is_atom(atom) do
+        atom = atom |> to_string() |> String.upcase() |> String.to_atom()
         Map.get(%__MODULE__{} |> Map.from_struct(), atom)
       end
-
-      def to_integer(integer) when is_integer(integer),
-        do: if(integer in vals(), do: integer, else: :error)
 
       def to_integer(string) when is_binary(string) do
         # case of "5" etc. Because fuck knows when it comes to discord.
@@ -148,6 +149,7 @@ defmodule Remedy.TypeBeforeCompile do
           :error ->
             key = String.to_existing_atom(string)
 
+          _ ->
             case keys_vals()[string] do
               nil -> :error
               key -> key
@@ -158,13 +160,13 @@ defmodule Remedy.TypeBeforeCompile do
       @doc false
       @impl true
       def to_binary(integer) when is_integer(integer),
-        do: if(integer in vals(), do: to_string(key_for(integer)), else: :error)
+        do: if(integer in @vals, do: to_string(key_for(integer)), else: :error)
 
       def to_binary(string) when is_atom(string),
-        do: if(Atom.to_string(string) in keys(), do: string, else: :error)
+        do: if(Atom.to_string(string) in @keys, do: string, else: :error)
 
       def to_binary(string) when is_binary(string),
-        do: if(string in keys(), do: string, else: :error)
+        do: if(string in @keys, do: string, else: :error)
 
       @doc false
       def to_atom_key(type), do: to_binary(type) |> String.to_atom()
@@ -172,9 +174,13 @@ defmodule Remedy.TypeBeforeCompile do
       @doc false
       @unsafe {:cast, [:value]}
       def cast(nil), do: {:ok, nil}
-      def cast(value) when is_integer(value), do: {:ok, value |> to_integer()}
-      def cast(value) when is_binary(value), do: {:ok, value |> to_integer()}
-      def cast(value) when is_atom(value), do: {:ok, value |> to_integer()}
+
+      def cast(value)
+          when is_integer(value)
+          when is_binary(value)
+          when is_atom(value),
+          do: {:ok, value |> to_integer()}
+
       def cast(_value), do: :error
 
       @doc false

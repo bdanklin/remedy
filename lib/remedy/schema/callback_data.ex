@@ -16,6 +16,12 @@ defmodule Remedy.Schema.CallbackData do
 
   @primary_key false
   embedded_schema do
+    ## Auto Complete
+    field :choices, {:array, :string}
+    ## Modal
+    field :custom_id, :string
+    field :title, :string
+    ## Message / Shared
     field :tts, :boolean
     field :content, :string
     field :flags, CallbackDataFlags
@@ -26,7 +32,25 @@ defmodule Remedy.Schema.CallbackData do
   end
 
   @doc false
-  def changeset(model \\ %__MODULE__{}, params) do
+  def changeset(model \\ %__MODULE__{}, params)
+
+  ## Autocomplete
+  def changeset(model, %{choices: _} = params) do
+    model
+    |> cast(params, [:choices])
+    |> validate_required([:choices])
+  end
+
+  ## Modal
+  def changeset(model, %{custom_id: _, title: _, components: _} = params) do
+    model
+    |> cast(params, [:custom_id, :title])
+    |> validate_required([:custom_id, :title])
+    |> cast_embed(:components)
+  end
+
+  ## Callback Message
+  def changeset(model, params) do
     model
     |> cast(params, [:tts, :content, :flags])
     |> cast_embed(:allowed_mentions)

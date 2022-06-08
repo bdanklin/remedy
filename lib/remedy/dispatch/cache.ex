@@ -20,6 +20,7 @@ defmodule Remedy.Dispatch.Cache do
   alias Remedy.Dispatch.Cache.User
   alias Remedy.Dispatch.Cache.VoiceRegion
   alias Remedy.Dispatch.Cache.VoiceState
+  alias Remedy.Schema.Ban
   alias Remedy.Schema.Thread
   alias Remedy.Schema.User
   alias Remedy.Schema.Member

@@ -5,9 +5,12 @@ defmodule Remedy.Gateway.ATC do
   require Logger
   alias Remedy.Gateway.ATC.State
 
-  def request_connection(%{shard: shard}) do
-    Logger.info("Trying to connect shard #{shard}")
-    GenServer.call(__MODULE__, :request_connection, :infinity)
+  def request_connection(%{shard: shard, shards: shards, intents: intents} = socket) do
+    with :ok <- Logger.info("Shard:#{shard} Requesting Clearance To Connect"),
+         :ok <- GenServer.call(__MODULE__, :request_connection, :infinity),
+         :ok <- Logger.info("Shard:#{shard} Clearance Granted") do
+      socket
+    end
   end
 
   def start_link(args) do
@@ -21,8 +24,8 @@ defmodule Remedy.Gateway.ATC do
   end
 
   def handle_call(:request_connection, _from, state) do
-    with :ok <- State.handle_request_connection(state) do
-      {:reply, :ok, state}
-    end
+    {:reply, :ok,
+     state
+     |> State.handle_request_connection()}
   end
 end

@@ -38,7 +38,7 @@ defmodule Remedy.Schema.Activity do
     #   embeds_one :party, ActivityParty
     embeds_one :assets, ActivityAssets
     embeds_one :secrets, ActivitySecrets
-    embeds_many :buttons, ActivityButton
+    embeds_may(:buttons, ActivityButton)
   end
 
   @doc false

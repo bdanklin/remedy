@@ -24,7 +24,7 @@ defmodule Remedy.Schema.App do
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
-  schema "applications" do
+  embedded_schema do
     field :name, :string
     field :icon, :string
     field :description, :string

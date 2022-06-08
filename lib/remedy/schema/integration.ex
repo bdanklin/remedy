@@ -23,7 +23,7 @@ defmodule Remedy.Schema.Integration do
         }
 
   @primary_key {:id, Snowflake, autogenerate: false}
-  schema "integrations" do
+  embedded_schema do
     field :name, :string
     field :type, IntegrationType
     field :enabled, :boolean

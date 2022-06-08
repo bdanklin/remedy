@@ -1,46 +1,36 @@
 defmodule Remedy.Rest.Connection.State do
   @moduledoc false
+
+  @port 443
+  @url 'discord.com'
+
   require Logger
-  ## conn:          HTTP CONNECTION PID
-  ## url:           HTTP URL
-  ## port:          HTTP PORT
-  ## opts:          HTTP OPTIONS
-  ## connection:    CONNECTION NUMBER
 
-  ## alive_since:   Connection started                      System.os_time(1000)
-
-  ## last_req:      Last Request Start Time                 System.os_time(1000)
-  ## last_req_ms:   Last Request Time Taken                 System.os_time(1000)
-
-  ## dt:            Running average of :req_ms      (:req_ms + :last_req_ms) / 2
-  ## util:          Connection Utilization      :last_req - :req) / :last_req_ms
+  @type t :: %__MODULE__{
+          conn: reference(),
+          worker: integer(),
+          token: String.t(),
+          status: :up | :down
+        }
 
   defstruct conn: nil,
-            url: 'discord.com',
-            port: 443,
-            connection: nil,
-            alive_since: 0,
-            last_req: nil,
-            last_req_ms: nil,
-            dt: nil,
-            util: nil
+            worker: nil,
+            token: nil,
+            status: nil
 
-  def new(number) do
-    %__MODULE__{connection: number, alive_since: System.os_time(1000)}
+  def new(args) do
+    %__MODULE__{worker: args.worker, token: args.token}
   end
 
-  def open_http2(%__MODULE__{connection: connection, url: url, port: port} = state) do
-    with :ok <- Logger.info("HTTP Worker #{connection} Connecting..."),
-         {:ok, conn} <- :gun.open(url, port, opts()),
-         :ok <- Logger.info("HTTP Worker #{connection} Connected..."),
-         {:ok, :http2} <- :gun.await_up(conn, 10_000),
-         :ok <- Logger.info("HTTP Worker #{connection} Ready") do
-      %__MODULE__{state | conn: conn}
-    end
+  def handle_connect(%__MODULE__{worker: number} = state) do
+    Logger.info("Starting HTTP Connection #{number}")
+
+    state
+    |> connect()
   end
 
-  defp opts() do
-    %{
+  defp connect(%__MODULE__{worker: worker} = state) do
+    opts = %{
       protocols: [:http2],
       transport: :tls,
       http2_opts: %{keepalive: 5000},
@@ -54,30 +44,80 @@ defmodule Remedy.Rest.Connection.State do
         ]
       ]
     }
-  end
 
-  def join_pool_party(%__MODULE__{connection: connection} = state) do
-    with :ok <- Remedy.Rest.Lifeguard.return_to_pool(connection) do
-      state
+    with :ok <- Logger.info("HTTP Worker #{worker} Connecting..."),
+         {:ok, conn} <- :gun.open(@url, @port, opts),
+         :ok <- Logger.info("HTTP Worker #{worker} Connected..."),
+         {:ok, :http2} <- :gun.await_up(conn, 10_000),
+         :ok <- Logger.info("HTTP Worker #{worker} Ready") do
+      %__MODULE__{state | conn: conn, status: :up}
     end
   end
 
-  def return_to_pool(%__MODULE__{connection: connection} = state) do
-    with :ok <- Remedy.Rest.Lifeguard.return_to_pool(connection) do
-      state
+  alias Remedy.Rest.Request
+  alias Remedy.Rest.Response
+
+  def handle_request(%__MODULE__{status: :down, worker: worker}, request) do
+    Logger.warn("HTTP Worker #{worker} is down, cannot handle request")
+
+    {:error, :http_worker_down}
+  end
+
+  def handle_request(
+        %__MODULE__{
+          conn: conn,
+          token: token
+        },
+        %Request{
+          method: method,
+          route: route,
+          headers: headers,
+          body: body
+        } = request
+      ) do
+    headers = [{"Authorization", "Bot #{token}"} | headers]
+
+    stream =
+      case method do
+        :get -> :gun.get(conn, route, headers)
+        :put -> :gun.put(conn, route, headers, body)
+        :post -> :gun.post(conn, route, headers, body)
+        :patch -> :gun.patch(conn, route, headers, body)
+        :delete -> :gun.delete(conn, route, headers)
+      end
+
+    with {:response, :nofin, status, headers} <- :gun.await(conn, stream),
+         {:ok, body} <- :gun.await_body(conn, stream) do
+      {:ok,
+       %Response{
+         status: status,
+         headers: headers,
+         body: Jason.decode!(body, keys: :strings),
+         request: request
+       }}
+    else
+      {:response, :fin, status, headers} ->
+        {:ok, %Response{status: status, headers: headers, body: "", request: request}}
+
+      {:error, reason} ->
+        {:error, to_string(reason)}
     end
   end
 
-  def update_utilization(%__MODULE__{last_req: nil, last_req_ms: nil} = state, req) do
-    req_ms = System.os_time(1000) - req
-    %__MODULE__{state | last_req: req, last_req_ms: req_ms}
+  def handle_error(%__MODULE__{worker: worker} = state, {what, why, reason}) do
+    Logger.warn(" HTTP/2 CONNECTION #{worker} ERROR: #{what}, #{why} #{reason}. COMMITTING SEPPUKU (◑_◑)")
+
+    %__MODULE__{state | status: :down}
+    |> connect()
   end
 
-  def update_utilization(%__MODULE__{last_req: last_req, last_req_ms: last_req_ms} = state, req) do
-    req_ms = System.os_time(1000) - req
-    dt = (last_req_ms + req_ms) / 2
-    util = req_ms / (req - last_req)
+  def handle_up(%__MODULE__{worker: worker} = state) do
+    Logger.info("HTTP/2 CONNECTION #{worker}: READY")
+    %__MODULE__{state | status: :down}
+  end
 
-    %__MODULE__{state | last_req: req, last_req_ms: req_ms, dt: dt, util: util}
+  def handle_down(%__MODULE__{worker: worker} = state) do
+    Logger.warn("HTTP/2 CONNECTION #{worker}: DOWN")
+    %__MODULE__{state | status: :down}
   end
 end
